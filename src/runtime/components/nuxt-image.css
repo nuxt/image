@@ -1,0 +1,25 @@
+.__nuxt-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.__nuxt-image img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.__nuxt-image-blur {
+  filter: blur(25px);
+  transform: scale(1.1);
+}
+
+.__nuxt-image .fade-enter-active, .__nuxt-image .fade-leave-active {
+  transition: opacity 1s;
+}
+
+.__nuxt-image .fade-enter, .__nuxt-image .fade-leave-to /* .__nuxt-image .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
