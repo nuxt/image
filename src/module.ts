@@ -9,6 +9,7 @@ async function ImageModule (moduleOptions) {
     const { nuxt, addServerMiddleware, addPlugin } = this
 
     const options: ModuleOptions = {
+        presets: [],
         ...nuxt.options.image,
         ...moduleOptions
     }
@@ -16,6 +17,16 @@ async function ImageModule (moduleOptions) {
     // Ensure at least one provider is set
     if (!options.providers || !Object.keys(options.providers).length) {
         options.providers = { local: {} }
+    }
+
+    // Add default `lqip` preset
+    if (!options.presets.some(preset => preset.name === 'lqip')) {
+        options.presets.unshift({
+            name: 'lqip',
+            modifiers: {
+              contain: '20x20'
+            }
+        })
     }
 
     // Apply local defaults
@@ -66,7 +77,8 @@ async function ImageModule (moduleOptions) {
     const pluginOptions = {
         defaultProvider: options.defaultProvider,
         imports: {} as { [name: string]: string },
-        providers: [] as {  name: string, import: string, options: any }[]
+        providers: [] as {  name: string, import: string, options: any }[],
+        presets: options.presets
     }
 
     for (const p of providers) {

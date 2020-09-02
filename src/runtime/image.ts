@@ -1,5 +1,10 @@
 import { RuntimeProvider, ImageModifiers } from '../types'
 
+interface ImagePreset {
+  name: string
+  modifiers: any
+  provider?: string
+}
 interface CreateImageOptions {
   providers: {
     [name: string]: {
@@ -7,29 +12,50 @@ interface CreateImageOptions {
       provider: RuntimeProvider
     }
   }
+  presets: ImagePreset[]
   defaultProvider: string
 }
 
-export function createImage({  providers, defaultProvider }: CreateImageOptions) {
+export function createImage({  providers, defaultProvider, presets }: CreateImageOptions) {
+  const presetMap = presets.reduce((map, preset) => {
+    map[preset.name] = preset
+    return map
+  }, {})
   function image(src: string, modifiers: ImageModifiers, options: any = {}) {
     if (src.includes(':')) {
-      const [srcProvider, ...rest] = src.split(':')
+      const [srcConfig, ...rest] = src.split(':')
       src = rest.join(':')
-      options.provider = srcProvider
+      const [provider, preset] = srcConfig.split('+')
+
+      options.provider = provider || options.provider
+      options.preset = preset || options.preset
     }
     
     const p = providers[options.provider || defaultProvider]
     if (!p) {
       throw new Error('Unsupported provided ' + options.provider)
     }
+
+    if (options.preset && !presetMap[options.preset]) {
+      throw new Error('Unsupported preset ' + options.preset)
+    }
+
     const { provider, defaults } = p
-    return provider.generateURL(src, modifiers, { ...defaults, ...options })
+    return provider.generateURL(
+      src,
+      presetMap[options.preset] ? presetMap[options.preset].modifiers : modifiers,
+      { ...defaults, ...options }
+    )
   }
 
-  // TODO: generalize for presets
-  image.lqip = (src) => {
-    return image(src, { contain: '20x20' })
-  }
+  presets.forEach(preset => {
+    image[preset.name] = (src) => {
+      return image(src, preset.modifiers, {
+        provider: preset.provider
+      })
+    }
+  })
+
   image.$observer = createObserver()
 
   return image

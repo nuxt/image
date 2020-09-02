@@ -1,10 +1,17 @@
 export interface ModuleOptions {
     defaultProvider: string;
+    presets: ImagePreset[],
     providers: {
       local: LocalOptions
       [name: string]: any
     }
     provider: object;
+}
+
+export interface ImagePreset {
+  name: string
+  modifiers: any
+  provider?: string
 }
 
 export type ProviderFactory = (options: any) => Provider

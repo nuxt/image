@@ -16,7 +16,8 @@ providers['<%= provider.name %>'] = {
 
 const image = createImage({
     providers,
-    defaultProvider: '<%= options.defaultProvider %>'
+    defaultProvider: '<%= options.defaultProvider %>',
+    presets: <%= devalue(options.presets) %>
 })
 
 

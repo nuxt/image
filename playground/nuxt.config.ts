@@ -8,6 +8,14 @@ export default {
   ],
   image: {
     defaultProvider: 'twicpics',
+    presets: [
+      {
+        name: 's50',
+        modifiers: {
+          contain: '50x50'
+        }
+      }
+    ],
     providers: {
       local: {},
       twicpics: {
