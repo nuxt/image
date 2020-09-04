@@ -1,19 +1,19 @@
 <template>
   <div>
     <nuxt-image
-      src="local:images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
+      src="local:/images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
       :width="300"
       :height="400"
     />
     <nuxt-image
-      src="local+s50:images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
+      src="local+s50:/images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
       :width="50"
       :height="50"
     />
     <span>Photo by <a href="https://unsplash.com/@sequence_studio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Holly Pezant</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
     
     <nuxt-image
-      src="twicpics:content/images/2018/08/best-of-sublime-text.jpg"
+      src="twicpics:/content/images/2018/08/best-of-sublime-text.jpg"
       :width="700"
       :height="370"
     />

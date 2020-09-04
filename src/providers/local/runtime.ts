@@ -9,6 +9,6 @@ export default <RuntimeProvider> {
       operations.push(`s_${w}_${h}`)
     }
     const operationsString = operations.length ? operations.join(',') : '_'
-    return options.baseURL + '/_/' + operationsString + '/' + src
+    return options.baseURL + '/_/' + operationsString + src
   }
 }

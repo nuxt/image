@@ -30,6 +30,10 @@ export function createImage({  providers, defaultProvider, presets }: CreateImag
       options.provider = provider || options.provider
       options.preset = preset || options.preset
     }
+
+    if (!src || src[0] !== '/') {
+      throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
+    }
     
     const p = providers[options.provider || defaultProvider]
     if (!p) {
