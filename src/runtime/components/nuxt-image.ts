@@ -1,7 +1,6 @@
 import './nuxt-image.css'
-import Vue from 'vue'
 
-export default Vue.extend({
+export default {
     name: "NuxtImage",
     props: {
         src: {
@@ -10,12 +9,16 @@ export default Vue.extend({
             required: true
         },
         width: {
-            type: Number,
-            default: -1
+            type: String,
+            default: ''
         },
         height: {
-            type: Number,
-            default: -1
+            type: String,
+            default: ''
+        },
+        legacy: {
+            type: Boolean,
+            default: false
         },
         alt: {
             type: String,
@@ -35,7 +38,9 @@ export default Vue.extend({
         }
     },
     async fetch() {
-        this.blurry = await this.$img.lqip(this.src)
+        if (!this.legacy) {
+            this.blurry = await this.$img.lqip(this.src)
+        }
     },
     mounted() {
         this.$img.$observer.add(this.$el, () => {
@@ -58,7 +63,7 @@ export default Vue.extend({
                     }
                 })
             }
-            if (!Array.isArray(sizes) || !sizes.length) {
+            if ((!Array.isArray(sizes) || !sizes.length) && !this.legacy) {
                 sizes = [{
                     width: this.width
                 }]
@@ -68,7 +73,10 @@ export default Vue.extend({
             return sizes;
         },
         generatedSrc() {
-            return this.sizes[0].url
+            if (this.sizes.length) {
+                return this.sizes[0].url
+            }
+            return this.src
         },
         generatedSrcset() {
             return this.sizes.map(({ width, url }) => `${url} ${width}w`).join(', ')
@@ -92,8 +100,11 @@ export default Vue.extend({
         }
     },
     render(h) {
+        if (this.legacy) {
+            return this.renderNonOptimizedImage(h)
+        }
         const bluryImage = h('img', {
-            class: '__nuxt-image-blur',
+            class: '__nuxt-image-rel full blur',
             attrs: {
                 src: this.blurry,
                 alt: this.alt
@@ -101,7 +112,7 @@ export default Vue.extend({
         })
 
         const originalImage = h('img', {
-            class: ['__nuxt-image-original', this.loaded ? 'visible' : ''],
+            class: ['__nuxt-image-abs', this.loaded ? 'visible' : ''],
             attrs: {
                 src: this.loading ? this.generatedSrc : undefined,
                 srcset: this.loading ? this.generatedSrcset : undefined,
@@ -120,21 +131,38 @@ export default Vue.extend({
 
         const noScript = h('noscript', {
             domProps: {
-                innerHTML: `<img class="__nuxt-image-original visible" src="${this.generatedSrc}" srcset="${this.generatedSrcset}" sizes="${this.generatedSizes}" width="${this.width}" height="${this.height}" alt="${this.alt}" >`
+                innerHTML: `<img class="__nuxt-image-abs visible" src="${this.generatedSrc}" srcset="${this.generatedSrcset}" sizes="${this.generatedSizes}" width="${this.width}" height="${this.height}" alt="${this.alt}" >`
             }
         }, [])
 
+        const placeholder = h('div', {
+            class: '___nuxt-image-pl',
+            style: {
+                paddingBottom: this.height ? `${this.height}` : undefined,
+            }
+        })
+
         const wrapper = h('div', {
             style: {
-                width: `${this.width}px`,
-                height: `${this.height}px`,
+                width: this.width ? `${this.width}px` : undefined
             },
             class: '__nuxt-image',
-        }, [bluryImage, originalImage, noScript])
+        }, [bluryImage, originalImage, noScript, placeholder])
 
         return wrapper;
     },
     methods: {
+        renderNonOptimizedImage(h) {
+            return h('img', {
+                class: '__nuxt-image-original visible',
+                attrs: {
+                    src: this.generatedSrc,
+                    srcset: this.generatedSrcset,
+                    sizes: this.generatedSizes,
+                    alt: this.alt
+                }
+            })
+        },
         generateSizedImage(width: number) {
             return this.$img(this.src, {
                 width: width
@@ -144,4 +172,4 @@ export default Vue.extend({
             this.loading = true
         }
     }
-})
+}

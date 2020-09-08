@@ -1,8 +1,8 @@
 .__nuxt-image {
   position: relative;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
 }
-
 .__nuxt-image img {
   position: absolute;
   left: 0;
@@ -10,16 +10,22 @@
   width: 100%;
   height: 100%;
 }
+.__nuxt-image-rel {
 
-.__nuxt-image-blur {
+}
+.__nuxt-image-rel.full {
+  width: 100%;
+  height: 100%;
+}
+.__nuxt-image-rel.blur {
   filter: blur(25px);
   transform: scale(1.1);
 }
 
-.__nuxt-image-original {
+.__nuxt-image-abs {
   opacity: 0;
   transition: opacity 400ms ease 0ms;
 }
-.__nuxt-image-original.visible {
+.__nuxt-image-abs.visible {
   opacity: 1;
 }

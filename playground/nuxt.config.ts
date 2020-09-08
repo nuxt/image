@@ -8,7 +8,7 @@ export default {
     '@nuxtjs/tailwindcss'
   ],
   image: {
-    defaultProvider: 'twicpics',
+    defaultProvider: 'local',
     presets: [
       {
         name: 's50',
@@ -20,8 +20,11 @@ export default {
     providers: {
       local: {},
       twicpics: {
-        baseURL: 'https://i5acur1u.twic.pics/',
+        baseURL: 'https://i5acur1u.twic.pics',
       },
+      cloudinary: {
+        baseURL: 'https://res.cloudinary.com/farnabaz/image/upload',
+      }
     }
   }
 }
