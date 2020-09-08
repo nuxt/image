@@ -35,6 +35,9 @@ export interface GenerateOptions {
 }
 
 export interface ImageModifiers {
+  width: number
+  height: number
+  resize: string
   contain: string
 }
 

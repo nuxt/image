@@ -96,3 +96,16 @@ function createObserver() {
       }
   }
 }
+
+async function readAsDataURI(url: string, host: string, encrypted: boolean) {
+  const _url = url.startsWith('http') ? url : `http${encrypted ? 's' : ''}://${host}$ url}`
+  const http = _url.startsWith('https') ? await import('https') : await import('http')  
+  return await new Promise(async (resolve) => {
+      http.get(_url, (resp) => {
+          resp.setEncoding('base64');
+          let body = "data:" + resp.headers["content-type"] + ";base64,";
+          resp.on('data', (data) => { body += data });
+          resp.on('end', () => resolve(body));
+      }).on('error', (e) => resolve(url))
+  })
+}

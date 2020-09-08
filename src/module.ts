@@ -1,9 +1,8 @@
 import path from 'path'
-import { parse } from 'querystring'
 import hash from 'hasha'
 
 import { name, version } from '../package.json'
-import { ModuleOptions, Provider, ProviderFactory } from './types'
+import { ModuleOptions, ProviderFactory } from './types'
 
 async function ImageModule (moduleOptions) {
     const { nuxt, addServerMiddleware, addPlugin } = this
@@ -24,7 +23,7 @@ async function ImageModule (moduleOptions) {
         options.presets.unshift({
             name: 'lqip',
             modifiers: {
-              contain: '20x20'
+              width: 20
             }
         })
     }
@@ -98,14 +97,14 @@ async function ImageModule (moduleOptions) {
             })
         }
     }
-    console.log(pluginOptions);
+
     addPlugin({
         fileName: 'image.js',
         src: path.resolve(__dirname, '../templates/plugin.js'),
         options: pluginOptions
     })
 
-    // Transpile and alias auth src
+    // Transpile and alias image src
     nuxt.options.alias['~image'] = __dirname
     nuxt.options.build.transpile.push(__dirname)
 }

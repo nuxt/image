@@ -21,33 +21,68 @@ export default Vue.extend({
             type: String,
             default: ''
         },
+        sets: {
+            type: [String, Array],
+            default: '',
+        }
     },
     data() {
         return {
-            blury: null,
-            original: null,
+            srcset: [],
+            blurry: null,
+            loading: false,
             loaded: false,
         }
     },
-    // @ts-ignore
     async fetch() {
-        // this.$img[p]
-        // <NuxtImage src="cloudinary://..." src="{ path: '', provider: 'xnxx' }">
-        this.blury = await this.$img.lqip(this.src)
+        this.blurry = await this.$img.lqip(this.src)
     },
     mounted() {
         this.$img.$observer.add(this.$el, () => {
-            console.log("OK, element is visible, Hoooray");
             // OK, element is visible, Hoooray
             this.loadOriginalImage()
         })
+    },
+    computed: {
+        sizes() {
+            let sizes = this.sets;
+            if (typeof this.sets === 'string') {
+                sizes = this.sets.split(',').filter(Boolean).map((set) => {
+                    let [breakpoint, width] = set.split(':').map(num => parseInt(num.trim(), 10))
+                    return width ? {
+                        breakpoint: `(min-width:${breakpoint}px) `,
+                        width: width,
+                    } : {
+                        breakpoint: '',
+                        width: breakpoint
+                    }
+                })
+            }
+            if (!Array.isArray(sizes) || !sizes.length) {
+                sizes = [{
+                    width: this.width
+                }]
+            }
+            sizes = sizes.map(size => ({ ...size, url: this.generateSizedImage(size.width) }))
+            
+            return sizes;
+        },
+        generatedSrc() {
+            return this.sizes[0].url
+        },
+        generatedSrcset() {
+            return this.sizes.map(({ width, url }) => `${url} ${width}w`).join(', ')
+        },
+        generatedSizes() {
+            return this.sizes.map(({ width, breakpoint }) => `${breakpoint}${width}px`).reverse().join(', ')
+        }
     },
     beforeDestroy () {
         this.$img.$observer.remove(this.$el)
     },
     watch: {
         async src(v) {
-            this.blury = await this.$img.lqip(this.src)
+            this.blurry = await this.$img.lqip(this.src)
             this.original = null
             this.$img.$observer.remove(this.$el)
             this.$img.$observer.add(this.$el, () => {
@@ -60,27 +95,34 @@ export default Vue.extend({
         const bluryImage = h('img', {
             class: '__nuxt-image-blur',
             attrs: {
-                src: this.blury,
+                src: this.blurry,
                 alt: this.alt
             }
         })
 
-        let originalImage = null
-        if (this.original) {
-            originalImage = h('img', {
-                class: '__nuxt-image-original',
-                attrs: {
-                    src: this.original,
-                    alt: this.alt
+        const originalImage = h('img', {
+            class: ['__nuxt-image-original', this.loaded ? 'visible' : ''],
+            attrs: {
+                src: this.loading ? this.generatedSrc : undefined,
+                srcset: this.loading ? this.generatedSrcset : undefined,
+                sizes: this.loading ? this.generatedSizes : undefined,
+                alt: this.alt,
+                width: this.width,
+                height: this.height,
+            },
+            on: {
+                load: () => {
+                    this.loaded = true
                 }
-            })
-        }
-
-        const transition = h('transition', {
-            props: {
-                name: 'fade'
             }
-        }, [originalImage])
+        })
+
+
+        const noScript = h('noscript', {
+            domProps: {
+                innerHTML: `<img class="__nuxt-image-original visible" src="${this.generatedSrc}" srcset="${this.generatedSrcset}" sizes="${this.generatedSizes}" width="${this.width}" height="${this.height}" alt="${this.alt}" >`
+            }
+        }, [])
 
         const wrapper = h('div', {
             style: {
@@ -88,26 +130,18 @@ export default Vue.extend({
                 height: `${this.height}px`,
             },
             class: '__nuxt-image',
-        }, [bluryImage, transition])
+        }, [bluryImage, originalImage, noScript])
 
         return wrapper;
     },
     methods: {
-        generateSourceImage() {
-            if (typeof this.src === "object") {
-                return this.$img(this.src);
-            }
+        generateSizedImage(width: number) {
             return this.$img(this.src, {
-                resize: `${this.width}x${this.height}`
+                width: width
             })
         },
         loadOriginalImage() {
-            var newImg = new Image();
-            newImg.onload = () => {
-                this.original = newImg.src
-                this.loaded = true
-            }
-            newImg.src = this.generateSourceImage();
+            this.loading = true
         }
     }
 })

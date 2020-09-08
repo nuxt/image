@@ -16,10 +16,10 @@
   transform: scale(1.1);
 }
 
-.__nuxt-image .fade-enter-active, .__nuxt-image .fade-leave-active {
-  transition: opacity 1s;
-}
-
-.__nuxt-image .fade-enter, .__nuxt-image .fade-leave-to /* .__nuxt-image .fade-leave-active below version 2.1.8 */ {
+.__nuxt-image-original {
   opacity: 0;
+  transition: opacity 400ms ease 0ms;
+}
+.__nuxt-image-original.visible {
+  opacity: 1;
 }

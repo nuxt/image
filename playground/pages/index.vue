@@ -4,6 +4,7 @@
       src="local:/images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
       :width="300"
       :height="400"
+      sets="300,410:600,800:900,900:1200"
     />
     <nuxt-image
       src="local+s50:/images/holly-pezant-FiwHZ935FLE-unsplash.jpg"
