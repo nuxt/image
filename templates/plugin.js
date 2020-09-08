@@ -21,9 +21,9 @@ const image = createImage({
 })
 
 
-Vue.component(NuxtImage.options.name, NuxtImage)
+Vue.component(NuxtImage.name, NuxtImage)
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
-    inject('img', image)
+  inject('img', image)
 }

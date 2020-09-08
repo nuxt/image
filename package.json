@@ -7,8 +7,10 @@
   "files": [
     "dist"
   ],
+  "main": "dist/module.js",
   "scripts": {
     "build": "yarn clean && tsc",
+    "postbuild": "copyfiles -u 1 src/**/*.css dist",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-ts playground",
     "nuxt-storybook": "ts-node src/cli",
@@ -27,12 +29,16 @@
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@nuxtjs/storybook": "^2.1.0",
+    "@nuxtjs/tailwindcss": "^3.0.2",
     "@types/ci-info": "latest",
     "@types/inquirer": "latest",
     "babel-eslint": "latest",
+    "copyfiles": "^2.3.0",
     "eslint": "latest",
+    "node-sass": "^4.14.1",
     "nuxt-edge": "^2.14.2-26626271.34c56722",
     "rimraf": "^3.0.2",
+    "sass-loader": "^10.0.2",
     "standard-version": "latest",
     "typescript": "^4.0.2"
   },

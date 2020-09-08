@@ -4,7 +4,8 @@ export default {
     '../src/module.ts'
   ],
   buildModules: [
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/tailwindcss'
   ],
   image: {
     defaultProvider: 'twicpics',

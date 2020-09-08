@@ -1,8 +1,8 @@
 import path from 'path'
 import hash from 'hasha'
-
-import { name, version } from '../package.json'
 import { ModuleOptions, ProviderFactory } from './types'
+
+const { name, version } = require('../package.json')
 
 async function ImageModule (moduleOptions) {
     const { nuxt, addServerMiddleware, addPlugin } = this
@@ -23,7 +23,7 @@ async function ImageModule (moduleOptions) {
         options.presets.unshift({
             name: 'lqip',
             modifiers: {
-              width: 20
+              width: 30
             }
         })
     }
