@@ -1,6 +1,9 @@
 import path from 'path'
 import hash from 'hasha'
+import fs from 'fs-extra'
 import { ModuleOptions, ProviderFactory } from './types'
+import localGenerator from './providers/local/generate'
+import { logger } from './utils'
 
 const { name, version } = require('../package.json')
 
@@ -107,6 +110,24 @@ async function ImageModule (moduleOptions) {
     // Transpile and alias image src
     nuxt.options.alias['~image'] = __dirname
     nuxt.options.build.transpile.push(__dirname)
+
+    nuxt.hook('generate:page', async (page) => {
+        const { dir } = nuxt.options.generate
+        
+        const generator = localGenerator(options.providers.local)
+
+        const images = page.html.match(/\/_image\/local[^\"\s]+/g)
+
+        await Promise.all(
+            images.map(async (image) => {
+                const data = await generator(image.replace('/_image/local', ''))
+                const imagePath = dir + image
+                await fs.ensureDir(path.dirname(imagePath))
+                await fs.writeFile(imagePath, data, "binary")
+                logger.success("Generated image " + image)
+            })
+        )
+    })
 }
 
 function tryRequire(id) {

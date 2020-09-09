@@ -154,7 +154,7 @@ export default {
     methods: {
         renderNonOptimizedImage(h) {
             return h('img', {
-                class: '__nuxt-image-original visible',
+                class: '__nuxt-image-abs visible',
                 attrs: {
                     src: this.generatedSrc,
                     srcset: this.generatedSrcset,

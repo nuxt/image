@@ -5,6 +5,7 @@ interface ImagePreset {
   modifiers: any
   provider?: string
 }
+
 interface CreateImageOptions {
   providers: {
     [name: string]: {
