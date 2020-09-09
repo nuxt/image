@@ -164,9 +164,10 @@ export default {
             })
         },
         generateSizedImage(width: number) {
-            return this.$img(this.src, {
+            const image = this.$img(this.src, {
                 width: width
             })
+            return encodeURI(image)
         },
         loadOriginalImage() {
             this.loading = true

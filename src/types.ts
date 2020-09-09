@@ -19,8 +19,12 @@ export type ProviderFactory = (options: any) => Provider
 export interface Provider {
     runtime: string
     runtimeOptions: any
-    middleware?(req, res, next): void
+    middleware?(): ProviderServerMiddleware
+    generator?(): ProviderStaticGenerator;
 }
+
+export type ProviderStaticGenerator = (url: string) => void
+export type ProviderServerMiddleware = (req, res, next) => void
 
 export interface LocalOptions {
   dir?: string,

@@ -2,10 +2,15 @@ import path from 'path'
 import hash from 'hasha'
 import fs from 'fs-extra'
 import { ModuleOptions, ProviderFactory } from './types'
-import localGenerator from './providers/local/generate'
 import { logger } from './utils'
 
 const { name, version } = require('../package.json')
+
+interface ModuleProvider {
+    name: string,
+    options: any
+    provider: ProviderFactory
+}
 
 async function ImageModule (moduleOptions) {
     const { nuxt, addServerMiddleware, addPlugin } = this
@@ -44,11 +49,7 @@ async function ImageModule (moduleOptions) {
         options.defaultProvider = Object.keys(options.providers)[0]
     }
 
-    const providers: {
-        name: string,
-        options: any
-        provider: ProviderFactory
-    }[] = []
+    const providers: ModuleProvider[] = []
 
     for (let [key, provider] of Object.entries(options.providers)) {
         if (Array.isArray(provider)) {
@@ -96,7 +97,7 @@ async function ImageModule (moduleOptions) {
         if (typeof middleware === "function") {
             addServerMiddleware({
                 path: '/_image/' + p.name,
-                handler: middleware
+                handler: middleware()
             })
         }
     }
@@ -111,22 +112,47 @@ async function ImageModule (moduleOptions) {
     nuxt.options.alias['~image'] = __dirname
     nuxt.options.build.transpile.push(__dirname)
 
+    handleStaticGeneration(nuxt, providers)
+}
+
+function handleStaticGeneration(nuxt: any, providers: ModuleProvider[]) {
+    const { dir } = nuxt.options.generate
+    const generators = {}
+
+    function findGenerator(imageProvider) {
+        if (!generators[imageProvider]) {
+            const matchedProvider = providers.find(p => p.name == imageProvider);
+            if (matchedProvider) {
+                const { generator } = matchedProvider.provider(matchedProvider.options);
+                if (typeof generator === "function") {
+                    generators[imageProvider] = generator();
+                }
+            }
+        }
+        if (!generators[imageProvider]) {
+            throw new Error(`"${imageProvider}" provider does not have proper generator`)
+        }
+        return generators[imageProvider]
+    }
+
+    // Generate single image
+    async function generateImage(image) {
+        const imagePath = dir + image
+        const [_, imageProvider, imageUrl] = image.match(/\/_image\/(\w+)(\/.*)/)
+        try {
+            const imageGenerator = findGenerator(imageProvider);
+            const data = await imageGenerator(imageUrl)
+            await fs.ensureDir(path.dirname(imagePath))
+            await fs.writeFile(imagePath, data, "binary")
+            logger.success("Generated image " + image)
+        } catch (error) {
+            logger.error(error.message)
+        }
+    }
+
     nuxt.hook('generate:page', async (page) => {
-        const { dir } = nuxt.options.generate
-        
-        const generator = localGenerator(options.providers.local)
-
-        const images = page.html.match(/\/_image\/local[^\"\s]+/g)
-
-        await Promise.all(
-            images.map(async (image) => {
-                const data = await generator(image.replace('/_image/local', ''))
-                const imagePath = dir + image
-                await fs.ensureDir(path.dirname(imagePath))
-                await fs.writeFile(imagePath, data, "binary")
-                logger.success("Generated image " + image)
-            })
-        )
+        const images = page.html.match(/\/_image[^\"\s]+/g)
+        await Promise.all(images.map(generateImage))
     })
 }
 
