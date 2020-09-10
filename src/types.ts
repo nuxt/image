@@ -27,8 +27,7 @@ export type ProviderStaticGenerator = (url: string) => void
 export type ProviderServerMiddleware = (req, res, next) => void
 
 export interface LocalOptions {
-  dir?: string,
-  baseURL?: string,
+  dir?: string
 }
 
 export interface GenerateOptions {

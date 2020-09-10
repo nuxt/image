@@ -8,6 +8,6 @@ export default <RuntimeProvider> {
       operations.push(`w_${modifiers.width}`)
     }
     const operationsString = operations.length ? operations.join(',') : '_'
-    return options.baseURL + '/_/' + operationsString + src
+    return '/_image/local/_/' + operationsString + src
   }
 }

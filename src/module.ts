@@ -40,7 +40,6 @@ async function ImageModule (moduleOptions) {
     if (options.providers.local) {
         options.providers.local = {
             dir: path.join(nuxt.options.srcDir, 'static'),
-            baseURL: '/_image/local',
             ...options.providers.local
         }
     }
