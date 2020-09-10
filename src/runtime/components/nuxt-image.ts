@@ -27,6 +27,18 @@ export default {
         sets: {
             type: [String, Array],
             default: '',
+        },
+        format: {
+            type: String,
+            default: undefined
+        },
+        size: {
+            type: String,
+            default: 'cover'
+        },
+        operations: {
+            type: Object,
+            default: () => ({})
         }
     },
     data() {
@@ -165,7 +177,10 @@ export default {
         },
         generateSizedImage(width: number) {
             const image = this.$img(this.src, {
-                width: width
+                width: width,
+                format: this.format,
+                size: this.size,
+                ...this.operations
             })
             return encodeURI(image)
         },

@@ -1,18 +1,44 @@
 import { RuntimeProvider, ImageModifiers } from '../../types'
 
+function getSizeOperator(size) {
+  if (!size) {
+    return 'fit'
+  }
+  switch (size) {
+    case 'fill':
+      return 'fill'
+    case 'inside':
+      return 'pad'
+    case 'outside':
+      return 'lpad'
+    case 'cover':
+      return 'fit'
+    case 'contain':
+      return 'scale'
+    default:
+      return size;
+  }
+}
+
 export default <RuntimeProvider> {
   generateURL(src: string, modifiers: ImageModifiers, options: any) {
+    const { width, height, format, size, ...providerModifiers } = modifiers;
     const operations = []
 
-    if (modifiers.width) {
-      operations.push('w_' + modifiers.width)
+    if (width) {
+      operations.push('w_' + width)
     }
-    if (modifiers.height) {
-      operations.push('h_' + modifiers.height)
+    if (height) {
+      operations.push('h_' + height)
     }
-    if (modifiers.resize) {
-      operations.push('c_' + modifiers.resize)
+    if (format) {
+      operations.push('f_' + format)
     }
+    operations.push('c_' + getSizeOperator(size))
+
+    Object.entries(providerModifiers).forEach(([key, value]) => {
+      operations.push(`${key}_${String(value)}`)
+    })
     
     const operationsString = operations.join(',')
     return options.baseURL + '/' + operationsString + src
