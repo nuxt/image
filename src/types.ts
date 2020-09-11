@@ -20,10 +20,8 @@ export interface Provider {
     runtime: string
     runtimeOptions: any
     middleware?(): ProviderServerMiddleware
-    generator?(): ProviderStaticGenerator;
 }
 
-export type ProviderStaticGenerator = (url: string) => void
 export type ProviderServerMiddleware = (req, res, next) => void
 
 export interface LocalOptions {
@@ -49,5 +47,5 @@ export interface RuntimeProvider {
   // Apply provider base
   // Add additional params (like signuture)
   // Do modifier mapping
-  generateURL: (src: string, modifiers: ImageModifiers, providerOptions: any) => string
+  generateURL: (src: string, modifiers: ImageModifiers, providerOptions: any) => { url: string, isStatic?: boolean }
 }

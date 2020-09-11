@@ -15,6 +15,9 @@ export default <RuntimeProvider> {
 
 
     const operationsString = operations.length ? operations.join(',') : '_'
-    return `/_image/local/${modifiers.format || '_'}/${operationsString}${src}`
+    return {
+      url: `/_image/local/${modifiers.format || '_'}/${operationsString}${src}`,
+      isStatic: true
+    };
   }
 }

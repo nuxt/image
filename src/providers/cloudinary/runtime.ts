@@ -41,6 +41,8 @@ export default <RuntimeProvider> {
     })
     
     const operationsString = operations.join(',')
-    return options.baseURL + '/' + operationsString + src
+    return {
+      url: options.baseURL + '/' + operationsString + src
+    }
   }
 }

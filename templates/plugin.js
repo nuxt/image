@@ -4,8 +4,9 @@ import { createImage } from '~image/runtime/image'
  
 <%=Object.entries(options.imports).map(([name, path]) => `import ${name} from '${path}'`).join('\n')%>
 
+const defaultProvider = '<%= options.defaultProvider %>'
+const presets = <%= devalue(options.presets) %>
 const providers = {}
-
 <% for (provider of options.providers) { %>
 // <%= provider.name %>
 providers['<%= provider.name %>'] = {
@@ -14,16 +15,15 @@ providers['<%= provider.name %>'] = {
 }
 <% } %>
 
-const image = createImage({
-    providers,
-    defaultProvider: '<%= options.defaultProvider %>',
-    presets: <%= devalue(options.presets) %>
-})
-
-
 Vue.component(NuxtImage.name, NuxtImage)
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
+  const image = createImage(context, {
+    defaultProvider,
+    providers,
+    presets,
+  })
+
   inject('img', image)
 }

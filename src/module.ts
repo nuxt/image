@@ -1,6 +1,8 @@
 import path from 'path'
 import hash from 'hasha'
+import fetch from 'node-fetch'
 import fs from 'fs-extra'
+import util from 'util'
 import { ModuleOptions, ProviderFactory } from './types'
 import { logger } from './utils'
 
@@ -111,47 +113,47 @@ async function ImageModule (moduleOptions) {
     nuxt.options.alias['~image'] = __dirname
     nuxt.options.build.transpile.push(__dirname)
 
-    handleStaticGeneration(nuxt, providers)
+    nuxt.hook("generate:before", () => {
+        handleStaticGeneration(nuxt, providers)
+    })
 }
 
 function handleStaticGeneration(nuxt: any, providers: ModuleProvider[]) {
-    const { dir } = nuxt.options.generate
-    const generators = {}
-
-    function findGenerator(imageProvider) {
-        if (!generators[imageProvider]) {
-            const matchedProvider = providers.find(p => p.name == imageProvider);
-            if (matchedProvider) {
-                const { generator } = matchedProvider.provider(matchedProvider.options);
-                if (typeof generator === "function") {
-                    generators[imageProvider] = generator();
-                }
-            }
-        }
-        if (!generators[imageProvider]) {
-            throw new Error(`"${imageProvider}" provider does not have proper generator`)
-        }
-        return generators[imageProvider]
-    }
+    const { dir: generateDir } = nuxt.options.generate
+    const streamPipeline = util.promisify(require('stream').pipeline)
+    const downloadList = {}
 
     // Generate single image
-    async function generateImage(image) {
-        const imagePath = dir + image
-        const [_, imageProvider, imageUrl] = image.match(/\/_image\/(\w+)(\/.*)/)
+    async function generateImage({ url, staticUrl }) {
         try {
-            const imageGenerator = findGenerator(imageProvider);
-            const data = await imageGenerator(imageUrl)
-            await fs.ensureDir(path.dirname(imagePath))
-            await fs.writeFile(imagePath, data, "binary")
-            logger.success("Generated image " + image)
+            const response = await fetch(url)
+            if (!response.ok) throw new Error(`unexpected response ${response.statusText}`)
+            await streamPipeline(response.body, fs.createWriteStream(path.join(generateDir, staticUrl)))
+            logger.success("Generated image " + staticUrl)
         } catch (error) {
             logger.error(error.message)
         }
     }
 
-    nuxt.hook('generate:page', async (page) => {
-        const images = page.html.match(/\/_image[^\"\s]+/g)
-        await Promise.all(images.map(generateImage))
+    nuxt.hook('vue-renderer:ssr:templateParams', (templateParams, renderContext) => {
+        const { staticImages = [] } = renderContext
+        staticImages.map(({ url, staticUrl }) => {
+            downloadList[url] = staticUrl;
+        })
+    })
+
+    nuxt.hook('generate:done', async () => {
+        const host = 'http://localhost:' + nuxt.server.listeners[0].port
+        
+        try { await fs.mkdir(path.join(generateDir, '_image')) } catch {}
+
+        const downloads = Object.entries(downloadList)
+            .map(([url, staticUrl]) => generateImage({
+                url: host + url,
+                staticUrl
+            }))
+        await Promise.all(downloads)
+        
     })
 }
 

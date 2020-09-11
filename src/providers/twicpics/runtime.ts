@@ -36,6 +36,8 @@ export default <RuntimeProvider> {
     })
     
     const operationsString = operations.join('/')
-    return options.baseURL + src + '?twic=v1/' + operationsString
+    return {
+      url: options.baseURL + src + '?twic=v1/' + operationsString
+    }
   }
 }

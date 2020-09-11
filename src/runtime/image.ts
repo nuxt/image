@@ -1,4 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from '../types'
+import hash from 'hash.js'
 
 interface ImagePreset {
   name: string
@@ -17,7 +18,15 @@ interface CreateImageOptions {
   defaultProvider: string
 }
 
-export function createImage({  providers, defaultProvider, presets }: CreateImageOptions) {
+function getExtension(url: string) {
+  return url.split(/[#?]/)[0].split('.').pop().trim();
+}
+
+function generateUnique(url) {
+  return hash.sha256().update(url).digest('hex')
+}
+
+export function createImage(context, { providers, defaultProvider, presets }: CreateImageOptions) {
   const presetMap = presets.reduce((map, preset) => {
     map[preset.name] = preset
     return map
@@ -46,11 +55,25 @@ export function createImage({  providers, defaultProvider, presets }: CreateImag
     }
 
     const { provider, defaults } = p
-    return provider.generateURL(
+    const { url, isStatic } = provider.generateURL(
       src,
       presetMap[options.preset] ? presetMap[options.preset].modifiers : modifiers,
       { ...defaults, ...options }
     )
+
+    if (context.isStatic && isStatic) {
+      const staticUrl = '_image/' + generateUnique(url) + '.' + (modifiers.format || getExtension(src))
+      if (process.server) {
+        context.ssrContext.staticImages = context.ssrContext.staticImages || []
+        context.ssrContext.staticImages.push({
+          url,
+          staticUrl
+        })
+      }
+      return staticUrl;
+    }
+
+    return url;
   }
 
   presets.forEach(preset => {
