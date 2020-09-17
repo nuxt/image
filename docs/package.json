@@ -5,15 +5,17 @@
   "author": "NuxtJS",
   "repository": "nuxt/image",
   "scripts": {
-    "dev": "nuxt",
-    "generate": "nuxt generate",
-    "start": "nuxt start"
+    "dev": "nuxt-ts",
+    "generate": "nuxt-ts generate",
+    "start": "nuxt-ts start"
   },
   "dependencies": {
-    "@nuxt/content-theme-docs": "^0.5.3",
+    "@nuxt/content-theme-docs": "^0.6.0",
+    "@nuxt/typescript-runtime": "^2.0.0",
     "nuxt-edge": "^2.14.1-26608350.3204f301"
   },
   "devDependencies": {
+    "@nuxt/typescript-build": "^2.0.3",
     "nuxt-ackee": "^2.0.0"
   }
 }

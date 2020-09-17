@@ -1,7 +1,7 @@
 ---
-title: Image Component
-description: 'List of available props for image component'
-position: 4
+title: (WIP) Picture Component
+description: 'List of available props for picture component'
+position: 5
 category: Props
 ---
 
@@ -14,8 +14,6 @@ Path to image file. `src` sould be in form of absolute path and starts with `/`.
     <nuxt-image :src="src" ... />
 </template>
 ```
-
-The `src` has other capabilities in `nuxt-image`, you can provide provider and preset for the image right inside the `src` property.
 
 ### Provider
 

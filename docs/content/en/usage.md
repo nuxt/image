@@ -5,116 +5,27 @@ position: 2
 category: Guide
 ---
 
-## simple usage
+## Basic
 
-```vue{}[index.vue]
-<template>
-  <nuxt-image src="/path/to/image">
-</template>
-```
-
-## provider
-
-Using specific provider
+Using image component is just easy as using `<img>` tag. Just define `src`, `width` and `height` and your image will be there for you.
 
 <code-group>
   <code-block label="index.vue" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="twicpics:/path/to/image">
+    <nuxt-image src="/nuxt-icon.png" width="50px" height="50px" />
   </template>
   ```
 
   </code-block>
-  <code-block label="nuxt.config.js">
+  <code-block label="Preview">
 
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      providers: {
-        local: {},
-        twicpics: {
-          baseURL: 'https://i5acur1u.twic.pics/'
-        }
-      }
-    }
-  }
-  ```
+  <div class="text-center p-4 bg-gray-800 rounded-b-md">
+    <nuxt-image src="/nuxt-icon.png" width="50px" height="50px" />
+  </div>
+
   </code-block>
 </code-group>
 
-
-## presets
-
-Using specific provider
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="+small:/path/to/image">
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'small',
-          modifiers: {
-            contain: '50x50'
-          }
-        }
-      ]
-    }
-  }
-  ```
-  </code-block>
-</code-group>
-
-
-
-## provider + presets
-
-Using specific provider
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="twicpics+small:/path/to/image">
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'small',
-          modifiers: {
-            contain: '50x50'
-          }
-        }
-      ],
-      providers: {
-        local: {},
-        twicpics: {
-          baseURL: 'https://i5acur1u.twic.pics/'
-        }
-      }
-    }
-  }
-  ```
-  </code-block>
-</code-group>
+Defining `width` and `height` is required, without fixed size your page will face [layout shifting](https://web.dev/cls/) that is bad for user experience. Don't worry there is a [legacy](/nuxt-image#legacy) prop to ignore this requirement.  

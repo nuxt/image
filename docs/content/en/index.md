@@ -4,7 +4,8 @@ description: ''
 position: 1
 category: ''
 features:
-  - Lazy loading
+  - Full Static Support
+  - Lazy Loading
   - CDN Support
 ---
 
