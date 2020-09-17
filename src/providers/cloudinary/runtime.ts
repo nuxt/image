@@ -42,7 +42,7 @@ export default <RuntimeProvider> {
     
     const operationsString = operations.join(',')
     return {
-      url: options.baseURL + '/' + operationsString + src
+      url: options.baseURL + operationsString + src
     }
   }
 }
