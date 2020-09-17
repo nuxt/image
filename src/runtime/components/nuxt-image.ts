@@ -75,12 +75,14 @@ export default {
                     }
                 })
             }
-            if ((!Array.isArray(sizes) || !sizes.length) && !this.legacy) {
+            if ((!Array.isArray(sizes) || !sizes.length)) {
                 sizes = [{
-                    width: this.width
+                    breakpoint: '',
+                    width: this.width ? parseInt(this.width, 10) : undefined,
+                    height: this.height ? parseInt(this.height, 10) : undefined,
                 }]
             }
-            sizes = sizes.map(size => ({ ...size, url: this.generateSizedImage(size.width) }))
+            sizes = sizes.map(size => ({ ...size, url: this.generateSizedImage(size.width, size.height) }))
             
             return sizes;
         },
@@ -91,10 +93,10 @@ export default {
             return this.src
         },
         generatedSrcset() {
-            return this.sizes.map(({ width, url }) => `${url} ${width}w`).join(', ')
+            return this.sizes.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
         },
         generatedSizes() {
-            return this.sizes.map(({ width, breakpoint }) => `${breakpoint}${width}px`).reverse().join(', ')
+            return this.sizes.map(({ width, breakpoint }) => width ? `${breakpoint}${width}` : breakpoint).reverse().join(', ')
         }
     },
     beforeDestroy () {
@@ -124,7 +126,7 @@ export default {
         })
 
         const originalImage = h('img', {
-            class: ['__nuxt-image-abs', this.loaded ? 'visible' : ''],
+            class: ['__nuxt-image-abs'],
             attrs: {
                 src: this.loading ? this.generatedSrc : undefined,
                 srcset: this.loading ? this.generatedSrcset : undefined,
@@ -156,9 +158,9 @@ export default {
 
         const wrapper = h('div', {
             style: {
-                width: this.width ? `${this.width}px` : undefined
+                width: this.width ? this.width : undefined
             },
-            class: '__nuxt-image',
+            class: ['__nuxt-image', this.loaded ? 'visible' : ''],
         }, [bluryImage, originalImage, noScript, placeholder])
 
         return wrapper;
@@ -166,7 +168,7 @@ export default {
     methods: {
         renderNonOptimizedImage(h) {
             return h('img', {
-                class: '__nuxt-image-abs visible',
+                class: '',
                 attrs: {
                     src: this.generatedSrc,
                     srcset: this.generatedSrcset,
@@ -175,9 +177,10 @@ export default {
                 }
             })
         },
-        generateSizedImage(width: number) {
+        generateSizedImage(width: number, height: number) {
             const image = this.$img(this.src, {
-                width: width,
+                width,
+                height,
                 format: this.format,
                 size: this.size,
                 ...this.operations

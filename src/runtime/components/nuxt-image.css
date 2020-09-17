@@ -1,7 +1,7 @@
 .__nuxt-image {
   position: relative;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.05);
+  display: inline-block;
 }
 .__nuxt-image img {
   position: absolute;
@@ -9,9 +9,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-}
-.__nuxt-image-rel {
-
+  margin: 0;
+  transition: opacity 800ms ease 0ms;
 }
 .__nuxt-image-rel.full {
   width: 100%;
@@ -20,12 +19,13 @@
 .__nuxt-image-rel.blur {
   filter: blur(25px);
   transform: scale(1.1);
+  opacity: 1;
 }
 
-.__nuxt-image-abs {
+.__nuxt-image-abs,
+.__nuxt-image.visible .__nuxt-image-rel.blur {
   opacity: 0;
-  transition: opacity 800ms ease 0ms;
 }
-.__nuxt-image-abs.visible {
+.__nuxt-image.visible .__nuxt-image-abs {
   opacity: 1;
 }
