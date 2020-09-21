@@ -13,7 +13,7 @@ export default {
             return this.sizes.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
         },
         generatedSizes() {
-            return this.sizes.map(({ width, media }) => width ? `${media} ${width}` : media).reverse().join(', ')
+            return this.sizes.map(({ width, media }) => width ? `${media} ${width}px` : media).reverse().join(', ')
         },
         generatedSrc() {
             if (this.sizes.length) {
