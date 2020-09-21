@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import NuxtImage from '~image/runtime/components/nuxt-image' 
+import NuxtPicture from '~image/runtime/components/nuxt-picture' 
 import { createImage } from '~image/runtime/image' 
  
 <%=Object.entries(options.imports).map(([name, path]) => `import ${name} from '${path}'`).join('\n')%>
@@ -16,6 +17,7 @@ providers['<%= provider.name %>'] = {
 <% } %>
 
 Vue.component(NuxtImage.name, NuxtImage)
+Vue.component(NuxtPicture.name, NuxtPicture)
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
