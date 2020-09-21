@@ -65,11 +65,11 @@ export default {
             if (typeof this.sets === 'string') {
                 sizes = this.sets
                     .split(',')
-                    .map(set => set.match(/((\d+)\:)?(\d+)\s*(\((\w+)\))?/))
+                    .map(set => set.match(/((\d+)\:)?(\d+)\s*(\((\w+)\))?/)) // match: 100:100 (webp)
                     .filter(match => !!match)
-                    .map((match) => ({
+                    .map((match, index) => ({
                         width: match[3],
-                        breakpoint: match[2],
+                        breakpoint: match[2] || (index > 0 && match[3]),
                         format: match[5] || this.format
                     }))
             }
@@ -81,7 +81,7 @@ export default {
             }
             sizes = sizes.map(size => ({
                 ...size,
-                media: size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
+                media: size.media || size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
                 format: size.format || this.format,
                 url: this.generateSizedImage(size.width, size.height, size.format || this.format)
             }))
