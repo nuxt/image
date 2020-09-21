@@ -205,61 +205,63 @@ Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy lo
 
 ## `sets`
 
-The `srcset` attribute specifies the URL of the image to use in different situations. With `srcset`, the browser does the work of figuring out which image is best to load and render.  
-In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically create from image `src`.
+The `sets` attribute specifies the URL of the image to use in different situations. With `sets`, the browser does the work of figuring out which image is best to load and render.  
+In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically create from image `src`.  
 
-The `sets` prop accepts array of sizes or equivalent string.
+A set is consists of `width` and `breakpoint` or `media`: 
+- `width`: Width of generated image for this set
+- `breakpoint`: Minimum width of viewport to show the image
+- `media`: Custom media query for the set, using `media` will override `breakpoint`
 
-<code-group>
-  <code-block label="String Prop" active>
+Note that you should define set in the ascending order of their width or break point.
 
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image sets="300,300:600,600:900" ... />
-    <!--               |   |   |   |   | -->
-    <!--------- width -^   |   |   |   | -->
-    <!--                   |   |   |   | -->
-    <!------- breakpoint --^   |   |   | -->
-    <!---------------- width --^   |   | -->
-    <!--                           |   | -->
-    <!--------------- breakpoint --^   | -->
-    <!------------------------ width --^ -->
-  </template>
-  ```
+### Simple string formatted usage
+I this case you should create a comma separated list of sizes and breakpoints. Separate `breakpoint` and `width` of a set with `:`.
 
-  </code-block>
-  <code-block label="Array Prop">
+```vue{}[index.vue]
+<template>
+  <nuxt-image sets="300,300:600,600:900" ... />
+  <!--               |   |   |   |   | -->
+  <!--------- width -^   |   |   |   | -->
+  <!--                   |   |   |   | -->
+  <!------- breakpoint --^   |   |   | -->
+  <!---------------- width --^   |   | -->
+  <!--                           |   | -->
+  <!--------------- breakpoint --^   | -->
+  <!------------------------ width --^ -->
+</template>
+```
 
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image :sets="sets" ... />
-  </template>
+### Advances array formatted usage
+Using array will help you to create custom media queries of different sets and have more conrtol on different viewport sizes.
 
-  <script>
-  export default {
-    data() {
-      return {
-        sets: [
-          {
-            width: 300
-          },
-          {
-            breakpoint: 300,
-            width: 600
-          },
-          {
-            breakpoint: 600,
-            width: 900
-          }
-        ]
-      }
+```vue{}[index.vue]
+<template>
+  <nuxt-image :sets="sets" ... />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      sets: [
+        {
+          width: 300
+        },
+        {
+          breakpoint: 300,
+          width: 600
+        },
+        {
+          media: "(min-width: 600px)", // same as breakpoint: 600
+          width: 900
+        }
+      ]
     }
   }
-  </script>
-  ```
-
-  </code-block>
-</code-group>
+}
+</script>
+```
 
 ## `alt`
 
