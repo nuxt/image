@@ -18,12 +18,15 @@ interface CreateImageOptions {
   defaultProvider: string
 }
 
-function getExtension(url: string) {
-  return url.split(/[#?]/)[0].split('.').pop().trim();
+function getFile(url: string) {
+  const [name, extension] = url.split(/[\?#]/).shift().split('/').pop().split('.');
+  return {
+    name, extension
+  }
 }
 
 function generateUnique(url) {
-  return hash.sha256().update(url).digest('hex')
+  return hash.sha256().update(url).digest('hex').substr(0, 6)
 }
 
 export function createImage(context, { providers, defaultProvider, presets }: CreateImageOptions) {
@@ -62,7 +65,8 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
     )
 
     if (!context.isDev && context.isStatic && isStatic) {
-      const staticUrl = '_image/' + generateUnique(url) + '.' + (modifiers.format || getExtension(src))
+      const { name, extension } = getFile(src);
+      const staticUrl = '_image/' + name + '-' + generateUnique(url) + '.' + (modifiers.format || extension)
       if (process.server) {
         context.ssrContext.staticImages = context.ssrContext.staticImages || []
         context.ssrContext.staticImages.push({
