@@ -69,21 +69,21 @@ export default {
                     .filter(match => !!match)
                     .map((match) => ({
                         width: match[3],
-                        breakpoint: match[2] ? `(min-width: ${match[2]}px)` : '',
+                        breakpoint: match[2],
                         format: match[5] || this.format
                     }))
             }
             if ((!Array.isArray(sizes) || !sizes.length)) {
                 sizes = [{
-                    media: '',
                     width: this.width ? parseInt(this.width, 10) : undefined,
                     height: this.height ? parseInt(this.height, 10) : undefined,
-                    format: this.format
                 }]
             }
             sizes = sizes.map(size => ({
                 ...size,
-                url: this.generateSizedImage(size.width, size.height, size.format)
+                media: size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
+                format: size.format || this.format,
+                url: this.generateSizedImage(size.width, size.height, size.format || this.format)
             }))
             
             return sizes;
