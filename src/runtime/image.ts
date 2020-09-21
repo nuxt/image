@@ -61,7 +61,7 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
       { ...defaults, ...options }
     )
 
-    if (context.isStatic && isStatic) {
+    if (!context.isDev && context.isStatic && isStatic) {
       const staticUrl = '_image/' + generateUnique(url) + '.' + (modifiers.format || getExtension(src))
       if (process.server) {
         context.ssrContext.staticImages = context.ssrContext.staticImages || []
