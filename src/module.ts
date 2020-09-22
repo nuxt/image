@@ -1,12 +1,11 @@
 import path from 'path'
-import hash from 'hasha'
-import fetch from 'node-fetch'
 import fs from 'fs-extra'
-import util from 'util'
 import { ModuleOptions, ProviderFactory } from './types'
-import { logger } from './utils'
+import { downloadImage, getFileExtension, hashGenerator, logger, tryRequire } from './utils'
 
 const { name, version } = require('../package.json')
+
+const hash = hashGenerator()
 
 interface ModuleProvider {
     name: string,
@@ -119,49 +118,42 @@ async function ImageModule (moduleOptions) {
 }
 
 function handleStaticGeneration(nuxt: any, providers: ModuleProvider[]) {
-    const { dir: generateDir } = nuxt.options.generate
-    const streamPipeline = util.promisify(require('stream').pipeline)
-    const downloadList = {}
+    const staticImages = {} // url ~> hash
 
-    // Generate single image
-    async function generateImage({ url, staticUrl }) {
-        try {
-            const response = await fetch(url)
-            if (!response.ok) throw new Error(`unexpected response ${response.statusText}`)
-            await streamPipeline(response.body, fs.createWriteStream(path.join(generateDir, staticUrl)))
-            logger.success("Generated image " + staticUrl)
-        } catch (error) {
-            logger.error(error.message)
+    nuxt.hook('vue-renderer:ssr:prepareContext', renderContext => {
+        renderContext.mapImage = ({ url, isStatic, format, src }) => {
+            if (!isStatic) {
+                return url
+            }
+            if (!staticImages[url]) {
+                format = format || getFileExtension(src)
+                staticImages[url] = '_image/' + hash(url) + '.' + format
+            }
+            return staticImages[url]
         }
-    }
-
-    nuxt.hook('vue-renderer:ssr:templateParams', (templateParams, renderContext) => {
-        const { staticImages = [] } = renderContext
-        staticImages.map(({ url, staticUrl }) => {
-            downloadList[url] = staticUrl;
-        })
     })
 
     nuxt.hook('generate:done', async () => {
-        const host = 'http://localhost:' + nuxt.server.listeners[0].port
+        const { port } = nuxt.server.listeners[0]
+        const { dir: generateDir } = nuxt.options.generate
+        const host = 'http://localhost:' + port
         
         try { await fs.mkdir(path.join(generateDir, '_image')) } catch {}
 
-        const downloads = Object.entries(downloadList)
-            .map(([url, staticUrl]) => generateImage({
-                url: host + url,
-                staticUrl
-            }))
+        const downloads = Object.entries(staticImages)
+            .map(([url, name]) => {
+                if (!url.startsWith('http')) {
+                    url = host + url
+                }
+                return downloadImage({
+                    url,
+                    name,
+                    outDir: generateDir
+                })
+            })
         await Promise.all(downloads)
         
     })
-}
-
-function tryRequire(id) {
-    try {
-        const m = require(id)
-        return m.default || m
-    } catch(_err) {}
 }
 
 ImageModule.meta = { name, version }

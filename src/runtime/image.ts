@@ -1,5 +1,4 @@
 import { RuntimeProvider, ImageModifiers } from '../types'
-import hash from 'hash.js'
 
 interface ImagePreset {
   name: string
@@ -18,15 +17,19 @@ interface CreateImageOptions {
   defaultProvider: string
 }
 
-function getFile(url: string) {
-  const [name, extension] = url.split(/[\?#]/).shift().split('/').pop().split('.');
-  return {
-    name, extension
+function processSource(src: string) {
+  if (!src.includes(':')) {
+    return { src }
   }
-}
+  
+  const [srcConfig, ...rest] = src.split(':')
+  const [provider, preset] = srcConfig.split('+')
 
-function generateUnique(url) {
-  return hash.sha256().update(url).digest('hex').substr(0, 6)
+  return {
+    src: rest.join(':'),
+    provider,
+    preset
+  }
 }
 
 export function createImage(context, { providers, defaultProvider, presets }: CreateImageOptions) {
@@ -34,47 +37,48 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
     map[preset.name] = preset
     return map
   }, {})
-  function image(src: string, modifiers: ImageModifiers, options: any = {}) {
-    if (src.includes(':')) {
-      const [srcConfig, ...rest] = src.split(':')
-      src = rest.join(':')
-      const [provider, preset] = srcConfig.split('+')
-
-      options.provider = provider || options.provider
-      options.preset = preset || options.preset
-    }
+  
+  function image(source: string, modifiers: ImageModifiers, options: any = {}) {
+    const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
+    const provider = providers[sourceProvider || options.provider || defaultProvider]
+    const preset = sourcePreset || options.preset
 
     if (!src || src[0] !== '/') {
       throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
     }
     
-    const p = providers[options.provider || defaultProvider]
-    if (!p) {
+    if (!provider) {
       throw new Error('Unsupported provided ' + options.provider)
     }
 
-    if (options.preset && !presetMap[options.preset]) {
-      throw new Error('Unsupported preset ' + options.preset)
+    if (preset && !presetMap[preset]) {
+      throw new Error('Unsupported preset ' + preset)
     }
 
-    const { provider, defaults } = p
-    const { url, isStatic } = provider.generateURL(
+    const { url: providerUrl, isStatic } = provider.provider.generateURL(
       src,
       presetMap[options.preset] ? presetMap[options.preset].modifiers : modifiers,
-      { ...defaults, ...options }
+      { ...provider.defaults, ...options }
     )
-
-    if (!context.isDev && context.isStatic && isStatic) {
-      const { name, extension } = getFile(src);
-      const staticUrl = '_image/' + name + '-' + generateUnique(url) + '.' + (modifiers.format || extension)
-      if (process.server) {
-        context.ssrContext.staticImages = context.ssrContext.staticImages || []
-        context.ssrContext.staticImages.push({
-          url,
-          staticUrl
-        })
-      }
-      return staticUrl;
+    
+    const nuxtState = context.nuxtState || context.ssrContext.nuxt
+    nuxtState.images = nuxtState.images || {}
+    console.log(Object.keys(context.ssrContext));
+    
+    let url = providerUrl
+    if (nuxtState.images[url]) {
+      // Hydration with hash
+      url = nuxtState.images[url]
+    } else if (context.ssrContext && typeof context.ssrContext.mapImage === 'function') {
+       // Full Static
+       const originalURL = url
+       url = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
+       
+       if (url) {
+          nuxtState.images[providerUrl] = url
+       } else {
+          url = originalURL
+       }
     }
 
     return url;
