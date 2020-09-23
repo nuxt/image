@@ -1,227 +1,38 @@
 ---
-title: (WIP) Picture Component
-description: 'List of available props for picture component'
+title: Picture Component
+description: 'Picture component'
 position: 5
-category: Props
+category: Componets
 ---
 
-## `src`
+If you want to use modern and optimized formats like `webp` or `avif` and support browsers like `IE` or `Safari` you should use `nuxt-picture` component. `nuxt-picture` component is based on HTML `<picture>` tag, this component is designed to support modern formats and improve browser compatibility at the same time.  
 
-Path to image file. `src` sould be in form of absolute path and starts with `/`.
+The usage of `nuxt-picture` is same as `nuxt-picture`, with a little differences:
 
-```vue
-<template>
-    <nuxt-image :src="src" ... />
-</template>
-```
+- When you use moders formats like `webp` in the component, a fallback image with `jpeg` format will generated and uses a fallback images for old browsers.
 
-### Provider
-
-Nuxt image module will allow you to modify and serve your images using cloud services like coudinary. In order to use a provider you should:
-1. Define provider and its option in `nuxt.config`.
-2. Specify providers name in `nuxt-image` component
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
-      }
-    }
-  }
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
-  </div>
-
-  </code-block>
-</code-group>
-
-<!-- TODO: multiple providers -->
-<!-- TODO: default provider -->
-
-
-### Preset
-
-Presets are predefined sets of image modifiers that can be used create unified form of images in your projects. You can write your presets inside `nuxt.config` and then use them in `nuxt-image`.
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="50px" height="50px" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'jpg-cover',
-          modifiers: {
-            size: 'cover',
-            format: 'jpg',
-            width: 300,
-            height: 300
-          }
-        }
-      ]
-    }
-  }
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="150px" height="150px" />
-  </div>
-
-  </code-block>
-</code-group>
-
-
-
-### Provider + Presets
-
-As you may notice providers and presets has a different in their usage, and it is possible to use both provider and preset at the same time
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'jpg-cover',
-          modifiers: {
-            size: 'cover',
-            format: 'jpg',
-            width: 300,
-            height: 300
-          }
-        }
-      ],
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
-      }
-    }
-  }
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
-  </div>
-
-  </code-block>
-</code-group>
-
-## `legacy`
-
-Using `nuxt-image` you should provider `width` and `height` for the component. These values are used to optimize image size and prevent [Cumulative Layout Shift](https://web.dev/cls/). But there are situation that we don't want to specify with and height for image. In this situations you can use `legacy` prop.  
-
-Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy loading.
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'jpg-cover',
-          modifiers: {
-            size: 'cover',
-            format: 'jpg',
-            width: 300,
-            height: 300
-          }
-        }
-      ],
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
-      }
-    }
-  }
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image legacy src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
-  </div>
-
-  </code-block>
-</code-group>
-
-## `sets`
-
-The `srcset` attribute specifies the URL of the image to use in different situations. With `srcset`, the browser does the work of figuring out which image is best to load and render.  
-In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically create from image `src`.
-
-The `sets` prop accepts array of sizes or equivalent string.
+- In `sets` prop you can define different format for each set. Defining different foramts will help to improve browser compatibity.  
+  - If format does not present in a set it means that the set uses `foramt` props.
+  - If format does not present in a set and `format` props is missing then image format will not change.
 
 <code-group>
   <code-block label="String Prop" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image sets="300,300:600,600:900" ... />
-    <!--               |   |   |   |   | -->
-    <!--------- width -^   |   |   |   | -->
-    <!--                   |   |   |   | -->
-    <!------- breakpoint --^   |   |   | -->
-    <!---------------- width --^   |   | -->
-    <!--                           |   | -->
-    <!--------------- breakpoint --^   | -->
-    <!------------------------ width --^ -->
+    <nuxt-picture sets="300 (webp),300:600 (jpeg),600:900" ... />
+    <!--               |   |  |    |   |    |     |   | -->
+    <!--------- width -^   |  |    |   |    |     |   | -->
+    <!--                   |  |    |   |    |     |   | -->
+    <!------- breakpoint --^  |    |   |    |     |   | -->
+    <!-- format --------------^    |   |    |     |   | -->  
+    <!--                           |   |    |     |   | -->
+    <!---------------- width ------^   |    |     |   | -->
+    <!--------------- breakpoint ------^    |     |   | -->
+    <!--------------------------- format ---^     |   | --> 
+    <!--                                          |   | -->
+    <!---------------- width ---------------------^   | -->
+    <!--------------- breakpoint ---------------------^ -->
   </template>
   ```
 
@@ -230,7 +41,7 @@ The `sets` prop accepts array of sizes or equivalent string.
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image :sets="sets" ... />
+    <nuxt-picture :sets="sets" ... />
   </template>
 
   <script>
@@ -239,11 +50,13 @@ The `sets` prop accepts array of sizes or equivalent string.
       return {
         sets: [
           {
-            width: 300
+            width: 300,
+            format: 'webp'
           },
           {
             breakpoint: 300,
-            width: 600
+            width: 600,
+            format: 'jpeg'
           },
           {
             breakpoint: 600,
@@ -255,97 +68,6 @@ The `sets` prop accepts array of sizes or equivalent string.
   }
   </script>
   ```
-
-  </code-block>
-</code-group>
-
-## `alt`
-
-This prop specifies an alternate text for an image.
-
-## `format`
-
-In case you want to serve images in specific format, use this prop.
-
-```vue{}[index.vue]
-<template>
-  <nuxt-image format="webp" src="/nuxt-icon.png" ... />
-</template>
-```
-
-## `size`
-
-The `size` property specifies the size of the images.  
-There are five standard values you can use with this property.
-
-- `cover`: (default) Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit
-- `contain`: Preserving aspect ratio, contain within both provided dimensions using "letterboxing" where necessary.
-- `fill`: Ignore the aspect ratio of the input and stretch to both provided dimensions.
-- `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
-- `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified.
-
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image size="cover" src="/nuxt-icon.png" width="200px" height="100px" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-  <nuxt-image size="cover" src="/nuxt-icon.png" width="200px" height="100px" />
-  </div>
-
-  </code-block>
-</code-group>
-
-## `operations`
-
-In addition of standard operation, every provider can have their own operation. For example cloudinary supports lots of [transformations](https://cloudinary.com/documentation/image_transformations), Using `operations` prop you can use these transformations.  
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-image
-      src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png"
-      width="300px" 
-      height="169px"
-      :operations="imageOperations"
-    />
-  </template>
-  <script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          r: '0:100'
-        }
-      }
-    }
-  }
-  </script>
-  ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image
-      width="300px" 
-      height="169px"
-      src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" :operations="{r: '0:100'}"
-    />
-    <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
-      Rounding values
-    </a>
-  </div>
 
   </code-block>
 </code-group>
