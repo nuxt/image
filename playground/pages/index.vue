@@ -1,52 +1,47 @@
 <template>
   <div class="flex flex-col">
-    <section>
-      <nuxt-image
-        src="/images/wolfgang-hasselmann-HQIcxyA4cYI-unsplash.jpg"
-        class="background-image"
-        sets="300,900:900,1280:1280"
-      >
-      </nuxt-image>
-      <div class="copyright">
-        <span>Photo by <a href="https://unsplash.com/@wolfgang_hasselmann?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Wolfgang Hasselmann</a> on <a href="https://unsplash.com/t/wallpapers?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
-      </div>
-    </section>
     <div class="container mx-auto flex items-center py-32 flex-wrap">
         <nuxt-image
-          src="/images/wolfgang-hasselmann-esicdctFse0-unsplash.jpg"
+          v-for="image in images"
+          :key="image.src"
+          :src="image.src"
+          :alt="image.alt"
           height="67%"
           sets="640"
           class="w-1/2"
         />
-
-        <nuxt-image
-          src="/images/max-harlynking-_c2on-QNXG0-unsplash.jpg"
-          height="67%"
-          sets="640"
-          class="w-1/2"
-        />
-        
-        <nuxt-image
-          src="/images/andre-lergier-MMS_CBu0ngM-unsplash.jpg"
-          sets="640"
-          height="67%"
-          class="w-1/2"
-        />
-
-        <nuxt-image
-          src="/images/bela-bako-EMx_ih9FTwI-unsplash.jpg"
-          sets="640"
-          height="67%"
-          class="w-1/2"
-        />
-        
       </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  asyncData() {
+    return {
+      images: [
+        {
+          src: "/images/2000px-Aconcagua2016.jpg",
+          alt: "Aconcagua Argentina"
+        },
+        {
+          src: "/images/2000px-Everest_kalapatthar.jpg",
+          alt: "Mount Everest Nepal"
+        },
+        {
+          src: "/images/2000px-Mont-Blanc_from_Planpraz_station.jpg",
+          alt: "Mount Kilimanjaro Tanzania"
+        },
+        {
+          src: "/images/2000px-Mount_Vinson_from_NW_at_Vinson_Plateau_by_Christian_Stangl.jpg",
+          alt: "Vinson Massif Antarctic"
+        },
+        {
+          src: "/images/2000px-Wonder_Lake_and_Denali.jpg",
+          alt: "Denali Alaska"
+        }
+      ]
+    }
+  }
 }
 </script>
 
