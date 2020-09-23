@@ -63,7 +63,6 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
     
     const nuxtState = context.nuxtState || context.ssrContext.nuxt
     nuxtState.images = nuxtState.images || {}
-    console.log(Object.keys(context.ssrContext));
     
     let url = providerUrl
     if (nuxtState.images[url]) {
