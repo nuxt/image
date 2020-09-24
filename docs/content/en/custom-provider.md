@@ -22,9 +22,9 @@ export default function(providerOptions) {
     // Public options to use in runtime
     runtimeOptions: providerOptions,
 
-    // A factory function to create server middleware
+    // A server middleware to optimize images
     // This propery is optional you can omit this if don't need it
-    middleware: () => createServerMiddleware()
+    middleware: createServerMiddleware()
   }
 }
 ```
@@ -32,7 +32,7 @@ export default function(providerOptions) {
 - `providerOptions`: The provider options that defined in `nuxt.config`.
 - `runtime`: The absolute path to runtime file.
 - `runtimeOptions`: Public options to use in runtime. Do not pass any secret info here because these option will use in client side.
-- `middleware`: A factory function to create server middleware.
+- `middleware`: A server middleware to optimize images.
 
 
 ## Provider Runtime:
@@ -87,7 +87,7 @@ export default function(providerOptions) {
   return {
     runtime: require.resolve('./runtime'),
     runtimeOptions: providerOptions,
-    middleware: () => createMiddleware(providerOptions)
+    middleware: createMiddleware(providerOptions)
   }
 }
 ```

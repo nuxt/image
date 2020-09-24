@@ -6,7 +6,7 @@ export default <ProviderFactory>function(providerOptions) {
   return {
     runtime: require.resolve('./runtime'),
     runtimeOptions: providerOptions,
-    middleware: () => createMiddleware(providerOptions)
+    middleware: createMiddleware(providerOptions)
   }
 }
 

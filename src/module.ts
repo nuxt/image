@@ -97,7 +97,7 @@ async function ImageModule (moduleOptions) {
         if (typeof middleware === "function") {
             addServerMiddleware({
                 path: '/_image/' + p.name,
-                handler: middleware()
+                handler: middleware
             })
         }
     }
