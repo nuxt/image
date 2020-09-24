@@ -129,7 +129,7 @@ function handleStaticGeneration(nuxt: any, providers: ModuleProvider[]) {
                 format = format || getFileExtension(src)
                 staticImages[url] = '_image/' + hash(url) + '.' + format
             }
-            return staticImages[url]
+            return nuxt.options.router.base + staticImages[url]
         }
     })
 
@@ -152,7 +152,6 @@ function handleStaticGeneration(nuxt: any, providers: ModuleProvider[]) {
                 })
             })
         await Promise.all(downloads)
-        
     })
 }
 
