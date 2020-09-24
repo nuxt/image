@@ -11,13 +11,15 @@ Complete list of internal providers.
 
 Local provider is an integration of ipx and image module. Local provider is an specific provider that uses for development, optimizing in-project.  
 By default local provider looks `static` dir to find original images, You can change `dir` inside `nuxt.config`.
+The local provider has a chaching stategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using `clearCache` option in provide options. By default this cron job is disabled.
 
 ```js{}[nuxt.config.js]
 export default {
   image: {
     providers: {
       local: {
-        dir: '~/assets/images/local'
+        dir: '~/assets/images/local',
+        clearCache: false
       }
     }
   }

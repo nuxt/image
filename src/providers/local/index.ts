@@ -16,6 +16,9 @@ function createMiddleware(options) {
       adapter: 'fs',
       dir: options.dir
     },
+    cache: {
+      cleanCron: options.clearCache || false,
+    }
   });
   return IPXMiddleware(ipx)
 }

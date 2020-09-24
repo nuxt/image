@@ -26,6 +26,7 @@ export type ProviderServerMiddleware = (req, res, next) => void
 
 export interface LocalOptions {
   dir?: string
+  clearCache?: boolean | string;
 }
 
 export interface GenerateOptions {
