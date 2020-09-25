@@ -1,5 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
+import upath from 'upath'
+
 import { ModuleOptions, ProviderFactory } from './types'
 import { downloadImage, getFileExtension, hashGenerator, logger, tryRequire } from './utils'
 
@@ -87,7 +89,7 @@ async function ImageModule (moduleOptions) {
     for (const p of providers) {
         const { middleware, runtime, runtimeOptions } = p.provider(p.options)
         const importName = 'runtime_' + hash(runtime).substr(0, 8)
-        pluginOptions.imports[importName] = runtime
+        pluginOptions.imports[importName] = upath.normalize(runtime)
         pluginOptions.providers.push({
             name: p.name,
             import: importName,
