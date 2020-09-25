@@ -17,10 +17,6 @@ export default {
             type: Boolean,
             default: false
         },
-        alt: {
-            type: String,
-            default: ''
-        },
         sets: {
             type: [String, Array],
             default: '',
@@ -36,7 +32,32 @@ export default {
         operations: {
             type: Object,
             default: () => ({})
-        }
+        },
+        // `<img>` attrubutes
+        alt: {
+            type: String,
+            default: ''
+        },
+        referrerpolicy: {
+            type: String,
+            default: undefined
+        },
+        usemap: {
+            type: String,
+            default: undefined,
+        },
+        longdesc: {
+            type: String,
+            default: undefined,
+        },
+        ismap: {
+            type: Boolean,
+            default: false
+        },
+        crossorigin: {
+            type: Boolean,
+            default: false
+        },
     },
     data() {
         return {
@@ -60,6 +81,17 @@ export default {
         }
     },
     computed: {
+        imgAttributes() {
+            let alt = this.alt ? this.alt : this.alt.split(/[\?#]/).shift().split('/').pop().split('.').shift();
+            return {
+                alt,
+                referrerpolicy: this.referrerpolicy,
+                usemap: this.usemap,
+                longdesc: this.longdesc,
+                ismap: this.ismap,
+                crossorigin: this.crossorigin,
+            }
+        },
         sizes() {
             let sizes = this.sets;
             if (typeof this.sets === 'string') {
@@ -113,7 +145,18 @@ export default {
         },
         loadOriginalImage() {
             this.loading = true
-        }
+        },
+        renderAttributesToString(attributes = {}) {
+            return Object.entries<string>(attributes)
+                .map(([key, value]) => value ? `${key}="${value}"` : '')
+                .filter(Boolean).join(' ')
+        },
+        renderImgAttributesToString(extraAttributes = {}) {
+            return this.renderAttributesToString({
+                ...this.imgAttributes,
+                ...extraAttributes
+            })
+        },
     },
     beforeDestroy () {
         this.$img.$observer.remove(this.$el)

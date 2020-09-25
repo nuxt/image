@@ -2,10 +2,10 @@ import nuxtImageMixin from './nuxt-image-mixins'
 
 import './nuxt-image.css'
 
-const pictureHTML = ({ generatedSrc, width, height, alt, sizes }) => 
+const pictureHTML = ({ generatedSrc, width, height, renderImgAttributesToString, sizes, renderAttributesToString }) => 
 `<picture>
-${sizes.map(s => `<source srcset="${s.url}"${s.type ? ` type="${s.type}"` : '' }${s.media ? ` media="${s.media}"` : '' }>`).join('\n')}
-<img class="__nim_org" src="${generatedSrc}" width="${width}" height="${height}" alt="${alt}">
+${sizes.map(s => `<source ${renderAttributesToString({ type: s.type, media: s.media, srcset: s.url })}>`).join('\n')}
+<img class="__nim_org" ${renderImgAttributesToString({ src: generatedSrc, width, height })}>
 </picture>
 `
 
@@ -42,9 +42,9 @@ export default {
             class: ['__nim_org'],
             attrs: {
                 src: this.loading ? this.generatedSrc : undefined,
-                alt: this.alt,
                 width: this.width,
                 height: this.height,
+                ...this.imgAttributes,
             },
             on: {
                 load: () => {
@@ -100,7 +100,7 @@ export default {
                     src: this.generatedSrc,
                     srcset: this.generatedSrcset,
                     sizes: this.generatedSizes,
-                    alt: this.alt
+                    ...this.imgAttributes,
                 }
             });
             return h('picture', {}, [

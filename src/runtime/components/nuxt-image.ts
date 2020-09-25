@@ -2,8 +2,8 @@ import nuxtImageMixin from './nuxt-image-mixins'
 
 import './nuxt-image.css'
 
-const imageHTML = ({ generatedSrc, generatedSrcset, generatedSizes, width, height, alt }) => 
-`<img class="__nim_org" src="${generatedSrc}" srcset="${generatedSrcset}" sizes="${generatedSizes}" width="${width}" height="${height}" alt="${alt}" >`
+const imageHTML = ({ generatedSrc, generatedSrcset, generatedSizes, width, height, renderImgAttributesToString }) => 
+`<img class="__nim_org" ${renderImgAttributesToString({ src: generatedSrc, srcset: generatedSrcset, sizes: generatedSizes, width, height })} >`
 
 export default {
     name: "NuxtImage",
@@ -13,7 +13,7 @@ export default {
             return this.sizes.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
         },
         generatedSizes() {
-            return this.sizes.map(({ width, media }) => width ? `${media} ${width}px` : media).reverse().join(', ')
+            return this.sizes.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).reverse().join(', ')
         },
         generatedSrc() {
             if (this.sizes.length) {
@@ -40,9 +40,9 @@ export default {
                 src: this.loading ? this.generatedSrc : undefined,
                 srcset: this.loading ? this.generatedSrcset : undefined,
                 sizes: this.loading ? this.generatedSizes : undefined,
-                alt: this.alt,
                 width: this.width,
                 height: this.height,
+                ...this.imgAttributes,
             },
             on: {
                 load: () => {
@@ -80,7 +80,8 @@ export default {
                     src: this.generatedSrc,
                     srcset: this.generatedSrcset,
                     sizes: this.generatedSizes,
-                    alt: this.alt
+                    alt: this.alt,
+                    ...this.imgAttributes
                 }
             })
         }
