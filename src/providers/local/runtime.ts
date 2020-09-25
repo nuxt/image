@@ -13,10 +13,9 @@ export default <RuntimeProvider> {
       operations.push(`h_${modifiers.height}${size}`)
     }
 
-
     const operationsString = operations.length ? operations.join(',') : '_'
     return {
-      url: `/_image/local/${modifiers.format || '_'}/${operationsString}${src}`,
+      url: `/_image/local/${modifiers.format || '_'}/${operationsString}/${src.replace(/^\//, '')}`,
       isStatic: true
     };
   }

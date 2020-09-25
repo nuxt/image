@@ -20,7 +20,7 @@ export default {
     return {
       images: [
         {
-          src: "/images/2000px-Aconcagua2016.jpg",
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg",
           alt: "Aconcagua Argentina"
         },
         {

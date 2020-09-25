@@ -13,7 +13,7 @@ export default <ProviderFactory>function(providerOptions) {
 function createMiddleware(options) {
   const ipx = new IPX({
     input: {
-      adapter: 'fs',
+      adapter: 'hybrid',
       dir: options.dir
     },
     cache: {

@@ -18,7 +18,7 @@ interface CreateImageOptions {
 }
 
 function processSource(src: string) {
-  if (!src.includes(':')) {
+  if (!src.includes(':') || src.match('^https?:\/\/')) {
     return { src }
   }
   
@@ -43,7 +43,7 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
     const provider = providers[sourceProvider || options.provider || defaultProvider]
     const preset = sourcePreset || options.preset
 
-    if (!src || src[0] !== '/') {
+    if (!src.match(/^(https?:\/\/|\/.*)/)) {
       throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
     }
     
@@ -61,7 +61,8 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
       { ...provider.defaults, ...options }
     )
     
-    const nuxtState = context.nuxtState || context.ssrContext.nuxt
+    const { data } = context.nuxtState || context.ssrContext.nuxt
+    const nuxtState = data[0]
     nuxtState.images = nuxtState.images || {}
     
     let url = providerUrl
