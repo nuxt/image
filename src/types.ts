@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    __NUXT_JSONP_CACHE__: { [key: string]: any }
+  }
+}
+
 export interface ModuleOptions {
     defaultProvider: string;
     presets: ImagePreset[],

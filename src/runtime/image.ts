@@ -60,22 +60,33 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
       presetMap[options.preset] ? presetMap[options.preset].modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
-    
-    const { data } = context.nuxtState || context.ssrContext.nuxt
-    const nuxtState = data[0]
-    nuxtState.images = nuxtState.images || {}
+
+    if (typeof window !== "undefined" && window.__NUXT_JSONP_CACHE__) {
+      const jsonPData = window.__NUXT_JSONP_CACHE__[context.route.path].data[0]
+      if (jsonPData.images[providerUrl]) {
+        // Hydration with hash
+        return jsonPData.images[providerUrl]
+      }
+      // return original source on cache fail in full static mode
+      return src
+    } 
+
+    const nuxtState = context.nuxtState || context.ssrContext.nuxt
+    const data = nuxtState.data[0]
+
+    data.images = data.images || {}
     
     let url = providerUrl
-    if (nuxtState.images[url]) {
+    if (data.images[url]) {
       // Hydration with hash
-      url = nuxtState.images[url]
+      url = data.images[url]
     } else if (context.ssrContext && typeof context.ssrContext.mapImage === 'function') {
        // Full Static
        const originalURL = url
        url = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
        
        if (url) {
-          nuxtState.images[providerUrl] = url
+          data.images[providerUrl] = url
        } else {
           url = originalURL
        }
