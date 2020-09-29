@@ -4,15 +4,15 @@ description: ''
 position: 1
 category: ''
 features:
-  - Full Static Support
   - Lazy Loading
+  - Full Static Support
   - CDN Support
 ---
 
 <img src="/preview.png" class="light-img" />
 <img src="/preview-dark.png" class="dark-img" />
 
-Image module for [NuxtJS](https://nuxtjs.org).
+Optimised images for [NuxtJS](https://nuxtjs.org).
 
 ## Features
 

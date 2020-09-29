@@ -5,7 +5,7 @@ export default theme({
   env: {
     GITHUB_TOKEN: process.env.GITHUB_TOKEN
   },
-  loading: { color: '#ff4785' },
+  loading: { color: '#00DC82' },
   buildModules: [
     '@nuxt/typescript-build',
     // https://github.com/bdrtsky/nuxt-ackee
