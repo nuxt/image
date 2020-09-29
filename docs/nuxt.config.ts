@@ -39,17 +39,17 @@ export default theme({
     ],
     providers: {
       local: {
-        dir: path.join(__dirname, 'static'),
+        dir: path.join(__dirname, 'static')
       },
       cloudinary: {
         baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
       },
-      random: __dirname + "/plugins/random"
+      random: __dirname + '/plugins/random'
     }
   },
   build: {
     transpile: [
-      __dirname + "/plugins/"
+      __dirname + '/plugins/'
     ]
   }
 })

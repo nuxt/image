@@ -1,7 +1,7 @@
 import { RuntimeProvider, ImageModifiers } from '../../types'
 
 export default <RuntimeProvider> {
-  generateURL(src: string, modifiers: ImageModifiers, options: any) {
+  generateURL (src: string, modifiers: ImageModifiers) {
     const operations = []
 
     const size = modifiers.size ? `_${modifiers.size}` : ''
@@ -17,6 +17,6 @@ export default <RuntimeProvider> {
     return {
       url: `/_image/local/${modifiers.format || '_'}/${operationsString}/${src.replace(/^\//, '')}`,
       isStatic: true
-    };
+    }
   }
 }

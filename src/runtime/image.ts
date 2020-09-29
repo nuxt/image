@@ -17,11 +17,11 @@ interface CreateImageOptions {
   defaultProvider: string
 }
 
-function processSource(src: string) {
-  if (!src.includes(':') || src.match('^https?:\/\/')) {
+function processSource (src: string) {
+  if (!src.includes(':') || src.match('^https?://')) {
     return { src }
   }
-  
+
   const [srcConfig, ...rest] = src.split(':')
   const [provider, preset] = srcConfig.split('+')
 
@@ -32,13 +32,13 @@ function processSource(src: string) {
   }
 }
 
-export function createImage(context, { providers, defaultProvider, presets }: CreateImageOptions) {
+export function createImage (context, { providers, defaultProvider, presets }: CreateImageOptions) {
   const presetMap = presets.reduce((map, preset) => {
     map[preset.name] = preset
     return map
   }, {})
-  
-  function image(source: string, modifiers: ImageModifiers, options: any = {}) {
+
+  function image (source: string, modifiers: ImageModifiers, options: any = {}) {
     const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
     const provider = providers[sourceProvider || options.provider || defaultProvider]
     const preset = sourcePreset || options.preset
@@ -46,7 +46,7 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
     if (!src.match(/^(https?:\/\/|\/.*)/)) {
       throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
     }
-    
+
     if (!provider) {
       throw new Error('Unsupported provided ' + options.provider)
     }
@@ -57,11 +57,11 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
 
     const { url: providerUrl, isStatic } = provider.provider.generateURL(
       src,
-      presetMap[options.preset] ? presetMap[options.preset].modifiers : modifiers,
+      presetMap[preset] ? presetMap[preset].modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
 
-    if (typeof window !== "undefined" && window.__NUXT_JSONP_CACHE__) {
+    if (typeof window !== 'undefined' && window.__NUXT_JSONP_CACHE__) {
       const jsonPData = window.__NUXT_JSONP_CACHE__[context.route.path].data[0]
       if (jsonPData.images[providerUrl]) {
         // Hydration with hash
@@ -69,33 +69,33 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
       }
       // return original source on cache fail in full static mode
       return src
-    } 
+    }
 
     const nuxtState = context.nuxtState || context.ssrContext.nuxt
     const data = nuxtState.data[0]
 
     data.images = data.images || {}
-    
+
     let url = providerUrl
     if (data.images[url]) {
       // Hydration with hash
       url = data.images[url]
     } else if (context.ssrContext && typeof context.ssrContext.mapImage === 'function') {
-       // Full Static
-       const originalURL = url
-       url = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
-       
-       if (url) {
-          data.images[providerUrl] = url
-       } else {
-          url = originalURL
-       }
+      // Full Static
+      const originalURL = url
+      url = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
+
+      if (url) {
+        data.images[providerUrl] = url
+      } else {
+        url = originalURL
+      }
     }
 
-    return url;
+    return url
   }
 
-  presets.forEach(preset => {
+  presets.forEach((preset) => {
     image[preset.name] = (src) => {
       return image(src, preset.modifiers, {
         provider: preset.provider
@@ -108,47 +108,32 @@ export function createImage(context, { providers, defaultProvider, presets }: Cr
   return image
 }
 
-
-function createObserver() {
-  // @ts-ignore
+function createObserver () {
   const observer = (process.client ? new IntersectionObserver(callback) : {}) as IntersectionObserver
   const elementCallbackMap = {}
-  function callback(entries, imgObserver) {
-      entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-              const lazyImage = entry.target
-              const callback = elementCallbackMap[lazyImage.__unique]
-              if (typeof callback === "function") {
-                  callback()
-              }
-              delete elementCallbackMap[lazyImage.__unique]
-              imgObserver.unobserve(lazyImage)
-          }
-      })
+  function callback (entries, imgObserver) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const lazyImage = entry.target
+        const callback = elementCallbackMap[lazyImage.__unique]
+        if (typeof callback === 'function') {
+          callback()
+        }
+        delete elementCallbackMap[lazyImage.__unique]
+        imgObserver.unobserve(lazyImage)
+      }
+    })
   }
   return {
-      add(target, component, unique) {
-          // add unique id to recognize target
-          target.__unique = unique || target.id || target.__vue__._uid 
-          elementCallbackMap[target.__unique] = component;
-          observer.observe(target)
-      },
-      remove(target) {
-          delete elementCallbackMap[target.__unique]
-          observer.unobserve(target)
-      }
+    add (target, component, unique) {
+      // add unique id to recognize target
+      target.__unique = unique || target.id || target.__vue__._uid
+      elementCallbackMap[target.__unique] = component
+      observer.observe(target)
+    },
+    remove (target) {
+      delete elementCallbackMap[target.__unique]
+      observer.unobserve(target)
+    }
   }
-}
-
-async function readAsDataURI(url: string, host: string, encrypted: boolean) {
-  const _url = url.startsWith('http') ? url : `http${encrypted ? 's' : ''}://${host}$ url}`
-  const http = _url.startsWith('https') ? await import('https') : await import('http')  
-  return await new Promise(async (resolve) => {
-      http.get(_url, (resp) => {
-          resp.setEncoding('base64');
-          let body = "data:" + resp.headers["content-type"] + ";base64,";
-          resp.on('data', (data) => { body += data });
-          resp.on('end', () => resolve(body));
-      }).on('error', (e) => resolve(url))
-  })
 }

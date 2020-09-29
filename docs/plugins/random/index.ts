@@ -1,7 +1,6 @@
-export default function(providerOptions) {
+export default function (providerOptions) {
   return {
     runtime: require.resolve('./runtime'),
     runtimeOptions: providerOptions
   }
 }
-

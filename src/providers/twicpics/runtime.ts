@@ -1,6 +1,6 @@
 import { RuntimeProvider, ImageModifiers } from '../../types'
 
-function getSizeOperator(size) {
+function getSizeOperator (size) {
   if (!size) {
     return 'cover'
   }
@@ -14,15 +14,14 @@ function getSizeOperator(size) {
     case 'cover':
     case 'contain':
     default:
-      return size;
+      return size
   }
 }
 
 export default <RuntimeProvider> {
-  generateURL(src: string, modifiers: ImageModifiers, options: any) {
-    const { width, height, format, size, ...providerModifiers } = modifiers;
+  generateURL (src: string, modifiers: ImageModifiers, options: any) {
+    const { width, height, format, size, ...providerModifiers } = modifiers
     const operations = []
-
 
     if (width || height) {
       operations.push(`${getSizeOperator(size)}=${width || '-'}x${height || '-'}`)
@@ -34,10 +33,10 @@ export default <RuntimeProvider> {
     Object.entries(providerModifiers).forEach(([key, value]) => {
       operations.push(`${key}=${String(value)}`)
     })
-    
+
     const operationsString = operations.join('/')
     return {
-      url: options.baseURL + src + '?twic=v1/' + operationsString
+      url: (options.baseURL + src + '?twic=v1/' + operationsString).replace(/(https?:\/\/)|(\/)+/g, '$1$2')
     }
   }
 }

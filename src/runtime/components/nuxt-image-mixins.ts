@@ -1,164 +1,164 @@
 export default {
-    props: {
-        src: {
-            type: [String, Object],
-            default: '',
-            required: true
-        },
-        width: {
-            type: String,
-            default: ''
-        },
-        height: {
-            type: String,
-            default: ''
-        },
-        legacy: {
-            type: Boolean,
-            default: false
-        },
-        sets: {
-            type: [String, Array],
-            default: '',
-        },
-        format: {
-            type: String,
-            default: undefined
-        },
-        size: {
-            type: String,
-            default: 'cover'
-        },
-        operations: {
-            type: Object,
-            default: () => ({})
-        },
-        // `<img>` attrubutes
-        alt: {
-            type: String,
-            default: ''
-        },
-        referrerpolicy: {
-            type: String,
-            default: undefined
-        },
-        usemap: {
-            type: String,
-            default: undefined,
-        },
-        longdesc: {
-            type: String,
-            default: undefined,
-        },
-        ismap: {
-            type: Boolean,
-            default: false
-        },
-        crossorigin: {
-            type: Boolean,
-            default: false
-        },
+  props: {
+    src: {
+      type: [String, Object],
+      default: '',
+      required: true
     },
-    data() {
-        return {
-            srcset: [],
-            blurry: null,
-            loading: false,
-            loaded: false,
-        }
+    width: {
+      type: String,
+      default: ''
     },
-    async fetch() {
-        if (!this.legacy) {
-            this.blurry = await this.$img.lqip(this.src)
-        }
+    height: {
+      type: String,
+      default: ''
     },
-    mounted() {
-        if (!this.legacy) {
-            this.$img.$observer.add(this.$el, () => {
-                // OK, element is visible, Hoooray
-                this.loadOriginalImage()
-            })
-        }
+    legacy: {
+      type: Boolean,
+      default: false
     },
-    computed: {
-        imgAttributes() {
-            let alt = this.alt ? this.alt : this.alt.split(/[\?#]/).shift().split('/').pop().split('.').shift();
-            return {
-                alt,
-                referrerpolicy: this.referrerpolicy,
-                usemap: this.usemap,
-                longdesc: this.longdesc,
-                ismap: this.ismap,
-                crossorigin: this.crossorigin,
-            }
-        },
-        sizes() {
-            let sizes = this.sets;
-            if (typeof this.sets === 'string') {
-                sizes = this.sets
-                    .split(',')
-                    .map(set => set.match(/((\d+)\:)?(\d+)\s*(\((\w+)\))?/)) // match: 100:100 (webp)
-                    .filter(match => !!match)
-                    .map((match, index) => ({
-                        width: match[3],
-                        breakpoint: match[2] || (index > 0 && match[3]),
-                        format: match[5] || this.format
-                    }))
-            }
-            if ((!Array.isArray(sizes) || !sizes.length)) {
-                sizes = [{
-                    width: this.width ? parseInt(this.width, 10) : undefined,
-                    height: this.height ? parseInt(this.height, 10) : undefined,
-                }]
-            }
-            sizes = sizes.map(size => ({
-                ...size,
-                media: size.media || size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
-                format: size.format || this.format,
-                url: this.generateSizedImage(size.width, size.height, size.format || this.format)
-            }))
-            
-            return sizes;
-        }
+    sets: {
+      type: [String, Array],
+      default: ''
     },
-    watch: {
-        async src(v) {
-            this.blurry = await this.$img.lqip(this.src)
-            this.original = null
-            this.$img.$observer.remove(this.$el)
-            this.$img.$observer.add(this.$el, () => {
-                // OK, element is visible, Hoooray
-                this.loadOriginalImage()
-            })
-        }
+    format: {
+      type: String,
+      default: undefined
     },
-    methods: {
-        generateSizedImage(width: number, height: number, format: string) {
-            const image = this.$img(this.src, {
-                width,
-                height,
-                format,
-                size: this.size,
-                ...this.operations
-            })
-            return encodeURI(image)
-        },
-        loadOriginalImage() {
-            this.loading = true
-        },
-        renderAttributesToString(attributes = {}) {
-            return Object.entries<string>(attributes)
-                .map(([key, value]) => value ? `${key}="${value}"` : '')
-                .filter(Boolean).join(' ')
-        },
-        renderImgAttributesToString(extraAttributes = {}) {
-            return this.renderAttributesToString({
-                ...this.imgAttributes,
-                ...extraAttributes
-            })
-        },
+    size: {
+      type: String,
+      default: 'cover'
     },
-    beforeDestroy () {
-        this.$img.$observer.remove(this.$el)
+    operations: {
+      type: Object,
+      default: () => ({})
     },
+    // `<img>` attrubutes
+    alt: {
+      type: String,
+      default: ''
+    },
+    referrerpolicy: {
+      type: String,
+      default: undefined
+    },
+    usemap: {
+      type: String,
+      default: undefined
+    },
+    longdesc: {
+      type: String,
+      default: undefined
+    },
+    ismap: {
+      type: Boolean,
+      default: false
+    },
+    crossorigin: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      srcset: [],
+      blurry: null,
+      loading: false,
+      loaded: false
+    }
+  },
+  async fetch () {
+    if (!this.legacy) {
+      this.blurry = await this.$img.lqip(this.src)
+    }
+  },
+  mounted () {
+    if (!this.legacy) {
+      this.$img.$observer.add(this.$el, () => {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+      })
+    }
+  },
+  computed: {
+    imgAttributes () {
+      const alt = this.alt ? this.alt : this.alt.split(/[?#]/).shift().split('/').pop().split('.').shift()
+      return {
+        alt,
+        referrerpolicy: this.referrerpolicy,
+        usemap: this.usemap,
+        longdesc: this.longdesc,
+        ismap: this.ismap,
+        crossorigin: this.crossorigin
+      }
+    },
+    sizes () {
+      let sizes = this.sets
+      if (typeof this.sets === 'string') {
+        sizes = this.sets
+          .split(',')
+          .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/)) // match: 100:100 (webp)
+          .filter(match => !!match)
+          .map((match, index) => ({
+            width: match[3],
+            breakpoint: match[2] || (index > 0 && match[3]),
+            format: match[5] || this.format
+          }))
+      }
+      if ((!Array.isArray(sizes) || !sizes.length)) {
+        sizes = [{
+          width: this.width ? parseInt(this.width, 10) : undefined,
+          height: this.height ? parseInt(this.height, 10) : undefined
+        }]
+      }
+      sizes = sizes.map(size => ({
+        ...size,
+        media: size.media || size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
+        format: size.format || this.format,
+        url: this.generateSizedImage(size.width, size.height, size.format || this.format)
+      }))
+
+      return sizes
+    }
+  },
+  watch: {
+    async src () {
+      this.blurry = await this.$img.lqip(this.src)
+      this.original = null
+      this.$img.$observer.remove(this.$el)
+      this.$img.$observer.add(this.$el, () => {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+      })
+    }
+  },
+  methods: {
+    generateSizedImage (width: number, height: number, format: string) {
+      const image = this.$img(this.src, {
+        width,
+        height,
+        format,
+        size: this.size,
+        ...this.operations
+      })
+      return encodeURI(image)
+    },
+    loadOriginalImage () {
+      this.loading = true
+    },
+    renderAttributesToString (attributes = {}) {
+      return Object.entries<string>(attributes)
+        .map(([key, value]) => value ? `${key}="${value}"` : '')
+        .filter(Boolean).join(' ')
+    },
+    renderImgAttributesToString (extraAttributes = {}) {
+      return this.renderAttributesToString({
+        ...this.imgAttributes,
+        ...extraAttributes
+      })
+    }
+  },
+  beforeDestroy () {
+    this.$img.$observer.remove(this.$el)
+  }
 }
