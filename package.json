@@ -19,26 +19,26 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "dependencies": {
-    "hasha": "^5.2.0",
+    "hasha": "^5.2.1",
     "ipx": "latest",
     "node-fetch": "^2.6.1",
     "upath": "^1.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "latest",
-    "@nuxt/types": "^2.14.4",
+    "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/module-test-utils": "^2.0.0-3",
-    "@nuxtjs/storybook": "^2.1.0",
-    "@nuxtjs/tailwindcss": "^3.0.2",
+    "@nuxtjs/storybook": "^2.2.1",
+    "@nuxtjs/tailwindcss": "^3.1.0",
     "@types/ci-info": "latest",
     "@types/expect-puppeteer": "^4.4.3",
     "@types/inquirer": "latest",
     "@types/jest": "^26.0.14",
-    "@types/jest-environment-puppeteer": "^4.3.2",
+    "@types/jest-environment-puppeteer": "^4.4.0",
     "@types/puppeteer": "^3.0.2",
     "babel-eslint": "latest",
     "copyfiles": "^2.3.0",
@@ -51,8 +51,8 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^10.0.2",
     "standard-version": "latest",
-    "ts-jest": "^26.4.0",
-    "typescript": "^4.0.2"
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
   },
   "publishConfig": {
     "access": "public"
