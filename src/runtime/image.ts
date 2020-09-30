@@ -61,8 +61,10 @@ export function createImage (context, { providers, defaultProvider, presets }: C
       { ...provider.defaults, ...options }
     )
 
-    if (typeof window !== 'undefined' && window.__NUXT_JSONP_CACHE__) {
-      const jsonPData = window.__NUXT_JSONP_CACHE__[context.route.path].data[0]
+    // @ts-ignore
+    if (typeof window !== 'undefined' && typeof window.$nuxt._pagePayload !== 'undefined') {
+      // @ts-ignore
+      const jsonPData = window.$nuxt._pagePayload.data[0]
       if (jsonPData.images[providerUrl]) {
         // Hydration with hash
         return jsonPData.images[providerUrl]
