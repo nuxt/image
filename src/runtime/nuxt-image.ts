@@ -51,9 +51,12 @@ export default {
       }
     })
 
-    const noScript = h('noscript', {
-      domProps: { innerHTML: imageHTML(this) }
-    }, [])
+    let noScript = null
+    if (this.noScript) {
+      noScript = h('noscript', {
+        domProps: { innerHTML: imageHTML(this) }
+      }, [])
+    }
 
     const placeholder = h('div', {
       class: '__nim_pl',

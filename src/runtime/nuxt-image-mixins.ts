@@ -33,6 +33,10 @@ export default {
       type: Object,
       default: () => ({})
     },
+    noScript: {
+      type: Boolean,
+      default: false
+    },
     // `<img>` attrubutes
     alt: {
       type: String,

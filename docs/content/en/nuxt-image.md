@@ -153,6 +153,9 @@ As you may notice providers and presets has a different in their usage, and it i
   </code-block>
 </code-group>
 
+## `no-script`
+Genererate `<noscript>` tag for browsers that aren’t running javascript.
+
 ## `legacy`
 
 Using `nuxt-image` you should provider `width` and `height` for the component. These values are used to optimize image size and prevent [Cumulative Layout Shift](https://web.dev/cls/). But there are situation that we don't want to specify with and height for image. In this situations you can use `legacy` prop.  
