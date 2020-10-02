@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
+    "target": "ESNext",
+    "module": "ES6",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "moduleResolution": "Node",
     "outDir": "dist",
+    "declaration": true,
     "types": [
       "@types/node",
       "@nuxt/types"
