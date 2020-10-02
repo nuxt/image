@@ -6,7 +6,7 @@ category: Guide
 ---
 
 Although the image module offers multiple internal providers, you my want/need to write your custome provider.  
-Image provider have three different part with specific roles:
+Image provider have three different parts with specific roles.
 
 ## Provider Main
 This is the entry point of every provider, this part executes on initialization process to initialize provider specific tasks.
@@ -35,7 +35,7 @@ export default function(providerOptions) {
 - `middleware`: A server middleware to optimize images.
 
 
-## Provider Runtime:
+## Provider Runtime
 
 The runtime will recieve a src, image modifiers and its provider options and generates a url for optimized images. Runtime is a universal and could run in both server side and client side.
 
@@ -55,16 +55,16 @@ export default {
   }
 }
 ```
-### Parameters:
+### Parameters
 - `src`: Source path of the image
 - `modifiers`: List of image modifiers that defined in image component or a preset
 - `options`: `runtimeOptions` returned by provider main
-### Return 
+### Return
 - `url`: Absolute or relative url of optimized image.
 - `static`: A boolean value that determine whether the image should generate on static generation or not. If it is `true` during `nuxt generate` this image will be downloaded and saved in `generate.outDir` to server as a static image.
 
 
-## Provider Middleware: 
+## Provider Middleware
 
 Although there is planty of great image provider services out there but sometimes having your own is more fun and may be more customizable. If you want to use image manipulation libraries like [node-canvas](https://github.com/Automattic/node-canvas), [jimp](https://github.com/oliver-moran/jimp), [GraphicsMagick](https://github.com/aheckmann/gm) or any other great library you need to create a middleware for your provider.  
 A middleware is just a [server-middleware for nuxt](https://nuxtjs.org/api/configuration-servermiddleware#custom-server-middleware) that receives generated url and return optimized image.  
