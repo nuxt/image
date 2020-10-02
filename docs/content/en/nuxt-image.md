@@ -253,7 +253,7 @@ export default {
           width: 600
         },
         {
-          media: "(min-width: 600px)", // same as breakpoint: 600
+          media: '(min-width: 600px)', // same as breakpoint: 600
           width: 900
         }
       ]

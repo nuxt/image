@@ -37,7 +37,7 @@ category: Examples
   export default {
     image: {
       providers: {
-        random: "~/providers/random"
+        random: '~/providers/random'
       }
     }
   }
