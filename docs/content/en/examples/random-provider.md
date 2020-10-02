@@ -11,8 +11,8 @@ category: Examples
   ```js{}[~/providers/random/index.js]
   export default function(providerOptions) {
     return {
-        runtime: require.resolve('./runtime'),
-        runtimeOptions: providerOptions
+      runtime: require.resolve('./runtime'),
+      runtimeOptions: providerOptions
     }
   }
   ```
