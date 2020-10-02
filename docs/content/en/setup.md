@@ -33,7 +33,7 @@ Add `@nuxt/image` dependency to your project:
 
 Next, you need to register module inside `nuxt.config`:
 
-```bash{}[.nuxt.config.js]
+```js{}[nuxt.config.js]
 export default {
   modules: [
     '@nuxt/image'
