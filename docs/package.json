@@ -1,21 +1,16 @@
 {
-  "name": "@nuxt/image-docs",
-  "version": "1.0.0",
-  "description": "Docs for @nuxt/image",
-  "author": "NuxtJS",
-  "repository": "nuxt/image",
+  "private": true,
   "scripts": {
     "dev": "nuxt-ts",
     "generate": "nuxt-ts generate",
     "start": "nuxt-ts start"
   },
-  "dependencies": {
-    "@nuxt/content-theme-docs": "^0.6.1",
-    "@nuxt/typescript-runtime": "^2.0.0",
-    "nuxt-edge": "^2.14.1-26608350.3204f301"
-  },
   "devDependencies": {
-    "@nuxt/typescript-build": "^2.0.3",
-    "nuxt-ackee": "^2.0.0"
+    "@nuxt/content-theme-docs": "latest",
+    "@nuxt/typescript-build": "latest",
+    "@nuxt/typescript-runtime": "latest",
+    "@nuxtjs/tailwindcss": "latest",
+    "nuxt-ackee": "latest",
+    "nuxt-edge": "latest"
   }
 }
