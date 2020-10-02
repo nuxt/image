@@ -1,4 +1,4 @@
-import { setupTest, getContext } from '@nuxtjs/module-test-utils'
+import { setupTest, getContext } from '@nuxt/test-utils'
 
 describe('Plugin', () => {
   let testContext, plugin

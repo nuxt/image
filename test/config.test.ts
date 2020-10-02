@@ -1,4 +1,4 @@
-import { setupTest } from '@nuxtjs/module-test-utils'
+import { setupTest } from '@nuxt/test-utils'
 
 describe('undefined config', () => {
   setupTest({

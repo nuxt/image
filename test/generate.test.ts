@@ -1,19 +1,12 @@
-const { generate, createContext, loadNuxt, loadFixture } = require('@nuxtjs/module-test-utils')
+import { setupTest } from '@nuxt/test-utils'
 
 describe('undefined config', () => {
-  let nuxt
-  beforeAll(async () => {
-    createContext({
-      fixture: 'fixture/base',
-      configFile: 'nuxt.config.ts'
-    })
-    await loadFixture()
-    await loadNuxt()
-    await generate()
-  }, 60000)
-
-  afterAll(async () => {
-    await nuxt.close()
+  setupTest({
+    fixture: 'fixture/base',
+    configFile: 'nuxt.config.ts',
+    generate: true,
+    server: true,
+    config: {}
   })
 
   test('render index', () => {

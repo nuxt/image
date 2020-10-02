@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ES6",
+    "module": "ESNext",
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "outDir": "dist",
     "declaration": true,
     "types": [
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "@types/jest"
     ]
   },
   "include": [
