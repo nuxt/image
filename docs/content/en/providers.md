@@ -43,8 +43,6 @@ export default {
 }
 ```
 
-
-
 ## `twicpics`
 
 Integration between [Twicpics](https://www.twicpics.com) and the image module.  
@@ -56,6 +54,24 @@ export default {
     providers: {
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics'
+      }
+    }
+  }
+}
+```
+
+## `fastly`
+
+Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimization-api)
+and the image module. To use this provider you just need to specify the base url
+of your service in Fastly.
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    providers: {
+      fastly: {
+        baseURL: 'https://www.fastly.io'
       }
     }
   }
