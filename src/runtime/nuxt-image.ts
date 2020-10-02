@@ -58,15 +58,15 @@ export default {
     const placeholder = h('div', {
       class: '__nim_pl',
       style: {
-        paddingBottom: this.height ? `${this.height}` : undefined
+        paddingBottom: this.height ? `${parseInt(this.height, 10)}px` : undefined
       }
     })
 
     const wrapper = h('div', {
       style: {
-        width: this.width ? this.width : undefined
+        width: this.width ? `${parseInt(this.width, 10)}px` : undefined
       },
-      class: ['__nim_w', this.loaded ? 'visible' : '']
+      class: ['__nim_w', this.loaded ? 'visible' : ''].concat(this.$attrs.class || '')
     }, [bluryImage, originalImage, noScript, placeholder])
 
     return wrapper

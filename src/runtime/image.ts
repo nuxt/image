@@ -31,7 +31,7 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
 
     if (!provider) {
-      throw new Error('Unsupported provided ' + options.provider)
+      throw new Error('Unsupported provider ' + options.provider)
     }
 
     if (preset && !presetMap[preset]) {

@@ -6,11 +6,11 @@ export default {
       required: true
     },
     width: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     height: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     legacy: {

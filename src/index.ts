@@ -32,7 +32,7 @@ function imageModule (moduleOptions: ModuleOptions) {
   // Apply local defaults
   if (options.providers.local && typeof options.providers.local === 'object') {
     options.providers.local = {
-      dir: path.join(nuxt.options.srcDir, 'static'),
+      dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static),
       ...options.providers.local
     }
   }
