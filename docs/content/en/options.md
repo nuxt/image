@@ -42,7 +42,7 @@ Here is a sample to use `cloudinary`:
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -50,7 +50,7 @@ Here is a sample to use `cloudinary`:
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-image>
   </div>
 
   </code-block>
@@ -91,10 +91,7 @@ Presets are collections of pre-defined configuration for your projects. Presets 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image
-      legacy
-      src="+avatar:/nuxt-icon.png"
-    />
+    <nuxt-image legacy src="+avatar:/nuxt-icon.png" />
   </template>
   ```
 
@@ -102,10 +99,7 @@ Presets are collections of pre-defined configuration for your projects. Presets 
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image
-      legacy
-      src="+avatar:/nuxt-icon.png"
-    />
+    <nuxt-image legacy src="+avatar:/nuxt-icon.png"></nuxt-image>
   </div>
 
   </code-block>

@@ -28,7 +28,7 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -50,7 +50,7 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-image>
   </div>
 
   </code-block>
@@ -69,7 +69,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="50px" height="50px" />
+    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="50" height="50" />
   </template>
   ```
 
@@ -97,7 +97,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="150px" height="150px" />
+    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="150" height="150"></nuxt-image>
   </div>
 
   </code-block>
@@ -114,7 +114,7 @@ As you may notice providers and presets has a different in their usage, and it i
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -147,7 +147,7 @@ As you may notice providers and presets has a different in their usage, and it i
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </div>
 
   </code-block>
@@ -164,7 +164,7 @@ Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy lo
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300px" height="169px" />
+    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -294,7 +294,7 @@ There are five standard values you can use with this property.
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image size="cover" src="/nuxt-icon.png" width="200px" height="100px" />
+    <nuxt-image size="cover" src="/nuxt-icon.png" width="200" height="100" />
   </template>
   ```
 
@@ -302,7 +302,7 @@ There are five standard values you can use with this property.
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-  <nuxt-image size="cover" src="/nuxt-icon.png" width="200px" height="100px" />
+  <nuxt-image size="cover" src="/nuxt-icon.png" width="200" height="100" />
   </div>
 
   </code-block>
@@ -319,8 +319,8 @@ In addition of standard operation, every provider can have their own operation. 
   <template>
     <nuxt-image
       src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png"
-      width="300px" 
-      height="169px"
+      width="300" 
+      height="169"
       :operations="imageOperations"
     />
   </template>
@@ -342,8 +342,8 @@ In addition of standard operation, every provider can have their own operation. 
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-image
-      width="300px" 
-      height="169px"
+      width="300" 
+      height="169"
       src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" :operations="{r: '0:100'}"
     />
     <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">

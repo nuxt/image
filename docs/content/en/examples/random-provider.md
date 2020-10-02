@@ -5,11 +5,17 @@ position: 9
 category: Examples
 ---
 
+Example of creating a `random` provider to fetch a random image on [Unsplash](https://unsplash.com).
+
+Let's create a `./providers/random/` directory with two files inside:
+- `index.js`: our entry point for our provider, exporting `runtime` and `runtimeOptions`
+- `runtime.js`: our runtime sending back an url
+
 <code-group>
-  <code-block label="Provider Main" active>
+  <code-block label="index.js" active>
 
   ```js{}[~/providers/random/index.js]
-  export default function(providerOptions) {
+  export default function (providerOptions) {
     return {
       runtime: require.resolve('./runtime'),
       runtimeOptions: providerOptions
@@ -18,7 +24,7 @@ category: Examples
   ```
 
   </code-block>
-  <code-block label="Runtime">
+  <code-block label="runtime.js">
 
   ```js{}[~/providers/random/runtime.js]  
   export default {
@@ -30,10 +36,14 @@ category: Examples
   }
   ```
   </code-block>
-  <code-block label="nuxt.config">
+</code-group>
+
+Let's use our random provider in our Nuxt application:
+
+<code-group>
+  <code-block label="nuxt.config.js" active>
 
   ```js{}[nuxt.config.js]
-  
   export default {
     image: {
       providers: {
@@ -44,11 +54,11 @@ category: Examples
   ```
   </code-block>
 
-  <code-block label="Page">
+  <code-block label="pages/index.vue">
 
   ```vue{}[~/pages/index.js]
   <template>
-    <nuxt-image src="random:/" width="600px" height="400px" />
+    <nuxt-image src="random:/" width="600" height="400" />
   </template>
   ```
 
@@ -56,8 +66,9 @@ category: Examples
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="random:/" width="600px" height="400px" />
+    <nuxt-image src="random:/" width="600" height="400"></nuxt-image>
   </div>
 
   </code-block>
+
 </code-group>
