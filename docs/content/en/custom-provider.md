@@ -73,9 +73,9 @@ Below exmple shows simple middleware that returns single image.
 ```js
 function createMiddleware(options) {
   return function (req, res) {
-    const file = `./static/nuxt-icon.png`;
+    const file = './static/nuxt-icon.png';
 
-    res.setHeader('Content-type', "image/png");
+    res.setHeader('Content-type', 'image/png');
 
     var filestream = fs.createReadStream(file);
     filestream.pipe(res);
