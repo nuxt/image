@@ -23,6 +23,9 @@ export default {
       },
       cloudinary: {
         baseURL: 'https://res.cloudinary.com/farnabaz/image/upload'
+      },
+      fastly: {
+        baseURL: 'https://www.fastly.io'
       }
     }
   }
