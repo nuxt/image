@@ -19,7 +19,7 @@ export default {
 Providers are integration between the image module and images service providers like cloudinary. Using specific provider meand that your images are being transformed by specifig service.  
 There are planty of image server providers, currently we are supporting some providers out of box.
 
-To use any provider list them inside `nuxt.conig`, You can use [internal providers](/providers) or [create custom provider](/custom-provider).   
+To use any provider list them inside `nuxt.config`, You can use [internal providers](/providers) or [create custom provider](/custom-provider).   
 Here is a sample to use `cloudinary`:
 
 <code-group>
