@@ -1,21 +1,4 @@
-import { RuntimeProvider, ImageModifiers } from 'src/types'
-
-export interface ImagePreset {
-  name: string
-  modifiers: any
-  provider?: string
-}
-
-export interface CreateImageOptions {
-  providers: {
-    [name: string]: {
-      defaults: any
-      provider: RuntimeProvider
-    }
-  }
-  presets: ImagePreset[]
-  defaultProvider: string
-}
+import type { CreateImageOptions, ImageModifiers } from 'types'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {

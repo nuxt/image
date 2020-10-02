@@ -5,10 +5,11 @@
   "repository": "nuxt/image",
   "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
-    "templates"
+    "templates",
+    "types"
   ],
   "scripts": {
     "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",

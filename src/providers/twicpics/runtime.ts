@@ -1,4 +1,4 @@
-import { RuntimeProvider, ImageModifiers } from 'src/types'
+import { RuntimeProvider, ImageModifiers } from 'types'
 
 function getSizeOperator (size) {
   if (!size) {

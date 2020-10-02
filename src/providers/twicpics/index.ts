@@ -1,4 +1,4 @@
-import { ProviderFactory } from 'src/types'
+import { ProviderFactory } from 'types'
 
 export default <ProviderFactory> function (providerOptions) {
   return {

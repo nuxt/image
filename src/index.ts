@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'fs-extra'
 import upath from 'upath'
-import { Module } from '@nuxt/types'
+import { ModuleOptions, ProviderFactory } from 'types'
 import { downloadImage, getFileExtension, hash, tryRequire } from './utils'
-import { ModuleOptions, ProviderFactory } from './types'
+export type { Provider, RuntimeProvider } from 'types'
 
 function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
@@ -152,4 +152,4 @@ function handleStaticGeneration (nuxt: any) {
 }
 
 (imageModule as any).meta = require('../package.json')
-export default imageModule as Module<ModuleOptions>
+export default imageModule

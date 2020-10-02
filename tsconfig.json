@@ -6,9 +6,10 @@
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "outDir": "dist",
-    "declaration": true,
     "types": [
-      "@nuxt/types"
+      "@nuxt/types",
+      "@types/node",
+      "./types"
     ]
   },
   "include": [
