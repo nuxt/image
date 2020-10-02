@@ -1,7 +1,7 @@
 export default {
   components: true,
   modules: [
-    '../../src/module.ts'
+    '../../src/index.ts'
   ],
   buildModules: [
     '@nuxt/typescript-build'
