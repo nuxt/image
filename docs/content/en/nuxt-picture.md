@@ -11,8 +11,8 @@ The usage of `nuxt-picture` is same as `nuxt-image`, with a little differences:
 
 - When you use moders formats like `webp` in the component, a fallback image with `jpeg` format will generated and uses a fallback images for old browsers.
 
-- In `sets` prop you can define different format for each set. Defining different foramts will help to improve browser compatibity.  
-  - If format does not present in a set it means that the set uses `foramt` props.
+- In `sets` prop you can define different format for each set. Defining different formats will help to improve browser compatibity.  
+  - If format does not present in a set it means that the set uses `format` props.
   - If format does not present in a set and `format` props is missing then image format will not change.
 
 <code-group>
