@@ -11,7 +11,7 @@ Path to image file. `src` sould be in form of absolute path and starts with `/`.
 
 ```vue
 <template>
-    <nuxt-image :src="src" ... />
+  <nuxt-image :src="src" ... />
 </template>
 ```
 
