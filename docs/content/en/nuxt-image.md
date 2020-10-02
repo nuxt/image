@@ -1,7 +1,7 @@
 ---
 title: Image Component
 description: 'List of available props for image component'
-position: 4
+position: 7
 category: Componets
 ---
 

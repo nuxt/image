@@ -1,7 +1,7 @@
 ---
 title: Picture Component
 description: 'Picture component'
-position: 5
+position: 8
 category: Componets
 ---
 
