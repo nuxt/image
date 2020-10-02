@@ -4,8 +4,7 @@ export default {
     '../src/module.ts'
   ],
   buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/tailwindcss'
+    '@nuxt/typescript-build'
   ],
   image: {
     defaultProvider: 'local',
@@ -20,13 +19,11 @@ export default {
     providers: {
       local: {},
       twicpics: {
-        baseURL: 'https://i5acur1u.twic.pics',
+        baseURL: 'https://i5acur1u.twic.pics'
       },
       cloudinary: {
-        baseURL: 'https://res.cloudinary.com/farnabaz/image/upload',
+        baseURL: 'https://res.cloudinary.com/farnabaz/image/upload'
       }
     }
   }
 }
-
-

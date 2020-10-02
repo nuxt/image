@@ -1,17 +1,11 @@
-declare global {
-  interface Window {
-    __NUXT_JSONP_CACHE__: { [key: string]: any }
-  }
-}
-
 export interface ModuleOptions {
-    defaultProvider: string;
-    presets: ImagePreset[],
-    providers: {
-      local: LocalOptions
-      [name: string]: any
-    }
-    provider: object;
+  defaultProvider: string;
+  presets: ImagePreset[],
+  providers: {
+    local: LocalOptions
+    [name: string]: any
+  }
+  provider: object;
 }
 
 export interface ImagePreset {
@@ -23,9 +17,9 @@ export interface ImagePreset {
 export type ProviderFactory = (options: any) => Provider
 
 export interface Provider {
-    runtime: string
-    runtimeOptions: any
-    middleware?(): ProviderServerMiddleware
+  runtime: string
+  runtimeOptions: any
+  middleware?(): ProviderServerMiddleware
 }
 
 export type ProviderServerMiddleware = (req, res, next) => void
@@ -33,13 +27,6 @@ export type ProviderServerMiddleware = (req, res, next) => void
 export interface LocalOptions {
   dir?: string
   clearCache?: boolean | string;
-}
-
-export interface GenerateOptions {
-  providerOptions: any
-  modifiers: {
-    contain: string
-  }
 }
 
 export interface ImageModifiers {

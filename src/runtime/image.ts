@@ -1,12 +1,12 @@
-import { RuntimeProvider, ImageModifiers } from '../types'
+import { RuntimeProvider, ImageModifiers } from 'src/types'
 
-interface ImagePreset {
+export interface ImagePreset {
   name: string
   modifiers: any
   provider?: string
 }
 
-interface CreateImageOptions {
+export interface CreateImageOptions {
   providers: {
     [name: string]: {
       defaults: any

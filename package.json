@@ -1,19 +1,21 @@
 {
   "name": "@nuxt/image",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
-  "main": "dist/module.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "scripts": {
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",
     "postbuild": "copyfiles -u 1 src/**/*.css dist",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-ts playground",
-    "lint": "eslint --ext .ts,.js,.vue ./src",
+    "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
     "test": "yarn lint && yarn jest"
   },

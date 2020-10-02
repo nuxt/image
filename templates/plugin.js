@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import NuxtImage from '~image/runtime/components/nuxt-image' 
-import NuxtPicture from '~image/runtime/components/nuxt-picture' 
-import { createImage } from '~image/runtime/image' 
- 
+import NuxtImage from '~image/nuxt-image'
+import NuxtPicture from '~image/nuxt-picture'
+import { createImage } from '~image/image'
+
 <%=Object.entries(options.imports).map(([name, path]) => `import ${name} from '${path}'`).join('\n')%>
 
 const defaultProvider = '<%= options.defaultProvider %>'

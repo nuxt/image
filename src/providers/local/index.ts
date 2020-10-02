@@ -1,5 +1,4 @@
-import { ProviderFactory } from '../../types'
-const { IPX, IPXMiddleware } = require('ipx')
+import { ProviderFactory } from 'src/types'
 
 export default <ProviderFactory> function (providerOptions) {
   return {
@@ -10,6 +9,8 @@ export default <ProviderFactory> function (providerOptions) {
 }
 
 function createMiddleware (options) {
+  const { IPX, IPXMiddleware } = require('ipx')
+
   const ipx = new IPX({
     input: {
       adapter: 'fs',

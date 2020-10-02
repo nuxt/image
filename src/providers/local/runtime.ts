@@ -1,4 +1,4 @@
-import { RuntimeProvider, ImageModifiers } from '../../types'
+import { RuntimeProvider, ImageModifiers } from 'src/types'
 
 export default <RuntimeProvider> {
   generateURL (src: string, modifiers: ImageModifiers) {

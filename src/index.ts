@@ -1,41 +1,11 @@
 import path from 'path'
 import fs from 'fs-extra'
 import upath from 'upath'
-
-import { ModuleOptions, ProviderFactory } from './types'
+import { Module } from '@nuxt/types'
 import { downloadImage, getFileExtension, hash, tryRequire } from './utils'
+import { ModuleOptions, ProviderFactory } from './types'
 
-const { name, version } = require('../package.json')
-
-interface ModuleProvider {
-    name: string,
-    options: any
-    provider: ProviderFactory
-}
-
-function loadProvider (key: string, provider: any) {
-  const { nuxt } = this
-  if (typeof provider === 'string') {
-    provider = { provider }
-  } else if (typeof provider === 'object') {
-    provider = { options: provider }
-  }
-
-  if (!provider.name) {
-    provider.name = key
-  }
-  if (!provider.provider) {
-    provider.provider = provider.name
-  }
-  if (typeof provider.provider === 'string') {
-    provider.provider = tryRequire('./providers/' + provider.provider) ||
-          nuxt.resolver.requireModule(provider.provider)
-  }
-  // TODO: verify provider.provider and warn+skip if invalid
-  return provider
-}
-
-function ImageModule (moduleOptions) {
+function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
   const options: ModuleOptions = {
@@ -69,6 +39,12 @@ function ImageModule (moduleOptions) {
 
   if (!options.defaultProvider) {
     options.defaultProvider = Object.keys(options.providers)[0]
+  }
+
+  interface ModuleProvider {
+    name: string,
+    options: any
+    provider: ProviderFactory
   }
 
   const providers: ModuleProvider[] = Object.entries(options.providers)
@@ -106,12 +82,35 @@ function ImageModule (moduleOptions) {
   })
 
   // Transpile and alias image src
-  nuxt.options.alias['~image'] = __dirname
-  nuxt.options.build.transpile.push(__dirname)
+  const runtimeDir = path.resolve(__dirname, './runtime')
+  nuxt.options.alias['~image'] = runtimeDir
+  nuxt.options.build.transpile.push(runtimeDir)
 
   nuxt.hook('generate:before', () => {
     handleStaticGeneration(nuxt)
   })
+}
+
+function loadProvider (key: string, provider: any) {
+  const { nuxt } = this
+  if (typeof provider === 'string') {
+    provider = { provider }
+  } else if (typeof provider === 'object') {
+    provider = { options: provider }
+  }
+
+  if (!provider.name) {
+    provider.name = key
+  }
+  if (!provider.provider) {
+    provider.provider = provider.name
+  }
+  if (typeof provider.provider === 'string') {
+    provider.provider = tryRequire('./providers/' + provider.provider) ||
+      nuxt.resolver.requireModule(provider.provider)
+  }
+  // TODO: verify provider.provider and warn+skip if invalid
+  return provider
 }
 
 function handleStaticGeneration (nuxt: any) {
@@ -152,6 +151,5 @@ function handleStaticGeneration (nuxt: any) {
   })
 }
 
-ImageModule.meta = { name, version }
-
-export default ImageModule
+(imageModule as any).meta = require('../package.json')
+export default imageModule as Module<ModuleOptions>
