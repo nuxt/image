@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     imgAttributes () {
-      const alt = this.alt ? this.alt : this.alt.split(/[?#]/).shift().split('/').pop().split('.').shift()
+      const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
       return {
         alt,
         referrerpolicy: this.referrerpolicy,
