@@ -50,7 +50,7 @@ describe('Plugin', () => {
 
   test('Generate Circle Image with Cloudinary', () => {
     const image = nuxtContext.$img('cloudinary+circle:/test.png', {})
-    expect(image).toEqual('https://res.cloudinary.com/nuxt/image/upload/c_fit,r_100/test.png')
+    expect(image).toEqual('https://res.cloudinary.com/nuxt/image/upload/r_100/test.png')
   })
 
   test('Deny Invalid Images', () => {

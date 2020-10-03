@@ -1,15 +1,15 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator } from '../../runtime/provider-utils'
+import { cleanDoubleSlashes, createOperationsGenerator } from '../../runtime/provider-utils'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
-    size: 'c',
+    fit: 'c',
     width: 'w',
     height: 'h',
     format: 'f'
   },
   valueMap: {
-    size: {
+    fit: {
       fill: 'fill',
       inside: 'pad',
       outside: 'lpad',
@@ -26,7 +26,7 @@ export default <RuntimeProvider> {
     const operations = operationsGenerator(modifiers)
 
     return {
-      url: options.baseURL + '/' + operations + src
+      url: cleanDoubleSlashes(options.baseURL + '/' + operations + src)
     }
   }
 }

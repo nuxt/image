@@ -83,7 +83,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
         {
           name: 'jpg-cover',
           modifiers: {
-            size: 'cover',
+            fit: 'cover',
             format: 'jpg',
             width: 300,
             height: 300
@@ -128,7 +128,7 @@ As you may notice providers and presets has a different in their usage, and it i
         {
           name: 'jpg-cover',
           modifiers: {
-            size: 'cover',
+            fit: 'cover',
             format: 'jpg',
             width: 300,
             height: 300
@@ -181,7 +181,7 @@ Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy lo
         {
           name: 'jpg-cover',
           modifiers: {
-            size: 'cover',
+            fit: 'cover',
             format: 'jpg',
             width: 300,
             height: 300
@@ -280,9 +280,9 @@ In case you want to serve images in specific format, use this prop.
 </template>
 ```
 
-## `size`
+## `fit`
 
-The `size` property specifies the size of the images.  
+The `fit` property specifies the size of the images.  
 There are five standard values you can use with this property.
 
 - `cover`: (default) Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit
@@ -297,7 +297,7 @@ There are five standard values you can use with this property.
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image size="cover" src="/nuxt-icon.png" width="200" height="100" />
+    <nuxt-image fit="cover" src="/nuxt-icon.png" width="200" height="100" />
   </template>
   ```
 
@@ -305,7 +305,7 @@ There are five standard values you can use with this property.
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-  <nuxt-image size="cover" src="/nuxt-icon.png" width="200" height="100" />
+  <nuxt-image fit="cover" src="/nuxt-icon.png" width="200" height="100" />
   </div>
 
   </code-block>

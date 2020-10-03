@@ -25,7 +25,7 @@ export default {
       type: String,
       default: undefined
     },
-    size: {
+    fit: {
       type: String,
       default: 'cover'
     },
@@ -142,7 +142,7 @@ export default {
         width,
         height,
         format,
-        size: this.size,
+        fit: this.fit,
         ...this.operations
       })
       return encodeURI(image)

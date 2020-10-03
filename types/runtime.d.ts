@@ -27,7 +27,7 @@ export interface ImagePreset {
 export interface ImageModifiers {
   width: number
   height: number
-  size: string
+  fit: string
   format: string
   [key: string]: any;
 }
@@ -49,4 +49,17 @@ export interface RuntimeProvider {
   // Add additional params (like signuture)
   // Do modifier mapping
   generateURL: (src: string, modifiers: ImageModifiers, providerOptions: any) => { url: string, isStatic?: boolean }
+}
+
+export type RuntimeOperationFormatter = (key: string, value: string) => string
+
+export type RuntimeOperationMapper = { [key: string]: string } | ((key: string) => string)
+
+export interface OperationGeneratorConfig {
+  keys?: RuntimeOperationMapper
+  formatter?: RuntimeOperationFormatter
+  joinWith?: string
+  values?: {
+    [key: string]: RuntimeOperationMapper
+  }
 }

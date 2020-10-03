@@ -1,12 +1,12 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createMapper, createOperationsGenerator } from '../../runtime/provider-utils'
+import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '../../runtime/provider-utils'
 
-const sizes = createMapper({
+const fits = createMapper({
   fill: 'fill',
   inside: 'pad',
   outside: 'lpad',
-  cover: 'fit',
-  contain: 'scale',
+  cover: 'cover',
+  contain: 'contain',
   missingValue: 'cover'
 })
 
@@ -20,15 +20,15 @@ const operationsGenerator = createOperationsGenerator({
 
 export default <RuntimeProvider> {
   generateURL (src: string, modifiers: ImageModifiers, options: any) {
-    const { width, height, size, ...providerModifiers } = modifiers
+    const { width, height, fit, ...providerModifiers } = modifiers
 
-    const operations = operationsGenerator({
-      ...providerModifiers,
-      [sizes(size)]: `${width || '-'}x${height || '-'}`
-    })
+    if (width || height) {
+      providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
+    }
+    const operations = operationsGenerator(providerModifiers)
 
     return {
-      url: options.baseURL + src + '?twic=v1/' + operations
+      url: cleanDoubleSlashes(options.baseURL + src + '?twic=v1/' + operations)
     }
   }
 }

@@ -21,7 +21,7 @@ export default theme({
       {
         name: 'jpg-cover',
         modifiers: {
-          size: 'cover',
+          fit: 'cover',
           format: 'jpg',
           width: 300,
           height: 300

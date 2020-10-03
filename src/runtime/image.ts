@@ -1,5 +1,4 @@
 import type { CreateImageOptions, ImageModifiers } from 'types'
-import { cleanDoubleSlashes } from './provider-utils'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -39,12 +38,11 @@ export function createImage (context, { providers, defaultProvider, presets }: C
       throw new Error('Unsupported preset ' + preset)
     }
 
-    const generatedURL = provider.provider.generateURL(
+    const { url: providerUrl, isStatic } = provider.provider.generateURL(
       src,
       presetMap[preset] ? presetMap[preset].modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
-    const providerUrl = cleanDoubleSlashes(generatedURL.url)
 
     // @ts-ignore
     if (typeof window !== 'undefined' && typeof window.$nuxt._pagePayload !== 'undefined') {
@@ -70,7 +68,7 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     } else if (context.ssrContext && typeof context.ssrContext.mapImage === 'function') {
       // Full Static
       const originalURL = url
-      url = context.ssrContext.mapImage({ url, isStatic: generatedURL.isStatic, format: modifiers.format, src })
+      url = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
 
       if (url) {
         data.images[providerUrl] = url

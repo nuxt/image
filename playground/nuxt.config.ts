@@ -12,7 +12,8 @@ export default {
       {
         name: 's50',
         modifiers: {
-          contain: '50x50'
+          width: 50,
+          height: 50
         }
       }
     ],

@@ -1,12 +1,9 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator } from '../../runtime/provider-utils'
+import { cleanDoubleSlashes, createOperationsGenerator } from '../../runtime/provider-utils'
 
 const operationsGenerator = createOperationsGenerator({
-  keyMap: {
-    size: 'fit'
-  },
   valueMap: {
-    size: {
+    fit: {
       fill: 'crop',
       inside: 'crop',
       outside: 'crop',
@@ -22,7 +19,7 @@ export default <RuntimeProvider> {
   generateURL (src: string, modifiers: ImageModifiers, options: any) {
     const operations = operationsGenerator(modifiers)
     return {
-      url: options.baseURL + src + '?' + operations
+      url: cleanDoubleSlashes(options.baseURL + src + '?' + operations)
     }
   }
 }
