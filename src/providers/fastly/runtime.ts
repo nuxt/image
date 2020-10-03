@@ -1,44 +1,28 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
+import { createOperationsGenerator } from '../../runtime/provider-utils'
 
-function getSizeOperator (size) {
-  if (!size) {
-    return 'bounds'
-  }
-  switch (size) {
-    case 'contain':
-      return 'bounds'
-    case 'fill':
-    case 'inside':
-    case 'outside':
-      return 'crop'
-    default:
-      return size
-  }
-}
+const operationsGenerator = createOperationsGenerator({
+  keyMap: {
+    size: 'fit'
+  },
+  valueMap: {
+    size: {
+      fill: 'crop',
+      inside: 'crop',
+      outside: 'crop',
+      cover: 'bounds',
+      contain: 'bounds'
+    }
+  },
+  joinWith: '&',
+  formatter: (key, value) => `${key}=${value}`
+})
 
 export default <RuntimeProvider> {
   generateURL (src: string, modifiers: ImageModifiers, options: any) {
-    const { width, height, format, size, ...providerModifiers } = modifiers
-    const operations = []
-
-    if (width) {
-      operations.push('width=' + encodeURIComponent(width))
-    }
-    if (height) {
-      operations.push('height=' + encodeURIComponent(height))
-    }
-    if (format) {
-      operations.push('format=' + encodeURIComponent(format))
-    }
-    operations.push('fit=' + encodeURIComponent(getSizeOperator(size)))
-
-    Object.entries(providerModifiers).forEach(([key, value]) => {
-      operations.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    })
-
-    const operationsString = operations.join('&')
+    const operations = operationsGenerator(modifiers)
     return {
-      url: (options.baseURL + src + '?' + operationsString).replace(/(https?:\/\/)|(\/)+/g, '$1$2')
+      url: options.baseURL + src + '?' + operations
     }
   }
 }

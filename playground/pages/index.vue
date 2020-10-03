@@ -31,6 +31,8 @@ export default {
   asyncData () {
     return {
       images: [
+        { src: 'cloudinary:/remote/nuxt-org/blog/going-full-static/main.png', alt: 'Cloudinary' },
+        { src: 'fastly:/image.jpg', alt: 'fastify' },
         // { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg', alt: 'Aconcagua Argentina' },
         { src: '/images/2000px-Everest_kalapatthar.jpg', alt: 'Mount Everest Nepal' },
         { src: '/images/2000px-Mont-Blanc_from_Planpraz_station.jpg', alt: 'Mount Kilimanjaro Tanzania' },

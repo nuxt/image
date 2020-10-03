@@ -22,7 +22,7 @@ export default {
         baseURL: 'https://i5acur1u.twic.pics'
       },
       cloudinary: {
-        baseURL: 'https://res.cloudinary.com/farnabaz/image/upload'
+        baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
       },
       fastly: {
         baseURL: 'https://www.fastly.io'
