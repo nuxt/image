@@ -4,7 +4,7 @@ import './nuxt-image.css'
 
 const pictureHTML = ({ generatedSrc, width, height, renderImgAttributesToString, sizes, renderAttributesToString }) =>
 `<picture>
-${sizes.map(s => `<source ${renderAttributesToString({ type: s.type, media: s.media, srcset: s.url })}>`).join('\n')}
+${sizes.map(s => `<source ${renderAttributesToString({ type: s.format, media: s.media, srcset: s.url })}>`).join('\n')}
 <img class="__nim_org" ${renderImgAttributesToString({ src: generatedSrc, width, height })}>
 </picture>
 `
@@ -54,7 +54,7 @@ export default {
     const sources = this.sizes.map(size => h('source', {
       attrs: {
         srcset: size.url,
-        type: size.type ? size.type : undefined,
+        type: size.format ? size.format : undefined,
         media: size.media ? size.media : undefined
       }
     }))
@@ -91,7 +91,7 @@ export default {
       const sources = this.sizes.map(size => h('source', {
         attrs: {
           srcset: size.url,
-          type: size.type ? size.type : undefined,
+          type: size.format ? size.format : undefined,
           media: size.media ? size.media : undefined
         }
       }))

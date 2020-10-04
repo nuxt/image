@@ -115,12 +115,17 @@ export default {
           height: this.height ? parseInt(this.height, 10) : undefined
         }]
       }
-      sizes = sizes.map(size => ({
-        ...size,
-        media: size.media || size.breakpoint ? `(min-width: ${size.breakpoint}px)` : '',
-        format: size.format || this.format,
-        url: this.generateSizedImage(size.width, size.height, size.format || this.format)
-      }))
+
+      sizes = sizes.map((size) => {
+        if (!size.format) {
+          size.format = this.format
+        }
+        if (!size.media) {
+          size.media = size.breakpoint ? `(min-width: ${size.breakpoint}px)` : ''
+        }
+        size.url = this.generateSizedImage(size.width, size.height, size.format)
+        return size
+      })
 
       return sizes
     }
@@ -129,11 +134,13 @@ export default {
     async src () {
       this.blurry = await this.$img.lqip(this.src)
       this.original = null
-      this.$img.$observer.remove(this.$el)
-      this.$img.$observer.add(this.$el, () => {
+      if (!this.legacy) {
+        this.$img.$observer.remove(this.$el)
+        this.$img.$observer.add(this.$el, () => {
         // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
+          this.loadOriginalImage()
+        })
+      }
     }
   },
   methods: {
@@ -163,6 +170,8 @@ export default {
     }
   },
   beforeDestroy () {
-    this.$img.$observer.remove(this.$el)
+    if (!this.legacy) {
+      this.$img.$observer.remove(this.$el)
+    }
   }
 }

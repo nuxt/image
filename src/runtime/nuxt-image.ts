@@ -77,7 +77,7 @@ export default {
   methods: {
     renderLegacy (h) {
       return h('img', {
-        class: '',
+        class: '__nim_org',
         attrs: {
           src: this.generatedSrc,
           srcset: this.generatedSrcset,

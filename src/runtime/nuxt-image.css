@@ -13,17 +13,17 @@
   transition: opacity 800ms ease 0ms;
   object-fit: cover;
 }
-.__nim_full {
+.__nim_w.__nim_full {
   width: 100%;
   height: 100%;
 }
-.__nim_blur {
+.__nim_w .__nim_blur {
   filter: blur(25px);
   transform: scale(1.1);
   opacity: 1;
 }
 
-.__nim_org,
+.__nim_w .__nim_org,
 .__nim_w.visible .__nim_blur {
   opacity: 0;
 }
