@@ -11,7 +11,7 @@
 > Optimised images for [NuxtJS](https://nuxtjs.org), with progressive processing, lazy-loading, real-time resizes and providers ([IPX](https://github.com/nuxt-contrib/ipx), [Cloudinary](https://cloudinary.com), [TwicPics](https://www.twicpics.com/), etc).
 
 ```html
-<NuxtImage src="/image.png" width="500" heigh="200" />
+<NuxtImage src="/image.png" width="500" height="200" />
 ```
 
 :warning: This module is still in work in progress, please be careful.
