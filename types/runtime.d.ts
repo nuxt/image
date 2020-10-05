@@ -56,10 +56,10 @@ export type RuntimeOperationFormatter = (key: string, value: string) => string
 export type RuntimeOperationMapper = { [key: string]: string } | ((key: string) => string)
 
 export interface OperationGeneratorConfig {
-  keys?: RuntimeOperationMapper
+  keyMap?: RuntimeOperationMapper
   formatter?: RuntimeOperationFormatter
   joinWith?: string
-  values?: {
+  valueMap?: {
     [key: string]: RuntimeOperationMapper
   }
 }

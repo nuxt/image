@@ -24,7 +24,7 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
     }
   })
 
-  return (modifiers: ImageModifiers) => {
+  return (modifiers: { [key: string]: any }) => {
     const operations = Object.entries<string>(modifiers)
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
