@@ -1,4 +1,4 @@
-import { ImageModifiers, OperationGeneratorConfig } from 'types'
+import { OperationGeneratorConfig } from 'types'
 
 export function cleanDoubleSlashes (path) {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
