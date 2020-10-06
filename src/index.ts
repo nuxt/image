@@ -130,7 +130,7 @@ function handleStaticGeneration (nuxt: any) {
   })
 
   nuxt.hook('generate:done', async () => {
-    const { port } = nuxt.server.listeners[0]
+    const { port } = nuxt.server?.listeners[0] || nuxt.options.server
     const { dir: generateDir } = nuxt.options.generate
     const host = 'http://localhost:' + port
 
