@@ -10,10 +10,10 @@ const operationsGenerator = createOperationsGenerator({
   valueMap: {
     fit: {
       fill: 'crop',
-      inside: 'crop',
-      outside: 'crop',
+      inside: 'fit-max',
+      outside: 'fit-min',
       cover: 'clip',
-      contain: 'clip'
+      contain: 'fill'
     }
   },
   joinWith: '&',
