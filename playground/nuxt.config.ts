@@ -27,6 +27,9 @@ export default {
       },
       fastly: {
         baseURL: 'https://www.fastly.io'
+      },
+      imgix: {
+        baseURL: 'https://assets.imgix.net'
       }
     }
   }

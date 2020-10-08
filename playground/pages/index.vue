@@ -40,7 +40,8 @@ export default {
         { src: '/images/2000px-Wonder_Lake_and_Denali.jpg', alt: 'Denali Alaska' },
         { src: '/images/1280px-K2_2006b.jpg', alt: 'K2' },
         { src: '/images/damavand.jpg', alt: 'Damavand' },
-        { src: '/images/1280px-ChoOyu-fromGokyo.jpg', alt: 'Cho Oyu' }
+        { src: '/images/1280px-ChoOyu-fromGokyo.jpg', alt: 'Cho Oyu' },
+        { src: 'imgix:/examples/bluehat.jpg', alt: 'imgix'}
       ]
     }
   }

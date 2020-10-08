@@ -3,6 +3,7 @@ import local from '../src/providers/local'
 import cloudinary from '../src/providers/cloudinary'
 import twicpics from '../src/providers/twicpics'
 import fastly from '../src/providers/fastly'
+import imgix from '../src/providers/imgix'
 
 const images = [
   {
@@ -136,6 +137,28 @@ describe('Providers', () => {
     for (const image of images) {
       const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
       expect(generated).toEqual(image.fastly)
+    }
+  })
+
+  test('imgix', async () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
+    const providerData = imgix(providerOptions)
+
+    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
+
+    const isRuntimeExists = await fs.exists(providerData.runtime)
+    expect(isRuntimeExists).toEqual(true)
+
+    const runtime = (await import(providerData.runtime)).default
+    expect(typeof runtime).toEqual('object')
+    expect(typeof runtime.generateURL).toEqual('function')
+
+    for (const image of images) {
+      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toEqual(image.imgix)
     }
   })
 })
