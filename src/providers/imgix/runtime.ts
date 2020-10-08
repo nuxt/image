@@ -9,10 +9,10 @@ const operationsGenerator = createOperationsGenerator({
   },
   valueMap: {
     fit: {
-      fill: 'crop',
+      fill: 'scale',
       inside: 'fit-max',
       outside: 'fit-min',
-      cover: 'clip',
+      cover: 'crop',
       contain: 'fill'
     }
   },
