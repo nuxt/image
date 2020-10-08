@@ -11,28 +11,32 @@ const images = [
     local: { isStatic: true, url: '/_image/local/_/_/test.png' },
     cloudinary: { url: '/test.png' },
     twicpics: { url: '/test.png?twic=v1/' },
-    fastly: { url: '/test.png?' }
+    fastly: { url: '/test.png?' },
+    imgix: { url: '/test.png?' }
   },
   {
     args: ['/test.png', { width: 200 }],
     local: { isStatic: true, url: '/_image/local/_/w_200/test.png' },
     cloudinary: { url: '/w_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
-    fastly: { url: '/test.png?width=200' }
+    fastly: { url: '/test.png?width=200' },
+    imgix: { url: '/test.png?w=200' }
   },
   {
     args: ['/test.png', { height: 200 }],
     local: { isStatic: true, url: '/_image/local/_/h_200/test.png' },
     cloudinary: { url: '/h_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
-    fastly: { url: '/test.png?height=200' }
+    fastly: { url: '/test.png?height=200' },
+    imgix: { url: '/test.png?h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
     local: { isStatic: true, url: '/_image/local/_/s_200_200/test.png' },
     cloudinary: { url: '/w_200,h_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
-    fastly: { url: '/test.png?width=200&height=200' }
+    fastly: { url: '/test.png?width=200&height=200' },
+    imgix: { url: '/test.png?w=200&h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -46,7 +50,8 @@ const images = [
     local: { isStatic: true, url: '/_image/local/jpeg/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale,f_jpeg/test.png' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
-    fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' }
+    fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
+    imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' }
   }
 ]
 
