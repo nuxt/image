@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  ci:
+  test-unit:
     runs-on: ${{ matrix.os }}
 
     strategy:

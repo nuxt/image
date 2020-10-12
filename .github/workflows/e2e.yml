@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  ci:
+  test-e2e:
     runs-on: ${{ matrix.os }}
 
     strategy:
