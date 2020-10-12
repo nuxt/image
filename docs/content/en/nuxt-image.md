@@ -19,7 +19,7 @@ The `src` has other capabilities in `nuxt-image`, you can provide provider and p
 
 ### Provider
 
-Nuxt image module will allow you to modify and serve your images using cloud services like coudinary. In order to use a provider you should:
+Nuxt image module will allow you to modify and serve your images using cloud services like cloudinary. In order to use a provider you should:
 1. Define provider and its option in `nuxt.config`.
 2. Specify providers name in `nuxt-image` component
 
