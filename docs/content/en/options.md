@@ -5,7 +5,7 @@ position: 4
 category: Guide
 ---
 
-To configure the image module and cutomize its behavior, you can use `image` property in the `nuxt.config.js`:
+To configure the image module and customize its behavior, you can use the `image` property in your `nuxt.config.js`:
 
 ```js{}[nuxt.config.js]
 export default {
@@ -17,10 +17,10 @@ export default {
 
 ## `providers`
 
-Providers are integration between the image module and images service providers like cloudinary. Using specific provider meand that your images are being transformed by specifig service.
-There are planty of image server providers, currently we are supporting some providers out of box.
+Providers are an integration between the image module and images service providers like cloudinary. Using a specific provider means that your images are being transformed by the specific service.
+There are plenty of image service providers. Currently we are supporting some providers out of box.
 
-To use any provider list them inside `nuxt.config`, You can use [internal providers](/providers) or [create custom provider](/custom-provider).
+To use any provider, list them inside `nuxt.config.js`. You can use [internal providers](/providers) or [create a custom provider](/custom-provider).
 Here is a sample to use `cloudinary`:
 
 <code-group>
@@ -110,7 +110,7 @@ See:
 
 ## `defaultProvider`
 
-If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `defaultProvider`, your first provider picks as default.
+If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `defaultProvider`, your first provider is picked as default.
 
 ```js{}[nuxt.config.js]
 export default {
