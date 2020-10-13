@@ -107,7 +107,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
 
 ### Provider + Presets
 
-As you may notice providers and presets has a different in their usage, and it is possible to use both provider and preset at the same time
+As you may notice providers and presets are different in their usage, and it is possible to use both providers and presets at the same time.
 
 <code-group>
   <code-block label="index.vue" active>
@@ -158,7 +158,7 @@ Genererate `<noscript>` tag for browsers that aren’t running javascript.
 
 ## `legacy`
 
-Using `nuxt-image` you should provider `width` and `height` for the component. These values are used to optimize image size and prevent [Cumulative Layout Shift](https://web.dev/cls/). But there are situation that we don't want to specify with and height for image. In this situations you can use `legacy` prop.  
+Using `nuxt-image` you should provider `width` and `height` for the component. These values are used to optimize image size and prevent [Cumulative Layout Shift](https://web.dev/cls/). But there are situations that we don't want to specify width and height for image. In these situations you can use `legacy` prop.
 
 Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy loading.
 
@@ -209,7 +209,7 @@ Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy lo
 ## `sets`
 
 The `sets` attribute specifies the URL of the image to use in different situations. With `sets`, the browser does the work of figuring out which image is best to load and render.  
-In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically create from image `src`.  
+In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
 
 A set is consists of `width` and `breakpoint` or `media`: 
 - `width`: Width of generated image for this set
@@ -313,7 +313,7 @@ There are five standard values you can use with this property.
 
 ## `operations`
 
-In addition of standard operation, every provider can have their own operation. For example cloudinary supports lots of [transformations](https://cloudinary.com/documentation/image_transformations), Using `operations` prop you can use these transformations.  
+In addition of standard operation, every provider can have their own operation. For example cloudinary supports lots of [transformations](https://cloudinary.com/documentation/image_transformations). Using `operations` prop you can use these transformations.
 
 <code-group>
   <code-block label="index.vue" active>
