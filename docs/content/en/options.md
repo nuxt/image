@@ -65,7 +65,7 @@ See:
 
 ## `presets`
 
-Presets are collections of pre-defined configuration for your projects. Presets will help you to unify images all over your project.
+Presets are collections of pre-defined configurations for your projects. Presets will help you to unify images all over your project.
 
 <code-group>
   <code-block label="nuxt.config.js" active>

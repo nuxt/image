@@ -68,7 +68,7 @@ export default {
 
 Although there is planty of great image provider services out there but sometimes having your own is more fun and may be more customizable. If you want to use image manipulation libraries like [node-canvas](https://github.com/Automattic/node-canvas), [jimp](https://github.com/oliver-moran/jimp), [GraphicsMagick](https://github.com/aheckmann/gm) or any other great library you need to create a middleware for your provider.  
 A middleware is just a [server-middleware for nuxt](https://nuxtjs.org/api/configuration-servermiddleware#custom-server-middleware) that receives generated url and return optimized image.  
-Below exmple shows simple middleware that returns single image.
+Below example shows simple middleware that returns single image.
 
 ```js
 function createMiddleware(options) {
