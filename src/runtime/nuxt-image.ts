@@ -40,8 +40,8 @@ export default {
         src: this.loading ? this.generatedSrc : undefined,
         srcset: this.loading ? this.generatedSrcset : undefined,
         sizes: this.loading ? this.generatedSizes : undefined,
-        width: this.width,
-        height: this.height,
+        width: this.imageWidth,
+        height: this.imageHeight,
         ...this.imgAttributes
       },
       on: {
@@ -61,14 +61,11 @@ export default {
     const placeholder = h('div', {
       class: '__nim_pl',
       style: {
-        paddingBottom: this.height ? `${parseInt(this.height, 10)}px` : undefined
+        paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
       }
     })
 
     const wrapper = h('div', {
-      style: {
-        width: this.width ? `${parseInt(this.width, 10)}px` : undefined
-      },
       class: ['__nim_w', this.loaded ? 'visible' : ''].concat(this.$attrs.class || '')
     }, [bluryImage, originalImage, noScript, placeholder])
 

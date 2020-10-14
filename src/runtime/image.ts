@@ -1,4 +1,5 @@
 import type { CreateImageOptions, ImageModifiers } from 'types'
+import { cleanDoubleSlashes } from './provider-utils'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -87,6 +88,26 @@ export function createImage (context, { providers, defaultProvider, presets }: C
       })
     }
   })
+
+  const { defaults: { baseURL }, provider: { generateURL } } = providers.local
+  image.lqip = async (source: string) => {
+    const { src, provider } = processSource(source)
+    let lqipSrc = src
+    if (provider && provider !== 'local' && providers[provider]) {
+      const generated = providers[provider].provider.generateURL(src, {}, providers[provider].defaults)
+      lqipSrc = generated.url
+    }
+    const { url } = generateURL(lqipSrc, {
+      width: 30,
+      format: 'jpg.json'
+    }, {})
+    const {
+      data, width, height
+    } = await fetch(cleanDoubleSlashes(baseURL + url)).then(res => res.json())
+    return {
+      data, width, height
+    }
+  }
 
   image.$observer = createObserver()
 

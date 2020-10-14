@@ -25,7 +25,7 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
   })
 
   return (modifiers: { [key: string]: any }) => {
-    const operations = Object.entries<string>(modifiers)
+    const operations = Object.entries(modifiers)
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
         const mapper = valueMap[key]

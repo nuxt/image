@@ -14,9 +14,11 @@ export default <RuntimeProvider> {
       operations.push(`h_${modifiers.height}${fit}`)
     }
 
+    const adapter = src.match(/^https?:\/\//) ? 'remote' : 'local'
+
     const operationsString = operations.length ? operations.join(',') : '_'
     return {
-      url: cleanDoubleSlashes(`/_image/local/${modifiers.format || '_'}/${operationsString}/${src}`),
+      url: cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`),
       isStatic: true
     }
   }

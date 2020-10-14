@@ -68,12 +68,20 @@ export default {
       srcset: [],
       blurry: null,
       loading: false,
-      loaded: false
+      loaded: false,
+      imageW: 0,
+      imageH: 0
     }
   },
   async fetch () {
     if (!this.legacy) {
-      this.blurry = await this.$img.lqip(this.src)
+      const {
+        data, width, height
+      } = await this.$img.lqip(this.src)
+
+      this.blurry = data
+      this.imageW = width
+      this.imageH = height
     }
   },
   mounted () {
@@ -85,6 +93,18 @@ export default {
     }
   },
   computed: {
+    imageWidth () {
+      return this.width || this.imageW
+    },
+    imageHeight () {
+      return this.height || this.imageH
+    },
+    imageRatio () {
+      if (this.height && this.width) {
+        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+      }
+      return (this.imageH / this.imageW) * 100
+    },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
       return {

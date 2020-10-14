@@ -6,8 +6,6 @@
       :src="image.src"
       :alt="image.alt"
       class="image"
-      width="100"
-      height="100"
       sets="320"
     />
   </div>
@@ -20,11 +18,6 @@
   justify-content: center;
 }
 
-.container .image {
-  width: 320px;
-  margin: 10px;
-  border-radius: 3px;
-}
 </style>
 
 <script>

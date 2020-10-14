@@ -21,6 +21,7 @@
     "test": "yarn lint && yarn jest"
   },
   "dependencies": {
+    "defu": "^3.1.0",
     "hasha": "^5.2.1",
     "ipx": "^0.3.2",
     "node-fetch": "^2.6.1",
@@ -44,9 +45,9 @@
     "jsdom-global": "^3.0.2",
     "nuxt-edge": "latest",
     "playwright": "^1.4.2",
-    "rimraf": "latest",
+    "rimraf": "^3.0.2",
     "standard-version": "latest",
-    "typescript": "latest"
+    "typescript": "^4.0.3"
   },
   "publishConfig": {
     "access": "public"

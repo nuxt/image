@@ -3,7 +3,9 @@ import { ProviderFactory } from 'types'
 export default <ProviderFactory> function (providerOptions) {
   return {
     runtime: require.resolve('./runtime'),
-    runtimeOptions: providerOptions,
+    runtimeOptions: {
+      baseURL: providerOptions.baseURL
+    },
     middleware: createMiddleware(providerOptions)
   }
 }
@@ -12,10 +14,18 @@ function createMiddleware (options) {
   const { IPX, IPXMiddleware } = require('ipx')
 
   const ipx = new IPX({
-    input: {
-      adapter: 'fs',
-      dir: options.dir
-    },
+    inputs: [
+      {
+        name: 'local',
+        adapter: 'fs',
+        dir: options.dir
+      },
+      {
+        name: 'remote',
+        adapter: 'remote',
+        accept: options.accept
+      }
+    ],
     cache: {
       cleanCron: options.clearCache || false
     }
