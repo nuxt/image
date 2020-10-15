@@ -31,6 +31,9 @@ export default {
       imgix: {
         baseURL: 'https://assets.imgix.net'
       }
+    },
+    intersectOptions: {
+      rootMargin: '50px'
     }
   }
 }

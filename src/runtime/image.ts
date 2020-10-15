@@ -15,7 +15,7 @@ function processSource (src: string) {
   }
 }
 
-export function createImage (context, { providers, defaultProvider, presets }: CreateImageOptions) {
+export function createImage (context, { providers, defaultProvider, presets, intersectOptions }: CreateImageOptions) {
   const presetMap = presets.reduce((map, preset) => {
     map[preset.name] = preset
     return map
@@ -88,13 +88,17 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
   })
 
-  image.$observer = createObserver()
+  image.$observer = createObserver(intersectOptions)
 
   return image
 }
 
-function createObserver () {
-  const observer = (process.client ? new IntersectionObserver(callback) : {}) as IntersectionObserver
+function createObserver (options: object) {
+  const intersectOptions = {
+    rootMargin: '50px',
+    ...options
+  }
+  const observer = (process.client ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
   const elementCallbackMap = {}
   function callback (entries, imgObserver) {
     entries.forEach((entry) => {

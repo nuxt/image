@@ -9,6 +9,7 @@ export interface CreateImageOptions {
   }
   presets: ImagePreset[]
   defaultProvider: string
+  intersectOptions: object
 }
 
 export interface $Image {
