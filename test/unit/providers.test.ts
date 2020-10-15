@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
-import local from '../src/providers/local'
-import cloudinary from '../src/providers/cloudinary'
-import twicpics from '../src/providers/twicpics'
-import fastly from '../src/providers/fastly'
-import imgix from '../src/providers/imgix'
+import local from '~/src/providers/local'
+import cloudinary from '~/src/providers/cloudinary'
+import twicpics from '~/src/providers/twicpics'
+import fastly from '~/src/providers/fastly'
+import imgix from '~/src/providers/imgix'
 
 const images = [
   {
@@ -43,7 +43,8 @@ const images = [
     local: { isStatic: true, url: '/_image/local/_/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale/test.png' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
-    fastly: { url: '/test.png?width=200&height=200&fit=bounds' }
+    fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
+    imgix: { url: '/test.png?w=200&h=200&fit=fill' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
