@@ -19,7 +19,7 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 export default <RuntimeProvider> {
-  generateURL (src: string, modifiers: ImageModifiers, options: any) {
+  getImage (src: string, modifiers: ImageModifiers, options: any) {
     const { width, height, fit, ...providerModifiers } = modifiers
 
     if (width || height) {

@@ -6,35 +6,6 @@ import { ModuleOptions, ProviderFactory } from 'types'
 import { downloadImage, getFileExtension, hash, tryRequire } from './utils'
 export type { Provider, RuntimeProvider } from 'types'
 
-function prepareLocalProvider ({ nuxt, options }, providerOptions) {
-  // Default port
-  const defaultPort =
-   process.env.PORT ||
-   process.env.npm_package_config_nuxt_port ||
-   (options.server && options.server.port) ||
-   3000
-
-  // Default host
-  let defaultHost =
-   process.env.HOST ||
-   process.env.npm_package_config_nuxt_host ||
-   (options.server && options.server.host) ||
-   'localhost'
-
-  /* istanbul ignore if */
-  if (defaultHost === '0.0.0.0') {
-    defaultHost = 'localhost'
-  }
-
-  // Default prefix
-  const prefix = '/'
-
-  return defu(providerOptions, {
-    baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
-  })
-}
-
 function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
@@ -46,22 +17,14 @@ function imageModule (moduleOptions: ModuleOptions) {
   }
 
   // Ensure local provider is set
-  options.providers.local = prepareLocalProvider(this, options.providers.local)
-
-  // Add default `lqip` preset
-  if (!options.presets.some(preset => preset.name === 'lqip')) {
-    options.presets.unshift({
-      name: 'lqip',
-      modifiers: {
-        format: 'jpeg_json',
-        width: 30
-      }
-    })
+  if (!options.providers.length || options.providers.local) {
+    options.providers.local = prepareLocalProvider(this, options.providers.local)
   }
 
   if (!options.defaultProvider) {
     options.defaultProvider = Object.keys(options.providers)[0]
   }
+
 
   interface ModuleProvider {
     name: string,
@@ -170,6 +133,35 @@ function handleStaticGeneration (nuxt: any) {
         })
       })
     await Promise.all(downloads)
+  })
+}
+
+function prepareLocalProvider ({ nuxt, options }, providerOptions) {
+  // Default port
+  const defaultPort =
+   process.env.PORT ||
+   process.env.npm_package_config_nuxt_port ||
+   (options.server && options.server.port) ||
+   3000
+
+  // Default host
+  let defaultHost =
+   process.env.HOST ||
+   process.env.npm_package_config_nuxt_host ||
+   (options.server && options.server.host) ||
+   'localhost'
+
+  /* istanbul ignore if */
+  if (defaultHost === '0.0.0.0') {
+    defaultHost = 'localhost'
+  }
+
+  // Default prefix
+  const prefix = '/'
+
+  return defu(providerOptions, {
+    baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
+    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   })
 }
 

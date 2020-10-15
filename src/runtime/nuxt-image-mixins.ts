@@ -74,15 +74,17 @@ export default {
     }
   },
   async fetch () {
-    if (!this.legacy) {
-      const {
-        data, width, height
-      } = await this.$img.lqip(this.src)
-
-      this.blurry = data
-      this.imageW = width
-      this.imageH = height
+    if (this.legacy) {
+      return
     }
+    const image = await this.$img.lqip(this.src)
+    if (!image) {
+      return
+    }
+
+    this.blurry = image.url
+    this.imageW = image.width
+    this.imageH = image.height
   },
   mounted () {
     if (!this.legacy) {

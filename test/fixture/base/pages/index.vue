@@ -1,7 +1,7 @@
 <template>
   <div>
     It works
-    <nuxt-image :src="image" width="300px" height="200px" />
+    <nuxt-image :src="image" />
     <button id="button" @click="changeImage">
       Change Image
     </button>

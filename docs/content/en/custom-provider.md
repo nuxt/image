@@ -41,7 +41,7 @@ The runtime will recieve a src, image modifiers and its provider options and gen
 
 ```js
 export default {
-  generateURL(src, modifiers, options) {
+  getImage(src, modifiers, options) {
     const { width, height, format, fit, ...providerModifiers } = modifiers;
     const operations = []
 

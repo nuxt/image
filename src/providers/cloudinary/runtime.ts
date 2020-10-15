@@ -22,7 +22,7 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 export default <RuntimeProvider> {
-  generateURL (src: string, modifiers: ImageModifiers, options: any) {
+  getImage (src: string, modifiers: ImageModifiers, options: any) {
     const operations = operationsGenerator(modifiers)
 
     return {

@@ -1,8 +1,12 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
 import { cleanDoubleSlashes } from '../../runtime/provider-utils'
 
+function predictAdapter (src: string) {
+  return src.match(/^https?:\/\//) ? 'remote' : 'local'
+}
+
 export default <RuntimeProvider> {
-  generateURL (src: string, modifiers: ImageModifiers) {
+  getImage (src: string, modifiers: ImageModifiers, { baseURL }) {
     const operations = []
 
     const fit = modifiers.fit ? `_${modifiers.fit}` : ''
@@ -14,12 +18,18 @@ export default <RuntimeProvider> {
       operations.push(`h_${modifiers.height}${fit}`)
     }
 
-    const adapter = src.match(/^https?:\/\//) ? 'remote' : 'local'
+    const adapter = predictAdapter(src)
 
-    const operationsString = operations.length ? operations.join(',') : '_'
+    const operationsString = operations.join(',') || '_'
+    const url = cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`)
+    const infoUrl = cleanDoubleSlashes(`/_image/local/${adapter}/jpg.json/${operationsString}/${src}`)
     return {
-      url: cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`),
-      isStatic: true
+      url,
+      isStatic: true,
+      getInfo: async () => {
+        const { width, height, size } = await fetch(cleanDoubleSlashes(baseURL + infoUrl)).then(res => res.json())
+        return { width, height, size }
+      }
     }
   }
 }
