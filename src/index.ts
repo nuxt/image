@@ -25,7 +25,6 @@ function imageModule (moduleOptions: ModuleOptions) {
     options.defaultProvider = Object.keys(options.providers)[0]
   }
 
-
   interface ModuleProvider {
     name: string,
     options: any

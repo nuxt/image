@@ -92,7 +92,6 @@ export function createImage (context, { providers, defaultProvider, presets }: C
   image.lqip = async (source: string, options: any = {}) => {
     const { src, provider: sourceProvider } = processSource(source)
     const provider = providers[sourceProvider || options.provider || defaultProvider]
-
     if (!provider) {
       throw new Error('Unsupported provider ' + provider)
     }
@@ -103,14 +102,8 @@ export function createImage (context, { providers, defaultProvider, presets }: C
 
     if (typeof generated.getInfo !== 'function') {
       return false
-  const { defaults: { baseURL }, provider: { generateURL } } = providers.local
-  image.lqip = async (source: string) => {
-    const { src, provider } = processSource(source)
-    let lqipSrc = src
-    if (provider && provider !== 'local' && providers[provider]) {
-      const generated = providers[provider].provider.generateURL(src, {}, providers[provider].defaults)
-      lqipSrc = generated.url
     }
+    const { width, height, size } = await generated.getInfo()
     return {
       url: generated.url, width, height, size
     }
