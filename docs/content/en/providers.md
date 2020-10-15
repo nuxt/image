@@ -78,7 +78,7 @@ export default {
 }
 ```
 
-## 'imgix'
+## `imgix`
 
 Integration between [imgix](https://docs.imgix.com/) and the image module. To use this provider you just need to specify the base url of your service in imgix.
 

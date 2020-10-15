@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
-import local from '../src/providers/local'
-import cloudinary from '../src/providers/cloudinary'
-import twicpics from '../src/providers/twicpics'
-import fastly from '../src/providers/fastly'
-import imgix from '../src/providers/imgix'
+import local from '~/src/providers/local'
+import cloudinary from '~/src/providers/cloudinary'
+import twicpics from '~/src/providers/twicpics'
+import fastly from '~/src/providers/fastly'
+import imgix from '~/src/providers/imgix'
 
 const images = [
   {
