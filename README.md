@@ -14,7 +14,7 @@
 <NuxtImage src="/image.png" width="500" height="200" />
 ```
 
-:warning: This module is still in work in progress, please be careful.
+:warning: This module is still a work in progress, please be careful.
 
 - [✨ &nbsp;Release Notes](https://image.nuxtjs.org/releases)
 - [📖 &nbsp;Documentation](https://image.nuxtjs.org)
