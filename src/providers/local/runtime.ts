@@ -28,7 +28,7 @@ export default <RuntimeProvider> {
       isStatic: true,
       getInfo: async () => {
         const { width, height, size } = await fetch(cleanDoubleSlashes(baseURL + infoUrl)).then(res => res.json())
-        return { width, height, size }
+        return { width, height, bytes: size }
       }
     }
   }

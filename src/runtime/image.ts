@@ -103,9 +103,9 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     if (typeof generated.getInfo !== 'function') {
       return false
     }
-    const { width, height, size } = await generated.getInfo()
+    const { width, height, bytes } = await generated.getInfo()
     return {
-      url: generated.url, width, height, size
+      url: generated.url, width, height, bytes
     }
   }
 

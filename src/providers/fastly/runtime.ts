@@ -28,7 +28,7 @@ export default <RuntimeProvider> {
         return {
           width,
           height,
-          size: info.ifsz
+          bytes: info.ifsz
         }
       }
     }

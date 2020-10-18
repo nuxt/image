@@ -31,7 +31,7 @@ export default <RuntimeProvider> {
         return {
           width: info.PixelWidth,
           height: info.PixelHeight,
-          size: info['Content-Length']
+          bytes: info['Content-Length']
         }
       }
     }

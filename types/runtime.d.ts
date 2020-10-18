@@ -63,7 +63,7 @@ export interface RuntimeImageInfo {
   // height of image in pixels
   height: number,
   // size of image in bytes
-  size: number,
+  bytes: number,
 }
 
 export type RuntimeOperationFormatter = (key: string, value: string) => string
