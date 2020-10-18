@@ -5,7 +5,7 @@ import './nuxt-image.css'
 const pictureHTML = ({ generatedSrc, width, height, renderImgAttributesToString, sizes, renderAttributesToString }) =>
 `<picture>
 ${sizes.map(s => `<source ${renderAttributesToString({ type: s.format, media: s.media, srcset: s.url })}>`).join('\n')}
-<img class="__nim_org" ${renderImgAttributesToString({ src: generatedSrc, width, height })}>
+<img class="__nim_o" ${renderImgAttributesToString({ src: generatedSrc, width, height })}>
 </picture>
 `
 
@@ -29,16 +29,16 @@ export default {
     if (this.legacy) {
       return this.renderLegacy(h)
     }
-    const bluryImage = h('img', {
-      class: '__nim_full __nim_blur',
+    const placeholderImage = h('img', {
+      class: '__nim_p',
       attrs: {
-        src: this.blurry,
+        src: this.placeholder,
         alt: this.alt
       }
     })
 
     const originalImage = h('img', {
-      class: ['__nim_org'],
+      class: ['__nim_o'],
       attrs: {
         src: this.loading ? this.generatedSrc : undefined,
         width: this.width,
@@ -70,8 +70,8 @@ export default {
       }, [])
     }
 
-    const placeholder = h('div', {
-      class: '__nim_pl',
+    const ratioBox = h('div', {
+      class: '__nim_r',
       style: {
         paddingBottom: this.height ? `${this.height}` : undefined
       }
@@ -82,7 +82,7 @@ export default {
         width: this.width ? this.width : undefined
       },
       class: ['__nim_w', this.loaded ? 'visible' : '']
-    }, [bluryImage, picture, noScript, placeholder])
+    }, [placeholderImage, picture, noScript, ratioBox])
 
     return wrapper
   },
@@ -96,7 +96,7 @@ export default {
         }
       }))
       const originalImage = h('img', {
-        class: '__nim_org',
+        class: '__nim_o',
         attrs: {
           src: this.generatedSrc,
           srcset: this.generatedSrcset,

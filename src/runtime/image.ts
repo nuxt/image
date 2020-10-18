@@ -89,7 +89,7 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
   })
 
-  image.lqip = async (source: string, options: any = {}) => {
+  image.getPlaceholder = async (source: string, options: any = {}) => {
     const { src, provider: sourceProvider } = processSource(source)
     const provider = providers[sourceProvider || options.provider || defaultProvider]
     if (!provider) {

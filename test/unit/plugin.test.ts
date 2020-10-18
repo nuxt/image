@@ -34,14 +34,14 @@ describe('Plugin', () => {
     }
   })
 
-  test('Generate LQIP', async () => {
+  test('Generate Placeholder', async () => {
     testContext = getContext()
     plugin = (await import(testContext.nuxt.options.buildDir + '/image.js')).default
     plugin(nuxtContext, (_, data) => { nuxtContext.$img = data })
 
     // temporally commented
-    // const lqip = nuxtContext.$img.lqip('/test.png')
-    // expect(lqip).toEqual('/_image/local/_/w_30/test.png')
+    // const placeholder = nuxtContext.$img.getPlaceholder('/test.png')
+    // expect(placeholder).toEqual('/_image/local/_/w_30/test.png')
   })
 
   test('Generate Random Image', () => {

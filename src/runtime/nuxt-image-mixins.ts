@@ -66,7 +66,7 @@ export default {
   data () {
     return {
       srcset: [],
-      blurry: null,
+      placeholder: null,
       loading: false,
       loaded: false,
       imageW: 0,
@@ -77,12 +77,11 @@ export default {
     if (this.legacy) {
       return
     }
-    const image = await this.$img.lqip(this.src)
+    const image = await this.$img.getPlaceholder(this.src)
     if (!image) {
       return
     }
-
-    this.blurry = image.url
+    this.placeholder = image.url
     this.imageW = image.width
     this.imageH = image.height
   },
@@ -154,7 +153,13 @@ export default {
   },
   watch: {
     async src () {
-      this.blurry = await this.$img.lqip(this.src)
+      const image = await this.$img.getPlaceholder(this.src)
+      if (!image) {
+        return
+      }
+      this.placeholder = image.url
+      this.imageW = image.width
+      this.imageH = image.height
       this.original = null
       if (!this.legacy) {
         this.$img.$observer.remove(this.$el)

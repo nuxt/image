@@ -3,7 +3,7 @@ import nuxtImageMixin from './nuxt-image-mixins'
 import './nuxt-image.css'
 
 const imageHTML = ({ generatedSrc, generatedSrcset, generatedSizes, width, height, renderImgAttributesToString }) =>
-`<img class="__nim_org" ${renderImgAttributesToString({ src: generatedSrc, srcset: generatedSrcset, sizes: generatedSizes, width, height })} >`
+`<img class="__nim_o" ${renderImgAttributesToString({ src: generatedSrc, srcset: generatedSrcset, sizes: generatedSizes, width, height })} >`
 
 export default {
   name: 'NuxtImage',
@@ -26,16 +26,16 @@ export default {
     if (this.legacy) {
       return this.renderLegacy(h)
     }
-    const bluryImage = h('img', {
-      class: '__nim_full __nim_blur',
+    const placeholderImage = h('img', {
+      class: '__nim_p',
       attrs: {
-        src: this.blurry,
+        src: this.placeholder,
         alt: this.alt
       }
     })
 
     const originalImage = h('img', {
-      class: ['__nim_org'],
+      class: ['__nim_o'],
       attrs: {
         src: this.loading ? this.generatedSrc : undefined,
         srcset: this.loading ? this.generatedSrcset : undefined,
@@ -58,8 +58,8 @@ export default {
       }, [])
     }
 
-    const placeholder = h('div', {
-      class: '__nim_pl',
+    const ratioBox = h('div', {
+      class: '__nim_r',
       style: {
         paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
       }
@@ -67,14 +67,14 @@ export default {
 
     const wrapper = h('div', {
       class: ['__nim_w', this.loaded ? 'visible' : ''].concat(this.$attrs.class || '')
-    }, [bluryImage, originalImage, noScript, placeholder])
+    }, [placeholderImage, originalImage, noScript, ratioBox])
 
     return wrapper
   },
   methods: {
     renderLegacy (h) {
       return h('img', {
-        class: '__nim_org',
+        class: '__nim_o',
         attrs: {
           src: this.generatedSrc,
           srcset: this.generatedSrcset,
