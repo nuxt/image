@@ -96,16 +96,16 @@ export function createImage (context, { providers, defaultProvider, presets }: C
       throw new Error('Unsupported provider ' + provider)
     }
 
-    const generated = provider.provider.getImage(src, {
+    const image = provider.provider.getImage(src, {
       width: 30
     }, provider.defaults)
 
-    if (typeof generated.getInfo !== 'function') {
+    if (typeof image.getInfo !== 'function') {
       return false
     }
-    const { width, height, bytes } = await generated.getInfo()
+    const { width, height, bytes } = await image.getInfo()
     return {
-      url: generated.url, width, height, bytes
+      url: image.url, width, height, bytes
     }
   }
 
