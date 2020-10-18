@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '../../runtime/provider-utils'
+import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '~image/utils'
 
 const fits = createMapper({
   fill: 'fill',

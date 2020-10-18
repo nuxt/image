@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { cleanDoubleSlashes, createOperationsGenerator } from '../../runtime/provider-utils'
+import { cleanDoubleSlashes, createOperationsGenerator } from '~image/utils'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

@@ -1,5 +1,6 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { cleanDoubleSlashes } from '../../runtime/provider-utils'
+import { cleanDoubleSlashes } from '~image/utils'
+import fetch from '~image/fetch'
 
 function predictAdapter (src: string) {
   return src.match(/^https?:\/\//) ? 'remote' : 'local'
@@ -27,7 +28,7 @@ export default <RuntimeProvider> {
       url,
       isStatic: true,
       getInfo: async () => {
-        const { width, height, size } = await fetch(cleanDoubleSlashes(baseURL + infoUrl)).then(res => res.json())
+        const { width, height, size } = await fetch(baseURL + infoUrl).then(res => res.json())
         return { width, height, bytes: size }
       }
     }

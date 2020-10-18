@@ -116,7 +116,7 @@ export function createImage (context, { providers, defaultProvider, presets }: C
 }
 
 function createObserver () {
-  const observer = (process.client ? new IntersectionObserver(callback) : {}) as IntersectionObserver
+  const observer = (typeof window !== 'undefined' ? new IntersectionObserver(callback) : {}) as IntersectionObserver
   const elementCallbackMap = {}
   function callback (entries, imgObserver) {
     entries.forEach((entry) => {
