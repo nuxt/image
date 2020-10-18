@@ -1,6 +1,6 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
 import { cleanDoubleSlashes, createOperationsGenerator } from '~image/utils'
-import fetch from "~image/fetch"
+import fetch from '~image/fetch'
 
 const operationsGenerator = createOperationsGenerator({
   valueMap: {
