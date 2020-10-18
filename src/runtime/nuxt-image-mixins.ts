@@ -67,10 +67,10 @@ export default {
     return {
       srcset: [],
       placeholder: null,
+      placeholderWidth: 0,
+      placeholderHeight: 0,
       loading: false,
-      loaded: false,
-      imageW: 0,
-      imageH: 0
+      loaded: false
     }
   },
   async fetch () {
@@ -82,8 +82,8 @@ export default {
       return
     }
     this.placeholder = image.url
-    this.imageW = image.width
-    this.imageH = image.height
+    this.placeholderWidth = image.width
+    this.placeholderHeight = image.height
   },
   mounted () {
     if (!this.legacy) {
@@ -94,17 +94,19 @@ export default {
     }
   },
   computed: {
-    imageWidth () {
-      return this.width || this.imageW
-    },
-    imageHeight () {
-      return this.height || this.imageH
-    },
     imageRatio () {
+      let width = this.placeholderWidth
+      let height = this.placeholderHeight
       if (this.height && this.width) {
-        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+        width = this.width
+        height = this.height
       }
-      return (this.imageH / this.imageW) * 100
+
+      if (!height) {
+        return 0
+      }
+
+      return (parseInt(height, 10) / parseInt(width, 10)) * 100
     },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
@@ -158,8 +160,8 @@ export default {
         return
       }
       this.placeholder = image.url
-      this.imageW = image.width
-      this.imageH = image.height
+      this.placeholderWidth = image.width
+      this.placeholderHeight = image.height
       this.original = null
       if (!this.legacy) {
         this.$img.$observer.remove(this.$el)

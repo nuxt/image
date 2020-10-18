@@ -100,13 +100,14 @@ export function createImage (context, { providers, defaultProvider, presets }: C
       width: 30
     }, provider.defaults)
 
-    if (typeof image.getInfo !== 'function') {
-      return false
+    const placeholder = {
+      url: image.url
     }
-    const { width, height, bytes } = await image.getInfo()
-    return {
-      url: image.url, width, height, bytes
+    if (typeof image.getInfo === 'function') {
+      const info = await image.getInfo()
+      Object.assign(placeholder, info)
     }
+    return placeholder
   }
 
   image.$observer = createObserver()

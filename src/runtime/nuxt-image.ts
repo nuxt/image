@@ -40,8 +40,6 @@ export default {
         src: this.loading ? this.generatedSrc : undefined,
         srcset: this.loading ? this.generatedSrcset : undefined,
         sizes: this.loading ? this.generatedSizes : undefined,
-        width: this.imageWidth,
-        height: this.imageHeight,
         ...this.imgAttributes
       },
       on: {

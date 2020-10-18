@@ -41,8 +41,6 @@ export default {
       class: ['__nim_o'],
       attrs: {
         src: this.loading ? this.generatedSrc : undefined,
-        width: this.width,
-        height: this.height,
         ...this.imgAttributes
       },
       on: {
@@ -73,14 +71,11 @@ export default {
     const ratioBox = h('div', {
       class: '__nim_r',
       style: {
-        paddingBottom: this.height ? `${this.height}` : undefined
+        paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
       }
     })
 
     const wrapper = h('div', {
-      style: {
-        width: this.width ? this.width : undefined
-      },
       class: ['__nim_w', this.loaded ? 'visible' : '']
     }, [placeholderImage, picture, noScript, ratioBox])
 
