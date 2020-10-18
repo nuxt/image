@@ -49,6 +49,7 @@ export interface RuntimeProvider {
   // Add additional params (like signuture)
   // Do modifier mapping
   getImage: (src: string, modifiers: ImageModifiers, providerOptions: any) => RuntimeImage
+  getPlaceholder: (src: string, modifiers: ImageModifiers, providerOptions: any) => RuntimePlaceholder
 }
 
 export interface RuntimeImage {
@@ -64,6 +65,10 @@ export interface RuntimeImageInfo {
   height: number,
   // size of image in bytes
   bytes: number,
+}
+
+export interface RuntimePlaceholder extends RuntimeImageInfo {
+  url: string;
 }
 
 export type RuntimeOperationFormatter = (key: string, value: string) => string

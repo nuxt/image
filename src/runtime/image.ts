@@ -89,11 +89,17 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
   })
 
-  image.getPlaceholder = async (source: string, options: any = {}) => {
+  image.getPlaceholder = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
     const { src, provider: sourceProvider } = processSource(source)
     const provider = providers[sourceProvider || options.provider || defaultProvider]
     if (!provider) {
       throw new Error('Unsupported provider ' + provider)
+    }
+
+    if (typeof provider.provider.getPlaceholder === 'function') {
+      return provider.provider.getPlaceholder(src, modifiers, {
+        ...provider.defaults, ...options
+      })
     }
 
     const image = provider.provider.getImage(src, {

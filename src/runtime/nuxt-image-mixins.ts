@@ -77,7 +77,7 @@ export default {
     if (this.legacy) {
       return
     }
-    const image = await this.$img.getPlaceholder(this.src)
+    const image = await this.$img.getPlaceholder(this.src, { fit: this.fit, ...this.operations })
     if (!image) {
       return
     }
@@ -155,7 +155,7 @@ export default {
   },
   watch: {
     async src () {
-      const image = await this.$img.getPlaceholder(this.src)
+      const image = await this.$img.getPlaceholder(this.src, { fit: this.fit, ...this.operations })
       if (!image) {
         return
       }
