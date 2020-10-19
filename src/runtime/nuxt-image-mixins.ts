@@ -65,6 +65,7 @@ export default {
   },
   data () {
     return {
+      error: '',
       srcset: [],
       blurry: null,
       loading: false,
@@ -73,7 +74,7 @@ export default {
   },
   async fetch () {
     if (!this.legacy) {
-      this.blurry = await this.$img.lqip(this.src)
+      this.blurry = await this.getPlaceholder()
     }
   },
   mounted () {
@@ -132,7 +133,7 @@ export default {
   },
   watch: {
     async src () {
-      this.blurry = await this.$img.lqip(this.src)
+      this.blurry = await this.getPlaceholder()
       this.original = null
       if (!this.legacy) {
         this.$img.$observer.remove(this.$el)
@@ -144,15 +145,27 @@ export default {
     }
   },
   methods: {
+    getPlaceholder () {
+      try {
+        return this.$img.lqip(this.src)
+      } catch (e) {
+        this.error = e.message
+        return false
+      }
+    },
     generateSizedImage (width: number, height: number, format: string) {
-      const image = this.$img(this.src, {
-        width,
-        height,
-        format,
-        fit: this.fit,
-        ...this.operations
-      })
-      return encodeURI(image)
+      try {
+        const image = this.$img(this.src, {
+          width,
+          height,
+          format,
+          fit: this.fit,
+          ...this.operations
+        })
+        return encodeURI(image)
+      } catch (e) {
+        this.error = e.message
+      }
     },
     loadOriginalImage () {
       this.loading = true

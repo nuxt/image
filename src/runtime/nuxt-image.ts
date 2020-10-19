@@ -23,6 +23,11 @@ export default {
     }
   },
   render (h) {
+    if (this.error) {
+      return h('div', {
+        class: ['__nim_w'].concat(this.$attrs.class || '')
+      }, [this.error])
+    }
     if (this.legacy) {
       return this.renderLegacy(h)
     }
