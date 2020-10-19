@@ -149,7 +149,7 @@ export default {
       try {
         return this.$img.lqip(this.src)
       } catch (e) {
-        this.error = e.message
+        this.onError(e)
         return false
       }
     },
@@ -164,7 +164,8 @@ export default {
         })
         return encodeURI(image)
       } catch (e) {
-        this.error = e.message
+        this.onError(e)
+        return ''
       }
     },
     loadOriginalImage () {
@@ -180,6 +181,11 @@ export default {
         ...this.imgAttributes,
         ...extraAttributes
       })
+    },
+    onError (e: Error) {
+      this.error = e.message
+      // eslint-disable-next-line no-console
+      console.error(e.message)
     }
   },
   beforeDestroy () {
