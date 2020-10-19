@@ -7,7 +7,7 @@ function predictAdapter (src: string) {
 }
 
 export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, { baseURL }) {
+  getImage (src: string, modifiers: ImageModifiers, options: any) {
     const operations = []
 
     const fit = modifiers.fit ? `_${modifiers.fit}` : ''
@@ -28,6 +28,7 @@ export default <RuntimeProvider> {
       url,
       isStatic: true,
       getInfo: async () => {
+        const baseURL = typeof window !== 'undefined' ? options.baseURL : options.internalBaseURL
         const { width, height, size } = await fetch(baseURL + infoUrl).then(res => res.json())
         return { width, height, bytes: size }
       }

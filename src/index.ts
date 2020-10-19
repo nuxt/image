@@ -160,6 +160,7 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
 
   return defu(providerOptions, {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
+    internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   })
 }
