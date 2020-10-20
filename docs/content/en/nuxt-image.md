@@ -158,8 +158,6 @@ Genererate `<noscript>` tag for browsers that aren’t running javascript.
 
 ## `legacy`
 
-Using `nuxt-image` you should provider `width` and `height` for the component. These values are used to optimize image size and prevent [Cumulative Layout Shift](https://web.dev/cls/). But there are situations that we don't want to specify width and height for image. In these situations you can use `legacy` prop.
-
 Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy loading.
 
 <code-group>

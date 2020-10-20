@@ -18,7 +18,21 @@ export default {
   image: {
     providers: {
       local: {
-        dir: '~/assets/images/local',
+        /**
+         * Public domain of your website 
+         **/
+        baseURL: 'https://awesome.com/',
+        /**
+         * Internal address of your website 
+         **/
+        internalBaseURL: 'http://192.168.1.100:3000/',
+        /**
+         * Input directory for images
+         **/
+        dir: '~/static',
+        /**
+         * Enable/Disabel cache cleaning cron job
+         **/
         clearCache: false
       }
     }
