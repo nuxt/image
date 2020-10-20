@@ -100,6 +100,8 @@ export default {
       if (this.height && this.width) {
         width = this.width
         height = this.height
+      } else if (this.width || this.height) {
+        console.warn('`<nuxt-imge>` needs both width adn height to calculate aspect ratio. Using one without another will be ignored')
       }
 
       if (!height) {
