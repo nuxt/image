@@ -1,4 +1,4 @@
-import type { CreateImageOptions, ImageModifiers } from 'types'
+import type { CreateImageOptions, ImageModifiers, ImagePreset } from 'types'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -21,26 +21,36 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     return map
   }, {})
 
+  function getProvider (name: string) {
+    const provider = providers[name]
+    if (!provider) {
+      throw new Error('Unsupported provider ' + name)
+    }
+    return provider
+  }
+
+  function getPreset (name: string): ImagePreset | false {
+    if (!name) {
+      return false
+    }
+    if (!presetMap[name]) {
+      throw new Error('Unsupported preset ' + name)
+    }
+    return presetMap[name]
+  }
+
   function image (source: string, modifiers: ImageModifiers, options: any = {}) {
     const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
-    const provider = providers[sourceProvider || options.provider || defaultProvider]
-    const preset = sourcePreset || options.preset
+    const provider = getProvider(sourceProvider || options.provider || defaultProvider)
+    const preset = getPreset(sourcePreset || options.preset)
 
     if (!src.match(/^(https?:\/\/|\/.*)/)) {
       throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
     }
 
-    if (!provider) {
-      throw new Error('Unsupported provider ' + options.provider)
-    }
-
-    if (preset && !presetMap[preset]) {
-      throw new Error('Unsupported preset ' + preset)
-    }
-
     const image = provider.provider.getImage(
       src,
-      presetMap[preset] ? presetMap[preset].modifiers : modifiers,
+      preset ? preset.modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
     const { url: providerUrl, isStatic } = image
@@ -91,27 +101,25 @@ export function createImage (context, { providers, defaultProvider, presets }: C
 
   image.getPlaceholder = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
     const { src, provider: sourceProvider } = processSource(source)
-    const provider = providers[sourceProvider || options.provider || defaultProvider]
-    if (!provider) {
-      throw new Error('Unsupported provider ' + provider)
-    }
+    const provider = getProvider(sourceProvider || options.provider || defaultProvider)
 
+    let placeholder
     if (typeof provider.provider.getPlaceholder === 'function') {
-      return provider.provider.getPlaceholder(src, modifiers, {
+      placeholder = provider.provider.getPlaceholder(src, modifiers, {
         ...provider.defaults, ...options
       })
-    }
+    } else {
+      const image = provider.provider.getImage(src, {
+        ...modifiers,
+        width: 30
+      }, provider.defaults)
 
-    const image = provider.provider.getImage(src, {
-      width: 30
-    }, provider.defaults)
+      placeholder = { url: image.url }
 
-    const placeholder = {
-      url: image.url
-    }
-    if (typeof image.getInfo === 'function') {
-      const info = await image.getInfo()
-      Object.assign(placeholder, info)
+      if (typeof image.getInfo === 'function') {
+        const info = await image.getInfo()
+        Object.assign(placeholder, info)
+      }
     }
     return placeholder
   }
