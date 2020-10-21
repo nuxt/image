@@ -180,8 +180,13 @@ export default {
     async fetchMeta () {
       // Fetch meta when necessary
       if (this.placeholder === true || !(this.width && this.height)) {
-        const meta = await this.$img.getMeta(this.src, this.computedOperations)
-        Object.assign(this.meta, meta)
+        try {
+          const meta = await this.$img.getMeta(this.src, this.computedOperations)
+          Object.assign(this.meta, meta)
+        } catch (e) {
+          this.onError(e)
+          return ''
+        }
       }
 
       // Allow overriding meta.placeholder
@@ -190,14 +195,18 @@ export default {
       }
     },
     generateSizedImage (width: number, height: number, format: string) {
-      const image = this.$img(this.src, {
-        width,
-        height,
-        format,
-        ...this.computedOperations
-      })
-
-      return encodeURI(image)
+      try {
+        const image = this.$img(this.src, {
+          width,
+          height,
+          format,
+          ...this.computedOperations
+        })
+        return encodeURI(image)
+      } catch (e) {
+        this.onError(e)
+        return ''
+      }
     },
     loadOriginalImage () {
       this.loading = true
