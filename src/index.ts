@@ -11,6 +11,7 @@ function imageModule (moduleOptions: ModuleOptions) {
 
   const options: ModuleOptions = {
     presets: [],
+    intersectOptions: {},
     providers: {},
     ...nuxt.options.image,
     ...moduleOptions
@@ -36,6 +37,7 @@ function imageModule (moduleOptions: ModuleOptions) {
 
   const pluginOptions = {
     defaultProvider: options.defaultProvider,
+    intersectOptions: options.intersectOptions,
     imports: {} as { [name: string]: string },
     providers: [] as { name: string, import: string, options: any }[],
     presets: options.presets

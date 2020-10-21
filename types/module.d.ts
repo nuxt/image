@@ -11,7 +11,7 @@ export interface ModuleOptions {
     }
     [name: string]: any
   }
-  provider: object;
+  intersectOptions: object;
 }
 
 export const imageModule: Module<ModuleOptions>

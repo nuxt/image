@@ -5,6 +5,7 @@ import { createImage } from '~image/image'
 
 <%=Object.entries(options.imports).map(([name, path]) => `import ${name} from '${path}'`).join('\n')%>
 
+const intersectOptions = <%= devalue(options.intersectOptions) %>
 const defaultProvider = '<%= options.defaultProvider %>'
 const presets = <%= devalue(options.presets) %>
 const providers = {}
@@ -25,6 +26,7 @@ export default function (context, inject) {
     defaultProvider,
     providers,
     presets,
+    intersectOptions
   })
 
   inject('img', image)
