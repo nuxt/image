@@ -54,10 +54,6 @@ describe('Plugin', () => {
     expect(image).toEqual('https://res.cloudinary.com/nuxt/image/upload/r_100/test.png')
   })
 
-  test('Deny Invalid Images', () => {
-    expect(() => nuxtContext.$img('test.png', {})).toThrow(Error)
-  })
-
   test('Deny undefined provider', () => {
     expect(() => nuxtContext.$img('invalid:/test.png', {})).toThrow(Error)
   })

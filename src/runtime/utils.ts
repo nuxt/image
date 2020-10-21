@@ -61,5 +61,5 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
 const modernFormats = ['webp', 'avif']
 
 export function isModernFormat (path: string) {
-  return modernFormats.includes(path.split('.').pop())
+  return modernFormats.includes(String(path).split('.').pop())
 }

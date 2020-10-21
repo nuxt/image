@@ -36,7 +36,7 @@ export function testComponent (Component, props) {
     })
   })
   test('add observer', () => {
-    expect(observerAdded).toBe(props.legacy ? 0 : 1)
+    expect(observerAdded).toBe(props.lazy === false ? 0 : 1)
     expect(observerDestroyed).toBe(0)
   })
   test('Generate alt', () => {
@@ -45,7 +45,7 @@ export function testComponent (Component, props) {
     expect(domAlt).toEqual('image')
   })
   test('Set src', (done) => {
-    if (props.legacy) {
+    if (props.lazy === false) {
       const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcBefore).toEqual(src)
       return done()
@@ -63,9 +63,9 @@ export function testComponent (Component, props) {
     src = '/image.jpeg'
     wrapper.setProps({ src })
     process.nextTick(() => {
-      if (props.legacy) {
-        expect(observerAdded).toBe(props.legacy ? 0 : 2)
-        expect(observerDestroyed).toBe(props.legacy ? 0 : 1)
+      if (props.lazy === false) {
+        expect(observerAdded).toBe(props.lazy === false ? 0 : 2)
+        expect(observerDestroyed).toBe(props.lazy === false ? 0 : 1)
 
         const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
         expect(domSrcBefore).toEqual(src)
@@ -93,7 +93,7 @@ export function testComponent (Component, props) {
 
   test('remove observer', () => {
     wrapper.destroy()
-    expect(observerDestroyed).toBe(props.legacy ? 0 : 2)
+    expect(observerDestroyed).toBe(props.lazy === false ? 0 : 2)
   })
 }
 

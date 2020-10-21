@@ -154,7 +154,7 @@ export default {
     src () {
       this.fetchMeta()
 
-      if (!this.lazy) {
+      if (this.lazy) {
         this.$img.$observer.remove(this.$el)
         this.$img.$observer.add(this.$el, () => {
           // OK, element is visible, Hoooray
@@ -172,7 +172,7 @@ export default {
     }
   },
   beforeDestroy () {
-    if (!this.lazy) {
+    if (this.lazy) {
       this.$img.$observer.remove(this.$el)
     }
   },
