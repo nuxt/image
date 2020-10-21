@@ -3,6 +3,7 @@ import Component from '~/src/runtime/nuxt-image'
 
 describe('Renders simple image', () => {
   testComponent(Component, {
+    lazy: true,
     width: 200,
     height: 200,
     sets: '200,500:500,900:900 (webp)'
@@ -11,7 +12,7 @@ describe('Renders simple image', () => {
 
 describe('Renders legacy image', () => {
   testComponent(Component, {
-    legacy: true,
+    lazy: false,
     width: '200px',
     height: 200,
     sets: [
@@ -31,6 +32,7 @@ describe('Renders legacy image', () => {
 
 describe('Renders noscript', () => {
   testComponent(Component, {
+    lazy: true,
     noScript: true,
     width: 200,
     height: 200,

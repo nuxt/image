@@ -1,3 +1,6 @@
+import { renderAttributesToString } from './utils'
+
+// @vue/component
 export default {
   props: {
     src: {
@@ -13,9 +16,9 @@ export default {
       type: [String, Number],
       default: ''
     },
-    legacy: {
+    lazy: {
       type: Boolean,
-      default: false
+      default: typeof IntersectionObserver !== 'undefined'
     },
     sets: {
       type: [String, Array],
@@ -61,31 +64,47 @@ export default {
     crossorigin: {
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: [Boolean, String],
+      default: false
     }
+  },
+  async fetch () {
+    await this.fetchMeta()
   },
   data () {
     return {
       error: '',
       srcset: [],
-      blurry: null,
+      meta: {
+        width: undefined,
+        height: undefined,
+        placeholder: undefined
+      },
+      // TODO: state: 'idle',
       loading: false,
       loaded: false
     }
   },
-  async fetch () {
-    if (!this.legacy) {
-      this.blurry = await this.getPlaceholder()
-    }
-  },
-  mounted () {
-    if (!this.legacy) {
-      this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
-    }
-  },
   computed: {
+    computedOperations () {
+      return {
+        fit: this.fit,
+        ...this.operations
+      }
+    },
+    imageRatio () {
+      if (this.height && this.width) {
+        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+      }
+
+      if (this.meta.width && this.meta.height) {
+        return (this.meta.width / this.meta.height) * 100
+      }
+
+      return 0
+    },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
       return {
@@ -132,25 +151,47 @@ export default {
     }
   },
   watch: {
-    async src () {
-      this.blurry = await this.getPlaceholder()
-      this.original = null
-      if (!this.legacy) {
+    src () {
+      this.fetchMeta()
+
+      if (this.lazy) {
         this.$img.$observer.remove(this.$el)
         this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
+          // OK, element is visible, Hoooray
           this.loadOriginalImage()
         })
       }
     }
   },
+  mounted () {
+    if (this.lazy) {
+      this.$img.$observer.add(this.$el, () => {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+      })
+    }
+  },
+  beforeDestroy () {
+    if (this.lazy) {
+      this.$img.$observer.remove(this.$el)
+    }
+  },
   methods: {
-    getPlaceholder () {
-      try {
-        return this.$img.lqip(this.src)
-      } catch (e) {
-        this.onError(e)
-        return false
+    async fetchMeta () {
+      // Fetch meta when necessary
+      if (this.placeholder === true || !(this.width && this.height)) {
+        try {
+          const meta = await this.$img.getMeta(this.src, this.computedOperations)
+          Object.assign(this.meta, meta)
+        } catch (e) {
+          this.onError(e)
+          return ''
+        }
+      }
+
+      // Allow overriding meta.placeholder
+      if (typeof this.placeholder === 'string') {
+        this.meta.placeholder = this.placeholder
       }
     },
     generateSizedImage (width: number, height: number, format: string) {
@@ -159,8 +200,7 @@ export default {
           width,
           height,
           format,
-          fit: this.fit,
-          ...this.operations
+          ...this.computedOperations
         })
         return encodeURI(image)
       } catch (e) {
@@ -171,13 +211,8 @@ export default {
     loadOriginalImage () {
       this.loading = true
     },
-    renderAttributesToString (attributes = {}) {
-      return Object.entries<string>(attributes)
-        .map(([key, value]) => value ? `${key}="${value}"` : '')
-        .filter(Boolean).join(' ')
-    },
     renderImgAttributesToString (extraAttributes = {}) {
-      return this.renderAttributesToString({
+      return renderAttributesToString({
         ...this.imgAttributes,
         ...extraAttributes
       })
@@ -186,11 +221,6 @@ export default {
       this.error = e.message
       // eslint-disable-next-line no-console
       console.error(e.message)
-    }
-  },
-  beforeDestroy () {
-    if (!this.legacy) {
-      this.$img.$observer.remove(this.$el)
     }
   }
 }
