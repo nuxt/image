@@ -4,29 +4,13 @@
       v-for="(image, i) in [...images, ...images, ...images, ...images, ...images]"
       :key="'img-' + i"
       :src="image.src"
+      :format="image.format"
       :alt="image.alt"
       class="image"
-      :placeholder="true"
-      width="100"
-      height="100"
       sets="320"
     />
   </div>
 </template>
-
-<style scoped>
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.container .image {
-  width: 320px;
-  margin: 10px;
-  border-radius: 3px;
-}
-</style>
 
 <script>
 export default {
@@ -43,9 +27,18 @@ export default {
         { src: '/images/2000px-Wonder_Lake_and_Denali.jpg', alt: 'Denali Alaska' },
         { src: '/images/1280px-K2_2006b.jpg', alt: 'K2' },
         { src: '/images/damavand.jpg', alt: 'Damavand' },
-        { src: '/images/1280px-ChoOyu-fromGokyo.jpg', alt: 'Cho Oyu' }
+        { src: '/images/1280px-ChoOyu-fromGokyo.jpg', alt: 'Cho Oyu' },
+        { src: 'twicpics:/v1/placeholder:200x100:medium-violet-red', alt: 'Placeholder', format: 'jpg' }
       ]
     }
   }
 }
 </script>
+
+<style scoped>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

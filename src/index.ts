@@ -1,4 +1,5 @@
 import path from 'path'
+import defu from 'defu'
 import fs from 'fs-extra'
 import upath from 'upath'
 import { ModuleOptions, ProviderFactory } from 'types'
@@ -11,31 +12,14 @@ function imageModule (moduleOptions: ModuleOptions) {
   const options: ModuleOptions = {
     presets: [],
     intersectOptions: {},
+    providers: {},
     ...nuxt.options.image,
     ...moduleOptions
   }
 
-  // Ensure at least one provider is set
-  if (!options.providers || !Object.keys(options.providers).length) {
-    options.providers = { local: {} }
-  }
-
-  // Add default `lqip` preset
-  if (!options.presets.some(preset => preset.name === 'lqip')) {
-    options.presets.unshift({
-      name: 'lqip',
-      modifiers: {
-        width: 30
-      }
-    })
-  }
-
-  // Apply local defaults
-  if (options.providers.local && typeof options.providers.local === 'object') {
-    options.providers.local = {
-      dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static),
-      ...options.providers.local
-    }
+  // Ensure local provider is set
+  if (!options.providers.length || options.providers.local) {
+    options.providers.local = prepareLocalProvider(this, options.providers.local)
   }
 
   if (!options.defaultProvider) {
@@ -150,6 +134,36 @@ function handleStaticGeneration (nuxt: any) {
         })
       })
     await Promise.all(downloads)
+  })
+}
+
+function prepareLocalProvider ({ nuxt, options }, providerOptions) {
+  // Default port
+  const defaultPort =
+   process.env.PORT ||
+   process.env.npm_package_config_nuxt_port ||
+   (options.server && options.server.port) ||
+   3000
+
+  // Default host
+  let defaultHost =
+   process.env.HOST ||
+   process.env.npm_package_config_nuxt_host ||
+   (options.server && options.server.host) ||
+   'localhost'
+
+  /* istanbul ignore if */
+  if (defaultHost === '0.0.0.0') {
+    defaultHost = 'localhost'
+  }
+
+  // Default prefix
+  const prefix = '/'
+
+  return defu(providerOptions, {
+    baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
+    internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
+    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   })
 }
 

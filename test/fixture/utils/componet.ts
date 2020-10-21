@@ -18,7 +18,7 @@ export function testComponent (Component, props) {
       observerDestroyed += 1
     }
   }
-  $img.lqip = () => `/lqip${src}`
+  $img.getPlaceholder = () => `/placeholder${src}`
   let wrapper
   test('Mount', () => {
     // render the component
@@ -36,25 +36,25 @@ export function testComponent (Component, props) {
     })
   })
   test('add observer', () => {
-    expect(observerAdded).toBe(props.legacy ? 0 : 1)
+    expect(observerAdded).toBe(props.lazy === false ? 0 : 1)
     expect(observerDestroyed).toBe(0)
   })
   test('Generate alt', () => {
     expect(wrapper.vm.imgAttributes.alt).toEqual('image')
-    const domAlt = wrapper.find('.__nim_org').element.getAttribute('alt')
+    const domAlt = wrapper.find('.__nim_o').element.getAttribute('alt')
     expect(domAlt).toEqual('image')
   })
   test('Set src', (done) => {
-    if (props.legacy) {
-      const domSrcBefore = wrapper.find('.__nim_org').element.getAttribute('src')
+    if (props.lazy === false) {
+      const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcBefore).toEqual(src)
       return done()
     }
-    const domSrcBefore = wrapper.find('.__nim_org').element.getAttribute('src')
+    const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
     expect(domSrcBefore).toBeNull()
     becomeVisible()
     process.nextTick(() => {
-      const domSrcAfter = wrapper.find('.__nim_org').element.getAttribute('src')
+      const domSrcAfter = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcAfter).toEqual(src)
       done()
     })
@@ -63,16 +63,16 @@ export function testComponent (Component, props) {
     src = '/image.jpeg'
     wrapper.setProps({ src })
     process.nextTick(() => {
-      if (props.legacy) {
-        expect(observerAdded).toBe(props.legacy ? 0 : 2)
-        expect(observerDestroyed).toBe(props.legacy ? 0 : 1)
+      if (props.lazy === false) {
+        expect(observerAdded).toBe(props.lazy === false ? 0 : 2)
+        expect(observerDestroyed).toBe(props.lazy === false ? 0 : 1)
 
-        const domSrcBefore = wrapper.find('.__nim_org').element.getAttribute('src')
+        const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
         expect(domSrcBefore).toEqual(src)
         return done()
       }
 
-      const domSrcAfter = wrapper.find('.__nim_org').element.getAttribute('src')
+      const domSrcAfter = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcAfter).toEqual(src)
       done()
     })
@@ -93,7 +93,7 @@ export function testComponent (Component, props) {
 
   test('remove observer', () => {
     wrapper.destroy()
-    expect(observerDestroyed).toBe(props.legacy ? 0 : 2)
+    expect(observerDestroyed).toBe(props.lazy === false ? 0 : 2)
   })
 }
 
@@ -102,7 +102,7 @@ function testImageSets (wrapper) {
     '(min-width: 900px) 900px, (min-width: 500px) 500px, 200px',
     '200px'
   ]
-  const sizes = wrapper.find('.__nim_org').element.getAttribute('sizes')
+  const sizes = wrapper.find('.__nim_o').element.getAttribute('sizes')
   expect(possibleSizes).toContain(sizes)
 }
 

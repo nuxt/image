@@ -1,3 +1,6 @@
+import { renderAttributesToString } from './utils'
+
+// @vue/component
 export default {
   props: {
     src: {
@@ -13,9 +16,9 @@ export default {
       type: [String, Number],
       default: ''
     },
-    legacy: {
+    lazy: {
       type: Boolean,
-      default: false
+      default: typeof IntersectionObserver !== 'undefined'
     },
     sets: {
       type: [String, Array],
@@ -61,30 +64,47 @@ export default {
     crossorigin: {
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: [Boolean, String],
+      default: false
     }
+  },
+  async fetch () {
+    await this.fetchMeta()
   },
   data () {
     return {
+      error: '',
       srcset: [],
-      blurry: null,
+      meta: {
+        width: undefined,
+        height: undefined,
+        placeholder: undefined
+      },
+      // TODO: state: 'idle',
       loading: false,
       loaded: false
     }
   },
-  async fetch () {
-    if (!this.legacy) {
-      this.blurry = await this.$img.lqip(this.src)
-    }
-  },
-  mounted () {
-    if (!this.legacy) {
-      this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
-    }
-  },
   computed: {
+    computedOperations () {
+      return {
+        fit: this.fit,
+        ...this.operations
+      }
+    },
+    imageRatio () {
+      if (this.height && this.width) {
+        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+      }
+
+      if (this.meta.width && this.meta.height) {
+        return (this.meta.width / this.meta.height) * 100
+      }
+
+      return 0
+    },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
       return {
@@ -131,47 +151,76 @@ export default {
     }
   },
   watch: {
-    async src () {
-      this.blurry = await this.$img.lqip(this.src)
-      this.original = null
-      if (!this.legacy) {
+    src () {
+      this.fetchMeta()
+
+      if (this.lazy) {
         this.$img.$observer.remove(this.$el)
         this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
+          // OK, element is visible, Hoooray
           this.loadOriginalImage()
         })
       }
     }
   },
-  methods: {
-    generateSizedImage (width: number, height: number, format: string) {
-      const image = this.$img(this.src, {
-        width,
-        height,
-        format,
-        fit: this.fit,
-        ...this.operations
-      })
-      return encodeURI(image)
-    },
-    loadOriginalImage () {
-      this.loading = true
-    },
-    renderAttributesToString (attributes = {}) {
-      return Object.entries<string>(attributes)
-        .map(([key, value]) => value ? `${key}="${value}"` : '')
-        .filter(Boolean).join(' ')
-    },
-    renderImgAttributesToString (extraAttributes = {}) {
-      return this.renderAttributesToString({
-        ...this.imgAttributes,
-        ...extraAttributes
+  mounted () {
+    if (this.lazy) {
+      this.$img.$observer.add(this.$el, () => {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
       })
     }
   },
   beforeDestroy () {
-    if (!this.legacy) {
+    if (this.lazy) {
       this.$img.$observer.remove(this.$el)
+    }
+  },
+  methods: {
+    async fetchMeta () {
+      // Fetch meta when necessary
+      if (this.placeholder === true || !(this.width && this.height)) {
+        try {
+          const meta = await this.$img.getMeta(this.src, this.computedOperations)
+          Object.assign(this.meta, meta)
+        } catch (e) {
+          this.onError(e)
+          return ''
+        }
+      }
+
+      // Allow overriding meta.placeholder
+      if (typeof this.placeholder === 'string') {
+        this.meta.placeholder = this.placeholder
+      }
+    },
+    generateSizedImage (width: number, height: number, format: string) {
+      try {
+        const image = this.$img(this.src, {
+          width,
+          height,
+          format,
+          ...this.computedOperations
+        })
+        return encodeURI(image)
+      } catch (e) {
+        this.onError(e)
+        return ''
+      }
+    },
+    loadOriginalImage () {
+      this.loading = true
+    },
+    renderImgAttributesToString (extraAttributes = {}) {
+      return renderAttributesToString({
+        ...this.imgAttributes,
+        ...extraAttributes
+      })
+    },
+    onError (e: Error) {
+      this.error = e.message
+      // eslint-disable-next-line no-console
+      console.error(e.message)
     }
   }
 }

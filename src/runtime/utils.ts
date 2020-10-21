@@ -24,8 +24,8 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
     }
   })
 
-  return (modifiers: { [key: string]: any }) => {
-    const operations = Object.entries<string>(modifiers)
+  return (modifiers: { [key: string]: string }) => {
+    const operations = Object.entries(modifiers)
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
         const mapper = valueMap[key]
@@ -40,4 +40,26 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
 
     return operations.join(joinWith)
   }
+}
+
+type Attrs = { [key: string]: string|number }
+
+export function renderAttributesToString (attributes: Attrs = {}) {
+  return Object.entries(attributes)
+    .map(([key, value]) => value ? `${key}="${value}"` : '')
+    .filter(Boolean).join(' ')
+}
+
+export function renderTag (tag: string, attrs: Attrs, contents?: string) {
+  const html = `<${tag} ${renderAttributesToString(attrs)}>`
+  if (!contents) {
+    return html
+  }
+  return html + contents + `</${tag}>`
+}
+
+const modernFormats = ['webp', 'avif']
+
+export function isModernFormat (path: string) {
+  return modernFormats.includes(String(path).split('.').pop())
 }

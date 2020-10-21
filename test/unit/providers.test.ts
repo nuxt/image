@@ -8,7 +8,7 @@ import imgix from '~/src/providers/imgix'
 const images = [
   {
     args: ['/test.png', {}],
-    local: { isStatic: true, url: '/_image/local/_/_/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/_/test.png' },
     cloudinary: { url: '/test.png' },
     twicpics: { url: '/test.png?twic=v1/' },
     fastly: { url: '/test.png?' },
@@ -16,7 +16,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200 }],
-    local: { isStatic: true, url: '/_image/local/_/w_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/w_200/test.png' },
     cloudinary: { url: '/w_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
@@ -24,7 +24,7 @@ const images = [
   },
   {
     args: ['/test.png', { height: 200 }],
-    local: { isStatic: true, url: '/_image/local/_/h_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/h_200/test.png' },
     cloudinary: { url: '/h_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
@@ -32,7 +32,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
-    local: { isStatic: true, url: '/_image/local/_/s_200_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/s_200_200/test.png' },
     cloudinary: { url: '/w_200,h_200/test.png' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
@@ -40,7 +40,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
-    local: { isStatic: true, url: '/_image/local/_/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale/test.png' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
@@ -48,7 +48,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
-    local: { isStatic: true, url: '/_image/local/jpeg/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/jpeg/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale,f_jpeg/test.png' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
@@ -72,11 +72,11 @@ describe('Providers', () => {
 
     const runtime = (await import(providerData.runtime)).default
     expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.generateURL).toEqual('function')
+    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
-      expect(generated).toEqual(image.local)
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.local)
     }
   })
 
@@ -94,11 +94,11 @@ describe('Providers', () => {
 
     const runtime = (await import(providerData.runtime)).default
     expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.generateURL).toEqual('function')
+    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
-      expect(generated).toEqual(image.cloudinary)
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.cloudinary)
     }
   })
 
@@ -116,11 +116,11 @@ describe('Providers', () => {
 
     const runtime = (await import(providerData.runtime)).default
     expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.generateURL).toEqual('function')
+    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
-      expect(generated).toEqual(image.twicpics)
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.twicpics)
     }
   })
 
@@ -138,11 +138,11 @@ describe('Providers', () => {
 
     const runtime = (await import(providerData.runtime)).default
     expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.generateURL).toEqual('function')
+    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
-      expect(generated).toEqual(image.fastly)
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.fastly)
     }
   })
 
@@ -160,11 +160,11 @@ describe('Providers', () => {
 
     const runtime = (await import(providerData.runtime)).default
     expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.generateURL).toEqual('function')
+    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.generateURL.call(null, ...image.args, providerData.runtimeOptions)
-      expect(generated).toEqual(image.imgix)
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.imgix)
     }
   })
 })

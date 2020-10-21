@@ -1,4 +1,4 @@
-import type { CreateImageOptions, ImageModifiers } from 'types'
+import type { CreateImageOptions, ImageModifiers, ImagePreset } from 'types'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -21,28 +21,35 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return map
   }, {})
 
+  function getProvider (name: string) {
+    const provider = providers[name]
+    if (!provider) {
+      throw new Error('Unsupported provider ' + name)
+    }
+    return provider
+  }
+
+  function getPreset (name: string): ImagePreset | false {
+    if (!name) {
+      return false
+    }
+    if (!presetMap[name]) {
+      throw new Error('Unsupported preset ' + name)
+    }
+    return presetMap[name]
+  }
+
   function image (source: string, modifiers: ImageModifiers, options: any = {}) {
     const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
-    const provider = providers[sourceProvider || options.provider || defaultProvider]
-    const preset = sourcePreset || options.preset
+    const provider = getProvider(sourceProvider || options.provider || defaultProvider)
+    const preset = getPreset(sourcePreset || options.preset)
 
-    if (!src.match(/^(https?:\/\/|\/.*)/)) {
-      throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
-    }
-
-    if (!provider) {
-      throw new Error('Unsupported provider ' + options.provider)
-    }
-
-    if (preset && !presetMap[preset]) {
-      throw new Error('Unsupported preset ' + preset)
-    }
-
-    const { url: providerUrl, isStatic } = provider.provider.generateURL(
+    const image = provider.provider.getImage(
       src,
-      presetMap[preset] ? presetMap[preset].modifiers : modifiers,
+      preset ? preset.modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
+    const { url: providerUrl, isStatic } = image
 
     // @ts-ignore
     if (typeof window !== 'undefined' && typeof window.$nuxt._pagePayload !== 'undefined') {
@@ -57,8 +64,10 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
 
     const nuxtState = context.nuxtState || context.ssrContext.nuxt
+    if (!nuxtState.data || !nuxtState.data.length) {
+      nuxtState.data = [{}]
+    }
     const data = nuxtState.data[0]
-
     data.images = data.images || {}
 
     let url = providerUrl
@@ -87,6 +96,23 @@ export function createImage (context, { providers, defaultProvider, presets, int
       })
     }
   })
+  image.getMeta = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
+    const { src, provider: sourceProvider } = processSource(source)
+    const provider = getProvider(sourceProvider || options.provider || defaultProvider)
+
+    const sImage = provider.provider.getImage(src, { ...modifiers, width: 30 }, provider.defaults)
+    const meta = { placeholder: sImage.url }
+
+    if (typeof sImage.getInfo === 'function') {
+      Object.assign(meta, await sImage.getInfo())
+    }
+
+    if (typeof sImage.getPlaceholder === 'function') {
+      meta.placeholder = await sImage.getPlaceholder()
+    }
+
+    return meta
+  }
 
   image.$observer = createObserver(intersectOptions)
 
@@ -98,7 +124,7 @@ function createObserver (options: object) {
     rootMargin: '50px',
     ...options
   }
-  const observer = (process.client ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
+  const observer = (typeof IntersectionObserver != "undefined" ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
   const elementCallbackMap = {}
   function callback (entries, imgObserver) {
     entries.forEach((entry) => {

@@ -10,7 +10,10 @@
       "@nuxt/types",
       "@types/node",
       "./types"
-    ]
+    ],
+    "paths": {
+      "~image/*": ["src/runtime/*"]
+    }
   },
   "include": [
     "src"

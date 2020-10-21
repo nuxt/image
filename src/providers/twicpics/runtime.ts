@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '../../runtime/provider-utils'
+import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '~image/utils'
 
 const fits = createMapper({
   fill: 'fill',
@@ -19,7 +19,7 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 export default <RuntimeProvider> {
-  generateURL (src: string, modifiers: ImageModifiers, options: any) {
+  getImage (src: string, modifiers: ImageModifiers, options: any) {
     const { width, height, fit, ...providerModifiers } = modifiers
 
     if (width || height) {
