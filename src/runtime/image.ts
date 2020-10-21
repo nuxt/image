@@ -64,8 +64,10 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
 
     const nuxtState = context.nuxtState || context.ssrContext.nuxt
+    if (!nuxtState.data || !nuxtState.data.length) {
+      nuxtState.data = [{}]
+    }
     const data = nuxtState.data[0]
-
     data.images = data.images || {}
 
     let url = providerUrl
