@@ -20,6 +20,11 @@ export default {
     }
   },
   render (h) {
+    if (this.error) {
+      return h('div', {
+        class: ['__nim_w'].concat(this.$attrs.class || '')
+      }, [this.error])
+    }
     const sources = this.sizes.map(size => h('source', {
       attrs: {
         srcset: size.url,

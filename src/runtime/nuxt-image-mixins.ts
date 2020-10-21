@@ -75,6 +75,7 @@ export default {
   },
   data () {
     return {
+      error: '',
       srcset: [],
       meta: {
         width: undefined,
@@ -206,6 +207,11 @@ export default {
         ...this.imgAttributes,
         ...extraAttributes
       })
+    },
+    onError (e: Error) {
+      this.error = e.message
+      // eslint-disable-next-line no-console
+      console.error(e.message)
     }
   }
 }
