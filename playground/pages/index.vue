@@ -6,6 +6,7 @@
       :src="image.src"
       :alt="image.alt"
       class="image"
+      :placeholder="true"
       width="100"
       height="100"
       sets="320"

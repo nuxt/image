@@ -1,3 +1,6 @@
+import { renderAttributesToString } from './utils'
+
+// @vue/component
 export default {
   props: {
     src: {
@@ -13,9 +16,9 @@ export default {
       type: [String, Number],
       default: ''
     },
-    legacy: {
+    lazy: {
       type: Boolean,
-      default: false
+      default: typeof IntersectionObserver !== 'undefined'
     },
     sets: {
       type: [String, Array],
@@ -61,54 +64,45 @@ export default {
     crossorigin: {
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: [Boolean, String],
+      default: false
     }
+  },
+  async fetch () {
+    await this.fetchMeta()
   },
   data () {
     return {
       srcset: [],
-      placeholder: null,
-      placeholderWidth: 0,
-      placeholderHeight: 0,
+      meta: {
+        width: undefined,
+        height: undefined,
+        placeholder: undefined
+      },
+      // TODO: state: 'idle',
       loading: false,
       loaded: false
     }
   },
-  async fetch () {
-    if (this.legacy) {
-      return
-    }
-    const image = await this.$img.getPlaceholder(this.src, { fit: this.fit, ...this.operations })
-    if (!image) {
-      return
-    }
-    this.placeholder = image.url
-    this.placeholderWidth = image.width
-    this.placeholderHeight = image.height
-  },
-  mounted () {
-    if (!this.legacy) {
-      this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
-    }
-  },
   computed: {
+    computedOperations () {
+      return {
+        fit: this.fit,
+        ...this.operations
+      }
+    },
     imageRatio () {
-      let width = this.placeholderWidth
-      let height = this.placeholderHeight
       if (this.height && this.width) {
-        width = this.width
-        height = this.height
-      } else if (this.width || this.height) {
-        console.warn('`<nuxt-imge>` needs both width adn height to calculate aspect ratio. Using one without another will be ignored')
+        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
       }
 
-      if (!height) {
-        return 0
+      if (this.meta.width && this.meta.height) {
+        return (this.meta.width / this.meta.height) * 100
       }
 
-      return (parseInt(height, 10) / parseInt(width, 10)) * 100
+      return 0
     },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
@@ -156,53 +150,62 @@ export default {
     }
   },
   watch: {
-    async src () {
-      const image = await this.$img.getPlaceholder(this.src, { fit: this.fit, ...this.operations })
-      if (!image) {
-        return
-      }
-      this.placeholder = image.url
-      this.placeholderWidth = image.width
-      this.placeholderHeight = image.height
-      this.original = null
-      if (!this.legacy) {
+    src () {
+      this.fetchMeta()
+
+      if (!this.lazy) {
         this.$img.$observer.remove(this.$el)
         this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
+          // OK, element is visible, Hoooray
           this.loadOriginalImage()
         })
       }
     }
   },
+  mounted () {
+    if (this.lazy) {
+      this.$img.$observer.add(this.$el, () => {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+      })
+    }
+  },
+  beforeDestroy () {
+    if (!this.lazy) {
+      this.$img.$observer.remove(this.$el)
+    }
+  },
   methods: {
+    async fetchMeta () {
+      // Fetch meta when necessary
+      if (this.placeholder === true || !(this.width && this.height)) {
+        const meta = await this.$img.getMeta(this.src, this.computedOperations)
+        Object.assign(this.meta, meta)
+      }
+
+      // Allow overriding meta.placeholder
+      if (typeof this.placeholder === 'string') {
+        this.meta.placeholder = this.placeholder
+      }
+    },
     generateSizedImage (width: number, height: number, format: string) {
       const image = this.$img(this.src, {
         width,
         height,
         format,
-        fit: this.fit,
-        ...this.operations
+        ...this.computedOperations
       })
+
       return encodeURI(image)
     },
     loadOriginalImage () {
       this.loading = true
     },
-    renderAttributesToString (attributes = {}) {
-      return Object.entries<string>(attributes)
-        .map(([key, value]) => value ? `${key}="${value}"` : '')
-        .filter(Boolean).join(' ')
-    },
     renderImgAttributesToString (extraAttributes = {}) {
-      return this.renderAttributesToString({
+      return renderAttributesToString({
         ...this.imgAttributes,
         ...extraAttributes
       })
-    }
-  },
-  beforeDestroy () {
-    if (!this.legacy) {
-      this.$img.$observer.remove(this.$el)
     }
   }
 }

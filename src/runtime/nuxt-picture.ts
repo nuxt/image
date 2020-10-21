@@ -1,14 +1,8 @@
 import nuxtImageMixin from './nuxt-image-mixins'
-
 import './nuxt-image.css'
+import { renderTag, isModernFormat } from './utils'
 
-const pictureHTML = ({ generatedSrc, width, height, renderImgAttributesToString, sizes, renderAttributesToString }) =>
-`<picture>
-${sizes.map(s => `<source ${renderAttributesToString({ type: s.format, media: s.media, srcset: s.url })}>`).join('\n')}
-<img class="__nim_o" ${renderImgAttributesToString({ src: generatedSrc, width, height })}>
-</picture>
-`
-
+// @vue/component
 export default {
   name: 'NuxtPicture',
   mixins: [nuxtImageMixin],
@@ -16,7 +10,7 @@ export default {
     generatedSrc () {
       const [size] = this.sizes
       if (size) {
-        if (this.isModernFormat(size)) {
+        if (isModernFormat(size.format) || isModernFormat(size.url)) {
           return this.generateSizedImage(size.width, size.height, 'jpeg')
         } else {
           return this.sizes[0].url
@@ -26,16 +20,28 @@ export default {
     }
   },
   render (h) {
-    if (this.legacy) {
-      return this.renderLegacy(h)
-    }
-    const placeholderImage = h('img', {
-      class: '__nim_p',
+    const sources = this.sizes.map(size => h('source', {
       attrs: {
-        src: this.placeholder,
-        alt: this.alt
+        srcset: size.url,
+        type: size.format ? size.format : undefined,
+        media: size.media ? size.media : undefined
       }
-    })
+    })).reverse()
+
+    if (!this.lazy && !this.placeholder) {
+      const originalImage = h('img', {
+        class: '__nim_o',
+        attrs: {
+          src: this.generatedSrc,
+          ...this.imgAttributes
+        }
+      })
+
+      return h('picture', {}, [
+        ...sources,
+        originalImage
+      ])
+    }
 
     const originalImage = h('img', {
       class: ['__nim_o'],
@@ -49,23 +55,43 @@ export default {
         }
       }
     })
-    const sources = this.sizes.map(size => h('source', {
-      attrs: {
-        srcset: size.url,
-        type: size.format ? size.format : undefined,
-        media: size.media ? size.media : undefined
-      }
-    }))
+
+    let placeholder = null
+    if (this.meta.placeholder) {
+      placeholder = h('img', {
+        class: '__nim_p',
+        attrs: {
+          src: this.meta.placeholder
+        }
+      })
+    }
+
     const picture = h('picture', {}, [
-      ...sources.reverse(),
+      ...sources,
       originalImage
     ])
 
     let noScript = null
     if (this.noScript) {
+      const noScriptSources = this.sizes.map(size => renderTag('source', {
+        type: size.type,
+        media: size.media,
+        url: size.url
+      })).join('')
+
+      const noScriptImg = renderTag('img', {
+        class: '__nim_o',
+        src: this.generatedSrc,
+        ...this.imgAttributes
+      })
+
       noScript = h('noscript', {
-        domProps: { innerHTML: pictureHTML(this) }
-      }, [])
+        domProps: {
+          innerHTML: renderTag('img', {
+            class: '__nim_o'
+          }, noScriptSources + noScriptImg)
+        }
+      })
     }
 
     const ratioBox = h('div', {
@@ -77,40 +103,8 @@ export default {
 
     const wrapper = h('div', {
       class: ['__nim_w', this.loaded ? 'visible' : '']
-    }, [placeholderImage, picture, noScript, ratioBox])
+    }, [placeholder, picture, noScript, ratioBox])
 
     return wrapper
-  },
-  methods: {
-    renderLegacy (h) {
-      const sources = this.sizes.map(size => h('source', {
-        attrs: {
-          srcset: size.url,
-          type: size.format ? size.format : undefined,
-          media: size.media ? size.media : undefined
-        }
-      }))
-      const originalImage = h('img', {
-        class: '__nim_o',
-        attrs: {
-          src: this.generatedSrc,
-          srcset: this.generatedSrcset,
-          sizes: this.generatedSizes,
-          ...this.imgAttributes
-        }
-      })
-      return h('picture', {}, [
-        ...sources.reverse(),
-        originalImage
-      ])
-    },
-    isModernFormat ({ url, format }) {
-      const type = format || url.split('.').pop()
-      switch (type) {
-        case 'webp':
-          return true
-        default: return false
-      }
-    }
   }
 }

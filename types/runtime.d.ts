@@ -49,13 +49,13 @@ export interface RuntimeProvider {
   // Add additional params (like signuture)
   // Do modifier mapping
   getImage: (src: string, modifiers: ImageModifiers, providerOptions: any) => RuntimeImage
-  getPlaceholder: (src: string, modifiers: ImageModifiers, providerOptions: any) => RuntimePlaceholder
 }
 
 export interface RuntimeImage {
   url: string,
   isStatic?: boolean,
   getInfo?: () => Promise<RuntimeImageInfo>
+  getPlaceholder?: () => Promise<string>
 }
 
 export interface RuntimeImageInfo {
@@ -64,7 +64,9 @@ export interface RuntimeImageInfo {
   // height of image in pixels
   height: number,
   // size of image in bytes
-  bytes: number,
+  bytes?: number,
+  // placeholder (base64 or url)
+  placeholder?: string,
 }
 
 export interface RuntimePlaceholder extends RuntimeImageInfo {

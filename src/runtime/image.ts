@@ -44,10 +44,6 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     const provider = getProvider(sourceProvider || options.provider || defaultProvider)
     const preset = getPreset(sourcePreset || options.preset)
 
-    if (!src.match(/^(https?:\/\/|\/.*)/)) {
-      throw new Error('Unsupported image src "' + src + '", src path must be absolute. like: `/awesome.png`')
-    }
-
     const image = provider.provider.getImage(
       src,
       preset ? preset.modifiers : modifiers,
@@ -99,29 +95,22 @@ export function createImage (context, { providers, defaultProvider, presets }: C
     }
   })
 
-  image.getPlaceholder = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
+  image.getMeta = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
     const { src, provider: sourceProvider } = processSource(source)
     const provider = getProvider(sourceProvider || options.provider || defaultProvider)
 
-    let placeholder
-    if (typeof provider.provider.getPlaceholder === 'function') {
-      placeholder = provider.provider.getPlaceholder(src, modifiers, {
-        ...provider.defaults, ...options
-      })
-    } else {
-      const image = provider.provider.getImage(src, {
-        ...modifiers,
-        width: 30
-      }, provider.defaults)
+    const sImage = provider.provider.getImage(src, { ...modifiers, width: 30 }, provider.defaults)
+    const meta = { placeholder: sImage.url }
 
-      placeholder = { url: image.url }
-
-      if (typeof image.getInfo === 'function') {
-        const info = await image.getInfo()
-        Object.assign(placeholder, info)
-      }
+    if (typeof sImage.getInfo === 'function') {
+      Object.assign(meta, await sImage.getInfo())
     }
-    return placeholder
+
+    if (typeof sImage.getPlaceholder === 'function') {
+      meta.placeholder = await sImage.getPlaceholder()
+    }
+
+    return meta
   }
 
   image.$observer = createObserver()

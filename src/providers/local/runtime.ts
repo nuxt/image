@@ -23,14 +23,23 @@ export default <RuntimeProvider> {
 
     const operationsString = operations.join(',') || '_'
     const url = cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`)
-    const infoUrl = cleanDoubleSlashes(`/_image/local/${adapter}/jpg.json/${operationsString}/${src}`)
+    const infoUrl = cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || 'jpg'}.json/${operationsString}_url/${src}`)
+
+    const baseURL = process.client ? options.baseURL : options.internalBaseURL
+
+    let _meta
+    const getMeta = () => _meta || fetch(baseURL + infoUrl).then(res => res.json())
+
     return {
       url,
       isStatic: true,
-      getInfo: async () => {
-        const baseURL = typeof window !== 'undefined' ? options.baseURL : options.internalBaseURL
-        const { width, height, size } = await fetch(baseURL + infoUrl).then(res => res.json())
-        return { width, height, bytes: size }
+      async getInfo () {
+        const { width, height, size, data } = await getMeta()
+        return { width, height, bytes: size, placeholder: data }
+      },
+      async getPlaceHolder () {
+        const { data } = await getMeta()
+        return data
       }
     }
   }
