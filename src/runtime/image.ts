@@ -124,7 +124,7 @@ function createObserver (options: object) {
     rootMargin: '50px',
     ...options
   }
-  const observer = (typeof IntersectionObserver != "undefined" ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
+  const observer = (typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
   const elementCallbackMap = {}
   function callback (entries, imgObserver) {
     entries.forEach((entry) => {
