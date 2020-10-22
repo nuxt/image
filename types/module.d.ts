@@ -8,6 +8,10 @@ export interface ModuleOptions {
     local: {
       dir?: string
       clearCache?: boolean | string;
+      placeholder: {
+        type: 'image' | 'sqip',
+        encode: 'base64' | 'url'
+      }
     }
     [name: string]: any
   }

@@ -5,7 +5,8 @@ export default <ProviderFactory> function (providerOptions) {
     runtime: require.resolve('./runtime'),
     runtimeOptions: {
       baseURL: providerOptions.baseURL,
-      internalBaseURL: providerOptions.internalBaseURL
+      internalBaseURL: providerOptions.internalBaseURL,
+      placeholder: providerOptions.placeholder
     },
     middleware: createMiddleware(providerOptions)
   }

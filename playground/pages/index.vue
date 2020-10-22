@@ -33,7 +33,7 @@ export default {
   asyncData () {
     return {
       images: [
-        { src: 'images/nuxt-white.svg', alt: 'Nuxt', placeholder: false },
+        { src: 'images/nuxt-white.svg', alt: 'Nuxt' },
         { src: 'cloudinary:/remote/nuxt-org/blog/going-full-static/main.png', alt: 'Cloudinary' },
         { src: 'fastly:/image.jpg', alt: 'fastify' },
         { src: 'imgix:/examples/bluehat.jpg', alt: 'imgix' },

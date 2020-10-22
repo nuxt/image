@@ -163,7 +163,11 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
   providerOptions = defu(providerOptions, {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static),
+    placeholder: {
+      type: 'sqip',
+      encode: 'base64'
+    }
   })
 
   providerOptions.dir = nuxt.resolver.resolvePath(providerOptions.dir)
