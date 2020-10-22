@@ -160,11 +160,15 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
   // Default prefix
   const prefix = '/'
 
-  return defu(providerOptions, {
+  providerOptions = defu(providerOptions, {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   })
+
+  providerOptions.dir = nuxt.resolver.resolvePath(providerOptions.dir)
+
+  return providerOptions
 }
 
 (imageModule as any).meta = require('../package.json')
