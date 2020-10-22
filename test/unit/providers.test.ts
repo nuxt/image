@@ -58,7 +58,12 @@ const images = [
 
 describe('Providers', () => {
   test('local', async () => {
-    const providerOptions = {}
+    const providerOptions = {
+      placeholder: {
+        type: 'image',
+        encode: 'url'
+      }
+    }
     const providerDataExpectedkeys = ['runtime', 'runtimeOptions', 'middleware']
     const providerData = local(providerOptions)
 
