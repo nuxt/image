@@ -6,7 +6,7 @@
       :src="image.src"
       :alt="image.alt"
       class="image"
-      :placeholder="true"
+      :placeholder="image.placeholder !== false"
       width="100"
       height="100"
       sets="320"
@@ -33,6 +33,7 @@ export default {
   asyncData () {
     return {
       images: [
+        { src: 'images/nuxt-white.svg', alt: 'Nuxt', placeholder: false },
         { src: 'cloudinary:/remote/nuxt-org/blog/going-full-static/main.png', alt: 'Cloudinary' },
         { src: 'fastly:/image.jpg', alt: 'fastify' },
         { src: 'imgix:/examples/bluehat.jpg', alt: 'imgix' },
