@@ -62,7 +62,7 @@ export default {
     })
 
     let placeholder = null
-    if (this.meta.placeholder) {
+    if (this.placeholder && this.meta.placeholder) {
       placeholder = h('img', {
         class: '__nim_p',
         attrs: {
