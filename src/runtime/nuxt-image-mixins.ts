@@ -24,7 +24,7 @@ export default {
     },
     lazy: {
       type: Boolean,
-      default: typeof IntersectionObserver !== 'undefined'
+      default: true
     },
     sets: {
       type: [String, Array],
@@ -88,7 +88,7 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      lazyState: LazyState.IDLE
+      lazyState: this.lazy ? LazyState.IDLE : LazyState.LOADED
     }
   },
   computed: {

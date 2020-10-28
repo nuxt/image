@@ -1,10 +1,6 @@
-// export type ImageMeta {
-//   width: number;
-//   height: number;
-//   data: any;
-// }
+import { RuntimeImageInfo } from 'types'
 
-export async function getMeta (url) {
+export async function getMeta (url): RuntimeImageInfo {
   if (process.client) {
     if (typeof Image === 'undefined') {
       throw new TypeError('Image not supported')

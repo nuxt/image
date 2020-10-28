@@ -105,17 +105,13 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
     const meta = await { placeholder: sImage.url }
 
-    const baseUrl = 'http://localhost:3000'
-    const absoluteUrl = sImage.url[0] === '/' ? baseUrl + sImage.url : sImage.url
-    Object.assign(meta, await getMeta(absoluteUrl))
-
-    // if (typeof sImage.getInfo === 'function') {
-    //   Object.assign(meta, await sImage.getInfo())
-    // }
-
-    // if (typeof sImage.getPlaceholder === 'function') {
-    //   meta.placeholder = await sImage.getPlaceholder()
-    // }
+    if (typeof sImage.getMeta === 'function') {
+      Object.assign(meta, await sImage.getMeta())
+    } else {
+      const baseUrl = 'http://localhost:3000'
+      const absoluteUrl = sImage.url[0] === '/' ? baseUrl + sImage.url : sImage.url
+      Object.assign(meta, await getMeta(absoluteUrl))
+    }
 
     return meta
   }
