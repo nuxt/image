@@ -32,4 +32,4 @@ When you define an image with `src` props, Nuxt automatically calculates aspect 
 Forcing images to preserve aspect ratio will prevent [layout shifting](https://web.dev/cls/).
 If you want to resize the image all you need is changing the width using CSS.
 
-Don't worry you can control the aspect ratio of the image using `width` and `height` props. If you provide both `width` and `height`, the aspect ratio will be calculated using the `width` and `height.
+Don't worry you can control the aspect ratio of the image using `width` and `height` props. If you provide both `width` and `height`, the aspect ratio will be calculated using the `width` and `height`.
