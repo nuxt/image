@@ -99,3 +99,35 @@ export default function(providerOptions) {
   }
 }
 ```
+
+## Use your provider
+
+### Register provider
+
+After you create your own provider, you should register it in `nuxt.config`. In order to do that create a property inside `image.provider`.  
+
+```js
+export default {
+  ...
+  image: {
+    providers: {
+      customProvider: {
+        name: 'customProvider', // optional value to overrider provider name
+        provider: '~/providers/custom', // Path to custom provider
+        options: {
+          // ... provider options
+        }
+      } 
+    }
+  }
+}
+```
+
+### Use provider in `nuxt-image`
+To use your provider, write your provider's name before the src. Read [provider doc](/nuxt-image#provider)
+
+```vue{}[index.vue]
+<template>
+  <nuxt-image src="custom:/main.png" />
+</template>
+```

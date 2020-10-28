@@ -156,16 +156,16 @@ As you may notice providers and presets are different in their usage, and it is 
 ## `no-script`
 Genererate `<noscript>` tag for browsers that aren’t running javascript.
 
-## `legacy`
+## `lazy`
 
-Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy loading.
+By default `nuxt-image` lazy load all images to reduce initial requests and page size. Using `lazy` prop you can disable lazy loading.
 
 <code-group>
   <code-block label="index.vue" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-image :lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -198,7 +198,40 @@ Legacy mode is just and `<img>` tag with `srcsets`, no fixed size and no lazy lo
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image legacy src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
+    <nuxt-image lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
+  </div>
+
+  </code-block>
+</code-group>
+
+
+## `placeholder`
+
+The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-image` generate it for you.  
+If you set `placeholder` to `true`, module creates a small placeholder for you. You can set your custom placeholder in this prop.
+
+
+<code-group>
+  <code-block label="Auto Generate" active>
+
+  ```vue{}[index.vue]
+  <template>
+    <nuxt-image :placeholder="true" src="/nuxt-icon.png" />
+  </template>
+  ```
+  </code-block>
+  <code-block label="Custom Placeholder">
+
+  ```vue{}[index.vue]
+  <template>
+    <nuxt-image :placeholder="/icon.png" src="/nuxt-icon.png" />
+  </template>
+  ```
+  </code-block>
+  <code-block label="Preview">
+
+  <div class="text-center p-4 bg-gray-800 rounded-b-md">
+    <nuxt-image placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-image>
   </div>
 
   </code-block>
