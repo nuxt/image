@@ -33,12 +33,6 @@ export default <RuntimeProvider> {
     let _meta
     const getMeta = () => _meta || fetch(baseURL + infoUrl)
       .then(res => res.json())
-      .then((meta) => {
-        if (placeholder.encode === 'url') {
-          meta.data = middlewarePrefix + meta.data
-        }
-        return meta
-      })
 
     return {
       url,
@@ -49,7 +43,7 @@ export default <RuntimeProvider> {
       },
       async getPlaceholder () {
         const { data } = await getMeta()
-        return data
+        return data || url
       }
     }
   }

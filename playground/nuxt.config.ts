@@ -18,7 +18,11 @@ export default {
       }
     ],
     providers: {
-      local: {},
+      local: {
+        placeholder: {
+          encode: 'url'
+        }
+      },
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics'
       },
