@@ -25,7 +25,7 @@ export async function getMeta (url) {
   }
 
   if (process.server) {
-    const imageMeta = require('image-meta')
+    const imageMeta = require('image-meta').default
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
     const { width, height, mimeType } = await imageMeta(data)
     return {
