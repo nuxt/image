@@ -1,4 +1,5 @@
 import type { CreateImageOptions, ImageModifiers, ImagePreset } from 'types'
+import { getMeta } from './meta'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -101,15 +102,20 @@ export function createImage (context, { providers, defaultProvider, presets, int
     const provider = getProvider(sourceProvider || options.provider || defaultProvider)
 
     const sImage = provider.provider.getImage(src, { ...modifiers, width: 30 }, provider.defaults)
-    const meta = { placeholder: sImage.url }
 
-    if (typeof sImage.getInfo === 'function') {
-      Object.assign(meta, await sImage.getInfo())
-    }
+    const meta = await { placeholder: sImage.url }
 
-    if (typeof sImage.getPlaceholder === 'function') {
-      meta.placeholder = await sImage.getPlaceholder()
-    }
+    const baseUrl = 'http://localhost:3000'
+    const absoluteUrl = sImage.url[0] === '/' ? baseUrl + sImage.url : sImage.url
+    Object.assign(meta, await getMeta(absoluteUrl))
+
+    // if (typeof sImage.getInfo === 'function') {
+    //   Object.assign(meta, await sImage.getInfo())
+    // }
+
+    // if (typeof sImage.getPlaceholder === 'function') {
+    //   meta.placeholder = await sImage.getPlaceholder()
+    // }
 
     return meta
   }

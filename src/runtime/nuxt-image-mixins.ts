@@ -88,7 +88,7 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      lazyState: this.lazy ? LazyState.IDLE : LazyState.LOADED
+      lazyState: LazyState.IDLE
     }
   },
   computed: {
@@ -213,7 +213,7 @@ export default {
       }
     },
     loadOriginalImage () {
-      this.lazyState = 'loading'
+      this.lazyState = LazyState.LOADING
     },
     renderImgAttributesToString (extraAttributes = {}) {
       return renderAttributesToString({
