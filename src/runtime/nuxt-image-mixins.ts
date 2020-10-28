@@ -1,5 +1,11 @@
 import { renderAttributesToString } from './utils'
 
+export enum LazyState {
+  IDLE = 'idle',
+  LOADING = 'loading',
+  LOADED = 'loaded'
+}
+
 // @vue/component
 export default {
   props: {
@@ -82,9 +88,7 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      // TODO: state: 'idle',
-      loading: false,
-      loaded: false
+      lazyState: this.lazy ? LazyState.IDLE : LazyState.LOADED
     }
   },
   computed: {
@@ -209,7 +213,7 @@ export default {
       }
     },
     loadOriginalImage () {
-      this.loading = true
+      this.lazyState = 'loading'
     },
     renderImgAttributesToString (extraAttributes = {}) {
       return renderAttributesToString({
@@ -221,6 +225,10 @@ export default {
       this.error = e.message
       // eslint-disable-next-line no-console
       console.error(e.message)
+    },
+    // hanlde onLoad event of original image element
+    onImageLoaded () {
+      this.lazyState = LazyState.LOADED
     }
   }
 }

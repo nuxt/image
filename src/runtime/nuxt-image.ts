@@ -1,6 +1,6 @@
 import { renderTag } from './utils'
 
-import nuxtImageMixin from './nuxt-image-mixins'
+import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
 
 import './nuxt-image.css'
 
@@ -53,15 +53,13 @@ export default {
     const originalImage = h('img', {
       class: '__nim_o',
       attrs: {
-        src: this.loading ? this.generatedSrc : undefined,
-        srcset: this.loading ? this.generatedSrcset : undefined,
-        sizes: this.loading ? this.generatedSizes : undefined,
+        src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
+        srcset: this.lazyState !== LazyState.IDLE ? this.generatedSrcset : undefined,
+        sizes: this.lazyState !== LazyState.IDLE ? this.generatedSizes : undefined,
         ...this.imgAttributes
       },
       on: {
-        load: () => {
-          this.loaded = true
-        }
+        load: this.onImageLoaded
       }
     })
 
@@ -88,7 +86,7 @@ export default {
     })
 
     const wrapper = h('div', {
-      class: ['__nim_w', this.loaded ? 'visible' : ''].concat(this.$attrs.class || '')
+      class: ['__nim_w', this.lazyState === LazyState.LOADED ? 'visible' : ''].concat(this.$attrs.class || '')
     }, [placeholder, originalImage, noScript, ratioBox])
 
     return wrapper

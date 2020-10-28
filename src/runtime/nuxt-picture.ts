@@ -1,4 +1,4 @@
-import nuxtImageMixin from './nuxt-image-mixins'
+import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
 import './nuxt-image.css'
 import { renderTag, isModernFormat } from './utils'
 
@@ -51,13 +51,11 @@ export default {
     const originalImage = h('img', {
       class: ['__nim_o'],
       attrs: {
-        src: this.loading ? this.generatedSrc : undefined,
+        src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
         ...this.imgAttributes
       },
       on: {
-        load: () => {
-          this.loaded = true
-        }
+        load: this.onImageLoaded
       }
     })
 
@@ -107,7 +105,7 @@ export default {
     })
 
     const wrapper = h('div', {
-      class: ['__nim_w', this.loaded ? 'visible' : '']
+      class: ['__nim_w', this.lazyState === LazyState.LOADED ? 'visible' : '']
     }, [placeholder, picture, noScript, ratioBox])
 
     return wrapper
