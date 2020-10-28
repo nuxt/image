@@ -165,10 +165,17 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
     internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static),
     placeholder: {
-      type: 'sqip',
+      type: 'image',
       encode: 'base64'
     }
   })
+
+  if (providerOptions.placeholder.type === 'sqip') {
+    const sqip = tryRequire('sqip') as any
+    if (!sqip) {
+      throw new Error('Cannot find `SQIP`, install SQIP to proceed (`npm install sqip sqip-plugin-primitive sqip-plugin-svgo`)')
+    }
+  }
 
   providerOptions.dir = nuxt.resolver.resolvePath(providerOptions.dir)
 
