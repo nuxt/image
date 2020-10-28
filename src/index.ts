@@ -102,7 +102,7 @@ function loadProvider (key: string, provider: any) {
 function handleStaticGeneration (nuxt: any) {
   const staticImages = {} // url ~> hash
 
-  nuxt.hook('vue-renderer:ssr:prepareContext', async (renderContext) => {
+  nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext) => {
     renderContext.mapImage = ({ url, isStatic, format, src }) => {
       if (!isStatic) {
         return url
