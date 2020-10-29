@@ -125,3 +125,35 @@ export default {
   }
 }
 ```
+
+## `ipx`
+
+Internally nuxt image uses [ipx](https://github.com/nuxt-contrib/ipx) to modify and optimize images.  
+
+- `dir`: The root directory of the all images. By default nuxt image looks `static` dir to find original images, 
+- `clearCache`: The ipx has a caching stategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using `clearCache` option in provide options. By default this cron job is disabled.
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    ipx: {
+      /**
+       * Public domain of your website 
+       **/
+      baseURL: 'https://awesome.com/',
+      /**
+       * Internal address of your website 
+       **/
+      internalBaseURL: 'http://192.168.1.100:3000/',
+      /**
+       * Input directory for images
+       **/
+      dir: '~/static',
+      /**
+       * Enable/Disabel cache cleaning cron job
+       **/
+      clearCache: false
+    }
+  }
+}
+```

@@ -11,7 +11,6 @@ export default theme({
   ],
   image: {
     providers: {
-      local: {},
       cloudinary: {
         baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
       },
