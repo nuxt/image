@@ -16,6 +16,22 @@ function processSource (src: string) {
   }
 }
 
+function getCache (context) {
+  if (!context.cache) {
+    if (context.ssrContext && context.ssrContext.cache) {
+      context.cache = context.ssrContext.cache
+    } else {
+      const _cache = {}
+      context.cache = {
+        get: id => _cache[id],
+        set: (id, value) => { _cache[id] = value },
+        has: id => typeof _cache[id] !== 'undefined'
+      }
+    }
+  }
+  return context.cache
+}
+
 export function createImage (context, { providers, defaultProvider, presets, intersectOptions }: CreateImageOptions) {
   const presetMap = presets.reduce((map, preset) => {
     map[preset.name] = preset
@@ -110,7 +126,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     } else {
       const baseUrl = 'http://localhost:3000'
       const absoluteUrl = sImage.url[0] === '/' ? baseUrl + sImage.url : sImage.url
-      Object.assign(meta, await getMeta(absoluteUrl))
+      Object.assign(meta, await getMeta(absoluteUrl, getCache(context)))
     }
 
     return meta
