@@ -75,6 +75,12 @@ function imageModule (moduleOptions: ModuleOptions) {
   nuxt.hook('generate:before', () => {
     handleStaticGeneration(nuxt)
   })
+
+  const LruCache = require('lru-cache')
+  const cache = new LruCache()
+  nuxt.hook('vue-renderer:context', (ssrContext) => {
+    ssrContext.cache = cache
+  })
 }
 
 function loadProvider (key: string, provider: any) {

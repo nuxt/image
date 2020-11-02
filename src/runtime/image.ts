@@ -1,4 +1,5 @@
 import type { CreateImageOptions, ImageModifiers, ImagePreset } from 'types'
+import { getMeta } from './meta'
 
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
@@ -13,6 +14,22 @@ function processSource (src: string) {
     provider,
     preset
   }
+}
+
+function getCache (context) {
+  if (!context.cache) {
+    if (context.ssrContext && context.ssrContext.cache) {
+      context.cache = context.ssrContext.cache
+    } else {
+      const _cache = {}
+      context.cache = {
+        get: id => _cache[id],
+        set: (id, value) => { _cache[id] = value },
+        has: id => typeof _cache[id] !== 'undefined'
+      }
+    }
+  }
+  return context.cache
 }
 
 export function createImage (context, { providers, defaultProvider, presets, intersectOptions }: CreateImageOptions) {
@@ -101,14 +118,15 @@ export function createImage (context, { providers, defaultProvider, presets, int
     const provider = getProvider(sourceProvider || options.provider || defaultProvider)
 
     const sImage = provider.provider.getImage(src, { ...modifiers, width: 30 }, provider.defaults)
-    const meta = { placeholder: sImage.url }
 
-    if (typeof sImage.getInfo === 'function') {
-      Object.assign(meta, await sImage.getInfo())
-    }
+    const meta = await { placeholder: sImage.url }
 
-    if (typeof sImage.getPlaceholder === 'function') {
-      meta.placeholder = await sImage.getPlaceholder()
+    if (typeof sImage.getMeta === 'function') {
+      Object.assign(meta, await sImage.getMeta())
+    } else {
+      const baseUrl = 'http://localhost:3000'
+      const absoluteUrl = sImage.url[0] === '/' ? baseUrl + sImage.url : sImage.url
+      Object.assign(meta, await getMeta(absoluteUrl, getCache(context)))
     }
 
     return meta

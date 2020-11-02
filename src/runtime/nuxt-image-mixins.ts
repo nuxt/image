@@ -24,7 +24,7 @@ export default {
     },
     lazy: {
       type: Boolean,
-      default: typeof IntersectionObserver !== 'undefined'
+      default: true
     },
     sets: {
       type: [String, Array],
@@ -213,7 +213,7 @@ export default {
       }
     },
     loadOriginalImage () {
-      this.lazyState = 'loading'
+      this.lazyState = LazyState.LOADING
     },
     renderImgAttributesToString (extraAttributes = {}) {
       return renderAttributesToString({

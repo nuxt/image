@@ -55,8 +55,7 @@ export interface RuntimeProvider {
 export interface RuntimeImage {
   url: string,
   isStatic?: boolean,
-  getInfo?: () => Promise<RuntimeImageInfo>
-  getPlaceholder?: () => Promise<string>
+  getMeta?: () => Promise<RuntimeImageInfo>
 }
 
 export interface RuntimeImageInfo {
@@ -64,8 +63,6 @@ export interface RuntimeImageInfo {
   width: number,
   // height of image in pixels
   height: number,
-  // size of image in bytes
-  bytes?: number,
   // placeholder (base64 or url)
   placeholder?: string,
 }
