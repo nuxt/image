@@ -39,7 +39,7 @@ export default theme({
   },
   ackee: {
     server: 'https://ackee.nuxtjs.com',
-    domainId: '7e54dba4-1702-4c2a-9fb4-e0657449fb95',
+    domainId: '0006b8b9-dec9-4d9c-b540-8954a119abb0',
     detailed: true
   }
 })
