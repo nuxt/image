@@ -123,7 +123,6 @@ function handleStaticGeneration (nuxt: any) {
 
   nuxt.hook('generate:done', async () => {
     const { port } = nuxt.server.listeners[0]
-    console.log("345678", nuxt.server.listeners[0])
     const { dir: generateDir } = nuxt.options.generate
     const host = 'http://localhost:' + port
 
