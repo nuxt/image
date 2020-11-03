@@ -104,7 +104,7 @@ export default {
       }
 
       if (this.meta.width && this.meta.height) {
-        return (this.meta.width / this.meta.height) * 100
+        return (this.meta.height / this.meta.width) * 100
       }
 
       return 0
