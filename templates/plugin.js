@@ -7,6 +7,7 @@ import { createImage } from '~image/image'
 
 const intersectOptions = <%= devalue(options.intersectOptions) %>
 const defaultProvider = '<%= options.defaultProvider %>'
+const responsiveSizes = '<%= options.sizes %>'
 const presets = <%= devalue(options.presets) %>
 const providers = {}
 <% for (provider of options.providers) { %>
@@ -26,7 +27,8 @@ export default function (context, inject) {
     defaultProvider,
     providers,
     presets,
-    intersectOptions
+    intersectOptions,
+    responsiveSizes
   })
 
   inject('img', image)

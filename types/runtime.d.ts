@@ -33,6 +33,13 @@ export interface ImageModifiers {
   [key: string]: any;
 }
 
+export interface ImageSize {
+  width: number;
+  media: string;
+  breakpoint: number;
+  format: string;
+}
+
 // -- Provider --
 
 export type ProviderFactory = (options: any) => Provider

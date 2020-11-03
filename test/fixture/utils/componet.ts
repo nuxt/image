@@ -9,6 +9,21 @@ export function testComponent (Component, props) {
   function $img () {
     return src
   }
+  $img.sizes = () => {
+    return [{
+      width: 200,
+      url: src
+    }, {
+      width: 500,
+      media: '(min-width: 500px)',
+      url: src
+    }, {
+      width: 900,
+      media: '(min-width: 900px)',
+      format: 'webp',
+      url: src
+    }]
+  }
   $img.$observer = {
     add (_, callback) {
       observerAdded += 1

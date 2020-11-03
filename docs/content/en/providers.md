@@ -23,10 +23,6 @@ export default {
          **/
         baseURL: 'https://awesome.com/',
         /**
-         * Internal address of your website 
-         **/
-        internalBaseURL: 'http://192.168.1.100:3000/',
-        /**
          * Input directory for images
          **/
         dir: '~/static',
