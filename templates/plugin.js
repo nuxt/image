@@ -19,6 +19,10 @@ providers['<%= provider.name %>'] = {
 
 Vue.component(NuxtImage.name, NuxtImage)
 Vue.component(NuxtPicture.name, NuxtPicture)
+Vue.component('NuxtImg', NuxtImage)
+<% if (features.componentAliases) { %>Vue.component('NImg', NuxtImage)
+Vue.component('NPicture', NuxtPicture)<% } %>
+
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
