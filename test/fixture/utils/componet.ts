@@ -9,10 +9,11 @@ export function testComponent (Component, props) {
   function $img () {
     return src
   }
+  const eventType = { intersect: 'onIntersect' }
   $img.$observer = {
     add (_, callback) {
       observerAdded += 1
-      becomeVisible = callback
+      becomeVisible = () => callback(eventType.intersect)
     },
     remove () {
       observerDestroyed += 1

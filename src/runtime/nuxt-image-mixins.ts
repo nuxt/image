@@ -160,7 +160,7 @@ export default {
 
       if (this.lazy) {
         this.$img.$observer.remove(this.$el)
-        this.$img.$observer.add(this.$el, this.onOnserverEvent)
+        this.$img.$observer.add(this.$el, this.onObserverEvent)
       }
     }
   },
