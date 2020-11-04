@@ -86,7 +86,10 @@ export default {
     })
 
     const wrapper = h('div', {
-      class: ['__nim_w', this.lazyState === LazyState.LOADED ? 'visible' : ''].concat(this.$attrs.class || '')
+      class: ['__nim_w', this.lazyState === LazyState.LOADED ? 'visible' : ''].concat(this.$attrs.class || ''),
+      on: {
+        click: event => this.$emit('click', event)
+      }
     }, [placeholder, originalImage, noScript, ratioBox])
 
     return wrapper
