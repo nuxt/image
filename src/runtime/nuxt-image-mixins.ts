@@ -160,19 +160,13 @@ export default {
 
       if (this.lazy) {
         this.$img.$observer.remove(this.$el)
-        this.$img.$observer.add(this.$el, () => {
-          // OK, element is visible, Hoooray
-          this.loadOriginalImage()
-        })
+        this.$img.$observer.add(this.$el, this.onOnserverEvent)
       }
     }
   },
   mounted () {
     if (this.lazy) {
-      this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
+      this.$img.$observer.add(this.$el, this.onObserverEvent)
     }
   },
   beforeDestroy () {
@@ -229,6 +223,17 @@ export default {
     // hanlde onLoad event of original image element
     onImageLoaded () {
       this.lazyState = LazyState.LOADED
+    },
+    onObserverEvent (type) {
+      if (type === 'onIntersect') {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+        return
+      }
+      if (type === 'onPrint') {
+        this.$img.$observer.remove(this.$el)
+        this.lazyState = LazyState.LOADED
+      }
     }
   }
 }
