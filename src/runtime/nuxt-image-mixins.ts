@@ -78,6 +78,13 @@ export default {
   },
   async fetch () {
     await this.fetchMeta()
+
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
+    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
+      // eslint-disable-next-line no-unused-expressions
+      this.sizes
+    }
   },
   data () {
     return {
@@ -121,37 +128,10 @@ export default {
       }
     },
     sizes () {
-      let sizes = this.sets
-      if (typeof this.sets === 'string') {
-        sizes = this.sets
-          .split(',')
-          .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/)) // match: 100:100 (webp)
-          .filter(match => !!match)
-          .map((match, index) => ({
-            width: match[3],
-            breakpoint: match[2] || (index > 0 && match[3]),
-            format: match[5] || this.format
-          }))
-      }
-      if ((!Array.isArray(sizes) || !sizes.length)) {
-        sizes = [{
-          width: this.width ? parseInt(this.width, 10) : undefined,
-          height: this.height ? parseInt(this.height, 10) : undefined
-        }]
-      }
-
-      sizes = sizes.map((size) => {
-        if (!size.format) {
-          size.format = this.format
-        }
-        if (!size.media) {
-          size.media = size.breakpoint ? `(min-width: ${size.breakpoint}px)` : ''
-        }
-        size.url = this.generateSizedImage(size.width, size.height, size.format)
-        return size
+      return this.$img.sizes(this.src, this.sets, {
+        format: this.format,
+        ...this.computedOperations
       })
-
-      return sizes
     }
   },
   watch: {
@@ -206,7 +186,7 @@ export default {
           format,
           ...this.computedOperations
         })
-        return encodeURI(image)
+        return encodeURI(image.url)
       } catch (e) {
         this.onError(e)
         return ''
