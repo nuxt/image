@@ -4,6 +4,8 @@ import { ImagePreset } from './runtime'
 export interface ModuleOptions {
   defaultProvider: string;
   presets: ImagePreset[],
+  sizes: number[],
+  internalUrl?: string
   providers: {
     local: {
       dir?: string

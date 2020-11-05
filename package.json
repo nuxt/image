@@ -13,7 +13,6 @@
   ],
   "scripts": {
     "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",
-    "postbuild": "copyfiles -u 1 src/**/*.css dist",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
@@ -26,7 +25,7 @@
     "defu": "^3.1.0",
     "hasha": "^5.2.2",
     "image-meta": "^0.0.1",
-    "ipx": "0.4.0-rc.1",
+    "ipx": "^0.4.0",
     "node-fetch": "^2.6.1",
     "upath": "^2.0.0"
   },
@@ -41,7 +40,6 @@
     "@types/jest": "latest",
     "@vue/test-utils": "^1.1.0",
     "babel-eslint": "latest",
-    "copyfiles": "latest",
     "eslint": "latest",
     "jest": "latest",
     "jsdom": "^16.4.0",
