@@ -193,36 +193,61 @@ export function createImage (context, { providers, defaultProvider, presets, int
   return image
 }
 
-function createObserver (options: object) {
-  const intersectOptions = {
+function printObserver (onMatch) {
+  if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
+    return
+  }
+
+  const mediaQueryList = window.matchMedia('print')
+  mediaQueryList.addListener((query) => {
+    if (query.matches) {
+      onMatch()
+    }
+  })
+}
+
+function intersectionObserver (onMatch, options) {
+  const observer = (typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(onMatch, {
     rootMargin: '50px',
     ...options
-  }
-  const observer = (typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(callback, intersectOptions) : {}) as IntersectionObserver
+  }) : {}) as IntersectionObserver
+
+  return observer
+}
+
+function createObserver (intersectionOptions: object) {
+  const callbackType = { intersect: 'onIntersect', print: 'onPrint' }
   const elementCallbackMap = {}
-  function callback (entries, imgObserver) {
+  function intersectionCallback (entries, imgObserver) {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const lazyImage = entry.target
         const callback = elementCallbackMap[lazyImage.__unique]
         if (typeof callback === 'function') {
-          callback()
+          callback(callbackType.intersect)
         }
         delete elementCallbackMap[lazyImage.__unique]
         imgObserver.unobserve(lazyImage)
       }
     })
   }
+
+  printObserver(() => {
+    Object.values(elementCallbackMap).forEach((callback: any) => callback(callbackType.print))
+  })
+
+  const intersectObserver = intersectionObserver(intersectionCallback, intersectionOptions)
+
   return {
     add (target, component, unique) {
       // add unique id to recognize target
       target.__unique = unique || target.id || target.__vue__._uid
       elementCallbackMap[target.__unique] = component
-      observer.observe(target)
+      intersectObserver.observe(target)
     },
     remove (target) {
       delete elementCallbackMap[target.__unique]
-      observer.unobserve(target)
+      intersectObserver.unobserve(target)
     }
   }
 }
