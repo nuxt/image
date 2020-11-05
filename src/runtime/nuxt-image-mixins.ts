@@ -79,6 +79,8 @@ export default {
   async fetch () {
     await this.fetchMeta()
 
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
     if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
       // eslint-disable-next-line no-unused-expressions
       this.sizes
