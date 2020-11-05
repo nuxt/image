@@ -1,5 +1,4 @@
 import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
-import './nuxt-image.css'
 import { renderTag, isModernFormat } from './utils'
 
 // @vue/component
@@ -50,6 +49,21 @@ export default {
 
     const originalImage = h('img', {
       class: ['__nim_o'],
+      style: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        margin: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center center',
+        transition: 'opacity 800ms ease 0ms',
+        opacity: 0,
+        ...(this.lazyState === LazyState.LOADED ? {
+          opacity: 1
+        } : {})
+      },
       attrs: {
         src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
         ...this.imgAttributes
@@ -63,6 +77,18 @@ export default {
     if (this.placeholder && this.meta.placeholder) {
       placeholder = h('img', {
         class: '__nim_p',
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          margin: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          filter: 'blur(15px)',
+          transform: 'scale(1.1)'
+        },
         attrs: {
           src: this.meta.placeholder
         }
@@ -105,7 +131,11 @@ export default {
     })
 
     const wrapper = h('div', {
-      class: ['__nim_w', this.lazyState === LazyState.LOADED ? 'visible' : '']
+      class: this.$attrs.class,
+      style: {
+        position: 'relative',
+        overflow: 'hidden'
+      }
     }, [placeholder, picture, noScript, ratioBox])
 
     return wrapper

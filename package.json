@@ -13,7 +13,6 @@
   ],
   "scripts": {
     "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",
-    "postbuild": "copyfiles -u 1 src/**/*.css dist",
     "clean": "rimraf dist",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
@@ -25,7 +24,8 @@
   "dependencies": {
     "defu": "^3.1.0",
     "hasha": "^5.2.2",
-    "ipx": "0.4.0-rc.1",
+    "image-meta": "^0.0.1",
+    "ipx": "^0.4.0",
     "node-fetch": "^2.6.1",
     "upath": "^2.0.0"
   },
@@ -38,18 +38,18 @@
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/jest": "latest",
-    "@vue/test-utils": "^1.1.0",
+    "@vue/test-utils": "^1.1.1",
     "babel-eslint": "latest",
-    "copyfiles": "latest",
     "eslint": "latest",
     "jest": "latest",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
     "nuxt-edge": "latest",
-    "playwright": "^1.5.1",
+    "playwright": "^1.5.2",
     "rimraf": "^3.0.2",
     "standard-version": "latest",
-    "typescript": "^4.0.3"
+    "ts-loader": "^8.0.9",
+    "typescript": "^4.0.5"
   },
   "publishConfig": {
     "access": "public"

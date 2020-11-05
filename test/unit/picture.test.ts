@@ -10,7 +10,7 @@ describe('Renders simple image', () => {
   })
 })
 
-describe('Renders legacy image', () => {
+describe('Renders lazy=false', () => {
   testComponent(Component, {
     lazy: false,
     width: '200px',

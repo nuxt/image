@@ -7,6 +7,7 @@ import { createImage } from '~image/image'
 
 const intersectOptions = <%= devalue(options.intersectOptions) %>
 const defaultProvider = '<%= options.defaultProvider %>'
+const responsiveSizes = '<%= options.sizes %>'
 const presets = <%= devalue(options.presets) %>
 const providers = {}
 <% for (provider of options.providers) { %>
@@ -19,6 +20,10 @@ providers['<%= provider.name %>'] = {
 
 Vue.component(NuxtImage.name, NuxtImage)
 Vue.component(NuxtPicture.name, NuxtPicture)
+Vue.component('NuxtImg', NuxtImage)
+<% if (features.componentAliases) { %>Vue.component('NImg', NuxtImage)
+Vue.component('NPicture', NuxtPicture)<% } %>
+
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
@@ -26,7 +31,8 @@ export default function (context, inject) {
     defaultProvider,
     providers,
     presets,
-    intersectOptions
+    intersectOptions,
+    responsiveSizes
   })
 
   inject('img', image)

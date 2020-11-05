@@ -4,6 +4,7 @@ import fs from 'fs-extra'
 import upath from 'upath'
 import { ModuleOptions, ProviderFactory } from 'types'
 import { downloadImage, getFileExtension, hash, logger, tryRequire } from './utils'
+import { cleanDoubleSlashes } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
 
 function imageModule (moduleOptions: ModuleOptions) {
@@ -12,6 +13,7 @@ function imageModule (moduleOptions: ModuleOptions) {
   const options: ModuleOptions = {
     presets: [],
     intersectOptions: {},
+    sizes: [320, 420, 768, 1024, 1200],
     providers: {},
     ...nuxt.options.image,
     ...moduleOptions
@@ -36,6 +38,7 @@ function imageModule (moduleOptions: ModuleOptions) {
     .map(([key, provider]) => loadProvider.call(this, key, provider))
 
   const pluginOptions = {
+    sizes: options.sizes,
     defaultProvider: options.defaultProvider,
     intersectOptions: options.intersectOptions,
     imports: {} as { [name: string]: string },
@@ -73,8 +76,21 @@ function imageModule (moduleOptions: ModuleOptions) {
   nuxt.options.build.transpile.push(runtimeDir)
 
   nuxt.hook('generate:before', () => {
-    handleStaticGeneration(nuxt)
+    handleStaticGeneration(nuxt, options)
   })
+
+  const LruCache = require('lru-cache')
+  const cache = new LruCache()
+  nuxt.hook('vue-renderer:context', (ssrContext) => {
+    ssrContext.cache = cache
+    ssrContext.internalUrl = options.internalUrl
+  })
+
+  if (typeof nuxt.listen === 'function') {
+    nuxt.listen(0).then((server) => {
+      options.internalUrl = `http://localhost:${server.port}`
+    })
+  }
 }
 
 function loadProvider (key: string, provider: any) {
@@ -99,10 +115,11 @@ function loadProvider (key: string, provider: any) {
   return provider
 }
 
-function handleStaticGeneration (nuxt: any) {
+function handleStaticGeneration (nuxt: any, options: ModuleOptions) {
   const staticImages = {} // url ~> hash
 
   nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext) => {
+    renderContext.isGenerating = true
     renderContext.mapImage = ({ url, isStatic, format, src }) => {
       if (!isStatic) {
         return url
@@ -116,16 +133,13 @@ function handleStaticGeneration (nuxt: any) {
   })
 
   nuxt.hook('generate:done', async () => {
-    const { port } = nuxt.server.listeners[0]
     const { dir: generateDir } = nuxt.options.generate
-    const host = 'http://localhost:' + port
-
     try { await fs.mkdir(path.join(generateDir, '_image')) } catch {}
 
     const downloads = Object.entries(staticImages)
       .map(([url, name]) => {
         if (!url.startsWith('http')) {
-          url = host + url
+          url = cleanDoubleSlashes(options.internalUrl + url)
         }
         return downloadImage({
           url,
@@ -162,7 +176,6 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
 
   providerOptions = defu(providerOptions, {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    internalBaseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
   })
 

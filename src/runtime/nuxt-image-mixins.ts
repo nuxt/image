@@ -24,7 +24,7 @@ export default {
     },
     lazy: {
       type: Boolean,
-      default: typeof IntersectionObserver !== 'undefined'
+      default: true
     },
     sets: {
       type: [String, Array],
@@ -78,6 +78,13 @@ export default {
   },
   async fetch () {
     await this.fetchMeta()
+
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
+    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
+      // eslint-disable-next-line no-unused-expressions
+      this.sizes
+    }
   },
   data () {
     return {
@@ -104,7 +111,7 @@ export default {
       }
 
       if (this.meta.width && this.meta.height) {
-        return (this.meta.width / this.meta.height) * 100
+        return (this.meta.height / this.meta.width) * 100
       }
 
       return 0
@@ -121,37 +128,10 @@ export default {
       }
     },
     sizes () {
-      let sizes = this.sets
-      if (typeof this.sets === 'string') {
-        sizes = this.sets
-          .split(',')
-          .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/)) // match: 100:100 (webp)
-          .filter(match => !!match)
-          .map((match, index) => ({
-            width: match[3],
-            breakpoint: match[2] || (index > 0 && match[3]),
-            format: match[5] || this.format
-          }))
-      }
-      if ((!Array.isArray(sizes) || !sizes.length)) {
-        sizes = [{
-          width: this.width ? parseInt(this.width, 10) : undefined,
-          height: this.height ? parseInt(this.height, 10) : undefined
-        }]
-      }
-
-      sizes = sizes.map((size) => {
-        if (!size.format) {
-          size.format = this.format
-        }
-        if (!size.media) {
-          size.media = size.breakpoint ? `(min-width: ${size.breakpoint}px)` : ''
-        }
-        size.url = this.generateSizedImage(size.width, size.height, size.format)
-        return size
+      return this.$img.sizes(this.src, this.sets, {
+        format: this.format,
+        ...this.computedOperations
       })
-
-      return sizes
     }
   },
   watch: {
@@ -160,19 +140,13 @@ export default {
 
       if (this.lazy) {
         this.$img.$observer.remove(this.$el)
-        this.$img.$observer.add(this.$el, () => {
-          // OK, element is visible, Hoooray
-          this.loadOriginalImage()
-        })
+        this.$img.$observer.add(this.$el, this.onObserverEvent)
       }
     }
   },
   mounted () {
     if (this.lazy) {
-      this.$img.$observer.add(this.$el, () => {
-        // OK, element is visible, Hoooray
-        this.loadOriginalImage()
-      })
+      this.$img.$observer.add(this.$el, this.onObserverEvent)
     }
   },
   beforeDestroy () {
@@ -206,14 +180,14 @@ export default {
           format,
           ...this.computedOperations
         })
-        return encodeURI(image)
+        return encodeURI(image.url)
       } catch (e) {
         this.onError(e)
         return ''
       }
     },
     loadOriginalImage () {
-      this.lazyState = 'loading'
+      this.lazyState = LazyState.LOADING
     },
     renderImgAttributesToString (extraAttributes = {}) {
       return renderAttributesToString({
@@ -229,6 +203,17 @@ export default {
     // hanlde onLoad event of original image element
     onImageLoaded () {
       this.lazyState = LazyState.LOADED
+    },
+    onObserverEvent (type) {
+      if (type === 'onIntersect') {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+        return
+      }
+      if (type === 'onPrint') {
+        this.$img.$observer.remove(this.$el)
+        this.lazyState = LazyState.LOADED
+      }
     }
   }
 }

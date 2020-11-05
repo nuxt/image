@@ -9,6 +9,8 @@ export interface ModuleOptions {
     dir?: string;
     clearCache?: boolean | string;
   }
+  sizes: number[],
+  internalUrl?: string
   providers: {
     [name: string]: any;
   }

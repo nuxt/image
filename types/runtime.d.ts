@@ -33,6 +33,13 @@ export interface ImageModifiers {
   [key: string]: any;
 }
 
+export interface ImageSize {
+  width: number;
+  media: string;
+  breakpoint: number;
+  format: string;
+}
+
 // -- Provider --
 
 export type ProviderFactory = (options: any) => Provider
@@ -55,8 +62,7 @@ export interface RuntimeProvider {
 export interface RuntimeImage {
   url: string,
   isStatic?: boolean,
-  getInfo?: () => Promise<RuntimeImageInfo>
-  getPlaceholder?: () => Promise<string>
+  getMeta?: () => Promise<RuntimeImageInfo>
 }
 
 export interface RuntimeImageInfo {
@@ -64,8 +70,6 @@ export interface RuntimeImageInfo {
   width: number,
   // height of image in pixels
   height: number,
-  // size of image in bytes
-  bytes?: number,
   // placeholder (base64 or url)
   placeholder?: string,
 }
