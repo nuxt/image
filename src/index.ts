@@ -3,7 +3,7 @@ import defu from 'defu'
 import fs from 'fs-extra'
 import upath from 'upath'
 import { ModuleOptions, ProviderFactory } from 'types'
-import { downloadImage, getFileExtension, hash, tryRequire } from './utils'
+import { downloadImage, getFileExtension, hash, logger, tryRequire } from './utils'
 import { cleanDoubleSlashes } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
 
@@ -19,13 +19,13 @@ function imageModule (moduleOptions: ModuleOptions) {
     ...moduleOptions
   }
 
-  // Ensure local provider is set
-  if (!options.providers.length || options.providers.local) {
-    options.providers.local = prepareLocalProvider(this, options.providers.local)
+  if (typeof options.providers.ipx !== 'undefined') {
+    logger.warn("'ipx' is a reserved name for provider. Please choose another name for your provider. This provider will ignore.")
   }
+  options.providers.ipx = prepareLocalProvider(this, options.providers.ipx || {})
 
   if (!options.defaultProvider) {
-    options.defaultProvider = Object.keys(options.providers)[0]
+    options.defaultProvider = 'ipx'
   }
 
   interface ModuleProvider {

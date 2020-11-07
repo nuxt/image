@@ -8,7 +8,6 @@ export default {
     '@nuxt/typescript-build'
   ],
   image: {
-    defaultProvider: 'local',
     presets: [
       {
         name: 's50',
@@ -19,7 +18,7 @@ export default {
       }
     ],
     providers: {
-      local: {},
+      ipx: false,
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics'
       },

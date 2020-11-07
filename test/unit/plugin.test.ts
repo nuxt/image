@@ -24,7 +24,6 @@ describe('Plugin', () => {
           }
         ],
         providers: {
-          local: {},
           random: '~/providers/random',
           cloudinary: {
             baseURL: 'https://res.cloudinary.com/nuxt/image/upload'

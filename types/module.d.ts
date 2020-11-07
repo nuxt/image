@@ -3,15 +3,16 @@ import { ImagePreset } from './runtime'
 
 export interface ModuleOptions {
   defaultProvider: string;
-  presets: ImagePreset[],
+  presets: ImagePreset[];
+  ipx: {
+    baseURL: string;
+    dir?: string;
+    clearCache?: boolean | string;
+  }
   sizes: number[],
   internalUrl?: string
   providers: {
-    local: {
-      dir?: string
-      clearCache?: boolean | string;
-    }
-    [name: string]: any
+    [name: string]: any;
   }
   intersectOptions: object;
 }
