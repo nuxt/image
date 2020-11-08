@@ -7,13 +7,13 @@ export default {
   mixins: [nuxtImageMixin],
   computed: {
     generatedSrcset () {
-      if (!Array.isArray(this.source) || this.source.length < 2) {
+      if (!Array.isArray(this.sources) || this.sources.length < 2) {
         return undefined
       }
       return this.sources.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
     },
     generatedSizes () {
-      if (!Array.isArray(this.source) || this.source.length < 2) {
+      if (!Array.isArray(this.sources) || this.sources.length < 2) {
         return undefined
       }
       return this.sources.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).reverse().join(', ')

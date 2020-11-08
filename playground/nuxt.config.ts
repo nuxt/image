@@ -18,7 +18,6 @@ export default {
       }
     ],
     providers: {
-      ipx: false,
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics'
       },

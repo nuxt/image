@@ -6,7 +6,7 @@ describe('Renders simple image', () => {
     lazy: true,
     width: 200,
     height: 200,
-    sets: '200,500:500,900:900 (webp)'
+    sizes: '200,500:500,900:900 (webp)'
   })
 })
 
@@ -15,7 +15,7 @@ describe('Renders lazy=false', () => {
     lazy: false,
     width: '200px',
     height: 200,
-    sets: [
+    sizes: [
       {
         width: 200
       }, {
@@ -36,7 +36,7 @@ describe('Renders noscript', () => {
     noScript: true,
     width: 200,
     height: 200,
-    sets: [
+    sizes: [
       {
         width: 200
       }, {
