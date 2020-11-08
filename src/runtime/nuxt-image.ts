@@ -1,6 +1,5 @@
-import { renderTag } from './utils'
-
 import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
+import { renderTag } from './utils'
 
 // @vue/component
 export default {
@@ -8,14 +7,20 @@ export default {
   mixins: [nuxtImageMixin],
   computed: {
     generatedSrcset () {
-      return this.sizes.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
+      if (!Array.isArray(this.source) || this.source.length < 2) {
+        return undefined
+      }
+      return this.sources.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
     },
     generatedSizes () {
-      return this.sizes.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).reverse().join(', ')
+      if (!Array.isArray(this.source) || this.source.length < 2) {
+        return undefined
+      }
+      return this.sources.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).reverse().join(', ')
     },
     generatedSrc () {
-      if (this.sizes.length) {
-        return this.sizes[0].url
+      if (this.sources.length) {
+        return this.sources[0].url
       }
       return this.src
     }

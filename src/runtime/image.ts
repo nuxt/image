@@ -99,7 +99,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     /**
      * Handle client side rendering without server
      */
-    if (typeof window !== 'undefined' && context.isStatic && image.isStatic) {
+    if (!context.isDev && typeof window !== 'undefined' && context.isStatic && image.isStatic) {
       image.url = src
       return image
     }
@@ -132,7 +132,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   })
 
-  image.sizes = (src: string, sizes: Array<ImageSize> | string, operations: any = {}) => {
+  image.sizes = (src: string, sizes: Array<ImageSize> | string | boolean, operations: any = {}) => {
     if (typeof sizes === 'string') {
       sizes = sizes
         .split(',')
@@ -144,12 +144,16 @@ export function createImage (context, { providers, defaultProvider, presets, int
           format: match[5] || operations.format
         }))
     }
-    if ((!Array.isArray(sizes) || !sizes.length)) {
-      sizes = responsiveSizes.map(width => ({
-        width,
-        breakpoint: width,
-        format: operations.format
-      }))
+    if (!Array.isArray(sizes)) {
+      if (sizes === true) {
+        sizes = responsiveSizes.map(width => ({
+          width,
+          breakpoint: width,
+          format: operations.format
+        }))
+      } else {
+        sizes = [{}]
+      }
     }
 
     sizes = (sizes as Array<ImageSize>).map((size) => {
@@ -160,10 +164,10 @@ export function createImage (context, { providers, defaultProvider, presets, int
         size.media = size.breakpoint ? `(min-width: ${size.breakpoint}px)` : ''
       }
       const { url } = image(src, {
+        ...operations,
         width: size.width,
         height: size.height,
-        format: size.format,
-        ...operations
+        format: size.format
       })
       size.url = url
       return size

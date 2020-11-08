@@ -7,12 +7,12 @@ export default {
   mixins: [nuxtImageMixin],
   computed: {
     generatedSrc () {
-      const [size] = this.sizes
-      if (size) {
-        if (isModernFormat(size.format) || isModernFormat(size.url)) {
-          return this.generateSizedImage(size.width, size.height, 'jpeg')
+      const [source] = this.sources
+      if (source) {
+        if (isModernFormat(source.format) || isModernFormat(source.url)) {
+          return this.generateSizedImage(source.width, source.height, 'jpeg')
         } else {
-          return this.sizes[0].url
+          return this.sources[0].url
         }
       }
       return this.src
@@ -24,11 +24,11 @@ export default {
         class: ['__nim_w'].concat(this.$attrs.class || '')
       }, [this.error])
     }
-    const sources = this.sizes.map(size => h('source', {
+    const sources = this.sources.map(source => h('source', {
       attrs: {
-        srcset: size.url,
-        type: size.format ? size.format : undefined,
-        media: size.media ? size.media : undefined
+        srcset: source.url,
+        type: source.format,
+        media: source.media
       }
     })).reverse()
 
@@ -102,10 +102,10 @@ export default {
 
     let noScript = null
     if (this.noScript) {
-      const noScriptSources = this.sizes.map(size => renderTag('source', {
-        type: size.type,
-        media: size.media,
-        url: size.url
+      const noScriptSources = this.sources.map(source => renderTag('source', {
+        type: source.type,
+        media: source.media,
+        url: source.url
       })).join('')
 
       const noScriptImg = renderTag('img', {

@@ -9,7 +9,7 @@
       :placeholder="image.placeholder !== false"
       width="100"
       height="100"
-      sets="320"
+      sizes="320"
     />
   </div>
 </template>

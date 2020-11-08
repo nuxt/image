@@ -11,7 +11,7 @@ The usage of `nuxt-picture` is same as `nuxt-image`, with a little differences:
 
 - When you use modern formats like `webp` in the component, a fallback image with `jpeg` format will be generated and used as a fallback image for old browsers.
 
-- In `sets` prop you can define different formats for each set. Defining different formats will help to improve browser compatibity.
+- In `sizes` prop you can define different formats for each set. Defining different formats will help to improve browser compatibity.
   - If format does not present in a set it means that the set uses `format` props.
   - If format does not present in a set and `format` props is missing then image format will not change.
 
@@ -20,7 +20,7 @@ The usage of `nuxt-picture` is same as `nuxt-image`, with a little differences:
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-picture sets="300 (webp),300:600 (jpeg),600:900" ... />
+    <nuxt-picture sizes="300 (webp),300:600 (jpeg),600:900" ... />
     <!--               |   |  |    |   |    |     |   | -->
     <!--------- width -^   |  |    |   |    |     |   | -->
     <!--                   |  |    |   |    |     |   | -->
@@ -41,14 +41,14 @@ The usage of `nuxt-picture` is same as `nuxt-image`, with a little differences:
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-picture :sets="sets" ... />
+    <nuxt-picture :sizes="sizes" ... />
   </template>
 
   <script>
   export default {
     data() {
       return {
-        sets: [
+        sizes: [
           {
             width: 300,
             format: 'webp'

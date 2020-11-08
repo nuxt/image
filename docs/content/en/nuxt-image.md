@@ -237,9 +237,9 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
   </code-block>
 </code-group>
 
-## `sets`
+## `sizes`
 
-The `sets` attribute specifies the URL of the image to use in different situations. With `sets`, the browser does the work of figuring out which image is best to load and render.  
+The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
 In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
 
 A set is consists of `width` and `breakpoint` or `media`: 
@@ -254,7 +254,7 @@ I this case you should create a comma separated list of sizes and breakpoints. S
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image sets="300,300:600,600:900" ... />
+  <nuxt-image sizes="300,300:600,600:900" ... />
   <!--               |   |   |   |   | -->
   <!--------- width -^   |   |   |   | -->
   <!--                   |   |   |   | -->
@@ -267,18 +267,18 @@ I this case you should create a comma separated list of sizes and breakpoints. S
 ```
 
 ### Advances array formatted usage
-Using array will help you to create custom media queries of different sets and have more conrtol on different viewport sizes.
+Using array will help you to create custom media queries of different sizes and have more conrtol on different viewport sizes.
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image :sets="sets" ... />
+  <nuxt-image :sizes="sizes" ... />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      sets: [
+      sizes: [
         {
           width: 300
         },

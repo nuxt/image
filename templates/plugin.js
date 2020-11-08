@@ -7,7 +7,7 @@ import { createImage } from '~image/image'
 
 const intersectOptions = <%= devalue(options.intersectOptions) %>
 const defaultProvider = '<%= options.defaultProvider %>'
-const responsiveSizes = '<%= options.sizes %>'
+const responsiveSizes = <%= devalue(options.sizes) %>
 const presets = <%= devalue(options.presets) %>
 const providers = {}
 <% for (provider of options.providers) { %>

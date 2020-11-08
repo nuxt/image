@@ -26,7 +26,7 @@ export default {
       type: Boolean,
       default: true
     },
-    sets: {
+    sizes: {
       type: [String, Array],
       default: ''
     },
@@ -74,6 +74,10 @@ export default {
     placeholder: {
       type: [Boolean, String],
       default: false
+    },
+    responsive: {
+      type: Boolean,
+      default: false
     }
   },
   async fetch () {
@@ -83,7 +87,7 @@ export default {
     // and files are store in output direcotry
     if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
       // eslint-disable-next-line no-unused-expressions
-      this.sizes
+      this.sources
     }
   },
   data () {
@@ -127,8 +131,8 @@ export default {
         crossorigin: this.crossorigin
       }
     },
-    sizes () {
-      return this.$img.sizes(this.src, this.sets, {
+    sources () {
+      return this.$img.sizes(this.src, this.sizes || this.responsive, {
         format: this.format,
         ...this.computedOperations
       })
