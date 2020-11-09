@@ -176,10 +176,13 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
 
   providerOptions = defu(providerOptions, {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    dir: path.resolve(nuxt.options.srcDir, nuxt.options.dir.static)
+    dir: path.join('~', nuxt.options.dir.static),
+    clearCache: false,
+    cacheDir: '~~/node_modules/.cache/nuxt-image'
   })
 
   providerOptions.dir = nuxt.resolver.resolvePath(providerOptions.dir)
+  providerOptions.cacheDir = nuxt.resolver.resolvePath(providerOptions.cacheDir)
 
   return providerOptions
 }

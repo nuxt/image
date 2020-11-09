@@ -1,4 +1,3 @@
-import path from 'path'
 import { ProviderFactory } from 'types'
 
 export default <ProviderFactory> function (providerOptions) {
@@ -28,8 +27,8 @@ function createMiddleware (options) {
       }
     ],
     cache: {
-      dir: path.resolve('node_modules/.cache/nuxt-image'),
-      cleanCron: options.clearCache || false
+      dir: options.cacheDir,
+      cleanCron: options.clearCache
     }
   })
   return IPXMiddleware(ipx)

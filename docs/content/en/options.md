@@ -56,7 +56,6 @@ Here is a sample to use `cloudinary`:
   </code-block>
 </code-group>
 
-<!-- local provider -->
 <!-- writing custom providers -->
 See:
 - [How to use provider](/nuxt-image#provider)
@@ -110,14 +109,13 @@ See:
 
 ## `defaultProvider`
 
-If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `defaultProvider`, your first provider is picked as default.
+If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `defaultProvider`, module uses `ipx` as the default provider.
 
 ```js{}[nuxt.config.js]
 export default {
   image: {
     defaultProvider: 'twicpics',
     providers: {
-      local: {},
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics/'
       }
@@ -132,25 +130,22 @@ Internally nuxt image uses [ipx](https://github.com/nuxt-contrib/ipx) to modify 
 
 - `dir`: The root directory of the all images. By default nuxt image looks `static` dir to find original images, 
 - `clearCache`: The ipx has a caching stategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using `clearCache` option in provide options. By default this cron job is disabled.
+- `cacheDir`: The directory to store the cached images.
 
 ```js{}[nuxt.config.js]
 export default {
   image: {
     ipx: {
       /**
-       * Public domain of your website 
-       **/
-      baseURL: 'https://awesome.com/',
-      /**
-       * Internal address of your website 
-       **/
-      internalBaseURL: 'http://192.168.1.100:3000/',
-      /**
        * Input directory for images
        **/
       dir: '~/static',
       /**
-       * Enable/Disabel cache cleaning cron job
+       * Cache directory for optimized images
+       **/
+      cacheDir: '~~/node_modules/.cache/nuxt-image',
+      /**
+       * Enable/Disable cache cleaning cron job
        **/
       clearCache: false
     }

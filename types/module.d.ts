@@ -5,9 +5,9 @@ export interface ModuleOptions {
   defaultProvider: string;
   presets: ImagePreset[];
   ipx: {
-    baseURL: string;
     dir?: string;
     clearCache?: boolean | string;
+    cacheDir?: string;
   }
   sizes: number[],
   internalUrl?: string
