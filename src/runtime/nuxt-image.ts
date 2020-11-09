@@ -60,7 +60,8 @@ export default {
           transform: 'scale(1.1)'
         },
         attrs: {
-          src: this.meta.placeholder
+          src: this.meta.placeholder,
+          'aria-hidden': 'true'
         }
       })
     }
@@ -110,6 +111,9 @@ export default {
 
     const ratioBox = h('div', {
       class: '__nim_r',
+      attrs: {
+        'aria-hidden': 'true'
+      },
       style: {
         width: '100%',
         paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
