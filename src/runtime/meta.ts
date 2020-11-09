@@ -1,6 +1,6 @@
 import { RuntimeImageInfo } from 'types'
 
-export async function getMeta (url, cache): RuntimeImageInfo {
+export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
   const cacheKey = 'image:meta:' + url
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey)

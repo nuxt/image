@@ -10,6 +10,7 @@ export interface CreateImageOptions {
   presets: ImagePreset[]
   defaultProvider: string
   intersectOptions: object
+  responsiveSizes: number[]
 }
 
 export interface $Image {
@@ -38,6 +39,7 @@ export interface ImageSize {
   media: string;
   breakpoint: number;
   format: string;
+  url: string;
 }
 
 // -- Provider --

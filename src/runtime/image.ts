@@ -132,15 +132,15 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   })
 
-  image.sizes = (src: string, sizes: Array<ImageSize> | string | boolean, operations: any = {}) => {
+  image.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, operations: any = {}) => {
     if (typeof sizes === 'string') {
       sizes = sizes
         .split(',')
         .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/))
         .filter(match => !!match)
-        .map((match, index) => ({
-          width: match[3],
-          breakpoint: match[2] || (index > 0 && match[3]),
+        .map((match, index): Partial<ImageSize> => ({
+          width: parseInt(match[3], 10),
+          breakpoint: parseInt(match[2] || (index > 0 && match[3]), 10),
           format: match[5] || operations.format
         }))
     }
@@ -166,7 +166,6 @@ export function createImage (context, { providers, defaultProvider, presets, int
       const { url } = image(src, {
         ...operations,
         width: size.width,
-        height: size.height,
         format: size.format
       })
       size.url = url
