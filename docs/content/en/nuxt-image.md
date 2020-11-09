@@ -297,6 +297,11 @@ export default {
 </script>
 ```
 
+## `responsive`
+
+Using this prop `NuxtImage` will generate multiple sizes for the image based on the list of sizes that define the module options. see [`sizes` option](/options#sizes)  
+
+
 ## `alt`
 
 This prop specifies an alternate text for an image.

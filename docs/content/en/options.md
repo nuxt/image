@@ -152,3 +152,17 @@ export default {
   }
 }
 ```
+
+## `sizes`
+
+List of predefined sizes for responsive images. This sizes will use to generate resized and optimized version of an image.
+
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    sizes: [320, 420, 768, 1024, 1200]
+  }
+}
+
+```
