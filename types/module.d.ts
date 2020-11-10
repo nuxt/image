@@ -2,7 +2,7 @@ import { Module } from '@nuxt/types'
 import { ImagePreset } from './runtime'
 
 export interface ModuleOptions {
-  defaultProvider: string;
+  provider: string;
   presets: ImagePreset[];
   ipx: {
     dir?: string;

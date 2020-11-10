@@ -107,14 +107,14 @@ Presets are collections of pre-defined configurations for your projects. Presets
 See:
 - [How to use presets](/nuxt-image#preset)
 
-## `defaultProvider`
+## `provider`
 
-If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `defaultProvider`, module uses `ipx` as the default provider.
+If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `provider`, module uses `ipx` as the default provider.
 
 ```js{}[nuxt.config.js]
 export default {
   image: {
-    defaultProvider: 'twicpics',
+    provider: 'twicpics',
     providers: {
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics/'
