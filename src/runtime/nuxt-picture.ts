@@ -96,7 +96,7 @@ export default {
       })
     }
 
-    const picture = h('picture', {}, [
+    const picture = this.lazyState === LazyState.IDLE ? null : h('picture', {}, [
       ...sources,
       originalImage
     ])

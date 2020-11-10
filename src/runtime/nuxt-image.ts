@@ -66,33 +66,33 @@ export default {
       })
     }
 
-    const originalImage = h('img', {
-      class: '__nim_o',
-      style: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        margin: 0,
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center center',
-        transition: 'opacity 800ms ease 0ms',
-        opacity: 0,
-        ...(this.lazyState === LazyState.LOADED ? {
-          opacity: 1
-        } : {})
-      },
-      attrs: {
-        src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
-        srcset: this.lazyState !== LazyState.IDLE ? this.generatedSrcset : undefined,
-        sizes: this.lazyState !== LazyState.IDLE ? this.generatedSizes : undefined,
-        ...this.imgAttributes
-      },
-      on: {
-        load: this.onImageLoaded
-      }
-    })
+    let originalImage = null
+    if (this.lazyState !== LazyState.IDLE) {
+      originalImage = h('img', {
+        class: '__nim_o',
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          margin: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          transition: 'opacity 800ms ease 0ms',
+          opacity: this.lazyState === LazyState.LOADED ? 1 : 0
+        },
+        attrs: {
+          src: this.generatedSrc,
+          srcset: this.generatedSrcset,
+          sizes: this.generatedSizes,
+          ...this.imgAttributes
+        },
+        on: {
+          load: this.onImageLoaded
+        }
+      })
+    }
 
     let noScript = null
     if (this.noScript) {
