@@ -11,6 +11,7 @@ function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
   const options: ModuleOptions = {
+    defaultProvider: 'ipx',
     presets: [],
     intersectOptions: {},
     sizes: [320, 420, 768, 1024, 1200],
@@ -22,11 +23,8 @@ function imageModule (moduleOptions: ModuleOptions) {
   if (typeof options.providers.ipx !== 'undefined') {
     logger.warn("'ipx' is a reserved name for provider. Please choose another name for your provider. This provider will ignore.")
   }
-  options.providers.ipx = prepareLocalProvider(this, options.providers.ipx || {})
 
-  if (!options.defaultProvider) {
-    options.defaultProvider = 'ipx'
-  }
+  options.providers.ipx = prepareLocalProvider(this, options.ipx || {})
 
   interface ModuleProvider {
     name: string,
@@ -181,8 +179,8 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
     cacheDir: '~~/node_modules/.cache/nuxt-image'
   })
 
-  providerOptions.dir = nuxt.resolver.resolvePath(providerOptions.dir)
-  providerOptions.cacheDir = nuxt.resolver.resolvePath(providerOptions.cacheDir)
+  providerOptions.dir = nuxt.resolver.resolveAlias(providerOptions.dir)
+  providerOptions.cacheDir = nuxt.resolver.resolveAlias(providerOptions.cacheDir)
 
   return providerOptions
 }
