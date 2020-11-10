@@ -10,6 +10,9 @@ export default theme({
     '@nuxt/image'
   ],
   image: {
+    ipx: {
+      dir: `~~/static`
+    },
     providers: {
       cloudinary: {
         baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
