@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/nuxt/image/compare/v0.0.2...v0.0.4) (2020-11-10)
+
+
+### Features
+
+* a11y ([1732d62](https://github.com/nuxt/image/commit/1732d6228b10ecb3b7ca1939ec37f706739b2180))
+* add `cacheDir` options ([449a005](https://github.com/nuxt/image/commit/449a00561080c6b654eccf07c7db43ef6c8a8e24))
+* add click listener ([cbe2351](https://github.com/nuxt/image/commit/cbe2351b9da0ac5d021942455e99c7db474aacb6))
+* add component aliases ([845579b](https://github.com/nuxt/image/commit/845579bf9d7b324712bf11f54d89a205853fd7a3))
+* add fastly provider ([#15](https://github.com/nuxt/image/issues/15)) ([34ceb3c](https://github.com/nuxt/image/commit/34ceb3c4180b7765f87729ed5ae548ac4b3aa114))
+* add module option to modify `IntersectionObserver` options ([#41](https://github.com/nuxt/image/issues/41)) ([9f9b920](https://github.com/nuxt/image/commit/9f9b920c18c76227d15981be5f465b46da8183d8))
+* auto detect image ratio ([#37](https://github.com/nuxt/image/issues/37)) ([0f6e17e](https://github.com/nuxt/image/commit/0f6e17ea986925f7a5728a0e098c526bc9d7a137))
+* inline styles ([#67](https://github.com/nuxt/image/issues/67)) ([6909267](https://github.com/nuxt/image/commit/690926736cd7cc7e7ffbe362bee5cbd25346f328))
+* keep internal provider enable ([#60](https://github.com/nuxt/image/issues/60)) ([349b40a](https://github.com/nuxt/image/commit/349b40aea54d2d99274892bb0f261f34ee47a612))
+* load all images on print ([#66](https://github.com/nuxt/image/issues/66)) ([2c034de](https://github.com/nuxt/image/commit/2c034de136780c82f1330205248f1ac95640b7f4))
+* support responsive prop to generate sizes ([7e3f80b](https://github.com/nuxt/image/commit/7e3f80ba798eee2c267d77fb68b8b4cd16704866))
+* universal meta resolving ([#55](https://github.com/nuxt/image/issues/55)) ([45bbbe9](https://github.com/nuxt/image/commit/45bbbe9858da7f16c6f95c499dcb144874505e97))
+* **componets:** introduce `no-script` prop ([eb522b7](https://github.com/nuxt/image/commit/eb522b7e78ddd96ef6eea264cca665ead2ddfeec))
+* **runtime:** add imgix provider ([#29](https://github.com/nuxt/image/issues/29)) ([3f4a6a5](https://github.com/nuxt/image/commit/3f4a6a5dd0bca5d16d7a69e66f20cd13c97291e7))
+* **runtime:** catch image exceptions and prevent page crash ([#43](https://github.com/nuxt/image/issues/43)) ([e5190c1](https://github.com/nuxt/image/commit/e5190c18fea142db5e41176a669b00c358a740b8))
+
+
+### Bug Fixes
+
+* ensure component needs placeholder ([029f2cf](https://github.com/nuxt/image/commit/029f2cfaf40c654cd924324c19b473c1b5229fd7))
+* image ratio calculation ([b88bb9c](https://github.com/nuxt/image/commit/b88bb9c8e29d8064420ac1277649a0a7e5f6661a))
+* rename default provider's option ([c1509fb](https://github.com/nuxt/image/commit/c1509fb45674f7a02aef10de1dbfc0a8a89be886))
+* resolve cache dir aliases ([5303699](https://github.com/nuxt/image/commit/5303699a0bd90df87796573aaac098d4cc1a169f))
+* tests & typo ([6f06e65](https://github.com/nuxt/image/commit/6f06e657a60816b740ca004d79a15588f229710c))
+* **local-provider:** resolve input dir alias ([0a612d5](https://github.com/nuxt/image/commit/0a612d5dd4f98c3e87625e964762c7a398a0fd62)), closes [#47](https://github.com/nuxt/image/issues/47)
+* **runtime:** fix runtime behavior ([0ed7625](https://github.com/nuxt/image/commit/0ed76251335750fb679bc1e0877de55ef908f257))
+* **runtime:** handle ssr false ([27c3445](https://github.com/nuxt/image/commit/27c3445fe39c14e7ed06873b88bfe625eaebb56d))
+* **runtime:** rename `size` prop to `fit` ([6174417](https://github.com/nuxt/image/commit/6174417935f7a2cc05a67032fb7d03909a27325b)), closes [#16](https://github.com/nuxt/image/issues/16)
+* **runtime:** use file name from `src` if `alt` prop is missing ([19e6157](https://github.com/nuxt/image/commit/19e615763163c5e6c56dca5e6591bdc5adad741b))
+
 ### [0.0.3](https://github.com/nuxt/image/compare/v0.0.2...v0.0.3) (2020-10-05)
 
 
