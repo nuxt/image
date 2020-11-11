@@ -55,19 +55,14 @@ export function testComponent (Component, props) {
     expect(observerAdded).toBe(props.lazy === false ? 0 : 1)
     expect(observerDestroyed).toBe(0)
   })
-  test('Generate alt', () => {
-    expect(wrapper.vm.imgAttributes.alt).toEqual('image')
-    const domAlt = wrapper.find('.__nim_o').element.getAttribute('alt')
-    expect(domAlt).toEqual('image')
-  })
   test('Set src', (done) => {
     if (props.lazy === false) {
       const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcBefore).toEqual(src)
       return done()
     }
-    const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
-    expect(domSrcBefore).toBeNull()
+    const domElement = wrapper.find('.__nim_o').element
+    expect(domElement).toBeUndefined()
     becomeVisible()
     process.nextTick(() => {
       const domSrcAfter = wrapper.find('.__nim_o').element.getAttribute('src')
@@ -75,6 +70,12 @@ export function testComponent (Component, props) {
       done()
     })
   })
+  test('Generate alt', () => {
+    expect(wrapper.vm.imgAttributes.alt).toEqual('image')
+    const domAlt = wrapper.find('.__nim_o').element.getAttribute('alt')
+    expect(domAlt).toEqual('image')
+  })
+
   test('Change src', (done) => {
     src = '/image.jpeg'
     wrapper.setProps({ src })
