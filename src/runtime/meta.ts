@@ -29,7 +29,14 @@ export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
 
   if (process.server) {
     const imageMeta = require('image-meta').default
-    const data: Buffer = await fetch(url).then((res: any) => res.buffer())
+    const data: Buffer = await fetch(url)
+      .then((res: any) => {
+        if (res.status !== 200) {
+          throw new Error('Failed to load placeholder image')
+        }
+        return res.buffer()
+      })
+
     const { width, height, mimeType } = await imageMeta(data)
     const meta = {
       width,
