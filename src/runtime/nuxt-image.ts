@@ -54,10 +54,9 @@ export default {
           margin: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: this.fit,
           objectPosition: 'center center',
-          filter: 'blur(15px)',
-          transform: 'scale(1.1)'
+          filter: 'blur(10px)'
         },
         attrs: {
           src: this.meta.placeholder,
@@ -77,7 +76,7 @@ export default {
           margin: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: this.fit,
           objectPosition: 'center center',
           transition: 'opacity 800ms ease 0ms',
           opacity: this.lazyState === LazyState.LOADED ? 1 : 0

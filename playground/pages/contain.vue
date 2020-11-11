@@ -1,16 +1,18 @@
 <template>
   <div class="container">
-    <nuxt-image
+    <div
       v-for="(image, i) in [...images, ...images, ...images, ...images, ...images]"
       :key="'img-' + i"
-      :src="image.src"
-      :alt="image.alt"
       class="image"
-      :placeholder="image.placeholder !== false"
-      width="100"
-      height="100"
-      sizes="320"
-    />
+    >
+      <nuxt-image
+        :src="image.src"
+        :alt="image.alt"
+        fit="contain"
+        :placeholder="image.placeholder !== false"
+        sizes="320"
+      />
+    </div>
   </div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
       images: [
         { src: 'images/nuxt-white.svg', alt: 'Nuxt', placeholder: false },
         { src: 'cloudinary:/remote/nuxt-org/blog/going-full-static/main.png', alt: 'Cloudinary' },
-        { src: 'fastly:/image.jpg', alt: 'fastify' },
+        { src: 'fastly:/imsage.jpg', alt: 'fastify' },
         { src: 'imgix:/examples/bluehat.jpg', alt: 'imgix' },
         { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg', alt: 'Aconcagua Argentina' },
         { src: '/images/2000px-Everest_kalapatthar.jpg', alt: 'Mount Everest Nepal' },
