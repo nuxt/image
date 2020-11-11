@@ -42,7 +42,7 @@ export default <RuntimeProvider> {
 
     const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
     const operations = operationsGenerator(mergeModifiers as ImageModifiers)
-    
+
     return {
       url: cleanDoubleSlashes(options.baseURL + '/' + operations + srcWithoutExtension)
     }
