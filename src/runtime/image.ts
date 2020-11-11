@@ -176,7 +176,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
   }
 
   image.getMeta = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
-    const { image } = parseImage(source, { ...modifiers, width: 30 }, options)
+    const { image } = parseImage(source, { ...modifiers, width: 30, quality: 40 }, options)
 
     const meta = { placeholder: image.url }
 
