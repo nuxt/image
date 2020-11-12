@@ -5,6 +5,7 @@ async function _getMeta (url): Promise<RuntimeImageInfo> {
     if (typeof Image === 'undefined') {
       throw new TypeError('Image not supported')
     }
+
     return new Promise((resolve, reject) => {
       const img = new Image()
       img.onload = () => {
