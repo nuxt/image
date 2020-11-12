@@ -176,7 +176,8 @@ function prepareLocalProvider ({ nuxt, options }, providerOptions) {
     baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
     dir: path.join('~', nuxt.options.dir.static),
     clearCache: false,
-    cacheDir: '~~/node_modules/.cache/nuxt-image'
+    cacheDir: '~~/node_modules/.cache/nuxt-image',
+    sharp: {}
   })
 
   providerOptions.dir = nuxt.resolver.resolveAlias(providerOptions.dir)

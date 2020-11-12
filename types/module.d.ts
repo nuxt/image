@@ -8,6 +8,9 @@ export interface ModuleOptions {
     dir?: string;
     clearCache?: boolean | string;
     cacheDir?: string;
+    sharp: {
+      [key: string]: any;
+    }
   }
   sizes: number[],
   internalUrl?: string

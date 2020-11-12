@@ -29,7 +29,8 @@ function createMiddleware (options) {
     cache: {
       dir: options.cacheDir,
       cleanCron: options.clearCache
-    }
+    },
+    sharp: options.sharp
   })
   return IPXMiddleware(ipx)
 }
