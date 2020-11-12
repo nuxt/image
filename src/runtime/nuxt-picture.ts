@@ -59,10 +59,7 @@ export default {
         objectFit: 'cover',
         objectPosition: 'center center',
         transition: 'opacity 800ms ease 0ms',
-        opacity: 0,
-        ...(this.lazyState === LazyState.LOADED ? {
-          opacity: 1
-        } : {})
+        opacity: this.lazyState === LazyState.IDLE ? 0 : 1
       },
       attrs: {
         src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
@@ -86,8 +83,9 @@ export default {
           height: '100%',
           objectFit: 'cover',
           objectPosition: 'center center',
-          filter: 'blur(15px)',
-          transform: 'scale(1.1)'
+          filter: 'blur(10px)',
+          transition: 'opacity 1s',
+          opacity: this.lazyState === LazyState.LOADED ? 0 : 1
         },
         attrs: {
           src: this.meta.placeholder,
