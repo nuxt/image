@@ -42,7 +42,7 @@ export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
   }
 
   const meta = await _getMeta(url).catch((err) => {
-    // eslint-disable-next-line no-error
+    // eslint-disable-next-line no-console
     console.error('Failed to get image meta for ' + url, err + '')
     return {
       width: 0,
