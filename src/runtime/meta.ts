@@ -1,11 +1,6 @@
 import { RuntimeImageInfo } from 'types'
 
-export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
-  const cacheKey = 'image:meta:' + url
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey)
-  }
-
+async function _getMeta (url): Promise<RuntimeImageInfo> {
   if (process.client) {
     if (typeof Image === 'undefined') {
       throw new TypeError('Image not supported')
@@ -19,7 +14,6 @@ export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
           height: img.height,
           placeholder: url
         }
-        cache.set(cacheKey, meta)
         resolve(meta)
       }
       img.onerror = err => reject(err)
@@ -36,7 +30,27 @@ export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
       height,
       placeholder: `data:${mimeType};base64,${data.toString('base64')}`
     }
-    cache.set(cacheKey, meta)
+
     return meta
   }
+}
+
+export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
+  const cacheKey = 'image:meta:' + url
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey)
+  }
+
+  const meta = await _getMeta(url).catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error('Failed to get image meta for ' + url, err + '')
+    return {
+      width: 0,
+      height: 0,
+      placeholder: ''
+    }
+  })
+
+  cache.set(cacheKey, meta)
+  return meta
 }
