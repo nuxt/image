@@ -1,137 +1,94 @@
-import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
-import { renderTag } from './utils'
 
 // @vue/component
 export default {
   name: 'NuxtImage',
-  mixins: [nuxtImageMixin],
+  props: {
+    src: {
+      type: [String, Object],
+      default: '',
+      required: true
+    },
+    sizes: {
+      type: [String, Array],
+      default: ''
+    },
+    format: {
+      type: String,
+      default: undefined
+    },
+    quality: {
+      type: [Number, String],
+      default: 75
+    },
+    fit: {
+      type: String,
+      default: 'cover'
+    },
+    operations: {
+      type: Object,
+      default: () => ({})
+    },
+    layout: {
+      type: String,
+      default: 'inherit'
+    },
+    // `<img>` attrubutes
+    alt: {
+      type: String,
+      default: ''
+    }
+  },
   computed: {
+    generatedAlt () {
+      return this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+    },
+    sources () {
+      const sizes = this.sizes || ['responsive'].includes(this.layout)
+      return this.$img.sizes(this.src, sizes, {
+        fit: this.fit,
+        quality: this.quality,
+        format: this.format,
+        ...this.operations
+      })
+    },
     generatedSrcset () {
       if (!Array.isArray(this.sources) || this.sources.length < 2) {
         return undefined
       }
-      return this.sources.map(({ width, url }) => width ? `${url} ${width}w` : url).join(', ')
+      return this.sources.map(({ width, url }) => width ? `${url} ${width}w` : url).join(',\n')
     },
     generatedSizes () {
       if (!Array.isArray(this.sources) || this.sources.length < 2) {
         return undefined
       }
-      return this.sources.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).reverse().join(', ')
+      return this.sources.map(({ width, media }) => media ? `${media} ${width}px` : `${width}px`).join(', ')
     },
     generatedSrc () {
       if (this.sources.length) {
         return this.sources[0].url
       }
       return this.src
+    },
+    generatedStyle () {
+      if (this.layout === 'responsive') {
+        return {
+          maxWidth: '100%',
+          minWidth: '100%'
+        }
+      }
+      return {}
     }
   },
   render (h) {
-    if (this.error) {
-      return h('div', {
-        class: ['__nim_w'].concat(this.$attrs.class || '')
-      }, [this.error])
-    }
-    if (!this.lazy && !this.placeholder) {
-      return h('img', {
-        class: '__nim_o',
-        attrs: {
-          src: this.generatedSrc,
-          srcset: this.generatedSrcset,
-          sizes: this.generatedSizes,
-          ...this.imgAttributes
-        }
-      })
-    }
-
-    let placeholder = null
-    if (this.placeholder && this.meta.placeholder) {
-      placeholder = h('img', {
-        class: '__nim_p',
-        style: {
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          margin: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center center',
-          filter: 'blur(10px)',
-          transition: 'opacity 1s',
-          opacity: this.lazyState === LazyState.LOADED ? 0 : 1
-        },
-        attrs: {
-          src: this.meta.placeholder,
-          'aria-hidden': 'true'
-        }
-      })
-    }
-
-    let originalImage = null
-    if (this.lazyState !== LazyState.IDLE) {
-      originalImage = h('img', {
-        class: '__nim_o',
-        style: {
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          margin: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center center',
-          transition: 'opacity 800ms ease 0ms',
-          opacity: this.lazyState === LazyState.LOADED ? 1 : 0
-        },
-        attrs: {
-          src: this.generatedSrc,
-          srcset: this.generatedSrcset,
-          sizes: this.generatedSizes,
-          ...this.imgAttributes
-        },
-        on: {
-          load: this.onImageLoaded
-        }
-      })
-    }
-
-    let noScript = null
-    if (this.noScript) {
-      noScript = h('noscript', {
-        domProps: {
-          innerHTML: renderTag('img', {
-            class: '__nim_o',
-            src: this.generatedSrc,
-            srcset: this.generatedSrcset,
-            sizes: this.generatedSizes,
-            ...this.imgAttributes
-          })
-        }
-      })
-    }
-
-    const ratioBox = h('div', {
-      class: '__nim_r',
+    return h('img', {
+      class: 'nuxt-image',
+      style: this.generatedStyle,
       attrs: {
-        'aria-hidden': 'true'
-      },
-      style: {
-        width: '100%',
-        paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
+        src: this.generatedSrc,
+        srcset: this.generatedSrcset,
+        sizes: this.generatedSizes,
+        alt: this.generatedAlt
       }
     })
-
-    const wrapper = h('div', {
-      class: this.$attrs.class,
-      style: {
-        position: 'relative',
-        overflow: 'hidden'
-      },
-      on: {
-        click: event => this.$emit('click', event)
-      }
-    }, [placeholder, originalImage, noScript, ratioBox])
-
-    return wrapper
   }
 }

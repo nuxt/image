@@ -17,6 +17,9 @@ export default <RuntimeProvider> {
     } else if (modifiers.height) {
       operations.push(`h_${modifiers.height}${fit}`)
     }
+    if (modifiers.quality) {
+      operations.push(`q_${modifiers.quality}`)
+    }
 
     const adapter = predictAdapter(src)
 

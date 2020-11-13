@@ -14,7 +14,7 @@ function imageModule (moduleOptions: ModuleOptions) {
     provider: 'ipx',
     presets: [],
     intersectOptions: {},
-    sizes: [320, 420, 768, 1024, 1200],
+    sizes: [320, 420, 768, 1024, 1200, 1600],
     providers: {},
     ...nuxt.options.image,
     ...moduleOptions
