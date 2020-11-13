@@ -21,7 +21,7 @@ export default <RuntimeProvider> {
     const adapter = predictAdapter(src)
 
     const operationsString = operations.join(',') || '_'
-    const url = cleanDoubleSlashes(`/_image/ipx/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`)
+    const url = cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`)
 
     return {
       url,

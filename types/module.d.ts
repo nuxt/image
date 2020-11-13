@@ -4,10 +4,11 @@ import { ImagePreset } from './runtime'
 export interface ModuleOptions {
   provider: string;
   presets: ImagePreset[];
-  ipx: {
+  local: {
     dir?: string;
     clearCache?: boolean | string;
     cacheDir?: string;
+    accept: string[];
     sharp: {
       [key: string]: any;
     }

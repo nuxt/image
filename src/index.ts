@@ -11,7 +11,7 @@ function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
   const options: ModuleOptions = {
-    provider: 'ipx',
+    provider: 'local',
     presets: [],
     intersectOptions: {},
     sizes: [320, 420, 768, 1024, 1200],
@@ -20,11 +20,11 @@ function imageModule (moduleOptions: ModuleOptions) {
     ...moduleOptions
   }
 
-  if (typeof options.providers.ipx !== 'undefined') {
-    logger.warn("'ipx' is a reserved name for provider. Please choose another name for your provider. This provider will ignore.")
+  if (typeof options.providers.local !== 'undefined') {
+    logger.warn("'local' is a reserved name for provider. Please choose another name for your provider. This provider will ignore.")
   }
 
-  options.providers.ipx = prepareLocalProvider(this, options.ipx || {})
+  options.providers.local = prepareLocalProvider(this, options.local || {})
 
   interface ModuleProvider {
     name: string,

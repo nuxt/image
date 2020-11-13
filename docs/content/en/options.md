@@ -124,7 +124,7 @@ export default {
 }
 ```
 
-## `ipx`
+## `local`
 
 Internally nuxt image uses [ipx](https://github.com/nuxt-contrib/ipx) to modify and optimize images.  
 
@@ -136,7 +136,7 @@ Internally nuxt image uses [ipx](https://github.com/nuxt-contrib/ipx) to modify 
 ```js{}[nuxt.config.js]
 export default {
   image: {
-    ipx: {
+    local: {
       /**
        * Input directory for images
        **/
