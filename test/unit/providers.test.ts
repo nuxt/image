@@ -9,7 +9,7 @@ const images = [
   {
     args: ['/test.png', {}],
     local: { isStatic: true, url: '/_image/ipx/local/_/_/test.png' },
-    cloudinary: { url: '/test.png' },
+    cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/' },
     fastly: { url: '/test.png?' },
     imgix: { url: '/test.png?' }
@@ -17,7 +17,7 @@ const images = [
   {
     args: ['/test.png', { width: 200 }],
     local: { isStatic: true, url: '/_image/ipx/local/_/w_200/test.png' },
-    cloudinary: { url: '/w_200/test.png' },
+    cloudinary: { url: '/w_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
     imgix: { url: '/test.png?w=200' }
@@ -25,7 +25,7 @@ const images = [
   {
     args: ['/test.png', { height: 200 }],
     local: { isStatic: true, url: '/_image/ipx/local/_/h_200/test.png' },
-    cloudinary: { url: '/h_200/test.png' },
+    cloudinary: { url: '/h_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
     imgix: { url: '/test.png?h=200' }
@@ -33,7 +33,7 @@ const images = [
   {
     args: ['/test.png', { width: 200, height: 200 }],
     local: { isStatic: true, url: '/_image/ipx/local/_/s_200_200/test.png' },
-    cloudinary: { url: '/w_200,h_200/test.png' },
+    cloudinary: { url: '/w_200,h_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
     imgix: { url: '/test.png?w=200&h=200' }
@@ -41,7 +41,7 @@ const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
     local: { isStatic: true, url: '/_image/ipx/local/_/s_200_200_contain/test.png' },
-    cloudinary: { url: '/w_200,h_200,c_scale/test.png' },
+    cloudinary: { url: '/w_200,h_200,c_scale,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill' }
@@ -49,7 +49,7 @@ const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     local: { isStatic: true, url: '/_image/ipx/local/jpeg/s_200_200_contain/test.png' },
-    cloudinary: { url: '/w_200,h_200,c_scale,f_jpeg/test.png' },
+    cloudinary: { url: '/w_200,h_200,c_scale,f_jpeg,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' }
