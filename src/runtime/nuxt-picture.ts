@@ -288,7 +288,8 @@ export default {
           height: '100%',
           objectFit: 'cover',
           objectPosition: 'center center',
-          filter: 'blur(10px)',
+          // disable blur filter on custom placeholder
+          filter: typeof this.placeholder === 'string' ? undefined : 'blur(10px)',
           transition: 'opacity 1s',
           opacity: this.lazyState === LazyState.LOADED ? 0 : 1
         },
