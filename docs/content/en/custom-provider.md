@@ -123,11 +123,11 @@ export default {
 }
 ```
 
-### Use provider in `nuxt-image`
-To use your provider, write your provider's name before the src. Read [provider doc](/nuxt-image#provider)
+### Use provider in `nuxt-img`
+To use your provider, write your provider's name before the src. Read [provider doc](/nuxt-img#provider)
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image src="custom:/main.png" />
+  <nuxt-img src="custom:/main.png" />
 </template>
 ```

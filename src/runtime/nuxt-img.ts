@@ -1,7 +1,7 @@
 
 // @vue/component
 export default {
-  name: 'NuxtImage',
+  name: 'NuxtImg',
   props: {
     src: {
       type: [String, Object],
@@ -81,7 +81,7 @@ export default {
   },
   render (h) {
     return h('img', {
-      class: 'nuxt-image',
+      class: 'nuxt-img',
       style: this.generatedStyle,
       attrs: {
         src: this.generatedSrc,

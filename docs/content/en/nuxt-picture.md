@@ -7,7 +7,7 @@ category: Componets
 
 If you want to use modern and optimized formats like `webp` or `avif` and support browsers like `IE` or `Safari` you should use `nuxt-picture` component. `nuxt-picture` component is based on HTML `<picture>` tag, this component is designed to support modern formats and improve browser compatibility at the same time.
 
-The usage of `nuxt-picture` is same as `nuxt-image`, with a little differences:
+The usage of `nuxt-picture` is same as `nuxt-img`, with a little differences:
 
 - When you use modern formats like `webp` in the component, a fallback image with `jpeg` format will be generated and used as a fallback image for old browsers.
 

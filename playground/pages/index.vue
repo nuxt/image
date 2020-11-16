@@ -2,19 +2,19 @@
   <div>
     <div class="container">
       <h2>SVG image inside project</h2>
-      <NuxtImage src="images/nuxt-white.svg" width="400" height="400" />
+      <NuxtImg src="images/nuxt-white.svg" width="400" height="400" />
 
       <h2>JPEG image inside project</h2>
-      <NuxtImage src="/images/damavand.jpg" />
+      <NuxtImg src="/images/damavand.jpg" />
 
       <h2>JPEG image from remote url</h2>
-      <NuxtImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
+      <NuxtImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
 
       <h2>PNG image on Cloudinary</h2>
-      <NuxtImage src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" />
+      <NuxtImg src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" />
 
       <h2>JPEG image on Fastly</h2>
-      <NuxtImage src="fastly:/image.jpg" />
+      <NuxtImg src="fastly:/image.jpg" />
     </div>
   </div>
 </template>
