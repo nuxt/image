@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { cleanDoubleSlashes, createOperationsGenerator } from '~image/utils'
+import { createOperationsGenerator } from '~image/utils'
 
 const operationsGenerator = createOperationsGenerator({
   valueMap: {
@@ -18,9 +18,8 @@ const operationsGenerator = createOperationsGenerator({
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
     const operations = operationsGenerator(modifiers)
-    const url = cleanDoubleSlashes(options.baseURL + src + '?' + operations)
     return {
-      url
+      url: options.baseURL + src + '?' + operations
     }
   }
 }

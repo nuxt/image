@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { createMapper, createOperationsGenerator, cleanDoubleSlashes } from '~image/utils'
+import { createMapper, createOperationsGenerator } from '~image/utils'
 
 const fits = createMapper({
   fill: 'fill',
@@ -28,7 +28,7 @@ export default <RuntimeProvider> {
     const operations = operationsGenerator(providerModifiers)
 
     return {
-      url: cleanDoubleSlashes(options.baseURL + src + '?twic=v1/' + operations)
+      url: options.baseURL + src + '?twic=v1/' + operations
     }
   }
 }

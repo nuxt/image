@@ -18,7 +18,7 @@ describe('browser', () => {
     page.goto(url('/'))
     // temporally commented
     // const body = await page.innerHTML('body')
-    // expect(body).toContain('/_image/ipx/local/_/w_30/2000px-Aconcagua2016.jpg')
+    // expect(body).toContain('/_image/local/local/_/w_30/2000px-Aconcagua2016.jpg')
     const positiveRequest = requests.find(request => request.match('2000px-Aconcagua2016.jpg'))
     expect(positiveRequest).not.toBeNull()
     const negativeRequest = requests.find(request => request.match('1280px-K2_2006b.jpg'))

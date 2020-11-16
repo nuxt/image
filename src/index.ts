@@ -1,39 +1,22 @@
 import path from 'path'
-import defu from 'defu'
 import fs from 'fs-extra'
-import upath from 'upath'
-import { ModuleOptions, ProviderFactory } from 'types'
-import { downloadImage, getFileExtension, hash, logger, tryRequire } from './utils'
+import { ModuleOptions } from 'types'
+import { downloadImage, getFileExtension, getProviders, hash } from './utils'
 import { cleanDoubleSlashes } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
 
-function imageModule (moduleOptions: ModuleOptions) {
+async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
   const options: ModuleOptions = {
-    provider: 'ipx',
+    providers: {}, // user custom providers
     presets: [],
     intersectOptions: {},
     sizes: [320, 420, 768, 1024, 1200],
-    providers: {},
     ...nuxt.options.image,
     ...moduleOptions
   }
-
-  if (typeof options.providers.ipx !== 'undefined') {
-    logger.warn("'ipx' is a reserved name for provider. Please choose another name for your provider. This provider will ignore.")
-  }
-
-  options.providers.ipx = prepareLocalProvider(this, options.ipx || {})
-
-  interface ModuleProvider {
-    name: string,
-    options: any
-    provider: ProviderFactory
-  }
-
-  const providers: ModuleProvider[] = Object.entries(options.providers)
-    .map(([key, provider]) => loadProvider.call(this, key, provider))
+  options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'local'
 
   const pluginOptions = {
     sizes: options.sizes,
@@ -44,20 +27,19 @@ function imageModule (moduleOptions: ModuleOptions) {
     presets: options.presets
   }
 
+  const providers = await getProviders(nuxt, options)
   for (const p of providers) {
-    const { middleware, runtime, runtimeOptions } = p.provider(p.options)
-    const importName = 'runtime_' + hash(runtime).substr(0, 8)
-    pluginOptions.imports[importName] = upath.normalize(runtime)
+    pluginOptions.imports[p.importName] = p.runtime
     pluginOptions.providers.push({
       name: p.name,
-      import: importName,
-      options: runtimeOptions
+      import: p.importName,
+      options: p.runtimeOptions
     })
 
-    if (typeof middleware === 'function') {
+    if (typeof p.middleware === 'function') {
       addServerMiddleware({
         path: '/_image/' + p.name,
-        handler: middleware
+        handler: p.middleware
       })
     }
   }
@@ -86,31 +68,9 @@ function imageModule (moduleOptions: ModuleOptions) {
 
   if (typeof nuxt.listen === 'function') {
     nuxt.listen(0).then((server) => {
-      options.internalUrl = `http://localhost:${server.port}`
+      options.internalUrl = `http://localhost:${server.port}` // ! No tailing slash
     })
   }
-}
-
-function loadProvider (key: string, provider: any) {
-  const { nuxt } = this
-  if (typeof provider === 'string') {
-    provider = { provider }
-  } else if (typeof provider === 'object') {
-    provider = { options: provider }
-  }
-
-  if (!provider.name) {
-    provider.name = key
-  }
-  if (!provider.provider) {
-    provider.provider = provider.name
-  }
-  if (typeof provider.provider === 'string') {
-    provider.provider = tryRequire('./providers/' + provider.provider) ||
-      nuxt.resolver.requireModule(provider.provider)
-  }
-  // TODO: verify provider.provider and warn+skip if invalid
-  return provider
 }
 
 function handleStaticGeneration (nuxt: any, options: ModuleOptions) {
@@ -147,43 +107,6 @@ function handleStaticGeneration (nuxt: any, options: ModuleOptions) {
       })
     await Promise.all(downloads)
   })
-}
-
-function prepareLocalProvider ({ nuxt, options }, providerOptions) {
-  // Default port
-  const defaultPort =
-   process.env.PORT ||
-   process.env.npm_package_config_nuxt_port ||
-   (options.server && options.server.port) ||
-   3000
-
-  // Default host
-  let defaultHost =
-   process.env.HOST ||
-   process.env.npm_package_config_nuxt_host ||
-   (options.server && options.server.host) ||
-   'localhost'
-
-  /* istanbul ignore if */
-  if (defaultHost === '0.0.0.0') {
-    defaultHost = 'localhost'
-  }
-
-  // Default prefix
-  const prefix = '/'
-
-  providerOptions = defu(providerOptions, {
-    baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    dir: path.join('~', nuxt.options.dir.static),
-    clearCache: false,
-    cacheDir: '~~/node_modules/.cache/nuxt-image',
-    sharp: {}
-  })
-
-  providerOptions.dir = nuxt.resolver.resolveAlias(providerOptions.dir)
-  providerOptions.cacheDir = nuxt.resolver.resolveAlias(providerOptions.cacheDir)
-
-  return providerOptions
 }
 
 (imageModule as any).meta = require('../package.json')

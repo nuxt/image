@@ -40,7 +40,7 @@ describe('Plugin', () => {
 
     // temporally commented
     // const placeholder = nuxtContext.$img.getPlaceholder('/test.png')
-    // expect(placeholder).toEqual('/_image/ipx/_/w_30/test.png')
+    // expect(placeholder).toEqual('/_image/local/_/w_30/test.png')
   })
 
   test('Generate Random Image', () => {

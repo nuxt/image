@@ -21,7 +21,7 @@ describe('browser', () => {
     page.goto(url('/'))
     const body = await page.innerHTML('body')
     expect(body).not.toContain('/_/w_30/2000px-Aconcagua2016.jpg')
-    const placeholderRequest = requests.find(request => request.match('/_image/ipx/_/w_30/2000px-Aconcagua2016.jpg'))
+    const placeholderRequest = requests.find(request => request.match('/_image/local/_/w_30/2000px-Aconcagua2016.jpg'))
     expect(placeholderRequest).not.toBeNull()
     const positiveRequest = requests.find(request => request.match('2000px-Aconcagua2016.jpg'))
     expect(positiveRequest).not.toBeNull()

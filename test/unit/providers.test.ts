@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
-import local from '~/src/providers/ipx'
+import { cleanDoubleSlashes } from '../../src/runtime/utils'
+import local from '~/src/providers/local'
 import cloudinary from '~/src/providers/cloudinary'
 import twicpics from '~/src/providers/twicpics'
 import fastly from '~/src/providers/fastly'
@@ -8,7 +9,7 @@ import imgix from '~/src/providers/imgix'
 const images = [
   {
     args: ['/test.png', {}],
-    local: { isStatic: true, url: '/_image/ipx/local/_/_/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/_/test.png' },
     cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/' },
     fastly: { url: '/test.png?' },
@@ -16,7 +17,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200 }],
-    local: { isStatic: true, url: '/_image/ipx/local/_/w_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/w_200/test.png' },
     cloudinary: { url: '/w_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
@@ -24,7 +25,7 @@ const images = [
   },
   {
     args: ['/test.png', { height: 200 }],
-    local: { isStatic: true, url: '/_image/ipx/local/_/h_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/h_200/test.png' },
     cloudinary: { url: '/h_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
@@ -32,7 +33,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
-    local: { isStatic: true, url: '/_image/ipx/local/_/s_200_200/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/s_200_200/test.png' },
     cloudinary: { url: '/w_200,h_200,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
@@ -40,7 +41,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
-    local: { isStatic: true, url: '/_image/ipx/local/_/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/_/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale,f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
@@ -48,7 +49,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
-    local: { isStatic: true, url: '/_image/ipx/local/jpeg/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/local/jpeg/s_200_200_contain/test.png' },
     cloudinary: { url: '/w_200,h_200,c_scale,f_jpeg,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
@@ -76,13 +77,14 @@ describe('Providers', () => {
 
     for (const image of images) {
       const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      generated.url = cleanDoubleSlashes(generated.url)
       expect(generated).toMatchObject(image.local)
     }
   })
 
   test('cloudinary', async () => {
     const providerOptions = {
-      baseURL: '/'
+      baseURL: ''
     }
     const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
     const providerData = cloudinary(providerOptions)

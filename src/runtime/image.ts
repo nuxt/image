@@ -67,6 +67,11 @@ export function createImage (context, { providers, defaultProvider, presets, int
       preset ? preset.modifiers : modifiers,
       { ...provider.defaults, ...options }
     )
+
+    // apply router base & remove double slashes
+    const base = String(image.url)[0] === '/' ? context.base : ''
+    image.url = cleanDoubleSlashes(base + image.url)
+
     return {
       src,
       provider,
@@ -184,7 +189,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
       Object.assign(meta, await image.getMeta())
     } else {
       const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
-      const absoluteUrl = image.url[0] === '/' ? cleanDoubleSlashes(internalUrl + image.url) : image.url
+      const absoluteUrl = image.url[0] === '/' ? internalUrl + image.url : image.url
       Object.assign(meta, await getMeta(absoluteUrl, getCache(context)))
     }
 
