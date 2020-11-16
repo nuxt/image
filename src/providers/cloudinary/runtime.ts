@@ -1,5 +1,5 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { cleanDoubleSlashes, createOperationsGenerator } from '~image/utils'
+import { createOperationsGenerator } from '~image/utils'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -44,7 +44,7 @@ export default <RuntimeProvider> {
     const operations = operationsGenerator(mergeModifiers as ImageModifiers)
 
     return {
-      url: cleanDoubleSlashes(options.baseURL + '/' + operations + srcWithoutExtension)
+      url: options.baseURL + '/' + operations + srcWithoutExtension
     }
   }
 }

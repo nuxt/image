@@ -68,7 +68,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   if (typeof nuxt.listen === 'function') {
     nuxt.listen(0).then((server) => {
-      options.internalUrl = `http://localhost:${server.port}`
+      options.internalUrl = `http://localhost:${server.port}` // ! No tailing slash
     })
   }
 }

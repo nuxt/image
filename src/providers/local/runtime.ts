@@ -1,8 +1,10 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { cleanDoubleSlashes } from '~image/utils'
 
 function predictAdapter (src: string) {
-  return src.match(/^https?:\/\//) ? 'remote' : 'local'
+  if (src.match(/^https?:\/\//)) {
+    return 'remote'
+  }
+  return 'local'
 }
 
 export default <RuntimeProvider> {
@@ -21,10 +23,9 @@ export default <RuntimeProvider> {
     const adapter = predictAdapter(src)
 
     const operationsString = operations.join(',') || '_'
-    const url = cleanDoubleSlashes(`/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`)
 
     return {
-      url,
+      url: `/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`,
       isStatic: true
     }
   }
