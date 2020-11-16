@@ -1,10 +1,10 @@
 import fs from 'fs-extra'
+import { cleanDoubleSlashes } from '../../src/runtime/utils'
 import local from '~/src/providers/local'
 import cloudinary from '~/src/providers/cloudinary'
 import twicpics from '~/src/providers/twicpics'
 import fastly from '~/src/providers/fastly'
 import imgix from '~/src/providers/imgix'
-import { cleanDoubleSlashes } from '../../src/runtime/utils'
 
 const images = [
   {
