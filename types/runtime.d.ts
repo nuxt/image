@@ -44,16 +44,6 @@ export interface ImageSize {
 
 // -- Provider --
 
-export type ProviderFactory = (options: any) => Provider
-
-export interface Provider {
-  runtime: string
-  runtimeOptions: any
-  middleware?(): ProviderServerMiddleware
-}
-
-export type ProviderServerMiddleware = (req, res, next) => void
-
 export interface RuntimeProvider {
   // Apply provider base
   // Add additional params (like signuture)

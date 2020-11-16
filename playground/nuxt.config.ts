@@ -8,6 +8,18 @@ export default {
     '@nuxt/typescript-build'
   ],
   image: {
+    twicpics: {
+      baseURL: 'https://i5acur1u.twic.pics'
+    },
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
+    },
+    fastly: {
+      baseURL: 'https://www.fastly.io'
+    },
+    imgix: {
+      baseURL: 'https://assets.imgix.net'
+    },
     presets: [
       {
         name: 's50',
@@ -17,20 +29,6 @@ export default {
         }
       }
     ],
-    providers: {
-      twicpics: {
-        baseURL: 'https://i5acur1u.twic.pics'
-      },
-      cloudinary: {
-        baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
-      },
-      fastly: {
-        baseURL: 'https://www.fastly.io'
-      },
-      imgix: {
-        baseURL: 'https://assets.imgix.net'
-      }
-    },
     intersectOptions: {
       rootMargin: '50px'
     }
