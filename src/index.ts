@@ -9,7 +9,6 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addServerMiddleware, addPlugin } = this
 
   const options: ModuleOptions = {
-    provider: 'local',
     providers: {}, // user custom providers
     presets: [],
     intersectOptions: {},
@@ -17,6 +16,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
     ...nuxt.options.image,
     ...moduleOptions
   }
+  options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'local'
 
   const pluginOptions = {
     sizes: options.sizes,
