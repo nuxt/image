@@ -58,7 +58,7 @@ Let's use our random provider in our Nuxt application:
 
   ```vue{}[~/pages/index.js]
   <template>
-    <nuxt-image src="random:/" width="600" height="400" />
+    <nuxt-img src="random:/" width="600" height="400" />
   </template>
   ```
 
@@ -66,7 +66,7 @@ Let's use our random provider in our Nuxt application:
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="random:/" width="600" height="400"></nuxt-image>
+    <nuxt-img src="random:/" width="600" height="400"></nuxt-img>
   </div>
 
   </code-block>

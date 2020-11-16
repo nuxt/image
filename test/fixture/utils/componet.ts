@@ -96,7 +96,7 @@ export function testComponent (Component, props) {
   })
 
   test('sets', () => {
-    if (Component.name === 'NuxtImage') {
+    if (Component.name === 'NuxtImg') {
       testImageSets(wrapper)
     } else if (Component.name === 'NuxtPicture') {
       testPictureSets(wrapper)

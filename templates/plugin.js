@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import NuxtImage from '~image/nuxt-image'
+import NuxtImg from '~image/nuxt-img'
 import NuxtPicture from '~image/nuxt-picture'
 import { createImage } from '~image/image'
 
@@ -18,10 +18,9 @@ providers['<%= provider.name %>'] = {
 }
 <% } %>
 
-Vue.component(NuxtImage.name, NuxtImage)
+Vue.component(NuxtImg.name, NuxtImg)
 Vue.component(NuxtPicture.name, NuxtPicture)
-Vue.component('NuxtImg', NuxtImage)
-<% if (features.componentAliases) { %>Vue.component('NImg', NuxtImage)
+<% if (features.componentAliases) { %>Vue.component('NImg', NuxtImg)
 Vue.component('NPicture', NuxtPicture)<% } %>
 
 

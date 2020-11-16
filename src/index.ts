@@ -12,7 +12,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
     providers: {}, // user custom providers
     presets: [],
     intersectOptions: {},
-    sizes: [320, 420, 768, 1024, 1200],
+    sizes: [320, 420, 768, 1024, 1200, 1600],
     ...nuxt.options.image,
     ...moduleOptions
   }

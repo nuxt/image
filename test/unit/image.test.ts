@@ -1,5 +1,5 @@
 import { testComponent } from '../fixture/utils/componet'
-import Component from '~/src/runtime/nuxt-image'
+import Component from '~/src/runtime/nuxt-img'
 
 describe('Renders simple image', () => {
   testComponent(Component, {

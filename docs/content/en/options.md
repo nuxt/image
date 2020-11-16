@@ -42,7 +42,7 @@ Here is a sample to use `cloudinary`:
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -50,7 +50,7 @@ Here is a sample to use `cloudinary`:
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-image>
+    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-img>
   </div>
 
   </code-block>
@@ -58,7 +58,7 @@ Here is a sample to use `cloudinary`:
 
 <!-- writing custom providers -->
 See:
-- [How to use provider](/nuxt-image#provider)
+- [How to use provider](/nuxt-img#provider)
 - [List of internal providers](/providers)
 - [Create custom provider](/custom-provider)
 
@@ -90,7 +90,7 @@ Presets are collections of pre-defined configurations for your projects. Presets
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image legacy src="+avatar:/nuxt-icon.png" />
+    <nuxt-img legacy src="+avatar:/nuxt-icon.png" />
   </template>
   ```
 
@@ -98,14 +98,14 @@ Presets are collections of pre-defined configurations for your projects. Presets
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image legacy src="+avatar:/nuxt-icon.png"></nuxt-image>
+    <nuxt-img legacy src="+avatar:/nuxt-icon.png"></nuxt-img>
   </div>
 
   </code-block>
 </code-group>
 
 See:
-- [How to use presets](/nuxt-image#preset)
+- [How to use presets](/nuxt-img#preset)
 
 ## `provider`
 
@@ -144,7 +144,7 @@ export default {
       /**
        * Cache directory for optimized images
        **/
-      cacheDir: '~~/node_modules/.cache/nuxt-image',
+      cacheDir: '~~/node_modules/.cache/nuxt-img',
       /**
        * Enable/Disable cache cleaning cron job
        **/

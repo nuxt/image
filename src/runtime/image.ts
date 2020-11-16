@@ -143,9 +143,9 @@ export function createImage (context, { providers, defaultProvider, presets, int
         .split(',')
         .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/))
         .filter(match => !!match)
-        .map((match, index): Partial<ImageSize> => ({
+        .map((match, index, array): Partial<ImageSize> => ({
           width: parseInt(match[3], 10),
-          breakpoint: parseInt(match[2] || (index > 0 && match[3]), 10),
+          breakpoint: parseInt(match[2] || (index !== array.length - 1 && match[3]), 10),
           format: match[5] || operations.format
         }))
     }
@@ -166,7 +166,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
         size.format = operations.format
       }
       if (!size.media) {
-        size.media = size.breakpoint ? `(min-width: ${size.breakpoint}px)` : ''
+        size.media = size.breakpoint ? `(max-width: ${size.breakpoint}px)` : ''
       }
       const { url } = image(src, {
         ...operations,

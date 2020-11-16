@@ -14,7 +14,7 @@ Using image component is just easy as using `<img>` tag. Just define `src`, and 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="/nuxt-icon.png" />
+    <nuxt-img src="/nuxt-icon.png" />
   </template>
   ```
 
@@ -22,7 +22,7 @@ Using image component is just easy as using `<img>` tag. Just define `src`, and 
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="/nuxt-icon.png" />
+    <nuxt-img src="/nuxt-icon.png" />
   </div>
 
   </code-block>

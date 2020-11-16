@@ -11,24 +11,24 @@ Path to image file. `src` sould be in form of absolute path and starts with `/`.
 
 ```vue
 <template>
-  <nuxt-image :src="src" ... />
+  <nuxt-img :src="src" ... />
 </template>
 ```
 
-The `src` has other capabilities in `nuxt-image`, you can provide provider and preset for the image right inside the `src` property.
+The `src` has other capabilities in `nuxt-img`, you can provide provider and preset for the image right inside the `src` property.
 
 ### Provider
 
 Nuxt image module will allow you to modify and serve your images using cloud services like cloudinary. In order to use a provider you should:
 1. Define provider and its option in `nuxt.config`.
-2. Specify providers name in `nuxt-image` component
+2. Specify providers name in `nuxt-img` component
 
 <code-group>
   <code-block label="index.vue" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -50,7 +50,7 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-image>
+    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-img>
   </div>
 
   </code-block>
@@ -62,14 +62,14 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
 
 ### Preset
 
-Presets are predefined sets of image modifiers that can be used create unified form of images in your projects. You can write your presets inside `nuxt.config` and then use them in `nuxt-image`.
+Presets are predefined sets of image modifiers that can be used create unified form of images in your projects. You can write your presets inside `nuxt.config` and then use them in `nuxt-img`.
 
 <code-group>
   <code-block label="index.vue" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="50" height="50" />
+    <nuxt-img src="+jpg-cover:/nuxt-icon.png" width="50" height="50" />
   </template>
   ```
 
@@ -97,7 +97,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="+jpg-cover:/nuxt-icon.png" width="150" height="150"></nuxt-image>
+    <nuxt-img src="+jpg-cover:/nuxt-icon.png" width="150" height="150"></nuxt-img>
   </div>
 
   </code-block>
@@ -114,7 +114,7 @@ As you may notice providers and presets are different in their usage, and it is 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-img src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -147,7 +147,7 @@ As you may notice providers and presets are different in their usage, and it is 
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-img src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </div>
 
   </code-block>
@@ -158,14 +158,14 @@ Genererate `<noscript>` tag for browsers that aren’t running javascript.
 
 ## `lazy`
 
-By default `nuxt-image` lazy load all images to reduce initial requests and page size. Using `lazy` prop you can disable lazy loading.
+By default `nuxt-img` lazy load all images to reduce initial requests and page size. Using `lazy` prop you can disable lazy loading.
 
 <code-group>
   <code-block label="index.vue" active>
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image :lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
+    <nuxt-img :lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
   ```
 
@@ -198,7 +198,7 @@ By default `nuxt-image` lazy load all images to reduce initial requests and page
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
+    <nuxt-img lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
   </div>
 
   </code-block>
@@ -207,7 +207,7 @@ By default `nuxt-image` lazy load all images to reduce initial requests and page
 
 ## `placeholder`
 
-The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-image` generate it for you.  
+The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-img` generate it for you.  
 If you set `placeholder` to `true`, module creates a small placeholder for you. You can set your custom placeholder in this prop.
 
 
@@ -216,7 +216,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image :placeholder="true" src="/nuxt-icon.png" />
+    <nuxt-img :placeholder="true" src="/nuxt-icon.png" />
   </template>
   ```
   </code-block>
@@ -224,14 +224,14 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image :placeholder="/icon.png" src="/nuxt-icon.png" />
+    <nuxt-img :placeholder="/icon.png" src="/nuxt-icon.png" />
   </template>
   ```
   </code-block>
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-image>
+    <nuxt-img placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-img>
   </div>
 
   </code-block>
@@ -240,7 +240,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 ## `sizes`
 
 The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
-In `nuxt-image` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
+In `nuxt-img` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
 
 A set is consists of `width` and `breakpoint` or `media`: 
 - `width`: Width of generated image for this set
@@ -254,7 +254,7 @@ I this case you should create a comma separated list of sizes and breakpoints. S
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image sizes="300,300:600,600:900" ... />
+  <nuxt-img sizes="300,300:600,600:900" ... />
   <!--               |   |   |   |   | -->
   <!--------- width -^   |   |   |   | -->
   <!--                   |   |   |   | -->
@@ -271,7 +271,7 @@ Using array will help you to create custom media queries of different sizes and 
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image :sizes="sizes" ... />
+  <nuxt-img :sizes="sizes" ... />
 </template>
 
 <script>
@@ -299,7 +299,7 @@ export default {
 
 ## `responsive`
 
-Using this prop `NuxtImage` will generate multiple sizes for the image based on the list of sizes that define the module options. see [`sizes` option](/options#sizes)  
+Using this prop `NuxtImg` will generate multiple sizes for the image based on the list of sizes that define the module options. see [`sizes` option](/options#sizes)  
 
 
 ## `alt`
@@ -312,7 +312,7 @@ In case you want to serve images in specific format, use this prop.
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-image format="webp" src="/nuxt-icon.png" ... />
+  <nuxt-img format="webp" src="/nuxt-icon.png" ... />
 </template>
 ```
 
@@ -333,7 +333,7 @@ There are five standard values you can use with this property.
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image fit="cover" src="/nuxt-icon.png" width="200" height="100" />
+    <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
   </template>
   ```
 
@@ -341,7 +341,7 @@ There are five standard values you can use with this property.
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-  <nuxt-image fit="cover" src="/nuxt-icon.png" width="200" height="100" />
+  <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
   </div>
 
   </code-block>
@@ -356,7 +356,7 @@ In addition of standard operation, every provider can have their own operation. 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-image
+    <nuxt-img
       src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png"
       width="300" 
       height="169"
@@ -380,7 +380,7 @@ In addition of standard operation, every provider can have their own operation. 
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-image
+    <nuxt-img
       width="300" 
       height="169"
       src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" :operations="{r: '0:100'}"
