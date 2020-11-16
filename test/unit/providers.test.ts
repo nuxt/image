@@ -4,6 +4,7 @@ import cloudinary from '~/src/providers/cloudinary'
 import twicpics from '~/src/providers/twicpics'
 import fastly from '~/src/providers/fastly'
 import imgix from '~/src/providers/imgix'
+import { cleanDoubleSlashes } from '../../src/runtime/utils'
 
 const images = [
   {
@@ -76,13 +77,14 @@ describe('Providers', () => {
 
     for (const image of images) {
       const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      generated.url = cleanDoubleSlashes(generated.url)
       expect(generated).toMatchObject(image.local)
     }
   })
 
   test('cloudinary', async () => {
     const providerOptions = {
-      baseURL: '/'
+      baseURL: ''
     }
     const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
     const providerData = cloudinary(providerOptions)
