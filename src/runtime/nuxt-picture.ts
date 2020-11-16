@@ -1,21 +1,241 @@
-import nuxtImageMixin, { LazyState } from './nuxt-image-mixins'
-import { renderTag, isModernFormat } from './utils'
+import { renderTag } from './utils'
 
+export enum LazyState {
+  IDLE = 'idle',
+  LOADING = 'loading',
+  LOADED = 'loaded'
+}
 // @vue/component
 export default {
   name: 'NuxtPicture',
-  mixins: [nuxtImageMixin],
+  props: {
+    src: {
+      type: [String, Object],
+      default: '',
+      required: true
+    },
+    width: {
+      type: [String, Number],
+      default: ''
+    },
+    height: {
+      type: [String, Number],
+      default: ''
+    },
+    lazy: {
+      type: Boolean,
+      default: true
+    },
+    sizes: {
+      type: [String, Array],
+      default: ''
+    },
+    format: {
+      type: String,
+      default: undefined
+    },
+    fallbackFormat: {
+      type: String,
+      default: undefined
+    },
+    quality: {
+      type: [Number, String],
+      default: 75
+    },
+    fit: {
+      type: String,
+      default: 'cover'
+    },
+    operations: {
+      type: Object,
+      default: () => ({})
+    },
+    placeholder: {
+      type: [Boolean, String],
+      default: false
+    },
+    layout: {
+      type: String,
+      default: 'default'
+    },
+    noScript: {
+      type: Boolean,
+      default: false
+    },
+    // `<img>` attrubutes
+    alt: {
+      type: String,
+      default: ''
+    },
+    referrerpolicy: {
+      type: String,
+      default: undefined
+    },
+    usemap: {
+      type: String,
+      default: undefined
+    },
+    longdesc: {
+      type: String,
+      default: undefined
+    },
+    ismap: {
+      type: Boolean,
+      default: false
+    },
+    crossorigin: {
+      type: Boolean,
+      default: false
+    }
+  },
+  async fetch () {
+    await this.fetchMeta()
+
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
+    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
+      // eslint-disable-next-line no-unused-expressions
+      this.sources
+    }
+  },
+  data () {
+    return {
+      error: '',
+      meta: {
+        width: undefined,
+        height: undefined,
+        placeholder: undefined
+      },
+      lazyState: this.lazy ? LazyState.IDLE : LazyState.LOADED
+    }
+  },
   computed: {
+    computedOperations () {
+      return {
+        fit: this.fit,
+        quality: this.quality,
+        ...this.operations
+      }
+    },
+    imageRatio () {
+      if (this.height && this.width) {
+        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+      }
+
+      if (this.meta.width && this.meta.height) {
+        return (this.meta.height / this.meta.width) * 100
+      }
+
+      return 0
+    },
+    imgAttributes () {
+      const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+      return {
+        alt,
+        referrerpolicy: this.referrerpolicy,
+        usemap: this.usemap,
+        longdesc: this.longdesc,
+        ismap: this.ismap,
+        crossorigin: this.crossorigin
+      }
+    },
+    sources () {
+      const sizes = this.sizes || ['responsive'].includes(this.layout)
+      return this.$img.sizes(this.src, sizes, {
+        format: this.format,
+        ...this.computedOperations
+      })
+    },
     generatedSrc () {
       const [source] = this.sources
       if (source) {
-        if (isModernFormat(source.format) || isModernFormat(source.url)) {
-          return this.generateSizedImage(source.width, source.height, 'jpeg')
+        if (this.fallbackFormat) {
+          return this.generateSizedImage(source.width, source.height, this.fallbackFormat)
         } else {
           return this.sources[0].url
         }
       }
       return this.src
+    }
+  },
+  watch: {
+    src () {
+      this.fetchMeta()
+
+      if (this.lazy) {
+        this.$img.$observer.remove(this.$el)
+        this.$img.$observer.add(this.$el, this.onObserverEvent)
+      }
+    }
+  },
+  mounted () {
+    if (this.lazy) {
+      this.$img.$observer.add(this.$el, this.onObserverEvent)
+    }
+  },
+  beforeDestroy () {
+    if (this.lazy) {
+      this.$img.$observer.remove(this.$el)
+    }
+  },
+  methods: {
+    async fetchMeta () {
+      if (!this.placeholder && this.width && this.height) {
+        return
+      }
+      try {
+        const { width, height, placeholder } = await this.$img.getMeta(this.src, this.computedOperations)
+
+        Object.assign(this.meta, {
+          width,
+          height,
+          placeholder: typeof this.placeholder === 'string' ? this.placeholder : this.placeholder && placeholder
+        })
+      } catch (e) {
+        this.onError(e)
+        return ''
+      }
+    },
+    generateSizedImage (width: number, height: number, format: string) {
+      try {
+        const image = this.$img(this.src, {
+          width,
+          height,
+          format,
+          ...this.computedOperations
+        })
+        return encodeURI(image.url)
+      } catch (e) {
+        this.onError(e)
+        return ''
+      }
+    },
+    loadOriginalImage () {
+      this.lazyState = LazyState.LOADING
+    },
+    onError (e: Error) {
+      this.error = e.message
+      // eslint-disable-next-line no-console
+      console.error(e.message)
+      this.$emit('error', e)
+    },
+    // hanlde onLoad event of original image element
+    onImageLoaded () {
+      if (this.lazyState !== LazyState.LOADED) {
+        this.lazyState = LazyState.LOADED
+        this.$emit('load')
+      }
+    },
+    onObserverEvent (type) {
+      if (type === 'onIntersect') {
+        // OK, element is visible, Hoooray
+        this.loadOriginalImage()
+        return
+      }
+      if (type === 'onPrint') {
+        this.$img.$observer.remove(this.$el)
+        this.lazyState = LazyState.LOADED
+      }
     }
   },
   render (h) {
@@ -30,22 +250,7 @@ export default {
         type: source.format,
         media: source.media
       }
-    })).reverse()
-
-    if (!this.lazy && !this.placeholder) {
-      const originalImage = h('img', {
-        class: '__nim_o',
-        attrs: {
-          src: this.generatedSrc,
-          ...this.imgAttributes
-        }
-      })
-
-      return h('picture', {}, [
-        ...sources,
-        originalImage
-      ])
-    }
+    }))
 
     const originalImage = h('img', {
       class: ['__nim_o'],
@@ -62,7 +267,7 @@ export default {
         opacity: this.lazyState === LazyState.IDLE ? 0 : 1
       },
       attrs: {
-        src: this.lazyState !== LazyState.IDLE ? this.generatedSrc : undefined,
+        src: this.lazyState === LazyState.IDLE ? undefined : this.generatedSrc,
         ...this.imgAttributes
       },
       on: {
@@ -137,6 +342,9 @@ export default {
       style: {
         position: 'relative',
         overflow: 'hidden'
+      },
+      on: {
+        click: $event => this.$emit('click', $event)
       }
     }, [placeholder, picture, noScript, ratioBox])
 

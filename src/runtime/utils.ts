@@ -57,9 +57,3 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
   }
   return html + contents + `</${tag}>`
 }
-
-const modernFormats = ['webp', 'avif']
-
-export function isModernFormat (path: string) {
-  return modernFormats.includes(String(path).split('.').pop())
-}
