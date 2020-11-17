@@ -1,3 +1,4 @@
+import defu from 'defu'
 import type { CreateImageOptions, ImageModifiers, ImagePreset, ImageSize } from 'types'
 import { getMeta } from './meta'
 import { cleanDoubleSlashes, isRemoteUrl } from './utils'
@@ -77,7 +78,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
     const image = provider.provider.getImage(
       src,
-      preset ? preset.modifiers : modifiers,
+      defu(modifiers, preset.modifiers),
       { ...provider.defaults, ...options }
     )
 

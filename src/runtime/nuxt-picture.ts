@@ -32,19 +32,19 @@ export default {
     },
     format: {
       type: String,
-      default: undefined
+      default: null
     },
     fallbackFormat: {
       type: String,
-      default: undefined
+      default: null
     },
     quality: {
       type: [Number, String],
-      default: 75
+      default: null
     },
     fit: {
       type: String,
-      default: 'cover'
+      default: null
     },
     operations: {
       type: Object,
