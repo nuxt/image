@@ -4,6 +4,9 @@
       <h2>SVG image inside project</h2>
       <NuxtImg src="images/nuxt-white.svg" width="400" height="400" />
 
+      <h2>SVG image from remote url</h2>
+      <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg" width="400" height="400" />
+
       <h2>JPEG image inside project</h2>
       <NuxtImg src="/images/damavand.jpg" />
 

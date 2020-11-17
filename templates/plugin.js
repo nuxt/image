@@ -2,6 +2,7 @@ import Vue from 'vue'
 import NuxtImg from '~image/nuxt-img'
 import NuxtPicture from '~image/nuxt-picture'
 import { createImage } from '~image/image'
+import { allowList } from '~image/allowlist'
 
 <%=Object.entries(options.imports).map(([name, path]) => `import ${name} from '${path}'`).join('\n')%>
 
@@ -23,6 +24,7 @@ Vue.component(NuxtPicture.name, NuxtPicture)
 <% if (features.componentAliases) { %>Vue.component('NImg', NuxtImg)
 Vue.component('NPicture', NuxtPicture)<% } %>
 
+const allow = allowList(<%= devalue(options.allow) %>)
 
 // TODO: directly plugin into vue
 export default function (context, inject) {
@@ -31,7 +33,8 @@ export default function (context, inject) {
     providers,
     presets,
     intersectOptions,
-    responsiveSizes
+    responsiveSizes,
+    allow
   })
 
   inject('img', image)

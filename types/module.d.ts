@@ -18,6 +18,7 @@ export interface ModuleOptions {
   providers: {
     [name: string]: any;
   }
+  accept: any;
   intersectOptions: object;
 }
 

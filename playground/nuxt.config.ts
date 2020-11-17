@@ -8,6 +8,7 @@ export default {
     '@nuxt/typescript-build'
   ],
   image: {
+    accept: ['nuxtjs.org'],
     twicpics: {
       baseURL: 'https://i5acur1u.twic.pics'
     },

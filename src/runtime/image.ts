@@ -1,9 +1,9 @@
 import type { CreateImageOptions, ImageModifiers, ImagePreset, ImageSize } from 'types'
 import { getMeta } from './meta'
-import { cleanDoubleSlashes } from './utils'
+import { cleanDoubleSlashes, isRemoteUrl } from './utils'
 
 function processSource (src: string) {
-  if (!src.includes(':') || src.match('^https?://')) {
+  if (!src.includes(':') || isRemoteUrl(src)) {
     return { src }
   }
 
@@ -33,7 +33,7 @@ function getCache (context) {
   return context.cache
 }
 
-export function createImage (context, { providers, defaultProvider, presets, intersectOptions, responsiveSizes }: CreateImageOptions) {
+export function createImage (context, { providers, defaultProvider, presets, intersectOptions, responsiveSizes, allow }: CreateImageOptions) {
   const presetMap = presets.reduce((map, preset) => {
     map[preset.name] = preset
     return map
@@ -59,6 +59,19 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
   function parseImage (source: string, modifiers: ImageModifiers, options: any = {}) {
     const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
+    const isRemote = isRemoteUrl(src)
+
+    if (isRemote && !allow.accept(src)) {
+      return {
+        src,
+        provider: null,
+        preset: null,
+        image: {
+          url: src,
+          isStatic: false
+        }
+      }
+    }
     const provider = getProvider(sourceProvider || options.provider || defaultProvider)
     const preset = getPreset(sourcePreset || options.preset)
 
@@ -69,7 +82,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     )
 
     // apply router base & remove double slashes
-    const base = String(image.url)[0] === '/' ? context.base : ''
+    const base = isRemoteUrl(image.url) ? '' : context.base
     image.url = cleanDoubleSlashes(base + image.url)
 
     return {
@@ -189,7 +202,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
       Object.assign(meta, await image.getMeta())
     } else {
       const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
-      const absoluteUrl = image.url[0] === '/' ? internalUrl + image.url : image.url
+      const absoluteUrl = isRemoteUrl(image.url) ? image.url : internalUrl + image.url
       Object.assign(meta, await getMeta(absoluteUrl, getCache(context)))
     }
 

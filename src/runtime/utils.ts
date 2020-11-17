@@ -1,5 +1,9 @@
 import { OperationGeneratorConfig } from 'types'
 
+export function isRemoteUrl (url) {
+  return !!url.match('^https?://')
+}
+
 export function cleanDoubleSlashes (path) {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }

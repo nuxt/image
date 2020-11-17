@@ -1,3 +1,9 @@
+export interface AllowList {
+  allow: (valu: string) => boolean;
+  accept: (valu: string) => boolean;
+  reject: (valu: string) => boolean;
+}
+
 // -- $img() utility --
 
 export interface CreateImageOptions {
@@ -11,6 +17,7 @@ export interface CreateImageOptions {
   defaultProvider: string
   intersectOptions: object
   responsiveSizes: number[]
+  allow: AllowList
 }
 
 export interface $Image {

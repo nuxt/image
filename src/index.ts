@@ -12,6 +12,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
     providers: {}, // user custom providers
     presets: [],
     intersectOptions: {},
+    accept: 'nuxtjs.org',
     sizes: [320, 420, 768, 1024, 1200, 1600],
     ...nuxt.options.image,
     ...moduleOptions
@@ -24,7 +25,8 @@ async function imageModule (moduleOptions: ModuleOptions) {
     intersectOptions: options.intersectOptions,
     imports: {} as { [name: string]: string },
     providers: [] as { name: string, import: string, options: any }[],
-    presets: options.presets
+    presets: options.presets,
+    allow: options.accept
   }
 
   const providers = await getProviders(nuxt, options)
