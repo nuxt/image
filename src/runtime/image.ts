@@ -184,8 +184,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
       }
       const { url } = image(src, {
         ...operations,
-        width: size.width,
-        format: size.format
+        width: size.width || null,
+        format: size.format || null
       })
       size.url = url
       return size

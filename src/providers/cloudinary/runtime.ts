@@ -35,9 +35,8 @@ const defaultModifiers = {
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
     const mergeModifiers = {
-      ...modifiers,
-      format: modifiers.format || defaultModifiers.format,
-      quality: modifiers.quality || defaultModifiers.quality
+      ...defaultModifiers,
+      ...modifiers
     }
 
     const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
