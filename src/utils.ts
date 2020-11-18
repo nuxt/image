@@ -56,38 +56,12 @@ export async function getProviders (nuxt, options: ModuleOptions): Promise<Modul
 }
 
 export function enrichLocalProvider (nuxt, providerOptions) {
-  const { options } = nuxt
-  // Default port
-  const defaultPort =
-   process.env.PORT ||
-   process.env.npm_package_config_nuxt_port ||
-   (options.server && options.server.port) ||
-   3000
-
-  // Default host
-  let defaultHost =
-   process.env.HOST ||
-   process.env.npm_package_config_nuxt_host ||
-   (options.server && options.server.host) ||
-   'localhost'
-
-  /* istanbul ignore if */
-  if (defaultHost === '0.0.0.0') {
-    defaultHost = 'localhost'
-  }
-
-  // Default prefix
-  const prefix = '/'
-
   providerOptions = defu(providerOptions, {
-    baseURL: `http://${defaultHost}:${defaultPort}${prefix}`,
-    dir: path.join('~', options.dir.static),
     clearCache: false,
     cacheDir: '~~/node_modules/.cache/nuxt-image',
     sharp: {}
   })
 
-  providerOptions.dir = nuxt.resolver.resolveAlias(providerOptions.dir)
   providerOptions.cacheDir = nuxt.resolver.resolveAlias(providerOptions.cacheDir)
 
   return providerOptions

@@ -18,10 +18,6 @@ export default {
   image: {
     local: {
       /**
-       * Input directory for images
-       **/
-      dir: '~/static',
-      /**
        * Cache directory for optimized images
        **/
       cacheDir: '~~/node_modules/.cache/nuxt-img',

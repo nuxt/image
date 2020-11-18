@@ -78,7 +78,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
     const image = provider.provider.getImage(
       src,
-      defu(modifiers, preset.modifiers),
+      defu(modifiers, (preset && preset.modifiers) || {}),
       { ...provider.defaults, ...options }
     )
 

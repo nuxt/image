@@ -1,14 +1,8 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-
-function predictAdapter (src: string) {
-  if (src.match(/^https?:\/\//)) {
-    return 'remote'
-  }
-  return 'local'
-}
+import { isRemoteUrl } from '~image/utils'
 
 export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, _options: any) {
+  getImage (src: string, modifiers: ImageModifiers, options: any) {
     const operations = []
 
     const fit = modifiers.fit ? `_${modifiers.fit}` : ''
@@ -23,13 +17,13 @@ export default <RuntimeProvider> {
       operations.push(`q_${modifiers.quality}`)
     }
 
-    const adapter = predictAdapter(src)
+    src = isRemoteUrl(src) ? src : (options.baseURL || '') + src
 
     const operationsString = operations.join(',') || '_'
 
     return {
-      url: `/_image/local/${adapter}/${modifiers.format || '_'}/${operationsString}/${src}`,
-      isStatic: true
+      url: `/_image/local/remote/${modifiers.format || '_'}/${operationsString}/${src}`,
+      static: true
     }
   }
 }

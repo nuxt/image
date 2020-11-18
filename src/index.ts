@@ -1,6 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
 import { ModuleOptions } from 'types'
+import defu from 'defu'
 import { downloadImage, getFileExtension, getProviders, hash } from './utils'
 import { cleanDoubleSlashes } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
@@ -56,6 +57,15 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const runtimeDir = path.resolve(__dirname, './runtime')
   nuxt.options.alias['~image'] = runtimeDir
   nuxt.options.build.transpile.push(runtimeDir)
+
+  nuxt.options.build.loaders = defu({
+    vue: {
+      transformAssetUrls: {
+        'nuxt-img': 'src',
+        'nuxt-picture': 'src'
+      }
+    }
+  }, nuxt.options.build.loaders || {})
 
   nuxt.hook('generate:before', () => {
     handleStaticGeneration(nuxt, options)
