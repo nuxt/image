@@ -1,5 +1,5 @@
 ---
-title: Options
+title: Module Options
 description: ''
 position: 4
 category: Guide
@@ -15,52 +15,44 @@ export default {
 }
 ```
 
-## `providers`
+## `sizes`
 
-Providers are an integration between the image module and images service providers like cloudinary. Using a specific provider means that your images are being transformed by the specific service.
-There are plenty of image service providers. Currently we are supporting some providers out of box.
+List of predefined sizes for responsive images. This sizes will use to generate resized and optimized version of an image.
 
-To use any provider, list them inside `nuxt.config.js`. You can use [internal providers](/providers) or [create a custom provider](/custom-provider).
-Here is a sample to use `cloudinary`:
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    sizes: [320, 420, 768, 1024, 1200]
+  }
+}
 
-<code-group>
-  <code-block label="nuxt.config.js" active>
+```
 
-  ```js{}[nuxt.config.js]
+## `accept`
+
+To enable iamge optimization on an external image, specify which domain are allowed to be optimized. This option will use to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
+
+```js{}[nuxt.config.js]
   export default {
     image: {
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
+      accept: [ 'nuxtjs.org' ]
+    }
+  }
+```
+
+## `intersectOptions`
+
+The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the image are in Viewport or not. Use this option to modify IntersectionObserver options.
+
+```js{}[nuxt.config.js]
+  export default {
+    image: {
+      intersectOptions: {
+        rootMargin: '50px'
       }
     }
   }
-  ```
-  </code-block>
-  <code-block label="index.vue">
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-img>
-  </div>
-
-  </code-block>
-</code-group>
-
-<!-- writing custom providers -->
-See:
-- [How to use provider](/nuxt-img#provider)
-- [List of internal providers](/providers)
-- [Create custom provider](/custom-provider)
+```
 
 ## `presets`
 
@@ -107,6 +99,43 @@ Presets are collections of pre-defined configurations for your projects. Presets
 See:
 - [How to use presets](/nuxt-img#preset)
 
+## `providers`
+
+In order to create and use [custom provider](/custom-provider), you need to use `providers` option and define your custom providers.
+
+<code-group>
+  <code-block label="nuxt.config.js" active>
+
+  ```js{}[nuxt.config.js]
+  export default {
+    image: {
+      providers: {
+        random: {
+          provider: '~/providers/random',
+          options: {}
+        }
+      }
+    }
+  }
+  ```
+  </code-block>
+  <code-block label="index.vue">
+
+  ```vue{}[index.vue]
+  <template>
+    <nuxt-img src="random:main.png" width="300" height="169" />
+  </template>
+  ```
+
+  </code-block>
+</code-group>
+
+<!-- writing custom providers -->
+See:
+- [How to use provider](/nuxt-img#provider)
+- [List of internal providers](/providers)
+- [Create custom provider](/custom-provider)
+
 ## `provider`
 
 If you want to use multiple providers in your project, you should pick one of them as the default provider. If you do not set `provider`, module uses `ipx` as the default provider.
@@ -115,10 +144,8 @@ If you want to use multiple providers in your project, you should pick one of th
 export default {
   image: {
     provider: 'twicpics',
-    providers: {
-      twicpics: {
-        baseURL: 'https://i5acur1u.twic.pics/'
-      }
+    twicpics: {
+      baseURL: 'https://i5acur1u.twic.pics/'
     }
   }
 }
@@ -158,18 +185,4 @@ export default {
     }
   }
 }
-```
-
-## `sizes`
-
-List of predefined sizes for responsive images. This sizes will use to generate resized and optimized version of an image.
-
-
-```js{}[nuxt.config.js]
-export default {
-  image: {
-    sizes: [320, 420, 768, 1024, 1200]
-  }
-}
-
 ```

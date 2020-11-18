@@ -1,0 +1,22 @@
+---
+title: Fastly Provider
+description: ''
+position: 12
+category: Providers
+---
+
+Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimization-api)
+and the image module. To use this provider you just need to specify the base url
+of your service in Fastly.
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    providers: {
+      fastly: {
+        baseURL: 'https://www.fastly.io'
+      }
+    }
+  }
+}
+```

@@ -153,90 +153,6 @@ As you may notice providers and presets are different in their usage, and it is 
   </code-block>
 </code-group>
 
-## `no-script`
-Genererate `<noscript>` tag for browsers that aren’t running javascript.
-
-## `lazy`
-
-By default `nuxt-img` lazy load all images to reduce initial requests and page size. Using `lazy` prop you can disable lazy loading.
-
-<code-group>
-  <code-block label="index.vue" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img :lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
-  </template>
-  ```
-
-  </code-block>
-  <code-block label="nuxt.config.js">
-
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'jpg-cover',
-          modifiers: {
-            fit: 'cover',
-            format: 'jpg',
-            width: 300,
-            height: 300
-          }
-        }
-      ],
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
-      }
-    }
-  }
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img lazy="false" src="cloudinary+jpg-cover:/remote/nuxt-org/blog/going-full-static/main.png" />
-  </div>
-
-  </code-block>
-</code-group>
-
-
-## `placeholder`
-
-The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-img` generate it for you.  
-If you set `placeholder` to `true`, module creates a small placeholder for you. You can set your custom placeholder in this prop.
-
-
-<code-group>
-  <code-block label="Auto Generate" active>
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img :placeholder="true" src="/nuxt-icon.png" />
-  </template>
-  ```
-  </code-block>
-  <code-block label="Custom Placeholder">
-
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img :placeholder="/icon.png" src="/nuxt-icon.png" />
-  </template>
-  ```
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-img>
-  </div>
-
-  </code-block>
-</code-group>
-
 ## `sizes`
 
 The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
@@ -297,10 +213,10 @@ export default {
 </script>
 ```
 
-## `responsive`
+## `layout`
+The layout for the image. 
 
-Using this prop `NuxtImg` will generate multiple sizes for the image based on the list of sizes that define the module options. see [`sizes` option](/options#sizes)  
-
+- `responsive`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
 
 ## `alt`
 
@@ -315,6 +231,10 @@ In case you want to serve images in specific format, use this prop.
   <nuxt-img format="webp" src="/nuxt-icon.png" ... />
 </template>
 ```
+
+## `quality`
+
+The quality for generated images.
 
 ## `fit`
 

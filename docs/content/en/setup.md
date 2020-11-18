@@ -43,7 +43,7 @@ export default {
 
 That's it ✨!
 
-Now you can start using `<nuxt-img>` components in your project.
+Now you can start using [`<nuxt-img>`](/nuxt-image) and [`<nuxt-picture>`](/nuxt-picture) components in your project.
 
 ## Configure
 

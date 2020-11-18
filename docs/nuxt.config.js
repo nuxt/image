@@ -10,13 +10,14 @@ export default theme({
     '@nuxt/image'
   ],
   image: {
-    ipx: {
+    accept: [],
+    local: {
       dir: `~~/static`
     },
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
+    },
     providers: {
-      cloudinary: {
-        baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-      },
       random: '~~/providers/random'
     },
     presets: [

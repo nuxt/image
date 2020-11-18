@@ -9,8 +9,8 @@ features:
   - CDN Support
 ---
 
-<nuxt-img src="/preview.png" :placeholder="true" class="light-img"></nuxt-img>
-<nuxt-img src="/preview-dark.png" :placeholder="true" class="dark-img"></nuxt-img>
+<nuxt-picture src="/preview.png" :placeholder="true" class="light-img"></nuxt-picture>
+<nuxt-picture src="/preview-dark.png" :placeholder="true" class="dark-img"></nuxt-picture>
 
 Optimised images for [NuxtJS](https://nuxtjs.org).
 

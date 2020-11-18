@@ -50,14 +50,7 @@ export default {
     const operationsString = operations.join(',')
     return {
       url: options.baseURL + operationsString + src,
-      static: false,
-      getInfo: () => {
-        return {
-          width: 1,
-          height: 1,
-          bytes: 1
-        }
-      }
+      isStatic: false
     }
   }
 }
@@ -68,8 +61,7 @@ export default {
 - `options`: `runtimeOptions` returned by provider main
 ### Return
 - `url`: Absolute or relative url of optimized image.
-- `static`: A boolean value that determine whether the image should generate on static generation or not. If it is `true` during `nuxt generate` this image will be downloaded and saved in `generate.outDir` to server as a static image.
-- `getInfo`: An Async function that used to detect `width` and `height` of the image. This `width` and `height` will be used to calculate the aspect ratio of the image.
+- `isStatic`: A boolean value that determine whether the image should generate on static generation or not. If it is `true` during `nuxt generate` this image will be downloaded and saved in `generate.outDir` to server as a static image.
 
 
 ## Provider Middleware
@@ -128,6 +120,6 @@ To use your provider, write your provider's name before the src. Read [provider 
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-img src="custom:/main.png" />
+  <nuxt-img src="customProvider:/main.png" />
 </template>
 ```
