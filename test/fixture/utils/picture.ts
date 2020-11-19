@@ -119,7 +119,7 @@ function testImageSets (wrapper) {
     '(min-width: 900px) 900px, (min-width: 500px) 500px, 200px',
     '200px'
   ]
-  const sizes = wrapper.find('.__nim_o').element.getAttribute('sizes')
+  const sizes = wrapper.find('.nuxt-img').element.getAttribute('sizes')
   expect(possibleSizes).toContain(sizes)
 }
 

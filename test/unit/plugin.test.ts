@@ -44,20 +44,20 @@ describe('Plugin', () => {
   })
 
   test('Generate Random Image', () => {
-    const image = nuxtContext.$img('random:/test.png')
+    const image = nuxtContext.$img('/test.png', { provider: 'random' })
     expect(image.url).toEqual('https://source.unsplash.com/random/600x400')
   })
 
   test('Generate Circle Image with Cloudinary', () => {
-    const image = nuxtContext.$img('cloudinary+circle:/test.png', {})
-    expect(image.url).toEqual('https://res.cloudinary.com/nuxt/image/upload/r_100,f_auto,q_auto/test')
+    const image = nuxtContext.$img('/test.png', { provider: 'cloudinary', preset: 'circle' })
+    expect(image.url).toEqual('https://res.cloudinary.com/nuxt/image/upload/f_auto,q_auto,r_100/test')
   })
 
   test('Deny undefined provider', () => {
-    expect(() => nuxtContext.$img('invalid:/test.png', {})).toThrow(Error)
+    expect(() => nuxtContext.$img('/test.png', { provider: 'invalid' })).toThrow(Error)
   })
 
   test('Deny undefined preset', () => {
-    expect(() => nuxtContext.$img('+invalid:/test.png', {})).toThrow(Error)
+    expect(() => nuxtContext.$img('/test.png', { preset: 'invalid' })).toThrow(Error)
   })
 })

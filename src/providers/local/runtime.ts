@@ -23,7 +23,7 @@ export default <RuntimeProvider> {
 
     return {
       url: `/_image/local/remote/${modifiers.format || '_'}/${operationsString}/${src}`,
-      static: true
+      isStatic: true
     }
   }
 }
