@@ -1,22 +1,7 @@
 import defu from 'defu'
-import type { CreateImageOptions, ImageModifiers, ImagePreset, ImageSize } from 'types'
+import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions } from 'types'
 import { getMeta } from './meta'
 import { cleanDoubleSlashes, isRemoteUrl } from './utils'
-
-function processSource (src: string) {
-  if (!src.includes(':') || isRemoteUrl(src)) {
-    return { src }
-  }
-
-  const [srcConfig, ...rest] = src.split(':')
-  const [provider, preset] = srcConfig.split('+')
-
-  return {
-    src: rest.join(':'),
-    provider,
-    preset
-  }
-}
 
 function getCache (context) {
   if (!context.cache) {
@@ -58,8 +43,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return presetMap[name]
   }
 
-  function parseImage (source: string, modifiers: ImageModifiers, options: any = {}) {
-    const { src, provider: sourceProvider, preset: sourcePreset } = processSource(source)
+  function parseImage (src: string, options: ImageOptions = {}) {
+    const { modifiers = {} } = options
     const isRemote = isRemoteUrl(src)
 
     if (isRemote && !allow.accept(src)) {
@@ -73,8 +58,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
         }
       }
     }
-    const provider = getProvider(sourceProvider || options.provider || defaultProvider)
-    const preset = getPreset(sourcePreset || options.preset)
+    const provider = getProvider(options.provider || defaultProvider)
+    const preset = getPreset(options.preset)
 
     const image = provider.provider.getImage(
       src,
@@ -94,8 +79,9 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   }
 
-  function image (source: string, modifiers: ImageModifiers, options: any = {}) {
-    const { src, image } = parseImage(source, modifiers, options)
+  function image (source: string, options: ImageOptions = {}) {
+    const { modifiers = {} } = options
+    const { src, image } = parseImage(source, options)
     const { url: providerUrl, isStatic } = image
 
     /**
@@ -145,13 +131,15 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
   presets.forEach((preset) => {
     image[preset.name] = (src) => {
-      return image(src, preset.modifiers, {
+      return image(src, {
+        modifiers: preset.modifiers,
         provider: preset.provider
       })
     }
   })
 
-  image.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, operations: any = {}) => {
+  image.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {}) => {
+    const { modifiers = {} } = options
     if (typeof sizes === 'string') {
       sizes = sizes
         .split(',')
@@ -159,16 +147,14 @@ export function createImage (context, { providers, defaultProvider, presets, int
         .filter(match => !!match)
         .map((match, index, array): Partial<ImageSize> => ({
           width: parseInt(match[3], 10),
-          breakpoint: parseInt(match[2] || (index !== array.length - 1 && match[3]), 10),
-          format: match[5] || operations.format
+          breakpoint: parseInt(match[2] || (index !== array.length - 1 && match[3]), 10)
         }))
     }
     if (!Array.isArray(sizes)) {
       if (sizes === true) {
         sizes = responsiveSizes.map(width => ({
           width,
-          breakpoint: width,
-          format: operations.format
+          breakpoint: width
         }))
       } else {
         sizes = [{}]
@@ -176,26 +162,32 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
 
     sizes = (sizes as Array<ImageSize>).map((size) => {
-      if (!size.format) {
-        size.format = operations.format
-      }
       if (!size.media) {
         size.media = size.breakpoint ? `(max-width: ${size.breakpoint}px)` : ''
       }
       const { url } = image(src, {
-        ...operations,
-        width: size.width || null,
-        format: size.format || null
+        ...options,
+        modifiers: {
+          ...modifiers,
+          width: size.width || null,
+          format: size.format || null
+        }
       })
       size.url = url
       return size
     })
-
     return sizes
   }
 
-  image.getMeta = async (source: string, modifiers: ImageModifiers, options: any = {}) => {
-    const { image } = parseImage(source, { ...modifiers, width: 30, quality: 40 }, options)
+  image.getMeta = async (source: string, options: ImageOptions = {}) => {
+    const { image } = parseImage(source, {
+      ...options,
+      modifiers: {
+        ...options.modifiers,
+        width: 30,
+        quality: 40
+      }
+    })
 
     const meta = { placeholder: image.url }
 

@@ -21,7 +21,7 @@ export interface CreateImageOptions {
 }
 
 export interface $Image {
-  (source: string, modifiers: ImageModifiers, options: any): void
+  (source: string, options: ImageOptions): void
   [preset: string]: (source: string) => any
 }
 
@@ -39,6 +39,13 @@ export interface ImageModifiers {
   fit: string
   format: string
   [key: string]: any;
+}
+
+export interface ImageOptions {
+  size: String | Partial<ImageSize>[]
+  provider: string,
+  preset: string,
+  modifiers: ImageModifiers
 }
 
 export interface ImageSize {

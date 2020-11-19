@@ -5,16 +5,16 @@
       <NuxtPicture :lazy="false" src="images/nuxt-white.svg" width="400" height="400" />
 
       <h2>JPEG image inside project</h2>
-      <NuxtPicture :placeholder="true" src="/images/damavand.jpg" />
+      <NuxtPicture placeholder src="/images/damavand.jpg" />
 
       <h2>JPEG image from remote url</h2>
-      <NuxtPicture :placeholder="true" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
+      <NuxtPicture placeholder src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
 
       <h2>PNG image on Cloudinary</h2>
-      <NuxtPicture :placeholder="true" src="cloudinary:/remote/nuxt-org/blog/going-full-static/main.png" />
+      <NuxtPicture placeholder provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" />
 
       <h2>JPEG image on Fastly</h2>
-      <NuxtPicture :placeholder="true" src="fastly:/image.jpg" />
+      <NuxtPicture placeholder provider="fastly" src="/image.jpg" />
     </div>
   </div>
 </template>

@@ -82,7 +82,7 @@ Presets are collections of pre-defined configurations for your projects. Presets
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-img legacy src="+avatar:/nuxt-icon.png" />
+    <nuxt-img preset="avatar" src="/nuxt-icon.png" />
   </template>
   ```
 
@@ -90,7 +90,7 @@ Presets are collections of pre-defined configurations for your projects. Presets
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img legacy src="+avatar:/nuxt-icon.png"></nuxt-img>
+    <nuxt-img preset="avatar" src="/nuxt-icon.png"></nuxt-img>
   </div>
 
   </code-block>
@@ -123,7 +123,7 @@ In order to create and use [custom provider](/custom-provider), you need to use 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-img src="random:main.png" width="300" height="169" />
+    <nuxt-img provider="random" src="main.png" width="300" height="169" />
   </template>
   ```
 

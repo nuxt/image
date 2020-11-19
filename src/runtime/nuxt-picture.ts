@@ -14,6 +14,14 @@ export default {
       default: '',
       required: true
     },
+    provider: {
+      type: String,
+      default: null
+    },
+    preset: {
+      type: String,
+      default: null
+    },
     width: {
       type: [String, Number],
       default: ''
@@ -142,8 +150,12 @@ export default {
     sources () {
       const sizes = this.sizes || ['responsive'].includes(this.layout)
       return this.$img.sizes(this.src, sizes, {
-        format: this.format,
-        ...this.computedOperations
+        provider: this.provider,
+        preset: this.preset,
+        modifiers: {
+          format: this.format,
+          ...this.computedOperations
+        }
       })
     },
     generatedSrc () {
@@ -199,10 +211,14 @@ export default {
     generateSizedImage (width: number, height: number, format: string) {
       try {
         const image = this.$img(this.src, {
-          width,
-          height,
-          format,
-          ...this.computedOperations
+          provider: this.provider,
+          preset: this.preset,
+          modifiers: {
+            width,
+            height,
+            format,
+            ...this.computedOperations
+          }
         })
         return encodeURI(image.url)
       } catch (e) {

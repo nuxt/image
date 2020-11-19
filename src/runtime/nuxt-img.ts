@@ -8,6 +8,14 @@ export default {
       default: '',
       required: true
     },
+    provider: {
+      type: String,
+      default: null
+    },
+    preset: {
+      type: String,
+      default: null
+    },
     sizes: {
       type: [String, Array],
       default: ''
@@ -44,12 +52,17 @@ export default {
     },
     sources () {
       const sizes = this.sizes || ['responsive'].includes(this.layout)
-      return this.$img.sizes(this.src, sizes, {
-        fit: this.fit,
-        quality: this.quality,
-        format: this.format,
-        ...this.operations
+      const image = this.$img.sizes(this.src, sizes, {
+        modifiers: {
+          fit: this.fit,
+          quality: this.quality,
+          format: this.format,
+          ...this.operations
+        },
+        provider: this.provider,
+        preset: this.preset
       })
+      return image
     },
     generatedSrcset () {
       if (!Array.isArray(this.sources) || this.sources.length < 2) {
