@@ -284,7 +284,7 @@ export default {
         objectFit: 'cover',
         objectPosition: 'center center',
         transition: 'opacity 800ms ease 0ms',
-        opacity: this.lazyState === LazyState.IDLE ? 0 : 1
+        opacity: this.lazyState === LazyState.LOADED ? 1 : 0
       },
       attrs: {
         src: this.lazyState === LazyState.IDLE ? undefined : this.generatedSrc,
