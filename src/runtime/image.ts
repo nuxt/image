@@ -1,7 +1,7 @@
 import defu from 'defu'
 import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions } from 'types'
 import { getMeta } from './meta'
-import { cleanDoubleSlashes, isRemoteUrl } from './utils'
+import { cleanDoubleSlashes, getFileExtension, isRemoteUrl } from './utils'
 
 function getCache (context) {
   if (!context.cache) {
@@ -140,6 +140,11 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
   image.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {}) => {
     const { modifiers = {} } = options
+    if (modifiers.format === 'svg' || getFileExtension(src) === 'svg') {
+      return [{
+        url: src
+      }]
+    }
     if (typeof sizes === 'string') {
       sizes = sizes
         .split(',')

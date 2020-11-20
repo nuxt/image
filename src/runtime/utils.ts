@@ -4,6 +4,11 @@ export function isRemoteUrl (url) {
   return !!url.match('^https?://')
 }
 
+export function getFileExtension (url: string) {
+  const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
+  return extension
+}
+
 export function cleanDoubleSlashes (path) {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
