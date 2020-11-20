@@ -196,7 +196,11 @@ export default {
         return
       }
       try {
-        const { width, height, placeholder } = await this.$img.getMeta(this.src, this.computedOperations)
+        const { width, height, placeholder } = await this.$img.getMeta(this.src, {
+          modifiers: this.computedOperations,
+          provider: this.provider,
+          preset: this.preset
+        })
 
         Object.assign(this.meta, {
           width,
