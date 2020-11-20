@@ -30,11 +30,6 @@ export async function downloadImage ({ url, name, outDir }) {
   }
 }
 
-export function getFileExtension (url: string) {
-  const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
-  return extension
-}
-
 export function hash (value: string, length = 6) {
   return hasha(value).substr(0, length)
 }

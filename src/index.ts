@@ -2,8 +2,8 @@ import path from 'path'
 import fs from 'fs-extra'
 import { ModuleOptions } from 'types'
 import defu from 'defu'
-import { downloadImage, getFileExtension, getProviders, hash } from './utils'
-import { cleanDoubleSlashes } from './runtime/utils'
+import { downloadImage, getProviders, hash } from './utils'
+import { cleanDoubleSlashes, getFileExtension } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
 
 async function imageModule (moduleOptions: ModuleOptions) {
