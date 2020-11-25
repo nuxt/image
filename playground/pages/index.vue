@@ -1,8 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <h2>SVG image inside project</h2>
-      <nuxt-img src="~/assets/nuxt-white.svg" width="400" height="400" />
+      <h2>NuxtImg vs Img</h2>
+      <pre>&lt;img src="/images/damavand.jpg" width="200" height="auto"&gt;</pre>
+      <NuxtImg ref="nuxtImg" src="/images/damavand.jpg" width="200" height="100" quality="1" />
+      <img ref="img" src="/images/damavand.jpg" width="200" height="auto">
+      <pre>{{ nuxtImgCode }}</pre>
 
       <h2>SVG image from remote url</h2>
       <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg" width="400" height="400" />
@@ -22,6 +25,19 @@
   </div>
 </template>
 
+<script>
+export default {
+  data () {
+    return {
+      nuxtImgCode: ''
+    }
+  },
+  mounted () {
+    this.nuxtImgCode = this.$refs.nuxtImg.$el.outerHTML
+  }
+}
+</script>
+
 <style scoped>
 .container {
   text-align: center;
@@ -29,6 +45,7 @@
 .container img {
   max-width: 720px;
   margin: 10px;
+  border: 2px white solid;
   border-radius: 3px;
 }
 </style>

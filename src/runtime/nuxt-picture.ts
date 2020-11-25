@@ -1,4 +1,5 @@
-import { renderTag } from './utils'
+import { renderTag, getInt } from './utils'
+import { props } from './nuxt-img'
 
 export enum LazyState {
   IDLE = 'idle',
@@ -9,72 +10,28 @@ export enum LazyState {
 export default {
   name: 'NuxtPicture',
   props: {
-    src: {
-      type: [String, Object],
-      default: '',
-      required: true
-    },
-    provider: {
+    ...props,
+    // TODO: rename lazy to loading
+    loading: {
       type: String,
-      default: null
-    },
-    preset: {
-      type: String,
-      default: null
-    },
-    width: {
-      type: [String, Number],
-      default: ''
-    },
-    height: {
-      type: [String, Number],
-      default: ''
-    },
-    lazy: {
-      type: Boolean,
-      default: true
-    },
-    sizes: {
-      type: [String, Array],
-      default: ''
-    },
-    format: {
-      type: String,
-      default: null
+      default: undefined,
+      validator (value) {
+        return !value || ['lazy', 'eager'].includes(value)
+      }
     },
     fallbackFormat: {
       type: String,
       default: null
     },
-    quality: {
-      type: [Number, String],
-      default: null
-    },
-    fit: {
-      type: String,
-      default: null
-    },
-    operations: {
-      type: Object,
-      default: () => ({})
-    },
     placeholder: {
       type: [Boolean, String],
       default: false
-    },
-    layout: {
-      type: String,
-      default: 'default'
     },
     noScript: {
       type: Boolean,
       default: false
     },
-    // `<img>` attrubutes
-    alt: {
-      type: String,
-      default: ''
-    },
+    // <img> props to forward
     referrerpolicy: {
       type: String,
       default: undefined
@@ -114,10 +71,13 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      lazyState: this.lazy ? LazyState.IDLE : LazyState.LOADED
+      lazyState: this.isLazy ? LazyState.IDLE : LazyState.LOADED
     }
   },
   computed: {
+    isLazy () {
+      return this.loading === 'lazy'
+    },
     computedOperations () {
       return {
         fit: this.fit,
@@ -127,7 +87,7 @@ export default {
     },
     imageRatio () {
       if (this.height && this.width) {
-        return (parseInt(this.height, 10) / parseInt(this.width, 10)) * 100
+        return (getInt(this.height) / getInt(this.width)) * 100
       }
 
       if (this.meta.width && this.meta.height) {
@@ -174,19 +134,19 @@ export default {
     src () {
       this.fetchMeta()
 
-      if (this.lazy) {
+      if (this.isLazy) {
         this.$img.$observer.remove(this.$el)
         this.$img.$observer.add(this.$el, this.onObserverEvent)
       }
     }
   },
   mounted () {
-    if (this.lazy) {
+    if (this.isLazy) {
       this.$img.$observer.add(this.$el, this.onObserverEvent)
     }
   },
   beforeDestroy () {
-    if (this.lazy) {
+    if (this.isLazy) {
       this.$img.$observer.remove(this.$el)
     }
   },

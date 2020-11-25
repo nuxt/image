@@ -1,5 +1,17 @@
 <template>
   <main>
+    <ul>
+      <li>
+        <NuxtLink to="/">
+          Home
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/picture">
+          Picture
+        </NuxtLink>
+      </li>
+    </ul>
     <Nuxt />
   </main>
 </template>
@@ -11,5 +23,12 @@ body {
   display: flex;
   flex-direction: column;
   color: #ffffff;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+.nuxt-link-exact-active {
+  text-decoration: underline;
 }
 </style>

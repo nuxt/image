@@ -26,9 +26,8 @@ Vue.component('NPicture', NuxtPicture)<% } %>
 
 const allow = allowList(<%= devalue(options.allow) %>)
 
-// TODO: directly plugin into vue
 export default function (context, inject) {
-  const image = createImage(context, {
+  const $img = createImage(context, {
     defaultProvider,
     providers,
     presets,
@@ -37,5 +36,5 @@ export default function (context, inject) {
     allow
   })
 
-  inject('img', image)
+  inject('img', $img)
 }

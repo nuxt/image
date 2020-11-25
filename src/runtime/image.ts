@@ -79,7 +79,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   }
 
-  function image (source: string, options: ImageOptions = {}) {
+  function $img (source: string, options: ImageOptions = {}) {
     const { modifiers = {} } = options
     const { src, image } = parseImage(source, options)
     const { url: providerUrl, isStatic } = image
@@ -130,15 +130,15 @@ export function createImage (context, { providers, defaultProvider, presets, int
   }
 
   presets.forEach((preset) => {
-    image[preset.name] = (src) => {
-      return image(src, {
+    $img[preset.name] = (src) => {
+      return $img(src, {
         modifiers: preset.modifiers,
         provider: preset.provider
       })
     }
   })
 
-  image.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {}) => {
+  $img.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {}) => {
     const { modifiers = {} } = options
     if (modifiers.format === 'svg' || getFileExtension(src) === 'svg') {
       return [{
@@ -170,7 +170,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
       if (!size.media) {
         size.media = size.breakpoint ? `(max-width: ${size.breakpoint}px)` : ''
       }
-      const { url } = image(src, {
+      const { url } = $img(src, {
         ...options,
         modifiers: {
           ...modifiers,
@@ -184,7 +184,12 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return sizes
   }
 
-  image.getMeta = async (source: string, options: ImageOptions = {}) => {
+  // TODO:
+  $img.getResolution = async (source: string) => {
+
+  }
+
+  $img.getMeta = async (source: string, options: ImageOptions = {}) => {
     const { image } = parseImage(source, {
       ...options,
       modifiers: {
@@ -207,9 +212,9 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return meta
   }
 
-  image.$observer = createObserver(intersectOptions)
+  $img.$observer = createObserver(intersectOptions)
 
-  return image
+  return $img
 }
 
 function printObserver (onMatch) {

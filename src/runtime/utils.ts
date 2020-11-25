@@ -1,5 +1,15 @@
 import { OperationGeneratorConfig } from 'types'
 
+export function getInt (x): number | undefined {
+  if (typeof x === 'number') {
+    return x
+  }
+  if (typeof x === 'string') {
+    return parseInt(x, 10)
+  }
+  return undefined
+}
+
 export function isRemoteUrl (url) {
   return !!url.match('^https?://')
 }
