@@ -120,6 +120,6 @@ To use your provider, write your provider's name before the src. Read [provider 
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-img src="customProvider:/main.png" />
+  <nuxt-img provider="customProvider src="/main.png" />
 </template>
 ```

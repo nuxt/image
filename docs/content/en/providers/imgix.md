@@ -10,10 +10,8 @@ Integration between [imgix](https://docs.imgix.com/) and the image module. To us
 ```js{}[nuxt.config.js]
 export default {
   image: {
-    providers: {
-      imgix: {
-        baseURL: 'https://assets.imgix.net'
-      }
+    imgix: {
+      baseURL: 'https://assets.imgix.net'
     }
   }
 }

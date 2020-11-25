@@ -47,10 +47,8 @@ By default `nuxt-picture` lazy load all images to reduce initial requests and pa
           }
         }
       ],
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
+      cloudinary: {
+        baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
       }
     }
   }
@@ -85,7 +83,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 
   ```vue{}[index.vue]
   <template>
-    <nuxt-img :placeholder="/icon.png" src="/nuxt-icon.png" />
+    <nuxt-img placeholder="/icon.png" src="/nuxt-icon.png" />
   </template>
   ```
   </code-block>

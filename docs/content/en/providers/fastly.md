@@ -12,10 +12,8 @@ of your service in Fastly.
 ```js{}[nuxt.config.js]
 export default {
   image: {
-    providers: {
-      fastly: {
-        baseURL: 'https://www.fastly.io'
-      }
+    fastly: {
+      baseURL: 'https://www.fastly.io'
     }
   }
 }

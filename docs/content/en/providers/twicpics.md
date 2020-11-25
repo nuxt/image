@@ -11,10 +11,8 @@ To use this provider you just need to specify the base url of your project in Tw
 ```js{}[nuxt.config.js]
 export default {
   image: {
-    providers: {
-      twicpics: {
-        baseURL: 'https://i5acur1u.twic.pics'
-      }
+    twicpics: {
+      baseURL: 'https://i5acur1u.twic.pics'
     }
   }
 }

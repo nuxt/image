@@ -38,10 +38,8 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
   ```js{}[nuxt.config.js]
   export default {
     image: {
-      providers: {
-        cloudinary: {
-          baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-        }
+      cloudinary: {
+        baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
       }
     }
   }
