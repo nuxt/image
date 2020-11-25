@@ -47,7 +47,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     const { modifiers = {} } = options
     const isRemote = isRemoteUrl(src)
 
-    if (isRemote && !allow.accept(src)) {
+    if ((isRemote && !allow.accept(src)) || src.startsWith('data:')) {
       return {
         src,
         provider: null,
