@@ -83,15 +83,10 @@ export default {
       return
     }
 
-    // Get original image width & height
-    // TODO:
-    // const { width, height } = await this.$img.getResolution(this.src, {
-    //   provider: this.provider,
-    //   preset: this.preset
-    // })
-    const { width, height } = await this.$img.getMeta(this.src, {
+    const { width, height } = await this.$img.getResolution(this.src, {
       provider: this.provider,
-      preset: this.preset
+      preset: this.preset,
+      modifiers: this.modifiers
     })
     const ratio = height / width
 
@@ -107,6 +102,7 @@ export default {
     // Generate new src
     const { url } = this.$img(this.src, {
       modifiers: {
+        ...this.modifiers,
         width: getInt(this.meta.width || this.width),
         height: getInt(this.meta.height || this.height)
       },
@@ -128,15 +124,18 @@ export default {
     generatedAlt () {
       return this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
     },
+    modifiers () {
+      return {
+        fit: this.fit,
+        quality: this.quality,
+        format: this.format,
+        ...this.operations
+      }
+    },
     sources () {
       const sizes = this.sizes || ['responsive'].includes(this.layout)
       const image = this.$img.sizes(this.src, sizes, {
-        modifiers: {
-          fit: this.fit,
-          quality: this.quality,
-          format: this.format,
-          ...this.operations
-        },
+        modifiers: this.modifiers,
         provider: this.provider,
         preset: this.preset
       })
