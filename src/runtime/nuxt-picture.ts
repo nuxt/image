@@ -11,6 +11,14 @@ export default {
   name: 'NuxtPicture',
   props: {
     ...props,
+    width: {
+      type: [String, Number],
+      default: 'auto'
+    },
+    height: {
+      type: [String, Number],
+      default: 'auto'
+    },
     // TODO: rename lazy to loading
     loading: {
       type: String,
@@ -78,7 +86,7 @@ export default {
     isLazy () {
       return this.loading === 'lazy'
     },
-    computedOperations () {
+    modifiers () {
       return {
         fit: this.fit,
         quality: this.quality,
@@ -86,15 +94,7 @@ export default {
       }
     },
     imageRatio () {
-      if (this.height && this.width) {
-        return (getInt(this.height) / getInt(this.width)) * 100
-      }
-
-      if (this.meta.width && this.meta.height) {
-        return (this.meta.height / this.meta.width) * 100
-      }
-
-      return 0
+      return (this.meta.height / this.meta.width) * 100
     },
     imgAttributes () {
       const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
@@ -109,16 +109,23 @@ export default {
     },
     sources () {
       const sizes = this.sizes || ['responsive'].includes(this.layout)
-      return this.$img.sizes(this.src, sizes, {
+      const sources = this.$img.sizes(this.src, sizes, {
         provider: this.provider,
         preset: this.preset,
         modifiers: {
           format: this.format,
-          ...this.computedOperations
+          ...this.modifiers
         }
       })
+      if (sources.length < 2) {
+        return []
+      }
+      return sources
     },
     generatedSrc () {
+      if (this.meta.src) {
+        return this.meta.src
+      }
       const [source] = this.sources
       if (source) {
         if (this.fallbackFormat) {
@@ -152,25 +159,55 @@ export default {
   },
   methods: {
     async fetchMeta () {
-      if (!this.placeholder && this.width && this.height) {
+      if (typeof this.placeholder === 'string') {
+        this.meta.placeholder = this.placeholder
+      } else if (this.placeholder === true) {
+        try {
+          const { placeholder } = await this.$img.getMeta(this.src, {
+            modifiers: this.modifiers,
+            provider: this.provider,
+            preset: this.preset
+          })
+          this.meta.placeholder = placeholder
+        } catch (e) {
+          this.onError(e)
+          return
+        }
+      }
+
+      const { width, height } = await this.$img.getResolution(this.src, {
+        provider: this.provider,
+        preset: this.preset,
+        modifiers: this.modifiers
+      })
+      const ratio = height / width
+
+      if (!this.width && !this.height) {
+        this.meta.height = height
+        this.meta.width = width
         return
       }
-      try {
-        const { width, height, placeholder } = await this.$img.getMeta(this.src, {
-          modifiers: this.computedOperations,
-          provider: this.provider,
-          preset: this.preset
-        })
-
-        Object.assign(this.meta, {
-          width,
-          height,
-          placeholder: typeof this.placeholder === 'string' ? this.placeholder : this.placeholder && placeholder
-        })
-      } catch (e) {
-        this.onError(e)
-        return ''
+      if (this.height === 'auto' && this.width === 'auto') {
+        Object.assign(this.meta, { width, height })
+      } else if (this.height === 'auto') {
+        this.meta.height = Math.round(getInt(this.width || width) * ratio)
+        this.meta.width = getInt(this.width || width)
+      } else if (this.width === 'auto') {
+        this.meta.width = Math.round(getInt(this.height || height) / ratio)
+        this.meta.height = getInt(this.height || height)
       }
+
+      // Generate new src
+      const { url } = this.$img(this.src, {
+        modifiers: {
+          ...this.modifiers,
+          width: getInt(this.meta.width || this.width),
+          height: getInt(this.meta.height || this.height)
+        },
+        provider: this.provider,
+        preset: this.preset
+      })
+      this.meta.src = url
     },
     generateSizedImage (width: number, height: number, format: string) {
       try {
@@ -181,7 +218,7 @@ export default {
             width,
             height,
             format,
-            ...this.computedOperations
+            ...this.modifiers
           }
         })
         return encodeURI(image.url)
@@ -224,6 +261,7 @@ export default {
         class: ['__nim_w'].concat(this.$attrs.class || '')
       }, [this.error])
     }
+    const isInherit = this.layout === 'inherit'
     const sources = this.sources.map(source => h('source', {
       attrs: {
         srcset: source.url,
@@ -235,16 +273,8 @@ export default {
     const originalImage = h('img', {
       class: ['__nim_o'],
       style: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        margin: 0,
         width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center center',
-        transition: 'opacity 800ms ease 0ms',
-        opacity: this.lazyState === LazyState.LOADED ? 1 : 0
+        height: '100%'
       },
       attrs: {
         src: this.lazyState === LazyState.IDLE ? undefined : this.generatedSrc,
@@ -280,7 +310,20 @@ export default {
       })
     }
 
-    const picture = this.lazyState === LazyState.IDLE ? null : h('picture', {}, [
+    const picture = this.lazyState === LazyState.IDLE ? null : h('picture', {
+      style: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        margin: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        objectPosition: 'center center',
+        transition: 'opacity 800ms ease 0ms',
+        opacity: this.lazyState === LazyState.LOADED ? 1 : 0
+      }
+    }, [
       ...sources,
       originalImage
     ])
@@ -308,21 +351,30 @@ export default {
       })
     }
 
+    const ratioSVG = isInherit ? h('svg', {
+      attrs: {
+        width: this.meta.width,
+        height: this.meta.height,
+        xmlns: 'http://www.w3.org/2000/svg',
+        version: '1.1'
+      }
+    }) : null
     const ratioBox = h('div', {
       class: '__nim_r',
       attrs: {
         'aria-hidden': 'true'
       },
       style: {
-        paddingBottom: this.imageRatio ? `${this.imageRatio}%` : undefined
+        paddingBottom: isInherit ? undefined : this.imageRatio + '%'
       }
-    })
+    }, [ratioSVG])
 
     const wrapper = h('div', {
       class: this.$attrs.class,
       style: {
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: isInherit ? 'inline-block' : 'block'
       },
       on: {
         click: $event => this.$emit('click', $event)
