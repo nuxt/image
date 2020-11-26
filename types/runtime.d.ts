@@ -1,7 +1,7 @@
 export interface AllowList {
-  allow: (valu: string) => boolean;
-  accept: (valu: string) => boolean;
-  reject: (valu: string) => boolean;
+  allow: (value: string) => boolean;
+  accept: (value: string) => boolean;
+  reject: (value: string) => boolean;
 }
 
 // -- $img() utility --

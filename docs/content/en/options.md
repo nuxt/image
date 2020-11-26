@@ -30,7 +30,7 @@ export default {
 
 ## `accept`
 
-To enable iamge optimization on an external image, specify which domain are allowed to be optimized. This option will use to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
+To enable image optimization on an external website, specify which domains are allowed to be optimized. This option will use to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
 
 ```js{}[nuxt.config.js]
   export default {
