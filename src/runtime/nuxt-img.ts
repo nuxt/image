@@ -64,17 +64,32 @@ export default {
     ** - layout is not "responsive"
     ** - the width or height is "auto" and their values are not percentage
     */
-    if (this.sizes || this.layout === 'responsive' || (!this.width && !this.height) || this.width.includes('%') || this.height.includes('%')) {
-      this.meta.width = undefined
-      this.meta.height = undefined
-      this.meta.src = undefined
+    this.meta.width = undefined
+    this.meta.height = undefined
+    this.meta.src = undefined
+    if (this.sizes || this.layout === 'responsive' || (!this.width && !this.height) || String(this.width).includes('%') || String(this.height).includes('%')) {
       return
     }
     if (this.width !== 'auto' && this.height !== 'auto') {
       const { url } = this.$img(this.src, {
         modifiers: {
+          ...this.modifiers,
           width: this.width && getInt(this.width),
           height: this.height && getInt(this.height)
+        },
+        provider: this.provider,
+        preset: this.preset
+      })
+      this.meta.src = url
+      return
+    }
+
+    if (process.client) {
+      const { url } = this.$img(this.src, {
+        modifiers: {
+          ...this.modifiers,
+          width: this.width === 'auto' ? undefined : this.width && getInt(this.width),
+          height: this.height === 'auto' ? undefined : this.height && getInt(this.height)
         },
         provider: this.provider,
         preset: this.preset
@@ -172,10 +187,13 @@ export default {
       return {}
     }
   },
+  // TODO: use computed and use only for ratio
   watch: {
     src: '$fetch',
     width: '$fetch',
-    height: '$fetch'
+    height: '$fetch',
+    quality: '$fetch',
+    fit: '$fetch'
   },
   render (h) {
     return h('img', {

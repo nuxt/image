@@ -7,6 +7,9 @@ export default {
   buildModules: [
     '@nuxt/typescript-build'
   ],
+  plugins: [
+    'plugins/dat.gui.client.js'
+  ],
   image: {
     accept: ['nuxtjs.org'],
     twicpics: {
