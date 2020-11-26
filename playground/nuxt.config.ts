@@ -11,7 +11,7 @@ export default {
     'plugins/dat.gui.client.js'
   ],
   image: {
-    accept: ['nuxtjs.org'],
+    accept: ['nuxtjs.org', 'unsplash.com'],
     twicpics: {
       baseURL: 'https://i5acur1u.twic.pics'
     },
