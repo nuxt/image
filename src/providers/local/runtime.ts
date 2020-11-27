@@ -10,6 +10,14 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     background: 'b'
   },
+  valueMap: {
+    background (value) {
+      if (value.startsWith('#')) {
+        return value.replace('#', 'hex_')
+      }
+      return value
+    }
+  },
   joinWith: ',',
   formatter: (key, value) => `${key}_${value}`
 })

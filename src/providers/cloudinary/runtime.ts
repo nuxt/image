@@ -22,6 +22,12 @@ const operationsGenerator = createOperationsGenerator({
       thumbnail: 'thumb',
       cropping: 'crop',
       coverLimit: 'limit'
+    },
+    background (value) {
+      if (value.startsWith('#')) {
+        return value.replace('#', 'rgb_')
+      }
+      return value
     }
   },
   joinWith: ',',
