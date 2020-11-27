@@ -26,7 +26,7 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
 <code-group>
   <code-block label="index.vue" active>
 
-  ```vue{}[index.vue]
+  ```html{}[index.vue]
   <template>
     <nuxt-img provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
   </template>
@@ -65,7 +65,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
 <code-group>
   <code-block label="index.vue" active>
 
-  ```vue{}[index.vue]
+  ```html{}[index.vue]
   <template>
     <nuxt-img preset="jpg-cover" src="/nuxt-icon.png" width="50" height="50" />
   </template>
@@ -115,6 +115,7 @@ A set is consists of `width` and `breakpoint` or `media`:
 Note that you should define set in the ascending order of their width or break point.
 
 ### Simple string formatted usage
+
 I this case you should create a comma separated list of sizes and breakpoints. Separate `breakpoint` and `width` of a set with `:`.
 
 ```vue{}[index.vue]
@@ -134,7 +135,7 @@ I this case you should create a comma separated list of sizes and breakpoints. S
 ### Advances array formatted usage
 Using array will help you to create custom media queries of different sizes and have more conrtol on different viewport sizes.
 
-```vue{}[index.vue]
+```html{}[index.vue]
 <template>
   <nuxt-img :sizes="sizes" ... />
 </template>
@@ -163,6 +164,7 @@ export default {
 ```
 
 ## `layout`
+
 The layout for the image. 
 
 - `responsive`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
@@ -175,11 +177,13 @@ This prop specifies an alternate text for an image.
 
 In case you want to serve images in specific format, use this prop.
 
-```vue{}[index.vue]
+```html{}[index.vue]
 <template>
   <nuxt-img format="webp" src="/nuxt-icon.png" ... />
 </template>
 ```
+
+Available format are `webp`, `jpeg`, `jpg`, `png`, `gif` and `svg`. If format is not specified, it will respect the default image format.
 
 ## `quality`
 
@@ -200,7 +204,7 @@ There are five standard values you can use with this property.
 <code-group>
   <code-block label="index.vue" active>
 
-  ```vue{}[index.vue]
+  ```html{}[index.vue]
   <template>
     <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
   </template>
@@ -223,7 +227,7 @@ In addition of standard operation, every provider can have their own operation. 
 <code-group>
   <code-block label="index.vue" active>
 
-  ```vue{}[index.vue]
+  ```html{}[index.vue]
   <template>
     <nuxt-img
       provider="cloudinary"
@@ -233,6 +237,7 @@ In addition of standard operation, every provider can have their own operation. 
       :operations="imageOperations"
     />
   </template>
+
   <script>
   export default {
     data() {

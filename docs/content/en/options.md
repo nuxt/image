@@ -35,7 +35,7 @@ To enable image optimization on an external website, specify which domains are a
 ```js{}[nuxt.config.js]
   export default {
     image: {
-      accept: [ 'nuxtjs.org' ]
+      accept: ['nuxtjs.org']
     }
   }
 ```
