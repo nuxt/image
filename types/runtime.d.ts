@@ -86,7 +86,7 @@ export interface RuntimePlaceholder extends RuntimeImageInfo {
 
 export type RuntimeOperationFormatter = (key: string, value: string) => string
 
-export type RuntimeOperationMapper = { [key: string]: string } | ((key: string) => string)
+export type RuntimeOperationMapper = { [key: string]: string | false } | ((key: string) => string)
 
 export interface OperationGeneratorConfig {
   keyMap?: RuntimeOperationMapper

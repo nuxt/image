@@ -1,28 +1,35 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
-import { isRemoteUrl } from '~image/utils'
+import { createOperationsGenerator, isRemoteUrl } from '~image/utils'
+
+const operationsGenerator = createOperationsGenerator({
+  keyMap: {
+    fit: 'f',
+    width: 'w',
+    height: 'h',
+    resize: 's',
+    quality: 'q',
+    background: 'b'
+  },
+  joinWith: ',',
+  formatter: (key, value) => `${key}_${value}`
+})
 
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const operations = []
+    const format = modifiers.format || '_'
+    delete modifiers.format
 
-    const fit = modifiers.fit ? `_${modifiers.fit}` : ''
     if (modifiers.width && modifiers.height) {
-      operations.push(`s_${modifiers.width}_${modifiers.height}${fit}`)
-    } else if (modifiers.width) {
-      operations.push(`w_${modifiers.width}${fit}`)
-    } else if (modifiers.height) {
-      operations.push(`h_${modifiers.height}${fit}`)
+      modifiers.resize = `${modifiers.width}_${modifiers.height}`
+      delete modifiers.width
+      delete modifiers.height
     }
-    if (modifiers.quality) {
-      operations.push(`q_${modifiers.quality}`)
-    }
-
     src = isRemoteUrl(src) ? src : (options.baseURL || '') + src
 
-    const operationsString = operations.join(',') || '_'
+    const operationsString = operationsGenerator(modifiers) || '_'
 
     return {
-      url: `/_image/local/remote/${modifiers.format || '_'}/${operationsString}/${src}`,
+      url: `/_image/local/remote/${format}/${operationsString}/${src}`,
       isStatic: true
     }
   }

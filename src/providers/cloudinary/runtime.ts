@@ -7,7 +7,8 @@ const operationsGenerator = createOperationsGenerator({
     width: 'w',
     height: 'h',
     format: 'f',
-    quality: 'q'
+    quality: 'q',
+    background: 'b'
   },
   valueMap: {
     fit: {

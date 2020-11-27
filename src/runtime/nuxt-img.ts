@@ -34,6 +34,10 @@ export const props = {
     type: [Number, String],
     default: null
   },
+  background: {
+    type: String,
+    default: null
+  },
   fit: {
     type: String,
     default: null
@@ -144,6 +148,7 @@ export default {
         fit: this.fit,
         quality: this.quality,
         format: this.format,
+        background: this.background,
         ...this.operations
       }
     },

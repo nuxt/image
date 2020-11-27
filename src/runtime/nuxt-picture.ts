@@ -90,6 +90,7 @@ export default {
       return {
         fit: this.fit,
         quality: this.quality,
+        background: this.background,
         ...this.operations
       }
     },
