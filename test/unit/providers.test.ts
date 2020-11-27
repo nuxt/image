@@ -41,7 +41,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
-    local: { isStatic: true, url: '/_image/local/remote/_/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/remote/_/f_contain,s_200_200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
@@ -49,7 +49,7 @@ const images = [
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
-    local: { isStatic: true, url: '/_image/local/remote/jpeg/s_200_200_contain/test.png' },
+    local: { isStatic: true, url: '/_image/local/remote/jpeg/f_contain,s_200_200/test.png' },
     cloudinary: { url: '/f_jpeg,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },

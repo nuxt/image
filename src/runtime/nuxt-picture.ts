@@ -24,7 +24,7 @@ export default {
       type: String,
       default: undefined,
       validator (value) {
-        return !value || ['lazy', 'eager'].includes(value)
+        return !value || ['lazy', 'eager', 'auto'].includes(value)
       }
     },
     fallbackFormat: {
@@ -79,7 +79,7 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      lazyState: this.isLazy ? LazyState.IDLE : LazyState.LOADED
+      lazyState: this.loading === 'lazy' ? LazyState.IDLE : LazyState.LOADED
     }
   },
   computed: {
@@ -338,15 +338,13 @@ export default {
       })).join('')
 
       const noScriptImg = renderTag('img', {
-        class: '__nim_o',
         src: this.generatedSrc,
         ...this.imgAttributes
       })
 
       noScript = h('noscript', {
         domProps: {
-          innerHTML: renderTag('img', {
-            class: '__nim_o'
+          innerHTML: renderTag('picture', {
           }, noScriptSources + noScriptImg)
         }
       })

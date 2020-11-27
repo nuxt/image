@@ -3,50 +3,48 @@ import Component from '~/src/runtime/nuxt-picture'
 
 describe('Renders simple image', () => {
   testComponent(Component, {
-    lazy: true,
+    loading: 'lazy',
     width: 200,
     height: 200,
-    sizes: '200,500:500,900:900 (webp)'
+    sizes: '200,500:500,900:900'
   })
 })
 
-describe('Renders lazy=false', () => {
-  testComponent(Component, {
-    lazy: false,
-    width: '200px',
-    height: 200,
-    sizes: [
-      {
-        width: 200
-      }, {
-        width: 500,
-        breakpoint: 500
-      }, {
-        width: 900,
-        breakpoint: 900,
-        format: 'webp'
-      }
-    ]
-  })
-})
+// describe('Renders loading=auto', () => {
+//   testComponent(Component, {
+//     loading: 'auto',
+//     width: '200px',
+//     height: 200,
+//     sizes: [
+//       {
+//         width: 200
+//       }, {
+//         width: 500,
+//         breakpoint: 500
+//       }, {
+//         width: 900,
+//         breakpoint: 900
+//       }
+//     ]
+//   })
+// })
 
-describe('Renders noscript', () => {
-  testComponent(Component, {
-    lazy: true,
-    noScript: true,
-    width: 200,
-    height: 200,
-    sizes: [
-      {
-        width: 200
-      }, {
-        width: 500,
-        breakpoint: 500
-      }, {
-        width: 900,
-        media: '(min-width: 900px)',
-        format: 'webp'
-      }
-    ]
-  })
-})
+// describe('Renders noscript', () => {
+//   testComponent(Component, {
+//     loading: 'lazy',
+//     noScript: true,
+//     width: 200,
+//     height: 200,
+//     sizes: [
+//       {
+//         width: 200
+//       }, {
+//         width: 500,
+//         breakpoint: 500
+//       }, {
+//         width: 900,
+//         media: '(min-width: 900px)'
+//       }
+//     ]
+//   })
+// })

@@ -1,5 +1,5 @@
 import defu from 'defu'
-import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions } from 'types'
+import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions, ImageModifiers } from 'types'
 import { getMeta } from './meta'
 import { cleanDoubleSlashes, getFileExtension, isRemoteUrl } from './utils'
 
@@ -20,7 +20,7 @@ function getCache (context) {
 }
 
 export function createImage (context, { providers, defaultProvider, presets, intersectOptions, responsiveSizes, allow }: CreateImageOptions) {
-  const presetMap = presets.reduce((map, preset) => {
+  const presetMap: { [key: string]: ImagePreset} = presets.reduce((map, preset) => {
     map[preset.name] = preset
     return map
   }, {})
@@ -43,8 +43,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return presetMap[name]
   }
 
-  function parseImage (src: string, options: ImageOptions = {}) {
-    const { modifiers = {} } = options
+  function parseImage (src: string, options: ImageOptions = {} as any) {
+    const { modifiers = {} as ImageModifiers } = options
     const isRemote = isRemoteUrl(src)
 
     if ((isRemote && !allow.accept(src)) || src.startsWith('data:')) {
@@ -63,7 +63,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
 
     const image = provider.provider.getImage(
       src,
-      defu(modifiers, (preset && preset.modifiers) || {}),
+      defu(modifiers, (preset && (preset as ImagePreset).modifiers)),
       { ...provider.defaults, ...options }
     )
 
@@ -79,8 +79,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   }
 
-  function $img (source: string, options: ImageOptions = {}) {
-    const { modifiers = {} } = options
+  function $img (source: string, options: ImageOptions = {} as any) {
+    const { modifiers = {} as ImageModifiers } = options
     const { src, image } = parseImage(source, options)
     const { url: providerUrl, isStatic } = image
 
@@ -129,17 +129,17 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return image
   }
 
-  presets.forEach((preset) => {
+  presets.forEach((preset: ImagePreset) => {
     $img[preset.name] = (src) => {
       return $img(src, {
         modifiers: preset.modifiers,
         provider: preset.provider
-      })
+      } as ImageOptions)
     }
   })
 
-  $img.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {}) => {
-    const { modifiers = {} } = options
+  $img.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {} as ImageOptions) => {
+    const { modifiers = {} as ImageModifiers } = options
     if (modifiers.format === 'svg' || getFileExtension(src) === 'svg') {
       return [{
         url: src
@@ -184,7 +184,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return sizes
   }
 
-  $img.getResolution = async (source: string, options: ImageOptions = {}) => {
+  $img.getResolution = async (source: string, options: ImageOptions = {} as any) => {
     const { image } = parseImage(source, options)
 
     const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
@@ -202,7 +202,7 @@ export function createImage (context, { providers, defaultProvider, presets, int
     }
   }
 
-  $img.getMeta = async (source: string, options: ImageOptions = {}) => {
+  $img.getMeta = async (source: string, options: ImageOptions = {} as ImageOptions) => {
     const { image } = parseImage(source, {
       ...options,
       modifiers: {

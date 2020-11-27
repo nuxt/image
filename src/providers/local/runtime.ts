@@ -24,6 +24,9 @@ const operationsGenerator = createOperationsGenerator({
 
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
+    modifiers = {
+      ...modifiers
+    }
     const format = modifiers.format || '_'
     delete modifiers.format
 

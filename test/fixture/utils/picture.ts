@@ -2,6 +2,7 @@ require('jsdom-global')()
 const { mount } = require('@vue/test-utils')
 
 export function testComponent (Component, props) {
+  const isLazy = props.loading === 'lazy'
   let observerAdded = 0
   let observerDestroyed = 0
   let becomeVisible = null
@@ -10,6 +11,12 @@ export function testComponent (Component, props) {
     return src
   }
   const eventType = { intersect: 'onIntersect' }
+  $img.getResolution = () => {
+    return {
+      width: 200,
+      height: 200
+    }
+  }
   $img.sizes = () => {
     return [{
       width: 200,
@@ -52,11 +59,11 @@ export function testComponent (Component, props) {
     })
   })
   test('add observer', () => {
-    expect(observerAdded).toBe(props.lazy === false ? 0 : 1)
+    expect(observerAdded).toBe(isLazy ? 1 : 0)
     expect(observerDestroyed).toBe(0)
   })
   test('Set src', (done) => {
-    if (props.lazy === false) {
+    if (!isLazy) {
       const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcBefore).toEqual(src)
       return done()
@@ -77,17 +84,13 @@ export function testComponent (Component, props) {
   })
 
   test('Change src', (done) => {
+    const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
+    expect(domSrcBefore).toEqual(src)
     src = '/image.jpeg'
     wrapper.setProps({ src })
     process.nextTick(() => {
-      if (props.lazy === false) {
-        expect(observerAdded).toBe(props.lazy === false ? 0 : 2)
-        expect(observerDestroyed).toBe(props.lazy === false ? 0 : 1)
-
-        const domSrcBefore = wrapper.find('.__nim_o').element.getAttribute('src')
-        expect(domSrcBefore).toEqual(src)
-        return done()
-      }
+      expect(observerAdded).toBe(isLazy ? 2 : 0)
+      expect(observerDestroyed).toBe(isLazy ? 1 : 0)
 
       const domSrcAfter = wrapper.find('.__nim_o').element.getAttribute('src')
       expect(domSrcAfter).toEqual(src)
@@ -110,7 +113,7 @@ export function testComponent (Component, props) {
 
   test('remove observer', () => {
     wrapper.destroy()
-    expect(observerDestroyed).toBe(props.lazy === false ? 0 : 2)
+    expect(observerDestroyed).toBe(isLazy ? 2 : 0)
   })
 }
 
