@@ -198,7 +198,9 @@ export default {
     width: '$fetch',
     height: '$fetch',
     quality: '$fetch',
-    fit: '$fetch'
+    fit: '$fetch',
+    format: '$fetch',
+    background: '$fetch'
   },
   render (h) {
     return h('img', {

@@ -5,6 +5,7 @@
         <dat-gui close-text="Close controls" open-text="Open controls" close-position="bottom">
           <dat-folder label="Source">
             <dat-select v-model="src" :items="sources" label="Picture" />
+            <dat-select v-model="format" :items="formats" label="Format" />
           </dat-folder>
           <dat-folder label="Width">
             <dat-boolean v-model="widthAuto" label="Auto" />
@@ -30,6 +31,7 @@
           </dat-folder>
           <dat-folder label="Operations">
             <dat-select v-if="!widthAuto && !heightAuto" v-model="fit" :items="fits" label="Fit" />
+            <dat-color v-if="!widthAuto && !heightAuto" v-model="background" label="Background" />
             <dat-number v-model.lazy="quality" :step="5" :min="5" :max="100" label="Quality" />
           </dat-folder>
           <dat-folder label="Misc">
@@ -44,7 +46,6 @@
             <dat-number v-model="boxShadow.offsetY" :min="-100" :max="100" :step="1" label="Offset Y" />
             <dat-number v-model="boxShadow.blurRadius" :min="0" :max="100" :step="1" label="Blur radius" />
             <dat-number v-model="boxShadow.spreadRadius" label="Spread radius" />
-            <dat-color v-model="boxShadow.color" label="Color" />
           </dat-folder> -->
         </dat-gui>
       </client-only>
@@ -56,7 +57,8 @@
         :height="heightAuto ? 'auto' : height"
         :fit="fit"
         :quality="quality"
-        format="png"
+        :format="format"
+        :background="background"
         :class="{ border: showBorder }"
       />
       <!-- <NuxtImg
@@ -106,14 +108,24 @@ export default {
         { name: 'inside', value: 'inside' },
         { name: 'outside', value: 'outside' }
       ],
+      formats: [
+        { name: 'auto', value: '' },
+        { name: 'webp', value: 'webp' },
+        { name: 'jpg', value: 'jpg' },
+        { name: 'png', value: 'png' },
+        { name: 'svg', value: 'svg' },
+        { name: 'gif', value: 'gif' }
+      ],
       src: '/images/damavand.jpg',
       fit: 'cover',
+      format: '',
       quality: 100,
       widthAuto: true,
       heightAuto: false,
       width: 400,
       height: 200,
-      showBorder: true
+      showBorder: true,
+      background: '#000000'
     }
   },
   mounted () {
