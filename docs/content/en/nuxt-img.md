@@ -17,6 +17,32 @@ Path to image file. `src` sould be in form of absolute path and starts with `/`.
 
 The `src` has other capabilities in `nuxt-img`, you can provide provider and preset for the image right inside the `src` property.
 
+## `width`
+Specify width of the image.  
+`nuxt-img` uses this value to optimize the image as best as its possible:
+
+- This value will set as `width` attribute of DOM element
+- On `layout != "responsive"`
+  - When both `width` and `height` are present and values isn't equal to `auto`, this value will use to resize the image.
+  - On the server-side rendering when the value equals to `auto` and height is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
+  - On the server-side rendering when the value equals to `auto` and `height` is set, `nuxt-img` will automatically detects image's size and calulates proper with based on image's aspect ratio and `height` value. (This not happens on client-side rendering)
+  - On the server-side rendering the image will resize using calculated `width`
+
+
+
+## `height`
+Specify height of the image.  
+`nuxt-img` uses this value to optimize the image as best as its possible:
+
+- This value will set as `height` attribute of DOM element
+- On `layout != "responsive"`
+  - When both `width` and `height` are present and values isn't equal to `auto`, this value will use to resize the image.
+  - On the server-side rendering when the value equals to `auto` and width is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
+  - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper with based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
+  - On the server-side rendering the image will resize using calculated `height`
+
+
+
 ### Provider
 
 Nuxt image module will allow you to modify and serve your images using cloud services like cloudinary. In order to use a provider you should:
