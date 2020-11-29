@@ -1,13 +1,10 @@
 import path from 'path'
 import util from 'util'
-import url from 'url'
 import defu from 'defu'
 import consola from 'consola'
 import fetch from 'node-fetch'
 import hasha from 'hasha'
 import fs from 'fs-extra'
-import isHttps from 'is-https'
-import requrl from 'requrl'
 import upath from 'upath'
 import { ModuleOptions, ModuleProvider } from 'types'
 
