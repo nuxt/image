@@ -185,20 +185,23 @@ export function createImage (context, { providers, defaultProvider, presets, int
   }
 
   $img.getResolution = async (source: string, options: ImageOptions = {} as any) => {
-    const { image } = parseImage(source, options)
+    const { image } = parseImage(source, {
+      ...options,
+      modifiers: {
+        ...options.modifiers,
+        // these modifiers are used to reduce files size and keep resolution
+        format: 'jpg',
+        quality: 1
+      }
+    })
 
     const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
     const absoluteUrl = isRemoteUrl(image.url) ? image.url : internalUrl + image.url
-    try {
-      const resolution = await fetch(`${internalUrl}/_image_resolution?url=${absoluteUrl}`).then(res => res.json())
-      return resolution
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to get image meta for ' + source, err + '')
-      return {
-        width: 1,
-        height: 0
-      }
+    const { width, height } = await getMeta(absoluteUrl, getCache(context))
+
+    return {
+      width,
+      height
     }
   }
 

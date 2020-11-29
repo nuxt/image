@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs-extra'
 import { ModuleOptions } from 'types'
 import defu from 'defu'
-import { downloadImage, getProviders, hash, resolutionServerMiddleware } from './utils'
+import { downloadImage, getProviders, hash } from './utils'
 import { cleanDoubleSlashes, getFileExtension } from './runtime/utils'
 export type { Provider, RuntimeProvider } from 'types'
 
@@ -46,11 +46,6 @@ async function imageModule (moduleOptions: ModuleOptions) {
       })
     }
   }
-
-  addServerMiddleware({
-    path: '/_image_resolution',
-    handler: resolutionServerMiddleware
-  })
 
   addPlugin({
     fileName: 'image.js',

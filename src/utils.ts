@@ -92,20 +92,3 @@ export function loadProvider (nuxt, key: string, provider: any) {
     importName: 'runtime_' + hash(runtime).substr(0, 8)
   }
 }
-
-export async function resolutionServerMiddleware (req, res) {
-  const reqURL = new URL(requrl(req))
-  const host = `http${isHttps(req) ? 's' : ''}://${reqURL.host}/`
-
-  const { searchParams } = new URL(req.url, host)
-  const imageAddress = url.format(new URL(searchParams.get('url'), host))
-
-  const imageMeta = require('image-meta').default
-  const data: Buffer = await fetch(imageAddress).then((res: any) => res.buffer())
-  const { width, height } = await imageMeta(data)
-  res.setHeader('content-type', 'application/json')
-  res.end(JSON.stringify({
-    width,
-    height
-  }))
-}
