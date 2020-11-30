@@ -1,6 +1,6 @@
 export default {
   components: true,
-  target: 'static',
+  target: 'server',
   modules: [
     '../src/index.ts'
   ],

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="container" :style="containerStyle">
+    <div class="bg" :style="bgStyle" />
+    <div class="container">
       <client-only>
         <dat-gui close-text="Close controls" open-text="Open controls" close-position="bottom">
           <dat-folder label="Source">
@@ -32,10 +33,18 @@
           <dat-folder label="Operations">
             <dat-select v-if="!widthAuto && !heightAuto" v-model="fit" :items="fits" label="Fit" />
             <dat-color v-if="!widthAuto && !heightAuto" v-model="background" label="Background" />
-            <dat-number v-model.lazy="quality" :step="5" :min="5" :max="100" label="Quality" />
+            <dat-number
+              v-if="!isSvg"
+              v-model.lazy="quality"
+              :step="5"
+              :min="5"
+              :max="100"
+              label="Quality"
+            />
           </dat-folder>
-          <dat-folder label="Misc">
-            <dat-boolean v-model="showBorder" label="Border" />
+          <dat-folder label="UI">
+            <dat-boolean v-model="showBorder" label="Image border" />
+            <dat-boolean v-if="!isSvg" v-model="showBg" label="Background" />
           </dat-folder>
           <!-- <dat-string v-model="title" label="Title" />
           <dat-button label="Trigger alert" @click="triggerAlert" />
@@ -57,9 +66,12 @@
         :height="heightAuto ? 'auto' : height"
         :fit="fit"
         :quality="quality"
+        :format="format"
         :background="background"
         :class="{ border: showBorder }"
       />
+
+      <p class="credits" v-html="imageCredits" />
       <!-- <NuxtImg
         ref="nuxtImg"
         :src="src"
@@ -86,6 +98,7 @@
       // What about loading="lazy"?
       // On ssr do we render placeholder? no src? what about SEO?
       // -> No loading="lazy" on NuxtImg except supported browsers -->
+      </p>
     </div>
   </div>
 </template>
@@ -95,10 +108,10 @@ export default {
   data () {
     return {
       sources: [
-        { name: 'colors.jpg', value: '/images/colors.jpg', credit: 'Photo by Jeremy Thomas on Unsplash' },
-        { name: 'everest.jpg', value: '/images/everest.jpg' },
-        { name: 'nuxt-white.svg', value: '/images/nuxt-white.svg' },
-        { name: 'Unplash Image', value: 'https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1940&q=80' }
+        { name: 'colors.jpg', value: '/images/colors.jpg', credits: '<span>Photo by <a href="https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jeremy Thomas</a> on <a href="https://unsplash.com/s/photos/colors?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>.' },
+        { name: 'everest.jpg', value: '/images/everest.jpg', credits: 'Photo from the <a href="https://en.wikipedia.org/wiki/Mount_Everest">Mount Everest</a>\'s Wikipedia page.' },
+        { name: 'tacos.svg', value: '/images/tacos.svg', credits: 'Illustration from <a href="https://icons8.com/illustrations/illustration/abstract-1419">Icons8</a>' },
+        { name: 'Unplash Image', value: 'https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1940&q=80', credits: '<span>Photo by <a href="https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Omid Armin</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>' }
       ],
       fits: [
         { name: 'cover', value: 'cover' },
@@ -124,21 +137,29 @@ export default {
       width: 400,
       height: 200,
       showBorder: true,
-      background: '#000000'
+      background: '#000000',
+      showBg: true
     }
   },
   computed: {
+    isSvg () {
+      return this.src.endsWith('.svg')
+    },
+    imageCredits () {
+      const source = this.sources.find(({ value }) => value === this.src)
+      return source ? source.credits : ''
+    },
     bgSrc () {
       return this.$img(this.src, {
         modifiers: {
-          width: 20,
+          width: 30,
           format: 'jpg'
         }
       }).url
     },
-    containerStyle () {
+    bgStyle () {
       return {
-        backgroundImage: `url(${this.bgSrc})`
+        backgroundImage: this.showBg && !this.isSvg ? `url(${this.bgSrc})` : 'none'
       }
     }
   },
@@ -158,16 +179,48 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  opacity: 50%;
+  filter: blur(8px);
 }
 img {
   max-width: 100%;
   max-height: 100%;
+  transition: all 200ms ease-in-out;
 }
 img.border {
   border: 2px white solid;
-  border-radius: 3px;
+  border-radius: 5px;
+}
+.credits {
+  position: absolute;
+  bottom: 0;
+  color: #AAAAAA;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  padding: 8px 12px;
+  transition: background 200ms ease-in-out;
+}
+.credits:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+.credits >>> a {
+  color: #CCCCCC;
+  text-decoration: underline;
+}
+.credits >>> a:hover {
+  color: #EEEEEE;
+  text-decoration: underline;
 }
 </style>
