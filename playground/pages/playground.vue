@@ -189,7 +189,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  opacity: 50%;
+  opacity: 0.5;
   filter: blur(8px);
 }
 img {
