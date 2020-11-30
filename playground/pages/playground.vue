@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container" :style="containerStyle">
       <client-only>
         <dat-gui close-text="Close controls" open-text="Open controls" close-position="bottom">
           <dat-folder label="Source">
@@ -57,7 +57,6 @@
         :height="heightAuto ? 'auto' : height"
         :fit="fit"
         :quality="quality"
-        :format="format"
         :background="background"
         :class="{ border: showBorder }"
       />
@@ -96,7 +95,7 @@ export default {
   data () {
     return {
       sources: [
-        { name: 'damavand.jpg', value: '/images/damavand.jpg' },
+        { name: 'colors.jpg', value: '/images/colors.jpg', credit: 'Photo by Jeremy Thomas on Unsplash' },
         { name: 'everest.jpg', value: '/images/everest.jpg' },
         { name: 'nuxt-white.svg', value: '/images/nuxt-white.svg' },
         { name: 'Unplash Image', value: 'https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1940&q=80' }
@@ -116,7 +115,7 @@ export default {
         { name: 'svg', value: 'svg' },
         { name: 'gif', value: 'gif' }
       ],
-      src: '/images/damavand.jpg',
+      src: '/images/colors.jpg',
       fit: 'cover',
       format: '',
       quality: 100,
@@ -126,6 +125,21 @@ export default {
       height: 200,
       showBorder: true,
       background: '#000000'
+    }
+  },
+  computed: {
+    bgSrc () {
+      return this.$img(this.src, {
+        modifiers: {
+          width: 20,
+          format: 'jpg'
+        }
+      }).url
+    },
+    containerStyle () {
+      return {
+        backgroundImage: `url(${this.bgSrc})`
+      }
     }
   },
   mounted () {
@@ -144,6 +158,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
 }
 img.border {
   border: 2px white solid;
