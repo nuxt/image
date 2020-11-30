@@ -13,7 +13,7 @@ export default {
   image: {
     accept: ['nuxtjs.org', 'unsplash.com'],
     twicpics: {
-      baseURL: 'https://i5acur1u.twic.pics'
+      baseURL: 'https://nuxt-demo.twic.pics'
     },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload'

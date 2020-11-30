@@ -12,7 +12,7 @@ To use this provider you just need to specify the base url of your project in Tw
 export default {
   image: {
     twicpics: {
-      baseURL: 'https://i5acur1u.twic.pics'
+      baseURL: 'https://nuxt-demo.twic.pics'
     }
   }
 }
