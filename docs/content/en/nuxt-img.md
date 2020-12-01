@@ -1,8 +1,8 @@
 ---
 title: Image Component
-description: 'List of available props for image component'
+description: "List of available props for image component"
 position: 7
-category: Componets
+category: Components
 ---
 
 ## `src`
@@ -18,6 +18,7 @@ Path to image file. `src` sould be in form of absolute path and starts with `/`.
 The `src` has other capabilities in `nuxt-img`, you can provide provider and preset for the image right inside the `src` property.
 
 ## `width`
+
 Specify width of the image.  
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
@@ -28,9 +29,8 @@ Specify width of the image.
   - On the server-side rendering when the value equals to `auto` and `height` is set, `nuxt-img` will automatically detects image's size and calulates proper with based on image's aspect ratio and `height` value. (This not happens on client-side rendering)
   - On the server-side rendering the image will resize using calculated `width`
 
-
-
 ## `height`
+
 Specify height of the image.  
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
@@ -41,35 +41,40 @@ Specify height of the image.
   - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper with based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
   - On the server-side rendering the image will resize using calculated `height`
 
-
-
 ### Provider
 
-Nuxt image module will allow you to modify and serve your images using cloud services like cloudinary. In order to use a provider you should:
+Nuxt image module will allow you to modify and serve your images using cloud services like Cloudinary. In order to use a provider you should:
+
 1. Define provider and its option in `nuxt.config`.
 2. Specify providers name in `nuxt-img` component
 
 <code-group>
   <code-block label="index.vue" active>
 
-  ```html{}[index.vue]
-  <template>
-    <nuxt-img provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169" />
-  </template>
-  ```
+```html{}[index.vue]
+<template>
+  <nuxt-img
+    provider="cloudinary"
+    src="/remote/nuxt-org/blog/going-full-static/main.png"
+    width="300"
+    height="169"
+  />
+</template>
+```
 
   </code-block>
   <code-block label="nuxt.config.js">
 
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      cloudinary: {
-        baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
-      }
-    }
-  }
-  ```
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    cloudinary: {
+      baseURL: "https://res.cloudinary.com/nuxt/image/upload/",
+    },
+  },
+};
+```
+
   </code-block>
   <code-block label="Preview">
 
@@ -83,7 +88,6 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
 <!-- TODO: multiple providers -->
 <!-- TODO: default provider -->
 
-
 ### Preset
 
 Presets are predefined sets of image modifiers that can be used create unified form of images in your projects. You can write your presets inside `nuxt.config` and then use them in `nuxt-img`.
@@ -91,32 +95,33 @@ Presets are predefined sets of image modifiers that can be used create unified f
 <code-group>
   <code-block label="index.vue" active>
 
-  ```html{}[index.vue]
-  <template>
-    <nuxt-img preset="jpg-cover" src="/nuxt-icon.png" width="50" height="50" />
-  </template>
-  ```
+```html{}[index.vue]
+<template>
+  <nuxt-img preset="jpg-cover" src="/nuxt-icon.png" width="50" height="50" />
+</template>
+```
 
   </code-block>
   <code-block label="nuxt.config.js">
 
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      presets: [
-        {
-          name: 'jpg-cover',
-          modifiers: {
-            fit: 'cover',
-            format: 'jpg',
-            width: 300,
-            height: 300
-          }
-        }
-      ]
-    }
-  }
-  ```
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    presets: [
+      {
+        name: "jpg-cover",
+        modifiers: {
+          fit: "cover",
+          format: "jpg",
+          width: 300,
+          height: 300,
+        },
+      },
+    ],
+  },
+};
+```
+
   </code-block>
   <code-block label="Preview">
 
@@ -127,13 +132,13 @@ Presets are predefined sets of image modifiers that can be used create unified f
   </code-block>
 </code-group>
 
-
 ## `sizes`
 
 The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
 In `nuxt-img` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
 
-A set is consists of `width` and `breakpoint` or `media`: 
+A set is consists of `width` and `breakpoint` or `media`:
+
 - `width`: Width of generated image for this set
 - `breakpoint`: Minimum width of viewport to show the image
 - `media`: Custom media query for the set, using `media` will override `breakpoint`
@@ -159,6 +164,7 @@ I this case you should create a comma separated list of sizes and breakpoints. S
 ```
 
 ### Advances array formatted usage
+
 Using array will help you to create custom media queries of different sizes and have more conrtol on different viewport sizes.
 
 ```html{}[index.vue]
@@ -167,31 +173,31 @@ Using array will help you to create custom media queries of different sizes and 
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      sizes: [
-        {
-          width: 300
-        },
-        {
-          breakpoint: 300,
-          width: 600
-        },
-        {
-          media: '(min-width: 600px)', // same as breakpoint: 600
-          width: 900
-        }
-      ]
-    }
-  }
-}
+  export default {
+    data() {
+      return {
+        sizes: [
+          {
+            width: 300,
+          },
+          {
+            breakpoint: 300,
+            width: 600,
+          },
+          {
+            media: "(min-width: 600px)", // same as breakpoint: 600
+            width: 900,
+          },
+        ],
+      };
+    },
+  };
 </script>
 ```
 
 ## `layout`
 
-The layout for the image. 
+The layout for the image.
 
 - `responsive`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
 
@@ -226,15 +232,14 @@ There are five standard values you can use with this property.
 - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
 - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified.
 
-
 <code-group>
   <code-block label="index.vue" active>
 
-  ```html{}[index.vue]
-  <template>
-    <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
-  </template>
-  ```
+```html{}[index.vue]
+<template>
+  <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
+</template>
+```
 
   </code-block>
   <code-block label="Preview">
@@ -253,29 +258,29 @@ In addition of standard operation, every provider can have their own operation. 
 <code-group>
   <code-block label="index.vue" active>
 
-  ```html{}[index.vue]
-  <template>
-    <nuxt-img
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png"
-      width="300" 
-      height="169"
-      :operations="imageOperations"
-    />
-  </template>
+```html{}[index.vue]
+<template>
+  <nuxt-img
+    provider="cloudinary"
+    src="/remote/nuxt-org/blog/going-full-static/main.png"
+    width="300"
+    height="169"
+    :operations="imageOperations"
+  />
+</template>
 
-  <script>
+<script>
   export default {
     data() {
       return {
         imageOperations: {
-          r: '0:100'
-        }
-      }
-    }
-  }
-  </script>
-  ```
+          r: "0:100",
+        },
+      };
+    },
+  };
+</script>
+```
 
   </code-block>
   <code-block label="Preview">
