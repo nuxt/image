@@ -24,6 +24,9 @@ export default {
     imgix: {
       baseURL: 'https://assets.imgix.net'
     },
+    imagekit: {
+      baseURL: 'https://ik.imagekit.io/demo'
+    },
     presets: [
       {
         name: 's50',

@@ -21,6 +21,9 @@
 
       <h2>JPEG image on Fastly</h2>
       <NuxtImg provider="fastly" src="/image.jpg" />
+
+      <h2>JPEG image on Imagekit</h2>
+      <NuxtImg provider="imagekit" src="/img/plant.jpeg" />
     </div>
   </div>
 </template>
