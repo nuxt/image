@@ -18,7 +18,7 @@ By default `nuxt-picture` lazy load all images to reduce initial requests and pa
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-img
+  <nuxt-picture
     :lazy="false"
     provider="cloudinary"
     preset="jpg-cover"
@@ -57,7 +57,7 @@ export default {
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img lazy="false" provider="cloudinary" preset="jpg-cover" src="/remote/nuxt-org/blog/going-full-static/main.png" />
+    <nuxt-picture lazy="false" provider="cloudinary" preset="jpg-cover" src="/remote/nuxt-org/blog/going-full-static/main.png" />
   </div>
 
   </code-block>
@@ -65,7 +65,7 @@ export default {
 
 ## `placeholder`
 
-The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-img` generate it for you.  
+The placeholder is a small, low quality image that will show while the original image is loading. You could provide your own placeholder or let `nuxt-picture` generate it for you.  
 If you set `placeholder` to `true`, module creates a small placeholder for you. You can set your custom placeholder in this prop.
 
 <code-group>
@@ -73,7 +73,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-img placeholder src="/nuxt-icon.png" />
+  <nuxt-picture placeholder src="/nuxt-icon.png" />
 </template>
 ```
 
@@ -82,7 +82,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
 
 ```vue{}[index.vue]
 <template>
-  <nuxt-img placeholder="/icon.png" src="/nuxt-icon.png" />
+  <nuxt-picture placeholder="/icon.png" src="/nuxt-icon.png" />
 </template>
 ```
 
@@ -90,7 +90,7 @@ If you set `placeholder` to `true`, module creates a small placeholder for you. 
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-img>
+    <nuxt-picture placeholder="/icon.png" src="/nuxt-icon.png"></nuxt-picture>
   </div>
 
   </code-block>
