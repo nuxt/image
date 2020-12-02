@@ -251,9 +251,15 @@ There are five standard values you can use with this property.
   </code-block>
 </code-group>
 
+<alert type="info">
+
+Some providers provide additional values beside the above standard ones, such as [Cloudinary values](/providers/cloudinary#cloudinary-fit-values) for extra resizing effect.
+
+</alert>
+
 ## `operations`
 
-In addition of standard operation, every provider can have their own operation. For example cloudinary supports lots of [transformations](https://cloudinary.com/documentation/image_transformations). Using `operations` prop you can use these transformations.
+In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [transformations](/providers/cloudinary#cloudinary-operations). Using `operations` prop you can use these transformations.
 
 <code-group>
   <code-block label="index.vue" active>
@@ -274,11 +280,11 @@ In addition of standard operation, every provider can have their own operation. 
     data() {
       return {
         imageOperations: {
-          r: "0:100",
-        },
-      };
-    },
-  };
+          roundCorner: '0:100'
+        }
+      }
+    }
+  }
 </script>
 ```
 
@@ -290,7 +296,7 @@ In addition of standard operation, every provider can have their own operation. 
       width="300" 
       height="169"
       provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{r: '0:100'}"
+      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ roundCorner: '0:100'}"
     />
     <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
       Rounding values
