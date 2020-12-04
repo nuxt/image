@@ -19,12 +19,11 @@ export default {
       type: [String, Number],
       default: 'auto'
     },
-    // TODO: rename lazy to loading
     loading: {
-      type: String,
-      default: undefined,
+      type: [String, Boolean],
+      default: true,
       validator (value) {
-        return !value || ['lazy', 'eager', 'auto'].includes(value)
+        return typeof value === 'boolean' || ['lazy', 'eager'].includes(value)
       }
     },
     fallbackFormat: {
@@ -79,12 +78,12 @@ export default {
         height: undefined,
         placeholder: undefined
       },
-      lazyState: this.loading === 'lazy' ? LazyState.IDLE : LazyState.LOADED
+      lazyState: this.isLazy ? LazyState.IDLE : LazyState.LOADED
     }
   },
   computed: {
     isLazy () {
-      return this.loading === 'lazy'
+      return this.loading === true || this.loading === 'lazy'
     },
     modifiers () {
       return {
@@ -275,7 +274,9 @@ export default {
       class: ['__nim_o'],
       style: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        margin: 0,
+        padding: 0
       },
       attrs: {
         src: this.lazyState === LazyState.IDLE ? undefined : this.generatedSrc,
