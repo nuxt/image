@@ -10,7 +10,7 @@ export default theme({
     '@nuxt/image'
   ],
   image: {
-    accept: [],
+    accept: ['images.unsplash.com'],
     local: {
       dir: `~~/static`
     },
