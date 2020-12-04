@@ -39,9 +39,11 @@ export default {
 }
 ```
 
-That's it ✨!
+<alert type="success">
 
-Now you can start using [`<nuxt-img>`](/nuxt-image) and [`<nuxt-picture>`](/nuxt-picture) components in your project.
+That's it! You can can start using [`<nuxt-img>`](/nuxt-img) and [`<nuxt-picture>`](/nuxt-picture) components in your Nuxt app ✨
+
+</alert>
 
 ## Configure
 
