@@ -353,8 +353,8 @@ export default {
 
     const ratioSVG = isInherit ? h('svg', {
       attrs: {
-        width: this.meta.width,
-        height: this.meta.height,
+        width: getInt(this.meta.width || this.width),
+        height: getInt(this.meta.height || this.height),
         xmlns: 'http://www.w3.org/2000/svg',
         version: '1.1'
       }
