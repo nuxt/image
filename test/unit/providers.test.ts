@@ -5,6 +5,7 @@ import cloudinary from '~/src/providers/cloudinary'
 import twicpics from '~/src/providers/twicpics'
 import fastly from '~/src/providers/fastly'
 import imgix from '~/src/providers/imgix'
+import imagekit from '~/src/providers/imagekit'
 
 const images = [
   {
@@ -13,7 +14,8 @@ const images = [
     cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png?twic=v1/' },
     fastly: { url: '/test.png?' },
-    imgix: { url: '/test.png?' }
+    imgix: { url: '/test.png?' },
+    imagekit: { url: '/test.png?' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -21,7 +23,8 @@ const images = [
     cloudinary: { url: '/f_auto,q_auto,w_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
-    imgix: { url: '/test.png?w=200' }
+    imgix: { url: '/test.png?w=200' },
+    imagekit: { url: '/test.png?tr=w-200' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -29,7 +32,8 @@ const images = [
     cloudinary: { url: '/f_auto,q_auto,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
-    imgix: { url: '/test.png?h=200' }
+    imgix: { url: '/test.png?h=200' },
+    imagekit: { url: '/test.png?tr=h-200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -37,7 +41,8 @@ const images = [
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
-    imgix: { url: '/test.png?w=200&h=200' }
+    imgix: { url: '/test.png?w=200&h=200' },
+    imagekit: { url: '/test.png?tr=w-200,h-200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -45,7 +50,8 @@ const images = [
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
-    imgix: { url: '/test.png?w=200&h=200&fit=fill' }
+    imgix: { url: '/test.png?w=200&h=200&fit=fill' },
+    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -53,7 +59,8 @@ const images = [
     cloudinary: { url: '/f_jpeg,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
-    imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' }
+    imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
+    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' }
   }
 ]
 
@@ -167,6 +174,28 @@ describe('Providers', () => {
     for (const image of images) {
       const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
       expect(generated).toMatchObject(image.imgix)
+    }
+  })
+
+  test('imagekit', async () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
+    const providerData = imagekit(providerOptions)
+
+    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
+
+    const isRuntimeExists = await fs.exists(providerData.runtime)
+    expect(isRuntimeExists).toEqual(true)
+
+    const runtime = (await import(providerData.runtime)).default
+    expect(typeof runtime).toEqual('object')
+    expect(typeof runtime.getImage).toEqual('function')
+
+    for (const image of images) {
+      const generated = runtime.getImage.call(null, ...image.args, providerData.runtimeOptions)
+      expect(generated).toMatchObject(image.imagekit)
     }
   })
 })
