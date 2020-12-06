@@ -2,9 +2,9 @@ import { RuntimeProvider, ImageModifiers } from 'types'
 import { createMapper, createOperationsGenerator } from '~image/utils'
 
 const fits = createMapper({
-  fill: 'fill',
-  inside: 'pad',
-  outside: 'lpad',
+  fill: 'resize',
+  inside: 'contain-max',
+  outside: 'contain-min',
   cover: 'cover',
   contain: 'contain',
   missingValue: 'cover'
@@ -12,7 +12,17 @@ const fits = createMapper({
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
-    format: 'format'
+    format: 'format',
+    quality: 'quality',
+    background: 'background'
+  },
+  valueMap: {
+    format (value) {
+      if (value === 'jpg') {
+        return 'jpeg'
+      }
+      return value
+    }
   },
   joinWith: '/',
   formatter: (key, value) => `${key}=${value}`
@@ -20,15 +30,16 @@ const operationsGenerator = createOperationsGenerator({
 
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const { width, height, fit, ...providerModifiers } = modifiers
+    const { width, height, fit, format, ...providerModifiers } = modifiers
 
     if (width || height) {
       providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
     }
     const operations = operationsGenerator(providerModifiers)
+    const twicpicsOperations = (operations) ? '?twic=v1/' + operations : ''
 
     return {
-      url: options.baseURL + src + '?twic=v1/' + operations
+      url: options.baseURL + src + twicpicsOperations
     }
   }
 }

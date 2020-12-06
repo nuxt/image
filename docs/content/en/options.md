@@ -145,7 +145,7 @@ export default {
   image: {
     provider: 'twicpics',
     twicpics: {
-      baseURL: 'https://i5acur1u.twic.pics/'
+      baseURL: 'https://nuxt-demo.twic.pics'
     }
   }
 }
