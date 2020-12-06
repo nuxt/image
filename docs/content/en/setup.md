@@ -15,20 +15,18 @@ Add `@nuxt/image` dependency to your project:
   <code-block label="Yarn" active>
 
   ```bash
-  yarn add --dev @nuxt/image
+  yarn add @nuxt/image
   ```
 
   </code-block>
   <code-block label="NPM">
 
   ```bash
-  npm install --save-dev @nuxt/image
+  npm install @nuxt/image
   ```
 
   </code-block>
 </code-group>
-
-
 
 
 Next, you need to register module inside `nuxt.config`:
@@ -41,9 +39,11 @@ export default {
 }
 ```
 
-That's it ✨!
+<alert type="success">
 
-Now you can start using [`<nuxt-img>`](/nuxt-image) and [`<nuxt-picture>`](/nuxt-picture) components in your project.
+That's it! You can can start using [`<nuxt-img>`](/nuxt-img) and [`<nuxt-picture>`](/nuxt-picture) components in your Nuxt app ✨
+
+</alert>
 
 ## Configure
 

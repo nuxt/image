@@ -44,6 +44,9 @@ export function createImage (context, { providers, defaultProvider, presets, int
   }
 
   function parseImage (src: string, options: ImageOptions = {} as any) {
+    if (typeof src !== 'string') {
+      throw new TypeError(`src must be a string (received ${typeof src}: ${JSON.stringify(src)})`)
+    }
     const { modifiers = {} as ImageModifiers } = options
     const isRemote = isRemoteUrl(src)
 

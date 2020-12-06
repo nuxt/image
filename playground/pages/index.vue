@@ -17,7 +17,20 @@
       <NuxtImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
 
       <h2>PNG image on Cloudinary</h2>
-      <NuxtImg provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" />
+      <NuxtImg provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main" />
+      <NuxtImg provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main" width="200" height="200" fit="cropping" />
+      <NuxtImg
+        provider="cloudinary"
+        src="/remote/nuxt-org/blog/going-full-static/main"
+        width="200"
+        height="200"
+        fit="thumbnail"
+        :operations="{ roundCorner: 'max' }"
+      />
+
+      <h2>JPEG image on TwicPics</h2>
+      <NuxtImg provider="twicpics" src="/football.jpg" />
+      <NuxtImg provider="twicpics" src="/football.jpg" width="100" height="100" quality="1" />
 
       <h2>JPEG image on TwicPics</h2>
       <NuxtImg provider="twicpics" src="/football.jpg" />
@@ -25,6 +38,9 @@
 
       <h2>JPEG image on Fastly</h2>
       <NuxtImg provider="fastly" src="/image.jpg" />
+
+      <h2>JPEG image on Imagekit</h2>
+      <NuxtImg provider="imagekit" src="/img/plant.jpeg" />
     </div>
   </div>
 </template>

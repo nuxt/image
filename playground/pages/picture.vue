@@ -11,7 +11,10 @@
       <NuxtPicture placeholder src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
 
       <h2>PNG image on Cloudinary</h2>
-      <NuxtPicture width="800" placeholder layout="responsive" provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" />
+      <NuxtPicture width="800" placeholder provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main" />
+
+      <h2>JPEG image on TwicPics</h2>
+      <NuxtPicture width="900" placeholder provider="twicpics" src="/football.jpg" />
 
       <h2>JPEG image on TwicPics</h2>
       <NuxtPicture width="900" placeholder provider="twicpics" src="/football.jpg" />

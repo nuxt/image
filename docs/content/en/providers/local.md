@@ -11,7 +11,7 @@ Internally nuxt image uses [ipx](https://github.com/nuxt-contrib/ipx) to modify 
 - `dir`: The root directory of the all images. By default nuxt image looks `static` dir to find original images, 
 - `clearCache`: The ipx has a caching stategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using `clearCache` option in provide options. By default this cron job is disabled.
 - `cacheDir`: The directory to store the cached images.
-- `sharp`: Modify default behavior of image opetimizer. Note that if you change this option, you need to clear ipx cache.
+- `sharp`: Modify default behavior of image optimizer. Note that if you change this option, you need to clear ipx cache.
 
 ```js{}[nuxt.config.js]
 export default {

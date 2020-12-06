@@ -1,6 +1,8 @@
 import { RuntimeProvider, ImageModifiers } from 'types'
 import { createOperationsGenerator } from '~image/utils'
 
+const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
+
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
     fit: 'c',
@@ -8,7 +10,22 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     format: 'f',
     quality: 'q',
-    background: 'b'
+    background: 'b',
+    rotate: 'a',
+    roundCorner: 'r',
+    gravity: 'g',
+    effect: 'e',
+    color: 'co',
+    flags: 'fl',
+    dpr: 'dpr',
+    opacity: 'o',
+    overlay: 'l',
+    underlay: 'u',
+    transformation: 't',
+    zoom: 'z',
+    colorSpace: 'cs',
+    customFunc: 'fn',
+    density: 'dpi'
   },
   valueMap: {
     fit: {
@@ -23,11 +40,29 @@ const operationsGenerator = createOperationsGenerator({
       cropping: 'crop',
       coverLimit: 'limit'
     },
-    background (value) {
-      if (value.startsWith('#')) {
-        return value.replace('#', 'rgb_')
-      }
-      return value
+    background (value: string) {
+      return convertHextoRGBFormat(value)
+    },
+    color (value: string) {
+      return convertHextoRGBFormat(value)
+    },
+    gravity: {
+      auto: 'auto',
+      subject: 'auto:subject',
+      face: 'face',
+      sink: 'sink',
+      faceCenter: 'face:center',
+      multipleFaces: 'faces',
+      multipleFacesCenter: 'faces:center',
+      north: 'north',
+      northEast: 'north_east',
+      northWest: 'north_west',
+      west: 'west',
+      southWest: 'south_west',
+      south: 'south',
+      southEast: 'south_east',
+      east: 'east',
+      center: 'center'
     }
   },
   joinWith: ',',

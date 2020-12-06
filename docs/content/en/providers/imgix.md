@@ -5,7 +5,7 @@ position: 13
 category: Providers
 ---
 
-Integration between [imgix](https://docs.imgix.com/) and the image module. To use this provider you just need to specify the base url of your service in imgix.
+Integration between [Imgix](https://docs.imgix.com/) and the image module. To use this provider you just need to specify the base url of your service in Imgix.
 
 ```js{}[nuxt.config.js]
 export default {
