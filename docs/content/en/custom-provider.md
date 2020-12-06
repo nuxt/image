@@ -5,7 +5,7 @@ position: 6
 category: Guide
 ---
 
-Although the image module offers multiple internal providers, you my want/need to write your custome provider.  
+Although the image module offers multiple internal providers, you may want/need to write your custome provider.  
 Image provider have three different parts with specific roles.
 
 ## Provider Main
