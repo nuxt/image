@@ -38,7 +38,7 @@ Specify height of the image.
 - On `layout != "responsive"`
   - When both `width` and `height` are present and values isn't equal to `auto`, this value will use to resize the image.
   - On the server-side rendering when the value equals to `auto` and width is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
-  - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper with based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
+  - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper height based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
   - On the server-side rendering the image will resize using calculated `height`
 
 ### Provider
