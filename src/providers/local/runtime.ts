@@ -1,5 +1,5 @@
-import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator, isRemoteUrl } from '~image/utils'
+import { RuntimeProviderGetImage } from 'src'
+import { createOperationsGenerator, isRemoteUrl, joinURL } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -11,7 +11,7 @@ const operationsGenerator = createOperationsGenerator({
     background: 'b'
   },
   valueMap: {
-    background (value) {
+    background (value = '') {
       if (value.startsWith('#')) {
         return value.replace('#', 'hex_')
       }
@@ -22,26 +22,22 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}_${value}`
 })
 
-export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, options: any) {
-    modifiers = {
-      ...modifiers
-    }
-    const format = modifiers.format || '_'
-    delete modifiers.format
+export const getImage: RuntimeProviderGetImage = (src, { modifiers, baseURL }) => {
+  const format = modifiers.format || '_'
+  delete modifiers.format
 
-    if (modifiers.width && modifiers.height) {
-      modifiers.resize = `${modifiers.width}_${modifiers.height}`
-      delete modifiers.width
-      delete modifiers.height
-    }
-    src = isRemoteUrl(src) ? src : (options.baseURL || '') + src
+  if (modifiers.width && modifiers.height) {
+    modifiers.resize = `${modifiers.width}_${modifiers.height}`
+    delete modifiers.width
+    delete modifiers.height
+  }
 
-    const operationsString = operationsGenerator(modifiers) || '_'
+  src = isRemoteUrl(src) ? src : joinURL('http://localhost:3000', src)
 
-    return {
-      url: `/_image/local/remote/${format}/${operationsString}/${src}`,
-      isStatic: true
-    }
+  const operationsString = operationsGenerator(modifiers) || '_'
+
+  return {
+    url: joinURL(baseURL, 'default', format, operationsString, encodeURIComponent(src)),
+    isStatic: true
   }
 }

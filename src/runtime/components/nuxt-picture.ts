@@ -1,4 +1,4 @@
-import { renderTag, getInt } from './utils'
+import { renderTag, getInt } from '../utils'
 import { props } from './nuxt-img'
 
 export enum LazyState {
@@ -6,8 +6,9 @@ export enum LazyState {
   LOADING = 'loading',
   LOADED = 'loaded'
 }
+
 // @vue/component
-export default {
+export const NuxtPicture = {
   name: 'NuxtPicture',
   props: {
     ...props,
@@ -28,7 +29,7 @@ export default {
     },
     fallbackFormat: {
       type: String,
-      default: null
+      required: false
     },
     placeholder: {
       type: [Boolean, String],

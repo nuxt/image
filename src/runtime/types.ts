@@ -1,36 +1,7 @@
-export interface AllowList {
-  allow: (value: string) => boolean;
-  accept: (value: string) => boolean;
-  reject: (value: string) => boolean;
-}
-
-// -- $img() utility --
-
-export interface CreateImageOptions {
-  providers: {
-    [name: string]: {
-      defaults: any
-      provider: RuntimeProvider
-    }
-  }
-  presets: ImagePreset[]
-  defaultProvider: string
-  intersectOptions: object
-  responsiveSizes: number[]
-  allow: AllowList
-}
 
 export interface $Image {
   (source: string, options: ImageOptions): void
   [preset: string]: (source: string) => any
-}
-
-// -- generic --
-
-export interface ImagePreset {
-  name: string
-  modifiers: any
-  provider?: string
 }
 
 export interface ImageModifiers {
@@ -38,14 +9,15 @@ export interface ImageModifiers {
   height: number
   fit: string
   format: string
-  [key: string]: any;
+  [key: string]: any
 }
 
 export interface ImageOptions {
-  size: String | Partial<ImageSize>[]
-  provider: string,
-  preset: string,
-  modifiers: ImageModifiers
+  size?: String | Partial<ImageSize>[]
+  provider?: string,
+  preset?: string,
+  modifiers?: ImageModifiers
+  [key: string]: any
 }
 
 export interface ImageSize {
@@ -56,13 +28,11 @@ export interface ImageSize {
   url: string;
 }
 
-// -- Provider --
+export type RuntimeProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
 
 export interface RuntimeProvider {
-  // Apply provider base
-  // Add additional params (like signuture)
-  // Do modifier mapping
-  getImage: (src: string, modifiers: ImageModifiers, providerOptions: any) => RuntimeImage
+  defaults?: any
+  getImage: RuntimeProviderGetImage
 }
 
 export interface RuntimeImage {
@@ -72,11 +42,8 @@ export interface RuntimeImage {
 }
 
 export interface RuntimeImageInfo {
-  // width of image in pixels
   width: number,
-  // height of image in pixels
   height: number,
-  // placeholder (base64 or url)
   placeholder?: string,
 }
 
@@ -94,5 +61,21 @@ export interface OperationGeneratorConfig {
   joinWith?: string
   valueMap?: {
     [key: string]: RuntimeOperationMapper
+  }
+}
+
+declare module '@nuxt/types' {
+  interface Context {
+    $img: $Image
+  }
+
+  interface NuxtAppOptions {
+    $img: $Image
+  }
+}
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $img: $Image
   }
 }

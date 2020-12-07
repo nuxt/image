@@ -1,46 +1,45 @@
-import { getInt } from './utils'
+import { getInt } from '../utils'
 
 export const props = {
   src: {
     type: [String, Object],
-    default: '',
     required: true
   },
   provider: {
     type: String,
-    default: null
+    required: false
   },
   preset: {
     type: String,
-    default: null
+    required: false
   },
   width: {
     type: [String, Number],
-    default: ''
+    required: false
   },
   height: {
     type: [String, Number],
-    default: ''
+    required: false
   },
   sizes: {
     type: [String, Array],
-    default: ''
+    required: false
   },
   format: {
     type: String,
-    default: null
+    required: false
   },
   quality: {
     type: [Number, String],
-    default: null
+    required: false
   },
   background: {
     type: String,
-    default: null
+    required: false
   },
   fit: {
     type: String,
-    default: null
+    required: false
   },
   operations: {
     type: Object,
@@ -53,12 +52,12 @@ export const props = {
   // `<img>` attributes
   alt: {
     type: String,
-    default: ''
+    required: false
   }
 }
 
 // @vue/component
-export default {
+export const NuxtImg = {
   name: 'NuxtImg',
   props,
   async fetch () {

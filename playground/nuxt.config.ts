@@ -2,7 +2,7 @@ export default {
   components: true,
   target: 'server',
   modules: [
-    '../src/index.ts'
+    '../src/module.ts'
   ],
   buildModules: [
     '@nuxt/typescript-build'

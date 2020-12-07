@@ -1,6 +1,6 @@
-import { ProviderFactory } from 'types'
+import { ProviderFactory } from 'src'
 
-export default <ProviderFactory> function (providerOptions) {
+export const cloudinary = <ProviderFactory> function (providerOptions) {
   return {
     runtime: require.resolve('./runtime'),
     runtimeOptions: providerOptions

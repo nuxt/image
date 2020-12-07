@@ -1,4 +1,9 @@
-import { OperationGeneratorConfig } from 'types'
+import type { OperationGeneratorConfig } from '../types'
+export { joinURL } from '@nuxt/ufo'
+
+export default function imageFetch (url: string) {
+  return fetch(cleanDoubleSlashes(url))
+}
 
 export function getInt (x): number | undefined {
   if (typeof x === 'number') {
@@ -14,12 +19,12 @@ export function isRemoteUrl (url) {
   return !!url.match('^https?://')
 }
 
-export function getFileExtension (url: string) {
+export function getFileExtension (url: string = '') {
   const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
   return extension
 }
 
-export function cleanDoubleSlashes (path) {
+export function cleanDoubleSlashes (path: string = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
 

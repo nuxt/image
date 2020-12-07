@@ -1,5 +1,5 @@
-import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator } from '~image/utils'
+import type { RuntimeProviderGetImage } from 'src'
+import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -20,11 +20,9 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const operations = operationsGenerator(modifiers)
-    return {
-      url: options.baseURL + src + '?' + operations
-    }
+export const getImage: RuntimeProviderGetImage = (src, { modifiers, baseURL }) => {
+  const operations = operationsGenerator(modifiers)
+  return {
+    url: baseURL + src + '?' + operations
   }
 }

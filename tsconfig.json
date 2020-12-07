@@ -1,25 +1,19 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ESNext",
-    "module": "CommonJS",
-    "esModuleInterop": true,
     "moduleResolution": "Node",
-    "outDir": "dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "lib" : [
+      "DOM"
+    ],
     "types": [
       "@nuxt/types",
-      "@types/node",
-      "image-meta",
-      "./types"
-    ],
-    "paths": {
-      "~image/*": ["src/runtime/*"]
-    }
+      "@types/node"
+    ]
   },
   "include": [
     "src"
-  ],
-  "exclude": [
-    "src/runtime"
   ]
 }
