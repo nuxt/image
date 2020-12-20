@@ -39,6 +39,16 @@ export function createImage (context, { providers, defaultProvider, presets, int
     return map
   }, {})
 
+  if ('app' in context) {
+    context.app.router.afterEach(() => {
+      if (!context.nuxtState) {
+        context.beforeNuxtRender(({ nuxtState }) => {
+          nuxtState.imagePayload = nuxtState.data[0]
+        })
+      }
+    })
+  }
+
   function getProvider (name: string) {
     const provider = providers[name]
     if (!provider) {
@@ -83,9 +93,9 @@ export function createImage (context, { providers, defaultProvider, presets, int
      * Handle full static render
      */
     // @ts-ignore
-    if (typeof window !== 'undefined' && typeof window.$nuxt._pagePayload !== 'undefined') {
+    if (global.$nuxt) {
       // @ts-ignore
-      const jsonPData = window.$nuxt._pagePayload.data[0]
+      const jsonPData = global.$nuxt.context.nuxtState.imagePayload
       if (jsonPData.nuxtImageMap[providerUrl]) {
         // Hydration with hash
         image.url = jsonPData.nuxtImageMap[providerUrl]
