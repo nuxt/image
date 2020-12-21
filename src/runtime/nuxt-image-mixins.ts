@@ -49,7 +49,7 @@ export default {
     // `<img>` attrubutes
     alt: {
       type: String,
-      default: ''
+      default: undefined
     },
     referrerpolicy: {
       type: String,
@@ -121,7 +121,7 @@ export default {
       return 0
     },
     imgAttributes () {
-      const alt = this.alt ? this.alt : this.src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+      const alt = this.alt === undefined ? this.src.split(/[?#]/).shift().split('/').pop().split('.').shift() : this.alt
       return {
         alt,
         referrerpolicy: this.referrerpolicy,
