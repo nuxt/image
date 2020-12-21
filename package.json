@@ -1,12 +1,16 @@
 {
   "name": "@nuxt/image",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
-  
+  "files": [
+    "dist",
+    "templates",
+    "types"
+  ],
   "scripts": {
     "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",
     "clean": "rimraf dist",

@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/nuxt/image/compare/v0.0.4...v0.0.5) (2020-12-21)
+
+
+### Features
+
+* allow overiding sharp options ([7df04ca](https://github.com/nuxt/image/commit/7df04ca11eca53ef60074a2fb4aa94ac84870d13))
+
+
+### Bug Fixes
+
+* **package:** removed file filter ([78a31c5](https://github.com/nuxt/image/commit/78a31c5b7a421e8dad4aaef3d2ae623fe787e5eb))
+* **payload:** async hydrated components have access to image payload ([2849ed3](https://github.com/nuxt/image/commit/2849ed3f1e8e271878f8da3c53a526227b9e1129))
+* do not render image without src ([cbeada1](https://github.com/nuxt/image/commit/cbeada1d77244fc234b2a17e1fd2060c72ac3628))
+* improve error readability ([#79](https://github.com/nuxt/image/issues/79)) ([763f215](https://github.com/nuxt/image/commit/763f2152654986d8976f8cefe33364f591ada540))
+* **cloudinary:** fit types, auto format & quality  ([#76](https://github.com/nuxt/image/issues/76)) ([74ef445](https://github.com/nuxt/image/commit/74ef445b5ffd740e28722fd68a45192234fc52cc))
+* reduce placeholders quality ([b20a8f9](https://github.com/nuxt/image/commit/b20a8f98c91ebdcf0a0f1c66bcb21ee13fc79833))
+
 ### [0.0.4](https://github.com/nuxt/image/compare/v0.0.2...v0.0.4) (2020-11-10)
 
 
