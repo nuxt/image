@@ -1,5 +1,5 @@
 import type { OperationGeneratorConfig } from '../types'
-export { joinURL } from '@nuxt/ufo'
+export { joinURL } from 'ufo'
 
 export default function imageFetch (url: string) {
   return fetch(cleanDoubleSlashes(url))

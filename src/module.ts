@@ -68,7 +68,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   // Transpile and alias image src
   nuxt.options.alias['~image'] = resolve(__dirname, 'runtime')
-  nuxt.options.build.transpile.push(pkgDir, 'allowlist', 'defu', '@nuxt/ufo')
+  nuxt.options.build.transpile.push(pkgDir, 'allowlist', 'defu', 'ufo')
 
   addServerMiddleware({ path: options.local.baseURL, handle: createMiddleware(options.local) })
 

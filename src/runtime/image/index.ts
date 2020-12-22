@@ -1,6 +1,6 @@
 import { allowList, Matcher } from 'allowlist'
 import type { AllowlistOptions } from 'allowlist'
-import { joinURL, hasProtocol } from '@nuxt/ufo'
+import { hasProtocol } from 'ufo'
 import type { RuntimeProvider, ImageOptions, RuntimeImage } from '../types'
 import { isRemoteUrl } from '../utils'
 import { createObserver } from '../utils/observer'
@@ -154,9 +154,9 @@ function parseImage (ctx: ImageCTX, input: string, options: ImageOptions): Parse
 
   const image = provider.getImage(input, { ...defaults, ...options })
 
-  // Add base
+  // TODO: Add base
   // if (!hasProtocol(image.url)) {
-  // image.url = joinURL(, encodeURIComponent(image.url))
+  //   image.url = joinURL('/', image.url)
   // }
 
   return {

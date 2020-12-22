@@ -5,7 +5,7 @@ import stream from 'stream'
 import { join } from 'upath'
 import { ModuleOptions } from 'src/module'
 import fetch from 'node-fetch'
-import { joinURL, hasProtocol } from '@nuxt/ufo'
+import { joinURL, hasProtocol } from 'ufo'
 import { getFileExtension } from './runtime/utils'
 import { hash, logger } from './utils'
 
