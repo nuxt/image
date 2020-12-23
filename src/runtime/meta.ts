@@ -1,7 +1,7 @@
-import type { RuntimeImageInfo } from '../types/image'
+import type { ImageInfo } from '../types/image'
 import type { ImageCTX } from './image'
 
-export async function imageMeta (ctx: ImageCTX, url): Promise<RuntimeImageInfo> {
+export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
   const cache = getCache(ctx)
 
   const cacheKey = 'image:meta:' + url
@@ -23,7 +23,7 @@ export async function imageMeta (ctx: ImageCTX, url): Promise<RuntimeImageInfo> 
   return meta
 }
 
-async function _imageMeta (url): Promise<RuntimeImageInfo> {
+async function _imageMeta (url): Promise<ImageInfo> {
   if (process.client) {
     if (typeof Image === 'undefined') {
       throw new TypeError('Image not supported')

@@ -1,4 +1,4 @@
-import type { AllowlistOptions, Matcher } from 'allowlist'
+import type { AllowlistOptions } from 'allowlist'
 
 export interface ImageModifiers {
   width: number
@@ -20,11 +20,11 @@ export interface ImageOptions {
   size?: String | Partial<ImageSize>[]
   provider?: string,
   preset?: string,
-  modifiers?: ImageModifiers
+  modifiers?: Partial<ImageModifiers>
   [key: string]: any
 }
 
-export interface RuntimeImageInfo {
+export interface ImageInfo {
   width: number,
   height: number,
   placeholder?: string,
@@ -33,14 +33,21 @@ export interface RuntimeImageInfo {
 export interface RuntimeImage {
   url: string,
   isStatic?: boolean,
-  getMeta?: () => Promise<RuntimeImageInfo>
+  getMeta?: () => Promise<ImageInfo>
+}
+
+export type ProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
+
+export interface RuntimeProvider {
+  defaults?: any
+  getImage: ProviderGetImage
 }
 
 export interface CreateImageOptions {
   providers: {
     [name: string]: {
       defaults: any,
-      provider: any
+      provider: RuntimeProvider
     }
   }
   presets: { [name: string]: ImageOptions }
@@ -53,7 +60,7 @@ export interface CreateImageOptions {
 export interface ResolvedImage {
   input: string
   image: RuntimeImage
-  provider: any
+  provider: RuntimeProvider
   preset: ImageOptions
 }
 
@@ -62,19 +69,19 @@ export interface $Image {
   [preset: string]: (source: string) => any
 }
 
-export interface RuntimePlaceholder extends RuntimeImageInfo {
+export interface RuntimePlaceholder extends ImageInfo {
   url: string;
 }
 
-export type RuntimeOperationFormatter = (key: string, value: string) => string
+export type OperationFormatter = (key: string, value: string) => string
 
-export type RuntimeOperationMapper = { [key: string]: string | false } | ((key: string) => string)
+export type OperationMapper = { [key: string]: string | false } | ((key: string) => string)
 
 export interface OperationGeneratorConfig {
-  keyMap?: RuntimeOperationMapper
-  formatter?: RuntimeOperationFormatter
+  keyMap?: OperationMapper
+  formatter?: OperationFormatter
   joinWith?: string
   valueMap?: {
-    [key: string]: RuntimeOperationMapper
+    [key: string]: OperationMapper
   }
 }

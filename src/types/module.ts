@@ -1,9 +1,22 @@
 import type { ImageOptions } from './image'
-import type { InputProvider } from './provider'
+
+export interface Provider {
+  runtime: string
+  runtimeOptions: any
+}
+
+export type ProviderFactory = (options: any) => Provider
+
+export interface InputProvider {
+  name?: string
+  provider?: string | ProviderFactory
+  options?: any
+  baseURL?: string
+}
 
 export interface ModuleOptions {
   provider: string
-  presets: ImageOptions[]
+  presets: Partial<ImageOptions>[]
   local: {
     baseURL: string
     dir: string
@@ -17,5 +30,12 @@ export interface ModuleOptions {
   providers: { [name: string]: InputProvider }
   accept: any
   intersectOptions: object
+
+  cloudinary: InputProvider,
+  fastly: InputProvider,
+  imagekit: InputProvider,
+  imgix: InputProvider,
+  twicpics: InputProvider,
+
   [provider: string]: InputProvider | any
 }

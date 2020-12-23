@@ -1,10 +1,19 @@
 import { normalize } from 'upath'
-import type { ModuleOptions, ImageProvider, ProviderFactory, InputProvider } from './types'
+import type { ModuleOptions, ProviderFactory, InputProvider } from './types'
 import { hash } from './utils'
 import * as PROVIDERS from './providers'
 
-export function resolveProviders (nuxt, options: ModuleOptions): ImageProvider[] {
-  const providers: ImageProvider[] = []
+export interface ImageModuleProvider {
+  name: string
+  importName: string
+  options: any
+  provider: ProviderFactory
+  runtime: string
+  runtimeOptions: any
+}
+
+export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProvider[] {
+  const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
     if (PROVIDERS[key]) {
@@ -19,7 +28,7 @@ export function resolveProviders (nuxt, options: ModuleOptions): ImageProvider[]
   return providers
 }
 
-export function resolveProvider (nuxt: any, key: string, input: InputProvider): ImageProvider {
+export function resolveProvider (nuxt: any, key: string, input: InputProvider): ImageModuleProvider {
   if (!input.name) {
     input.name = key
   }
@@ -40,7 +49,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
 
   // TODO: Check existence of runtime
 
-  return <ImageProvider> {
+  return <ImageModuleProvider> {
     ...input,
     runtime: normalize(runtime),
     importName: `${key}Runtime$${hash(runtime, 4)}`,

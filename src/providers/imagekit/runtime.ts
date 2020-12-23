@@ -1,4 +1,4 @@
-import type { RuntimeProviderGetImage } from 'src'
+import type { ProviderGetImage } from 'src'
 import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
@@ -29,7 +29,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}-${value}`
 })
 
-export const getImage: RuntimeProviderGetImage = (src, { modifiers, baseURL }) => {
+export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
   let operations = operationsGenerator(modifiers)
   operations = operations.replace('c-pad_resize', 'cm-pad_resize')
   return {
