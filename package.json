@@ -17,8 +17,7 @@
     "templates"
   ],
   "scripts": {
-    "build": "yarn clean && siroc build",
-    "clean": "rimraf dist",
+    "build": "siroc build",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
@@ -57,7 +56,6 @@
     "jsdom-global": "latest",
     "nuxt-edge": "latest",
     "playwright": "latest",
-    "rimraf": "latest",
     "siroc": "latest",
     "standard-version": "latest",
     "ts-loader": "latest",
