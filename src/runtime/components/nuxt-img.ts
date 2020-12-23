@@ -60,6 +60,15 @@ export const props = {
 export const NuxtImg = {
   name: 'NuxtImg',
   props,
+  data () {
+    return {
+      meta: {
+        src: undefined,
+        width: undefined,
+        height: undefined
+      }
+    }
+  },
   async fetch () {
     /*
     ** We only set the width or/and height if:
@@ -128,15 +137,6 @@ export const NuxtImg = {
       preset: this.preset
     })
     this.meta.src = url
-  },
-  data () {
-    return {
-      meta: {
-        src: undefined,
-        width: undefined,
-        height: undefined
-      }
-    }
   },
   computed: {
     generatedAlt () {

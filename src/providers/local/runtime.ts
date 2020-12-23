@@ -1,5 +1,5 @@
 import { RuntimeProviderGetImage } from 'src'
-import { createOperationsGenerator, isRemoteUrl, joinURL } from '~image'
+import { createOperationsGenerator, isRemoteUrl, joinURL } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

@@ -1,5 +1,5 @@
 import type { RuntimeProviderGetImage } from 'src'
-import { createMapper, createOperationsGenerator } from '~image'
+import { createMapper, createOperationsGenerator } from '@nuxt/image/runtime'
 
 const fits = createMapper({
   fill: 'resize',

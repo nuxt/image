@@ -1,6 +1,6 @@
-import type { ImageSize, ImageOptions } from '..'
-import { getFileExtension } from '../utils'
-import type { ImageCTX } from './index'
+import type { ImageSize, ImageOptions } from '../types'
+import { getFileExtension } from './utils'
+import type { ImageCTX } from './image'
 
 export type InputSizes = Partial<ImageSize>[] | string | boolean
 

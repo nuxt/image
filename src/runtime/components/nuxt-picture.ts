@@ -61,16 +61,6 @@ export const NuxtPicture = {
       default: false
     }
   },
-  async fetch () {
-    await this.fetchMeta()
-
-    // Ensure images sizes are calculate in static generation process
-    // and files are store in output direcotry
-    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
-      // eslint-disable-next-line no-unused-expressions
-      this.sources
-    }
-  },
   data () {
     return {
       error: '',
@@ -80,6 +70,16 @@ export const NuxtPicture = {
         placeholder: undefined
       },
       lazyState: this.isLazy ? LazyState.IDLE : LazyState.LOADED
+    }
+  },
+  async fetch () {
+    await this.fetchMeta()
+
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
+    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
+      // eslint-disable-next-line no-unused-expressions
+      this.sources
     }
   },
   computed: {

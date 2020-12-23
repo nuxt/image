@@ -1,7 +1,9 @@
-
-export interface $Image {
-  (source: string, options: ImageOptions): void
-  [preset: string]: (source: string) => any
+export interface ImageSize {
+  width: number;
+  media: string;
+  breakpoint: number;
+  format: string;
+  url: string;
 }
 
 export interface ImageModifiers {
@@ -20,19 +22,15 @@ export interface ImageOptions {
   [key: string]: any
 }
 
-export interface ImageSize {
-  width: number;
-  media: string;
-  breakpoint: number;
-  format: string;
-  url: string;
+export interface $Image {
+  (source: string, options: ImageOptions): void
+  [preset: string]: (source: string) => any
 }
 
-export type RuntimeProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
-
-export interface RuntimeProvider {
-  defaults?: any
-  getImage: RuntimeProviderGetImage
+export interface RuntimeImageInfo {
+  width: number,
+  height: number,
+  placeholder?: string,
 }
 
 export interface RuntimeImage {
@@ -41,10 +39,11 @@ export interface RuntimeImage {
   getMeta?: () => Promise<RuntimeImageInfo>
 }
 
-export interface RuntimeImageInfo {
-  width: number,
-  height: number,
-  placeholder?: string,
+export type RuntimeProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
+
+export interface RuntimeProvider {
+  defaults?: any
+  getImage: RuntimeProviderGetImage
 }
 
 export interface RuntimePlaceholder extends RuntimeImageInfo {

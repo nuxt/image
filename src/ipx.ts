@@ -1,4 +1,4 @@
-export function createMiddleware (options) {
+export function createIPXMiddleware (options) {
   const { IPX, IPXMiddleware } = require('ipx')
 
   const ipx = new IPX({

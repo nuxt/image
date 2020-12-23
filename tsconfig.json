@@ -11,7 +11,10 @@
     "types": [
       "@nuxt/types",
       "@types/node"
-    ]
+    ],
+    "paths": {
+      "@nuxt/image/*": [ "src/*" ],
+    }
   },
   "include": [
     "src"

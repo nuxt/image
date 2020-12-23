@@ -35,13 +35,14 @@ export function createObserver (intersectionOptions: object) {
   }
 }
 
-function intersectionObserver (onMatch, options) {
-  const observer = (typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(onMatch, {
+function intersectionObserver (onMatch, options): IntersectionObserver | undefined {
+  if (typeof IntersectionObserver === 'undefined') {
+    return
+  }
+  return new IntersectionObserver(onMatch, {
     rootMargin: '50px',
     ...options
-  }) : {}) as IntersectionObserver
-
-  return observer
+  })
 }
 
 function printObserver (onMatch) {

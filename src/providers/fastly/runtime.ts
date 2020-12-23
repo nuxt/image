@@ -1,5 +1,5 @@
 import type { RuntimeProviderGetImage } from 'src'
-import { createOperationsGenerator } from '~image'
+import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
   valueMap: {

@@ -2,8 +2,7 @@ import { allowList, Matcher } from 'allowlist'
 import type { AllowlistOptions } from 'allowlist'
 import { hasProtocol } from 'ufo'
 import type { RuntimeProvider, ImageOptions, RuntimeImage } from '../types'
-import { isRemoteUrl } from '../utils'
-import { createObserver } from '../utils/observer'
+import { createObserver } from './observer'
 import { imageMeta } from './meta'
 import { getSizes, InputSizes } from './sizes'
 
@@ -125,7 +124,7 @@ async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
     Object.assign(meta, await image.getMeta())
   } else {
     const internalUrl = ctx.nuxtContext.ssrContext ? ctx.nuxtContext.ssrContext.internalUrl : ''
-    const absoluteUrl = isRemoteUrl(image.url) ? image.url : internalUrl + image.url
+    const absoluteUrl = hasProtocol(image.url) ? image.url : internalUrl + image.url
     Object.assign(meta, await imageMeta(ctx, absoluteUrl))
   }
 

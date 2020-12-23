@@ -1,5 +1,5 @@
 import type { RuntimeImageInfo } from '../types'
-import type { ImageCTX } from './index'
+import type { ImageCTX } from './image'
 
 export async function imageMeta (ctx: ImageCTX, url): Promise<RuntimeImageInfo> {
   const cache = getCache(ctx)

@@ -4,7 +4,7 @@ import { pick, pkg, pkgDir } from './utils'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, InputProvider } from './provider'
 import type { ImageOptions } from './runtime'
-import { createMiddleware } from './middleware'
+import { createIPXMiddleware } from './ipx'
 
 export interface ModuleOptions {
   provider: string
@@ -67,10 +67,13 @@ async function imageModule (moduleOptions: ModuleOptions) {
   })
 
   // Transpile and alias image src
-  nuxt.options.alias['~image'] = resolve(__dirname, 'runtime')
+  nuxt.options.alias['@nuxt/image/runtime'] = resolve(__dirname, 'runtime')
   nuxt.options.build.transpile.push(pkgDir, 'allowlist', 'defu', 'ufo')
 
-  addServerMiddleware({ path: options.local.baseURL, handle: createMiddleware(options.local) })
+  addServerMiddleware({
+    path: options.local.baseURL,
+    handle: createIPXMiddleware(options.local)
+  })
 
   nuxt.options.build.loaders = defu({
     vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }

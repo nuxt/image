@@ -1,5 +1,4 @@
 import type { OperationGeneratorConfig } from '../types'
-export { joinURL } from 'ufo'
 
 export default function imageFetch (url: string) {
   return fetch(cleanDoubleSlashes(url))
@@ -13,10 +12,6 @@ export function getInt (x): number | undefined {
     return parseInt(x, 10)
   }
   return undefined
-}
-
-export function isRemoteUrl (url) {
-  return !!url.match('^https?://')
 }
 
 export function getFileExtension (url: string = '') {

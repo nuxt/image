@@ -1,3 +1,3 @@
 export * from './module'
-export * from './runtime/types'
+export * from './types'
 export type { ProviderFactory } from './provider'
