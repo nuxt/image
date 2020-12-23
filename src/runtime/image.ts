@@ -1,6 +1,7 @@
 import { allowList } from 'allowlist'
 import type { Matcher } from 'allowlist'
-import { hasProtocol } from 'ufo'
+import { hasProtocol, joinURL } from 'ufo'
+import requrl from 'requrl'
 import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
 import { createObserver } from './observer'
 import { imageMeta } from './meta'
@@ -133,9 +134,10 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   const image = provider.getImage(input, { ...defaults, ...options })
 
   // TODO: Add base
-  // if (!hasProtocol(image.url)) {
-  //   image.url = joinURL('/', image.url)
-  // }
+  if (process.server && !hasProtocol(image.url)) {
+    const url = requrl(ctx.nuxtContext.ssrContext.req)
+    image.url = joinURL(url, image.url)
+  }
 
   return {
     input,
