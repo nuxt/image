@@ -110,7 +110,7 @@ export const NuxtImg = {
       return
     }
 
-    const { width, height } = await this.$img.getResolution(this.src, {
+    const { width, height } = await this.$img.getMeta(this.src, {
       provider: this.provider,
       preset: this.preset,
       modifiers: this.modifiers
