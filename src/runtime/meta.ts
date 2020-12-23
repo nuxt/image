@@ -1,4 +1,4 @@
-import type { RuntimeImageInfo } from '../types'
+import type { RuntimeImageInfo } from '../types/image'
 import type { ImageCTX } from './image'
 
 export async function imageMeta (ctx: ImageCTX, url): Promise<RuntimeImageInfo> {

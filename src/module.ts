@@ -1,29 +1,10 @@
 import { resolve } from 'path'
 import defu from 'defu'
+import type { ModuleOptions } from './types'
 import { pick, pkg, pkgDir } from './utils'
 import { setupStaticGeneration } from './generate'
-import { resolveProviders, InputProvider } from './provider'
-import type { ImageOptions } from './runtime'
+import { resolveProviders } from './provider'
 import { createIPXMiddleware } from './ipx'
-
-export interface ModuleOptions {
-  provider: string
-  presets: ImageOptions[]
-  local: {
-    baseURL: string
-    dir: string
-    clearCache: boolean | string
-    cacheDir: string
-    accept: string[]
-    sharp: { [key: string]: any }
-  }
-  sizes: number[],
-  internalUrl?: string
-  providers: { [name: string]: InputProvider }
-  accept: any
-  intersectOptions: object
-  [provider: string]: InputProvider | any
-}
 
 declare module '@nuxt/types' {
   interface Configuration { image: ModuleOptions }

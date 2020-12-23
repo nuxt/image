@@ -1,24 +1,10 @@
-import { allowList, Matcher } from 'allowlist'
-import type { AllowlistOptions } from 'allowlist'
+import { allowList } from 'allowlist'
+import type { Matcher } from 'allowlist'
 import { hasProtocol } from 'ufo'
-import type { RuntimeProvider, ImageOptions, RuntimeImage } from '../types'
+import type { ImageOptions, CreateImageOptions, ParsedImage } from '../types/image'
 import { createObserver } from './observer'
 import { imageMeta } from './meta'
 import { getSizes, InputSizes } from './sizes'
-
-export interface CreateImageOptions {
-  providers: {
-    [name: string]: {
-      defaults: any,
-      provider: RuntimeProvider
-    }
-  }
-  presets: { [name: string]: ImageOptions}
-  provider: string
-  intersectOptions: object
-  responsiveSizes: number[]
-  allow: AllowlistOptions
-}
 
 export interface ImageCTX {
   options: CreateImageOptions,
@@ -31,13 +17,6 @@ export interface ImageCTX {
     nuxtState?: any
   }
   $img?: Function
-}
-
-export interface ParsedImage {
-  input: string
-  image: RuntimeImage
-  provider: RuntimeProvider
-  preset: ImageOptions
 }
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext) {

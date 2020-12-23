@@ -1,29 +1,7 @@
 import { normalize } from 'upath'
-import type { ModuleOptions } from './module'
+import type { ModuleOptions, ImageProvider, ProviderFactory, InputProvider } from './types'
 import { hash } from './utils'
 import * as PROVIDERS from './providers'
-
-export interface Provider {
-  runtime: string
-  runtimeOptions: any
-}
-
-export type ProviderFactory = (options: any) => Provider
-
-export interface ImageProvider {
-  name: string
-  importName: string
-  options: any
-  provider: ProviderFactory
-  runtime: string
-  runtimeOptions: any
-}
-
-export interface InputProvider {
-  name?: string
-  provider: string | ProviderFactory
-  options?: any
-}
 
 export function resolveProviders (nuxt, options: ModuleOptions): ImageProvider[] {
   const providers: ImageProvider[] = []

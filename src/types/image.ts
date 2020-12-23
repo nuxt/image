@@ -1,10 +1,4 @@
-export interface ImageSize {
-  width: number;
-  media: string;
-  breakpoint: number;
-  format: string;
-  url: string;
-}
+import type { AllowlistOptions, Matcher } from 'allowlist'
 
 export interface ImageModifiers {
   width: number
@@ -14,17 +8,20 @@ export interface ImageModifiers {
   [key: string]: any
 }
 
+export interface ImageSize {
+  width: number;
+  media: string;
+  breakpoint: number;
+  format: string;
+  url: string;
+}
+
 export interface ImageOptions {
   size?: String | Partial<ImageSize>[]
   provider?: string,
   preset?: string,
   modifiers?: ImageModifiers
   [key: string]: any
-}
-
-export interface $Image {
-  (source: string, options: ImageOptions): void
-  [preset: string]: (source: string) => any
 }
 
 export interface RuntimeImageInfo {
@@ -39,11 +36,30 @@ export interface RuntimeImage {
   getMeta?: () => Promise<RuntimeImageInfo>
 }
 
-export type RuntimeProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
+export interface CreateImageOptions {
+  providers: {
+    [name: string]: {
+      defaults: any,
+      provider: any
+    }
+  }
+  presets: { [name: string]: ImageOptions }
+  provider: string
+  intersectOptions: object
+  responsiveSizes: number[]
+  allow: AllowlistOptions
+}
 
-export interface RuntimeProvider {
-  defaults?: any
-  getImage: RuntimeProviderGetImage
+export interface ParsedImage {
+  input: string
+  image: RuntimeImage
+  provider: any
+  preset: ImageOptions
+}
+
+export interface $Image {
+  (source: string, options: ImageOptions): void
+  [preset: string]: (source: string) => any
 }
 
 export interface RuntimePlaceholder extends RuntimeImageInfo {
@@ -60,21 +76,5 @@ export interface OperationGeneratorConfig {
   joinWith?: string
   valueMap?: {
     [key: string]: RuntimeOperationMapper
-  }
-}
-
-declare module '@nuxt/types' {
-  interface Context {
-    $img: $Image
-  }
-
-  interface NuxtAppOptions {
-    $img: $Image
-  }
-}
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $img: $Image
   }
 }

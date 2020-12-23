@@ -1,4 +1,4 @@
-import type { OperationGeneratorConfig } from '../types'
+import type { OperationGeneratorConfig } from '../types/image'
 
 export default function imageFetch (url: string) {
   return fetch(cleanDoubleSlashes(url))
