@@ -66,11 +66,9 @@ async function imageModule (moduleOptions: ModuleOptions) {
     ssrContext.cache = cache
   })
 
-  if (typeof nuxt.listen === 'function') {
-    nuxt.listen(0).then((server) => {
-      options.internalUrl = `http://localhost:${server.port}`
-    })
-  }
+  nuxt.hook('listen', (_, listener) => {
+    options.internalUrl = `http://localhost:${listener.port}`
+  })
 }
 
 (imageModule as any).meta = pkg
