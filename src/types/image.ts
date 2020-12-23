@@ -50,7 +50,7 @@ export interface CreateImageOptions {
   allow: AllowlistOptions
 }
 
-export interface ParsedImage {
+export interface ResolvedImage {
   input: string
   image: RuntimeImage
   provider: any

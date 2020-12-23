@@ -1,7 +1,7 @@
 import { allowList } from 'allowlist'
 import type { Matcher } from 'allowlist'
 import { hasProtocol } from 'ufo'
-import type { ImageOptions, CreateImageOptions, ParsedImage } from '../types/image'
+import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
 import { createObserver } from './observer'
 import { imageMeta } from './meta'
 import { getSizes, InputSizes } from './sizes'
@@ -27,7 +27,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   }
 
   function $img (input: string, options: ImageOptions = {}) {
-    const { image } = parseImage(ctx, input, options)
+    const { image } = resolveImage(ctx, input, options)
 
     // Full static
     // @ts-ignore
@@ -88,7 +88,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 }
 
 async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
-  const { image } = parseImage(ctx, input, {
+  const { image } = resolveImage(ctx, input, {
     ...options,
     modifiers: {
       ...options.modifiers,
@@ -110,7 +110,7 @@ async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
   return meta
 }
 
-function parseImage (ctx: ImageCTX, input: string, options: ImageOptions): ParsedImage {
+function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
   if (typeof input !== 'string') {
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
