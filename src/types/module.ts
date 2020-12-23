@@ -31,11 +31,11 @@ export interface ModuleOptions {
   accept: any
   intersectOptions: object
 
-  cloudinary: InputProvider,
-  fastly: InputProvider,
-  imagekit: InputProvider,
-  imgix: InputProvider,
-  twicpics: InputProvider,
+  cloudinary?: InputProvider,
+  fastly?: InputProvider,
+  imagekit?: InputProvider,
+  imgix?: InputProvider,
+  twicpics?: InputProvider,
 
   [provider: string]: InputProvider | any
 }

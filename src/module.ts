@@ -6,10 +6,6 @@ import { setupStaticGeneration } from './generate'
 import { resolveProviders } from './provider'
 import { createIPXMiddleware } from './ipx'
 
-declare module '@nuxt/types' {
-  interface Configuration { image: ModuleOptions }
-}
-
 async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
 
@@ -64,18 +60,17 @@ async function imageModule (moduleOptions: ModuleOptions) {
     setupStaticGeneration(nuxt, options)
   })
 
-  // const LruCache = require('lru-cache')
-  // const cache = new LruCache()
-  // nuxt.hook('vue-renderer:context', (ssrContext) => {
-  //   ssrContext.cache = cache
-  //   ssrContext.internalUrl = options.internalUrl
-  // })
+  const LruCache = require('lru-cache')
+  const cache = new LruCache()
+  nuxt.hook('vue-renderer:context', (ssrContext) => {
+    ssrContext.cache = cache
+  })
 
-  // if (typeof nuxt.listen === 'function') {
-  //   nuxt.listen(0).then((server) => {
-  //     options.internalUrl = `http://localhost:${server.port}` // ! No tailing slash
-  //   })
-  // }
+  if (typeof nuxt.listen === 'function') {
+    nuxt.listen(0).then((server) => {
+      options.internalUrl = `http://localhost:${server.port}`
+    })
+  }
 }
 
 (imageModule as any).meta = pkg
