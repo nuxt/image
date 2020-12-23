@@ -1,5 +1,6 @@
 import { RuntimeProviderGetImage } from 'src'
-import { createOperationsGenerator, isRemoteUrl, joinURL } from '@nuxt/image/runtime'
+import { hasProtocol, joinURL } from 'ufo'
+import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -32,7 +33,7 @@ export const getImage: RuntimeProviderGetImage = (src, { modifiers, baseURL }) =
     delete modifiers.height
   }
 
-  src = isRemoteUrl(src) ? src : joinURL('http://localhost:3000', src)
+  src = hasProtocol(src) ? src : joinURL('http://localhost:3000', src)
 
   const operationsString = operationsGenerator(modifiers) || '_'
 
