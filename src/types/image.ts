@@ -17,7 +17,6 @@ export interface ImageSize {
 }
 
 export interface ImageOptions {
-  size?: String | Partial<ImageSize>[]
   provider?: string,
   preset?: string,
   modifiers?: Partial<ImageModifiers>

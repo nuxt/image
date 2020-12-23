@@ -34,8 +34,8 @@ async function _imageMeta (url): Promise<ImageInfo> {
       img.onload = () => {
         const meta = {
           width: img.width,
-          height: img.height,
-          placeholder: url
+          height: img.height
+          // placeholder: url
         }
         resolve(meta)
       }
@@ -50,8 +50,8 @@ async function _imageMeta (url): Promise<ImageInfo> {
     const { width, height, mimeType } = await imageMeta(data)
     const meta = {
       width,
-      height,
-      placeholder: `data:${mimeType};base64,${data.toString('base64')}`
+      height
+      // placeholder: `data:${mimeType};base64,${data.toString('base64')}`
     }
 
     return meta

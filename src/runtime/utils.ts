@@ -76,3 +76,7 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
   }
   return html + contents + `</${tag}>`
 }
+
+export function generateAlt (src: string = '') {
+  return src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+}

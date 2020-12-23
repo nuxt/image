@@ -89,16 +89,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 }
 
 async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
-  const { image } = resolveImage(ctx, input, {
-    ...options,
-    modifiers: {
-      ...options.modifiers,
-      width: 30,
-      quality: 40
-    }
-  })
+  const { image } = resolveImage(ctx, input, { ...options })
 
-  const meta = { placeholder: image.url }
+  const meta = {}
 
   if (typeof image.getMeta === 'function') {
     Object.assign(meta, await image.getMeta())
