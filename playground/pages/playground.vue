@@ -151,10 +151,8 @@ export default {
     },
     bgSrc () {
       return this.$img(this.src, {
-        modifiers: {
-          width: 30,
-          format: 'jpg'
-        }
+        width: 30,
+        format: 'jpg'
       }).url
     },
     bgStyle () {

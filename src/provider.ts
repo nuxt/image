@@ -29,6 +29,10 @@ export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProv
 }
 
 export function resolveProvider (nuxt: any, key: string, input: InputProvider): ImageModuleProvider {
+  if (typeof input === 'string') {
+    input = { name: input }
+  }
+
   if (!input.name) {
     input.name = key
   }

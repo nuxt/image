@@ -1,4 +1,5 @@
 import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
 import { createMapper, createOperationsGenerator } from '@nuxt/image/runtime'
 
 const fits = createMapper({
@@ -28,7 +29,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const { width, height, fit, ...providerModifiers } = modifiers
 
   if (width || height) {
@@ -38,6 +39,6 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
   const twicpicsOperations = (operations) ? '?twic=v1/' + operations : ''
 
   return {
-    url: baseURL + src + twicpicsOperations
+    url: joinURL(baseURL, src + twicpicsOperations)
   }
 }

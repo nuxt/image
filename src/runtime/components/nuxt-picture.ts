@@ -29,6 +29,7 @@ export const NuxtPicture = {
     },
     fallbackFormat: {
       type: String,
+      default: '', // TODO
       required: false
     },
     placeholder: {
@@ -313,23 +314,25 @@ export const NuxtPicture = {
       })
     }
 
-    const picture = this.lazyState === LazyState.IDLE ? null : h('picture', {
-      style: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        margin: 0,
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center center',
-        transition: 'opacity 800ms ease 0ms',
-        opacity: this.lazyState === LazyState.LOADED ? 1 : 0
-      }
-    }, [
-      ...sources,
-      originalImage
-    ])
+    const picture = this.lazyState === LazyState.IDLE
+      ? null
+      : h('picture', {
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          margin: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          transition: 'opacity 800ms ease 0ms',
+          opacity: this.lazyState === LazyState.LOADED ? 1 : 0
+        }
+      }, [
+        ...sources,
+        originalImage
+      ])
 
     let noScript = null
     if (this.noScript) {
@@ -352,14 +355,16 @@ export const NuxtPicture = {
       })
     }
 
-    const ratioSVG = isInherit ? h('svg', {
-      attrs: {
-        width: getInt(this.meta.width || this.width),
-        height: getInt(this.meta.height || this.height),
-        xmlns: 'http://www.w3.org/2000/svg',
-        version: '1.1'
-      }
-    }) : null
+    const ratioSVG = isInherit
+      ? h('svg', {
+          attrs: {
+            width: getInt(this.meta.width || this.width),
+            height: getInt(this.meta.height || this.height),
+            xmlns: 'http://www.w3.org/2000/svg',
+            version: '1.1'
+          }
+        })
+      : null
     const ratioBox = h('div', {
       class: '__nim_r',
       attrs: {

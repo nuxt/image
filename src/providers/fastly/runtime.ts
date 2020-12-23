@@ -1,4 +1,5 @@
 import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
@@ -15,9 +16,9 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: baseURL + src + '?' + operations
+    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
   }
 }

@@ -1,4 +1,5 @@
 import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
@@ -74,13 +75,13 @@ const defaultModifiers = {
   quality: 'auto'
 }
 
-export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
 
   const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
-  const operations = operationsGenerator(mergeModifiers)
+  const operations = operationsGenerator(mergeModifiers as any)
 
   return {
-    url: baseURL + '/' + operations + srcWithoutExtension
+    url: joinURL(baseURL, operations, srcWithoutExtension)
   }
 }

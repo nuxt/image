@@ -23,7 +23,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}_${value}`
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers, baseURL }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const format = modifiers.format || '_'
   delete modifiers.format
 

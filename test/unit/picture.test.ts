@@ -1,8 +1,8 @@
 import { testComponent } from '../fixture/utils/picture'
-import Component from '~/src/runtime/nuxt-picture'
+import { NuxtPicture } from '../../src/runtime'
 
 describe('Renders simple image', () => {
-  testComponent(Component, {
+  testComponent(NuxtPicture, {
     loading: 'lazy',
     width: 200,
     height: 200,

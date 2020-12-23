@@ -14,7 +14,15 @@ export interface InputProvider {
   baseURL?: string
 }
 
-export interface ModuleOptions {
+export interface ImageProviders {
+  cloudinary?: InputProvider,
+  fastly?: InputProvider,
+  imagekit?: InputProvider,
+  imgix?: InputProvider,
+  twicpics?: InputProvider,
+}
+
+export interface ModuleOptions extends ImageProviders {
   provider: string
   presets: Partial<ImageOptions>[]
   local: {
@@ -27,15 +35,8 @@ export interface ModuleOptions {
   }
   sizes: number[],
   internalUrl?: string
-  providers: { [name: string]: InputProvider }
   accept: any
   intersectOptions: object
 
-  cloudinary?: InputProvider,
-  fastly?: InputProvider,
-  imagekit?: InputProvider,
-  imgix?: InputProvider,
-  twicpics?: InputProvider,
-
-  [provider: string]: InputProvider | any
+  providers: { [name: string]: InputProvider | any } & ImageProviders
 }
