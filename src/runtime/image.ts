@@ -103,9 +103,11 @@ async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
   if (typeof image.getMeta === 'function') {
     Object.assign(meta, await image.getMeta())
   } else {
-    const internalUrl = ctx.nuxtContext.ssrContext ? ctx.nuxtContext.ssrContext.internalUrl : ''
-    const absoluteUrl = hasProtocol(image.url) ? image.url : internalUrl + image.url
-    Object.assign(meta, await imageMeta(ctx, absoluteUrl))
+    if (process.server && !hasProtocol(image.url)) {
+      const url = requrl(ctx.nuxtContext.ssrContext.req)
+      image.url = joinURL(url, image.url) // TODO: Is modification safe?
+    }
+    Object.assign(meta, await imageMeta(ctx, image.url))
   }
 
   return meta
@@ -133,7 +135,6 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   const image = provider.getImage(input, { ...defaults, ...options })
 
-  // TODO: Add base
   if (process.server && !hasProtocol(image.url)) {
     const url = requrl(ctx.nuxtContext.ssrContext.req)
     image.url = joinURL(url, image.url)
