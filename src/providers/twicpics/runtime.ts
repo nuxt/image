@@ -13,14 +13,20 @@ const fits = createMapper({
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
-    format: 'format',
+    format: 'output',
     quality: 'quality',
     background: 'background'
   },
   valueMap: {
-    format (value) {
+    format (value: string) {
       if (value === 'jpg') {
         return 'jpeg'
+      }
+      return value
+    },
+    background (value: string) {
+      if (value.startsWith('#')) {
+        return value.replace('#', '')
       }
       return value
     }
