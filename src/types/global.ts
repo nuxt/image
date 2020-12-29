@@ -1,4 +1,4 @@
-import { $Image } from './runtime'
+import type { $Image } from './image'
 import { ModuleOptions } from './module'
 
 declare module '@nuxt/types' {
@@ -11,12 +11,19 @@ declare module '@nuxt/types' {
   }
 
   interface Configuration {
-    image: ModuleOptions
+    image?: Partial<ModuleOptions>
   }
 }
 
 declare module 'vue/types/vue' {
   interface Vue {
+    $img: $Image
+  }
+}
+
+declare module 'vuex/types/index' {
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+  interface Store<S> {
     $img: $Image
   }
 }

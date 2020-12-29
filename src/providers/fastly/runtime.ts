@@ -1,5 +1,6 @@
-import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator } from '~image/utils'
+import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
+import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const operationsGenerator = createOperationsGenerator({
   valueMap: {
@@ -15,11 +16,9 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const operations = operationsGenerator(modifiers)
-    return {
-      url: options.baseURL + src + '?' + operations
-    }
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
+  const operations = operationsGenerator(modifiers)
+  return {
+    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
   }
 }

@@ -1,19 +1,23 @@
 {
   "name": "@nuxt/image",
-  "version": "0.0.4",
+  "version": "0.2.0-alpha.1",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/module.js",
+    "./": "./",
+    "./runtime": "./dist/runtime.mjs"
+  },
+  "main": "dist/module.js",
+  "types": "dist/types.d.ts",
   "files": [
     "dist",
-    "templates",
-    "types"
+    "templates"
   ],
   "scripts": {
-    "build": "yarn clean && tsc && tsc -p tsconfig.runtime.json",
-    "clean": "rimraf dist",
+    "build": "siroc build",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
@@ -22,37 +26,40 @@
     "test:unit": "jest test/unit --forceExit"
   },
   "dependencies": {
+    "allowlist": "^0.1.1",
+    "consola": "^2.15.0",
     "defu": "^3.2.2",
     "hasha": "^5.2.2",
     "image-meta": "^0.0.1",
-    "ipx": "^0.4.6",
-    "is-https": "^2.0.2",
+    "ipx": "^0.4.8",
+    "is-https": "^3.0.2",
     "node-fetch": "^2.6.1",
-    "requrl": "^2.0.1",
+    "requrl": "^3.0.2",
+    "ufo": "^0.5.2",
     "upath": "^2.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "latest",
     "@babel/preset-typescript": "latest",
-    "@cyrilf/vue-dat-gui": "^0.3.0",
-    "@nuxt/test-utils": "^0.0.1",
+    "@cyrilf/vue-dat-gui": "latest",
+    "@nuxt/test-utils": "latest",
     "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
     "@types/jest": "latest",
-    "@vue/test-utils": "^1.1.1",
+    "@vue/test-utils": "latest",
     "babel-eslint": "latest",
     "eslint": "latest",
     "jest": "latest",
-    "jsdom": "^16.4.0",
-    "jsdom-global": "^3.0.2",
+    "jsdom": "latest",
+    "jsdom-global": "latest",
     "nuxt-edge": "latest",
-    "playwright": "^1.6.1",
-    "rimraf": "^3.0.2",
+    "playwright": "latest",
+    "siroc": "latest",
     "standard-version": "latest",
-    "ts-loader": "^8.0.11",
-    "typescript": "^4.0.5"
+    "ts-loader": "latest",
+    "typescript": "latest"
   },
   "publishConfig": {
     "access": "public"

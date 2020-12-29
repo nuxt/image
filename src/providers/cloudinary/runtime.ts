@@ -1,5 +1,6 @@
-import { RuntimeProvider, ImageModifiers } from 'types'
-import { createOperationsGenerator } from '~image/utils'
+import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
+import { createOperationsGenerator } from '@nuxt/image/runtime'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
 
@@ -74,18 +75,13 @@ const defaultModifiers = {
   quality: 'auto'
 }
 
-export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const mergeModifiers = {
-      ...defaultModifiers,
-      ...modifiers
-    }
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
+  const mergeModifiers = { ...defaultModifiers, ...modifiers }
 
-    const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
-    const operations = operationsGenerator(mergeModifiers as ImageModifiers)
+  const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
+  const operations = operationsGenerator(mergeModifiers as any)
 
-    return {
-      url: options.baseURL + '/' + operations + srcWithoutExtension
-    }
+  return {
+    url: joinURL(baseURL, operations, srcWithoutExtension)
   }
 }

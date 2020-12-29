@@ -1,5 +1,6 @@
-import { RuntimeProvider, ImageModifiers } from 'types'
-import { createMapper, createOperationsGenerator } from '~image/utils'
+import type { ProviderGetImage } from 'src'
+import { joinURL } from 'ufo'
+import { createMapper, createOperationsGenerator } from '@nuxt/image/runtime'
 
 const fits = createMapper({
   fill: 'resize',
@@ -28,18 +29,16 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export default <RuntimeProvider> {
-  getImage (src: string, modifiers: ImageModifiers, options: any) {
-    const { width, height, fit, format, ...providerModifiers } = modifiers
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
+  const { width, height, fit, ...providerModifiers } = modifiers
 
-    if (width || height) {
-      providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
-    }
-    const operations = operationsGenerator(providerModifiers)
-    const twicpicsOperations = (operations) ? '?twic=v1/' + operations : ''
+  if (width || height) {
+    providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
+  }
+  const operations = operationsGenerator(providerModifiers)
+  const twicpicsOperations = (operations) ? '?twic=v1/' + operations : ''
 
-    return {
-      url: options.baseURL + src + twicpicsOperations
-    }
+  return {
+    url: joinURL(baseURL, src + twicpicsOperations)
   }
 }
