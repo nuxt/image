@@ -35,6 +35,13 @@
 
       <h2>JPEG image on TwicPics</h2>
       <NuxtImg provider="twicpics" src="/football.jpg" />
+      <NuxtImg
+        provider="twicpics"
+        src="/football.jpg"
+        width="250"
+        height="400"
+        :operations="{ focus: 'auto' }"
+      />
       <NuxtImg provider="twicpics" src="/football.jpg" width="100" height="100" quality="1" />
 
       <h2>JPEG image on Fastly</h2>

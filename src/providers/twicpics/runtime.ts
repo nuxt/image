@@ -15,7 +15,9 @@ const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'output',
     quality: 'quality',
-    background: 'background'
+    background: 'background',
+    focus: 'focus',
+    zoom: 'zoom'
   },
   valueMap: {
     format (value: string) {
@@ -29,6 +31,19 @@ const operationsGenerator = createOperationsGenerator({
         return value.replace('#', '')
       }
       return value
+    },
+    focus: {
+      auto: 'auto',
+      faces: 'faces',
+      north: '50px0p',
+      northEast: '100px0p',
+      northWest: '0px0p',
+      west: '0px50p',
+      southWest: '100px100p',
+      south: '50px100p',
+      southEast: '0px100p',
+      east: '100px50p',
+      center: '50px50p'
     }
   },
   joinWith: '/',
@@ -42,9 +57,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
     providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
   }
   const operations = operationsGenerator(providerModifiers)
-  const twicpicsOperations = (operations) ? '?twic=v1/' + operations : ''
-
   return {
-    url: joinURL(baseURL, src + twicpicsOperations)
+    url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : ''))
   }
 }
