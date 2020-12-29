@@ -16,9 +16,6 @@
       <h2>JPEG image on TwicPics</h2>
       <NuxtPicture width="900" placeholder provider="twicpics" src="/football.jpg" />
 
-      <h2>JPEG image on TwicPics</h2>
-      <NuxtPicture width="900" placeholder provider="twicpics" src="/football.jpg" />
-
       <h2>JPEG image on Fastly</h2>
       <NuxtPicture width="900" placeholder provider="fastly" src="/image.jpg" />
     </div>
