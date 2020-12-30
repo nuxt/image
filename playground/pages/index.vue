@@ -1,11 +1,12 @@
 <template>
   <div class="container">
     <nuxt-image
-      src="storyblok:/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+      src="storyblok:/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
       alt="storyblok"
       class="image"
       width="100"
       height="100"
+      :operations="{smart: true, filters: {format: 'png'}}"
       sizes="320"
     />
     <nuxt-image

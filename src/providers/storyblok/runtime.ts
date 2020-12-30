@@ -46,6 +46,7 @@ export default <RuntimeProvider> {
       ...defaultModifiers,
       ...modifiers
     })
+    console.log(mergeModifiers)
     if (mergeModifiers.fit !== 'in') {
       delete mergeModifiers.fit
     }
