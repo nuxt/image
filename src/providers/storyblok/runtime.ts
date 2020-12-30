@@ -40,13 +40,11 @@ const overrideUndefined = (modifiers) => {
 }
 
 export default <RuntimeProvider> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getImage (src: string, modifiers: ImageModifiers, { baseURL }: any) {
     const mergeModifiers = overrideUndefined({
       ...defaultModifiers,
       ...modifiers
     })
-    console.log(mergeModifiers)
     if (mergeModifiers.fit !== 'in') {
       delete mergeModifiers.fit
     }
