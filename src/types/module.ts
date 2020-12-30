@@ -20,6 +20,7 @@ export interface ImageProviders {
   imagekit?: InputProvider,
   imgix?: InputProvider,
   twicpics?: InputProvider,
+  storyblok?: InputProvider
 }
 
 export interface ModuleOptions extends ImageProviders {

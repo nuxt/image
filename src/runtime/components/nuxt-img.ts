@@ -36,7 +36,8 @@ export const NuxtImg: Component = {
         format: this.format,
         quality: this.quality,
         background: this.background,
-        fit: this.fit
+        fit: this.fit,
+        ...this.$attrs
       }
     },
     nSrc () {

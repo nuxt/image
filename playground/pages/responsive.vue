@@ -17,5 +17,8 @@
 
     <h2>JPEG image on Fastly</h2>
     <NuxtImg layout="responsive" provider="fastly" src="/image.jpg" />
+
+    <h2>JPEG image on Storyblok</h2>
+    <NuxtImg layout="responsive" provider="storyblok" src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg" />
   </div>
 </template>

@@ -3,6 +3,7 @@
     <div class="container">
       <h2>NuxtImg vs Img</h2>
       <pre>&lt;img src="/images/damavand.jpg" width="200" height="auto"&gt;</pre>
+
       <NuxtImg
         ref="nuxtImg"
         src="/images/damavand.jpg"
@@ -42,6 +43,103 @@
 
       <h2>JPEG image on Imagekit</h2>
       <NuxtImg provider="imagekit" src="/img/plant.jpeg" />
+
+      <h2>JPEG image on Storyblok</h2>
+      <h3>Resizing</h3>
+      <div class="flex">
+        <div>Original</div>
+        <NuxtImg
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <div class="flex">
+        <div>Resized static</div>
+        <NuxtImg
+          width="500"
+          height="500"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <div class="flex">
+        <div>Proportional to Width</div>
+        <NuxtImg
+          width="500"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <div class="flex">
+        <div>Proportional to Height</div>
+        <NuxtImg
+          height="500"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <h3>Fit-in</h3>
+      <div class="flex">
+        <div>Fit in with background CCCCCC</div>
+        <NuxtImg
+          width="200"
+          height="200"
+          fit="in"
+          :filters="{ fill: 'CCCCCC' }"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <h3>Quality</h3>
+      <div class="flex">
+        <div>Resized and 10% Quality</div>
+        <NuxtImg
+          :filters="{ quality: '10' }"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+        />
+      </div>
+      <h3>Facial detection</h3>
+      <div class="flex">
+        <div>Resized without Smart Crop</div>
+        <NuxtImg
+          width="600"
+          height="130"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
+        />
+      </div>
+      <div class="flex">
+        <div>Resized with Smart Crop</div>
+        <NuxtImg
+          width="600"
+          height="130"
+          smart
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
+        />
+      </div>
+      <h3>Facial detection</h3>
+      <div class="flex">
+        <div>Focus on the bottom of the image</div>
+        <NuxtImg
+          width="600"
+          height="130"
+          :filters="{focal: '450x500:550x600'}"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
+        />
+      </div>
+      <div class="flex">
+        <div>Focus on the top of the image</div>
+        <NuxtImg
+          width="600"
+          height="130"
+          :filters="{focal: '450x0:550x100'}"
+          provider="storyblok"
+          src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
+        />
+      </div>
     </div>
   </div>
 </template>
