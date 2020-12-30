@@ -21,6 +21,9 @@ export default {
       twicpics: {
         baseURL: 'https://i5acur1u.twic.pics'
       },
+      storyblok: {
+        baseURL: 'https://img2.storyblok.com'
+      },
       cloudinary: {
         baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
       },

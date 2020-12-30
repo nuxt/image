@@ -1,6 +1,14 @@
 <template>
   <div class="container">
     <nuxt-image
+      src="storyblok:/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+      alt="storyblok"
+      class="image"
+      width="100"
+      height="100"
+      sizes="320"
+    />
+    <nuxt-image
       v-for="(image, i) in [...images, ...images, ...images, ...images, ...images]"
       :key="'img-' + i"
       :src="image.src"
