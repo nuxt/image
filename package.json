@@ -19,7 +19,10 @@
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
     "test": "yarn lint && yarn test:unit && yarn test:e2e",
     "test:e2e": "jest test/e2e --forceExit",
-    "test:unit": "jest test/unit --forceExit"
+    "test:unit": "jest test/unit --forceExit",
+    "generate": "yarn nuxt-ts generate playground",
+    "start": "yarn nuxt-ts start playground",
+    "start:generate": "rm -rf playground/node_modules/.cache && yarn generate && yarn start"
   },
   "dependencies": {
     "defu": "^3.2.2",
@@ -27,7 +30,8 @@
     "image-meta": "^0.0.1",
     "ipx": "^0.4.1",
     "node-fetch": "^2.6.1",
-    "upath": "^2.0.1"
+    "upath": "^2.0.1",
+    "vue-lazy-hydration": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "@babel/preset-env": "latest",

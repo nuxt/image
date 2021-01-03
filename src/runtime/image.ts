@@ -45,6 +45,11 @@ export function createImage (context, { providers, defaultProvider, presets, int
         context.beforeNuxtRender(({ nuxtState }) => {
           nuxtState.imagePayload = nuxtState.data[0]
         })
+      } else {
+        setTimeout(() => {
+          console.log('AHA', context)
+        }, 100)
+        // app.methods.fetchPayload(to.path)
       }
     })
   }
