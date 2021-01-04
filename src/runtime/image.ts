@@ -28,8 +28,8 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
     allow: allowList(globalOptions.allow),
     nuxtContext
   }
-  
-  if ('app' in context) {
+
+  if ('app' in nuxtContext) {
     nuxtContext.app.router.afterEach((page) => {
       fetchPayload(page, nuxtContext)
     })
