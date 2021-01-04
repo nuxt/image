@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <nuxt-image
-      :src="src"
-      :format="format"
-      :alt="alt"
-      class="image"
-      sets="320"
-    />
-  </div>
+  <nuxt-image
+    :src="src"
+    :format="format"
+    :alt="alt"
+    class="image"
+    sets="320"
+  />
 </template>
 
 <script>

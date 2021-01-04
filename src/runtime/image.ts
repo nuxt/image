@@ -2,6 +2,8 @@ import type { CreateImageOptions, ImageModifiers, ImagePreset, ImageSize } from 
 import { getMeta } from './meta'
 import { cleanDoubleSlashes } from './utils'
 
+let pagePayload = null
+
 function processSource (src: string) {
   if (!src.includes(':') || src.match('^https?://')) {
     return { src }
@@ -40,17 +42,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
   }, {})
 
   if ('app' in context) {
-    context.app.router.afterEach(() => {
-      if (!context.nuxtState) {
-        context.beforeNuxtRender(({ nuxtState }) => {
-          nuxtState.imagePayload = nuxtState.data[0]
-        })
-      } else {
-        setTimeout(() => {
-          console.log('AHA', context)
-        }, 100)
-        // app.methods.fetchPayload(to.path)
-      }
+    context.app.router.afterEach((page) => {
+      fetchPayload(page, context)
     })
   }
 
@@ -100,8 +93,8 @@ export function createImage (context, { providers, defaultProvider, presets, int
     // @ts-ignore
     if (global.$nuxt) {
       // @ts-ignore
-      const jsonPData = global.$nuxt.context.nuxtState.imagePayload
-      if (jsonPData.nuxtImageMap[providerUrl]) {
+      const jsonPData = pagePayload
+      if ('nuxtImageMap' in jsonPData && jsonPData.nuxtImageMap[providerUrl]) {
         // Hydration with hash
         image.url = jsonPData.nuxtImageMap[providerUrl]
       } else if (image.isStatic) {
@@ -209,6 +202,22 @@ export function createImage (context, { providers, defaultProvider, presets, int
   image.$observer = createObserver(intersectOptions)
 
   return image
+}
+
+async function fetchPayload (page, context) {
+  if (!context.nuxtState) {
+    context.beforeNuxtRender(({ nuxtState }) => {
+      pagePayload = nuxtState.data[0]
+    })
+  } else {
+    try {
+      // @ts-ignore
+      const payload = await window.__NUXT_IMPORT__(decodeURI(page.path.replace(/\/$/, '')), encodeURI(context.nuxtState.staticAssetsBase + page.path + 'payload.js'))
+      pagePayload = payload.data[0]
+    } catch (e) {
+      pagePayload = (context.nuxtState.data || [{}])[0] || {}
+    }
+  }
 }
 
 function printObserver (onMatch) {
