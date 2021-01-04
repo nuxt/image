@@ -1,6 +1,29 @@
-import { RuntimeImageInfo } from 'types'
+import type { ImageInfo } from '../types/image'
+import type { ImageCTX } from './image'
 
-async function _getMeta (url): Promise<RuntimeImageInfo> {
+export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
+  const cache = getCache(ctx)
+
+  const cacheKey = 'image:meta:' + url
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey)
+  }
+
+  const meta = await _imageMeta(url).catch((err) => {
+    // eslint-disable-next-line no-console
+    console.error('Failed to get image meta for ' + url, err + '')
+    return {
+      width: 0,
+      height: 0,
+      placeholder: ''
+    }
+  })
+
+  cache.set(cacheKey, meta)
+  return meta
+}
+
+async function _imageMeta (url): Promise<ImageInfo> {
   if (process.client) {
     if (typeof Image === 'undefined') {
       throw new TypeError('Image not supported')
@@ -11,8 +34,8 @@ async function _getMeta (url): Promise<RuntimeImageInfo> {
       img.onload = () => {
         const meta = {
           width: img.width,
-          height: img.height,
-          placeholder: url
+          height: img.height
+          // placeholder: url
         }
         resolve(meta)
       }
@@ -27,30 +50,26 @@ async function _getMeta (url): Promise<RuntimeImageInfo> {
     const { width, height, mimeType } = await imageMeta(data)
     const meta = {
       width,
-      height,
-      placeholder: `data:${mimeType};base64,${data.toString('base64')}`
+      height
+      // placeholder: `data:${mimeType};base64,${data.toString('base64')}`
     }
 
     return meta
   }
 }
 
-export async function getMeta (url, cache): Promise<RuntimeImageInfo> {
-  const cacheKey = 'image:meta:' + url
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey)
-  }
-
-  const meta = await _getMeta(url).catch((err) => {
-    // eslint-disable-next-line no-console
-    console.error('Failed to get image meta for ' + url, err + '')
-    return {
-      width: 0,
-      height: 0,
-      placeholder: ''
+function getCache (ctx: ImageCTX) {
+  if (!ctx.nuxtContext.cache) {
+    if (ctx.nuxtContext.ssrContext && ctx.nuxtContext.ssrContext.cache) {
+      ctx.nuxtContext.cache = ctx.nuxtContext.ssrContext.cache
+    } else {
+      const _cache = {}
+      ctx.nuxtContext.cache = {
+        get: id => _cache[id],
+        set: (id, value) => { _cache[id] = value },
+        has: id => typeof _cache[id] !== 'undefined'
+      }
     }
-  })
-
-  cache.set(cacheKey, meta)
-  return meta
+  }
+  return ctx.nuxtContext.cache
 }

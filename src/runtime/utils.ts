@@ -1,4 +1,8 @@
-import { OperationGeneratorConfig } from 'types'
+import type { OperationGeneratorConfig } from '../types/image'
+
+export default function imageFetch (url: string) {
+  return fetch(cleanDoubleSlashes(url))
+}
 
 export function getInt (x): number | undefined {
   if (typeof x === 'number') {
@@ -10,16 +14,12 @@ export function getInt (x): number | undefined {
   return undefined
 }
 
-export function isRemoteUrl (url) {
-  return !!url.match('^https?://')
-}
-
-export function getFileExtension (url: string) {
+export function getFileExtension (url: string = '') {
   const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
   return extension
 }
 
-export function cleanDoubleSlashes (path) {
+export function cleanDoubleSlashes (path: string = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
 
@@ -43,7 +43,7 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
     }
   })
 
-  return (modifiers: { [key: string]: string }) => {
+  return (modifiers: { [key: string]: string } = {}) => {
     const operations = Object.entries(modifiers)
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
@@ -75,4 +75,8 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
     return html
   }
   return html + contents + `</${tag}>`
+}
+
+export function generateAlt (src: string = '') {
+  return src.split(/[?#]/).shift().split('/').pop().split('.').shift()
 }

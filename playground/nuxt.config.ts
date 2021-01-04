@@ -1,17 +1,20 @@
-export default {
+import type { NuxtConfig } from '@nuxt/types'
+import '../src/types'
+
+export default <NuxtConfig> {
   components: true,
   target: 'server',
   modules: [
-    '../src/index.ts'
+    '../src/module.ts'
   ],
   buildModules: [
     '@nuxt/typescript-build'
   ],
-  plugins: [
-    'plugins/dat.gui.client.js'
-  ],
   image: {
-    accept: ['nuxtjs.org', 'unsplash.com'],
+    accept: [
+      'nuxtjs.org',
+      'unsplash.com'
+    ],
     twicpics: {
       baseURL: 'https://nuxt-demo.twic.pics'
     },

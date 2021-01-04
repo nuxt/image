@@ -137,7 +137,7 @@ export default {
 The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
 In `nuxt-img` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
 
-A set is consists of `width` and `breakpoint` or `media`:
+A set consists of `width` and `breakpoint` or `media`:
 
 - `width`: Width of generated image for this set
 - `breakpoint`: Minimum width of viewport to show the image

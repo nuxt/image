@@ -1,4 +1,4 @@
-import { renderTag, getInt } from './utils'
+import { renderTag, getInt } from '../utils'
 import { props } from './nuxt-img'
 
 export enum LazyState {
@@ -6,8 +6,9 @@ export enum LazyState {
   LOADING = 'loading',
   LOADED = 'loaded'
 }
+
 // @vue/component
-export default {
+export const NuxtPicture = {
   name: 'NuxtPicture',
   props: {
     ...props,
@@ -28,7 +29,8 @@ export default {
     },
     fallbackFormat: {
       type: String,
-      default: null
+      default: '', // TODO
+      required: false
     },
     placeholder: {
       type: [Boolean, String],
@@ -60,16 +62,6 @@ export default {
       default: false
     }
   },
-  async fetch () {
-    await this.fetchMeta()
-
-    // Ensure images sizes are calculate in static generation process
-    // and files are store in output direcotry
-    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
-      // eslint-disable-next-line no-unused-expressions
-      this.sources
-    }
-  },
   data () {
     return {
       error: '',
@@ -79,6 +71,16 @@ export default {
         placeholder: undefined
       },
       lazyState: this.isLazy ? LazyState.IDLE : LazyState.LOADED
+    }
+  },
+  async fetch () {
+    await this.fetchMeta()
+
+    // Ensure images sizes are calculate in static generation process
+    // and files are store in output direcotry
+    if (this.$nuxt.context.ssrContext && this.$nuxt.context.ssrContext.isGenerating) {
+      // eslint-disable-next-line no-unused-expressions
+      this.sources
     }
   },
   computed: {
@@ -175,7 +177,7 @@ export default {
         }
       }
 
-      const { width, height } = await this.$img.getResolution(this.src, {
+      const { width, height } = await this.$img.getMeta(this.src, {
         provider: this.provider,
         preset: this.preset,
         modifiers: this.modifiers
@@ -312,23 +314,25 @@ export default {
       })
     }
 
-    const picture = this.lazyState === LazyState.IDLE ? null : h('picture', {
-      style: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        margin: 0,
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        objectPosition: 'center center',
-        transition: 'opacity 800ms ease 0ms',
-        opacity: this.lazyState === LazyState.LOADED ? 1 : 0
-      }
-    }, [
-      ...sources,
-      originalImage
-    ])
+    const picture = this.lazyState === LazyState.IDLE
+      ? null
+      : h('picture', {
+        style: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          margin: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          transition: 'opacity 800ms ease 0ms',
+          opacity: this.lazyState === LazyState.LOADED ? 1 : 0
+        }
+      }, [
+        ...sources,
+        originalImage
+      ])
 
     let noScript = null
     if (this.noScript) {
@@ -351,14 +355,16 @@ export default {
       })
     }
 
-    const ratioSVG = isInherit ? h('svg', {
-      attrs: {
-        width: getInt(this.meta.width || this.width),
-        height: getInt(this.meta.height || this.height),
-        xmlns: 'http://www.w3.org/2000/svg',
-        version: '1.1'
-      }
-    }) : null
+    const ratioSVG = isInherit
+      ? h('svg', {
+          attrs: {
+            width: getInt(this.meta.width || this.width),
+            height: getInt(this.meta.height || this.height),
+            xmlns: 'http://www.w3.org/2000/svg',
+            version: '1.1'
+          }
+        })
+      : null
     const ratioBox = h('div', {
       class: '__nim_r',
       attrs: {

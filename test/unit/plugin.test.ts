@@ -43,12 +43,12 @@ describe('Plugin', () => {
     // expect(placeholder).toEqual('/_image/local/_/w_30/test.png')
   })
 
-  test('Generate Random Image', () => {
+  test.skip('Generate Random Image', () => {
     const image = nuxtContext.$img('/test.png', { provider: 'random' })
     expect(image.url).toEqual('https://source.unsplash.com/random/600x400')
   })
 
-  test('Generate Circle Image with Cloudinary', () => {
+  test.skip('Generate Circle Image with Cloudinary', () => {
     const image = nuxtContext.$img('/test.png', { provider: 'cloudinary', preset: 'circle' })
     expect(image.url).toEqual('https://res.cloudinary.com/nuxt/image/upload/f_auto,q_auto,r_100/test')
   })

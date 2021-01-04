@@ -3,7 +3,12 @@
     <div class="container">
       <h2>NuxtImg vs Img</h2>
       <pre>&lt;img src="/images/damavand.jpg" width="200" height="auto"&gt;</pre>
-      <NuxtImg ref="nuxtImg" src="/images/damavand.jpg" width="200" height="100" quality="1" />
+      <NuxtImg
+        ref="nuxtImg"
+        src="/images/damavand.jpg"
+        width="200"
+        height="100"
+      />
       <img ref="img" src="/images/damavand.jpg" width="200" height="auto">
       <pre>{{ nuxtImgCode }}</pre>
 
@@ -30,6 +35,13 @@
 
       <h2>JPEG image on TwicPics</h2>
       <NuxtImg provider="twicpics" src="/football.jpg" />
+      <NuxtImg
+        provider="twicpics"
+        src="/football.jpg"
+        width="250"
+        height="400"
+        :operations="{ focus: 'auto' }"
+      />
       <NuxtImg provider="twicpics" src="/football.jpg" width="100" height="100" quality="1" />
 
       <h2>JPEG image on Fastly</h2>
@@ -49,7 +61,7 @@ export default {
     }
   },
   mounted () {
-    this.nuxtImgCode = this.$refs.nuxtImg.$el.outerHTML
+    // this.nuxtImgCode = this.$refs.nuxtImg.$el.outerHTML
   }
 }
 </script>

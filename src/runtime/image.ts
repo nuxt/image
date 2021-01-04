@@ -1,247 +1,117 @@
-import defu from 'defu'
-import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions, ImageModifiers } from 'types'
-import { getMeta } from './meta'
-import { cleanDoubleSlashes, getFileExtension, isRemoteUrl } from './utils'
+import { allowList } from 'allowlist'
+import type { Matcher } from 'allowlist'
+import { hasProtocol, joinURL } from 'ufo'
+import requrl from 'requrl'
+import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
+import { createObserver } from './observer'
+import { imageMeta } from './meta'
+import { getSizes, InputSizes } from './sizes'
 
 let pagePayload = null
 
-function getCache (context) {
-  if (!context.cache) {
-    if (context.ssrContext && context.ssrContext.cache) {
-      context.cache = context.ssrContext.cache
-    } else {
-      const _cache = {}
-      context.cache = {
-        get: id => _cache[id],
-        set: (id, value) => { _cache[id] = value },
-        has: id => typeof _cache[id] !== 'undefined'
-      }
-    }
+export interface ImageCTX {
+  options: CreateImageOptions,
+  allow: Matcher<any>
+  nuxtContext: {
+    ssrContext: any
+    cache?: any
+    isDev: boolean
+    isStatic: boolean
+    nuxtState?: any
   }
-  return context.cache
+  $img?: Function
 }
 
-export function createImage (context, { providers, defaultProvider, presets, intersectOptions, responsiveSizes, allow }: CreateImageOptions) {
-  const presetMap: { [key: string]: ImagePreset} = presets.reduce((map, preset) => {
-    map[preset.name] = preset
-    return map
-  }, {})
-
+export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
+  const ctx: ImageCTX = {
+    options: globalOptions,
+    allow: allowList(globalOptions.allow),
+    nuxtContext
+  }
+  
   if ('app' in context) {
-    context.app.router.afterEach((page) => {
-      fetchPayload(page, context)
+    nuxtContext.app.router.afterEach((page) => {
+      fetchPayload(page, nuxtContext)
     })
   }
 
-  function getProvider (name: string) {
-    const provider = providers[name]
-    if (!provider) {
-      throw new Error('Unsupported provider ' + name)
-    }
-    return provider
-  }
+  function $img (input: string, options: ImageOptions = {}) {
+    const { image } = resolveImage(ctx, input, options)
 
-  function getPreset (name: string): ImagePreset | false {
-    if (!name) {
-      return false
-    }
-    if (!presetMap[name]) {
-      throw new Error('Unsupported preset ' + name)
-    }
-    return presetMap[name]
-  }
-
-  function parseImage (src: string, options: ImageOptions = {} as any) {
-    if (typeof src !== 'string') {
-      throw new TypeError(`src must be a string (received ${typeof src}: ${JSON.stringify(src)})`)
-    }
-    const { modifiers = {} as ImageModifiers } = options
-    const isRemote = isRemoteUrl(src)
-
-    if ((isRemote && !allow.accept(src)) || src.startsWith('data:')) {
-      return {
-        src,
-        provider: null,
-        preset: null,
-        image: {
-          url: src,
-          isStatic: false
-        }
-      }
-    }
-    const provider = getProvider(options.provider || defaultProvider)
-    const preset = getPreset(options.preset)
-
-    const image = provider.provider.getImage(
-      src,
-      defu(modifiers, (preset && (preset as ImagePreset).modifiers)),
-      { ...provider.defaults, ...options }
-    )
-
-    // apply router base & remove double slashes
-    const base = isRemoteUrl(image.url) ? '' : context.base
-    image.url = cleanDoubleSlashes(base + image.url)
-
-    return {
-      src,
-      provider,
-      preset,
-      image
-    }
-  }
-
-  function $img (source: string, options: ImageOptions = {} as any) {
-    const { modifiers = {} as ImageModifiers } = options
-    const { src, image } = parseImage(source, options)
-    const { url: providerUrl, isStatic } = image
-
-    /**
-     * Handle full static render
-     */
+    // Full static
     // @ts-ignore
     if (global.$nuxt) {
       // @ts-ignore
       const jsonPData = pagePayload
-      if (jsonPData && 'nuxtImageMap' in jsonPData && jsonPData.nuxtImageMap[providerUrl]) {
+      if (jsonPData && 'nuxtImageMap' in jsonPData && jsonPData.nuxtImageMap[input]) {
         // Hydration with hash
-        image.url = jsonPData.nuxtImageMap[providerUrl]
+        image.url = jsonPData.nuxtImageMap[input]
       } else if (image.isStatic) {
-        image.url = src
+        image.url = input
       }
-      // return original source on cache fail in full static mode
+      // Return original source on cache fail in full static mode
       return image
     }
 
-    /**
-     * Handle client side rendering without server
-     */
-    if (!context.isDev && typeof window !== 'undefined' && context.isStatic && image.isStatic) {
-      image.url = src
+    // Client-Side rendering without server
+    if (typeof window !== 'undefined' && !ctx.nuxtContext.isDev && ctx.nuxtContext.isStatic && image.isStatic) {
+      image.url = input
       return image
     }
 
-    const nuxtState = context.nuxtState || context.ssrContext.nuxt
-    if (!nuxtState.data || !nuxtState.data.length) {
-      nuxtState.data = [{}]
-    }
+    const nuxtState = ctx.nuxtContext.nuxtState || ctx.nuxtContext.ssrContext.nuxt
+    if (!nuxtState.data || !nuxtState.data.length) { nuxtState.data = [{}] }
     const data = nuxtState.data[0]
     data.nuxtImageMap = data.nuxtImageMap || {}
-    const url = providerUrl
-    if (data.nuxtImageMap[url]) {
+
+    if (data.nuxtImageMap[image.url]) {
       // Hydration with hash
-      image.url = data.nuxtImageMap[url]
-    } else if (context.ssrContext && typeof context.ssrContext.mapImage === 'function') {
+      image.url = data.nuxtImageMap[image.url]
+    } else if (typeof ctx.nuxtContext.ssrContext?.mapImage === 'function') {
       // Full Static
-      const mappedUrl = context.ssrContext.mapImage({ url, isStatic, format: modifiers.format, src })
+      const mappedUrl = ctx.nuxtContext.ssrContext?.mapImage({ input, image, options })
       if (mappedUrl) {
-        image.url = data.nuxtImageMap[providerUrl] = mappedUrl
+        image.url = mappedUrl
+        data.nuxtImageMap[image.url] = mappedUrl
       }
     }
+
     return image
   }
 
-  presets.forEach((preset: ImagePreset) => {
-    $img[preset.name] = (src) => {
-      return $img(src, {
-        modifiers: preset.modifiers,
-        provider: preset.provider
-      } as ImageOptions)
-    }
-  })
+  ctx.$img = $img
 
-  $img.sizes = (src: string, sizes: Array<Partial<ImageSize>> | string | boolean, options: ImageOptions = {} as ImageOptions) => {
-    const { modifiers = {} as ImageModifiers } = options
-    if (modifiers.format === 'svg' || getFileExtension(src) === 'svg') {
-      return [{
-        url: src
-      }]
-    }
-    if (typeof sizes === 'string') {
-      sizes = sizes
-        .split(',')
-        .map(set => set.match(/((\d+):)?(\d+)\s*(\((\w+)\))?/))
-        .filter(match => !!match)
-        .map((match, index, array): Partial<ImageSize> => ({
-          width: parseInt(match[3], 10),
-          breakpoint: parseInt(match[2] || (index !== array.length - 1 && match[3]), 10)
-        }))
-    }
-    if (!Array.isArray(sizes)) {
-      if (sizes === true) {
-        sizes = responsiveSizes.map(width => ({
-          width,
-          breakpoint: width
-        }))
-      } else {
-        sizes = [{}]
-      }
-    }
-
-    sizes = (sizes as Array<ImageSize>).map((size) => {
-      if (!size.media) {
-        size.media = size.breakpoint ? `(max-width: ${size.breakpoint}px)` : ''
-      }
-      const { url } = $img(src, {
-        ...options,
-        modifiers: {
-          ...modifiers,
-          width: size.width || null,
-          format: size.format || null
-        }
-      })
-      size.url = url
-      return size
+  for (const presetName in globalOptions.presets) {
+    $img[presetName] = (source: string, _options: ImageOptions = {}) => $img(source, {
+      ...globalOptions.presets[presetName],
+      ..._options
     })
-    return sizes
   }
 
-  $img.getResolution = async (source: string, options: ImageOptions = {} as any) => {
-    const { image } = parseImage(source, {
-      ...options,
-      modifiers: {
-        ...options.modifiers,
-        // these modifiers are used to reduce files size and keep resolution
-        format: 'jpg',
-        quality: 1
-      }
-    })
+  $img.$observer = createObserver(globalOptions.intersectOptions)
 
-    const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
-    const absoluteUrl = isRemoteUrl(image.url) ? image.url : internalUrl + image.url
-    const { width, height } = await getMeta(absoluteUrl, getCache(context))
-
-    return {
-      width,
-      height
-    }
-  }
-
-  $img.getMeta = async (source: string, options: ImageOptions = {} as ImageOptions) => {
-    const { image } = parseImage(source, {
-      ...options,
-      modifiers: {
-        ...options.modifiers,
-        width: 30,
-        quality: 40
-      }
-    })
-
-    const meta = { placeholder: image.url }
-
-    if (typeof image.getMeta === 'function') {
-      Object.assign(meta, await image.getMeta())
-    } else {
-      const internalUrl = context.ssrContext ? context.ssrContext.internalUrl : ''
-      const absoluteUrl = isRemoteUrl(image.url) ? image.url : internalUrl + image.url
-      Object.assign(meta, await getMeta(absoluteUrl, getCache(context)))
-    }
-
-    return meta
-  }
-
-  $img.$observer = createObserver(intersectOptions)
+  $img.sizes = (input: string, sizes: InputSizes, options: ImageOptions) => getSizes(ctx, input, sizes, options)
+  $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
 
   return $img
+}
+
+async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
+  const { image } = resolveImage(ctx, input, { ...options })
+
+  const meta = {}
+
+  if (typeof image.getMeta === 'function') {
+    Object.assign(meta, await image.getMeta())
+  } else {
+    if (process.server && !hasProtocol(image.url)) {
+      const url = requrl(ctx.nuxtContext.ssrContext.req)
+      image.url = joinURL(url, image.url) // TODO: Is modification safe?
+    }
+    Object.assign(meta, await imageMeta(ctx, image.url))
+  }
+
+  return meta
 }
 
 async function fetchPayload (page, context) {
@@ -260,61 +130,55 @@ async function fetchPayload (page, context) {
   }
 }
 
-function printObserver (onMatch) {
-  if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
-    return
+function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
+  if (typeof input !== 'string') {
+    throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
 
-  const mediaQueryList = window.matchMedia('print')
-  mediaQueryList.addListener((query) => {
-    if (query.matches) {
-      onMatch()
-    }
-  })
-}
-
-function intersectionObserver (onMatch, options) {
-  const observer = (typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(onMatch, {
-    rootMargin: '50px',
-    ...options
-  }) : {}) as IntersectionObserver
-
-  return observer
-}
-
-function createObserver (intersectionOptions: object) {
-  const callbackType = { intersect: 'onIntersect', print: 'onPrint' }
-  const elementCallbackMap = {}
-  function intersectionCallback (entries, imgObserver) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const lazyImage = entry.target
-        const callback = elementCallbackMap[lazyImage.__unique]
-        if (typeof callback === 'function') {
-          callback(callbackType.intersect)
-        }
-        delete elementCallbackMap[lazyImage.__unique]
-        imgObserver.unobserve(lazyImage)
+  if (input.startsWith('data:') || (hasProtocol(input) && !ctx.allow(input))) {
+    return {
+      input,
+      provider: null,
+      preset: null,
+      image: {
+        url: input,
+        isStatic: false
       }
-    })
+    }
   }
 
-  printObserver(() => {
-    Object.values(elementCallbackMap).forEach((callback: any) => callback(callbackType.print))
-  })
+  const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
+  const preset = getPreset(ctx, options.preset)
 
-  const intersectObserver = intersectionObserver(intersectionCallback, intersectionOptions)
+  const image = provider.getImage(input, { ...defaults, ...options })
+
+  if (process.server && !hasProtocol(image.url)) {
+    const url = requrl(ctx.nuxtContext.ssrContext.req)
+    image.url = joinURL(url, image.url)
+  }
 
   return {
-    add (target, component, unique) {
-      // add unique id to recognize target
-      target.__unique = unique || target.id || target.__vue__._uid
-      elementCallbackMap[target.__unique] = component
-      intersectObserver.observe(target)
-    },
-    remove (target) {
-      delete elementCallbackMap[target.__unique]
-      intersectObserver.unobserve(target)
-    }
+    input,
+    provider,
+    preset,
+    image
   }
+}
+
+function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
+  const provider = ctx.options.providers[name]
+  if (!provider) {
+    throw new Error('Unknown provider: ' + name)
+  }
+  return provider
+}
+
+function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
+  if (!name) {
+    return {}
+  }
+  if (!ctx.options.presets[name]) {
+    throw new Error('Unknown preset: ' + name)
+  }
+  return ctx.options.presets[name]
 }
