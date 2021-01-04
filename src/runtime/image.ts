@@ -3,6 +3,8 @@ import type { CreateImageOptions, ImagePreset, ImageSize, ImageOptions, ImageMod
 import { getMeta } from './meta'
 import { cleanDoubleSlashes, getFileExtension, isRemoteUrl } from './utils'
 
+let pagePayload = null
+
 function getCache (context) {
   if (!context.cache) {
     if (context.ssrContext && context.ssrContext.cache) {
@@ -24,6 +26,12 @@ export function createImage (context, { providers, defaultProvider, presets, int
     map[preset.name] = preset
     return map
   }, {})
+
+  if ('app' in context) {
+    context.app.router.afterEach((page) => {
+      fetchPayload(page, context)
+    })
+  }
 
   function getProvider (name: string) {
     const provider = providers[name]
@@ -91,10 +99,10 @@ export function createImage (context, { providers, defaultProvider, presets, int
      * Handle full static render
      */
     // @ts-ignore
-    if (typeof window !== 'undefined' && typeof window.$nuxt._pagePayload !== 'undefined') {
+    if (global.$nuxt) {
       // @ts-ignore
-      const jsonPData = window.$nuxt._pagePayload.data[0]
-      if (jsonPData.nuxtImageMap[providerUrl]) {
+      const jsonPData = pagePayload
+      if (jsonPData && 'nuxtImageMap' in jsonPData && jsonPData.nuxtImageMap[providerUrl]) {
         // Hydration with hash
         image.url = jsonPData.nuxtImageMap[providerUrl]
       } else if (image.isStatic) {
@@ -234,6 +242,22 @@ export function createImage (context, { providers, defaultProvider, presets, int
   $img.$observer = createObserver(intersectOptions)
 
   return $img
+}
+
+async function fetchPayload (page, context) {
+  if (!context.nuxtState) {
+    context.beforeNuxtRender(({ nuxtState }) => {
+      pagePayload = nuxtState.data[0]
+    })
+  } else {
+    try {
+      // @ts-ignore
+      const payload = await window.__NUXT_IMPORT__(decodeURI(page.path.replace(/\/$/, '')), encodeURI(context.nuxtState.staticAssetsBase + page.path + 'payload.js'))
+      pagePayload = payload.data[0]
+    } catch (e) {
+      pagePayload = (context.nuxtState.data || [{}])[0] || {}
+    }
+  }
 }
 
 function printObserver (onMatch) {

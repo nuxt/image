@@ -30,6 +30,7 @@ const operationsGenerator = createOperationsGenerator({
 
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { width, height, fit, format, ...providerModifiers } = modifiers
 
     if (width || height) {

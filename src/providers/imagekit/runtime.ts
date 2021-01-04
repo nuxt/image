@@ -16,7 +16,7 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'pad_resize',
       fill: 'force',
       inside: 'at_max',
-      outside: 'at_least',
+      outside: 'at_least'
     },
     background (value) {
       if (value.startsWith('#')) {
@@ -28,7 +28,6 @@ const operationsGenerator = createOperationsGenerator({
   joinWith: ',',
   formatter: (key, value) => `${key}-${value}`
 })
-
 
 export default <RuntimeProvider> {
   getImage (src: string, modifiers: ImageModifiers, options: any) {
