@@ -31,7 +31,7 @@ export default function(providerOptions) {
 
 - `providerOptions`: The provider options that defined in `nuxt.config`.
 - `runtime`: The absolute path to runtime file.
-- `runtimeOptions`: Public options to use in runtime. Do not pass any secret info here because these option will use in client side.
+- `runtimeOptions`: Public options to use in runtime. Do not pass any secret info here because these options will be used in client side.
 - `middleware`: A server middleware to optimize images.
 
 
