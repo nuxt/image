@@ -13,3 +13,4 @@ If you looking for a specific provider outside of this list, you can [create you
 - [`Twicpics`](/providers/twicpics)
 - [`Fastly`](/providers/fastly)
 - [`Imgix`](/providers/imgix)
+- [`Storyblok`](/providers/storyblok)
