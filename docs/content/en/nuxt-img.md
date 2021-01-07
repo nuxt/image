@@ -147,7 +147,7 @@ Note that you should define set in the ascending order of their width or break p
 
 ### Simple string formatted usage
 
-I this case you should create a comma separated list of sizes and breakpoints. Separate `breakpoint` and `width` of a set with `:`.
+In this case you should create a comma separated list of sizes and breakpoints. Separate `breakpoint` and `width` of a set with `:`.
 
 ```vue{}[index.vue]
 <template>
