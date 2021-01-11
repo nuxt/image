@@ -122,7 +122,7 @@ async function fetchPayload (page, context) {
   } else {
     try {
       // @ts-ignore
-      const payload = await window.__NUXT_IMPORT__(decodeURI(page.path.replace(/\/$/, '')), encodeURI(context.nuxtState.staticAssetsBase + page.path + 'payload.js'))
+      const payload = await window.__NUXT_IMPORT__(decodeURI(page.path.replace(/\/$/, '')), encodeURI(window.$nuxt.getStaticAssetsPath(`${page.path}payload.js`)))
       pagePayload = payload.data[0]
     } catch (e) {
       pagePayload = (context.nuxtState.data || [{}])[0] || {}
