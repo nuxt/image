@@ -64,7 +64,7 @@ export interface ResolvedImage {
 }
 
 export interface $Image {
-  (source: string, options: ImageOptions): void
+  (source: string, options: ImageOptions): RuntimeImage
   [preset: string]: (source: string) => any
 }
 

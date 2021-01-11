@@ -5,19 +5,14 @@
   "repository": "nuxt/image",
   "license": "MIT",
   "sideEffects": false,
-  "exports": {
-    ".": "./dist/module.js",
-    "./": "./",
-    "./runtime": "./dist/runtime.mjs"
-  },
   "main": "dist/module.js",
   "types": "dist/types.d.ts",
   "files": [
-    "dist",
-    "templates"
+    "dist"
   ],
   "scripts": {
-    "build": "siroc build",
+    "build": "siroc build && yarn build:runtime",
+    "build:runtime": "tsc -p tsconfig.runtime.json && copyfiles \"src/runtime/**/*\" -e \"**/*.ts\" -u 2 dist/runtime",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
@@ -50,6 +45,7 @@
     "@types/jest": "latest",
     "@vue/test-utils": "latest",
     "babel-eslint": "latest",
+    "copyfiles": "^2.4.1",
     "eslint": "latest",
     "jest": "latest",
     "jsdom": "latest",

@@ -1,4 +1,4 @@
-import type { OperationGeneratorConfig } from '../types/image'
+import type { OperationGeneratorConfig } from '../../types/image'
 
 export default function imageFetch (url: string) {
   return fetch(cleanDoubleSlashes(url))
@@ -79,4 +79,15 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
 
 export function generateAlt (src: string = '') {
   return src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+}
+
+export function parseSize (input = '') {
+  if (typeof input === 'number') {
+    return input
+  }
+  if (typeof input === 'string') {
+    if (input.replace('px', '').match(/^\d+$/g)) {
+      return parseInt(input, 10)
+    }
+  }
 }

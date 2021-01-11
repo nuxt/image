@@ -4,19 +4,11 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "lib" : [
-      "DOM"
-    ],
     "types": [
-      "@nuxt/types",
       "@types/node"
     ],
     "paths": {
       "@nuxt/image/*": [ "src/*" ]
     }
-  },
-  "include": [
-    "src"
-  ]
+  }
 }

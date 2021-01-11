@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import { createImage, NuxtPicture, NuxtImg } from '@nuxt/image/runtime'
+import { createImage} from '@nuxt/image/runtime'
+import NuxtImg from '@nuxt/image/runtime/components/nuxt-img.vue'
+import NuxtPicture from '@nuxt/image/runtime/components/nuxt-picture.vue'
 
 <%=options.providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')%>
 

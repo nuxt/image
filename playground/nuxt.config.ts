@@ -1,5 +1,5 @@
 import type { NuxtConfig } from '@nuxt/types'
-import '../src/types'
+import type { } from '../src/types'
 
 export default <NuxtConfig> {
   components: true,

@@ -3,9 +3,7 @@ import type { Matcher } from 'allowlist'
 import { hasProtocol, joinURL } from 'ufo'
 import requrl from 'requrl'
 import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
-import { createObserver } from './observer'
-import { imageMeta } from './meta'
-import { getSizes, InputSizes } from './sizes'
+import { imageMeta } from './utils/meta'
 
 export interface ImageCTX {
   options: CreateImageOptions,
@@ -71,6 +69,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
     return image
   }
 
+  $img.options = globalOptions
   ctx.$img = $img
 
   for (const presetName in globalOptions.presets) {
@@ -80,9 +79,6 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
     })
   }
 
-  $img.$observer = createObserver(globalOptions.intersectOptions)
-
-  $img.sizes = (input: string, sizes: InputSizes, options: ImageOptions) => getSizes(ctx, input, sizes, options)
   $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
 
   return $img

@@ -1,5 +1,5 @@
-import type { ImageInfo } from '../types/image'
-import type { ImageCTX } from './image'
+import type { ImageInfo } from '../../types/image'
+import type { ImageCTX } from '../image'
 
 export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
   const cache = getCache(ctx)
@@ -15,7 +15,7 @@ export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
     return {
       width: 0,
       height: 0,
-      placeholder: ''
+      ratio: 0
     }
   })
 
@@ -34,8 +34,8 @@ async function _imageMeta (url): Promise<ImageInfo> {
       img.onload = () => {
         const meta = {
           width: img.width,
-          height: img.height
-          // placeholder: url
+          height: img.height,
+          ratio: img.width / img.height
         }
         resolve(meta)
       }
@@ -47,11 +47,11 @@ async function _imageMeta (url): Promise<ImageInfo> {
   if (process.server) {
     const imageMeta = require('image-meta').default
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
-    const { width, height, mimeType } = await imageMeta(data)
+    const { width, height } = await imageMeta(data)
     const meta = {
       width,
-      height
-      // placeholder: `data:${mimeType};base64,${data.toString('base64')}`
+      height,
+      ratio: width / height
     }
 
     return meta

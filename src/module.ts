@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import defu from 'defu'
 import type { ModuleOptions } from './types'
-import { pick, pkg, pkgDir } from './utils'
+import { pick, pkg } from './utils'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders } from './provider'
 import { createIPXMiddleware } from './ipx'
@@ -34,18 +34,20 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const imageOptions = pick(options, ['sizes', 'presets', 'provider', 'intersectOptions', 'accept'])
   const providers = await resolveProviders(nuxt, options)
 
+  // Transpile and alias runtime
+  const runtimeDir = resolve(__dirname, 'runtime')
+  nuxt.options.alias['@nuxt/image/runtime'] = runtimeDir
+  nuxt.options.build.transpile.push(runtimeDir, 'allowlist', 'defu', 'ufo')
+
+  // Add plugin
   addPlugin({
     fileName: 'image.js',
-    src: resolve(pkgDir, 'templates/plugin.js'),
+    src: resolve(runtimeDir, 'plugin.js'),
     options: {
       imageOptions,
       providers
     }
   })
-
-  // Transpile and alias image src
-  nuxt.options.alias['@nuxt/image/runtime'] = resolve(__dirname, 'runtime')
-  nuxt.options.build.transpile.push(pkgDir, 'allowlist', 'defu', 'ufo')
 
   addServerMiddleware({
     path: options.local.baseURL,
