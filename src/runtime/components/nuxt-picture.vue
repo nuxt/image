@@ -1,20 +1,31 @@
 <template>
-  <!--  v-if="layout === 'responsive'" -->
   <div class="wrapper__responsive">
     <div class="sizer__responsive" :style="{ paddingTop: sizerHeight }" />
-    <img v-if="placeholder" aria-hidden="true" :src="placeholderSrc" class="placeholder" :style="{ opacity: isLoaded ? 0 : 1 }">
+    <img
+      v-if="placeholder"
+      aria-hidden="true"
+      class="placeholder"
+      :src="placeholderSrc"
+      :style="{ opacity: isLoaded ? 0 : 1 }"
+    >
     <picture v-if="isVisible">
       <source v-for="(source, index) of sources" :key="index" v-bind="source">
       <img
         v-if="isVisible"
         class="img"
+        decoding="async"
+        alt="nAlt"
+        :referrerpolicy="referrerpolicy"
+        :usemap="usemap"
+        :longdesc="longdesc"
+        :ismap="ismap"
+        :crossorigin="crossorigin"
         :src="legacySource.srcset[0].split(' ')[0]"
         :srcset="legacySource.srcset"
-        v-bind="imgAttributes"
-        decoding="async"
         :style="{ opacity: isLoaded ? 1 : 0 }"
         :loading="isLazy ? 'lazy' : 'eager'"
         @load="onImageLoaded"
+        @onbeforeprint="onPrint"
       >
     </picture>
   </div>
@@ -44,6 +55,7 @@ export default {
     longdesc: { type: String, default: undefined },
     ismap: { type: Boolean, default: false },
     crossorigin: { type: Boolean, default: false },
+    loading: { type: String, default: 'lazy' },
 
     // modifiers
     format: { type: String, required: false, default: undefined },
@@ -57,15 +69,10 @@ export default {
     provider: { type: String, required: false, default: undefined },
 
     // extras
-    placeholder: { type: [Boolean, String], default: false },
-    loading: {
-      type: [String, Boolean],
-      default: true,
-      validator: value => ['lazy', 'eager', true, false].includes(value)
-    }
+    placeholder: { type: [Boolean, String], default: false }
   },
   data () {
-    const isLazy = this.loading === true || this.loading === 'lazy'
+    const isLazy = this.loading === 'lazy'
     return {
       isLazy,
       lazyState: isLazy ? LazyState.IDLE : LazyState.LOADED
@@ -87,25 +94,12 @@ export default {
     nAlt () {
       return this.alt ?? generateAlt(this.src)
     },
-    imgAttributes () {
-      return {
-        alt: this.nAlt,
-        referrerpolicy: this.referrerpolicy,
-        usemap: this.usemap,
-        longdesc: this.longdesc,
-        ismap: this.ismap,
-        crossorigin: this.crossorigin
-      }
-    },
     isTransparent () {
       return ['png', 'webp', 'gif'].includes(this.originalFormat)
     },
     originalFormat () {
       return getFileExtension(this.src)
     },
-    // <nuxt-picture src="/images/example.jpg" />
-    // nFormat = webp
-    // nLegacyFormat = jpg
     nFormat () {
       if (this.format) { return this.format }
       if (this.originalFormat === 'svg') { return 'svg' }
@@ -131,8 +125,6 @@ export default {
     },
     legacySource () {
       return this.sources[this.sources.length - 1]
-      // return this.sources.find(s => s.legacy)
-      // return this.sources.find(s => s.format === this.nLegacyFormat)
     },
     sources () {
       if (this.nFormat === 'svg') {
@@ -205,14 +197,6 @@ export default {
       return this.ratio ? `${this.ratio * 100}%` : '100%'
     }
   },
-  watch: {
-    src () {
-      if (this.isLazy) {
-        this.unobserve()
-        this.$nextTick(() => this.observe())
-      }
-    }
-  },
   mounted () {
     if (this.isLazy) {
       this.observe()
@@ -231,28 +215,21 @@ export default {
         delete this._removeObserver
       }
     },
-    onError (err) {
-      this.error = err.message
-      console.error(err.message) // eslint-disable-line no-console
-      this.$emit('error', err)
-    },
-    onImageLoaded () {
-      if (this.lazyState === LazyState.LOADED) {
-        return
-      }
-      this.$nextTick(() => {
+    onImageLoaded (event) {
+      this.$emit('load', event)
+      if (this.lazyState !== LazyState.LOADED) {
         this.lazyState = LazyState.LOADED
-        this.$emit('load')
-      })
+      }
     },
     onObservered (type) {
-      if (type === 'intersect') {
-        // OK, element is visible, Hoooray
-        this.lazyState = LazyState.LOADING
-      } else if (type === 'print') {
-        this.unobserve()
-        this.lazyState = LazyState.LOADED
+      if (type === 'print') {
+        return this.onPrint()
       }
+      this.lazyState = LazyState.LOADING
+    },
+    onPrint () {
+      this.lazyState = LazyState.LOADED
+      this.unobserve()
     }
   }
 }

@@ -9,11 +9,9 @@ let observerInstance: Observer
 let observerIdCtr = 1
 const OBSERVER_ID_KEY = '__observer_id__'
 
-export function getObserver (): Observer {
+export function getObserver (): Observer | false {
   if (typeof IntersectionObserver === 'undefined') {
-    // TODO
-    const noop = () => {}
-    return { add: noop, remove: noop, supported: false }
+    return false
   }
 
   if (observerInstance) {
@@ -54,9 +52,13 @@ export function getObserver (): Observer {
   return observerInstance
 }
 
-export function useObserver (el, cb): Function {
+export function useObserver (el, fn): Function {
   const observer = getObserver()
-  observer.add(el, cb)
+  if (!observer) {
+    fn('unsupported')
+    return () => {}
+  }
+  observer.add(el, fn)
   return () => observer.remove(el)
 }
 
@@ -65,7 +67,7 @@ function onPrint (fn) {
     return
   }
   const mediaQueryList = window.matchMedia('print')
-  mediaQueryList.addListener((query) => {
+  mediaQueryList.addEventListener('change', (query) => {
     if (query.matches) {
       fn()
     }
