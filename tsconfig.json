@@ -8,7 +8,10 @@
       "@types/node"
     ],
     "paths": {
-      "@nuxt/image/*": [ "src/*" ]
+      "~image/*": [ "src/runtime/*" ],
+      "~image": [
+        "src/runtime"
+      ]
     }
   }
 }

@@ -1,6 +1,6 @@
 import type { ProviderGetImage } from 'src'
 import { joinURL } from 'ufo'
-import { createMapper, createOperationsGenerator } from '@nuxt/image/runtime'
+import { createMapper, createOperationsGenerator } from '~image'
 
 const fits = createMapper({
   fill: 'resize',

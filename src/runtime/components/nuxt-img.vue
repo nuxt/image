@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { generateAlt } from '@nuxt/image/runtime'
+import { generateAlt } from '~image'
 
 export default {
   name: 'NuxtImg',

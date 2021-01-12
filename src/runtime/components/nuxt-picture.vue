@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { generateAlt, getFileExtension, useObserver, parseSize } from '@nuxt/image/runtime'
+import { generateAlt, getFileExtension, useObserver, parseSize } from '~image'
 
 export const LazyState = {
   IDLE: 'idle',

@@ -1,6 +1,6 @@
 import type { ProviderGetImage } from 'src'
 import { joinURL } from 'ufo'
-import { createOperationsGenerator } from '@nuxt/image/runtime'
+import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

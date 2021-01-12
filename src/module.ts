@@ -36,7 +36,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   // Transpile and alias runtime
   const runtimeDir = resolve(__dirname, 'runtime')
-  nuxt.options.alias['@nuxt/image/runtime'] = runtimeDir
+  nuxt.options.alias['~image'] = runtimeDir
   nuxt.options.build.transpile.push(runtimeDir, 'allowlist', 'defu', 'ufo')
 
   // Add plugin
