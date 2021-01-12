@@ -1,9 +1,16 @@
 <template>
-  <img :width="width" :height="height" :src="nSrc" :alt="nAlt">
+  <img
+    :width="width"
+    :height="height"
+    :src="nSrc"
+    :alt="nAlt"
+  >
 </template>
 
 <script>
-import { generateAlt } from '~image'
+import { generateAlt, useObserver } from '~image'
+
+const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
 export default {
   name: 'NuxtImg',
@@ -15,6 +22,7 @@ export default {
     width: { type: [String, Number], required: false, default: undefined },
     height: { type: [String, Number], required: false, default: undefined },
     alt: { type: String, required: false, default: undefined },
+    loading: { type: String, default: undefined },
 
     // modifiers
     format: { type: String, required: false, default: undefined },
@@ -26,12 +34,20 @@ export default {
     preset: { type: String, required: false, default: undefined },
     provider: { type: String, required: false, default: undefined }
   },
+  data () {
+    return {
+      usePlaceholder: this.loading === 'lazy'
+    }
+  },
   computed: {
     nAlt () {
       return this.alt ?? generateAlt(this.src)
     },
     nSrc () {
-      return this.$img(this?.src, {
+      if (this.usePlaceholder) {
+        return EMPTY_GIF
+      }
+      return this.$img(this.src, {
         provider: this.provider,
         preset: this.preset,
         modifiers: this.modifiers
@@ -47,7 +63,27 @@ export default {
         fit: this.fit
       }
     }
+  },
+  mounted () {
+    if (this.usePlaceholder) {
+      this.observe()
+    }
+  },
+  beforeDestroy () {
+    this.unobserve()
+  },
+  methods: {
+    observe () {
+      this._removeObserver = useObserver(this.$el, () => {
+        this.usePlaceholder = false
+      })
+    },
+    unobserve () {
+      if (this._removeObserver) {
+        this._removeObserver()
+        delete this._removeObserver
+      }
+    }
   }
 }
-
 </script>
