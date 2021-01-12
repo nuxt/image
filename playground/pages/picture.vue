@@ -1,12 +1,20 @@
 <template>
   <div>
     <div>
+      <select v-model="src">
+        <option value="/images/damavand.jpg">
+          Damavand
+        </option>
+        <option value="/images/colors.jpg">
+          Colors
+        </option>
+      </select>
       <!-- <h2>SVG image inside project</h2>
       <NuxtPicture :loading="true" src="/images/nuxt-white.svg" width="40" height="40" /> -->
-      <NuxtPicture :loading="true" src="/images/nuxt-white.svg" width="40" height="40" />
+      <NuxtPicture placeholder src="/images/nuxt-white.svg" width="40" height="40" />
 
       <h2>JPEG image inside project</h2>
-      <NuxtPicture placeholder width="600" height="300" src="/images/damavand.jpg" />
+      <NuxtPicture placeholder width="600" height="300" :src="src" />
       <!-- <div style="height: 2000px;" /> -->
       <h2>JPEG image from remote url</h2>
       <!-- <NuxtPicture placeholder width="600" height="331" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" /> -->
@@ -22,6 +30,16 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      src: '/images/damavand.jpg'
+    }
+  }
+}
+</script>
 
 <style scoped>
 .container {

@@ -3,16 +3,29 @@
     <div class="container">
       <h2>NuxtImg vs Img</h2>
       <pre>&lt;img src="/images/damavand.jpg" width="200" height="auto"&gt;</pre>
+
+      <p>
+        <select v-model="src">
+          <option value="/images/damavand.jpg">
+            Damavand
+          </option>
+          <option value="/images/colors.jpg">
+            Colors
+          </option>
+        </select>
+      </p>
+      <div style="height:2000px;" />
+
       <NuxtImg
         ref="nuxtImg"
-        src="/images/damavand.jpg"
+        :src="src"
         width="200"
         height="100"
+        loading="lazy"
       />
-      <img ref="img" src="/images/damavand.jpg" width="200" height="auto">
+      <img ref="img" src="/images/damavand.jpg" width="200" height="100" loading="lazy">
       <pre>{{ nuxtImgCode }}</pre>
-
-      <h2>SVG image from remote url</h2>
+      </p><h2>SVG image from remote url</h2>
       <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg" width="400" height="400" />
 
       <h2>JPEG image inside project</h2>
@@ -49,6 +62,7 @@
 
       <h2>JPEG image on Imagekit</h2>
       <NuxtImg provider="imagekit" src="/img/plant.jpeg" />
+      </p<select>
     </div>
   </div>
 </template>
@@ -57,7 +71,8 @@
 export default {
   data () {
     return {
-      nuxtImgCode: ''
+      nuxtImgCode: '',
+      src: '/images/damavand.jpg'
     }
   },
   mounted () {
