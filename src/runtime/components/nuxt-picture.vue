@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { generateAlt, getFileExtension, useObserver, parseSize } from '~image'
 
 export const LazyState = {

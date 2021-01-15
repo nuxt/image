@@ -7,7 +7,7 @@
   >
 </template>
 
-<script>
+<script lang="ts">
 import { generateAlt, useObserver } from '~image'
 
 const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
