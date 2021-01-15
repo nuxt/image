@@ -7,7 +7,8 @@ const BuiltInProviders = [
   'fastly',
   'imagekit',
   'imgix',
-  'local',
+  'ipx',
+  'static',
   'twicpics'
 ]
 

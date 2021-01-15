@@ -1,23 +1,8 @@
 import { allowList } from 'allowlist'
-import type { Matcher } from 'allowlist'
 import { hasProtocol, joinURL } from 'ufo'
-import requrl from 'requrl'
-import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
+import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
-
-export interface ImageCTX {
-  options: CreateImageOptions,
-  allow: Matcher<any>
-  nuxtContext: {
-    ssrContext: any
-    cache?: any
-    isDev: boolean
-    isStatic: boolean
-    nuxtState?: any
-  }
-  $img?: Function
-}
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   const ctx: ImageCTX = {
@@ -27,43 +12,30 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   }
 
   function $img (input: string, options: ImageOptions = {}) {
-    const { image } = resolveImage(ctx, input, options)
+    const image = resolveImage(ctx, input, options)
 
     // Full static
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.$nuxt && window.$nuxt._pagePayload) {
-      // @ts-ignore
-      const jsonPData = window.$nuxt._pagePayload.data[0]
-      if (jsonPData.nuxtImageMap[input]) {
-        // Hydration with hash
-        image.url = jsonPData.nuxtImageMap[input]
-      } else if (image.isStatic) {
-        image.url = input
+    if (process.static && image.isStatic) {
+      const staticImagesBase = '/_nuxt/image' // TODO
+
+      if (process.client && 'fetchPayload' in window.$nuxt) {
+        const mappedURL = (window.$nuxt as any)?._pagePayload?.pagePayload?.data?.[0]?._img[image.url]
+        image.url = mappedURL || input
+        return image
       }
-      // Return original source on cache fail in full static mode
-      return image
-    }
 
-    // Client-Side rendering without server
-    if (typeof window !== 'undefined' && !ctx.nuxtContext.isDev && ctx.nuxtContext.isStatic && image.isStatic) {
-      image.url = input
-      return image
-    }
-
-    const nuxtState = ctx.nuxtContext.nuxtState || ctx.nuxtContext.ssrContext.nuxt
-    if (!nuxtState.data || !nuxtState.data.length) { nuxtState.data = [{}] }
-    const data = nuxtState.data[0]
-    data.nuxtImageMap = data.nuxtImageMap || {}
-
-    if (data.nuxtImageMap[image.url]) {
-      // Hydration with hash
-      image.url = data.nuxtImageMap[image.url]
-    } else if (typeof ctx.nuxtContext.ssrContext?.mapImage === 'function') {
-      // Full Static
-      const mappedUrl = ctx.nuxtContext.ssrContext?.mapImage({ input, image, options })
-      if (mappedUrl) {
-        image.url = mappedUrl
-        data.nuxtImageMap[image.url] = mappedUrl
+      if (process.server) {
+        const { ssrContext } = ctx.nuxtContext
+        const ssrData = ssrContext.nuxt.data[0]
+        const staticImages = ssrData._img = ssrData._img || {}
+        const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
+        if (typeof mapToStatic === 'function') {
+          const mappedURL = mapToStatic(image)
+          if (mappedURL) {
+            staticImages[image.url] = mappedURL
+            image.url = joinURL(staticImagesBase, mappedURL)
+          }
+        }
       }
     }
 
@@ -86,17 +58,13 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 }
 
 async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
-  const { image } = resolveImage(ctx, input, { ...options })
+  const image = resolveImage(ctx, input, { ...options })
 
   const meta = {}
 
   if (typeof image.getMeta === 'function') {
     Object.assign(meta, await image.getMeta())
   } else {
-    if (process.server && !hasProtocol(image.url)) {
-      const url = requrl(ctx.nuxtContext.ssrContext.req)
-      image.url = joinURL(url, image.url) // TODO: Is modification safe?
-    }
     Object.assign(meta, await imageMeta(ctx, image.url))
   }
 
@@ -110,39 +78,28 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   if (input.startsWith('data:') || (hasProtocol(input) && !ctx.allow(input))) {
     return {
-      input,
-      provider: null,
-      preset: null,
-      image: {
-        url: input,
-        isStatic: false
-      }
+      url: input
     }
   }
 
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
 
-  const _options = { ...defaults, ...options }
+  const _options = { ...defaults, ...preset, ...options }
   if (_options.modifiers?.width) {
     _options.modifiers.width = parseSize(_options.modifiers.width)
   }
   if (_options.modifiers?.height) {
     _options.modifiers.height = parseSize(_options.modifiers.height)
   }
-  const image = provider.getImage(input, _options)
 
-  if (process.server && !hasProtocol(image.url)) {
-    const url = requrl(ctx.nuxtContext.ssrContext.req)
-    image.url = joinURL(url, image.url)
+  const image = provider.getImage(input, _options, ctx)
+
+  if (_options.modifiers?.format && !image.format) {
+    image.format = _options.modifiers.format
   }
 
-  return {
-    input,
-    provider,
-    preset,
-    image
-  }
+  return image
 }
 
 function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {

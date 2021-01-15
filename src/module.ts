@@ -10,11 +10,11 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
-    provider: 'local',
+    provider: 'static',
     presets: [],
-    local: {
-      baseURL: '/_img/ipx',
-      dir: nuxt.options.dir.static,
+    static: {
+      baseURL: '/_img',
+      dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
       clearCache: false,
       cacheDir: 'node_modules/.cache/nuxt-image', /* TODO */
       accept: [],
@@ -23,13 +23,13 @@ async function imageModule (moduleOptions: ModuleOptions) {
     sizes: [320, 420, 768, 1024, 1200, 1600],
     internalUrl: '',
     providers: {},
-    accept: ['http://localhost'],
+    accept: [],
     intersectOptions: {}
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
-  options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'local'
+  options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
 
   const imageOptions = pick(options, ['sizes', 'presets', 'provider', 'intersectOptions', 'accept'])
   const providers = await resolveProviders(nuxt, options)
@@ -50,8 +50,8 @@ async function imageModule (moduleOptions: ModuleOptions) {
   })
 
   addServerMiddleware({
-    path: options.local.baseURL,
-    handle: createIPXMiddleware(options.local)
+    path: options.static.baseURL,
+    handle: createIPXMiddleware(options.static)
   })
 
   nuxt.options.build.loaders = defu({

@@ -4,9 +4,14 @@ export function createIPXMiddleware (options) {
   const ipx = new IPX({
     inputs: [
       {
-        name: 'default',
+        name: 'remote',
         adapter: 'remote',
         accept: [/.*/]
+      },
+      {
+        name: 'static',
+        adapter: 'fs',
+        dir: options.dir
       }
     ],
     cache: {

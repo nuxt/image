@@ -18,7 +18,7 @@ export interface ImageProviders {
 export interface ModuleOptions extends ImageProviders {
   provider: string
   presets: Partial<ImageOptions>[]
-  local: {
+  static: {
     baseURL: string
     dir: string
     clearCache: boolean | string

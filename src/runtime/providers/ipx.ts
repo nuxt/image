@@ -33,12 +33,11 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
     delete modifiers.height
   }
 
-  src = hasProtocol(src) ? src : joinURL('http://localhost:3000', src)
-
   const operationsString = operationsGenerator(modifiers) || '_'
 
+  const type = hasProtocol(src) ? 'remote' : 'static'
+
   return {
-    url: joinURL(baseURL, 'default', format, operationsString, encodeURIComponent(src)),
-    isStatic: true
+    url: joinURL(baseURL, type, format, operationsString, src)
   }
 }

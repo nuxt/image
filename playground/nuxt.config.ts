@@ -3,7 +3,7 @@ import type { } from '../src/types'
 
 export default <NuxtConfig> {
   components: true,
-  target: 'server',
+  target: 'static',
   modules: [
     '../src/module.ts'
   ],

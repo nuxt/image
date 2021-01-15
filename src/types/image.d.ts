@@ -1,4 +1,4 @@
-import type { AllowlistOptions } from 'allowlist'
+import type { AllowlistOptions, Matcher } from 'allowlist'
 
 export interface ImageModifiers {
   width: number
@@ -6,6 +6,48 @@ export interface ImageModifiers {
   fit: string
   format: string
   [key: string]: any
+}
+
+export interface ImageOptions {
+  provider?: string,
+  preset?: string,
+  modifiers?: Partial<ImageModifiers>
+  [key: string]: any
+}
+
+// eslint-disable-next-line no-use-before-define
+export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCTX) => ResolvedImage
+
+export interface ImageProvider {
+  defaults?: any
+  getImage: ProviderGetImage
+}
+
+export interface CreateImageOptions {
+  providers: {
+    [name: string]: {
+      defaults: any,
+      provider: ImageProvider
+    }
+  }
+  presets: { [name: string]: ImageOptions }
+  provider: string
+  intersectOptions: object
+  responsiveSizes: number[]
+  allow: AllowlistOptions
+}
+
+export interface ImageCTX {
+  options: CreateImageOptions,
+  allow: Matcher<any>
+  nuxtContext: {
+    ssrContext: any
+    cache?: any
+    isDev: boolean
+    isStatic: boolean
+    nuxtState?: any
+  }
+  $img?: Function
 }
 
 export interface ImageSize {
@@ -16,55 +58,21 @@ export interface ImageSize {
   url: string;
 }
 
-export interface ImageOptions {
-  provider?: string,
-  preset?: string,
-  modifiers?: Partial<ImageModifiers>
-  [key: string]: any
-}
-
 export interface ImageInfo {
   width: number,
   height: number,
   placeholder?: string,
 }
 
-export interface RuntimeImage {
+export interface ResolvedImage {
   url: string,
-  isStatic?: boolean,
+  format?: string
+  isStatic?: boolean
   getMeta?: () => Promise<ImageInfo>
 }
 
-export type ProviderGetImage = (src: string, options: ImageOptions) => RuntimeImage
-
-export interface RuntimeProvider {
-  defaults?: any
-  getImage: ProviderGetImage
-}
-
-export interface CreateImageOptions {
-  providers: {
-    [name: string]: {
-      defaults: any,
-      provider: RuntimeProvider
-    }
-  }
-  presets: { [name: string]: ImageOptions }
-  provider: string
-  intersectOptions: object
-  responsiveSizes: number[]
-  allow: AllowlistOptions
-}
-
-export interface ResolvedImage {
-  input: string
-  image: RuntimeImage
-  provider: RuntimeProvider
-  preset: ImageOptions
-}
-
 export interface $Image {
-  (source: string, options: ImageOptions): RuntimeImage
+  (source: string, options: ImageOptions): ResolvedImage
   [preset: string]: (source: string) => any
 }
 
@@ -84,3 +92,5 @@ export interface OperationGeneratorConfig {
     [key: string]: OperationMapper
   }
 }
+
+export type MapToStatic = (image: ResolvedImage) => string

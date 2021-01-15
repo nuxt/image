@@ -1,5 +1,4 @@
-import type { ImageInfo } from '../../types/image'
-import type { ImageCTX } from '../image'
+import type { ImageInfo, ImageCTX } from '../../types/image'
 
 export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
   const cache = getCache(ctx)
