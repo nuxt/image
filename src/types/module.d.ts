@@ -1,15 +1,8 @@
 import type { ImageOptions } from './image'
 
-export interface Provider {
-  runtime: string
-  runtimeOptions: any
-}
-
-export type ProviderFactory = (options: any) => Provider
-
 export interface InputProvider {
   name?: string
-  provider?: string | ProviderFactory
+  provider?: string
   options?: any
   baseURL?: string
 }

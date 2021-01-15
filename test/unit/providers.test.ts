@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import { cleanDoubleSlashes } from '../../src/runtime/utils'
-import { local, cloudinary, twicpics, fastly, imgix, imagekit } from '../../src/providers'
+import { local, cloudinary, twicpics, fastly, imgix, imagekit } from '../../src/runtime/providers'
 
 const images = [
   {
