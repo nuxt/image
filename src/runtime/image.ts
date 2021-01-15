@@ -4,6 +4,7 @@ import { hasProtocol, joinURL } from 'ufo'
 import requrl from 'requrl'
 import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
 import { imageMeta } from './utils/meta'
+import { parseSize } from './utils'
 
 export interface ImageCTX {
   options: CreateImageOptions,
@@ -122,7 +123,14 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
 
-  const image = provider.getImage(input, { ...defaults, ...options })
+  const _options = { ...defaults, ...options }
+  if (_options.modifiers?.width) {
+    _options.modifiers.width = parseSize(_options.modifiers.width)
+  }
+  if (_options.modifiers?.height) {
+    _options.modifiers.height = parseSize(_options.modifiers.height)
+  }
+  const image = provider.getImage(input, _options)
 
   if (process.server && !hasProtocol(image.url)) {
     const url = requrl(ctx.nuxtContext.ssrContext.req)
