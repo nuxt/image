@@ -20,7 +20,6 @@ async function imageModule (moduleOptions: ModuleOptions) {
       accept: [],
       sharp: {}
     },
-    sizes: [320, 420, 768, 1024, 1200, 1600],
     internalUrl: '',
     providers: {},
     accept: [],
@@ -28,6 +27,13 @@ async function imageModule (moduleOptions: ModuleOptions) {
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
+  // Sanitize sizes
+  if (!Array.isArray(options.sizes)) {
+    options.sizes = [320, 420, 768, 1024, 1200, 1600]
+  } else {
+    // Sort sizes from lowest to highest
+    options.sizes.sort((s1, s2) => s1 - s2)
+  }
 
   options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
 

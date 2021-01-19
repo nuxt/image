@@ -26,7 +26,7 @@ export interface ModuleOptions extends ImageProviders {
     accept: string[]
     sharp: { [key: string]: any }
   }
-  sizes: number[],
+  sizes?: number[],
   internalUrl?: string
   accept: any
   intersectOptions: object
