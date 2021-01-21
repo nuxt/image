@@ -13,9 +13,14 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 
   function $img (input: string, options: ImageOptions = {}) {
     const image = resolveImage(ctx, input, options)
+    if (image.isStatic) {
+      handleStaticImage(image, input)
+    }
+    return image
+  }
 
-    // Full static
-    if (process.static && image.isStatic) {
+  function handleStaticImage (image: ResolvedImage, input: string) {
+    if (process.static) {
       const staticImagesBase = '/_nuxt/image' // TODO
 
       if (process.client && 'fetchPayload' in window.$nuxt) {
@@ -37,9 +42,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
           }
         }
       }
+    } else if (process.env.NODE_ENV === 'production') {
+      image.url = input
     }
-
-    return image
   }
 
   $img.options = globalOptions
