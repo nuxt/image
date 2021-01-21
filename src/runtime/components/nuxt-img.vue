@@ -4,16 +4,18 @@
     :height="height"
     :src="nSrc"
     :alt="nAlt"
-  >
+    @error="setFallbackImage"
+  />
 </template>
 
 <script lang="ts">
-import { generateAlt, useObserver } from '~image'
+import { generateAlt, useObserver } from "~image";
 
-const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+const EMPTY_GIF =
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
 export default {
-  name: 'NuxtImg',
+  name: "NuxtImg",
   props: {
     // input source
     src: { type: String, required: true },
@@ -32,58 +34,64 @@ export default {
 
     // options
     preset: { type: String, required: false, default: undefined },
-    provider: { type: String, required: false, default: undefined }
+    provider: { type: String, required: false, default: undefined },
+    fallback: { type: String, required: false, default: undefined },
   },
-  data () {
+  data() {
     return {
-      usePlaceholder: this.loading === 'lazy'
-    }
+      usePlaceholder: this.loading === "lazy",
+    };
   },
   computed: {
-    nAlt () {
-      return this.alt ?? generateAlt(this.src)
+    nAlt() {
+      return this.alt ?? generateAlt(this.src);
     },
-    nSrc () {
+    nSrc() {
       if (this.usePlaceholder) {
-        return EMPTY_GIF
+        return EMPTY_GIF;
       }
       return this.$img(this.src, {
         provider: this.provider,
         preset: this.preset,
-        modifiers: this.modifiers
-      }).url
+        modifiers: this.modifiers,
+      }).url;
     },
-    modifiers () {
+    modifiers() {
       return {
         width: this.width,
         height: this.height,
         format: this.format,
         quality: this.quality,
         background: this.background,
-        fit: this.fit
-      }
-    }
+        fit: this.fit,
+      };
+    },
   },
-  mounted () {
+  mounted() {
     if (this.usePlaceholder) {
-      this.observe()
+      this.observe();
     }
   },
-  beforeDestroy () {
-    this.unobserve()
+  beforeDestroy() {
+    this.unobserve();
   },
   methods: {
-    observe () {
+    observe() {
       this._removeObserver = useObserver(this.$el, () => {
-        this.usePlaceholder = false
-      })
+        this.usePlaceholder = false;
+      });
     },
-    unobserve () {
+    unobserve() {
       if (this._removeObserver) {
-        this._removeObserver()
-        delete this._removeObserver
+        this._removeObserver();
+        delete this._removeObserver;
       }
-    }
-  }
-}
+    },
+    setFallbackImage(event) {
+      if (this.fallback) {
+        event.target.src = this.fallback;
+      }
+    },
+  },
+};
 </script>
