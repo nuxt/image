@@ -1,6 +1,6 @@
 {
   "name": "@nuxt/image",
-  "version": "0.2.0-alpha.6",
+  "version": "0.2.0-alpha.7",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
@@ -11,8 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "siroc build && yarn build:runtime",
-    "build:runtime": "makedist --src src/runtime --dist dist/runtime",
+    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
     "dev": "yarn nuxt-ts playground",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
@@ -50,7 +49,7 @@
     "jest": "latest",
     "jsdom": "latest",
     "jsdom-global": "latest",
-    "makedist": "latest",
+    "mkdist": "latest",
     "nuxt-edge": "latest",
     "playwright": "latest",
     "siroc": "latest",
