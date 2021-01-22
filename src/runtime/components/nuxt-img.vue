@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { generateAlt, useObserver } from '~image'
+import { generateAlt, useObserver, parseSize } from '~image'
 
 const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
@@ -93,8 +93,8 @@ export default {
     getResponsive () {
       const sizes = this.$img.getSizes(this.src, {
         sizes: this.sizes,
-        width: this.nWidth,
-        height: this.nHeight,
+        width: parseSize(this.width),
+        height: parseSize(this.height),
         modifiers: this.modifiers
       })
       return {
