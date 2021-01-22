@@ -58,6 +58,8 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   }
 
   $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
+  // eslint-disable-next-line no-use-before-define
+  $img.getSources = (input: string, options: GetSourcesOptions) => getSources(ctx, input, options)
 
   return $img
 }
@@ -123,4 +125,45 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
     throw new Error('Unknown preset: ' + name)
   }
   return ctx.options.presets[name]
+}
+
+interface GetSourcesOptions {
+  formats?: string[]
+  sizes?: string[]
+  modifiers?: any,
+  width?: number,
+  height?: number,
+}
+
+function getSources (ctx: ImageCTX, input: string, opts: GetSourcesOptions) {
+  let widths = [].concat(opts.sizes || ctx.options.sizes)
+  if (opts.width) {
+    widths.push(opts.width)
+    widths.push(opts.width * 2)
+    widths = widths.filter(w => w <= opts.width)
+  }
+  widths = Array.from(new Set(widths))
+    .sort((s1, s2) => s1 - s2) // unique & lowest to highest
+
+  const sizes = []
+  for (const width of widths) {
+    sizes.push({
+      width,
+      height: (opts.height / opts.width) || opts.height
+    })
+  }
+
+  const getURL = (width, height, format) => ctx.$img(input, {
+    modifiers: { ...opts.modifiers, width, height, format }
+  }).url
+
+  const sources = (opts.formats || [undefined]).map((format) => {
+    return {
+      type: format ? `image/${format}` : undefined,
+      sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+      srcset: sizes.map(({ width, height }) => `${getURL(width, height, format)} ${width}w`)
+    }
+  })
+
+  return sources
 }

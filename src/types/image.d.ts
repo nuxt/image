@@ -34,6 +34,7 @@ export interface CreateImageOptions {
   provider: string
   intersectOptions: object
   responsiveSizes: number[]
+  sizes: string[]
   allow: AllowlistOptions
 }
 

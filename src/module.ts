@@ -29,10 +29,8 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
   // Sanitize sizes
   if (!Array.isArray(options.sizes)) {
-    options.sizes = [320, 420, 768, 1024, 1200, 1600]
-  } else {
-    // Sort sizes from lowest to highest
-    options.sizes.sort((s1, s2) => s1 - s2)
+    // https://screensiz.es/
+    options.sizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840]
   }
 
   options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
