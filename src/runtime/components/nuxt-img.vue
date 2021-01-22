@@ -4,6 +4,7 @@
     :height="height"
     :src="nSrc"
     :alt="nAlt"
+    v-bind="nAttrs"
   >
 </template>
 
@@ -32,7 +33,8 @@ export default {
 
     // options
     preset: { type: String, required: false, default: undefined },
-    provider: { type: String, required: false, default: undefined }
+    provider: { type: String, required: false, default: undefined },
+    responsive: { type: Boolean, required: false, default: false }
   },
   data () {
     return {
@@ -52,6 +54,20 @@ export default {
         preset: this.preset,
         modifiers: this.modifiers
       }).url
+    },
+    nAttrs () {
+      const attrs: any = {}
+      if (this.responsive) {
+        const sizes = this.$img.getSizes(this.src, {
+          sizes: this.sizes,
+          width: this.nWidth,
+          height: this.nHeight,
+          modifiers: this.modifiers
+        })
+        attrs.sizes = sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`)
+        attrs.srcSet = sizes.map(({ width, src }) => `${src} ${width}w`)
+      }
+      return attrs
     },
     modifiers () {
       return {

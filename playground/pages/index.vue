@@ -29,7 +29,7 @@
       <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg" width="400" height="400" />
 
       <h2>JPEG image inside project</h2>
-      <NuxtImg src="/images/damavand.jpg" />
+      <NuxtImg responsive src="/images/damavand.jpg" />
 
       <h2>JPEG image from remote url</h2>
       <NuxtImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/600px-Aconcagua2016.jpg" />
