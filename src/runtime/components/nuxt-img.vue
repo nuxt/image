@@ -29,6 +29,7 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
+    options: { type: Object, required: false, default: () => {} },
 
     // options
     preset: { type: String, required: false, default: undefined },
@@ -60,7 +61,8 @@ export default {
         format: this.format,
         quality: this.quality,
         background: this.background,
-        fit: this.fit
+        fit: this.fit,
+        options: this.options
       }
     }
   },
