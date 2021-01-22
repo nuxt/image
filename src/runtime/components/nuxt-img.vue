@@ -58,14 +58,9 @@ export default {
     nAttrs () {
       const attrs: any = {}
       if (this.responsive) {
-        const sizes = this.$img.getSizes(this.src, {
-          sizes: this.sizes,
-          width: this.nWidth,
-          height: this.nHeight,
-          modifiers: this.modifiers
-        })
-        attrs.sizes = sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`)
-        attrs.srcSet = sizes.map(({ width, src }) => `${src} ${width}w`)
+        const { sizes, srcSet } = this.getResponsive()
+        attrs.sizes = sizes
+        attrs.srcSet = srcSet
       }
       return attrs
     },
@@ -80,6 +75,12 @@ export default {
       }
     }
   },
+  created () {
+    if (process.server && process.static) {
+      // Force compute sources into ssrContext
+      this.getResponsive()
+    }
+  },
   mounted () {
     if (this.usePlaceholder) {
       this.observe()
@@ -89,6 +90,18 @@ export default {
     this.unobserve()
   },
   methods: {
+    getResponsive () {
+      const sizes = this.$img.getSizes(this.src, {
+        sizes: this.sizes,
+        width: this.nWidth,
+        height: this.nHeight,
+        modifiers: this.modifiers
+      })
+      return {
+        sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+        srcSet: sizes.map(({ width, src }) => `${src} ${width}w`)
+      }
+    },
     observe () {
       this._removeObserver = useObserver(this.$el, () => {
         this.usePlaceholder = false
