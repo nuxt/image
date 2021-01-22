@@ -184,11 +184,27 @@ export default {
           srcset: this.src
         }]
       }
-      return this.$img.getSources(this.src, {
-        formats: this.nLegacyFormat !== this.nFormat ? [this.nLegacyFormat, this.nFormat] : [this.nFormat],
-        modifiers: this.modifiers,
-        sizes: this.sizes
+
+      const formats = this.nLegacyFormat !== this.nFormat
+        ? [this.nLegacyFormat, this.nFormat]
+        : [this.nFormat]
+
+      const sources = formats.map((format) => {
+        const sizes = this.$img.getSizes(this.src, {
+          sizes: this.sizes,
+          width: this.nWidth,
+          height: this.nHeight,
+          modifiers: { ...this.modifiers, format }
+        })
+
+        return {
+          type: `image/${format}`,
+          sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+          srcset: sizes.map(({ width, src }) => `${src} ${width}w`)
+        }
       })
+
+      return sources
     },
     observe () {
       this._removeObserver = useObserver(this.$el, type => this.onObservered(type))
