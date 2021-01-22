@@ -63,7 +63,7 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
-    options: { type: Object, required: false, default: () => {} },
+    modifiers: { type: Object, required: false, default: undefined },
 
     // options
     preset: { type: String, required: false, default: undefined },
@@ -116,12 +116,12 @@ export default {
       }
       return formats[this.nFormat] || this.originalFormat
     },
-    modifiers () {
+    nModifiers () {
       return {
+        ...this.modifiers,
         format: this.format,
         quality: this.quality,
         background: this.background,
-        options: this.options,
         fit: this.fit
       }
     },
@@ -159,7 +159,7 @@ export default {
           srcset: densities.map((density) => {
             const { url } = this.$img(this.src, {
               modifiers: {
-                ...this.modifiers,
+                ...this.nModifiers,
                 width: variant.width * density,
                 height: variant.height ? variant.height * density : undefined,
                 format: variant.format
