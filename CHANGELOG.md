@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/nuxt/image/compare/v0.0.4...v0.2.0) (2021-01-25)
+
+
+### Features
+
+* **nuxt-img:** responsive prop ([#155](https://github.com/nuxt/image/issues/155)) ([3dcee93](https://github.com/nuxt/image/commit/3dcee9322663a10e1e16a7de373c5a483ec2d7b1))
+* $img.getSources and better srcset for `<nuxt-picture>` ([36e039b](https://github.com/nuxt/image/commit/36e039b5ada9d917cfb6eea225b188b56b00768f))
+* add background prop ([ec8d1ce](https://github.com/nuxt/image/commit/ec8d1ce68bfde46e819311b5e62fe5fb9af097a1))
+* allow overiding sharp options ([7df04ca](https://github.com/nuxt/image/commit/7df04ca11eca53ef60074a2fb4aa94ac84870d13))
+* allow top level provider options ([7b47d6e](https://github.com/nuxt/image/commit/7b47d6e8ded1e3f78522b300b4543a44f98fbb87))
+* allow/disallow remote urls ([0856343](https://github.com/nuxt/image/commit/08563435ab8606409d68c1e214442f201ee88cd8))
+* fix full static support ([caaff86](https://github.com/nuxt/image/commit/caaff86daea8adc540524e2deed8cb832893cf6f))
+* imagekit provider implementation and tests ([#109](https://github.com/nuxt/image/issues/109)) ([fa8be15](https://github.com/nuxt/image/commit/fa8be154f76194a38afa0ced75e529736a39b95b))
+* support modifiers prop for components ([#154](https://github.com/nuxt/image/issues/154)) ([6fe9e8f](https://github.com/nuxt/image/commit/6fe9e8fa87a7f3b905b3bf3f7c20ebc36b027050))
+* **nuxt-img:** handle loading=lazy with observer ([abb32a1](https://github.com/nuxt/image/commit/abb32a1e6e814daefe7fd7e7a145405f7687fd7b))
+* support `NUXT_IMAGE_PROVIDER` environment variable ([1385eb8](https://github.com/nuxt/image/commit/1385eb8d3304c1c821bb4154519b7e253e177090))
+* support assets using remote adapter ([acff75c](https://github.com/nuxt/image/commit/acff75ca54501aa74e12191538ab07bb75f65e7b))
+* support providers and presets with props ([189cfb9](https://github.com/nuxt/image/commit/189cfb9d9496d52b184f314c2c10881108fe00aa))
+* support types for config ([4d7bf06](https://github.com/nuxt/image/commit/4d7bf065cda9365c88e7485d8d6f5c7d9cac6793))
+
+
+### Bug Fixes
+
+* add types for pick utility and fix issues with imageOptions ([#156](https://github.com/nuxt/image/issues/156)) ([63aaa8a](https://github.com/nuxt/image/commit/63aaa8ae0c4b5bf0786f5a809f194a4d0eb91b02))
+* **img:** handle ststic images in with prod server target ([95dd0c6](https://github.com/nuxt/image/commit/95dd0c6848e14c93e2a6e0d983548044c6d87067))
+* clean up `undefined` values ([bf9e040](https://github.com/nuxt/image/commit/bf9e0408f4af2b291ed9c7254bf0c7f46f85f6d4))
+* cleanup double slashes outside of provider runtime ([d71b03a](https://github.com/nuxt/image/commit/d71b03aa575264170c79548cd9b6d2b915b73565))
+* disable blur filter on custom placeholder ([3f277a3](https://github.com/nuxt/image/commit/3f277a3ea20491dfe13a5e0a85039f95ec34e384))
+* do not generate multiple sizes for SVG files ([7e385c3](https://github.com/nuxt/image/commit/7e385c3369ec3b3171f88c51be4437d0e1e75233))
+* do not render image without src ([cbeada1](https://github.com/nuxt/image/commit/cbeada1d77244fc234b2a17e1fd2060c72ac3628))
+* do not sent data urls to provider ([565445f](https://github.com/nuxt/image/commit/565445f27f03198fd876cdf7916cc0f81dbe02c8))
+* improve error readability ([#79](https://github.com/nuxt/image/issues/79)) ([763f215](https://github.com/nuxt/image/commit/763f2152654986d8976f8cefe33364f591ada540))
+* merge merge presets with inline modifiers ([164af06](https://github.com/nuxt/image/commit/164af0621556bd4fd106b230ed92c4de69199574))
+* opacity ([1220c6a](https://github.com/nuxt/image/commit/1220c6a4f726797f036fc1a469f26480a401be0a))
+* parse width and height modifiers ([dd2bf78](https://github.com/nuxt/image/commit/dd2bf786371272252a6edf518f38835be03d00d9))
+* remove resolution server middleware ([fc34a73](https://github.com/nuxt/image/commit/fc34a73c71c77904133cb941425b05a790933c0b))
+* set correct width and height for svg ([05e3bfe](https://github.com/nuxt/image/commit/05e3bfe87208132beaef3dabefde2f3ea0f273c3))
+* sizes as array should overwrites defaults ([339b7dd](https://github.com/nuxt/image/commit/339b7dd9756a7870b28f5c84e53f079a3220621c))
+* **cloudinary:** fit types, auto format & quality  ([#76](https://github.com/nuxt/image/issues/76)) ([74ef445](https://github.com/nuxt/image/commit/74ef445b5ffd740e28722fd68a45192234fc52cc))
+* **module:** add package name to transpile list as well ([f97b34a](https://github.com/nuxt/image/commit/f97b34aaaaf8ed519d661c19c952e94e21e82d30))
+* **picture:** call `getMeta` with current arguments ([d43daf2](https://github.com/nuxt/image/commit/d43daf2b00ebf3bf1402158126a243270fb5e45d))
+* **twicpics:** fix minor issues and adds custom operations ([#132](https://github.com/nuxt/image/issues/132)) ([5a4e5d3](https://github.com/nuxt/image/commit/5a4e5d3fc90ac33f3c8262cdb9daa373f4187fc0))
+* reduce placeholders quality ([b20a8f9](https://github.com/nuxt/image/commit/b20a8f98c91ebdcf0a0f1c66bcb21ee13fc79833))
+* rename `nuxt-image` to `nuxt-img` ([df3b92c](https://github.com/nuxt/image/commit/df3b92c52adc5519911b1535a6c5fc64b1fae1c9))
+* sanitize backgroun modifier ([c1f3fb4](https://github.com/nuxt/image/commit/c1f3fb4afb6cb7bd1108ac6a83dc969fb06bb4ae))
+* **picture:** show image after load ([709d8e7](https://github.com/nuxt/image/commit/709d8e753410bb813886967e47de56ec295632d0))
+
 ### [0.0.4](https://github.com/nuxt/image/compare/v0.0.2...v0.0.4) (2020-11-10)
 
 
