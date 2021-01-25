@@ -63,6 +63,7 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
+    modifiers: { type: Object, required: false, default: undefined },
 
     // options
     preset: { type: String, required: false, default: undefined },
@@ -122,8 +123,9 @@ export default {
       }
       return formats[this.nFormat] || this.originalFormat
     },
-    modifiers () {
+    nModifiers () {
       return {
+        ...this.modifiers,
         format: this.format,
         quality: this.quality,
         background: this.background,
@@ -194,7 +196,10 @@ export default {
           sizes: this.sizes,
           width: this.nWidth,
           height: this.nHeight,
-          modifiers: { ...this.modifiers, format }
+          modifiers: {
+            ...this.nModifiers,
+            format
+          }
         })
 
         return {
