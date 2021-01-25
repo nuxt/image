@@ -86,21 +86,14 @@ Presets are collections of pre-defined configurations for your projects. Presets
   ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img preset="avatar" src="/nuxt-icon.png"></nuxt-img>
-  </div>
-
-  </code-block>
-</code-group>
+  </code-group>
 
 See:
 - [How to use presets](/components/nuxt-img#preset)
 
 ## `providers`
 
-In order to create and use [custom provider](/custom-provider), you need to use `providers` option and define your custom providers.
+In order to create and use [custom provider](/advanced/custom-provider), you need to use `providers` option and define your custom providers.
 
 <code-group>
   <code-block label="nuxt.config.js" active>
@@ -131,7 +124,7 @@ In order to create and use [custom provider](/custom-provider), you need to use 
 
 <!-- writing custom providers -->
 See:
-- [How to use provider](/nuxt-img#provider)
+- [How to use provider](/components/nuxt-img#provider)
 - [List of internal providers](/providers)
 - [Create custom provider](/advanced/custom-provider)
 

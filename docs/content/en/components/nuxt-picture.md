@@ -25,13 +25,6 @@ If you want to use modern and optimized formats like `webp` or `avif` and suppor
   ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-picture src="/nuxt-icon.png" placeholder />
-  </div>
-
-  </code-block>
 </code-group>
 
 When you use `<nuxt-picture>`, It automatically calculates aspect ratio of the image and set size of the image based on the aspect ratio. The image's width will be equal to width of parent element in DOM and its height calculates based on the aspect ratio.
@@ -42,7 +35,7 @@ Don't worry you can control the aspect ratio of the image using `width` and `hei
 
 <alert type="info">
 
-`<nuxt-picture>` supports all available props of [`<nuxt-img>`](/nuxt-img) with these additional props.
+`<nuxt-picture>` supports all available props of [`<nuxt-img>`](/components/nuxt-img) with these additional props.
 
 </alert>
 
@@ -88,14 +81,6 @@ If you add the `placeholder` prop, Nuxt image will create the placeholder image:
 ```
 
   </code-block>
-
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-picture placeholder src="https://images.unsplash.com/photo-1606661247834-eb1f16814366?w=1950&q=80" height="300" format="jpg"></nuxt-picture>
-  </div>
-
-  </code-block>
 </code-group>
 
 You can set a custom placeholder by using a source in the `placeholder` prop:
@@ -108,14 +93,6 @@ You can set a custom placeholder by using a source in the `placeholder` prop:
   <nuxt-picture placeholder="https://images.unsplash.com/photo-1606661247834-eb1f16814366?w=20&q=80" src="https://images.unsplash.com/photo-1606661247834-eb1f16814366?w=1950&q=80" />
 </template>
 ```
-
-  </code-block>
-
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-picture placeholder="https://images.unsplash.com/photo-1606661247834-eb1f16814366?w=20&q=80" src="https://images.unsplash.com/photo-1606661247834-eb1f16814366?w=1950&q=80" height="300"></nuxt-picture>
-  </div>
 
   </code-block>
 </code-group>

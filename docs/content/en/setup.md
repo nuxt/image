@@ -41,7 +41,7 @@ export default {
 
 <alert type="success">
 
-That's it! You can can start using [`<nuxt-img>`](/nuxt-img) and [`<nuxt-picture>`](/nuxt-picture) components in your Nuxt app ✨
+That's it! You can can start using [`<nuxt-img>`](/components/nuxt-img) and [`<nuxt-picture>`](/components/nuxt-picture) components in your Nuxt app ✨
 
 </alert>
 

@@ -26,13 +26,6 @@ position: 201
   ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img src="/nuxt-icon.png" />
-  </div>
-
-  </code-block>
 </code-group>
 
 ## `src`
@@ -106,13 +99,6 @@ export default {
 ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img provider="cloudinary" src="/remote/nuxt-org/blog/going-full-static/main.png" width="300" height="169"></nuxt-img>
-  </div>
-
-  </code-block>
 </code-group>
 
 <!-- TODO: multiple providers -->
@@ -150,13 +136,6 @@ export default {
   },
 };
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img preset="cover" src="/nuxt-icon.png" width="150" height="150"></nuxt-img>
-  </div>
 
   </code-block>
 </code-group>
@@ -198,13 +177,6 @@ There are five standard values you can use with this property.
 ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-  <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
-  </div>
-
-  </code-block>
 </code-group>
 
 <alert type="info">
@@ -231,21 +203,6 @@ In addition of standard operation, every provider can have their own operation. 
   />
 </template>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      height="169"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :modifiers="{ roundCorner: '0:100'}"
-    />
-    <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
-      Rounding values
-    </a>
-  </div>
 
   </code-block>
 </code-group>

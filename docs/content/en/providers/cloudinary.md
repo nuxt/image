@@ -20,7 +20,7 @@ export default {
 
 ## Cloudinary `fit` values
 
-Beside [the standard values for `fit` property](/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
+Beside [the standard values for `fit` property](/components/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
 
 * `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
 * `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
@@ -32,7 +32,7 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 ## Cloudinary operations
 
-Beside the [standard operations](/nuxt-img), you can also pass the following Cloudinary-specific transformation params to `operations`:
+Beside the [standard operations](/components/nuxt-img), you can also pass the following Cloudinary-specific transformation params to `operations`:
 
 ### `rotate`
 
@@ -78,21 +78,6 @@ Round the specified corners of the desired image. If pass only a number or `max`
 ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      height="169"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ roundCorner: 'max'}"
-    />
-    <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
-      Rounding values
-    </a>
-  </div>
-
-  </code-block>
 </code-group>
 
 ### `gravity`
@@ -127,19 +112,6 @@ Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces
   }
 </script>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      fit="fill"
-      height="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ gravity: 'subject'}"
-    />
-  </div>
 
   </code-block>
 </code-group>
@@ -177,19 +149,6 @@ Apply a filter or an effect on the desired asset. See [Effects for images](https
 ```
 
   </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      fit="fill"
-      height="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ effect: 'grayscale'}"
-    />
-  </div>
-
-  </code-block>
 </code-group>
 
 ### `color`
@@ -222,17 +181,6 @@ Color to use when text captions, shadow effect and colorize effect are in use.
   }
 </script>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ effect: 'colorize:50', color: 'red' }"
-    />
-  </div>
 
   </code-block>
 </code-group>
@@ -274,17 +222,6 @@ Adjust the opacity of the desired image. Scale: 0 to 100 (%).
   }
 </script>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ opacity: 50 }"
-    />
-  </div>
 
   </code-block>
 </code-group>
