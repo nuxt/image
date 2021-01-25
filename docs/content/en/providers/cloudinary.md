@@ -1,11 +1,11 @@
 ---
-title: Cloudinary Provider
+title: Cloudinary
 description: ''
-position: 11
 category: Providers
+position: 401
 ---
 
-Integration between [Cloudinary](https://cloudinary.com) and the image module.  
+Integration between [Cloudinary](https://cloudinary.com) and the image module.
 To use this provider you just need to specify the base url of your project in cloudinary.
 
 ```js{}[nuxt.config.js]
@@ -36,9 +36,9 @@ Beside the [standard operations](/nuxt-img), you can also pass the following Clo
 
 ### `rotate`
 
-Accepted values: 
-  * Any degree number, or 
-  * `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`  
+Accepted values:
+  * Any degree number, or
+  * `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
 
 To rotate or flip a given asset by certain degrees, or automatically based on orientation.
 
@@ -82,7 +82,7 @@ Round the specified corners of the desired image. If pass only a number or `max`
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       height="169"
       provider="cloudinary"
       src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ roundCorner: 'max'}"
@@ -97,7 +97,7 @@ Round the specified corners of the desired image. If pass only a number or `max`
 
 ### `gravity`
 
-Detemine which part of the image to cropped or to place the overlay.  
+Detemine which part of the image to cropped or to place the overlay.
 Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces`, `multipleFacesCenter`, `north`, `northEast`, `northWest`, `west`, `southWest`, `south`, `southEast`, `east`, `center`
 
 <code-group>
@@ -133,7 +133,7 @@ Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       fit="fill"
       height="300"
       provider="cloudinary"
@@ -181,7 +181,7 @@ Apply a filter or an effect on the desired asset. See [Effects for images](https
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       fit="fill"
       height="300"
       provider="cloudinary"
@@ -228,7 +228,7 @@ Color to use when text captions, shadow effect and colorize effect are in use.
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       provider="cloudinary"
       src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ effect: 'colorize:50', color: 'red' }"
     />
@@ -280,7 +280,7 @@ Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       provider="cloudinary"
       src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ opacity: 50 }"
     />

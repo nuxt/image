@@ -1,9 +1,39 @@
 ---
-title: Image Component
+title: <nuxt-img>
 description: "List of available props for image component"
-position: 7
 category: Components
+position: 201
 ---
+
+## `<nuxt-img>`
+
+`<nuxt-img>` is a replacement for native `<img>` tag with no additional styles and supporting all native attributes.
+
+- Use built-in static provder to optimize local and remote images
+- Converts `src` to provider URL
+- Automatically resize images based on `width` and `height` attributes
+- Support `loading="lazy"` with wider range of browsers (see [native support](https://caniuse.com/loading-lazy-attr))
+- Automatically generate `alt` attribute based on `src`
+- Optionally generate responsive `srcSet` and `sizes` attrs with `responsive` prop
+
+<code-group>
+  <code-block label="index.vue" active>
+
+  ```vue{}[index.vue]
+  <template>
+    <nuxt-img src="/nuxt-icon.png" />
+  </template>
+  ```
+
+  </code-block>
+  <code-block label="Preview">
+
+  <div class="text-center p-4 bg-gray-800 rounded-b-md">
+    <nuxt-img src="/nuxt-icon.png" />
+  </div>
+
+  </code-block>
+</code-group>
 
 ## `src`
 
@@ -19,7 +49,7 @@ The `src` has other capabilities in `nuxt-img`, you can provide provider and pre
 
 ## `width`
 
-Specify width of the image.  
+Specify width of the image.
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
 - This value will set as `width` attribute of DOM element
@@ -31,7 +61,7 @@ Specify width of the image.
 
 ## `height`
 
-Specify height of the image.  
+Specify height of the image.
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
 - This value will set as `height` attribute of DOM element
@@ -108,8 +138,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
 export default {
   image: {
     presets: [
-      {
-        name: "jpg-cover",
+      cover: {
         modifiers: {
           fit: "cover",
           format: "jpg",
@@ -126,84 +155,11 @@ export default {
   <code-block label="Preview">
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img preset="jpg-cover" src="/nuxt-icon.png" width="150" height="150"></nuxt-img>
+    <nuxt-img preset="cover" src="/nuxt-icon.png" width="150" height="150"></nuxt-img>
   </div>
 
   </code-block>
 </code-group>
-
-## `sizes`
-
-The `sizes` attribute specifies the URL of the image to use in different situations. With `sizes`, the browser does the work of figuring out which image is best to load and render.  
-In `nuxt-img` you can simply provide various sizes and width breakpoints to generate `srcset`. Resized images are automatically created from the image `src`.
-
-A set consists of `width` and `breakpoint` or `media`:
-
-- `width`: Width of generated image for this set
-- `breakpoint`: Minimum width of viewport to show the image
-- `media`: Custom media query for the set, using `media` will override `breakpoint`
-
-Note that you should define set in the ascending order of their width or break point.
-
-### Simple string formatted usage
-
-In this case you should create a comma separated list of sizes and breakpoints. Separate `breakpoint` and `width` of a set with `:`.
-
-```vue{}[index.vue]
-<template>
-  <nuxt-img sizes="300,300:600,600:900" ... />
-  <!--               |   |   |   |   | -->
-  <!--------- width -^   |   |   |   | -->
-  <!--                   |   |   |   | -->
-  <!------- breakpoint --^   |   |   | -->
-  <!---------------- width --^   |   | -->
-  <!--                           |   | -->
-  <!--------------- breakpoint --^   | -->
-  <!------------------------ width --^ -->
-</template>
-```
-
-### Advances array formatted usage
-
-Using array will help you to create custom media queries of different sizes and have more conrtol on different viewport sizes.
-
-```html{}[index.vue]
-<template>
-  <nuxt-img :sizes="sizes" ... />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        sizes: [
-          {
-            width: 300,
-          },
-          {
-            breakpoint: 300,
-            width: 600,
-          },
-          {
-            media: "(min-width: 600px)", // same as breakpoint: 600
-            width: 900,
-          },
-        ],
-      };
-    },
-  };
-</script>
-```
-
-## `layout`
-
-The layout for the image.
-
-- `responsive`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
-
-## `alt`
-
-This prop specifies an alternate text for an image.
 
 ## `format`
 
@@ -223,7 +179,7 @@ The quality for generated images.
 
 ## `fit`
 
-The `fit` property specifies the size of the images.  
+The `fit` property specifies the size of the images.
 There are five standard values you can use with this property.
 
 - `cover`: (default) Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit
@@ -257,9 +213,9 @@ Some providers provide additional values beside the above standard ones, such as
 
 </alert>
 
-## `operations`
+## `modifiers`
 
-In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [transformations](/providers/cloudinary#cloudinary-operations). Using `operations` prop you can use these transformations.
+In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [transformations](/providers/cloudinary#cloudinary-operations). Using `modifiers` prop you can use these transformations.
 
 <code-group>
   <code-block label="index.vue" active>
@@ -271,21 +227,9 @@ In addition of standard operation, every provider can have their own operation. 
     src="/remote/nuxt-org/blog/going-full-static/main.png"
     width="300"
     height="169"
-    :operations="imageOperations"
+    :modifiers="{ roundCorner: '0:100' }"
   />
 </template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          roundCorner: '0:100'
-        }
-      }
-    }
-  }
-</script>
 ```
 
   </code-block>
@@ -293,10 +237,10 @@ In addition of standard operation, every provider can have their own operation. 
 
   <div class="text-center p-4 bg-gray-800 rounded-b-md">
     <nuxt-img
-      width="300" 
+      width="300"
       height="169"
       provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ roundCorner: '0:100'}"
+      src="/remote/nuxt-org/blog/going-full-static/main.png" :modifiers="{ roundCorner: '0:100'}"
     />
     <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
       Rounding values

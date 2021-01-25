@@ -17,7 +17,7 @@ export interface ImageProviders {
 
 export interface ModuleOptions extends ImageProviders {
   provider: string
-  presets: Partial<ImageOptions>[]
+  presets: { [name: string]: ImageOptions }
   static: {
     baseURL: string
     dir: string
@@ -26,7 +26,7 @@ export interface ModuleOptions extends ImageProviders {
     accept: string[]
     sharp: { [key: string]: any }
   }
-  sizes?: number[],
+  sizes?: (number|string)[],
   internalUrl?: string
   accept: any
   intersectOptions: object

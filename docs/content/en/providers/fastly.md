@@ -1,8 +1,8 @@
 ---
-title: Fastly Provider
+title: Fastly
 description: ''
-position: 12
 category: Providers
+position: 402
 ---
 
 Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimization-api)

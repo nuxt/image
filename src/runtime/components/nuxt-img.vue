@@ -30,6 +30,7 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
+    modifiers: { type: Object, required: false, default: undefined },
 
     // options
     preset: { type: String, required: false, default: undefined },
@@ -52,7 +53,7 @@ export default {
       return this.$img(this.src, {
         provider: this.provider,
         preset: this.preset,
-        modifiers: this.modifiers
+        modifiers: this.nModifiers
       }).url
     },
     nAttrs () {
@@ -64,8 +65,9 @@ export default {
       }
       return attrs
     },
-    modifiers () {
+    nModifiers () {
       return {
+        ...this.modifiers,
         width: this.width,
         height: this.height,
         format: this.format,
