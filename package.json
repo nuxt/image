@@ -13,12 +13,12 @@
   "scripts": {
     "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
     "dev": "yarn nuxt playground",
-    "docs:dev": "yarn nuxt dev docs",
     "docs:build": "cd docs && nuxt generate",
+    "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
-    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
     "test": "true",
+    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
   },
