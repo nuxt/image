@@ -4,11 +4,12 @@
     :height="height"
     :src="nSrc"
     :alt="nAlt"
+    v-bind="nAttrs"
   >
 </template>
 
 <script lang="ts">
-import { generateAlt, useObserver } from '~image'
+import { generateAlt, useObserver, parseSize } from '~image'
 
 const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
@@ -33,7 +34,8 @@ export default {
 
     // options
     preset: { type: String, required: false, default: undefined },
-    provider: { type: String, required: false, default: undefined }
+    provider: { type: String, required: false, default: undefined },
+    responsive: { type: Boolean, required: false, default: false }
   },
   data () {
     return {
@@ -54,6 +56,15 @@ export default {
         modifiers: this.nModifiers
       }).url
     },
+    nAttrs () {
+      const attrs: any = {}
+      if (this.responsive) {
+        const { sizes, srcSet } = this.getResponsive()
+        attrs.sizes = sizes
+        attrs.srcSet = srcSet
+      }
+      return attrs
+    },
     nModifiers () {
       return {
         ...this.modifiers,
@@ -66,6 +77,12 @@ export default {
       }
     }
   },
+  created () {
+    if (process.server && process.static) {
+      // Force compute sources into ssrContext
+      this.getResponsive()
+    }
+  },
   mounted () {
     if (this.usePlaceholder) {
       this.observe()
@@ -75,6 +92,18 @@ export default {
     this.unobserve()
   },
   methods: {
+    getResponsive () {
+      const sizes = this.$img.getSizes(this.src, {
+        sizes: this.sizes,
+        width: parseSize(this.width),
+        height: parseSize(this.height),
+        modifiers: this.modifiers
+      })
+      return {
+        sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+        srcSet: sizes.map(({ width, src }) => `${src} ${width}w`)
+      }
+    },
     observe () {
       this._removeObserver = useObserver(this.$el, () => {
         this.usePlaceholder = false
