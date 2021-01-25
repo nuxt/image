@@ -7851,20 +7851,6 @@ make-error@^1.1.1:
   resolved "https://registry.yarnpkg.com/make-error/-/make-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"
   integrity sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==
 
-makedist@latest:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/makedist/-/makedist-0.0.5.tgz#245fa9c980f2943b6d256973a5c83511f4a61147"
-  integrity sha512-g9IasBJNHV1tAqB5ejo+VZLsO0a8iHa/Z3RV/Y1gsAKOkxeWgLYtSLq3MHAVoGL5SbZhPf0ZeB9qyoksjJNmzw==
-  dependencies:
-    defu "^3.2.2"
-    esbuild "^0.8.32"
-    fs-extra "^9.0.1"
-    globby "^11.0.2"
-    jiti "^1.2.0"
-    mri "^1.1.6"
-    upath "^2.0.1"
-    vue-template-compiler "^2.6.12"
-
 makeerror@1.0.x:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/makeerror/-/makeerror-1.0.11.tgz#e01a5c9109f2af79660e4e8b9587790184f5a96c"
@@ -8260,6 +8246,20 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+
+mkdist@latest:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/mkdist/-/mkdist-0.1.1.tgz#6d80e08fefd5a6159034f7ce6bbc27007754086f"
+  integrity sha512-bX5TmI/pyiAp9lw36ddbYE9b8U5NqGI1FDMduAyN1I5e+WM1Zw0uPjq4kQlnNKW1Ax15BR+IlhpXyk5wJSJXMQ==
+  dependencies:
+    defu "^3.2.2"
+    esbuild "^0.8.32"
+    fs-extra "^9.0.1"
+    globby "^11.0.2"
+    jiti "^1.2.0"
+    mri "^1.1.6"
+    upath "^2.0.1"
+    vue-template-compiler "^2.6.12"
 
 modify-values@^1.0.0:
   version "1.0.1"

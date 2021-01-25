@@ -13,9 +13,14 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 
   function $img (input: string, options: ImageOptions = {}) {
     const image = resolveImage(ctx, input, options)
+    if (image.isStatic) {
+      handleStaticImage(image, input)
+    }
+    return image
+  }
 
-    // Full static
-    if (process.static && image.isStatic) {
+  function handleStaticImage (image: ResolvedImage, input: string) {
+    if (process.static) {
       const staticImagesBase = '/_nuxt/image' // TODO
 
       if (process.client && 'fetchPayload' in window.$nuxt) {
@@ -37,9 +42,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
           }
         }
       }
+    } else if (process.env.NODE_ENV === 'production') {
+      image.url = input
     }
-
-    return image
   }
 
   $img.options = globalOptions
@@ -53,6 +58,8 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   }
 
   $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
+  // eslint-disable-next-line no-use-before-define
+  $img.getSizes = (input: string, options: GetSizesOptions) => getSizes(ctx, input, options)
 
   return $img
 }
@@ -118,4 +125,37 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
     throw new Error('Unknown preset: ' + name)
   }
   return ctx.options.presets[name]
+}
+
+interface GetSizesOptions {
+  sizes?: string[]
+  modifiers?: any,
+  width?: number,
+  height?: number,
+}
+
+function getSizes (ctx: ImageCTX, input: string, opts: GetSizesOptions) {
+  let widths = [].concat(opts.sizes || ctx.options.sizes)
+  if (opts.width) {
+    widths.push(opts.width)
+    widths.push(opts.width * 2)
+    widths = widths.filter(w => w <= opts.width)
+  }
+  widths = Array.from(new Set(widths))
+    .sort((s1, s2) => s1 - s2) // unique & lowest to highest
+
+  const sizes = []
+
+  for (const width of widths) {
+    const height = (opts.height / opts.width) || opts.height
+    sizes.push({
+      width,
+      height,
+      src: ctx.$img(input, {
+        modifiers: { ...opts.modifiers, width, height }
+      }).url
+    })
+  }
+
+  return sizes
 }

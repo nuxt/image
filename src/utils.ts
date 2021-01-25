@@ -10,9 +10,8 @@ export function hash (value: string, length = 6) {
   return hasha(value).substr(0, length)
 }
 
-// TODO: Typechecks
-export function pick (obj: any, keys: string[]) {
-  const newobj = {}
+export function pick<O extends Record<any, any>, K extends keyof O> (obj: O, keys: K[]): Pick<O, K> {
+  const newobj = {} as Pick<O, K>
   for (const key of keys) {
     newobj[key] = obj[key]
   }

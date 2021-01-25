@@ -33,13 +33,13 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: string
   intersectOptions: object
-  responsiveSizes: number[]
-  allow: AllowlistOptions
+  sizes?: (number | string)[]
+  accept: AllowlistOptions
 }
 
 export interface ImageCTX {
   options: CreateImageOptions,
-  allow: Matcher<any>
+  accept: Matcher<any>
   nuxtContext: {
     ssrContext: any
     cache?: any
