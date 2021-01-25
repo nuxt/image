@@ -88,6 +88,8 @@ export default {
       }
     },
     setFallbackImage (event) {
+      if (this._errored) { return }
+      this._errored = true
       if (this.fallback) {
         event.target.src = this.fallback
       }
