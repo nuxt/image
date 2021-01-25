@@ -1,13 +1,13 @@
-import theme from '@nuxt/content-theme-docs'
+import { withDocus } from 'docus'
+import imageModule from '../src/module'
 
-export default theme({
+export default withDocus({
   loading: { color: '#00DC82' },
   buildModules: [
     // https://github.com/bdrtsky/nuxt-ackee
-    'nuxt-ackee'
-  ],
-  modules: [
-    '@nuxt/image'
+    'nuxt-ackee',
+    '@nuxt/typescript-build',
+    imageModule,
   ],
   image: {
     accept: ['images.unsplash.com'],
@@ -17,12 +17,8 @@ export default theme({
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
-    providers: {
-      random: '~~/providers/random'
-    },
-    presets: [
-      {
-        name: 'jpg-cover',
+    presets: {
+      cover: {
         modifiers: {
           fit: 'cover',
           format: 'jpg',
@@ -30,15 +26,14 @@ export default theme({
           height: 300
         }
       },
-      {
-        name: 'avatar',
+      avatar: {
         modifiers: {
           format: 'jpg',
           width: 50,
           height: 50
         }
       }
-    ]
+    }
   },
   ackee: {
     server: 'https://ackee.nuxtjs.com',
