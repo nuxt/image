@@ -1,6 +1,7 @@
 ---
-title: Options
-description: ''
+menuTitle: Options
+title: Module Options
+description: 'Nuxt Image is configured with sensible defaults.'
 position: 301
 category: API
 ---
@@ -19,7 +20,7 @@ export default {
 
 List of predefined sizes for responsive images. This sizes will use to generate resized and optimized version of an image.
 
-```js{}[nuxt.config.js]
+```ts [nuxt.config.js]
 export default {
   image: {
     sizes: [320, 420, 768, 1024, 1200]
@@ -32,26 +33,26 @@ export default {
 
 To enable image optimization on an external website, specify which domains are allowed to be optimized. This option will use to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
 
-```js{}[nuxt.config.js]
-  export default {
-    image: {
-      accept: ['nuxtjs.org']
-    }
+```ts [nuxt.config.js]
+export default {
+  image: {
+    accept: ['nuxtjs.org']
   }
+}
 ```
 
 ## `intersectOptions`
 
 The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the image are in Viewport or not. Use this option to modify IntersectionObserver options.
 
-```js{}[nuxt.config.js]
-  export default {
-    image: {
-      intersectOptions: {
-        rootMargin: '50px'
-      }
+```ts [nuxt.config.js]
+export default {
+  image: {
+    intersectOptions: {
+      rootMargin: '50px'
     }
   }
+}
 ```
 
 ## `presets`
@@ -61,7 +62,7 @@ Presets are collections of pre-defined configurations for your projects. Presets
 <code-group>
   <code-block label="nuxt.config.js" active>
 
-  ```js{}[nuxt.config.js]
+  ```ts [nuxt.config.js]
   export default {
     image: {
       presets: {
@@ -79,14 +80,14 @@ Presets are collections of pre-defined configurations for your projects. Presets
   </code-block>
   <code-block label="index.vue">
 
-  ```vue{}[index.vue]
+  ```html [index.vue]
   <template>
     <nuxt-img preset="avatar" src="/nuxt-icon.png" />
   </template>
   ```
 
   </code-block>
-  </code-group>
+</code-group>
 
 See:
 - [How to use presets](/components/nuxt-img#preset)
@@ -132,7 +133,7 @@ See:
 
 If you want to use multiple providers in your project, you should pick one of them as the default provider. Default value for provider is `'static'`
 
-```js{}[nuxt.config.js]
+```ts [nuxt.config.js]
 export default {
   image: {
     provider: 'twicpics',
@@ -154,14 +155,14 @@ export default {
 export default {
   image: {
     static: {
-      baseURL: '',
       dir: '~/static',
       clearCache: false,
       cacheDir: '~~/node_modules/.cache/nuxt-img',
-      accept: [],
       // Here is complete list of available options: https://github.com/lovell/sharp/blob/master/lib/constructor.js#L132
       sharp: {}
     }
   }
 }
 ```
+
+Learn more about [IPX's options](/providers/ipx).

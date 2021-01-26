@@ -1,11 +1,9 @@
 ---
 title: Create Custom Provider
-description: ''
+description: 'The image module offers internal providers and the possibility to write custom integration.'
 category: Advanced
 position: 502
 ---
-
-Although the image module offers multiple internal providers, you may want/need to write your custome provider integration.
 
 ## Provider Entry
 

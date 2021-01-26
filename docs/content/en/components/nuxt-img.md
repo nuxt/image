@@ -1,44 +1,34 @@
 ---
-title: <nuxt-img>
-description: "List of available props for image component"
+title: Usage of <nuxt-img> component
+description: "Discover how to use and configure the nuxt-img component."
+menuTitle: <nuxt-img>
 category: Components
 position: 201
 ---
 
-## `<nuxt-img>`
-
-`<nuxt-img>` is a replacement for native `<img>` tag with no additional styles and supporting all native attributes.
+`<nuxt-img>` is a replacement for the native `<img>` tag with no additional styles and supporting all native attributes.
 
 - Use built-in static provder to optimize local and remote images
 - Converts `src` to provider URL
 - Automatically resize images based on `width` and `height` attributes
 - Support `loading="lazy"` with wider range of browsers (see [native support](https://caniuse.com/loading-lazy-attr))
 - Automatically generate `alt` attribute based on `src`
-- Optionally generate responsive `srcSet` and `sizes` attrs with `responsive` prop
+- Optionally generate responsive `src-set` and `sizes` attrs with `responsive` prop
 
-<code-group>
-  <code-block label="index.vue" active>
+Use it like you would use the `<img>` tag:
 
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img src="/nuxt-icon.png" />
-  </template>
-  ```
-
-  </code-block>
-</code-group>
-
+```html
+<nuxt-img src="/nuxt-icon.png" />
+```
 ## `src`
 
-Path to image file. `src` sould be in form of absolute path and starts with `/`.
+Path to image file. `src` sould be in form of absolute path that starts with `/` or an URL.
 
-```vue
-<template>
-  <nuxt-img :src="src" ... />
-</template>
+```html
+<nuxt-img :src="src" ... />
 ```
 
-The `src` has other capabilities in `nuxt-img`, you can provide provider and preset for the image right inside the `src` property.
+To accept image optimization on external websites (not `src` starting with `/`), you need to whitelist them in the [`accept`](/api/options#accept) option.
 
 ## `width`
 
@@ -64,7 +54,7 @@ Specify height of the image.
   - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper height based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
   - On the server-side rendering the image will resize using calculated `height`
 
-### Provider
+## `provider`
 
 Nuxt image module will allow you to modify and serve your images using cloud services like Cloudinary. In order to use a provider you should:
 
@@ -74,7 +64,7 @@ Nuxt image module will allow you to modify and serve your images using cloud ser
 <code-group>
   <code-block label="index.vue" active>
 
-```html{}[index.vue]
+```html
 <template>
   <nuxt-img
     provider="cloudinary"
@@ -104,14 +94,14 @@ export default {
 <!-- TODO: multiple providers -->
 <!-- TODO: default provider -->
 
-### Preset
+## `preset`
 
 Presets are predefined sets of image modifiers that can be used create unified form of images in your projects. You can write your presets inside `nuxt.config` and then use them in `nuxt-img`.
 
 <code-group>
   <code-block label="index.vue" active>
 
-```html{}[index.vue]
+```html
 <template>
   <nuxt-img preset="jpg-cover" src="/nuxt-icon.png" width="50" height="50" />
 </template>
@@ -120,7 +110,7 @@ Presets are predefined sets of image modifiers that can be used create unified f
   </code-block>
   <code-block label="nuxt.config.js">
 
-```js{}[nuxt.config.js]
+```ts
 export default {
   image: {
     presets: [
@@ -144,17 +134,19 @@ export default {
 
 In case you want to serve images in specific format, use this prop.
 
-```html{}[index.vue]
-<template>
-  <nuxt-img format="webp" src="/nuxt-icon.png" ... />
-</template>
+```html
+<nuxt-img format="webp" src="/nuxt-icon.png" ... />
 ```
 
 Available format are `webp`, `jpeg`, `jpg`, `png`, `gif` and `svg`. If format is not specified, it will respect the default image format.
 
 ## `quality`
 
-The quality for generated images.
+The quality for the generated image(s).
+
+```html
+<nuxt-img src="/nuxt.jpg" quality="80" width="200" height="100" />
+```
 
 ## `fit`
 
@@ -167,17 +159,9 @@ There are five standard values you can use with this property.
 - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
 - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified.
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
-</template>
+```html 
+<nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
 ```
-
-  </code-block>
-</code-group>
 
 <alert type="info">
 
@@ -187,22 +171,16 @@ Some providers provide additional values beside the above standard ones, such as
 
 ## `modifiers`
 
-In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [transformations](/providers/cloudinary#cloudinary-operations). Using `modifiers` prop you can use these transformations.
+In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [modifiers](/providers/cloudinary#cloudinary-modifiers).
 
-<code-group>
-  <code-block label="index.vue" active>
+Using the `modifiers` prop let you use any of these transformations.
 
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    height="169"
-    :modifiers="{ roundCorner: '0:100' }"
-  />
-</template>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  height="169"
+  :modifiers="{ roundCorner: '0:100' }"
+/>
 ```
-
-  </code-block>
-</code-group>

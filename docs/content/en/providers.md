@@ -1,6 +1,6 @@
 ---
 title: Providers
-description: ''
+description: 'Nuxt Image supports multiple providers for high performances.'
 position: 103
 category: 'Getting Started'
 ---
@@ -8,7 +8,6 @@ category: 'Getting Started'
 ## Static Images
 
 For static projects (`target: 'static'`) image module automatically optimizes `src` for both local and external assets via a preconfigured instance of [IPX](/providers/ipx) during development and generation (`nuxt genrate`) so you don't have to worry about choosing a hosting.
-
 
 ## Image Providers
 
