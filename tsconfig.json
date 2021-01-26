@@ -4,14 +4,10 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": [
-      "@types/node"
-    ],
+    "types": ["node", "jest"],
     "paths": {
-      "~image/*": [ "src/runtime/*" ],
-      "~image": [
-        "src/runtime"
-      ]
+      "~image/*": ["src/runtime/*"],
+      "~image": ["src/runtime"]
     }
   }
 }
