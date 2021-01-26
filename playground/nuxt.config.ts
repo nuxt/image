@@ -39,6 +39,9 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    sanity: {
+      projectId: 'j1o4tmjp'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

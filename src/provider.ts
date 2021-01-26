@@ -8,6 +8,7 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'sanity',
   'static',
   'twicpics',
   'storyblok'

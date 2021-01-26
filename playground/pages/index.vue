@@ -46,6 +46,17 @@
         :operations="{ roundCorner: 'max' }"
       />
 
+      <h2>JPEG image on Sanity</h2>
+      <NuxtImg provider="sanity" src="image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg" />
+      <NuxtImg provider="sanity" src="image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg" width="200" height="200" fit="crop" />
+      <NuxtImg
+        provider="sanity"
+        src="image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg"
+        width="200"
+        height="200"
+        fit="min"
+      />
+
       <h2>JPEG image on TwicPics</h2>
       <NuxtImg provider="twicpics" src="/football.jpg" />
       <NuxtImg
