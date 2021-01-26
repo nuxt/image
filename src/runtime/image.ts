@@ -145,9 +145,10 @@ function getSizes (ctx: ImageCTX, input: string, opts: GetSizesOptions) {
     .sort((s1, s2) => s1 - s2) // unique & lowest to highest
 
   const sizes = []
+  const ratio = opts.height / opts.width
 
   for (const width of widths) {
-    const height = (opts.height / opts.width) || opts.height
+    const height = ratio ? Math.round(opts.width * ratio) : opts.height
     sizes.push({
       width,
       height,
