@@ -3,8 +3,10 @@ import { hasProtocol, joinURL } from 'ufo'
 import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
+import { useManifest } from './utils/static'
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
+  const manifest = useManifest(nuxtContext)
   const ctx: ImageCTX = {
     options: globalOptions,
     allow: allowList(globalOptions.allow),
@@ -24,8 +26,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
       const staticImagesBase = '/_nuxt/image' // TODO
 
       if (process.client && 'fetchPayload' in window.$nuxt) {
-        const mappedURL = (window.$nuxt as any)?._pagePayload?.pagePayload?.data?.[0]?._img[image.url]
-        image.url = mappedURL || input
+        image.url = manifest[image.url] ? joinURL(staticImagesBase, manifest[image.url]) : input
         return image
       }
 
