@@ -1,5 +1,6 @@
 <template>
   <img
+    :key="nSrc"
     :width="width"
     :height="height"
     :src="nSrc"
