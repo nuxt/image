@@ -103,7 +103,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     _options.modifiers.height = parseSize(_options.modifiers.height)
   }
 
-  const image = provider.getImage(input, _options, ctx)
+  const image = provider.getImage(input, JSON.parse(JSON.stringify(_options)), ctx)
 
   if (_options.modifiers?.format && !image.format) {
     image.format = _options.modifiers.format
