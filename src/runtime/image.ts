@@ -1,7 +1,7 @@
 import { allowList } from 'allowlist'
 import defu from 'defu'
 import { hasProtocol, joinURL } from 'ufo'
-import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX } from '../types/image'
+import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
@@ -11,16 +11,26 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 
   const ctx: ImageCTX = {
     options: globalOptions,
-    allow: allowList(globalOptions.allow),
+    accept: allowList(globalOptions.accept),
     nuxtContext
   }
 
-  function $img (input: string, options: ImageOptions = {}) {
+  const getImage: $Img['getImage'] = function (input: string, options: ImageOptions = {}) {
     const image = resolveImage(ctx, input, options)
     if (image.isStatic) {
       handleStaticImage(image, input)
     }
     return image
+  }
+
+  function $img (input: string, modifiers: ImageOptions['modifiers'] = {}, options: ImageOptions = {}) {
+    return getImage(input, {
+      ...options,
+      modifiers: {
+        ...options.modifiers,
+        ...modifiers
+      }
+    }).url
   }
 
   function handleStaticImage (image: ResolvedImage, input: string) {
@@ -51,19 +61,17 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
     }
   }
 
-  $img.options = globalOptions
-  ctx.$img = $img
-
   for (const presetName in globalOptions.presets) {
-    $img[presetName] = (source: string, _options: ImageOptions = {}) => $img(source, {
-      ...globalOptions.presets[presetName],
-      ..._options
-    })
+    $img[presetName] = ((source, modifiers, options) =>
+      $img(source, modifiers, { ...globalOptions.presets[presetName], ...options })) as $Img[string]
   }
 
-  $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
-  // eslint-disable-next-line no-use-before-define
-  $img.getSizes = (input: string, options: GetSizesOptions) => getSizes(ctx, input, options)
+  $img.options = globalOptions
+  $img.getImage = getImage
+  $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
+  $img.getSizes = ((input: string, options?: ImageOptions, sizes?: string[]) => getSizes(ctx, input, options, sizes)) as $Img['getSizes']
+
+  ctx.$img = $img as $Img
 
   return $img
 }
@@ -87,7 +95,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
 
-  if (input.startsWith('data:') || (hasProtocol(input) && !ctx.allow(input))) {
+  if (input.startsWith('data:') || (hasProtocol(input) && !ctx.accept(input))) {
     return {
       url: input
     }
@@ -132,36 +140,31 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-interface GetSizesOptions {
-  sizes?: string[]
-  modifiers?: any,
-  width?: number,
-  height?: number,
-}
-
-function getSizes (ctx: ImageCTX, input: string, opts: GetSizesOptions) {
-  let widths = [].concat(opts.sizes || ctx.options.sizes)
-  if (opts.width) {
-    widths.push(opts.width)
-    widths = widths.filter(w => w <= opts.width)
-    widths.push(opts.width * 2)
+function getSizes (ctx: ImageCTX, input: string, opts: ImageOptions = {}, sizes?: string[]) {
+  let widths = [].concat(sizes || ctx.options.sizes)
+  if (opts.modifiers.width) {
+    widths.push(opts.modifiers.width)
+    widths = widths.filter(w => w <= opts.modifiers.width)
+    widths.push(opts.modifiers.width * 2)
   }
   widths = Array.from(new Set(widths))
     .sort((s1, s2) => s1 - s2) // unique & lowest to highest
 
-  const sizes = []
-  const ratio = opts.height / opts.width
+  const sources = []
+  const ratio = opts.modifiers.height / opts.modifiers.width
 
   for (const width of widths) {
-    const height = ratio ? Math.round(width * ratio) : opts.height
-    sizes.push({
+    const height = ratio ? Math.round(width * ratio) : opts.modifiers.height
+    sources.push({
       width,
       height,
       src: ctx.$img(input, {
-        modifiers: { ...opts.modifiers, width, height }
-      }).url
+        ...opts.modifiers,
+        width,
+        height
+      }, opts)
     })
   }
 
-  return sizes
+  return sources
 }

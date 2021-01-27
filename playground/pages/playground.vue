@@ -153,7 +153,7 @@ export default {
       return this.$img(this.src, {
         width: 30,
         format: 'jpg'
-      }).url
+      })
     },
     bgStyle () {
       return {
