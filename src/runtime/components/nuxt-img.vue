@@ -51,11 +51,7 @@ export default {
       if (this.usePlaceholder) {
         return EMPTY_GIF
       }
-      return this.$img(this.src, {
-        provider: this.provider,
-        preset: this.preset,
-        modifiers: this.nModifiers
-      }).url
+      return this.$img(this.src, this.nModifiers, this.nOptions)
     },
     nAttrs () {
       const attrs: any = {}
@@ -76,6 +72,12 @@ export default {
         background: this.background,
         fit: this.fit
       }
+    },
+    nOptions () {
+      return {
+        provider: this.provider,
+        preset: this.preset
+      }
     }
   },
   created () {
@@ -95,11 +97,13 @@ export default {
   methods: {
     getResponsive () {
       const sizes = this.$img.getSizes(this.src, {
-        sizes: this.sizes,
-        width: parseSize(this.width),
-        height: parseSize(this.height),
-        modifiers: this.modifiers
-      })
+        ...this.nOptions,
+        modifiers: {
+          ...this.nModifiers,
+          width: parseSize(this.width),
+          height: parseSize(this.height)
+        }
+      }, this.sizes)
       return {
         sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
         srcSet: sizes.map(({ width, src }) => `${src} ${width}w`)
