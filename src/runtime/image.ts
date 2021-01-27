@@ -98,8 +98,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   const _options: ImageOptions = defu(options, preset, defaults)
   _options.modifiers = { ..._options.modifiers }
-
-  const expectedFormat = _options.modifiers?.format
+  const expectedFormat = _options.modifiers.format
 
   if (_options.modifiers?.width) {
     _options.modifiers.width = parseSize(_options.modifiers.width)
