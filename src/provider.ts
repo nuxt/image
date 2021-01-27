@@ -52,7 +52,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
 
   input.provider = BuiltInProviders.includes(input.provider)
     ? require.resolve('./runtime/providers/' + input.provider)
-    : nuxt.resolver.resolveModule(input.provider)
+    : nuxt.resolver.resolvePath(input.provider)
 
   return <ImageModuleProvider> {
     ...input,
