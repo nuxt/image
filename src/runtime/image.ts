@@ -96,7 +96,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
 
-  const _options: ImageOptions = defu({ modifiers: {} }, options, preset, defaults)
+  const _options: ImageOptions = defu({}, options, preset, defaults)
 
   if (_options.modifiers?.width) {
     _options.modifiers.width = parseSize(_options.modifiers.width)
@@ -105,7 +105,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     _options.modifiers.height = parseSize(_options.modifiers.height)
   }
 
-  const image = provider.getImage(input, _options, ctx)
+  const image = provider.getImage(input, defu({ modifiers: {} }, _options), ctx)
 
   if (_options.modifiers?.format && !image.format) {
     image.format = _options.modifiers.format
