@@ -1,5 +1,5 @@
 import { } from '@nuxt/types'
-import type { $Img } from './image'
+import type { $Img, ProviderGetImage } from './image'
 import { ModuleOptions } from './module'
 
 declare module '@nuxt/types' {
@@ -9,6 +9,7 @@ declare module '@nuxt/types' {
 
   interface NuxtAppOptions {
     $img: $Img
+    getImage: ProviderGetImage
   }
 
   interface Configuration {
