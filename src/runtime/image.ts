@@ -1,4 +1,5 @@
 import { allowList } from 'allowlist'
+import defu from 'defu'
 import { hasProtocol, joinURL } from 'ufo'
 import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX } from '../types/image'
 import { imageMeta } from './utils/meta'
@@ -95,7 +96,10 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
 
-  const _options = { ...defaults, ...preset, ...options }
+  const _options: ImageOptions = defu(options, preset, defaults)
+  _options.modifiers = { ..._options.modifiers }
+  const expectedFormat = _options.modifiers.format
+
   if (_options.modifiers?.width) {
     _options.modifiers.width = parseSize(_options.modifiers.width)
   }
@@ -105,9 +109,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   const image = provider.getImage(input, _options, ctx)
 
-  if (_options.modifiers?.format && !image.format) {
-    image.format = _options.modifiers.format
-  }
+  image.format = image.format || expectedFormat || ''
 
   return image
 }
