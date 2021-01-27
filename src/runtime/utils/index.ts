@@ -81,7 +81,7 @@ export function generateAlt (src: string = '') {
   return src.split(/[?#]/).shift().split('/').pop().split('.').shift()
 }
 
-export function parseSize (input = '') {
+export function parseSize (input: string | number = '') {
   if (typeof input === 'number') {
     return input
   }
