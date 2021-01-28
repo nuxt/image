@@ -30,6 +30,15 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+
+    providers: {
+      custom: {
+        provider: "~/providers/custom",
+        options: {
+          baseURL: "https://site.my"
+        }
+      }
+    },
     presets: [
       {
         name: 's50',
