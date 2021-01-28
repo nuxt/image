@@ -1,5 +1,5 @@
 import { } from '@nuxt/types'
-import type { $Img, ProviderGetImage } from './image'
+import type { $Img } from './image'
 import { ModuleOptions } from './module'
 
 declare module '@nuxt/types' {
