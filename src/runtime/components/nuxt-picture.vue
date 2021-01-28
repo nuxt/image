@@ -22,7 +22,8 @@
         :crossorigin="crossorigin"
         :src="defaultSrc"
         :srcset="sources[0].srcset"
-        :style="{ opacity: isLoaded ? 1 : 0 }"
+        :style="{ opacity: isLoaded ? 1 : 0.01 }"
+        :sizes="sources[0].sizes"
         :loading="isLazy ? 'lazy' : 'eager'"
         @load="onImageLoaded"
         @onbeforeprint="onPrint"
@@ -132,6 +133,12 @@ export default {
         fit: this.fit
       }
     },
+    nOptions () {
+      return {
+        provider: this.provider,
+        preset: this.preset
+      }
+    },
     defaultSrc () {
       return this.sources[0].srcset[0].split(' ')[0]
     },
@@ -154,12 +161,10 @@ export default {
       }
       const width = 30
       return this.$img(this.src, {
-        modifiers: {
-          ...this.modifiers,
-          width,
-          height: this.ratio ? Math.round(width * this.ratio) : undefined
-        }
-      }).url
+        ...this.nModifiers,
+        width,
+        height: this.ratio ? Math.round(width * this.ratio) : undefined
+      }, this.nOptions)
     },
     sizerHeight () {
       return this.ratio ? `${this.ratio * 100}%` : '100%'
@@ -193,14 +198,14 @@ export default {
 
       const sources = formats.map((format) => {
         const sizes = this.$img.getSizes(this.src, {
-          sizes: this.sizes,
-          width: this.nWidth,
-          height: this.nHeight,
+          ...this.nOptions,
           modifiers: {
             ...this.nModifiers,
+            width: this.nWidth,
+            height: this.nHeight,
             format
           }
-        })
+        }, this.sizes)
 
         return {
           type: `image/${format}`,
