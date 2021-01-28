@@ -1,11 +1,13 @@
 ---
+menuTitle: Twicpics
 title: Twicpics Provider
-description: ''
-position: 14
+description: 'Nuxt Image internally use Twicpics as static provider.'
 category: Providers
+position: 405
 ---
 
-Integration between [Twicpics](https://www.twicpics.com) and the image module.  
+Integration between [Twicpics](https://www.twicpics.com) and the image module.
+
 To use this provider you just need to specify the base url of your project in Twicpics.
 
 ```js{}[nuxt.config.js]

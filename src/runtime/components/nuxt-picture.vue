@@ -9,20 +9,21 @@
       :style="{ opacity: isLoaded ? 0 : 1 }"
     >
     <picture v-if="isVisible">
-      <source v-for="(source, index) of sources" :key="index" v-bind="source">
+      <source v-if="sources[1]" v-bind="sources[1]">
       <img
         v-if="isVisible"
         class="img"
         decoding="async"
-        alt="nAlt"
+        :alt="nAlt"
         :referrerpolicy="referrerpolicy"
         :usemap="usemap"
         :longdesc="longdesc"
         :ismap="ismap"
         :crossorigin="crossorigin"
-        :src="legacySource.srcset[0].split(' ')[0]"
-        :srcset="legacySource.srcset"
-        :style="{ opacity: isLoaded ? 1 : 0 }"
+        :src="defaultSrc"
+        :srcset="sources[0].srcset"
+        :style="{ opacity: isLoaded ? 1 : 0.01 }"
+        :sizes="sources[0].sizes"
         :loading="isLazy ? 'lazy' : 'eager'"
         @load="onImageLoaded"
         @onbeforeprint="onPrint"
@@ -63,13 +64,15 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
+    modifiers: { type: Object, required: false, default: undefined },
 
     // options
     preset: { type: String, required: false, default: undefined },
     provider: { type: String, required: false, default: undefined },
 
     // extras
-    placeholder: { type: [Boolean, String], default: false }
+    placeholder: { type: [Boolean, String], default: false },
+    sizes: { type: [Array], default: undefined }
   },
   data () {
     const isLazy = this.loading === 'lazy'
@@ -80,7 +83,7 @@ export default {
   },
   computed: {
     ratio () {
-      return parseSize(this.height) / parseSize(this.width)
+      return this.nHeight / this.nWidth
     },
     isVisible () {
       if (this.lazyState === LazyState.IDLE) {
@@ -93,6 +96,12 @@ export default {
     },
     nAlt () {
       return this.alt ?? generateAlt(this.src)
+    },
+    nWidth () {
+      return parseSize(this.width)
+    },
+    nHeight () {
+      return parseSize(this.height)
     },
     isTransparent () {
       return ['png', 'webp', 'gif'].includes(this.originalFormat)
@@ -115,60 +124,26 @@ export default {
       }
       return formats[this.nFormat] || this.originalFormat
     },
-    modifiers () {
+    nModifiers () {
       return {
+        ...this.modifiers,
         format: this.format,
         quality: this.quality,
         background: this.background,
         fit: this.fit
       }
     },
-    legacySource () {
-      return this.sources[this.sources.length - 1]
+    nOptions () {
+      return {
+        provider: this.provider,
+        preset: this.preset
+      }
+    },
+    defaultSrc () {
+      return this.sources[0].srcset[0].split(' ')[0]
     },
     sources () {
-      if (this.nFormat === 'svg') {
-        return [{
-          srcset: this.src
-        }]
-      }
-
-      const breakpoints = this.$img.options.sizes
-      const densities = [1, 2]
-      const formats = this.nLegacyFormat !== this.nFormat ? [this.nFormat, this.nLegacyFormat] : [this.nFormat]
-
-      const variants = []
-
-      for (const format of formats) {
-        for (const width of breakpoints) {
-          variants.push({
-            width,
-            height: this.ratio ? Math.round(width * this.ratio) : parseSize(this.height),
-            media: `(max-width: ${width}px)`,
-            format
-          })
-        }
-      }
-
-      const sources = variants.map((variant) => {
-        return {
-          media: variant.media,
-          type: `image/${variant.format}`,
-          srcset: densities.map((density) => {
-            const { url } = this.$img(this.src, {
-              modifiers: {
-                ...this.modifiers,
-                width: variant.width * density,
-                height: variant.height ? variant.height * density : undefined,
-                format: variant.format
-              }
-            })
-            return `${url} ${density}x`
-          })
-        }
-      })
-
-      return sources
+      return this.getSources()
     },
     srcset () {
       if (this.nFormat === 'svg') {
@@ -186,15 +161,19 @@ export default {
       }
       const width = 30
       return this.$img(this.src, {
-        modifiers: {
-          ...this.modifiers,
-          width,
-          height: this.ratio ? Math.round(width * this.ratio) : undefined
-        }
-      }).url
+        ...this.nModifiers,
+        width,
+        height: this.ratio ? Math.round(width * this.ratio) : undefined
+      }, this.nOptions)
     },
     sizerHeight () {
       return this.ratio ? `${this.ratio * 100}%` : '100%'
+    }
+  },
+  created () {
+    if (process.server && process.static) {
+      // Force compute sources into ssrContext
+      this.getSources()
     }
   },
   mounted () {
@@ -206,6 +185,37 @@ export default {
     this.unobserve()
   },
   methods: {
+    getSources () {
+      if (this.nFormat === 'svg') {
+        return [{
+          srcset: this.src
+        }]
+      }
+
+      const formats = this.nLegacyFormat !== this.nFormat
+        ? [this.nLegacyFormat, this.nFormat]
+        : [this.nFormat]
+
+      const sources = formats.map((format) => {
+        const sizes = this.$img.getSizes(this.src, {
+          ...this.nOptions,
+          modifiers: {
+            ...this.nModifiers,
+            width: this.nWidth,
+            height: this.nHeight,
+            format
+          }
+        }, this.sizes)
+
+        return {
+          type: `image/${format}`,
+          sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+          srcset: sizes.map(({ width, src }) => `${src} ${width}w`)
+        }
+      })
+
+      return sources
+    },
     observe () {
       this._removeObserver = useObserver(this.$el, type => this.onObservered(type))
     },

@@ -1,11 +1,13 @@
 ---
+menuTitle: Cloudinary
 title: Cloudinary Provider
-description: ''
-position: 11
+description: 'Nuxt Image has first class integration with Cloudinary'
 category: Providers
+position: 401
 ---
 
-Integration between [Cloudinary](https://cloudinary.com) and the image module.  
+Integration between [Cloudinary](https://cloudinary.com) and the image module.
+
 To use this provider you just need to specify the base url of your project in cloudinary.
 
 ```js{}[nuxt.config.js]
@@ -20,7 +22,7 @@ export default {
 
 ## Cloudinary `fit` values
 
-Beside [the standard values for `fit` property](/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
+Beside [the standard values for `fit` property](/components/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
 
 * `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
 * `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
@@ -30,15 +32,15 @@ Beside [the standard values for `fit` property](/nuxt-img#fit) of Nuxt image and
 
 Check out [Cloudinary resize mode Documentation](https://cloudinary.com/documentation/image_transformation_reference#crop_parameter) for more details.
 
-## Cloudinary operations
+## Cloudinary modifiers
 
-Beside the [standard operations](/nuxt-img), you can also pass the following Cloudinary-specific transformation params to `operations`:
+Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop:
 
 ### `rotate`
 
-Accepted values: 
-  * Any degree number, or 
-  * `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`  
+Accepted values:
+  * Any degree number, or
+  * `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
 
 To rotate or flip a given asset by certain degrees, or automatically based on orientation.
 
@@ -50,192 +52,58 @@ Round the specified corners of the desired image. If pass only a number or `max`
   - Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
   - Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    height="169"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          roundCorner: 'max'
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  height="169"
+  :modifiers="{ roundCorner: 'max' }"
+/>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300" 
-      height="169"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ roundCorner: 'max'}"
-    />
-    <a href="https://cloudinary.com/documentation/image_transformations#rounding_corners_and_creating_circular_images">
-      Rounding values
-    </a>
-  </div>
-
-  </code-block>
-</code-group>
-
 ### `gravity`
 
-Detemine which part of the image to cropped or to place the overlay.  
+Detemine which part of the image to cropped or to place the overlay.
 Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces`, `multipleFacesCenter`, `north`, `northEast`, `northWest`, `west`, `southWest`, `south`, `southEast`, `east`, `center`
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    height="300"
-    fit="fill"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          gravity: 'subject'
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  height="300"
+  fit="fill"
+  :modifiers="{ gravity: 'subject' }"
+/>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300" 
-      fit="fill"
-      height="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ gravity: 'subject'}"
-    />
-  </div>
-
-  </code-block>
-</code-group>
 
 ### `effect`
 
 Apply a filter or an effect on the desired asset. See [Effects for images](https://cloudinary.com/documentation/image_transformation_reference#effect_parameter) for the full list of syntax and available effects.
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    height="300"
-    fit="fill"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          effect: 'grayscale'
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  height="300"
+  fit="fill"
+  :modifiers="{ effect: 'grayscale' }"
+/>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300" 
-      fit="fill"
-      height="300"
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ effect: 'grayscale'}"
-    />
-  </div>
-
-  </code-block>
-</code-group>
 
 ### `color`
 
 Color to use when text captions, shadow effect and colorize effect are in use.
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          effect: 'colorize:50',
-          color: 'red'
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  :modifiers="{ effect: 'colorize:50', color: 'red' }"
+/>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300" 
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ effect: 'colorize:50', color: 'red' }"
-    />
-  </div>
-
-  </code-block>
-</code-group>
 
 ### `flags`
 
@@ -249,69 +117,36 @@ The target device pixel ratio for the asset. `auto` means automatically matching
 
 Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 
-<code-group>
-  <code-block label="index.vue" active>
-
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          opacity: 50
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  :modifiers="{ opacity: 50 }"
+/>
 ```
-
-  </code-block>
-  <code-block label="Preview">
-
-  <div class="text-center p-4 bg-gray-800 rounded-b-md">
-    <nuxt-img
-      width="300" 
-      provider="cloudinary"
-      src="/remote/nuxt-org/blog/going-full-static/main.png" :operations="{ opacity: 50 }"
-    />
-  </div>
-
-  </code-block>
-</code-group>
 
 ### `overlay`
 
 Create a layer **over** the base image. This can be use with `x`, `y`, `gravity` to customize the position of the overlay.
 
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="100"
-    height="100"
-    fit="thumb"
-    :operations="imageOperations"
-  />
-</template>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="100"
+  height="100"
+  fit="thumb"
+  :modifiers="modifiers"
+/>
 
 <script>
   export default {
     data() {
       return {
-        imageOperations: {
-          gravity: "north",
-          overlay: "text:default_style:Hello+World",
+        modifiers: {
+          gravity: 'north',
+          overlay: 'text:default_style:Hello+World',
         }
       }
     }
@@ -333,7 +168,7 @@ A pre-defined named transformation to apply to the asset.
 
 Use together with `fit='crop'` or `fit='thumb'` to decide how much of original image/video surronding the face to keep using face detection.
 
-```html{}[index.vue]
+```html [index.vue]
 <template>
   <nuxt-img
     provider="cloudinary"
@@ -341,7 +176,7 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
     width="100"
     height="100"
     fit="thumb"
-    :operations="imageOperations"
+    :modifiers="modifiers"
   />
 </template>
 
@@ -349,7 +184,7 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
   export default {
     data() {
       return {
-        imageOperations: {
+        modifiers: {
           zoom: 0.75,
           gravity: "face"
         }
@@ -363,27 +198,13 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
 
 Color space to use for the delivery image url. See [Color space Documentation](https://cloudinary.com/documentation/image_transformation_reference#color_space_parameter) for accepted values details.
 
-```html{}[index.vue]
-<template>
-  <nuxt-img
-    provider="cloudinary"
-    src="/remote/nuxt-org/blog/going-full-static/main.png"
-    width="300"
-    :operations="imageOperations"
-  />
-</template>
-
-<script>
-  export default {
-    data() {
-      return {
-        imageOperations: {
-          colorSpace: "srgb"
-        }
-      }
-    }
-  }
-</script>
+```html
+<nuxt-img
+  provider="cloudinary"
+  src="/remote/nuxt-org/blog/going-full-static/main.png"
+  width="300"
+  :modifiers="{ colorSpace: 'srgb' }"
+/>
 ```
 
 ### `customFunc`

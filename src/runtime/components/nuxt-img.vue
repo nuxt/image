@@ -1,15 +1,17 @@
 <template>
   <img
+    :key="nSrc"
     :width="width"
     :height="height"
     :src="nSrc"
     :alt="nAlt"
+    v-bind="nAttrs"
     @error="setFallbackImage"
   >
 </template>
 
 <script lang="ts">
-import { generateAlt, useObserver } from '~image'
+import { generateAlt, useObserver, parseSize } from '~image'
 
 const EMPTY_GIF =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -31,10 +33,12 @@ export default {
     quality: { type: [Number, String], required: false, default: undefined },
     background: { type: String, required: false, default: undefined },
     fit: { type: String, required: false, default: undefined },
+    modifiers: { type: Object, required: false, default: undefined },
 
     // options
     preset: { type: String, required: false, default: undefined },
     provider: { type: String, required: false, default: undefined },
+    responsive: { type: Boolean, required: false, default: false },
     fallback: { type: String, required: false, default: undefined }
   },
   data () {
@@ -50,14 +54,20 @@ export default {
       if (this.usePlaceholder) {
         return EMPTY_GIF
       }
-      return this.$img(this.src, {
-        provider: this.provider,
-        preset: this.preset,
-        modifiers: this.modifiers
-      }).url
+      return this.$img(this.src, this.nModifiers, this.nOptions)
     },
-    modifiers () {
+    nAttrs () {
+      const attrs: any = {}
+      if (this.responsive) {
+        const { sizes, srcSet } = this.getResponsive()
+        attrs.sizes = sizes
+        attrs.srcSet = srcSet
+      }
+      return attrs
+    },
+    nModifiers () {
       return {
+        ...this.modifiers,
         width: this.width,
         height: this.height,
         format: this.format,
@@ -65,6 +75,18 @@ export default {
         background: this.background,
         fit: this.fit
       }
+    },
+    nOptions () {
+      return {
+        provider: this.provider,
+        preset: this.preset
+      }
+    }
+  },
+  created () {
+    if (process.server && process.static) {
+      // Force compute sources into ssrContext
+      this.getResponsive()
     }
   },
   mounted () {
@@ -76,6 +98,20 @@ export default {
     this.unobserve()
   },
   methods: {
+    getResponsive () {
+      const sizes = this.$img.getSizes(this.src, {
+        ...this.nOptions,
+        modifiers: {
+          ...this.nModifiers,
+          width: parseSize(this.width),
+          height: parseSize(this.height)
+        }
+      }, this.sizes)
+      return {
+        sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
+        srcSet: sizes.map(({ width, src }) => `${src} ${width}w`)
+      }
+    },
     observe () {
       this._removeObserver = useObserver(this.$el, () => {
         this.usePlaceholder = false

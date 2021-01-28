@@ -33,29 +33,8 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: string
   intersectOptions: object
-  responsiveSizes: number[]
-  allow: AllowlistOptions
-}
-
-export interface ImageCTX {
-  options: CreateImageOptions,
-  allow: Matcher<any>
-  nuxtContext: {
-    ssrContext: any
-    cache?: any
-    isDev: boolean
-    isStatic: boolean
-    nuxtState?: any
-  }
-  $img?: Function
-}
-
-export interface ImageSize {
-  width: number;
-  media: string;
-  breakpoint: number;
-  format: string;
-  url: string;
+  sizes?: (number | string)[]
+  accept: AllowlistOptions
 }
 
 export interface ImageInfo {
@@ -71,9 +50,34 @@ export interface ResolvedImage {
   getMeta?: () => Promise<ImageInfo>
 }
 
-export interface $Image {
-  (source: string, options: ImageOptions): ResolvedImage
-  [preset: string]: (source: string) => any
+export interface $Img {
+  (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
+  options: CreateImageOptions
+  getImage: (source: string, options?: ImageOptions) => ResolvedImage
+  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => { width: string, height: string, src: string }[]
+  getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
+  [preset: string]: $Img['options'] | $Img['getImage'] | $Img['getSizes'] | $Img['getMeta'] | $Img /* preset */
+}
+
+export interface ImageCTX {
+  options: CreateImageOptions,
+  accept: Matcher<any>
+  nuxtContext: {
+    ssrContext: any
+    cache?: any
+    isDev: boolean
+    isStatic: boolean
+    nuxtState?: any
+  }
+  $img?: $Img
+}
+
+export interface ImageSize {
+  width: number;
+  media: string;
+  breakpoint: number;
+  format: string;
+  url: string;
 }
 
 export interface RuntimePlaceholder extends ImageInfo {

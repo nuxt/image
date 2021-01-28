@@ -1,22 +1,20 @@
 ---
 title: Introduction
-description: ''
-position: 1
-category: ''
+description: 'Nuxt Image is a module to optimise your application images.'
+category: 'Getting Started'
+position: 101
 features:
   - Lazy Loading
   - Full Static Support
   - CDN Support
 ---
 
-<nuxt-picture src="/preview.png" placeholder class="light-img"></nuxt-picture>
-<nuxt-picture src="/preview-dark.png" placeholder class="dark-img"></nuxt-picture>
+<img src="/preview.png" placeholder class="light-img" />
+<img src="/preview-dark.png" placeholder class="dark-img" />
 
-Optimised images for [NuxtJS](https://nuxtjs.org).
+Optimised images for [NuxtJS](https://nuxtjs.org) (work in progress 🏗 ).
 
 ## Features
 
 <list :items="features"></list>
-
-<p class="flex items-center">Enjoy light and dark mode:&nbsp;<app-color-switcher class="p-2"></app-color-switcher></p>
 

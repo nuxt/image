@@ -1,6 +1,6 @@
 {
   "name": "@nuxt/image",
-  "version": "0.2.0-alpha.7",
+  "version": "0.2.1",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
@@ -12,10 +12,13 @@
   ],
   "scripts": {
     "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
-    "dev": "yarn nuxt-ts playground",
+    "dev": "yarn nuxt playground",
+    "docs:build": "cd docs && nuxt generate",
+    "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
     "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
-    "test": "yarn lint && yarn test:unit && yarn test:e2e",
+    "test": "true",
+    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
   },
@@ -30,7 +33,7 @@
     "is-https": "^3.0.2",
     "node-fetch": "^2.6.1",
     "requrl": "^3.0.2",
-    "ufo": "^0.5.2",
+    "ufo": "^0.5.4",
     "upath": "^2.0.1"
   },
   "devDependencies": {
@@ -50,7 +53,7 @@
     "jsdom": "latest",
     "jsdom-global": "latest",
     "mkdist": "latest",
-    "nuxt-edge": "latest",
+    "nuxt-edge": "^2.15.0-26856070.8350560",
     "playwright": "latest",
     "siroc": "latest",
     "standard-version": "latest",

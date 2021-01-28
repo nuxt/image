@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import defu from 'defu'
-import type { ModuleOptions } from './types'
+import type { ModuleOptions, CreateImageOptions } from './types'
 import { pick, pkg } from './utils'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders } from './provider'
@@ -11,7 +11,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   const defaults: ModuleOptions = {
     provider: 'static',
-    presets: [],
+    presets: {},
     static: {
       baseURL: '/_img',
       dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
@@ -29,15 +29,20 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
   // Sanitize sizes
   if (!Array.isArray(options.sizes)) {
-    options.sizes = [320, 420, 768, 1024, 1200, 1600]
-  } else {
-    // Sort sizes from lowest to highest
-    options.sizes.sort((s1, s2) => s1 - s2)
+    // https://screensiz.es/
+    options.sizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840]
   }
 
   options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
 
-  const imageOptions = pick(options, ['sizes', 'presets', 'provider', 'intersectOptions', 'accept'])
+  const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
+    'sizes',
+    'presets',
+    'provider',
+    'intersectOptions',
+    'accept'
+  ])
+
   const providers = await resolveProviders(nuxt, options)
 
   // Transpile and alias runtime

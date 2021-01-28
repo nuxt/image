@@ -1,39 +1,36 @@
 ---
 title: Setup
-description: ''
-position: 2
-category: Guide
+description: 'Using image module in your NuxtJS project is only one command away ✨'
+category: 'Getting Started'
+position: 102
 ---
-
-Using image module in your NuxtJS project is only one command away ✨
-
 ## Installation
 
-Add `@nuxt/image` dependency to your project:
+Add `@nuxt/image` devDependency to your project:
 
 <code-group>
   <code-block label="Yarn" active>
 
   ```bash
-  yarn add @nuxt/image
+  yarn add --dev @nuxt/image
   ```
 
   </code-block>
   <code-block label="NPM">
 
   ```bash
-  npm install @nuxt/image
+  npm install -D @nuxt/image
   ```
 
   </code-block>
 </code-group>
 
 
-Next, you need to register module inside `nuxt.config`:
+Next, add the module inside your `nuxt.config`:
 
-```js{}[nuxt.config.js]
+```ts [nuxt.config.js]
 export default {
-  modules: [
+  buildModules: [
     '@nuxt/image'
   ]
 }
@@ -41,7 +38,7 @@ export default {
 
 <alert type="success">
 
-That's it! You can can start using [`<nuxt-img>`](/nuxt-img) and [`<nuxt-picture>`](/nuxt-picture) components in your Nuxt app ✨
+That's it! You can can start using [`<nuxt-img>`](/components/nuxt-img) and [`<nuxt-picture>`](/components/nuxt-picture) components in your Nuxt app ✨
 
 </alert>
 
@@ -49,7 +46,7 @@ That's it! You can can start using [`<nuxt-img>`](/nuxt-img) and [`<nuxt-picture
 
 Then, add `image` section in `nuxt.config.js`:
 
-```js[nuxt.config.js]
+```ts [nuxt.config.js]
 export default {
   image: {
     // Options
@@ -57,4 +54,4 @@ export default {
 }
 ```
 
-See [module options](/options).
+See [module options](/api/options).
