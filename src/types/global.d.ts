@@ -9,7 +9,6 @@ declare module '@nuxt/types' {
 
   interface NuxtAppOptions {
     $img: $Img
-    getImage: ProviderGetImage
   }
 
   interface Configuration {
