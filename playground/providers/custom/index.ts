@@ -1,12 +1,8 @@
 import { joinURL } from 'ufo'
-import { NuxtAppOptions } from '@nuxt/types'
+import type { ProviderGetImage } from '../../../src/types' // '@nuxt/image'
 
-export const getImage: NuxtAppOptions['getImage'] = (
-  src,
-  { modifiers = {}, baseURL = '/' } = {}
-) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operationsString = `w_${modifiers.width}&h_${modifiers.height}`
-
   return {
     url: joinURL(baseURL, operationsString, src)
   }
