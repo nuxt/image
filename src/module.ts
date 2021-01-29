@@ -50,18 +50,6 @@ async function imageModule (moduleOptions: ModuleOptions) {
   nuxt.options.alias['~image'] = runtimeDir
   nuxt.options.build.transpile.push(runtimeDir, '@nuxt/image', 'allowlist', 'defu', 'ufo')
 
-  // transform asset urls that pass to `src` attribute on image components
-  nuxt.options.build.loaders = defu({
-    vue: {
-      transformAssetUrls: {
-        NuxtImg: 'src',
-        NuxtPicture: 'src',
-        'nuxt-img': 'src',
-        'nuxt-picture': 'src'
-      }
-    }
-  }, nuxt.options.build.loaders || {})
-
   // Add plugin
   addPlugin({
     fileName: 'image.js',
@@ -77,8 +65,9 @@ async function imageModule (moduleOptions: ModuleOptions) {
     handle: createIPXMiddleware(options.static)
   })
 
+  // transform asset urls that pass to `src` attribute on image components
   nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }
+    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
   }, nuxt.options.build.loaders || {})
 
   nuxt.hook('generate:before', () => {
