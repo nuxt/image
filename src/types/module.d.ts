@@ -1,35 +1,30 @@
+import type { IPXOptions } from 'ipx'
 import type { ImageOptions } from './image'
 
-export interface InputProvider {
+export interface InputProvider<T=any> {
   name?: string
   provider?: string
-  options?: any
-  baseURL?: string
+  options?: T
 }
 
 export interface ImageProviders {
-  cloudinary?: InputProvider,
-  fastly?: InputProvider,
-  imagekit?: InputProvider,
-  imgix?: InputProvider,
-  twicpics?: InputProvider,
+  cloudinary?: any
+  fastly?: any
+  imagekit?: any
+  imgix?: any
+  twicpics?: any
+  ipx?: Partial<IPXOptions>
+  static?: Partial<IPXOptions>
 }
 
 export interface ModuleOptions extends ImageProviders {
   provider: string
   presets: { [name: string]: ImageOptions }
-  static: {
-    baseURL: string
-    dir: string
-    clearCache: boolean | string
-    cacheDir: string
-    accept: string[]
-    sharp: { [key: string]: any }
-  }
-  sizes?: (number|string)[],
-  internalUrl?: string
-  accept: any
+  dir: string
+  domains: string[]
+  sharp: {}
+  sizes: (number|string)[],
+  internalUrl: string
   intersectOptions: object
-
   providers: { [name: string]: InputProvider | any } & ImageProviders
 }

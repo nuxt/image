@@ -1,6 +1,5 @@
-import { allowList } from 'allowlist'
 import defu from 'defu'
-import { hasProtocol, joinURL } from 'ufo'
+import { joinURL } from 'ufo'
 import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
@@ -11,7 +10,6 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
 
   const ctx: ImageCTX = {
     options: globalOptions,
-    accept: allowList(globalOptions.accept),
     nuxtContext
   }
 
@@ -95,7 +93,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
 
-  if (input.startsWith('data:') || (hasProtocol(input) && !ctx.accept(input))) {
+  if (input.startsWith('data:')) {
     return {
       url: input
     }

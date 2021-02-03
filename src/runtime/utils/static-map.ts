@@ -4,7 +4,6 @@ function updateImageMap () {
   if (typeof window.$nuxt !== 'undefined') {
     const pageImages = (window.$nuxt as any)._pagePayload?.data?.[0]?._img || {}
     Object.assign(staticImageMap, pageImages)
-    console.log(staticImageMap)
   }
 }
 

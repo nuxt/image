@@ -11,9 +11,10 @@ export default <NuxtConfig> {
     '@nuxt/typescript-build'
   ],
   image: {
-    accept: [
-      'nuxtjs.org',
-      'unsplash.com'
+    domains: [
+      'https://nuxtjs.org',
+      'https://unsplash.com',
+      'https://upload.wikimedia.org'
     ],
     twicpics: {
       baseURL: 'https://nuxt-demo.twic.pics'
@@ -30,24 +31,22 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
-
     providers: {
       custom: {
-        provider: "~/providers/custom",
+        provider: '~/providers/custom',
         options: {
-          baseURL: "https://site.my"
+          baseURL: 'https://site.my'
         }
       }
     },
-    presets: [
-      {
-        name: 's50',
+    presets: {
+      s50: {
         modifiers: {
           width: 50,
           height: 50
         }
       }
-    ],
+    },
     intersectOptions: {
       rootMargin: '50px'
     }

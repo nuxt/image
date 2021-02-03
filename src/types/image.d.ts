@@ -1,5 +1,3 @@
-import type { AllowlistOptions, Matcher } from 'allowlist'
-
 export interface ImageModifiers {
   width: number
   height: number
@@ -34,7 +32,6 @@ export interface CreateImageOptions {
   provider: string
   intersectOptions: object
   sizes?: (number | string)[]
-  accept: AllowlistOptions
 }
 
 export interface ImageInfo {
@@ -61,7 +58,6 @@ export interface $Img {
 
 export interface ImageCTX {
   options: CreateImageOptions,
-  accept: Matcher<any>
   nuxtContext: {
     ssrContext: any
     cache?: any

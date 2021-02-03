@@ -25,8 +25,8 @@
       />
       <img ref="img" src="/images/damavand.jpg" width="200" height="100" loading="lazy">
       <pre>{{ nuxtImgCode }}</pre>
-      </p><h2>SVG image from remote url</h2>
-      <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg" width="400" height="400" />
+      <h2>SVG image from remote url</h2>
+      <NuxtImg src="https://nuxtjs.org/logos/nuxt.svg?foo=bar" width="400" height="400" />
 
       <h2>JPEG image inside project</h2>
       <NuxtImg responsive src="/images/damavand.jpg" />

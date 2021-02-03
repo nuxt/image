@@ -12,17 +12,13 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const defaults: ModuleOptions = {
     provider: 'static',
     presets: {},
-    static: {
-      baseURL: '/_img',
-      dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
-      clearCache: false,
-      cacheDir: 'node_modules/.cache/nuxt-image', /* TODO */
-      accept: [],
-      sharp: {}
-    },
+    dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
+    domains: [],
+    sharp: {},
+    sizes: undefined,
     internalUrl: '',
     providers: {},
-    accept: [],
+    static: {},
     intersectOptions: {}
   }
 
@@ -39,9 +35,10 @@ async function imageModule (moduleOptions: ModuleOptions) {
     'sizes',
     'presets',
     'provider',
-    'intersectOptions',
-    'accept'
+    'intersectOptions'
   ])
+
+  options.static.domains = options.domains
 
   const providers = await resolveProviders(nuxt, options)
 
@@ -61,8 +58,12 @@ async function imageModule (moduleOptions: ModuleOptions) {
   })
 
   addServerMiddleware({
-    path: options.static.baseURL,
-    handle: createIPXMiddleware(options.static)
+    path: '/_ipx',
+    handle: createIPXMiddleware({
+      dir: options.dir,
+      domains: options.domains,
+      sharp: options.sharp
+    })
   })
 
   nuxt.options.build.loaders = defu({
