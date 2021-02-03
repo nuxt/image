@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/nuxt/image/compare/v0.2.1...v0.3.0) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* improved $img interface (#169)
+
+### Features
+
+* improved $img interface ([#169](https://github.com/nuxt/image/issues/169)) ([40ab562](https://github.com/nuxt/image/commit/40ab5624f733631298975d76e673923916dd46c6))
+* use ipx@0.5.x ([fe92ecf](https://github.com/nuxt/image/commit/fe92ecf0e47d579478123bb777ba07785c184fd0))
+
+
+### Bug Fixes
+
+* **image:** use defu for options and fix default format ([#166](https://github.com/nuxt/image/issues/166)) ([cf2e9c1](https://github.com/nuxt/image/commit/cf2e9c13755f8eb440df1881b84145693e180f61))
+* **plugin:** create static manifest for client hydration ([#162](https://github.com/nuxt/image/issues/162)) ([0b10c22](https://github.com/nuxt/image/commit/0b10c22f1661e6013b1f364365e0e4dd04dfc423))
+* **provider:** use resolvePath to resolve aliases as well ([#161](https://github.com/nuxt/image/issues/161)) ([930e192](https://github.com/nuxt/image/commit/930e192f99a5bf2b00c7fb66316d67a062d81417))
+* use correct width and handle x2 ([97e3889](https://github.com/nuxt/image/commit/97e3889dcf47aa89d4218c959bec2268ce79a029))
+* use ratio in getSizes ([8e5b658](https://github.com/nuxt/image/commit/8e5b658fa51132ad405ea4e09bf2c8d476d9f002))
+
 ### [0.2.1](https://github.com/nuxt/image/compare/v0.2.0...v0.2.1) (2021-01-26)
 
 
