@@ -7,7 +7,7 @@ position: 502
 
 ## Provider Entry
 
-The runtime will receive a src, image modifiers and its provider options and generates a url for optimized images. Runtime is universal and can run on both server side and client side.
+The runtime will receive a source, image modifiers and its provider options. It is responsible for generating a url for optimized images, and needs to be isomorphic because it may be called on either server or client.
 
 ```js
 import { joinURL } from 'ufo'
