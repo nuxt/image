@@ -160,7 +160,7 @@ The quality for the generated image(s).
 The `fit` property specifies the size of the images.
 There are five standard values you can use with this property.
 
-- `cover`: (default) Preserving aspect ratio, ensures the image covers both provided dimensions by cropping/clipping to fit
+- `cover`: (default) Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit
 - `contain`: Preserving aspect ratio, contain within both provided dimensions using "letterboxing" where necessary.
 - `fill`: Ignore the aspect ratio of the input and stretch to both provided dimensions.
 - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
