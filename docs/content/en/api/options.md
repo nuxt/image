@@ -42,7 +42,7 @@ export default {
 
 ## `intersectOptions`
 
-The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the images are in Viewport or not. Use this option to modify IntersectionObserver options.
+The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the images are in the viewport or not. Use this option to modify IntersectionObserver options.
 
 ```ts [nuxt.config.js]
 export default {
