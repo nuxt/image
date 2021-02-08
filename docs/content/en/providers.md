@@ -13,7 +13,7 @@ For static projects (`target: 'static'`) image module automatically optimizes `s
 
 When using server target (or serverless) and also for dynamic images which are not predictable during generation-time we need a runtime image provider.
 
-Providers are an integration between the image module and images service providers. Using a specific provider means that your images are being transformed by the specific service URLs.
+Providers are an integration between the image module and image service providers. Using a specific provider means that your images will be transformed into URLs from the image service.
 
 There are plenty of image service providers. Nuxt image has a generic way to work with external providers. Here is a complete list of providers that are supported out-of-the-box and can be easily configured to use.
 
