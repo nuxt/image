@@ -42,7 +42,7 @@ That's it! You can can start using [`<nuxt-img>`](/components/nuxt-img) and [`<n
 
 ## Configure
 
-Add an `image` property in your `nuxt.config.js`:
+Add an `image` section in your `nuxt.config.js`:
 
 ```ts [nuxt.config.js]
 export default {
