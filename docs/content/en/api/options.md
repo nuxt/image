@@ -18,7 +18,7 @@ export default {
 
 ## `sizes`
 
-List of predefined sizes for responsive images. This sizes will use to generate resized and optimized version of an image.
+List of predefined sizes for responsive images. These sizes will be used to generate a resized and optimized version of an image.
 
 ```ts [nuxt.config.js]
 export default {
@@ -26,12 +26,11 @@ export default {
     sizes: [320, 420, 768, 1024, 1200]
   }
 }
-
 ```
 
 ## `accept`
 
-To enable image optimization on an external website, specify which domains are allowed to be optimized. This option will use to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
+To enable image optimization on an external website, specify which domains are allowed to be optimized. This option will be used to detect whether a remote image should be optimized or not. This is needed to ensure that external urls can't be abused.
 
 ```ts [nuxt.config.js]
 export default {
@@ -43,7 +42,7 @@ export default {
 
 ## `intersectOptions`
 
-The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the image are in Viewport or not. Use this option to modify IntersectionObserver options.
+The module uses [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to detect whether the images are in Viewport or not. Use this option to modify IntersectionObserver options.
 
 ```ts [nuxt.config.js]
 export default {
@@ -62,72 +61,77 @@ Presets are collections of pre-defined configurations for your projects. Presets
 <code-group>
   <code-block label="nuxt.config.js" active>
 
-  ```ts [nuxt.config.js]
-  export default {
-    image: {
-      presets: {
-        avatar: {
-          modifiers: {
-            format: 'jpg',
-            width: 50,
-            height: 50
-          }
+```ts [nuxt.config.js]
+export default {
+  image: {
+    presets: {
+      avatar: {
+        modifiers: {
+          format: 'jpg',
+          width: 50,
+          height: 50
         }
       }
     }
   }
-  ```
+}
+```
+
   </code-block>
   <code-block label="index.vue">
 
-  ```html [index.vue]
-  <template>
-    <nuxt-img preset="avatar" src="/nuxt-icon.png" />
-  </template>
-  ```
+```html [index.vue]
+<template>
+  <nuxt-img preset="avatar" src="/nuxt-icon.png" />
+</template>
+```
 
   </code-block>
 </code-group>
 
 See:
+
 - [How to use presets](/components/nuxt-img#preset)
 
 ## `providers`
 
-In order to create and use [custom provider](/advanced/custom-provider), you need to use `providers` option and define your custom providers.
+In order to create and use a [custom provider](/advanced/custom-provider), you need to use the `providers` option and define your custom providers.
 
 <code-group>
   <code-block label="nuxt.config.js" active>
 
-  ```js{}[nuxt.config.js]
-  export default {
-    image: {
-      providers: {
-        random: {
-          provider: '~/providers/random',
-          options: {}
-        }
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    providers: {
+      random: {
+        provider: '~/providers/random',
+        options: {}
       }
     }
   }
-  ```
+}
+```
+
   </code-block>
   <code-block label="index.vue">
 
-  ```vue{}[index.vue]
-  <template>
-    <nuxt-img provider="random" src="main.png" width="300" height="169" />
-  </template>
-  ```
+```vue{}[index.vue]
+<template>
+  <nuxt-img provider="random" src="main.png" width="300" height="169" />
+</template>
+```
 
   </code-block>
 </code-group>
 
 <!-- writing custom providers -->
+
 See:
-- [How to use provider](/components/nuxt-img#provider)
+
+- [How to use a provider](/components/nuxt-img#provider)
 - [List of internal providers](/providers)
-- [Create custom provider](/advanced/custom-provider)
+- [Create a custom provider](/advanced/custom-provider)
 
 ## `provider`
 
@@ -146,10 +150,10 @@ export default {
 
 ## `static`
 
-- `dir`: The root directory of the all images. By default nuxt image looks `static` dir to find original images,
-- `clearCache`: The ipx has a caching stategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using `clearCache` option in provide options. By default this cron job is disabled.
+- `dir`: The root directory of the all images. By default nuxt image looks in the `static` dir to find original images.
+- `clearCache`: The ipx has a caching strategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using the `clearCache` option in the provide options. By default this cron job is disabled.
 - `cacheDir`: The directory to store the cached images.
-- `sharp`: Modify default behavior of image opetimizer. Note that if you change this option, you need to clear ipx cache.
+- `sharp`: Modify default behavior of image optimizer. Note that if you change this option, you need to clear the ipx cache.
 
 ```js{}[nuxt.config.js]
 export default {
