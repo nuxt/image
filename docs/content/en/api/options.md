@@ -151,7 +151,7 @@ export default {
 ## `static`
 
 - `dir`: The root directory of the all images. By default nuxt image looks in the `static` dir to find original images.
-- `clearCache`: The ipx has a caching strategy to clear cached images to reduce massive disk usages. You can schedule the cache cleaning job using the `clearCache` option in the provide options. By default this cron job is disabled.
+- `clearCache`: If enabled, `ipx` can run a cron job to clear cached images to help prevent massive disk usage. By default this is disabled.
 - `cacheDir`: The directory to store the cached images.
 - `sharp`: Modify default behavior of image optimizer. Note that if you change this option, you need to clear the ipx cache.
 
