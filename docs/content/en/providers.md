@@ -11,13 +11,16 @@ For static projects (`target: 'static'`) image module automatically optimizes `s
 
 ## Image Providers
 
-When using server target (or serverless) and also for dynamic images which are not predictable during generation-time we need a rumtime image provider. Providers are an integration between the image module and images service providers. Using a specific provider means that your images are being transformed by the specific service URLs.
-There are plenty of image service providers. Nuxt image have a generic way to work with external providers. Here is a complete list of providers that are supporteed out-of-the-box and can be easily configured to use.
+With a server/serverless target or with dynamic images that aren't known at generation-time we need a runtime image provider.
 
-If you are looking for a specific provider outside of this list, you can [create your own provider](/advanced/custom-provider).
+Providers are an integration between the image module and image service providers. Using a specific provider means that your images will be transformed into URLs from the image service.
+
+There are plenty of image service providers. Nuxt image has a generic way to work with external providers. Here is a complete list of providers that are supported out-of-the-box and can be easily configured to use.
 
 - [`Cloudinary`](/providers/cloudinary)
 - [`Fastly`](/providers/fastly)
 - [`Imgix`](/providers/imgix)
 - [`IPX`](/providers/ipx) (selfhosted)
 - [`Twicpics`](/providers/twicpics)
+
+If you are looking for a specific provider outside of this list, you can [create your own provider](/advanced/custom-provider).
