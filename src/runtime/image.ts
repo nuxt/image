@@ -67,7 +67,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   $img.options = globalOptions
   $img.getImage = getImage
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
-  $img.getSizes = ((input: string, options?: ImageOptions, sizes?: string[]) => getSizes(ctx, input, options, sizes)) as $Img['getSizes']
+  $img.getSizes = ((input: string, options: ImageOptions & { sizes: Record<string, number> }) => getSizes(ctx, input, options)) as $Img['getSizes']
 
   ctx.$img = $img as $Img
 
@@ -138,31 +138,31 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes (ctx: ImageCTX, input: string, opts: ImageOptions = {}, sizes?: string[]) {
-  let widths = [].concat(sizes || ctx.options.sizes)
-  if (opts.modifiers.width) {
-    widths.push(opts.modifiers.width)
-    widths = widths.filter(w => w <= opts.modifiers.width)
-    widths.push(opts.modifiers.width * 2)
-  }
-  widths = Array.from(new Set(widths))
-    .sort((s1, s2) => s1 - s2) // unique & lowest to highest
-
-  const sources = []
+function getSizes (ctx: ImageCTX, input: string, opts: ImageOptions & { sizes: Record<string, number> }) {
   const ratio = opts.modifiers.height / opts.modifiers.width
-
-  for (const width of widths) {
+  const variants = []
+  for (const screen in opts.sizes) {
+    const screenMaxWidth = ctx.options.screens[screen]
+    const width = opts.sizes[screen]
+    if (!screenMaxWidth || !width) {
+      continue
+    }
     const height = ratio ? Math.round(width * ratio) : opts.modifiers.height
-    sources.push({
+    variants.push({
       width,
-      height,
-      src: ctx.$img(input, {
-        ...opts.modifiers,
-        width,
-        height
-      }, opts)
+      media: `(max-width: ${screenMaxWidth}px)`,
+      src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
     })
   }
 
-  return sources
+  variants.sort((v1, v2) => v1.width - v2.width)
+
+  const defaultVar = variants[variants.length - 1]
+  defaultVar.media = ''
+
+  return {
+    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.width}px`).join(', '),
+    srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
+    src: defaultVar.src
+  }
 }

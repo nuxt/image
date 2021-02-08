@@ -15,7 +15,15 @@ async function imageModule (moduleOptions: ModuleOptions) {
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
     domains: [],
     sharp: {},
-    sizes: undefined,
+    // https://tailwindcss.com/docs/breakpoints
+    screens: {
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536
+    },
     internalUrl: '',
     providers: {},
     static: {},
@@ -23,16 +31,11 @@ async function imageModule (moduleOptions: ModuleOptions) {
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
-  // Sanitize sizes
-  if (!Array.isArray(options.sizes)) {
-    // https://screensiz.es/
-    options.sizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840]
-  }
 
   options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
 
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
-    'sizes',
+    'screens',
     'presets',
     'provider',
     'intersectOptions'

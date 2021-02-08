@@ -1,5 +1,5 @@
 import type { IPXOptions } from 'ipx'
-import type { ImageOptions } from './image'
+import type { ImageOptions, CreateImageOptions } from './image'
 
 export interface InputProvider<T=any> {
   name?: string
@@ -17,14 +17,15 @@ export interface ImageProviders {
   static?: Partial<IPXOptions>
 }
 
+// TODO: use types from CreateImageOptions
 export interface ModuleOptions extends ImageProviders {
-  provider: string
+  provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
   domains: string[]
   sharp: {}
-  sizes: (number|string)[],
+  screens: CreateImageOptions['screens'],
   internalUrl: string
-  intersectOptions: object
+  intersectOptions: CreateImageOptions['intersectOptions']
   providers: { [name: string]: InputProvider | any } & ImageProviders
 }

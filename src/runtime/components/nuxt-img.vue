@@ -36,7 +36,7 @@ export default {
     // options
     preset: { type: String, required: false, default: undefined },
     provider: { type: String, required: false, default: undefined },
-    responsive: { type: Boolean, required: false, default: false }
+    sizes: { type: Object, required: false, default: undefined }
   },
   data () {
     return {
@@ -51,16 +51,35 @@ export default {
       if (this.usePlaceholder) {
         return EMPTY_GIF
       }
+      if (this.nResponsive) {
+        return this.nSizes.src
+      }
       return this.$img(this.src, this.nModifiers, this.nOptions)
     },
     nAttrs () {
       const attrs: any = {}
-      if (this.responsive) {
-        const { sizes, srcSet } = this.getResponsive()
+      if (this.nResponsive) {
+        const { sizes, srcset } = this.nSizes
         attrs.sizes = sizes
-        attrs.srcSet = srcSet
+        attrs.srcset = srcset
+      } else if (this.sizes) {
+        attrs.sizes = this.sizes
       }
       return attrs
+    },
+    nResponsive () {
+      return this.sizes && typeof this.sizes === 'object'
+    },
+    nSizes () {
+      return this.$img.getSizes(this.src, {
+        ...this.nOptions,
+        sizes: this.sizes,
+        modifiers: {
+          ...this.nModifiers,
+          width: parseSize(this.width),
+          height: parseSize(this.height)
+        }
+      })
     },
     nModifiers () {
       return {
@@ -82,8 +101,11 @@ export default {
   },
   created () {
     if (process.server && process.static) {
-      // Force compute sources into ssrContext
-      this.getResponsive()
+      if (this.nResponsive) {
+        // Force compute sources into ssrContext
+        // eslint-disable-next-line no-unused-expressions
+        this.nSizes
+      }
     }
   },
   mounted () {
@@ -95,20 +117,6 @@ export default {
     this.unobserve()
   },
   methods: {
-    getResponsive () {
-      const sizes = this.$img.getSizes(this.src, {
-        ...this.nOptions,
-        modifiers: {
-          ...this.nModifiers,
-          width: parseSize(this.width),
-          height: parseSize(this.height)
-        }
-      }, this.sizes)
-      return {
-        sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
-        srcSet: sizes.map(({ width, src }) => `${src} ${width}w`)
-      }
-    },
     observe () {
       this._removeObserver = useObserver(this.$el, () => {
         this.usePlaceholder = false

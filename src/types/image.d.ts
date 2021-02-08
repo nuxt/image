@@ -31,7 +31,7 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: string
   intersectOptions: object
-  sizes?: (number | string)[]
+  screens?: Record<string, number>,
 }
 
 export interface ImageInfo {
@@ -51,7 +51,7 @@ export interface $Img {
   (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
   options: CreateImageOptions
   getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => { width: string, height: string, src: string }[]
+  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => { srcset: string[], sizes: string[] }
   getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
   [preset: string]: $Img['options'] | $Img['getImage'] | $Img['getSizes'] | $Img['getMeta'] | $Img /* preset */
 }
