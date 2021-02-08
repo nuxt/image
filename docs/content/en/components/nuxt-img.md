@@ -54,7 +54,7 @@ Specify width of the image.
 Specify height of the image.
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
-- This value will set as `height` attribute of DOM element
+- This value will be set as `height` attribute of DOM element
 - On `layout != "responsive"`
   - When both `width` and `height` are present and values aren't equal to `auto`, this value will use to resize the image.
   - On the server-side rendering when the value equals to `auto` and width is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
