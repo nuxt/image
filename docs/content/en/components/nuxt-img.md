@@ -1,6 +1,6 @@
 ---
 title: Usage of <nuxt-img> component
-description: "Discover how to use and configure the nuxt-img component."
+description: 'Discover how to use and configure the nuxt-img component.'
 menuTitle: <nuxt-img>
 category: Components
 position: 201
@@ -8,11 +8,11 @@ position: 201
 
 `<nuxt-img>` is a replacement for the native `<img>` tag with no additional styles and supporting all native attributes.
 
-- Use built-in static provder to optimize local and remote images
+- Use built-in static provider to optimize local and remote images
 - Converts `src` to provider URL
 - Automatically resize images based on `width` and `height` attributes
 - Support `loading="lazy"` with wider range of browsers (see [native support](https://caniuse.com/loading-lazy-attr))
-- Automatically generate `alt` attribute based on `src`
+- Automatically generate `alt` attribute based on `src`.
 - Optionally generate responsive `src-set` and `sizes` attrs with `responsive` prop
 
 Use it like you would use the `<img>` tag:
@@ -20,9 +20,16 @@ Use it like you would use the `<img>` tag:
 ```html
 <nuxt-img src="/nuxt-icon.png" />
 ```
-## `src`
 
-Path to image file. `src` sould be in form of absolute path that starts with `/` or an URL.
+Will result in:
+
+```html
+<img src="/nuxt-icon.png" alt="nuxt-icon" />
+```
+
+## `src` Path to image file. `src` should be in the form of an absolute path
+
+that starts with `/` or a URL.
 
 ```html
 <nuxt-img :src="src" ... />
@@ -37,19 +44,19 @@ Specify width of the image.
 
 - This value will set as `width` attribute of DOM element
 - On `layout != "responsive"`
-  - When both `width` and `height` are present and values isn't equal to `auto`, this value will use to resize the image.
-  - On the server-side rendering when the value equals to `auto` and height is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
-  - On the server-side rendering when the value equals to `auto` and `height` is set, `nuxt-img` will automatically detects image's size and calulates proper width based on image's aspect ratio and `height` value. (This not happens on client-side rendering)
-  - On the server-side rendering the image will resize using calculated `width`
+  - When both `width` and `height` are present and values aren't equal to `auto`, this value will be used to resize the image.
+  - On server-side rendering when the value equals `auto` and height is not set or equal to `auto`, `nuxt-img` will automatically detect the image's size and use it. (This does not happens on client-side rendering)
+  - On server-side rendering when the value equals `auto` and `height` is set, `nuxt-img` will automatically detect the image's size and calculate the proper width based on the image's aspect ratio and `height` value. (This does not happens on client-side rendering)
+  - On server-side rendering the image will resize using the calculated `width`
 
 ## `height`
 
 Specify height of the image.
 `nuxt-img` uses this value to optimize the image as best as its possible:
 
-- This value will set as `height` attribute of DOM element
+- This value will be set as `height` attribute of DOM element
 - On `layout != "responsive"`
-  - When both `width` and `height` are present and values isn't equal to `auto`, this value will use to resize the image.
+  - When both `width` and `height` are present and values aren't equal to `auto`, this value will use to resize the image.
   - On the server-side rendering when the value equals to `auto` and width is not set or equal to `auto`, `nuxt-img` will automatically detects image's size and use it. (This not happens on client-side rendering)
   - On the server-side rendering when the value equals to `auto` and `width` is set, `nuxt-img` will automatically detects image's size and calulates proper height based on image's aspect ratio and `width` value. (This not happens on client-side rendering)
   - On the server-side rendering the image will resize using calculated `height`
@@ -132,13 +139,13 @@ export default {
 
 ## `format`
 
-In case you want to serve images in specific format, use this prop.
+In case you want to serve images in a specific format, use this prop.
 
 ```html
 <nuxt-img format="webp" src="/nuxt-icon.png" ... />
 ```
 
-Available format are `webp`, `jpeg`, `jpg`, `png`, `gif` and `svg`. If format is not specified, it will respect the default image format.
+Available formats are `webp`, `jpeg`, `jpg`, `png`, `gif` and `svg`. If the format is not specified, it will respect the default image format.
 
 ## `quality`
 
@@ -159,21 +166,21 @@ There are five standard values you can use with this property.
 - `inside`: Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
 - `outside`: Preserving aspect ratio, resize the image to be as small as possible while ensuring its dimensions are greater than or equal to both those specified.
 
-```html 
+```html
 <nuxt-img fit="cover" src="/nuxt-icon.png" width="200" height="100" />
 ```
 
 <alert type="info">
 
-Some providers provide additional values beside the above standard ones, such as [Cloudinary values](/providers/cloudinary#cloudinary-fit-values) for extra resizing effect.
+Some providers provide additional values besides the above standard ones, such as [Cloudinary values](/providers/cloudinary#cloudinary-fit-values) for extra resizing effects.
 
 </alert>
 
 ## `modifiers`
 
-In addition of standard operation, every provider can have their own operation. For example Cloudinary supports lots of [modifiers](/providers/cloudinary#cloudinary-modifiers).
+In addition to standard operations, every provider can have their own operation. For example Cloudinary supports lots of [modifiers](/providers/cloudinary#cloudinary-modifiers).
 
-Using the `modifiers` prop let you use any of these transformations.
+Using the `modifiers` prop lets you use any of these transformations.
 
 ```html
 <nuxt-img
