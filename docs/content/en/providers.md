@@ -11,7 +11,7 @@ For static projects (`target: 'static'`) image module automatically optimizes `s
 
 ## Image Providers
 
-When using server target (or serverless) and also for dynamic images which are not predictable during generation-time we need a runtime image provider.
+With a server/serverless target or with dynamic images that aren't known at generation-time we need a runtime image provider.
 
 Providers are an integration between the image module and image service providers. Using a specific provider means that your images will be transformed into URLs from the image service.
 
