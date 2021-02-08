@@ -4,6 +4,10 @@ import type { } from '../src/types'
 export default <NuxtConfig> {
   components: true,
   target: 'static',
+  head: {
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  },
   modules: [
     '../src/module.ts'
   ],
