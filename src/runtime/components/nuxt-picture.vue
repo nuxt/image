@@ -10,11 +10,11 @@
     >
     <picture v-if="isVisible">
       <source
-        v-for="nSource of nSources"
-        :key="nSource.src"
-        :type="nSource.type"
-        :srcset="nSource.srcset"
-        :sizes="nSource.sizes"
+        v-if="nSources[1]"
+        :key="nSources[1].src"
+        :type="nSources[1].type"
+        :srcset="nSources[1].srcset"
+        :sizes="nSources[1].sizes"
       >
       <img
         v-if="isVisible"
@@ -159,7 +159,7 @@ export default {
       const sources = formats.map((format) => {
         const { srcset, sizes, src } = this.$img.getSizes(this.src, {
           ...this.nOptions,
-          sizes: this.sizes,
+          sizes: this.sizes || this.$img.options.screens,
           modifiers: {
             ...this.nModifiers,
             width: this.nWidth,
