@@ -1,6 +1,6 @@
 import defu from 'defu'
 import { joinURL } from 'ufo'
-import type { ImageOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
@@ -67,7 +67,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   $img.options = globalOptions
   $img.getImage = getImage
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
-  $img.getSizes = ((input: string, options: ImageOptions & { sizes: Record<string, number> }) => getSizes(ctx, input, options)) as $Img['getSizes']
+  $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
 
   ctx.$img = $img as $Img
 
@@ -138,7 +138,7 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes (ctx: ImageCTX, input: string, opts: ImageOptions & { sizes: Record<string, number> }) {
+function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const ratio = opts.modifiers.height / opts.modifiers.width
   const variants = []
   for (const screen in opts.sizes) {

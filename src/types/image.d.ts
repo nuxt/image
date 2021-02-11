@@ -13,6 +13,10 @@ export interface ImageOptions {
   [key: string]: any
 }
 
+export interface ImageSizesOptions extends ImageOptions {
+  sizes: Record<string, number>
+}
+
 // eslint-disable-next-line no-use-before-define
 export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCTX) => ResolvedImage
 
