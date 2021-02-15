@@ -16,17 +16,18 @@
     </div>
     <nuxt-img
       src="/logos/nuxt.png"
-      sizes="sm:100vw md:50vw 400px"
+      sizes="sm:100vw md:50vw lg:400px"
     />
+    <img src="/_ipx/logos/nuxt.png?w=384" alt="nuxt" sizes="(max-width: 640px) 640px, 384px" srcset="/_ipx/logos/nuxt.png?w=640 640w, /_ipx/logos/nuxt.png?w=384 384w" data-v-7d203d15="">
     <br>
     <nuxt-picture
       src="/logos/nuxt.png"
-      sizes="sm:100vw md:50vw 400px"
+      sizes="sm:100vw md:50vw lg:400px"
     />
     <br>
     <nuxt-img
       src="/logos/nuxt.png"
-      :sizes="{ sm: '100vw', md: '50vw', default: 400 }"
+      :sizes="{ sm: '100vw', md: '50vw', lg: 400 }"
     />
     <br>
     <img
