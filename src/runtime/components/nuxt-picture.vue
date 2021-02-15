@@ -78,7 +78,7 @@ export default {
 
     // extras
     placeholder: { type: [Boolean, String], default: false },
-    sizes: { type: Object, required: false, default: undefined }
+    sizes: { type: [Object, String], required: false, default: undefined }
   },
   data () {
     const isLazy = this.loading === 'lazy'
