@@ -10,7 +10,7 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     resize: 's',
     quality: 'q',
-    background: 'bg'
+    background: 'b'
   },
   joinWith: '&',
   formatter: (key, val) => encodeQueryItem(key, val)
