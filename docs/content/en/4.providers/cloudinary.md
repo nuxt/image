@@ -3,7 +3,6 @@ menuTitle: Cloudinary
 title: Cloudinary Provider
 description: 'Nuxt Image has first class integration with Cloudinary'
 category: Providers
-position: 401
 ---
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.

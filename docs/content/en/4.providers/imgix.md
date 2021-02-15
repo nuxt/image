@@ -3,7 +3,6 @@ menuTitle: Imgix
 title: Imgix Provider
 description: 'Nuxt Image has first class integration with Imgix'
 category: Providers
-position: 403
 ---
 
 Integration between [Imgix](https://docs.imgix.com/) and the image module.

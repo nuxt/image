@@ -3,7 +3,6 @@ menuTitle: Fastly
 title: Fastly Provider
 description: 'Nuxt Image has first class integration with Fastly'
 category: Providers
-position: 402
 ---
 
 Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimization-api) and the image module.
