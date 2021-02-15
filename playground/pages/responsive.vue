@@ -17,24 +17,14 @@
     <nuxt-img
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
+      loading="lazy"
     />
-    <img src="/_ipx/logos/nuxt.png?w=384" alt="nuxt" sizes="(max-width: 640px) 640px, 384px" srcset="/_ipx/logos/nuxt.png?w=640 640w, /_ipx/logos/nuxt.png?w=384 384w" data-v-7d203d15="">
     <br>
     <nuxt-picture
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
+      loading="lazy"
     />
-    <br>
-    <nuxt-img
-      src="/logos/nuxt.png"
-      :sizes="{ sm: '100vw', md: '50vw', lg: 400 }"
-    />
-    <br>
-    <img
-      src="/logos/nuxt.png"
-      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
-      :srcset="`${l(320)} 320w,${l(640)} 640w,${l(384)} 384w,${l(400)} 400w`"
-    >
   </div>
 </template>
 
