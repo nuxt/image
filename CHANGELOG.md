@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/nuxt/image/compare/v0.3.0...v0.4.0) (2021-02-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove nuxt-picture wrapper
+* screen based responsive (#182)
+
+### Features
+
+* remove nuxt-picture wrapper ([8d7d84b](https://github.com/nuxt/image/commit/8d7d84b0bf2b8bdf9be5c73d5b968b9a827545f3))
+* screen based responsive ([#182](https://github.com/nuxt/image/issues/182)) ([51e2e0a](https://github.com/nuxt/image/commit/51e2e0aa34a46fe7713f6a96db8ba933182ded05))
+
 ## [0.3.0](https://github.com/nuxt/image/compare/v0.2.1...v0.3.0) (2021-02-03)
 
 
