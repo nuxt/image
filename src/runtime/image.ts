@@ -165,7 +165,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     const screenMaxWidth = ctx.options.screens[key]
     if (!/^\d+$/.test(sizes[key]) &&
       !sizes[key].endsWith('px') &&
-      !sizes[key].endsWith('em')
+      !sizes[key].endsWith('vw')
     ) {
       continue
     }
@@ -193,7 +193,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   }
 
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.width}`).join(', '),
+    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.width}px`).join(', '),
     srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
     src: defaultVar?.src
   }
