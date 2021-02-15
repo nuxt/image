@@ -9,7 +9,13 @@
       :style="{ opacity: isLoaded ? 0 : 1 }"
     >
     <picture v-if="isVisible">
-      <source v-if="sources[1]" v-bind="sources[1]">
+      <source
+        v-if="nSources[1]"
+        :key="nSources[1].src"
+        :type="nSources[1].type"
+        :srcset="nSources[1].srcset"
+        :sizes="nSources[1].sizes"
+      >
       <img
         v-if="isVisible"
         class="img"
@@ -20,10 +26,10 @@
         :longdesc="longdesc"
         :ismap="ismap"
         :crossorigin="crossorigin"
-        :src="defaultSrc"
-        :srcset="sources[0].srcset"
+        :src="nSources[0].src"
+        :srcset="nSources[0].srcset"
+        :sizes="nSources[0].sizes"
         :style="{ opacity: isLoaded ? 1 : 0.01 }"
-        :sizes="sources[0].sizes"
         :loading="isLazy ? 'lazy' : 'eager'"
         @load="onImageLoaded"
         @onbeforeprint="onPrint"
@@ -72,7 +78,7 @@ export default {
 
     // extras
     placeholder: { type: [Boolean, String], default: false },
-    sizes: { type: [Array], default: undefined }
+    sizes: { type: [Object, String], required: false, default: undefined }
   },
   data () {
     const isLazy = this.loading === 'lazy'
@@ -139,11 +145,38 @@ export default {
         preset: this.preset
       }
     },
-    defaultSrc () {
-      return this.sources[0].srcset[0].split(' ')[0]
-    },
-    sources () {
-      return this.getSources()
+    nSources () {
+      if (this.nFormat === 'svg') {
+        return [{
+          srcset: this.src
+        }]
+      }
+
+      const formats = this.nLegacyFormat !== this.nFormat
+        ? [this.nLegacyFormat, this.nFormat]
+        : [this.nFormat]
+
+      const sources = formats.map((format) => {
+        const { srcset, sizes, src } = this.$img.getSizes(this.src, {
+          ...this.nOptions,
+          sizes: this.sizes || this.$img.options.screens,
+          modifiers: {
+            ...this.nModifiers,
+            width: this.nWidth,
+            height: this.nHeight,
+            format
+          }
+        })
+
+        return {
+          src,
+          type: `image/${format}`,
+          sizes,
+          srcset
+        }
+      })
+
+      return sources
     },
     srcset () {
       if (this.nFormat === 'svg') {
@@ -173,7 +206,8 @@ export default {
   created () {
     if (process.server && process.static) {
       // Force compute sources into ssrContext
-      this.getSources()
+      // eslint-disable-next-line no-unused-expressions
+      this.nSources
     }
   },
   mounted () {
@@ -185,37 +219,6 @@ export default {
     this.unobserve()
   },
   methods: {
-    getSources () {
-      if (this.nFormat === 'svg') {
-        return [{
-          srcset: this.src
-        }]
-      }
-
-      const formats = this.nLegacyFormat !== this.nFormat
-        ? [this.nLegacyFormat, this.nFormat]
-        : [this.nFormat]
-
-      const sources = formats.map((format) => {
-        const sizes = this.$img.getSizes(this.src, {
-          ...this.nOptions,
-          modifiers: {
-            ...this.nModifiers,
-            width: this.nWidth,
-            height: this.nHeight,
-            format
-          }
-        }, this.sizes)
-
-        return {
-          type: `image/${format}`,
-          sizes: sizes.map(({ width }) => `(max-width: ${width}px) ${width}px`),
-          srcset: sizes.map(({ width, src }) => `${src} ${width}w`)
-        }
-      })
-
-      return sources
-    },
     observe () {
       this._removeObserver = useObserver(this.$el, type => this.onObservered(type))
     },
