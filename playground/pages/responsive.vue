@@ -16,7 +16,7 @@
     </div>
     <nuxt-img
       src="/logos/nuxt.png"
-      sizes="lg:400 sm:100vw md:50vw"
+      sizes="sm:100vw md:50vw 400px md:50vw "
     />
     <nuxt-img
       src="/logos/nuxt.png"

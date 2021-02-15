@@ -141,28 +141,60 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const ratio = opts.modifiers.height / opts.modifiers.width
   const variants = []
-  for (const screen in opts.sizes) {
-    const screenMaxWidth = ctx.options.screens[screen]
-    const width = opts.sizes[screen]
+
+  const sizes: Record<string, string> = {}
+
+  // string => object
+  if (typeof opts.sizes === 'string') {
+    for (const entry of opts.sizes.split(/[\s,]+/).filter(e => e)) {
+      const s = entry.split(':')
+      if (s.length !== 2) {
+        if (s.length === 1) {
+          s.unshift('default')
+        } else {
+          continue
+        }
+      }
+      sizes[s[0].trim()] = s[1].trim()
+    }
+  } else {
+    Object.assign(sizes, opts.sizes)
+  }
+
+  for (const key in sizes) {
+    const screenMaxWidth = ctx.options.screens[key]
+    if (!/^\d+$/.test(sizes[key]) &&
+      !sizes[key].endsWith('px') &&
+      !sizes[key].endsWith('em')
+    ) {
+      continue
+    }
+    let width = parseInt(sizes[key])
     if (!screenMaxWidth || !width) {
       continue
+    }
+    if (sizes[key].endsWith('vw')) {
+      width = (width / 100) * screenMaxWidth
     }
     const height = ratio ? Math.round(width * ratio) : opts.modifiers.height
     variants.push({
       width,
+      screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
       src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
     })
   }
 
-  variants.sort((v1, v2) => v1.width - v2.width)
+  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
   const defaultVar = variants[variants.length - 1]
-  defaultVar.media = ''
+  if (defaultVar) {
+    defaultVar.media = ''
+  }
 
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.width}px`).join(', '),
+    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.width}`).join(', '),
     srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar.src
+    src: defaultVar?.src
   }
 }

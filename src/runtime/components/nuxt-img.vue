@@ -36,7 +36,7 @@ export default {
     // options
     preset: { type: String, required: false, default: undefined },
     provider: { type: String, required: false, default: undefined },
-    sizes: { type: Object, required: false, default: undefined }
+    sizes: { type: [Object, String], required: false, default: undefined }
   },
   data () {
     return {
@@ -51,14 +51,14 @@ export default {
       if (this.usePlaceholder) {
         return EMPTY_GIF
       }
-      if (this.nResponsive) {
+      if (this.sizes) {
         return this.nSizes.src
       }
       return this.$img(this.src, this.nModifiers, this.nOptions)
     },
     nAttrs () {
       const attrs: any = {}
-      if (this.nResponsive) {
+      if (this.sizes) {
         const { sizes, srcset } = this.nSizes
         attrs.sizes = sizes
         attrs.srcset = srcset
@@ -66,9 +66,6 @@ export default {
         attrs.sizes = this.sizes
       }
       return attrs
-    },
-    nResponsive () {
-      return this.sizes && typeof this.sizes === 'object'
     },
     nSizes () {
       return this.$img.getSizes(this.src, {
@@ -101,7 +98,7 @@ export default {
   },
   created () {
     if (process.server && process.static) {
-      if (this.nResponsive) {
+      if (this.sizes) {
         // Force compute sources into ssrContext
         // eslint-disable-next-line no-unused-expressions
         this.nSizes

@@ -14,7 +14,7 @@ export interface ImageOptions {
 }
 
 export interface ImageSizesOptions extends ImageOptions {
-  sizes: Record<string, number>
+  sizes: Record<string, string|number> | string
 }
 
 // eslint-disable-next-line no-use-before-define
