@@ -139,7 +139,7 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 }
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
-  const ratio = opts.modifiers.height / opts.modifiers.width
+  const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
   const variants = []
 
   const sizes: Record<string, string> = {}
@@ -172,7 +172,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     if (isFluid) {
       width = (width / 100) * screenMaxWidth
     }
-    const height = ratio ? Math.round(width * ratio) : opts.modifiers.height
+    const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
     variants.push({
       width,
       size,
