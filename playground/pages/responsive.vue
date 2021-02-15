@@ -16,12 +16,19 @@
     </div>
     <nuxt-img
       src="/logos/nuxt.png"
-      sizes="sm:100vw md:50vw 400px md:50vw "
+      sizes="sm:100vw md:50vw 400px"
     />
+    <br>
+    <nuxt-picture
+      src="/logos/nuxt.png"
+      sizes="sm:100vw md:50vw 400px"
+    />
+    <br>
     <nuxt-img
       src="/logos/nuxt.png"
       :sizes="{ sm: '100vw', md: '50vw', default: 400 }"
     />
+    <br>
     <img
       src="/logos/nuxt.png"
       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
