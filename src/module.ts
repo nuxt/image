@@ -17,6 +17,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
     sharp: {},
     // https://tailwindcss.com/docs/breakpoints
     screens: {
+      xs: 320,
       sm: 640,
       md: 768,
       lg: 1024,
