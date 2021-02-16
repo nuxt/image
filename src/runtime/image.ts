@@ -156,7 +156,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   }
 
   for (const key in sizes) {
-    const screenMaxWidth = ctx.options.screens[key]
+    const screenMaxWidth = ctx.options.screens[key] || parseInt(key)
     let size = String(sizes[key])
     const isFluid = size.endsWith('vw')
     if (!isFluid && /^\d+$/.test(size)) {
