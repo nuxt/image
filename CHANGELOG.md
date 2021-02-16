@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/nuxt/image/compare/v0.4.0...v0.4.1) (2021-02-16)
+
+
+### Features
+
+* allow sizes key to be screen width ([6624440](https://github.com/nuxt/image/commit/6624440ef84588c48f86c217157863b5ffd52706))
+
+
+### Bug Fixes
+
+* use Math.round for generated width ([8ee9a40](https://github.com/nuxt/image/commit/8ee9a406c993a08d1cdd6ec7d6acaa68dc215fe4))
+
 ## [0.4.0](https://github.com/nuxt/image/compare/v0.3.0...v0.4.0) (2021-02-15)
 
 
