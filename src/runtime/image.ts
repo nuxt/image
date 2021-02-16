@@ -170,7 +170,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       continue
     }
     if (isFluid) {
-      width = (width / 100) * screenMaxWidth
+      width = Math.round((width / 100) * screenMaxWidth)
     }
     const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
     variants.push({
