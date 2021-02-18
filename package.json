@@ -15,7 +15,7 @@
     "attributes": "dist/vetur/attributes.json"
   },
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
+    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime && mkdist --src src/vetur --dist dist/vetur",
     "dev": "yarn nuxt playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
