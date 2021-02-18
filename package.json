@@ -10,6 +10,10 @@
   "files": [
     "dist"
   ],
+  "vetur": {
+    "tags": "dist/vetur/tags.json",
+    "attributes": "dist/vetur/attributes.json"
+  },
   "scripts": {
     "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
     "dev": "yarn nuxt playground",
