@@ -1,4 +1,5 @@
 import type { ProviderGetImage } from 'src'
+import { withoutBase, withBase } from 'ufo'
 
 const defaultModifiers = {
   width: '0',
@@ -15,7 +16,7 @@ const buildWidth = (mergeModifiers) => {
 
 const buildFit = ({ fit }) => fit ? `/fit-${fit}` : ''
 
-const buildSmart = ({ smart }) => typeof smart !== 'undefined' ? '/smart' : ''
+const buildSmart = ({ smart }) => smart ? '/smart' : ''
 
 const buildFilters = (filters) => {
   if (!filters) { return '' }
@@ -45,9 +46,9 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = 'htt
     ...modifiers
   })
 
-  const srcWithoutBase = src.replace('https://a.storyblok.com', '')
+  const srcWithoutBase = withoutBase(src, 'https://a.storyblok.com')
   const options = `${buildFit(mergeModifiers)}${buildWidth(mergeModifiers)}${buildSmart(mergeModifiers)}${buildFilters(mergeModifiers.filters)}`
-  const url = `${baseURL}${options}${srcWithoutBase}`
+  const url = withBase(`${options}${srcWithoutBase}`, baseURL)
   return {
     url
   }
