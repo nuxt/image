@@ -15,7 +15,7 @@ export const props = {
   quality: { type: [Number, String], required: false },
   background: { type: String, required: false },
   fit: { type: String, required: false },
-
+  modifiers: { type: Object, required: false },
   // options
   preset: { type: String, required: false },
   provider: { type: String, required: false }
@@ -31,13 +31,13 @@ export const NuxtImg: Component = {
     },
     nModifiers () {
       return {
+        ...this.modifiers,
         width: this.width,
         height: this.height,
         format: this.format,
         quality: this.quality,
         background: this.background,
-        fit: this.fit,
-        ...this.$attrs
+        fit: this.fit
       }
     },
     nSrc () {

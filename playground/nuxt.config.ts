@@ -1,9 +1,14 @@
 import type { NuxtConfig } from '@nuxt/types'
-import '../src/types'
+import type { } from '../src/types'
 
 export default <NuxtConfig> {
   components: true,
-  target: 'server',
+  target: 'static',
+  head: {
+    meta: [
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  },
   modules: [
     '../src/module.ts'
   ],
@@ -11,9 +16,10 @@ export default <NuxtConfig> {
     '@nuxt/typescript-build'
   ],
   image: {
-    accept: [
-      'nuxtjs.org',
-      'unsplash.com'
+    domains: [
+      'https://nuxtjs.org',
+      'https://unsplash.com',
+      'https://upload.wikimedia.org'
     ],
     twicpics: {
       baseURL: 'https://nuxt-demo.twic.pics'
@@ -33,15 +39,22 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
-    presets: [
-      {
-        name: 's50',
+    providers: {
+      custom: {
+        provider: '~/providers/custom',
+        options: {
+          baseURL: 'https://site.my'
+        }
+      }
+    },
+    presets: {
+      s50: {
         modifiers: {
           width: 50,
           height: 50
         }
       }
-    ],
+    },
     intersectOptions: {
       rootMargin: '50px'
     }

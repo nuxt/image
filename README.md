@@ -8,28 +8,20 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-> Optimised images for [NuxtJS](https://nuxtjs.org), with progressive processing, lazy-loading, real-time resizes and providers ([IPX](https://github.com/nuxt-contrib/ipx), [Cloudinary](https://cloudinary.com), [TwicPics](https://www.twicpics.com/), etc).
+:warning: Image module is under development and API changes might happen. Use with Caution!
 
-```html
-<NuxtImg src="/image.png" width="500" height="200" />
-```
-
-:warning: This module is still a work in progress, please be careful.
-
-- [✨ &nbsp;Release Notes](https://image.nuxtjs.org/releases)
+<!-- - [✨ &nbsp;Release Notes](https://image.nuxtjs.org/releases) -->
 - [📖 &nbsp;Documentation](https://image.nuxtjs.org)
 
-## Contributing
-
-You can contribute to this module online with CodeSandBox:
-
-[![Edit @nuxt/image](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nuxt/image/tree/master/?fontsize=14&hidenavigation=1&theme=dark)
-
-Or locally:
+### Contributing
 
 1. Clone this repository
 2. Install dependencies using `yarn install`
 3. Start development server using `yarn dev`
+
+You can also contribute to this module online with CodeSandBox:
+
+[![Edit @nuxt/image](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nuxt/image/tree/main/?fontsize=14&hidenavigation=1&theme=dark)
 
 ## 📑 License
 

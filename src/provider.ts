@@ -1,13 +1,23 @@
 import { normalize } from 'upath'
-import type { ModuleOptions, ProviderFactory, InputProvider } from './types'
+import type { ModuleOptions, InputProvider } from './types'
 import { hash } from './utils'
-import * as PROVIDERS from './providers'
+
+const BuiltInProviders = [
+  'cloudinary',
+  'fastly',
+  'imagekit',
+  'imgix',
+  'ipx',
+  'static',
+  'twicpics',
+  'storyblok'
+]
 
 export interface ImageModuleProvider {
   name: string
   importName: string
   options: any
-  provider: ProviderFactory
+  provider: string
   runtime: string
   runtimeOptions: any
 }
@@ -16,8 +26,8 @@ export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProv
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
-    if (PROVIDERS[key]) {
-      providers.push(resolveProvider(nuxt, key, { provider: PROVIDERS[key], options: options[key] }))
+    if (BuiltInProviders.includes(key)) {
+      providers.push(resolveProvider(nuxt, key, { provider: key, options: options[key] }))
     }
   }
 
@@ -41,22 +51,14 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
     input.provider = input.name
   }
 
-  if (typeof input.provider === 'string') {
-    input.provider = (PROVIDERS[input.provider] || nuxt.resolver.requireModule(input.provider)) as ProviderFactory
-  }
-
-  if (typeof input.provider !== 'function') {
-    throw new TypeError(`Invalid provider: ${input.provider}. Function expected but got ${typeof input.provider}.`)
-  }
-
-  const { runtime, runtimeOptions = {} } = input.provider(input.options)
-
-  // TODO: Check existence of runtime
+  input.provider = BuiltInProviders.includes(input.provider)
+    ? require.resolve('./runtime/providers/' + input.provider)
+    : nuxt.resolver.resolvePath(input.provider)
 
   return <ImageModuleProvider> {
     ...input,
-    runtime: normalize(runtime),
-    importName: `${key}Runtime$${hash(runtime, 4)}`,
-    runtimeOptions
+    runtime: normalize(input.provider),
+    importName: `${key}Runtime$${hash(input.provider, 4)}`,
+    runtimeOptions: input.options
   }
 }

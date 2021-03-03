@@ -1,41 +1,40 @@
 {
   "name": "@nuxt/image",
-  "version": "0.2.0-alpha.1",
+  "version": "0.4.1",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
   "sideEffects": false,
-  "exports": {
-    ".": "./dist/module.js",
-    "./": "./",
-    "./runtime": "./dist/runtime.mjs"
-  },
   "main": "dist/module.js",
   "types": "dist/types.d.ts",
   "files": [
-    "dist",
-    "templates"
+    "dist"
   ],
   "scripts": {
-    "build": "siroc build",
-    "dev": "yarn nuxt-ts playground",
+    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
+    "dev": "yarn nuxt playground",
+    "docs:build": "cd docs && nuxt generate",
+    "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
-    "release": "yarn test && standard-version && yarn build && git push --follow-tags && npm publish",
-    "test": "yarn lint && yarn test:unit && yarn test:e2e",
+    "prepublishOnly": "yarn build",
+    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
+    "test": "true",
+    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
   },
   "dependencies": {
     "allowlist": "^0.1.1",
-    "consola": "^2.15.0",
+    "consola": "^2.15.3",
     "defu": "^3.2.2",
+    "fs-extra": "^9.1.0",
     "hasha": "^5.2.2",
     "image-meta": "^0.0.1",
-    "ipx": "^0.4.8",
+    "ipx": "^0.6.0",
     "is-https": "^3.0.2",
     "node-fetch": "^2.6.1",
     "requrl": "^3.0.2",
-    "ufo": "^0.5.2",
+    "ufo": "^0.6.6",
     "upath": "^2.0.1"
   },
   "devDependencies": {
@@ -54,7 +53,8 @@
     "jest": "latest",
     "jsdom": "latest",
     "jsdom-global": "latest",
-    "nuxt-edge": "latest",
+    "mkdist": "latest",
+    "nuxt-edge": "^2.15.0-26889155.dd0eea40",
     "playwright": "latest",
     "siroc": "latest",
     "standard-version": "latest",

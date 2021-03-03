@@ -1,21 +1,17 @@
-import { resolve } from 'path'
 import consola from 'consola'
-import hasha from 'hasha'
+import hasha from 'hasha/index.js'
 import { name, version } from '../package.json'
 
 export const logger = consola.withScope('@nuxt/image')
 
 export const pkg = { name, version }
 
-export const pkgDir = resolve(__dirname, '..')
-
 export function hash (value: string, length = 6) {
   return hasha(value).substr(0, length)
 }
 
-// TODO: Typechecks
-export function pick (obj: any, keys: string[]) {
-  const newobj = {}
+export function pick<O extends Record<any, any>, K extends keyof O> (obj: O, keys: K[]): Pick<O, K> {
+  const newobj = {} as Pick<O, K>
   for (const key of keys) {
     newobj[key] = obj[key]
   }

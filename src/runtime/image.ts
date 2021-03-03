@@ -1,105 +1,87 @@
-import { allowList } from 'allowlist'
-import type { Matcher } from 'allowlist'
-import { hasProtocol, joinURL } from 'ufo'
-import requrl from 'requrl'
-import type { ImageOptions, CreateImageOptions, ResolvedImage } from '../types/image'
-import { createObserver } from './observer'
-import { imageMeta } from './meta'
-import { getSizes, InputSizes } from './sizes'
-
-export interface ImageCTX {
-  options: CreateImageOptions,
-  allow: Matcher<any>
-  nuxtContext: {
-    ssrContext: any
-    cache?: any
-    isDev: boolean
-    isStatic: boolean
-    nuxtState?: any
-  }
-  $img?: Function
-}
+import defu from 'defu'
+import { joinURL } from 'ufo'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
+import { imageMeta } from './utils/meta'
+import { parseSize } from './utils'
+import { useStaticImageMap } from './utils/static-map'
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
+  const staticImageManifest = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
+
   const ctx: ImageCTX = {
     options: globalOptions,
-    allow: allowList(globalOptions.allow),
     nuxtContext
   }
 
-  function $img (input: string, options: ImageOptions = {}) {
-    const { image } = resolveImage(ctx, input, options)
-
-    // Full static
-    // @ts-ignore
-    if (typeof window !== 'undefined' && window.$nuxt && window.$nuxt._pagePayload) {
-      // @ts-ignore
-      const jsonPData = window.$nuxt._pagePayload.data[0]
-      if (jsonPData.nuxtImageMap[input]) {
-        // Hydration with hash
-        image.url = jsonPData.nuxtImageMap[input]
-      } else if (image.isStatic) {
-        image.url = input
-      }
-      // Return original source on cache fail in full static mode
-      return image
+  const getImage: $Img['getImage'] = function (input: string, options: ImageOptions = {}) {
+    const image = resolveImage(ctx, input, options)
+    if (image.isStatic) {
+      handleStaticImage(image, input)
     }
-
-    // Client-Side rendering without server
-    if (typeof window !== 'undefined' && !ctx.nuxtContext.isDev && ctx.nuxtContext.isStatic && image.isStatic) {
-      image.url = input
-      return image
-    }
-
-    const nuxtState = ctx.nuxtContext.nuxtState || ctx.nuxtContext.ssrContext.nuxt
-    if (!nuxtState.data || !nuxtState.data.length) { nuxtState.data = [{}] }
-    const data = nuxtState.data[0]
-    data.nuxtImageMap = data.nuxtImageMap || {}
-
-    if (data.nuxtImageMap[image.url]) {
-      // Hydration with hash
-      image.url = data.nuxtImageMap[image.url]
-    } else if (typeof ctx.nuxtContext.ssrContext?.mapImage === 'function') {
-      // Full Static
-      const mappedUrl = ctx.nuxtContext.ssrContext?.mapImage({ input, image, options })
-      if (mappedUrl) {
-        image.url = mappedUrl
-        data.nuxtImageMap[image.url] = mappedUrl
-      }
-    }
-
     return image
   }
 
-  ctx.$img = $img
-
-  for (const presetName in globalOptions.presets) {
-    $img[presetName] = (source: string, _options: ImageOptions = {}) => $img(source, {
-      ...globalOptions.presets[presetName],
-      ..._options
-    })
+  function $img (input: string, modifiers: ImageOptions['modifiers'] = {}, options: ImageOptions = {}) {
+    return getImage(input, {
+      ...options,
+      modifiers: {
+        ...options.modifiers,
+        ...modifiers
+      }
+    }).url
   }
 
-  $img.$observer = createObserver(globalOptions.intersectOptions)
+  function handleStaticImage (image: ResolvedImage, input: string) {
+    if (process.static) {
+      const staticImagesBase = '/_nuxt/image' // TODO
 
-  $img.sizes = (input: string, sizes: InputSizes, options: ImageOptions) => getSizes(ctx, input, sizes, options)
-  $img.getMeta = (input: string, options: ImageOptions) => getMeta(ctx, input, options)
+      if (process.client && 'fetchPayload' in window.$nuxt) {
+        const mappedURL = staticImageManifest[image.url]
+        image.url = mappedURL ? joinURL(staticImagesBase, mappedURL) : input
+        return image
+      }
+
+      if (process.server) {
+        const { ssrContext } = ctx.nuxtContext
+        const ssrData = ssrContext.nuxt.data[0]
+        const staticImages = ssrData._img = ssrData._img || {}
+        const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
+        if (typeof mapToStatic === 'function') {
+          const mappedURL = mapToStatic(image)
+          if (mappedURL) {
+            staticImages[image.url] = mappedURL
+            image.url = joinURL(staticImagesBase, mappedURL)
+          }
+        }
+      }
+    } else if (process.env.NODE_ENV === 'production') {
+      image.url = input
+    }
+  }
+
+  for (const presetName in globalOptions.presets) {
+    $img[presetName] = ((source, modifiers, options) =>
+      $img(source, modifiers, { ...globalOptions.presets[presetName], ...options })) as $Img[string]
+  }
+
+  $img.options = globalOptions
+  $img.getImage = getImage
+  $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
+  $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
+
+  ctx.$img = $img as $Img
 
   return $img
 }
 
 async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
-  const { image } = resolveImage(ctx, input, { ...options })
+  const image = resolveImage(ctx, input, { ...options })
 
   const meta = {}
 
   if (typeof image.getMeta === 'function') {
     Object.assign(meta, await image.getMeta())
   } else {
-    if (process.server && !hasProtocol(image.url)) {
-      const url = requrl(ctx.nuxtContext.ssrContext.req)
-      image.url = joinURL(url, image.url) // TODO: Is modification safe?
-    }
     Object.assign(meta, await imageMeta(ctx, image.url))
   }
 
@@ -111,34 +93,31 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
 
-  if (input.startsWith('data:') || (hasProtocol(input) && !ctx.allow(input))) {
+  if (input.startsWith('data:')) {
     return {
-      input,
-      provider: null,
-      preset: null,
-      image: {
-        url: input,
-        isStatic: false
-      }
+      url: input
     }
   }
 
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
 
-  const image = provider.getImage(input, { ...defaults, ...options })
+  const _options: ImageOptions = defu(options, preset, defaults)
+  _options.modifiers = { ..._options.modifiers }
+  const expectedFormat = _options.modifiers.format
 
-  if (process.server && !hasProtocol(image.url)) {
-    const url = requrl(ctx.nuxtContext.ssrContext.req)
-    image.url = joinURL(url, image.url)
+  if (_options.modifiers?.width) {
+    _options.modifiers.width = parseSize(_options.modifiers.width)
+  }
+  if (_options.modifiers?.height) {
+    _options.modifiers.height = parseSize(_options.modifiers.height)
   }
 
-  return {
-    input,
-    provider,
-    preset,
-    image
-  }
+  const image = provider.getImage(input, _options, ctx)
+
+  image.format = image.format || expectedFormat || ''
+
+  return image
 }
 
 function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
@@ -157,4 +136,62 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
     throw new Error('Unknown preset: ' + name)
   }
   return ctx.options.presets[name]
+}
+
+function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
+  const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
+  const variants = []
+
+  const sizes: Record<string, string> = {}
+
+  // string => object
+  if (typeof opts.sizes === 'string') {
+    for (const entry of opts.sizes.split(/[\s,]+/).filter(e => e)) {
+      const s = entry.split(':')
+      if (s.length !== 2) { continue }
+      sizes[s[0].trim()] = s[1].trim()
+    }
+  } else {
+    Object.assign(sizes, opts.sizes)
+  }
+
+  for (const key in sizes) {
+    const screenMaxWidth = ctx.options.screens[key] || parseInt(key)
+    let size = String(sizes[key])
+    const isFluid = size.endsWith('vw')
+    if (!isFluid && /^\d+$/.test(size)) {
+      size = size + 'px'
+    }
+    if (!isFluid && !size.endsWith('px')) {
+      continue
+    }
+    let width = parseInt(size)
+    if (!screenMaxWidth || !width) {
+      continue
+    }
+    if (isFluid) {
+      width = Math.round((width / 100) * screenMaxWidth)
+    }
+    const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
+    variants.push({
+      width,
+      size,
+      screenMaxWidth,
+      media: `(max-width: ${screenMaxWidth}px)`,
+      src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
+    })
+  }
+
+  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+
+  const defaultVar = variants[variants.length - 1]
+  if (defaultVar) {
+    defaultVar.media = ''
+  }
+
+  return {
+    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
+    src: defaultVar?.src
+  }
 }

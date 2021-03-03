@@ -1,16 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "dev": "nuxt",
     "generate": "nuxt generate",
+    "build": "nuxt generate",
+    "dev": "nuxt dev",
     "start": "nuxt start"
   },
   "devDependencies": {
-    "@nuxt/content-theme-docs": "latest",
-    "nuxt-ackee": "latest",
-    "nuxt-edge": "latest"
-  },
-  "dependencies": {
-    "@nuxt/image": "^0.0.4"
+    "docus": "^0.0.8",
+    "nuxt-edge": "^2.15.0-26889155.dd0eea40",
+    "vue-plausible": "^1.1.2"
   }
 }
