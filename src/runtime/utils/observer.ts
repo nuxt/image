@@ -67,9 +67,17 @@ function onPrint (fn) {
     return
   }
   const mediaQueryList = window.matchMedia('print')
-  mediaQueryList.addEventListener('change', (query) => {
+
+  const handleQuery = (query) => {
     if (query.matches) {
       fn()
     }
-  })
+  }
+
+  if (typeof mediaQueryList.addEventListener === 'function') {
+    mediaQueryList.addEventListener('change', handleQuery)
+  } else {
+    // Safari/Older Browser Fallback
+    mediaQueryList.addListener(handleQuery)
+  }
 }
