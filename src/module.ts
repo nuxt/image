@@ -71,7 +71,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
   })
 
   nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }
+    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', 'nuxt-download-link': 'src' } }
   }, nuxt.options.build.loaders || {})
 
   nuxt.hook('generate:before', () => {
