@@ -18,7 +18,11 @@ export function useStaticImageMap (nuxtContext?) {
 
   // Make sure manifest is initialized
   if ((window as any).onNuxtReady) {
-    (window as any).onNuxtReady(updateImageMap)
+    (window as any).onNuxtReady(function () {
+      updateImageMap()
+
+      window.$nuxt.$on('nuxtImage:updateImageMap', updateImageMap)
+    })
   }
 
   return staticImageMap
