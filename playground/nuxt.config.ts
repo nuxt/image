@@ -24,6 +24,9 @@ export default <NuxtConfig> {
     twicpics: {
       baseURL: 'https://nuxt-demo.twic.pics'
     },
+    storyblok: {
+      baseURL: 'https://img2.storyblok.com'
+    },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
     },

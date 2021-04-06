@@ -13,6 +13,7 @@ export interface ImageProviders {
   imagekit?: any
   imgix?: any
   twicpics?: any
+  storyblok?: any,
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
 }

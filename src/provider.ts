@@ -9,7 +9,8 @@ const BuiltInProviders = [
   'imgix',
   'ipx',
   'static',
-  'twicpics'
+  'twicpics',
+  'storyblok'
 ]
 
 export interface ImageModuleProvider {
