@@ -1,54 +1,26 @@
 import type { ProviderGetImage } from 'src'
-import { withoutBase, withBase } from 'ufo'
+import { withBase, joinURL, parseURL } from 'ufo'
 
-const defaultModifiers = {
-  width: '0',
-  height: '0'
-}
+// https://www.storyblok.com/docs/image-service
+const storyblockCDN = 'https://img2.storyblok.com'
 
-const buildWidth = (mergeModifiers) => {
-  const { width, height } = mergeModifiers
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = storyblockCDN } = {}) => {
+  const { fit, smart, width, height, filters } = modifiers
 
-  if (width === '0' && height === '0') { return '' }
+  const doResize = width && height
 
-  return `/${width}x${height}`
-}
+  const options = joinURL(
+    fit && `fit-${fit}`,
+    doResize && `${width}x${height}`,
+    smart && 'smart',
+    filters && ('filters' + Object.entries(filters).map(e => `:${e[0]}(${e[1]})`).join(''))
+  )
 
-const buildFit = ({ fit }) => fit ? `/fit-${fit}` : ''
+  // TODO: check if hostname is https://a.storyblok.com ?
+  const { pathname } = parseURL(src)
 
-const buildSmart = ({ smart }) => smart ? '/smart' : ''
+  const url = withBase(joinURL(options, pathname), baseURL)
 
-const buildFilters = (filters) => {
-  if (!filters) { return '' }
-
-  let string = '/filters'
-
-  for (const f in filters) {
-    string += `:${f}(${filters[f]})`
-  }
-
-  return string
-}
-
-const overrideUndefined = (modifiers) => {
-  const ret = modifiers
-  for (const key in modifiers) {
-    if (typeof modifiers[key] === 'undefined' && typeof defaultModifiers[key] !== 'undefined') {
-      ret[key] = defaultModifiers[key]
-    }
-  }
-  return ret
-}
-
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = 'https://img2.storyblok.com' } = {}) => {
-  const mergeModifiers = overrideUndefined({
-    ...defaultModifiers,
-    ...modifiers
-  })
-
-  const srcWithoutBase = withoutBase(src, 'https://a.storyblok.com')
-  const options = `${buildFit(mergeModifiers)}${buildWidth(mergeModifiers)}${buildSmart(mergeModifiers)}${buildFilters(mergeModifiers.filters)}`
-  const url = withBase(`${options}${srcWithoutBase}`, baseURL)
   return {
     url
   }
