@@ -5,15 +5,33 @@ import { withBase, joinURL, parseURL } from 'ufo'
 const storyblockCDN = 'https://img2.storyblok.com'
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = storyblockCDN } = {}) => {
-  const { fit, smart, width, height, filters } = modifiers
+  const {
+    fit,
+    smart,
+    width = '0',
+    height = '0',
+    filters = {},
+    format,
+    quality
+  } = modifiers
 
-  const doResize = width && height
+  const doResize = width !== '0' || height !== '0'
+
+  if (format) {
+    filters.format = format + ''
+  }
+
+  if (quality) {
+    filters.quality = quality + ''
+  }
+
+  const _filters = Object.entries(filters || {}).map(e => `${e[0]}(${e[1]})`).join(':')
 
   const options = joinURL(
     fit && `fit-${fit}`,
-    doResize && `${width}x${height}`,
+    doResize ? `${width}x${height}` : undefined,
     smart && 'smart',
-    filters && ('filters' + Object.entries(filters).map(e => `:${e[0]}(${e[1]})`).join(''))
+    _filters && ('filters:' + _filters)
   )
 
   // TODO: check if hostname is https://a.storyblok.com ?

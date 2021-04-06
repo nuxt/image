@@ -78,11 +78,7 @@ Example:
   width="200"
   height="200"
   fit="in"
-  :modifiers="{
-    filters:{
-      fill: 'CCCCCC'
-    }
-  }"
+  :modifiers="{ filters: { fill: 'CCCCCC' } }"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
@@ -100,11 +96,7 @@ Example:
 <h3>Format</h3>
 <NuxtImg
   width="200"
-  :modifiers="{
-    filters:{
-      format: 'png'
-    }
-  }"
+  format="webp"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
@@ -122,12 +114,9 @@ Example:
  <div class="flex">
 <div>Resized and 10% Quality</div>
 <NuxtImg
-  :modifiers="{
-    filters:{
-      quality: '10'
-    }
-  }"
   provider="storyblok"
+  width="200"
+  quality="10"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 </div>

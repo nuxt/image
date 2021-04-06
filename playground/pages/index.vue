@@ -114,7 +114,7 @@
         <div>Change image format</div>
         <NuxtImg
           width="200"
-          :modifiers="{ filters: { format: 'png' } }"
+          format="webp"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
         />
@@ -123,11 +123,8 @@
       <div class="flex">
         <div>Resized and 10% Quality</div>
         <NuxtImg
-          :modifiers="{
-            filters:{
-              quality: '10'
-            }
-          }"
+          width="200"
+          quality="10"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
         />
@@ -158,11 +155,7 @@
         <NuxtImg
           width="600"
           height="130"
-          :modifiers="{
-            filters: {
-              focal: '450x500:550x600'
-            }
-          }"
+          :modifiers="{ filters: { focal: '450x500:550x600' } }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
         />
@@ -172,7 +165,7 @@
         <NuxtImg
           width="600"
           height="130"
-          :modifiers="{ filters:{ focal: '450x0:550x100' } }"
+          :modifiers="{ filters: { focal: '450x0:550x100' } }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
         />
