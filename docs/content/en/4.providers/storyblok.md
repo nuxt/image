@@ -26,6 +26,7 @@ I am following all modifiers present on [Storyblok image service](https://www.st
 Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#resizing) if you want to know more.
 
 the logic is:
+
 - If you not defining the width or height it's taking the original image size.
 - If you defined only the width or height it will resize proportionaly based ont he one defined
 
@@ -108,6 +109,7 @@ Example:
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 ```
+
 ### Quality
 
 Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#quality-optimization) if you want to know more.
@@ -137,7 +139,7 @@ Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#fac
 
 To have a smart crop just define a smart property inside modifier.
 
-Example: 
+Example:
 
 ```html
 <h3>Facial detection</h3>
@@ -154,9 +156,7 @@ Example:
 <NuxtImg
   width="600"
   height="130"
-  :modifiers="{
-    smart: true
-  }"
+  :modifiers="{ smart: true }"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
 />
@@ -175,11 +175,7 @@ Example:
 <NuxtImg
   width="600"
   height="130"
-  :modifiers="{
-    filters: {
-      focal: '450x500:550x600'
-    }
-  }"
+  :modifiers="{ filters: { focal: '450x500:550x600' } }"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
 />
@@ -188,11 +184,7 @@ Example:
 <NuxtImg
   width="600"
   height="130"
-  :modifiers="{
-    filters:{
-      focal: '450x0:550x100'
-    }
-  }"
+  :modifiers="{ filters: { focal: '450x0:550x100' } }"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
 />

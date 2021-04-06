@@ -104,11 +104,7 @@
           width="200"
           height="200"
           fit="in"
-          :modifiers="{
-            filters:{
-              fill: 'CCCCCC'
-            }
-          }"
+          :modifiers="{ filters: { fill: 'CCCCCC' } }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
         />
@@ -118,11 +114,7 @@
         <div>Change image format</div>
         <NuxtImg
           width="200"
-          :modifiers="{
-            filters:{
-              format: 'png'
-            }
-          }"
+          :modifiers="{ filters: { format: 'png' } }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
         />
@@ -155,9 +147,7 @@
         <NuxtImg
           width="600"
           height="130"
-          :modifiers="{
-            smart: true
-          }"
+          :modifiers="{ smart: true }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
         />
@@ -182,11 +172,7 @@
         <NuxtImg
           width="600"
           height="130"
-          :modifiers="{
-            filters:{
-              focal: '450x0:550x100'
-            }
-          }"
+          :modifiers="{ filters:{ focal: '450x0:550x100' } }"
           provider="storyblok"
           src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
         />
