@@ -8,14 +8,15 @@
   "main": "dist/module.js",
   "types": "dist/types.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "vetur"
   ],
   "vetur": {
-    "tags": "dist/vetur/tags.json",
-    "attributes": "dist/vetur/attributes.json"
+    "tags": "vetur/tags.json",
+    "attributes": "vetur/attributes.json"
   },
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime && mkdist --src src/vetur --dist dist/vetur",
+    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
     "dev": "yarn nuxt playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
