@@ -3,7 +3,6 @@ menuTitle: Sanity
 title: Sanity Provider
 description: 'Nuxt Image has first class integration with Sanity'
 category: Providers
-position: 405
 ---
 
 Integration between [Sanity](https://www.sanity.io/docs/image-urls) and the image module.
