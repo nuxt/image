@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/nuxt/image/compare/v0.4.1...v0.4.2) (2021-04-07)
+
+
+### Features
+
+* add storyblok provider ([#133](https://github.com/nuxt/image/issues/133)) ([cf04f1f](https://github.com/nuxt/image/commit/cf04f1f1c00e6aec3ad23821865788b3c8b4fe86))
+* expose vetur helpers ([#195](https://github.com/nuxt/image/issues/195)) ([543e7cf](https://github.com/nuxt/image/commit/543e7cf00c8383e12ba68739ef919aed009d2084))
+
 ### [0.4.1](https://github.com/nuxt/image/compare/v0.4.0...v0.4.1) (2021-02-16)
 
 
