@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/nuxt/image/compare/v0.4.3...v0.4.4) (2021-04-10)
+
+
+### Bug Fixes
+
+* enable default provider for resolving ([18ed241](https://github.com/nuxt/image/commit/18ed241109c0064ddacff9dc6877ce5f4e42139e))
+
 ### [0.4.3](https://github.com/nuxt/image/compare/v0.4.2...v0.4.3) (2021-04-10)
 
 
