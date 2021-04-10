@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.3](https://github.com/nuxt/image/compare/v0.4.2...v0.4.3) (2021-04-10)
+
+
+### Features
+
+* vercel image provider ([#210](https://github.com/nuxt/image/issues/210)) ([69e4af7](https://github.com/nuxt/image/commit/69e4af749103e730d758f7636ddfce1fee4d55c7))
+
 ### [0.4.2](https://github.com/nuxt/image/compare/v0.4.1...v0.4.2) (2021-04-07)
 
 
