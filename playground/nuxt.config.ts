@@ -39,6 +39,9 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    vercel: {
+      baseURL: 'https://image-component.nextjs.gallery/_next/image'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

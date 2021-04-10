@@ -1,10 +1,15 @@
 import type { IPXOptions } from 'ipx'
 import type { ImageOptions, CreateImageOptions } from './image'
 
+// eslint-disable-next-line no-use-before-define
+export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt)
+  => void | Promise<void>
+
 export interface InputProvider<T=any> {
   name?: string
   provider?: string
   options?: T
+  setup?: ProviderSetup
 }
 
 export interface ImageProviders {
@@ -29,4 +34,14 @@ export interface ModuleOptions extends ImageProviders {
   internalUrl: string
   intersectOptions: CreateImageOptions['intersectOptions']
   providers: { [name: string]: InputProvider | any } & ImageProviders
+}
+
+export interface ImageModuleProvider {
+  name: string
+  importName: string
+  options: any
+  provider: string
+  runtime: string
+  runtimeOptions: any
+  setup: ProviderSetup
 }
