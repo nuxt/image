@@ -3,14 +3,14 @@ import defu from 'defu'
 import type { ModuleOptions, CreateImageOptions } from './types'
 import { pick, pkg } from './utils'
 import { setupStaticGeneration } from './generate'
-import { resolveProviders } from './provider'
+import { resolveProviders, detectProvider } from './provider'
 import { createIPXMiddleware } from './ipx'
 
 async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
-    provider: 'static',
+    provider: 'auto',
     presets: {},
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
     domains: [],
@@ -33,7 +33,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
-  options.provider = process.env.NUXT_IMAGE_PROVIDER || options.provider || 'static'
+  options.provider = detectProvider(options.provider)
 
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
     'screens',
@@ -45,6 +45,13 @@ async function imageModule (moduleOptions: ModuleOptions) {
   options.static.domains = options.domains
 
   const providers = await resolveProviders(nuxt, options)
+
+  // Run setup
+  for (const p of providers) {
+    if (typeof p.setup === 'function') {
+      await p.setup(p, options, nuxt)
+    }
+  }
 
   // Transpile and alias runtime
   const runtimeDir = resolve(__dirname, 'runtime')

@@ -1,5 +1,6 @@
-import { normalize } from 'upath'
-import type { ModuleOptions, InputProvider } from './types'
+import { normalize, resolve, dirname } from 'upath'
+import { writeJson, mkdirp } from 'fs-extra'
+import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import { hash } from './utils'
 
 const BuiltInProviders = [
@@ -10,16 +11,20 @@ const BuiltInProviders = [
   'ipx',
   'static',
   'twicpics',
-  'storyblok'
+  'storyblok',
+  'vercel'
 ]
 
-export interface ImageModuleProvider {
-  name: string
-  importName: string
-  options: any
-  provider: string
-  runtime: string
-  runtimeOptions: any
+export const providerSetup: Record<string, ProviderSetup> = {
+  // https://vercel.com/docs/more/adding-your-framework#images
+  async vercel (_providerOptions, moduleOptions, nuxt) {
+    const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
+    await mkdirp(dirname(imagesConfig))
+    await writeJson(imagesConfig, {
+      domains: moduleOptions.domains,
+      sizes: Object.values(moduleOptions.screens)
+    })
+  }
 }
 
 export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProvider[] {
@@ -55,10 +60,29 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
     ? require.resolve('./runtime/providers/' + input.provider)
     : nuxt.resolver.resolvePath(input.provider)
 
+  const setup = input.setup || providerSetup[input.name]
+
   return <ImageModuleProvider> {
     ...input,
+    setup,
     runtime: normalize(input.provider),
     importName: `${key}Runtime$${hash(input.provider, 4)}`,
     runtimeOptions: input.options
   }
+}
+
+export function detectProvider (userInput?: string) {
+  if (process.env.NUXT_IMAGE_PROVIDER) {
+    return process.env.NUXT_IMAGE_PROVIDER
+  }
+
+  if (userInput && userInput !== 'auto') {
+    return userInput
+  }
+
+  if (process.env.NOW_BUILDER) {
+    return 'vercel'
+  }
+
+  return 'static'
 }
