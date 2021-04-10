@@ -35,6 +35,8 @@ async function imageModule (moduleOptions: ModuleOptions) {
 
   options.provider = detectProvider(options.provider)
 
+  options[options.provider] = options[options.provider] || {}
+
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
     'screens',
     'presets',
