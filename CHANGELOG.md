@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.5](https://github.com/nuxt/image/compare/v0.4.4...v0.4.5) (2021-04-19)
+
+
+### Features
+
+* support cloudinary fetch base url ([#218](https://github.com/nuxt/image/issues/218)) ([31bef1e](https://github.com/nuxt/image/commit/31bef1eb56c2ef5905c209d8000a7cde8597c16d))
+
+
+### Bug Fixes
+
+* limit static download concurrency ([#217](https://github.com/nuxt/image/issues/217)) ([bb4af1a](https://github.com/nuxt/image/commit/bb4af1a46929bc5a0260b53ffcb0b3dab4aeecc1))
+
 ### [0.4.4](https://github.com/nuxt/image/compare/v0.4.3...v0.4.4) (2021-04-10)
 
 
