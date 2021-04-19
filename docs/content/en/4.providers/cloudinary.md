@@ -58,7 +58,7 @@ export default {
 ```
 
 ```vue
-<NuxtImg src="/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+<NuxtImg provider="cloudinary src="/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
 ```
 
 Note: You will need to configure your "Auto upload mapping" to do the above.
