@@ -1,5 +1,5 @@
 import type { ProviderGetImage } from 'src'
-import { joinURL, withoutTrailingSlash } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
@@ -78,16 +78,27 @@ const defaultModifiers = {
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
+  const operations = operationsGenerator(mergeModifiers as any)
 
-  // Fetch mode allows you to pass in full non-cloudinary URLS and have them "lazy-uploaded"
-  // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
-  const isFetchMode = withoutTrailingSlash(baseURL).endsWith('/fetch')
-  // If the src is not using fetch mode then we need to remove the extension (if it exists)
-  if (!isFetchMode) {
+  let remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
+  // Handle delivery remote media file URLs
+  // see: https://cloudinary.com/documentation/fetch_remote_images
+  // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory
+  if (remoteFolderMapping?.length >= 1) {
+    // need to do some weird logic to get the remote folder after image/upload after the operations and before the src
+    const remoteFolder = remoteFolderMapping[1]
+    const baseURLWithoutRemoteFolder = baseURL.replace(remoteFolder, '')
+
+    return {
+      url: joinURL(baseURLWithoutRemoteFolder, operations, remoteFolder, src)
+    }
+  } else if (/\/image\/fetch\/?/.test(baseURL)) {
+    // need to encode the src as a path in case it contains special characters
+    src = encodePath(src)
+  } else {
+    // If the src is not a remote media file then we need to remove the extension (if it exists)
     src = removePathExtension(src)
   }
-
-  const operations = operationsGenerator(mergeModifiers as any)
 
   return {
     url: joinURL(baseURL, operations, src)

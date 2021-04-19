@@ -13,11 +13,56 @@ To use this provider you just need to specify the base url of your project in cl
 export default {
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/'
     }
   }
 }
 ```
+
+## Remote Images
+
+To handle remote image data, you can either use [fetch](https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url) 
+or [upload](https://cloudinary.com/documentation/fetch_remote_images#auto_upload_remote_resources). Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload)
+for the difference between the two.
+
+
+### Fetch
+
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch/'
+    }
+  }
+}
+```
+
+```vue
+<NuxtImg src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+```
+
+Note: You will need to configure your "Allowed fetch domains" to do the above. 
+
+### Upload
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/<mapping-folder>'
+    }
+  }
+}
+```
+
+```vue
+<NuxtImg src="/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+```
+
+Note: You will need to configure your "Auto upload mapping" to do the above.
+
 
 ## Cloudinary `fit` values
 
