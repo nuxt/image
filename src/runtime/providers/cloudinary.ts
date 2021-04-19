@@ -3,6 +3,8 @@ import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
+const removePathExtension = (value: string) => value.replace(/\.[^/.]+$/, '')
+const removePathLeadingSlash = (value: string) => value.replace(/\/$/, '')
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -78,10 +80,17 @@ const defaultModifiers = {
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
 
-  const srcWithoutExtension = src.replace(/\.[^/.]+$/, '')
+  // Fetch mode allows you to pass in full non-cloudinary URLS and have them "lazy-uploaded"
+  // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
+  const isFetchMode = removePathLeadingSlash(baseURL).endsWith('/fetch')
+  // If the src is not using fetch mode then we need to remove the extension (if it exists)
+  if (!isFetchMode) {
+    src = removePathExtension(src)
+  }
+
   const operations = operationsGenerator(mergeModifiers as any)
 
   return {
-    url: joinURL(baseURL, operations, srcWithoutExtension)
+    url: joinURL(baseURL, operations, src)
   }
 }

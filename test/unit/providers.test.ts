@@ -103,6 +103,30 @@ describe('Providers', () => {
     }
   })
 
+  test('cloudinary fetch', async () => {
+    const providerOptions = {
+      baseURL: 'https://res.cloudinary.com/demo/image/fetch/'
+    }
+    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
+    const providerData = cloudinary(providerOptions)
+
+    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
+
+    const runtime = (await import(providerData.runtime))
+
+    // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
+    const generated = runtime.getImage(
+      'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png',
+      { modifiers: {
+          width: 300,
+          height: 300,
+        }, ...providerData.runtimeOptions }
+    )
+    expect(generated).toMatchObject({
+      url: '/w_200,h_200/https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
+    })
+  })
+
   test('twicpics', async () => {
     const providerOptions = {
       baseURL: ''
