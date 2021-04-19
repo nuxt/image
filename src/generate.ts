@@ -28,7 +28,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 
   nuxt.hook('generate:done', async () => {
     const { dir: generateDir } = nuxt.options.generate
-    const limit = pLimit(5)
+    const limit = pLimit(8)
     const downloads = Object.entries(staticImages).map(([url, name]) => {
       if (!hasProtocol(url)) {
         url = joinURL(options.internalUrl, url)
