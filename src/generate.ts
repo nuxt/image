@@ -3,7 +3,7 @@ import { createWriteStream } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 import { mkdirp } from 'fs-extra'
-import { dirname, join, relative, resolve, extname } from 'upath'
+import { dirname, join, relative, resolve, extname, basename, trimExt } from 'upath'
 import fetch from 'node-fetch'
 import { joinURL, hasProtocol, parseURL } from 'ufo'
 import pLimit from 'p-limit'
@@ -19,8 +19,14 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
     renderContext.image = renderContext.image || {}
     renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage) {
       if (!staticImages[url]) {
-        const ext = (format && `.${format}`) || extname(parseURL(url).pathname) || '.png'
-        staticImages[url] = hash(url) + ext
+        const parsedURL = parseURL(url)
+        const params = {
+          name: trimExt(basename(parsedURL.pathname)),
+          ext: (format && `.${format}`) || extname(parseURL(url).pathname) || '.png',
+          hash: hash(url)
+        }
+
+        staticImages[url] = options.staticFilename.replace(/\[(\w+)]/g, (_, key) => params[key])
       }
       return staticImages[url]
     }
@@ -36,7 +42,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
       return limit(() => downloadImage({
         url,
         name,
-        outDir: resolve(generateDir, '_nuxt/image' /* TODO: staticImagesBase */)
+        outDir: resolve(generateDir)
       }))
     })
     await Promise.all(downloads)
