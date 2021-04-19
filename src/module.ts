@@ -10,6 +10,7 @@ async function imageModule (moduleOptions: ModuleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
+    staticFilename: '_nuxt/image/[hash][ext]',
     provider: 'auto',
     presets: {},
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
