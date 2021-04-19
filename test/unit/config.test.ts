@@ -7,12 +7,10 @@ describe('undefined config', () => {
     config: {}
   })
 
-  test('render index', () => {
-    expect(true).toBeTruthy()
-  })
+  test.todo('render index')
 })
 
-describe('Custome Provider', () => {
+describe('Custom Provider', () => {
   setupTest({
     fixture: 'fixture/base',
     configFile: 'nuxt.config.ts',
@@ -25,7 +23,5 @@ describe('Custome Provider', () => {
     }
   })
 
-  test('built', () => {
-    expect(true).toBeTruthy()
-  })
+  test.todo('built')
 })

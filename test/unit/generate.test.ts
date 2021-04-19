@@ -9,7 +9,5 @@ describe('undefined config', () => {
     config: {}
   })
 
-  test('render index', () => {
-    expect(true).toBeTruthy()
-  })
+  test.todo('render index')
 })
