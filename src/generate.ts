@@ -6,6 +6,7 @@ import { mkdirp } from 'fs-extra'
 import { dirname, join, relative, resolve, extname } from 'upath'
 import fetch from 'node-fetch'
 import { joinURL, hasProtocol, parseURL } from 'ufo'
+import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
 import { hash, logger } from './utils'
 
@@ -27,15 +28,16 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 
   nuxt.hook('generate:done', async () => {
     const { dir: generateDir } = nuxt.options.generate
+    const limit = pLimit(8)
     const downloads = Object.entries(staticImages).map(([url, name]) => {
       if (!hasProtocol(url)) {
         url = joinURL(options.internalUrl, url)
       }
-      return downloadImage({
+      return limit(() => downloadImage({
         url,
         name,
         outDir: resolve(generateDir, '_nuxt/image' /* TODO: staticImagesBase */)
-      })
+      }))
     })
     await Promise.all(downloads)
   })
