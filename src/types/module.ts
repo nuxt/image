@@ -2,10 +2,10 @@ import type { IPXOptions } from 'ipx'
 import type { ImageOptions, CreateImageOptions } from './image'
 
 // eslint-disable-next-line no-use-before-define
-export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt)
+export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt: any)
   => void | Promise<void>
 
-export interface InputProvider<T=any> {
+export interface InputProvider<T = any> {
   name?: string
   provider?: string
   options?: T

@@ -7,8 +7,8 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel
   return {
     url: baseURL + '?' + stringifyQuery({
       url: src,
-      w: String(modifiers.width),
-      q: String(modifiers.quality || '100')
+      w: modifiers?.width ? String(modifiers.width) : undefined,
+      q: String(modifiers?.quality || '100')
     })
   }
 }

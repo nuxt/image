@@ -1,6 +1,6 @@
 import type { ImageInfo, ImageCTX } from '../../types/image'
 
-export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
+export async function imageMeta (ctx: ImageCTX, url: string): Promise<ImageInfo> {
   const cache = getCache(ctx)
 
   const cacheKey = 'image:meta:' + url
@@ -22,27 +22,7 @@ export async function imageMeta (ctx: ImageCTX, url): Promise<ImageInfo> {
   return meta
 }
 
-async function _imageMeta (url): Promise<ImageInfo> {
-  if (process.client) {
-    if (typeof Image === 'undefined') {
-      throw new TypeError('Image not supported')
-    }
-
-    return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => {
-        const meta = {
-          width: img.width,
-          height: img.height,
-          ratio: img.width / img.height
-        }
-        resolve(meta)
-      }
-      img.onerror = err => reject(err)
-      img.src = url
-    })
-  }
-
+async function _imageMeta (url: string): Promise<ImageInfo> {
   if (process.server) {
     const imageMeta = require('image-meta').default
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
@@ -55,6 +35,23 @@ async function _imageMeta (url): Promise<ImageInfo> {
 
     return meta
   }
+  if (typeof Image === 'undefined') {
+    throw new TypeError('Image not supported')
+  }
+
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const meta = {
+        width: img.width,
+        height: img.height,
+        ratio: img.width / img.height
+      }
+      resolve(meta)
+    }
+    img.onerror = err => reject(err)
+    img.src = url
+  })
 }
 
 function getCache (ctx: ImageCTX) {
@@ -62,11 +59,11 @@ function getCache (ctx: ImageCTX) {
     if (ctx.nuxtContext.ssrContext && ctx.nuxtContext.ssrContext.cache) {
       ctx.nuxtContext.cache = ctx.nuxtContext.ssrContext.cache
     } else {
-      const _cache = {}
+      const _cache: Record<string, any> = {}
       ctx.nuxtContext.cache = {
-        get: id => _cache[id],
-        set: (id, value) => { _cache[id] = value },
-        has: id => typeof _cache[id] !== 'undefined'
+        get: (id: string) => _cache[id],
+        set: (id: string, value: any) => { _cache[id] = value },
+        has: (id: string) => typeof _cache[id] !== 'undefined'
       }
     }
   }
