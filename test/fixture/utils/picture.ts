@@ -1,7 +1,11 @@
-require('jsdom-global')()
-const { mount } = require('@vue/test-utils')
+/**
+ * @jest-environment jsdom
+ */
 
-export function testComponent (Component, props) {
+import Vue from 'vue'
+import { mount, Wrapper } from '@vue/test-utils'
+
+export function testComponent (Component: any, props: Record<string, any>) {
   const isLazy = props.loading === 'lazy'
   let observerAdded = 0
   let observerDestroyed = 0
@@ -42,7 +46,7 @@ export function testComponent (Component, props) {
     }
   }
   $img.getPlaceholder = () => `/placeholder${src}`
-  let wrapper
+  let wrapper: Wrapper<Vue>
   test('Mount', () => {
     // render the component
     wrapper = mount({
@@ -78,7 +82,7 @@ export function testComponent (Component, props) {
     })
   })
   test('Generate alt', () => {
-    expect(wrapper.vm.imgAttributes.alt).toEqual('image')
+    expect((wrapper.vm as any).imgAttributes.alt).toEqual('image')
     const domAlt = wrapper.find('.__nim_o').element.getAttribute('alt')
     expect(domAlt).toEqual('image')
   })
