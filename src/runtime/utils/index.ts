@@ -25,7 +25,7 @@ export function cleanDoubleSlashes (path: string = '') {
 
 export function createMapper (map: any) {
   return (key?: string) => {
-    return key ? map[key!] || key : map.missingValue
+    return key ? map[key] || key : map.missingValue
   }
 }
 

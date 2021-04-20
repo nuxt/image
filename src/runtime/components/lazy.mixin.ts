@@ -28,7 +28,7 @@ export const lazyMixin = defineMixin({
   },
   methods: {
     observe () {
-      ; (this as PrivateThis)._removeObserver = useObserver(this.$el, () => {
+      ;(this as PrivateThis)._removeObserver = useObserver(this.$el, () => {
         this.lazyLoad = false
       })
     },
