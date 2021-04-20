@@ -85,14 +85,6 @@ export default defineComponent({
       })
 
       return sources
-    },
-    srcset (): string[] | undefined {
-      if (this.nFormat === 'svg') {
-        return
-      }
-      return []
-      // TODO: this needs to be written
-      // return this.sources.map(source => `${source.srcset} ${source.width}`)
     }
   },
   created () {
