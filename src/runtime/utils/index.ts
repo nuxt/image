@@ -15,7 +15,7 @@ export function getInt (x): number | undefined {
 }
 
 export function getFileExtension (url: string = '') {
-  const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
+  const extension = url.split(/[?#]/).shift()!.split('/').pop()!.split('.').pop()!
   return extension
 }
 
