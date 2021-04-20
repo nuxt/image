@@ -1,4 +1,4 @@
-import { NuxtImg } from '../../src/runtime'
+import NuxtImg from '../../src/runtime/components/nuxt-img.vue'
 import { testComponent } from '../fixture/utils/img'
 
 describe('Renders simple image', () => {
