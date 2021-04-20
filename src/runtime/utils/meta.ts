@@ -1,7 +1,7 @@
 import type { ImageInfo, ImageCTX } from '../../types/image'
 
 export async function imageMeta (ctx: ImageCTX, url: string): Promise<ImageInfo> {
-  const cache = getCache(ctx)
+  const cache = getCache<ImageInfo>(ctx)
 
   const cacheKey = 'image:meta:' + url
   if (cache.has(cacheKey)) {
@@ -54,7 +54,13 @@ async function _imageMeta (url: string): Promise<ImageInfo> {
   })
 }
 
-function getCache (ctx: ImageCTX) {
+interface Cache<T> {
+  get: (id: string) => T,
+  set: (id: string, value: T) => void,
+  has: (id: string) => boolean
+}
+
+function getCache <T = any> (ctx: ImageCTX): Cache<T> {
   if (!ctx.nuxtContext.cache) {
     if (ctx.nuxtContext.ssrContext && ctx.nuxtContext.ssrContext.cache) {
       ctx.nuxtContext.cache = ctx.nuxtContext.ssrContext.cache
