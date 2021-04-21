@@ -16,6 +16,7 @@ export const imageMixin = {
     provider: { type: String, default: undefined },
 
     sizes: { type: [Object, String], default: undefined },
+    srcset: { type: [Array, String], default: undefined },
 
     // <img> attributes
     width: { type: [String, Number], default: undefined },

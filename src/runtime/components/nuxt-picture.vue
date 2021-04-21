@@ -65,6 +65,7 @@ export default {
         const { srcset, sizes, src } = this.$img.getSizes(this.src, {
           ...this.nOptions,
           sizes: this.sizes || this.$img.options.screens,
+          srcset: this.srcset,
           modifiers: {
             ...this.nModifiers,
             format
@@ -80,12 +81,6 @@ export default {
       })
 
       return sources
-    },
-    srcset () {
-      if (this.nFormat === 'svg') {
-        return
-      }
-      return this.sources.map(source => `${source.srcset} ${source.width}`)
     }
   },
   created () {

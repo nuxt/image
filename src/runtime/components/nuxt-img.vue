@@ -18,10 +18,13 @@ export default {
   computed: {
     nAttrs () {
       const attrs: any = this.nImgAttrs
-      if (this.sizes) {
+      if (this.sizes || this.srcset) {
         const { sizes, srcset } = this.nSizes
-        attrs.sizes = sizes
-        attrs.srcset = srcset
+        attrs.sizes = sizes || null
+        attrs.srcset = srcset || null
+      } else {
+        attrs.sizes = null
+        attrs.srcset = null
       }
       return attrs
     },
@@ -38,6 +41,7 @@ export default {
       return this.$img.getSizes(this.src, {
         ...this.nOptions,
         sizes: this.sizes,
+        srcset: this.srcset,
         modifiers: {
           ...this.nModifiers,
           width: parseSize(this.width),
@@ -48,7 +52,7 @@ export default {
   },
   created () {
     if (process.server && process.static) {
-      if (this.sizes) {
+      if (this.sizes || this.srcset) {
         // Force compute sources into ssrContext
         // eslint-disable-next-line no-unused-expressions
         this.nSizes

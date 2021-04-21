@@ -140,9 +140,11 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
-  const variants = []
+  const sizeVarients = []
+  const srcVarients = []
 
   const sizes: Record<string, string> = {}
+  const srcset: Array<number> = []
 
   // string => object
   if (typeof opts.sizes === 'string') {
@@ -173,7 +175,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       width = Math.round((width / 100) * screenMaxWidth)
     }
     const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
-    variants.push({
+    sizeVarients.push({
       width,
       size,
       screenMaxWidth,
@@ -182,16 +184,39 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     })
   }
 
-  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  sizeVarients.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  const defaultVar = variants[variants.length - 1]
+  const defaultVar = sizeVarients[sizeVarients.length - 1]
   if (defaultVar) {
     defaultVar.media = ''
   }
 
+  // string => array
+  if (typeof opts.srcset === 'string') {
+    for (const entry of opts.srcset.split(/[ ,]+/).filter(e => e)) {
+      const size = parseInt(entry)
+      if (isNaN(size)) {
+        continue
+      }
+      srcset.push(size)
+    }
+  } else if (opts.srcset) {
+    srcset.push(...opts.srcset.filter(e => !isNaN(parseInt(e))))
+  }
+
+  srcset.forEach((width) => {
+    const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
+    srcVarients.push({
+      width,
+      src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
+    })
+  })
+
+  srcVarients.sort((v1, v2) => v1.width - v2.width)
+
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
+    sizes: sizeVarients.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    srcset: srcVarients.length ? srcVarients.map(v => `${v.src} ${v.width}w`).join(', ') : sizeVarients.map(v => `${v.src} ${v.width}w`).join(', '),
     src: defaultVar?.src
   }
 }
