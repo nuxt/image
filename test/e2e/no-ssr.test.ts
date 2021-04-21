@@ -1,4 +1,5 @@
 import { setupTest, createPage, url } from '@nuxt/test-utils'
+import type { Page } from 'playwright'
 
 describe('browser', () => {
   setupTest({
@@ -7,8 +8,8 @@ describe('browser', () => {
     },
     browser: true
   })
-  let page
-  const requests = []
+  let page: Page
+  const requests: string[] = []
 
   test('should render image', async () => {
     page = await createPage()

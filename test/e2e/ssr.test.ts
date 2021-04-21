@@ -1,11 +1,12 @@
 import { setupTest, createPage, url } from '@nuxt/test-utils'
+import type { Page } from 'playwright'
 
 describe('browser', () => {
   setupTest({
     browser: true
   })
-  let page
-  const requests = []
+  let page: Page
+  const requests: string[] = []
 
   test('should render image', async () => {
     page = await createPage()
@@ -14,7 +15,7 @@ describe('browser', () => {
       return route.continue()
     })
     page.goto(url('/'))
-    // temporally commented
+    // temporarily commented
     // const body = await page.innerHTML('body')
     // expect(body).toContain('/_image/local/local/_/w_30/2000px-Aconcagua2016.jpg')
     const positiveRequest = requests.find(request => request.match('2000px-Aconcagua2016.jpg'))
