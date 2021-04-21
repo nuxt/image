@@ -1,11 +1,12 @@
 import fs from 'fs-extra'
-import { cleanDoubleSlashes } from '../../src/runtime/utils'
-import * as local from '../../src/runtime/providers/ipx'
-import * as cloudinary from '../../src/runtime/providers/cloudinary'
-import * as twicpics from '../../src/runtime/providers/twicpics'
-import * as fastly from '../../src/runtime/providers/fastly'
-import * as imgix from '../../src/runtime/providers/imgix'
-import * as imagekit from '../../src/runtime/providers/imagekit'
+
+import { cleanDoubleSlashes } from '~/runtime/utils'
+import * as local from '~/runtime/providers/ipx'
+import * as cloudinary from '~/runtime/providers/cloudinary'
+import * as twicpics from '~/runtime/providers/twicpics'
+import * as fastly from '~/runtime/providers/fastly'
+import * as imgix from '~/runtime/providers/imgix'
+import * as imagekit from '~/runtime/providers/imagekit'
 
 const images = [
   {
@@ -122,10 +123,13 @@ describe.skip('Providers', () => {
     // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
     const generated = runtime.getImage(
       'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png',
-      { modifiers: {
+      {
+        modifiers: {
           width: 300,
-          height: 300,
-        }, ...providerData.runtimeOptions }
+          height: 300
+        },
+        ...providerData.runtimeOptions
+      }
     )
     expect(generated).toMatchObject({
       url: '/w_300,h_300/https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
@@ -144,11 +148,14 @@ describe.skip('Providers', () => {
     const runtime = (await import(providerData.runtime))
 
     const generated = runtime.getImage(
-        '1/13/Benedict_Cumberbatch_2011.png',
-        { modifiers: {
-            width: 300,
-            height: 300,
-          }, ...providerData.runtimeOptions }
+      '1/13/Benedict_Cumberbatch_2011.png',
+      {
+        modifiers: {
+          width: 300,
+          height: 300
+        },
+        ...providerData.runtimeOptions
+      }
     )
     expect(generated).toMatchObject({
       url: '/w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'

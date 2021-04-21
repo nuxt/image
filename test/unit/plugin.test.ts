@@ -1,6 +1,6 @@
 import { setupTest, getContext } from '@nuxt/test-utils'
-import { resolve } from 'upath'
-import type { $Img } from '../../src'
+
+import type { $Img } from '~/index'
 
 describe('Plugin', () => {
   let testContext, plugin
@@ -12,8 +12,6 @@ describe('Plugin', () => {
   }
 
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
     server: true,
     config: {
       image: {

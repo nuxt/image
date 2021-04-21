@@ -1,4 +1,4 @@
-import imageModule from '../../../src/module'
+import imageModule from '../../src/module'
 
 export default {
   components: true,

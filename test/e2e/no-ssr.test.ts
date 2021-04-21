@@ -2,8 +2,6 @@ import { setupTest, createPage, url } from '@nuxt/test-utils'
 
 describe('browser', () => {
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
     config: {
       ssr: false
     },

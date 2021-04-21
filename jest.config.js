@@ -17,7 +17,11 @@ module.exports = {
   moduleNameMapper: {
     '~image/(.*)': '<rootDir>/src/runtime/$1',
     '~image': '<rootDir>/src/runtime/index.ts',
-    '~/(.*)': '<rootDir>/$1',
-    '^.+\\.css$': '<rootDir>/test/fixture/utils/CSSStub.js'
-  }
+    '~/(.*)': '<rootDir>/src/$1',
+    '^.+\\.css$': '<rootDir>/test/utils/stub.js'
+  },
+  collectCoverageFrom: [
+    'src/**',
+    '!src/runtime/plugin.js'
+  ]
 }
