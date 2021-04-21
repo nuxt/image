@@ -1,4 +1,6 @@
 import { setupTest, getContext } from '@nuxt/test-utils'
+import { resolve } from 'upath'
+import type { $Img } from '../../src'
 
 describe('Plugin', () => {
   let testContext, plugin
@@ -6,7 +8,7 @@ describe('Plugin', () => {
     nuxtState: {
       data: [{}]
     },
-    $img: null
+    $img: null as null | $Img
   }
 
   setupTest({
@@ -15,49 +17,54 @@ describe('Plugin', () => {
     server: true,
     config: {
       image: {
-        presets: [
-          {
-            name: 'circle',
+        presets: {
+          circle: {
             modifiers: {
               r: '100'
             }
           }
-        ],
+        },
         providers: {
-          random: '~/providers/random',
-          cloudinary: {
-            baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
+          random: {
+            name: 'random',
+            provider: '~/providers/random'
           }
+        },
+        cloudinary: {
+          baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
         }
       }
     }
   })
 
-  test('Generate Placeholder', async () => {
+  test('Setup local test context', async () => {
     testContext = getContext()
-    plugin = (await import(testContext.nuxt.options.buildDir + '/image.js')).default
+    plugin = (await import(testContext.nuxt!.options.buildDir + '/image.js')).default
+    // @ts-ignore
     plugin(nuxtContext, (_, data) => { nuxtContext.$img = data })
+  })
 
-    // temporally commented
-    // const placeholder = nuxtContext.$img.getPlaceholder('/test.png')
+  test.skip('Generate placeholder', async () => {
+    // TODO: see https://github.com/nuxt/image/issues/189)
+    // const placeholder = nuxtContext.$img?.getPlaceholder('/test.png')
     // expect(placeholder).toEqual('/_image/local/_/w_30/test.png')
   })
 
-  test.skip('Generate Random Image', () => {
-    const image = nuxtContext.$img('/test.png', { provider: 'random' })
-    expect(image).toEqual('https://source.unsplash.com/random/600x400')
+  test('Generate Random Image', () => {
+    const { url } = nuxtContext.$img?.getImage('/test.png', { provider: 'random' })!
+    expect(url).toEqual('https://source.unsplash.com/random/600x400')
   })
 
-  test.skip('Generate Circle Image with Cloudinary', () => {
-    const image = nuxtContext.$img('/test.png', { provider: 'cloudinary', preset: 'circle' })
-    expect(image).toEqual('https://res.cloudinary.com/nuxt/image/upload/f_auto,q_auto,r_100/test')
+  test('Generate Circle Image with Cloudinary', () => {
+    const { url } = nuxtContext.$img?.getImage('/test.png', { provider: 'cloudinary', preset: 'circle' })!
+    expect(url).toEqual('https://res.cloudinary.com/nuxt/image/upload/f_auto,q_auto,r_100/test')
   })
 
   test('Deny undefined provider', () => {
-    expect(() => nuxtContext.$img('/test.png', { provider: 'invalid' })).toThrow(Error)
+    expect(() => nuxtContext.$img?.getImage('/test.png', { provider: 'invalid' })).toThrow(Error)
   })
 
   test('Deny undefined preset', () => {
-    expect(() => nuxtContext.$img('/test.png', { preset: 'invalid' })).toThrow(Error)
+    expect(() => nuxtContext.$img?.getImage('/test.png', { preset: 'invalid' })).toThrow(Error)
   })
 })

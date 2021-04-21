@@ -1,7 +1,7 @@
 import { testComponent } from '../fixture/utils/picture'
 import NuxtPicture from '../../src/runtime/components/nuxt-picture.vue'
 
-describe('Renders simple image', () => {
+describe.skip('Renders simple image', () => {
   testComponent(NuxtPicture, {
     loading: 'lazy',
     width: 200,

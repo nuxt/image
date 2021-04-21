@@ -1,6 +1,5 @@
-export default function (providerOptions) {
+export function getImage () {
   return {
-    runtime: require.resolve('./runtime'),
-    runtimeOptions: providerOptions
+    url: 'https://source.unsplash.com/random/600x400'
   }
 }
