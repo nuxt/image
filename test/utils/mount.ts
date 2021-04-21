@@ -8,9 +8,11 @@ export function mountWithImg (Component: any, propsData: Record<string, any>) {
         custom: {
           defaults: {},
           provider: {
-            getImage (url) {
+            getImage (url, options) {
+              const segments = url.split('.')
+              const path = [segments.slice(0, -1), (options.modifiers?.format || segments.slice(-1))].join('.')
               return {
-                url
+                url: path
               }
             }
           }
