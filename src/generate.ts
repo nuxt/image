@@ -13,9 +13,9 @@ import { hash, logger } from './utils'
 const pipeline = promisify(stream.pipeline)
 
 export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
-  const staticImages = {} // url ~> hashed file name
+  const staticImages: Record<string, string> = {} // url ~> hashed file name
 
-  nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext) => {
+  nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext: any) => {
     renderContext.image = renderContext.image || {}
     renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage) {
       if (!staticImages[url]) {
@@ -43,7 +43,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   })
 }
 
-async function downloadImage ({ url, name, outDir }) {
+async function downloadImage ({ url, name, outDir }: { url: string, name: string, outDir: string }) {
   try {
     const response = await fetch(url)
     if (!response.ok) { throw new Error(`Unexpected response ${response.statusText}`) }

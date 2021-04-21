@@ -34,6 +34,7 @@ export interface ModuleOptions extends ImageProviders {
   internalUrl: string
   intersectOptions: CreateImageOptions['intersectOptions']
   providers: { [name: string]: InputProvider | any } & ImageProviders
+  [key: string]: any
 }
 
 export interface ImageModuleProvider {

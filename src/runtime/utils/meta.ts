@@ -24,13 +24,17 @@ export async function imageMeta (ctx: ImageCTX, url: string): Promise<ImageInfo>
 
 async function _imageMeta (url: string): Promise<ImageInfo> {
   if (process.server) {
-    const imageMeta = require('image-meta').default
+    const imageMeta = await import('image-meta').then(r => r.default || r)
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
-    const { width, height } = await imageMeta(data)
+    const metadata = imageMeta(data)
+    if (!metadata) {
+      throw new Error(`No metadata could be extracted from the image \`${url}\`.`)
+    }
+    const { width, height } = metadata
     const meta = {
-      width,
-      height,
-      ratio: width / height
+      width: width!,
+      height: height!,
+      ratio: width && height ? width / height : undefined
     }
 
     return meta
