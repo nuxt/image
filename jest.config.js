@@ -9,6 +9,9 @@ module.exports = {
     '~/(.*)': '<rootDir>/src/$1',
     '^.+\\.css$': '<rootDir>/test/utils/stub.js'
   },
+  setupFilesAfterEnv: [
+    '<rootDir>/test/setup.ts'
+  ],
   collectCoverageFrom: [
     'src/**',
     '!src/runtime/plugin.js'
