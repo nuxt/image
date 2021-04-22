@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/nuxt/image/compare/v0.4.5...v0.4.6) (2021-04-22)
+
+
+### Features
+
+* `staticFilename` option to customize static image filenames ([#220](https://github.com/nuxt/image/issues/220)) ([975b1a2](https://github.com/nuxt/image/commit/975b1a2c72a60172b0b373036dfa197980b1c32a))
+* type improvements ([#222](https://github.com/nuxt/image/issues/222)) ([6dc8aa0](https://github.com/nuxt/image/commit/6dc8aa059b6f12139301cb0c7732743565a877ea))
+
+
+### Bug Fixes
+
+* **deps:** add missing lru-cache ([0af0bf3](https://github.com/nuxt/image/commit/0af0bf39644c179f7c1cd664f60cdbb3e9aae2ea))
+
 ### [0.4.5](https://github.com/nuxt/image/compare/v0.4.4...v0.4.5) (2021-04-19)
 
 
