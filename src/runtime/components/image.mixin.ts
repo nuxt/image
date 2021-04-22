@@ -1,3 +1,4 @@
+import { parseSize } from '../utils'
 import type { DefineMixin } from './types'
 
 const defineMixin: DefineMixin = (opts: any) => opts
@@ -47,8 +48,8 @@ export const imageMixin = defineMixin({
       decoding?: 'async' | 'auto' | 'sync'
       } {
       return {
-        width: this.width ? Number(this.width) : undefined,
-        height: this.height ? Number(this.height) : undefined,
+        width: parseSize(this.width),
+        height: parseSize(this.height),
         alt: this.alt,
         referrerpolicy: this.referrerpolicy,
         usemap: this.usemap,
@@ -62,8 +63,8 @@ export const imageMixin = defineMixin({
     nModifiers (): { width?: number, height?: number, format?: string, quality?: string | number, background?: string, fit?: string } & Record<string, any> {
       return {
         ...this.modifiers,
-        width: this.width ? Number(this.width) : undefined,
-        height: this.height ? Number(this.height) : undefined,
+        width: parseSize(this.width),
+        height: parseSize(this.height),
         format: this.format,
         quality: this.quality,
         background: this.background,
