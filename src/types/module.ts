@@ -25,6 +25,7 @@ export interface ImageProviders {
 
 // TODO: use types from CreateImageOptions
 export interface ModuleOptions extends ImageProviders {
+  staticFilename: string,
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string

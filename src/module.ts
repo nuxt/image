@@ -1,4 +1,4 @@
-import { resolve } from 'upath'
+import { resolve, join } from 'upath'
 
 import type { Module } from '@nuxt/types'
 import defu from 'defu'
@@ -13,6 +13,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
+    staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
     presets: {},
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),

@@ -3,9 +3,9 @@ import { createWriteStream } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 import { mkdirp } from 'fs-extra'
-import { dirname, join, relative, resolve, extname } from 'upath'
+import { dirname, join, relative, extname, basename, trimExt } from 'upath'
 import fetch from 'node-fetch'
-import { joinURL, hasProtocol, parseURL } from 'ufo'
+import { joinURL, hasProtocol, parseURL, withoutTrailingSlash } from 'ufo'
 import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
 import { hash, logger } from './utils'
@@ -19,15 +19,22 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
     renderContext.image = renderContext.image || {}
     renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage) {
       if (!staticImages[url]) {
-        const ext = (format && `.${format}`) || extname(parseURL(url).pathname) || '.png'
-        staticImages[url] = hash(url) + ext
+        const { pathname } = parseURL(url)
+        const params: any = {
+          name: trimExt(basename(pathname)),
+          ext: (format && `.${format}`) || extname(pathname) || '.png',
+          hash: hash(url),
+          // TODO: pass from runtimeConfig to mapStatic as param
+          publicPath: withoutTrailingSlash(nuxt.options.build.publicPath)
+        }
+
+        staticImages[url] = options.staticFilename.replace(/\[(\w+)]/g, (match, key) => params[key] || match)
       }
       return staticImages[url]
     }
   })
 
   nuxt.hook('generate:done', async () => {
-    const { dir: generateDir } = nuxt.options.generate
     const limit = pLimit(8)
     const downloads = Object.entries(staticImages).map(([url, name]) => {
       if (!hasProtocol(url)) {
@@ -36,7 +43,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
       return limit(() => downloadImage({
         url,
         name,
-        outDir: resolve(generateDir, '_nuxt/image' /* TODO: staticImagesBase */)
+        outDir: nuxt.options.generate.dir
       }))
     })
     await Promise.all(downloads)
