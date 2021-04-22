@@ -80,7 +80,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
   const operations = operationsGenerator(mergeModifiers as any)
 
-  let remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
+  const remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
   // Handle delivery remote media file URLs
   // see: https://cloudinary.com/documentation/fetch_remote_images
   // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory

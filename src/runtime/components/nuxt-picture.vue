@@ -16,41 +16,46 @@
 </template>
 
 <script lang="ts">
+import type { DefineComponentWithMixin } from '../../types/vue'
+
 import { imageMixin } from './image.mixin'
 import { getFileExtension } from '~image'
 
-export default {
+const defineComponent: DefineComponentWithMixin = (opts: any) => opts
+
+export default defineComponent({
   name: 'NuxtPicture',
   mixins: [imageMixin],
-
   props: {
-    legacyFormat: { type: String, default: undefined }
+    legacyFormat: { type: String, default: null }
   },
   computed: {
-    isTransparent () {
+    isTransparent (): boolean {
       return ['png', 'webp', 'gif'].includes(this.originalFormat)
     },
-    originalFormat () {
+    originalFormat (): string {
       return getFileExtension(this.src)
     },
-    nFormat () {
+    nFormat (): string {
       if (this.format) {
         return this.format
       }
-      if (this.originalFormat === 'svg') { return 'svg' }
+      if (this.originalFormat === 'svg') {
+        return 'svg'
+      }
       return 'webp'
     },
-    nLegacyFormat () {
+    nLegacyFormat (): string {
       if (this.legacyFormat) {
         return this.legacyFormat
       }
-      const formats = {
+      const formats: Record<string, string> = {
         webp: this.isTransparent ? 'png' : 'jpeg',
         svg: 'png'
       }
       return formats[this.nFormat] || this.originalFormat
     },
-    nSources () {
+    nSources (): Array<{ srcset: string, src?: string, type?: string, sizes?: string }> {
       if (this.nFormat === 'svg') {
         return [{
           srcset: this.src
@@ -80,12 +85,6 @@ export default {
       })
 
       return sources
-    },
-    srcset () {
-      if (this.nFormat === 'svg') {
-        return
-      }
-      return this.sources.map(source => `${source.srcset} ${source.width}`)
     }
   },
   created () {
@@ -95,5 +94,5 @@ export default {
       this.nSources
     }
   }
-}
+})
 </script>

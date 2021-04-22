@@ -4,7 +4,7 @@ export default function imageFetch (url: string) {
   return fetch(cleanDoubleSlashes(url))
 }
 
-export function getInt (x): number | undefined {
+export function getInt (x: unknown): number | undefined {
   if (typeof x === 'number') {
     return x
   }
@@ -15,7 +15,7 @@ export function getInt (x): number | undefined {
 }
 
 export function getFileExtension (url: string = '') {
-  const extension = url.split(/[?#]/).shift().split('/').pop().split('.').pop()
+  const extension = url.split(/[?#]/).shift()!.split('/').pop()!.split('.').pop()!
   return extension
 }
 
@@ -24,8 +24,8 @@ export function cleanDoubleSlashes (path: string = '') {
 }
 
 export function createMapper (map: any) {
-  return (key: string) => {
-    return map[key] || key || map.missingValue
+  return (key?: string) => {
+    return key ? map[key] || key : map.missingValue
   }
 }
 
@@ -36,10 +36,10 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
   if (keyMap && typeof keyMap !== 'function') {
     keyMap = createMapper(keyMap)
   }
-  valueMap = valueMap || {}
-  Object.keys(valueMap).forEach((valueKey) => {
-    if (typeof valueMap[valueKey] !== 'function') {
-      valueMap[valueKey] = createMapper(valueMap[valueKey])
+  const map = valueMap || {}
+  Object.keys(map).forEach((valueKey) => {
+    if (typeof map[valueKey] !== 'function') {
+      map[valueKey] = createMapper(map[valueKey])
     }
   })
 
@@ -47,14 +47,14 @@ export function createOperationsGenerator ({ formatter, keyMap, joinWith = '/', 
     const operations = Object.entries(modifiers)
       .filter(([_, value]) => typeof value !== 'undefined')
       .map(([key, value]) => {
-        const mapper = valueMap[key]
+        const mapper = map[key]
         if (typeof mapper === 'function') {
           value = mapper(modifiers[key])
         }
 
         key = typeof keyMap === 'function' ? keyMap(key) : key
 
-        return formatter(key, value)
+        return formatter!(key, value)
       })
 
     return operations.join(joinWith)
@@ -78,10 +78,10 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
 }
 
 export function generateAlt (src: string = '') {
-  return src.split(/[?#]/).shift().split('/').pop().split('.').shift()
+  return src.split(/[?#]/).shift()!.split('/').pop()!.split('.').shift()
 }
 
-export function parseSize (input: string | number = '') {
+export function parseSize (input: string | number | undefined = '') {
   if (typeof input === 'number') {
     return input
   }

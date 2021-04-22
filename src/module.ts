@@ -1,12 +1,15 @@
-import { resolve } from 'path'
+import { resolve } from 'upath'
+
+import type { Module } from '@nuxt/types'
 import defu from 'defu'
+
+import { setupStaticGeneration } from './generate'
+import { createIPXMiddleware } from './ipx'
+import { resolveProviders, detectProvider } from './provider'
 import type { ModuleOptions, CreateImageOptions } from './types'
 import { pick, pkg } from './utils'
-import { setupStaticGeneration } from './generate'
-import { resolveProviders, detectProvider } from './provider'
-import { createIPXMiddleware } from './ipx'
 
-async function imageModule (moduleOptions: ModuleOptions) {
+const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
@@ -45,9 +48,10 @@ async function imageModule (moduleOptions: ModuleOptions) {
     'intersectOptions'
   ])
 
+  options.static = options.static || {}
   options.static.domains = options.domains
 
-  const providers = await resolveProviders(nuxt, options)
+  const providers = resolveProviders(nuxt, options)
 
   // Run setup
   for (const p of providers) {
@@ -88,17 +92,17 @@ async function imageModule (moduleOptions: ModuleOptions) {
     setupStaticGeneration(nuxt, options)
   })
 
-  const LruCache = require('lru-cache')
+  const LruCache = await import('lru-cache').then(r => r.default || r)
   const cache = new LruCache()
-  nuxt.hook('vue-renderer:context', (ssrContext) => {
+  nuxt.hook('vue-renderer:context', (ssrContext: any) => {
     ssrContext.cache = cache
   })
 
-  nuxt.hook('listen', (_, listener) => {
+  nuxt.hook('listen', (_: any, listener: any) => {
     options.internalUrl = `http://localhost:${listener.port}`
   })
 }
 
-(imageModule as any).meta = pkg
+  ; (imageModule as any).meta = pkg
 
 export default imageModule
