@@ -78,7 +78,13 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 ## Cloudinary modifiers
 
-Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop:
+Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
+
+<alert type="info">
+
+The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
+
+</alert>
 
 ### `rotate`
 
