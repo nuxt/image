@@ -11,20 +11,60 @@
           Picture
         </NuxtLink>
       </li>
-      <!-- <li>
+      <li>
         <NuxtLink to="/playground">
           Playground
         </NuxtLink>
-      </li> -->
+      </li>
       <li>
         <NuxtLink to="/instagram">
           Instagram
         </NuxtLink>
       </li>
+      <li>
+        <select v-model="selectedProvider">
+          <option value="">
+            Provider fixtures
+          </option>
+          <option value="">
+            --
+          </option>
+          <option v-for="provider in providers" :key="provider" :value="provider">
+            {{ provider }}
+          </option>
+        </select>
+      </li>
     </ul>
     <Nuxt />
   </main>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    providers: [
+      'cloudinary',
+      'fastly',
+      'imagekit',
+      'imgix',
+      'static',
+      'twicpics',
+      'storyblok',
+      'vercel'
+    ]
+  }),
+  computed: {
+    selectedProvider: {
+      get () {
+        return this.$route.params.provider || ''
+      },
+      set (provider) {
+        this.$router.push(`/providers/${provider}`)
+      }
+    }
+  }
+}
+</script>
 
 <style>
 body {

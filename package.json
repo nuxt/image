@@ -19,8 +19,7 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepublishOnly": "yarn build",
     "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "true",
-    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
+    "test": "yarn lint && yarn jest --forceExit",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
   },
@@ -53,6 +52,7 @@
     "@types/lru-cache": "^5.1.0",
     "@types/node-fetch": "^2.5.10",
     "@vue/test-utils": "latest",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "latest",
     "eslint": "latest",
     "jest": "latest",
@@ -64,7 +64,8 @@
     "siroc": "latest",
     "standard-version": "latest",
     "ts-loader": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "vue-jest": "^3.0.7"
   },
   "publishConfig": {
     "access": "public"

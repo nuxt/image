@@ -1,7 +1,9 @@
+import imageModule from '../../src/module'
+
 export default {
   components: true,
   modules: [
-    '../../../src/module.ts'
+    imageModule
   ],
   buildModules: [
     '@nuxt/typescript-build'

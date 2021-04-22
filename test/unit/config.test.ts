@@ -1,31 +1,34 @@
-import { setupTest } from '@nuxt/test-utils'
+import { get, setupTest } from '@nuxt/test-utils'
 
 describe('undefined config', () => {
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
+    server: true,
     config: {}
   })
 
-  test('render index', () => {
-    expect(true).toBeTruthy()
+  test('does not optimize images', async () => {
+    const { body } = await get('/')
+    expect(body).toContain('<img src="/2000px-Aconcagua2016.jpg" width="300" height="200">')
   })
 })
 
-describe('Custome Provider', () => {
+describe('Custom provider', () => {
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
+    server: true,
     config: {
       image: {
+        provider: 'random',
         providers: {
-          random: '~/providers/random'
+          random: {
+            provider: '~/providers/random'
+          }
         }
       }
     }
   })
 
-  test('built', () => {
-    expect(true).toBeTruthy()
+  test('render index', async () => {
+    const { body } = await get('/')
+    expect(body).toContain('<img src="https://source.unsplash.com/random/600x400" width="300" height="200">')
   })
 })
