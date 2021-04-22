@@ -1,4 +1,4 @@
-import { resolve, join } from 'upath'
+import { resolve } from 'upath'
 
 import type { Module } from '@nuxt/types'
 import defu from 'defu'
