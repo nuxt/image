@@ -12,7 +12,7 @@
     "vetur"
   ],
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime",
+    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime -d",
     "dev": "yarn nuxt playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
@@ -58,7 +58,7 @@
     "jest": "latest",
     "jsdom": "latest",
     "jsdom-global": "latest",
-    "mkdist": "latest",
+    "mkdist": "^0.2.0",
     "nuxt": "latest",
     "playwright": "latest",
     "siroc": "latest",
