@@ -135,7 +135,9 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 }
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
-  const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
+  const width = parseSize(opts.modifiers?.width)
+  const height = parseSize(opts.modifiers?.height)
+  const ratio = (width && height) ? width / height : 0
   const variants = []
 
   const sizes: Record<string, string> = {}
@@ -161,20 +163,20 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     if (!isFluid && !size.endsWith('px')) {
       continue
     }
-    let width = parseInt(size)
-    if (!screenMaxWidth || !width) {
+    let _cWidth = parseInt(size)
+    if (!screenMaxWidth || !_cWidth) {
       continue
     }
     if (isFluid) {
-      width = Math.round((width / 100) * screenMaxWidth)
+      _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
-    const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers && opts.modifiers.height)
+    const _cHeight = ratio ? Math.round(_cWidth * ratio) : height
     variants.push({
-      width,
+      width: _cWidth,
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img!(input, { ...opts.modifiers, width, height }, opts)
+      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, _cHeight }, opts)
     })
   }
 
