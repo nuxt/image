@@ -71,6 +71,7 @@
         :class="{ border: showBorder }"
       />
 
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <p class="credits" v-html="imageCredits" />
       <!-- <NuxtImg
         ref="nuxtImg"
