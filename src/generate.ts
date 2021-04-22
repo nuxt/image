@@ -3,7 +3,7 @@ import { createWriteStream } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 import { mkdirp } from 'fs-extra'
-import { dirname, join, relative, resolve, extname, basename, trimExt } from 'upath'
+import { dirname, join, relative, extname, basename, trimExt } from 'upath'
 import fetch from 'node-fetch'
 import { joinURL, hasProtocol, parseURL } from 'ufo'
 import pLimit from 'p-limit'
@@ -33,7 +33,6 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   })
 
   nuxt.hook('generate:done', async () => {
-    const { dir: generateDir } = nuxt.options.generate
     const limit = pLimit(8)
     const downloads = Object.entries(staticImages).map(([url, name]) => {
       if (!hasProtocol(url)) {
@@ -42,7 +41,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
       return limit(() => downloadImage({
         url,
         name,
-        outDir: resolve(generateDir)
+        outDir: nuxt.options.generate.dir
       }))
     })
     await Promise.all(downloads)
