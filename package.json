@@ -19,8 +19,7 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepublishOnly": "yarn build",
     "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "true",
-    "test2": "yarn lint && yarn test:unit && yarn test:e2e",
+    "test": "yarn lint && yarn jest --forceExit",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
   },
