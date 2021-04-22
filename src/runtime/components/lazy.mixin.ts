@@ -1,4 +1,4 @@
-import type { DefineMixin } from './types'
+import type { DefineMixin } from '../../types/vue'
 import type { imageMixin } from './image.mixin'
 
 import { useObserver } from '~image'

@@ -7,7 +7,8 @@
 </template>
 
 <script lang="ts">
-import type { DefineComponentWithMixin } from './types'
+import type { DefineComponentWithMixin } from '../../types/vue'
+import type { ImageSizes } from '../../types'
 import { imageMixin } from './image.mixin'
 import { EMPTY_GIF, lazyMixin } from './lazy.mixin'
 
@@ -43,7 +44,7 @@ export default defineComponent({
       return this.$img(this.src, this.nModifiers, this.nOptions)
     },
     /* eslint-disable no-undef */
-    nSizes (): ReturnType<typeof $Img['getSizes']> {
+    nSizes (): ImageSizes {
       return this.$img.getSizes(this.src, {
         ...this.nOptions,
         sizes: this.sizes,

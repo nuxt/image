@@ -1,5 +1,5 @@
 import { parseSize } from '../utils'
-import type { DefineMixin } from './types'
+import type { DefineMixin } from '../../types/vue'
 
 const defineMixin: DefineMixin = (opts: any) => opts
 

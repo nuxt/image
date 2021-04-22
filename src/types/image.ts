@@ -51,11 +51,17 @@ export interface ResolvedImage {
   getMeta?: () => Promise<ImageInfo>
 }
 
+export interface ImageSizes {
+  srcset: string
+  sizes: string
+  src: string
+}
+
 export interface Img {
   (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
   options: CreateImageOptions
   getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => { srcset: string, sizes: string, src: string }
+  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
   getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
 }
 
