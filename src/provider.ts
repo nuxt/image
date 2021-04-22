@@ -22,12 +22,12 @@ export const providerSetup: Record<string, ProviderSetup> = {
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
       domains: moduleOptions.domains,
-      sizes: Object.values(moduleOptions.screens)
+      sizes: Object.values(moduleOptions.screens || {})
     })
   }
 }
 
-export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProvider[] {
+export function resolveProviders (nuxt: any, options: ModuleOptions): ImageModuleProvider[] {
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
@@ -65,8 +65,8 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
   return <ImageModuleProvider> {
     ...input,
     setup,
-    runtime: normalize(input.provider),
-    importName: `${key}Runtime$${hash(input.provider, 4)}`,
+    runtime: normalize(input.provider!),
+    importName: `${key}Runtime$${hash(input.provider!, 4)}`,
     runtimeOptions: input.options
   }
 }
