@@ -1,5 +1,4 @@
 import defu from 'defu'
-import { joinURL } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
@@ -33,11 +32,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
 
   function handleStaticImage (image: ResolvedImage, input: string) {
     if (process.static) {
-      const staticImagesBase = '/_nuxt/image' // TODO
-
       if (process.client && 'fetchPayload' in window.$nuxt) {
         const mappedURL = staticImageManifest[image.url]
-        image.url = mappedURL ? joinURL(staticImagesBase, mappedURL) : input
+        image.url = mappedURL || input
         return image
       }
 
@@ -50,7 +47,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
           const mappedURL = mapToStatic(image)
           if (mappedURL) {
             staticImages[image.url] = mappedURL
-            image.url = joinURL(staticImagesBase, mappedURL)
+            image.url = mappedURL
           }
         }
       }
