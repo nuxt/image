@@ -1,13 +1,17 @@
+/* eslint-disable no-use-before-define */
+type ObserverCallback = (event?: 'unsupported' | 'intersect') => any
 
 interface Observer {
-  add: (el, cb) => void
-  remove: (el) => void
+  add: (el: ObservedElement, cb: ObserverCallback) => void
+  remove: (el: ObservedElement) => void
   supported: boolean
 }
 
 let observerInstance: Observer
 let observerIdCtr = 1
 const OBSERVER_ID_KEY = '__observer_id__'
+
+type ObservedElement = Element & { [OBSERVER_ID_KEY]?: number | string }
 
 export function getObserver (): Observer | false {
   if (typeof IntersectionObserver === 'undefined') {
@@ -18,18 +22,19 @@ export function getObserver (): Observer | false {
     return observerInstance
   }
 
-  const elementCallbackMap = {}
+  const elementCallbackMap: Record<string | number, ObserverCallback> = {}
 
-  const remove = (el) => {
-    if (!el[OBSERVER_ID_KEY]) { return }
-    delete elementCallbackMap[el[OBSERVER_ID_KEY]]
+  const remove = (el: ObservedElement) => {
+    const key = el[OBSERVER_ID_KEY]
+    if (!key) { return }
+    delete elementCallbackMap[key]
     delete el[OBSERVER_ID_KEY]
     intersectObserver.unobserve(el)
   }
 
-  const add = (el, fn) => {
+  const add = (el: ObservedElement, fn: () => any) => {
     el[OBSERVER_ID_KEY] = el[OBSERVER_ID_KEY] || ++observerIdCtr
-    elementCallbackMap[el[OBSERVER_ID_KEY]] = fn
+    elementCallbackMap[el[OBSERVER_ID_KEY]!] = fn
     intersectObserver.observe(el)
   }
 
@@ -37,10 +42,10 @@ export function getObserver (): Observer | false {
     Object.values(elementCallbackMap).forEach((fn: any) => fn('print'))
   })
 
-  const onMatch = (entries) => {
+  const onMatch = (entries: IntersectionObserverEntry[]) => {
     for (const entry of entries) {
       if (entry.isIntersecting) {
-        const fn = elementCallbackMap[entry.target[OBSERVER_ID_KEY]]
+        const fn = elementCallbackMap[(entry.target as ObservedElement)[OBSERVER_ID_KEY]!]
         if (typeof fn === 'function') { fn('intersect') }
         remove(entry.target)
       }
@@ -52,7 +57,7 @@ export function getObserver (): Observer | false {
   return observerInstance
 }
 
-export function useObserver (el, fn): Function {
+export function useObserver (el: ObservedElement, fn: ObserverCallback): Function {
   const observer = getObserver()
   if (!observer) {
     fn('unsupported')
@@ -62,7 +67,7 @@ export function useObserver (el, fn): Function {
   return () => observer.remove(el)
 }
 
-function onPrint (fn) {
+function onPrint (fn: ObserverCallback) {
   if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
     return
   }

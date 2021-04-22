@@ -28,10 +28,10 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
   const _filters = Object.entries(filters || {}).map(e => `${e[0]}(${e[1]})`).join(':')
 
   const options = joinURL(
-    fit && `fit-${fit}`,
-    doResize ? `${width}x${height}` : undefined,
-    smart && 'smart',
-    _filters && ('filters:' + _filters)
+    fit ? `fit-${fit}` : '',
+    doResize ? `${width}x${height}` : '',
+    smart ? 'smart' : '',
+    _filters ? ('filters:' + _filters) : ''
   )
 
   // TODO: check if hostname is https://a.storyblok.com ?

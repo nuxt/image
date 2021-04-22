@@ -1,3 +1,5 @@
+import type { Context } from '@nuxt/types'
+
 const staticImageMap = {}
 
 function updateImageMap () {
@@ -7,13 +9,13 @@ function updateImageMap () {
   }
 }
 
-export function useStaticImageMap (nuxtContext?) {
+export function useStaticImageMap (nuxtContext?: Context) {
   // Update on initialization
   updateImageMap()
 
   // Merge new mappings on route change
   if (nuxtContext) {
-    nuxtContext.app.router.afterEach(updateImageMap)
+    nuxtContext.app.router?.afterEach(updateImageMap)
   }
 
   // Make sure manifest is initialized

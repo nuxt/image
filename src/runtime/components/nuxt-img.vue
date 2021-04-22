@@ -7,17 +7,26 @@
 </template>
 
 <script lang="ts">
+import type { DefineComponentWithMixin } from '../../types/vue'
+import type { ImageSizes } from '../../types'
 import { imageMixin } from './image.mixin'
 import { EMPTY_GIF, lazyMixin } from './lazy.mixin'
 
 import { parseSize } from '~image'
 
-export default {
+const defineComponent: DefineComponentWithMixin = (opts: any) => opts
+
+type NAttrs = typeof imageMixin['nImgAttrs'] & {
+    sizes?: string
+    srcset?: string
+}
+
+export default defineComponent({
   name: 'NuxtImg',
   mixins: [imageMixin, lazyMixin],
   computed: {
-    nAttrs () {
-      const attrs: any = this.nImgAttrs
+    nAttrs (): NAttrs {
+      const attrs: NAttrs = this.nImgAttrs
       if (this.sizes) {
         const { sizes, srcset } = this.nSizes
         attrs.sizes = sizes
@@ -25,7 +34,7 @@ export default {
       }
       return attrs
     },
-    nSrc () {
+    nSrc (): string {
       if (this.lazyLoad) {
         return EMPTY_GIF
       }
@@ -34,7 +43,8 @@ export default {
       }
       return this.$img(this.src, this.nModifiers, this.nOptions)
     },
-    nSizes () {
+    /* eslint-disable no-undef */
+    nSizes (): ImageSizes {
       return this.$img.getSizes(this.src, {
         ...this.nOptions,
         sizes: this.sizes,
@@ -55,5 +65,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

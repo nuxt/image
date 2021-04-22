@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node", "jest", "./src/types/global"],
+    "types": ["node", "jest"],
     "paths": {
       "~image/*": ["src/runtime/*"],
       "~image": ["src/runtime"]
     }
-  }
+  },
+  "exclude": ["dist"]
 }
