@@ -19,10 +19,10 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
     renderContext.image = renderContext.image || {}
     renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage) {
       if (!staticImages[url]) {
-        const parsedURL = parseURL(url)
+        const { pathname } = parseURL(url)
         const params: any = {
-          name: trimExt(basename(parsedURL.pathname)),
-          ext: (format && `.${format}`) || extname(parseURL(url).pathname) || '.png',
+          name: trimExt(basename(pathname)),
+          ext: (format && `.${format}`) || extname(pathname) || '.png',
           hash: hash(url)
         }
 
