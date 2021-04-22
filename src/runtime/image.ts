@@ -194,17 +194,27 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   // string => array
   if (typeof opts.srcset === 'string') {
     for (const entry of opts.srcset.split(/[ ,]+/).filter(e => e)) {
-      const size = parseInt(entry)
-      if (isNaN(size)) {
-        continue
+      if (/^[x]\d+/.test(entry)) {
+        const dpiSize = parseInt(entry.replace(/^x/, ''))
+        if (isNaN(dpiSize)) {
+          continue
+        }
+        srcset.push(...sizeVarients.map(s => s.width * dpiSize))
+      } else {
+        const size = parseInt(entry)
+        if (isNaN(size)) {
+          continue
+        }
+        srcset.push(size)
       }
-      srcset.push(size)
     }
   } else if (opts.srcset) {
     srcset.push(...opts.srcset.filter(e => !isNaN(parseInt(e))))
   }
 
-  srcset.forEach((width) => {
+  const uniqueSrcset = Array.from(new Set(srcset))
+
+  uniqueSrcset.forEach((width) => {
     const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
     srcVarients.push({
       width,
