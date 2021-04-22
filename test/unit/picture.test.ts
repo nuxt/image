@@ -5,8 +5,8 @@
 import type Vue from 'vue'
 import { Wrapper } from '@vue/test-utils'
 
-import { mountWithImg } from '../utils/mount'
-import { nextTick } from '../utils/tick'
+import { getSrc, mountWithImg } from './utils/mount'
+import { nextTick } from './utils/tick'
 
 import NuxtPicture from '~/runtime/components/nuxt-picture.vue'
 
@@ -54,9 +54,9 @@ describe('Renders simple image', () => {
   test.todo('alt attribute is generated')
 
   test('props.src is picked up by getImage()', () => {
-    [['source', 'srcset'], ['img', 'src']].forEach(([element, attribute]) => {
+    ;[['source', 'srcset', '/image.webp'], ['img', 'src']].forEach(([element, attribute, customSrc]) => {
       const domSrc = wrapper.find(element).element.getAttribute(attribute)
-      expect(domSrc).toContain(src)
+      expect(domSrc).toContain(getSrc(customSrc || src))
     })
   })
 
@@ -70,9 +70,9 @@ describe('Renders simple image', () => {
 
     await nextTick()
 
-    ;[['source', 'srcset'], ['img', 'src']].forEach(([element, attribute]) => {
+    ;[['source', 'srcset', '/image.webp'], ['img', 'src']].forEach(([element, attribute, src]) => {
       const domSrc = wrapper.find(element).element.getAttribute(attribute)
-      expect(domSrc).toContain(newSource)
+      expect(domSrc).toContain(getSrc(src || newSource))
     })
   })
 

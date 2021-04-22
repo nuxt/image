@@ -5,9 +5,9 @@
 import type Vue from 'vue'
 import { Wrapper } from '@vue/test-utils'
 
-import { mountWithImg } from '../utils/mount'
-import { mockObserver } from '../utils/observer'
-import { nextTick } from '../utils/tick'
+import { getSrc, mountWithImg } from './utils/mount'
+import { mockObserver } from './utils/observer'
+import { nextTick } from './utils/tick'
 
 import NuxtImg from '~/runtime/components/nuxt-img.vue'
 
@@ -37,7 +37,7 @@ describe('Renders simple image', () => {
 
   test('props.src is picked up by getImage()', () => {
     const domSrc = wrapper.element.getAttribute('src')
-    expect(domSrc).toEqual(src)
+    expect(domSrc).toEqual(getSrc(src))
   })
 
   test('props.src is reactive', (done) => {
@@ -45,7 +45,7 @@ describe('Renders simple image', () => {
     wrapper.setProps({ src: newSource })
     process.nextTick(() => {
       const domSrc = wrapper.find('img').element.getAttribute('src')
-      expect(domSrc).toEqual(newSource)
+      expect(domSrc).toEqual(getSrc(newSource))
       return done()
     })
   })
