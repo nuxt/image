@@ -5,7 +5,7 @@ import stream from 'stream'
 import { mkdirp } from 'fs-extra'
 import { dirname, join, relative, extname, basename, trimExt } from 'upath'
 import fetch from 'node-fetch'
-import { joinURL, hasProtocol, parseURL } from 'ufo'
+import { joinURL, hasProtocol, parseURL, withoutTrailingSlash } from 'ufo'
 import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
 import { hash, logger } from './utils'
@@ -23,7 +23,9 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
         const params: any = {
           name: trimExt(basename(pathname)),
           ext: (format && `.${format}`) || extname(pathname) || '.png',
-          hash: hash(url)
+          hash: hash(url),
+          // TODO: pass from runtimeConfig to mapStatic as param
+          publicPath: withoutTrailingSlash(nuxt.options.build.publicPath)
         }
 
         staticImages[url] = options.staticFilename.replace(/\[(\w+)]/g, (match, key) => params[key] || match)
