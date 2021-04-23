@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.7](https://github.com/nuxt/image/compare/v0.4.6...v0.4.7) (2021-04-23)
+
+
+### Bug Fixes
+
+* **pkg:** use --ext js to avoid issues with mjs ([a483e14](https://github.com/nuxt/image/commit/a483e14514385b9ddc7cceef2fb8c982c3c6e362))
+
 ### [0.4.6](https://github.com/nuxt/image/compare/v0.4.5...v0.4.6) (2021-04-22)
 
 
