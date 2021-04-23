@@ -191,7 +191,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     defaultVar.media = ''
   }
 
-  // string => array
+  // Only use srcset if it is a string
   if (typeof opts.srcset === 'string') {
     for (const entry of opts.srcset.split(/[ ,]+/).filter(e => e)) {
       if (/^[x]\d+/.test(entry)) {
@@ -208,8 +208,6 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
         srcset.push(size)
       }
     }
-  } else if (opts.srcset) {
-    srcset.push(...opts.srcset.filter(e => !isNaN(parseInt(e))))
   }
 
   const uniqueSrcset = Array.from(new Set(srcset))
