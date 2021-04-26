@@ -80,7 +80,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.NOW_BUILDER) {
+  if (process.env.VERCEL) {
     return 'vercel'
   }
 
