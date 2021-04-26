@@ -36,12 +36,9 @@ export default defineComponent({
     },
     nSrc (): string {
       // Calculate src first to trigger creation of static image
-      const src = this.$img(this.src, this.nModifiers, this.nOptions)
+      const src = this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
       if (this.lazyLoad) {
         return EMPTY_GIF
-      }
-      if (this.sizes) {
-        return this.nSizes.src
       }
       return src
     },
