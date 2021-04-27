@@ -40,8 +40,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
 
       if (process.server) {
         const { ssrContext } = ctx.nuxtContext
+        const ssrState = ssrContext.nuxt
         const ssrData = ssrContext.nuxt.data[0]
-        const staticImages = ssrData._img = ssrData._img || {}
+        const staticImages = ssrState._img = ssrData._img = ssrData._img || {}
         const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
         if (typeof mapToStatic === 'function') {
           const mappedURL = mapToStatic(image)

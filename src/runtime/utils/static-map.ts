@@ -4,7 +4,12 @@ const staticImageMap = {}
 
 function updateImageMap () {
   if (typeof window.$nuxt !== 'undefined') {
+    // Client-side navigation
     const pageImages = (window.$nuxt as any)._pagePayload?.data?.[0]?._img || {}
+    Object.assign(staticImageMap, pageImages)
+  } else if (typeof (window as any).__NUXT__ !== 'undefined') {
+    // Initial load
+    const pageImages = (window as any).__NUXT__?._img || {}
     Object.assign(staticImageMap, pageImages)
   }
 }
