@@ -35,13 +35,12 @@ export default defineComponent({
       return attrs
     },
     nSrc (): string {
+      // Calculate src first to trigger creation of static image
+      const src = this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
       if (this.lazyLoad) {
         return EMPTY_GIF
       }
-      if (this.sizes) {
-        return this.nSizes.src
-      }
-      return this.$img(this.src, this.nModifiers, this.nOptions)
+      return src
     },
     /* eslint-disable no-undef */
     nSizes (): ImageSizes {
