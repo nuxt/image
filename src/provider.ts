@@ -22,7 +22,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
       domains: moduleOptions.domains,
-      sizes: Object.values(moduleOptions.screens || {})
+      sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
 }
@@ -80,7 +80,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.NOW_BUILDER) {
+  if (process.env.VERCEL) {
     return 'vercel'
   }
 
