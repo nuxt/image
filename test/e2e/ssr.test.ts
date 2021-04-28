@@ -29,7 +29,7 @@ describe('browser (ssr: true)', () => {
     expect(negativeRequest).toBeFalsy()
   })
 
-  test.skip('change image location', async () => {
+  test('change image location', async () => {
     await page.click('#button')
     const positiveRequest = requests.find(request => request.match('/_ipx/1280px-K2_2006b.jpg'))
     expect(positiveRequest).toBeTruthy()
