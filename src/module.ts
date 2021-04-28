@@ -5,6 +5,7 @@ import defu from 'defu'
 
 import { setupStaticGeneration } from './generate'
 import { createIPXMiddleware } from './ipx'
+import { setupInjectedLazyScript } from './lazy'
 import { resolveProviders, detectProvider } from './provider'
 import type { ModuleOptions, CreateImageOptions } from './types'
 import { pick, pkg } from './utils'
@@ -83,6 +84,8 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
       sharp: options.sharp
     })
   })
+
+  await setupInjectedLazyScript(nuxt)
 
   nuxt.options.build.loaders = defu({
     vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }

@@ -2,6 +2,8 @@
 
 exports[`Renders simple image Matches snapshot 1`] = `"<img src=\\"/_custom/image.png\\" width=\\"200\\" height=\\"200\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;
 
-exports[`Renders simple image registers an observer for lazy loading 1`] = `"<img src=\\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\\" width=\\"200\\" height=\\"200\\" loading=\\"lazy\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;
+exports[`Renders simple image does not register an observer for lazy loading if there is native support 1`] = `"<img src=\\"/_custom/image.png\\" width=\\"200\\" height=\\"200\\" loading=\\"lazy\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;
 
-exports[`Renders simple image registers an observer for lazy loading 2`] = `"<img src=\\"/_custom/image.png\\" width=\\"200\\" height=\\"200\\" loading=\\"lazy\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;
+exports[`Renders simple image registers an observer for lazy loading if no native support for lazy loading 1`] = `"<img src=\\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\\" width=\\"200\\" height=\\"200\\" loading=\\"lazy\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;
+
+exports[`Renders simple image registers an observer for lazy loading if no native support for lazy loading 2`] = `"<img src=\\"/_custom/image.png\\" width=\\"200\\" height=\\"200\\" loading=\\"lazy\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_custom/image.png 500w, /_custom/image.png 900w\\">"`;

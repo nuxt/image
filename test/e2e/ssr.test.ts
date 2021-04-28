@@ -1,4 +1,4 @@
-import { setupTest, createPage, url } from '@nuxt/test-utils'
+import { setupTest, createPage, get, url } from '@nuxt/test-utils'
 import type { Page } from 'playwright'
 
 describe('browser (ssr: true)', () => {
@@ -29,9 +29,22 @@ describe('browser (ssr: true)', () => {
     expect(negativeRequest).toBeFalsy()
   })
 
-  test('change image location', async () => {
+  test.skip('change image location', async () => {
     await page.click('#button')
     const positiveRequest = requests.find(request => request.match('/_ipx/1280px-K2_2006b.jpg'))
     expect(positiveRequest).toBeTruthy()
+  })
+
+  test('should opt for native lazy loading', async () => {
+    // Ensures <img> tag is wrapped with <noscript>
+    const response = await get('/lazy')
+    expect(response.body).toContain('<noscript><img')
+    expect(response.body).toContain('lazy.jpg')
+
+    // Ensures our injected script replaces <noscript>
+    page.goto(url('/lazy'))
+    const body = await page.innerHTML('body')
+    expect(body).not.toContain('<noscript>')
+    expect(body).toContain('src="/_ipx/lazy.jpg?s=300_200"')
   })
 })

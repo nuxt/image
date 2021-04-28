@@ -19,6 +19,7 @@ const defineComponent: DefineComponentWithMixin = (opts: any) => opts
 type NAttrs = typeof imageMixin['nImgAttrs'] & {
     sizes?: string
     srcset?: string
+    'data-ssr-lazy'?: string
 }
 
 export default defineComponent({
@@ -32,14 +33,20 @@ export default defineComponent({
         attrs.sizes = sizes
         attrs.srcset = srcset
       }
+      if (process.server && this.lazyLoad) {
+        attrs['data-ssr-lazy'] = 'lazy'
+      }
       return attrs
     },
     nSrc (): string {
       // Calculate src first to trigger creation of static image
       const src = this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
-      if (this.lazyLoad) {
+
+      // Render image source on SSR for better SEO
+      if (this.lazyLoad && process.client) {
         return EMPTY_GIF
       }
+
       return src
     },
     /* eslint-disable no-undef */

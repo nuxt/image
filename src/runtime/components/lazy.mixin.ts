@@ -11,11 +11,13 @@ interface PrivateThis {
   _removeObserver?: ReturnType<typeof useObserver>
 }
 
+const supportsLazyLoading = process.client && ('loading' in HTMLImageElement.prototype)
+
 // @vue/component
 export const lazyMixin = defineMixin({
   data () {
     return {
-      lazyLoad: (this as any as typeof imageMixin).loading === 'lazy'
+      lazyLoad: (this as any as typeof imageMixin).loading === 'lazy' && !supportsLazyLoading
     }
   },
   mounted () {
