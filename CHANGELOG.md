@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/nuxt/image/compare/v0.4.7...v0.4.8) (2021-04-28)
+
+
+### Bug Fixes
+
+* **image:** ratio calc regression (fixes [#238](https://github.com/nuxt/image/issues/238)) ([5e28edd](https://github.com/nuxt/image/commit/5e28edd005b76fc4872efc15b9ba9fb7cb75b66d))
+* ensure static image map is available on first load ([#236](https://github.com/nuxt/image/issues/236)) ([466d5a8](https://github.com/nuxt/image/commit/466d5a8e4e3146631090455bed9d9952cf34f86e))
+* generate static images even if lazy loaded ([#233](https://github.com/nuxt/image/issues/233)) ([5be72a5](https://github.com/nuxt/image/commit/5be72a563e13bbceccfbbc889fb4d4f60bcee68d)), closes [#232](https://github.com/nuxt/image/issues/232)
+* vercel provider improvements ([#231](https://github.com/nuxt/image/issues/231)) ([9561daf](https://github.com/nuxt/image/commit/9561dafc3841d66e23123f797ea637f1f7802a8d))
+
 ### [0.4.7](https://github.com/nuxt/image/compare/v0.4.6...v0.4.7) (2021-04-23)
 
 
