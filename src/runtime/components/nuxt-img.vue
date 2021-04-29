@@ -1,7 +1,6 @@
 <template>
   <img
     :key="nSrc"
-    :src="nSrc"
     v-bind="nAttrs"
   >
 </template>
@@ -19,7 +18,8 @@ const defineComponent: DefineComponentWithMixin = (opts: any) => opts
 type NAttrs = typeof imageMixin['nImgAttrs'] & {
     sizes?: string
     srcset?: string
-    'data-ssr-lazy'?: string
+    src?: string
+    'data-src'?: string
 }
 
 export default defineComponent({
@@ -33,21 +33,14 @@ export default defineComponent({
         attrs.sizes = sizes
         attrs.srcset = srcset
       }
-      if (process.server && this.lazyLoad) {
-        attrs['data-ssr-lazy'] = 'lazy'
+      if (this.nDataSrc) {
+        attrs['data-src'] = this.nDataSrc
       }
+      attrs.src = process.client && this.lazyLoad ? EMPTY_GIF : this.nSrc
       return attrs
     },
     nSrc (): string {
-      // Calculate src first to trigger creation of static image
-      const src = this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
-
-      // Render image source on SSR for better SEO
-      if (this.lazyLoad && process.client) {
-        return EMPTY_GIF
-      }
-
-      return src
+      return this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
     },
     /* eslint-disable no-undef */
     nSizes (): ImageSizes {

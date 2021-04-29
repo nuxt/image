@@ -2,17 +2,24 @@ const EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAA
 
 const supportsLazyLoading = 'loading' in HTMLImageElement.prototype
 
+if (!supportsLazyLoading) {
+  const script = document.createElement('script')
+  script.src = 'lazy-polyfill.js'
+  script.async = true
+  document.head.appendChild(script)
+}
+
 const noscripts = document.querySelectorAll('noscript')
 
 noscripts.forEach(function (el) {
   let html = el.innerHTML.trim().replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 
-  if (!html.match(/data-ssr-lazy/)) {
+  if (!html.match(/data-src/)) {
     return
   }
 
   if (!supportsLazyLoading) {
-    html = html.replace(/src="([^"]*)"/, 'src="' + EMPTY_GIF + '"')
+    html = html.replace(/ src="([^"]*)"/, ' src="' + EMPTY_GIF + '"')
   }
 
   const wrapper = document.createElement('div')
