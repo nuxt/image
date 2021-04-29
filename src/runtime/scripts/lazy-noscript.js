@@ -19,7 +19,7 @@ noscripts.forEach(function (el) {
   }
 
   if (!supportsLazyLoading) {
-    html = html.replace(/ src="([^"]*)"/, ' src="' + EMPTY_GIF + '"')
+    html = html.replace(/ src="([^"]*)"/g, ' src="' + EMPTY_GIF + '"')
   }
 
   const wrapper = document.createElement('div')
