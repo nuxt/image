@@ -8,7 +8,7 @@ const serializeProp = '__dangerouslyDisableSanitizersByTagID'
 
 const wrapWithNoscripts = (result: { html: string }) => {
   // Replace <img> with <noscript>
-  result.html = result.html.replace(/<img([^>]*data-src[^>]*>)/g, (r: string) => '<noscript>' + r + '</noscript>')
+  result.html = result.html.replace(/<img([^>]*loading="lazy"[^>]*>)/g, (r: string) => '<noscript>' + r + '</noscript>')
 }
 
 export async function setupInjectedLazyScript (nuxt: any): Promise<void> {

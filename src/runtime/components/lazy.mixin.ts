@@ -14,7 +14,7 @@ export const lazyMixin = defineMixin({
       return !supportsLazyLoading && (this as any as typeof imageMixin).loading === 'lazy' && !((this.$vnode.elm as any)?.dataset.intersected)
     },
     nDataSrc (): string | null {
-      return !supportsLazyLoading && this.lazyLoad ? (this as any).nSrc : null
+      return process.client && !supportsLazyLoading && this.lazyLoad ? (this as any).nSrc : null
     }
   }
 })

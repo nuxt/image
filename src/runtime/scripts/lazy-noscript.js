@@ -14,12 +14,12 @@ const noscripts = document.querySelectorAll('noscript')
 noscripts.forEach(function (el) {
   let html = el.innerHTML.trim().replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 
-  if (!html.match(/data-src/)) {
+  if (!html.match(/loading="lazy"/)) {
     return
   }
 
   if (!supportsLazyLoading) {
-    html = html.replace(/ src="([^"]*)"/g, ' src="' + EMPTY_GIF + '"')
+    html = html.replace(/ src="([^"]*)"/g, (_, src) => ` src="${EMPTY_GIF}" data-src="${src}"`)
   }
 
   const wrapper = document.createElement('div')
