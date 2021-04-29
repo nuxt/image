@@ -8,7 +8,7 @@ describe('undefined config', () => {
 
   test('does not optimize images', async () => {
     const { body } = await get('/')
-    expect(body).toContain('<img src="/2000px-Aconcagua2016.jpg" width="300" height="200">')
+    expect(body).toContain('<img width="300" height="200" src="/2000px-Aconcagua2016.jpg">')
   })
 })
 
@@ -29,6 +29,6 @@ describe('Custom provider', () => {
 
   test('render index', async () => {
     const { body } = await get('/')
-    expect(body).toContain('<img src="https://source.unsplash.com/random/600x400" width="300" height="200">')
+    expect(body).toContain('<img width="300" height="200" src="https://source.unsplash.com/random/600x400">')
   })
 })

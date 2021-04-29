@@ -3,7 +3,6 @@ import { createHash } from 'crypto'
 import { readFile, writeFile } from 'fs-extra'
 import { join, resolve } from 'upath'
 
-const hash = createHash('sha256')
 const hid = 'image-lazy-noscript'
 const serializeProp = '__dangerouslyDisableSanitizersByTagID'
 
@@ -18,6 +17,7 @@ export async function setupInjectedLazyScript (nuxt: any): Promise<void> {
   const polyfillPath = resolve(__dirname, '../dist/runtime/scripts/lazy-polyfill.min.js')
   const polyfill = await readFile(polyfillPath, 'utf-8')
 
+  const hash = createHash('sha256')
   hash.update(polyfill)
   const polyfillHash = hash.digest('hex').slice(0, 6)
   const polyfillScriptName = `lazy-polyfill-${polyfillHash}.js`

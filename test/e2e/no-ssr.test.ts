@@ -38,4 +38,12 @@ describe('browser (ssr: false)', () => {
     const positiveRequest = requests.find(request => request.match('/_ipx/1280px-K2_2006b.jpg'))
     expect(positiveRequest).toBeTruthy()
   })
+
+  test('should opt for native lazy loading', async () => {
+    // Ensures we properly render image sources
+    page.goto(url('/lazy'))
+    await page.waitForEvent('domcontentloaded')
+    const body = await page.innerHTML('body')
+    expect(body).toContain('src="/_ipx/lazy.jpg?s=300_200"')
+  })
 })
