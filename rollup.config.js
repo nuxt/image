@@ -1,5 +1,5 @@
 import { terser } from 'rollup-plugin-terser'
-import babel from '@rollup/plugin-babel'
+import esbuild from 'rollup-plugin-esbuild'
 
 export default [
   getConfigFor('lazy-noscript'),
@@ -23,18 +23,7 @@ function getConfigFor (file) {
       }
     ],
     plugins: [
-      babel({
-        babelHelpers: 'inline',
-        presets: [
-          [
-            '@babel/preset-env', {
-              targets: {
-                safari: '12'
-              }
-            }
-          ]
-        ]
-      })
+      esbuild()
     ]
   }
 }
