@@ -80,7 +80,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.VERCEL) {
+  if (process.env.VERCEL || process.env.NUXT_ENV_VERCEL_ENV) {
     return 'vercel'
   }
 
