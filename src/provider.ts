@@ -71,17 +71,22 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
   }
 }
 
+const providerFlags = {
+  vercel: [process.env.VERCEL, process.env.NUXT_ENV_VERCEL_ENV, process.env.NOW_BUILDER].some(Boolean)
+}
+
 export function detectProvider (userInput?: string) {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
 
   if (userInput && userInput !== 'auto') {
+    for (const [provider, enabled] of Object.entries(providerFlags)) {
+      if (userInput === provider && !enabled) {
+        return 'static'
+      }
+    }
     return userInput
-  }
-
-  if (process.env.VERCEL || process.env.NUXT_ENV_VERCEL_ENV) {
-    return 'vercel'
   }
 
   return 'static'
