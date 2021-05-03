@@ -81,7 +81,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.VERCEL) {
+  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {
     return 'vercel'
   }
 
