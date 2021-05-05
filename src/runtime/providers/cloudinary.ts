@@ -42,6 +42,9 @@ const operationsGenerator = createOperationsGenerator({
       cropping: 'crop',
       coverLimit: 'limit'
     },
+    format: {
+      jpeg: 'jpg'
+    },
     background (value: string) {
       return convertHextoRGBFormat(value)
     },
