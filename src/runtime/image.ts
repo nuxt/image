@@ -140,8 +140,8 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
-  const sizeVarients = []
-  const srcVarients = []
+  const sizeVariants = []
+  const srcVariants = []
 
   const sizes: Record<string, string> = {}
   const srcset: Array<number> = []
@@ -175,7 +175,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       width = Math.round((width / 100) * screenMaxWidth)
     }
     const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
-    sizeVarients.push({
+    sizeVariants.push({
       width,
       size,
       screenMaxWidth,
@@ -184,9 +184,9 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     })
   }
 
-  sizeVarients.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  const defaultVar = sizeVarients[sizeVarients.length - 1]
+  const defaultVar = sizeVariants[sizeVariants.length - 1]
   if (defaultVar) {
     defaultVar.media = ''
   }
@@ -199,7 +199,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
         if (isNaN(dpiSize) || !opts.sizes) {
           continue
         }
-        srcset.push(...sizeVarients.map(s => s.width * dpiSize))
+        srcset.push(...sizeVariants.map(s => s.width * dpiSize))
       } else {
         const size = parseInt(entry)
         if (isNaN(size)) {
@@ -214,17 +214,17 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
 
   uniqueSrcset.forEach((width) => {
     const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
-    srcVarients.push({
+    srcVariants.push({
       width,
       src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
     })
   })
 
-  srcVarients.sort((v1, v2) => v1.width - v2.width)
+  srcVariants.sort((v1, v2) => v1.width - v2.width)
 
   return {
-    sizes: sizeVarients.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: srcVarients.length ? srcVarients.map(v => `${v.src} ${v.width}w`).join(', ') : sizeVarients.map(v => `${v.src} ${v.width}w`).join(', '),
+    sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    srcset: srcVariants.length ? srcVariants.map(v => `${v.src} ${v.width}w`).join(', ') : sizeVariants.map(v => `${v.src} ${v.width}w`).join(', '),
     src: defaultVar?.src
   }
 }
