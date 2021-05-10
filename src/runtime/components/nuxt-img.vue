@@ -10,7 +10,6 @@
 import type { DefineComponentWithMixin } from '../../types/vue'
 import type { ImageSizes } from '../../types'
 import { imageMixin } from './image.mixin'
-import { EMPTY_GIF, lazyMixin } from './lazy.mixin'
 
 import { parseSize } from '~image'
 
@@ -23,7 +22,7 @@ type NAttrs = typeof imageMixin['nImgAttrs'] & {
 
 export default defineComponent({
   name: 'NuxtImg',
-  mixins: [imageMixin, lazyMixin],
+  mixins: [imageMixin],
   computed: {
     nAttrs (): NAttrs {
       const attrs: NAttrs = this.nImgAttrs
@@ -35,12 +34,7 @@ export default defineComponent({
       return attrs
     },
     nSrc (): string {
-      // Calculate src first to trigger creation of static image
-      const src = this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
-      if (this.lazyLoad) {
-        return EMPTY_GIF
-      }
-      return src
+      return this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
     },
     /* eslint-disable no-undef */
     nSizes (): ImageSizes {
