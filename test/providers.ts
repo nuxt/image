@@ -47,7 +47,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     ipx: { url: '/_ipx/test.png?fit=contain&f=jpeg&s=200_200' },
-    cloudinary: { url: '/f_jpeg,q_auto,w_200,h_200,c_scale/test' },
+    cloudinary: { url: '/f_jpg,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/output=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
