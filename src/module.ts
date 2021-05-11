@@ -93,7 +93,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
 
     // In development, add IPX middleware directly
 
-    const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware.find(mw => mw.path && mw.path.startsWith('/_ipx'))
+    const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware.find((mw: { path: string }) => mw.path && mw.path.startsWith('/_ipx'))
 
     if (!hasUserProvidedMiddleware) {
       const { createIPX, createIPXMiddleware } = await import('ipx')
