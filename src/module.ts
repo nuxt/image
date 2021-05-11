@@ -119,7 +119,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
       const distDir = resolve(nuxt.options.buildDir, 'dist')
       const apiDir = resolve(distDir, 'api')
       const apiFile = resolve(apiDir, 'ipx.js')
-      const relativeApiFile = '~/' + relative(rootDir, apiFile)
+      const relativeApiFile = '~~/' + relative(rootDir, apiFile)
 
       await mkdirp(apiDir)
       await writeFile(apiFile, handler.replace(/.__IPX_OPTIONS__./, JSON.stringify(ipxOptions)))
