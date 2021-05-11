@@ -5,6 +5,8 @@ import type { Module } from '@nuxt/types'
 import defu from 'defu'
 
 import { mkdirp, readFile, writeFile } from 'fs-extra'
+import { lt } from 'semver'
+
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
 import type { ModuleOptions, CreateImageOptions } from './types'
@@ -78,10 +80,11 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
 
   // Only add IPX server middleware if the static/ipx provider is used
   if (
-    ['static', 'ipx'].includes(options.provider) ||
-    ['static', 'ipx'].some(provider => Object.keys(options.providers).includes(provider))
+    (options.provider === 'static' && nuxt.options.dev) ||
+    options.provider === 'ipx' ||
+    Object.keys(options.providers).includes('ipx')
   ) {
-    const rootDir = this.options.rootDir
+    const rootDir = nuxt.options.rootDir
     const ipxOptions = {
       dir: relative(rootDir, options.dir),
       domains: options.domains,
@@ -90,13 +93,21 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
 
     // In development, add IPX middleware directly
 
-    const { createIPX, createIPXMiddleware } = await import('ipx')
+    const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware.find(mw => mw.path && mw.path.startsWith('/_ipx'))
 
-    const ipx = createIPX(ipxOptions)
-    addServerMiddleware({
-      path: '/_ipx',
-      handle: createIPXMiddleware(ipx)
-    })
+    if (!hasUserProvidedMiddleware) {
+      const { createIPX, createIPXMiddleware } = await import('ipx')
+
+      const ipx = createIPX(ipxOptions)
+      addServerMiddleware({
+        path: '/_ipx',
+        handle: createIPXMiddleware(ipx)
+      })
+    }
+
+    if (nuxt.options.dev && options.provider === 'ipx' && !hasUserProvidedMiddleware && lt(nuxt.constructor.version, '2.16.0')) {
+      console.warn('If you would like to use the `ipx` provider at runtime, make sure to follow the instructions at https://image.nuxtjs.org/providers/ipx.')
+    }
 
     // In production, add IPX module to .nuxtrc (used in Nuxt 2.16+)
     nuxt.hook('build:done', async () => {
@@ -105,7 +116,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
       }
 
       const handler = await readFile(resolve(runtimeDir, 'ipx.js'), 'utf-8')
-      const distDir = resolve(this.options.buildDir, 'dist')
+      const distDir = resolve(nuxt.options.buildDir, 'dist')
       const apiDir = resolve(distDir, 'api')
       const apiFile = resolve(apiDir, 'ipx.js')
       const relativeApiFile = '~/' + relative(rootDir, apiFile)
