@@ -1,17 +1,17 @@
-import { resolve } from 'upath'
+import { relative, resolve } from 'upath'
 import { update as updaterc } from 'rc9'
 
 import type { Module } from '@nuxt/types'
 import defu from 'defu'
 
-import { copyFile, mkdirp } from 'fs-extra'
+import { mkdirp, readFile, writeFile } from 'fs-extra'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
 import type { ModuleOptions, CreateImageOptions } from './types'
 import { pick, pkg } from './utils'
 
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
-  const { nuxt, addPlugin, addModule } = this
+  const { nuxt, addPlugin, addServerMiddleware } = this
 
   const defaults: ModuleOptions = {
     staticFilename: '[publicPath]/image/[hash][ext]',
@@ -81,14 +81,22 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     ['static', 'ipx'].includes(options.provider) ||
     ['static', 'ipx'].some(provider => Object.keys(options.providers).includes(provider))
   ) {
-    const ipxModuleDev = resolve(runtimeDir, 'ipx.js')
+    const rootDir = this.options.rootDir
     const ipxOptions = {
-      dir: options.dir,
+      dir: relative(rootDir, options.dir),
       domains: options.domains,
       sharp: options.sharp
     }
 
-    addModule([ipxModuleDev, ipxOptions])
+    // In development, add IPX middleware directly
+
+    const { createIPX, createIPXMiddleware } = await import('ipx')
+
+    const ipx = createIPX(ipxOptions)
+    addServerMiddleware({
+      path: '/_ipx',
+      handle: createIPXMiddleware(ipx)
+    })
 
     // In production, add IPX module to .nuxtrc (used in Nuxt 2.16+)
     nuxt.hook('build:done', async () => {
@@ -96,14 +104,16 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
         return
       }
 
+      const handler = await readFile(resolve(runtimeDir, 'ipx.js'), 'utf-8')
       const distDir = resolve(this.options.buildDir, 'dist')
-      const apiDir = resolve(distDir, 'server', 'modules')
-      const apiModuleProd = resolve(apiDir, 'ipx.js')
+      const apiDir = resolve(distDir, 'api')
+      const apiFile = resolve(apiDir, 'ipx.js')
+      const relativeApiFile = '~/' + relative(rootDir, apiFile)
 
       await mkdirp(apiDir)
-      await copyFile(ipxModuleDev, apiModuleProd)
+      await writeFile(apiFile, handler.replace(/.__IPX_OPTIONS__./, JSON.stringify(ipxOptions)))
 
-      updaterc({ modules: [[apiModuleProd, ipxOptions]] }, { dir: distDir, name: '.nuxtrc' })
+      updaterc({ serverMiddleware: [{ path: '/_ipx', handler: relativeApiFile }] }, { dir: distDir, name: '.nuxtrc' })
     })
   }
 
