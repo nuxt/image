@@ -22,3 +22,32 @@ that are stored locally within your repo.
 ```
 
 This will load the image in as `/static/logo.png` and apply the IPX optimizations if applicable.
+
+
+### Using `ipx` in production
+
+**If you are using Nuxt 2.16+ this is done automatically for you.**
+
+However, if you are using Nuxt < 2.16, and you need to use the `ipx` provider at runtime, you will either need to add `@nuxt/image` to your _modules_ (instead of buildModules) or add the following code to your `nuxt.config`:
+
+```js
+import path from 'path'
+import { createIPX, createIPXMiddleware } from 'ipx'
+
+const ipx = createIPX({
+  dir: path.join(__dirname, 'static'),
+  // https://image.nuxtjs.org/api/options#domains
+  domains: [],
+  // Any options you need to pass to sharp
+  sharp: {}
+})
+
+export default {
+  serverMiddleware: [
+    {
+      path: '/_ipx',
+      handler: createIPXMiddleware(ipx)
+    }
+  ]
+}
+```
