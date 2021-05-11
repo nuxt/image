@@ -76,30 +76,36 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     }
   })
 
-  const ipxModuleDev = resolve(runtimeDir, 'ipx.js')
-  const ipxOptions = {
-    dir: options.dir,
-    domains: options.domains,
-    sharp: options.sharp
-  }
-
-  addModule([ipxModuleDev, ipxOptions])
-
-  // In production, add IPX module to nuxt config for Nuxt 2.16+
-  nuxt.hook('build:done', async () => {
-    if (nuxt.options.dev) {
-      return
+  // Only add IPX server middleware if the static/ipx provider is used
+  if (
+    ['static', 'ipx'].includes(options.provider) ||
+    ['static', 'ipx'].some(provider => Object.keys(options.providers).includes(provider))
+  ) {
+    const ipxModuleDev = resolve(runtimeDir, 'ipx.js')
+    const ipxOptions = {
+      dir: options.dir,
+      domains: options.domains,
+      sharp: options.sharp
     }
 
-    const distDir = resolve(this.options.buildDir, 'dist')
-    const apiDir = resolve(distDir, 'server', 'modules')
-    const apiModuleProd = resolve(apiDir, 'ipx.js')
+    addModule([ipxModuleDev, ipxOptions])
 
-    await mkdirp(apiDir)
-    await copyFile(ipxModuleDev, apiModuleProd)
+    // In production, add IPX module to .nuxtrc (used in Nuxt 2.16+)
+    nuxt.hook('build:done', async () => {
+      if (nuxt.options.dev) {
+        return
+      }
 
-    updaterc({ modules: [[apiModuleProd, ipxOptions]] }, { dir: distDir, name: '.nuxtrc' })
-  })
+      const distDir = resolve(this.options.buildDir, 'dist')
+      const apiDir = resolve(distDir, 'server', 'modules')
+      const apiModuleProd = resolve(apiDir, 'ipx.js')
+
+      await mkdirp(apiDir)
+      await copyFile(ipxModuleDev, apiModuleProd)
+
+      updaterc({ modules: [[apiModuleProd, ipxOptions]] }, { dir: distDir, name: '.nuxtrc' })
+    })
+  }
 
   nuxt.options.build.loaders = defu({
     vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }
