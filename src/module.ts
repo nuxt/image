@@ -72,22 +72,20 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     }
   })
 
-  // Only add IPX server middleware if the static/ipx provider is used
-  if (
-    (options.provider === 'static' && nuxt.options.dev) ||
-    options.provider === 'ipx' ||
-    'ipx' in options.providers
-  ) {
-    const rootDir = nuxt.options.rootDir
+  // Check if IPX middleware is required
+  const ipxEnabled = ('ipx' in options.providers) || (options.provider === 'static' && nuxt.options.dev)
+
+  if (ipxEnabled) {
     const ipxOptions = {
-      dir: relative(rootDir, options.dir),
+      dir: relative(nuxt.options.rootDir, options.dir),
       domains: options.domains,
       sharp: options.sharp
     }
 
     // In development, add IPX middleware directly
 
-    const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware.find((mw: { path: string }) => mw.path && mw.path.startsWith('/_ipx'))
+    const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware
+      .find((mw: { path: string }) => mw.path && mw.path.startsWith('/_ipx'))
 
     if (!hasUserProvidedMiddleware) {
       const handlerContents = await readFile(resolve(runtimeDir, 'ipx.js'), 'utf-8')
@@ -98,11 +96,11 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
       const writeServerMiddleware = async () => {
         if (!existsSync(handlerFile)) {
           await mkdirp(imageDir)
-          await writeFile(handlerFile, handlerContents.replace(/.__IPX_OPTIONS__./, JSON.stringify(ipxOptions)))
+          await writeFile(handlerFile, handlerContents.replace(/.__IPX_OPTIONS__./, JSON.stringify(ipxOptions, null, 2)))
         }
       }
+      nuxt.hook('build:templates', writeServerMiddleware)
       nuxt.hook('render:setupMiddleware', writeServerMiddleware)
-      nuxt.hook('build:done', writeServerMiddleware)
 
       if (nuxt.options.dev && options.provider === 'ipx') {
         console.warn('If you would like to use the `ipx` provider at runtime, make sure to follow the instructions at https://image.nuxtjs.org/providers/ipx.')
