@@ -57,9 +57,6 @@ export default <NuxtConfig> {
           height: 50
         }
       }
-    },
-    intersectOptions: {
-      rootMargin: '50px'
     }
   }
 }

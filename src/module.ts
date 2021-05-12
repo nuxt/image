@@ -31,8 +31,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     },
     internalUrl: '',
     providers: {},
-    static: {},
-    intersectOptions: {}
+    static: {}
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
@@ -44,8 +43,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
     'screens',
     'presets',
-    'provider',
-    'intersectOptions'
+    'provider'
   ])
 
   options.static = options.static || {}
