@@ -82,8 +82,9 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     })
   })
 
+  // transform asset urls that pass to `src` attribute on image components
   nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }
+    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
   }, nuxt.options.build.loaders || {})
 
   nuxt.hook('generate:before', () => {
