@@ -33,7 +33,6 @@ export interface ModuleOptions extends ImageProviders {
   sharp: {}
   screens: CreateImageOptions['screens'],
   internalUrl: string
-  intersectOptions: CreateImageOptions['intersectOptions']
   providers: { [name: string]: InputProvider | any } & ImageProviders
   [key: string]: any
 }
