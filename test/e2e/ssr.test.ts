@@ -1,13 +1,17 @@
 import { setupTest, createPage, url } from '@nuxt/test-utils'
+import type { Page } from 'playwright'
 
-describe('browser', () => {
+describe('browser (ssr: true)', () => {
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
-    browser: true
+    browser: true,
+    config: {
+      image: {
+        provider: 'ipx'
+      }
+    }
   })
-  let page
-  const requests = []
+  let page: Page
+  const requests: string[] = []
 
   test('should render image', async () => {
     page = await createPage()
@@ -16,17 +20,18 @@ describe('browser', () => {
       return route.continue()
     })
     page.goto(url('/'))
-    // temporally commented
-    // const body = await page.innerHTML('body')
-    // expect(body).toContain('/_image/local/local/_/w_30/2000px-Aconcagua2016.jpg')
-    const positiveRequest = requests.find(request => request.match('2000px-Aconcagua2016.jpg'))
-    expect(positiveRequest).not.toBeNull()
+    const body = await page.innerHTML('body')
+    expect(body).toContain('/_ipx/2000px-Aconcagua2016.jpg?s=300_20')
+
+    const positiveRequest = requests.find(request => request.match('/_ipx/2000px-Aconcagua2016.jpg'))
+    expect(positiveRequest).toBeTruthy()
     const negativeRequest = requests.find(request => request.match('1280px-K2_2006b.jpg'))
-    expect(negativeRequest).toBeUndefined()
+    expect(negativeRequest).toBeFalsy()
   })
+
   test('change image location', async () => {
     await page.click('#button')
-    const positiveRequest = requests.find(request => request.match('1280px-K2_2006b.jpg'))
-    expect(positiveRequest).not.toBeUndefined()
+    const positiveRequest = requests.find(request => request.match('/_ipx/1280px-K2_2006b.jpg'))
+    expect(positiveRequest).toBeTruthy()
   })
 })

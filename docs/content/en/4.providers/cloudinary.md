@@ -13,11 +13,56 @@ To use this provider you just need to specify the base url of your project in cl
 export default {
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/'
     }
   }
 }
 ```
+
+## Remote Images
+
+To handle remote image data, you can either use [fetch](https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url) 
+or [upload](https://cloudinary.com/documentation/fetch_remote_images#auto_upload_remote_resources). Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload)
+for the difference between the two.
+
+
+### Fetch
+
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch/'
+    }
+  }
+}
+```
+
+```vue
+<NuxtImg provider="cloudinary" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+```
+
+Note: You will need to configure your "Allowed fetch domains" to do the above. 
+
+### Upload
+
+```js{}[nuxt.config.js]
+export default {
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/<mapping-folder>'
+    }
+  }
+}
+```
+
+```vue
+<NuxtImg provider="cloudinary" src="/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+```
+
+Note: You will need to configure your "Auto upload mapping" to do the above.
+
 
 ## Cloudinary `fit` values
 
@@ -33,7 +78,13 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 ## Cloudinary modifiers
 
-Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop:
+Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
+
+<alert type="info">
+
+The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
+
+</alert>
 
 ### `rotate`
 

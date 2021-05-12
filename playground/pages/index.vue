@@ -181,6 +181,14 @@
           src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
         />
       </div>
+
+      <h2>Vercel</h2>
+      <NuxtImg
+        width="750"
+        quality="75"
+        provider="vercel"
+        src="mountains.jpg"
+      />
     </div>
   </div>
 </template>

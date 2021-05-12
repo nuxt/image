@@ -1,19 +1,18 @@
 import defu from 'defu'
-import { joinURL } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
 
-export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
-  const staticImageManifest = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
+export function createImage (globalOptions: CreateImageOptions, nuxtContext: any) {
+  const staticImageManifest: Record<string, string> = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
 
   const ctx: ImageCTX = {
     options: globalOptions,
     nuxtContext
   }
 
-  const getImage: $Img['getImage'] = function (input: string, options: ImageOptions = {}) {
+  const getImage: $Img['getImage'] = function (input: string, options = {}) {
     const image = resolveImage(ctx, input, options)
     if (image.isStatic) {
       handleStaticImage(image, input)
@@ -21,7 +20,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
     return image
   }
 
-  function $img (input: string, modifiers: ImageOptions['modifiers'] = {}, options: ImageOptions = {}) {
+  const $img = function $img (input, modifiers = {}, options = {}) {
     return getImage(input, {
       ...options,
       modifiers: {
@@ -29,28 +28,27 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
         ...modifiers
       }
     }).url
-  }
+  } as $Img
 
   function handleStaticImage (image: ResolvedImage, input: string) {
     if (process.static) {
-      const staticImagesBase = '/_nuxt/image' // TODO
-
       if (process.client && 'fetchPayload' in window.$nuxt) {
         const mappedURL = staticImageManifest[image.url]
-        image.url = mappedURL ? joinURL(staticImagesBase, mappedURL) : input
+        image.url = mappedURL || input
         return image
       }
 
       if (process.server) {
         const { ssrContext } = ctx.nuxtContext
+        const ssrState = ssrContext.nuxt
         const ssrData = ssrContext.nuxt.data[0]
-        const staticImages = ssrData._img = ssrData._img || {}
+        const staticImages = ssrState._img = ssrData._img = ssrData._img || {}
         const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
         if (typeof mapToStatic === 'function') {
           const mappedURL = mapToStatic(image)
           if (mappedURL) {
             staticImages[image.url] = mappedURL
-            image.url = joinURL(staticImagesBase, mappedURL)
+            image.url = mappedURL
           }
         }
       }
@@ -74,18 +72,14 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
   return $img
 }
 
-async function getMeta (ctx: ImageCTX, input: string, options: ImageOptions) {
+async function getMeta (ctx: ImageCTX, input: string, options?: ImageOptions) {
   const image = resolveImage(ctx, input, { ...options })
 
-  const meta = {}
-
   if (typeof image.getMeta === 'function') {
-    Object.assign(meta, await image.getMeta())
+    return await image.getMeta()
   } else {
-    Object.assign(meta, await imageMeta(ctx, image.url))
+    return await imageMeta(ctx, image.url)
   }
-
-  return meta
 }
 
 function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
@@ -139,7 +133,9 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 }
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
-  const ratio = parseSize(opts.modifiers.height) / parseSize(opts.modifiers.width)
+  const width = parseSize(opts.modifiers?.width)
+  const height = parseSize(opts.modifiers?.height)
+  const hwRatio = (width && height) ? height / width : 0
   const variants = []
 
   const sizes: Record<string, string> = {}
@@ -156,7 +152,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   }
 
   for (const key in sizes) {
-    const screenMaxWidth = ctx.options.screens[key] || parseInt(key)
+    const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
     let size = String(sizes[key])
     const isFluid = size.endsWith('vw')
     if (!isFluid && /^\d+$/.test(size)) {
@@ -165,20 +161,20 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     if (!isFluid && !size.endsWith('px')) {
       continue
     }
-    let width = parseInt(size)
-    if (!screenMaxWidth || !width) {
+    let _cWidth = parseInt(size)
+    if (!screenMaxWidth || !_cWidth) {
       continue
     }
     if (isFluid) {
-      width = Math.round((width / 100) * screenMaxWidth)
+      _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
-    const height = ratio ? Math.round(width * ratio) : parseSize(opts.modifiers.height)
+    const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
     variants.push({
-      width,
+      width: _cWidth,
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img(input, { ...opts.modifiers, width, height }, opts)
+      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, _cHeight }, opts)
     })
   }
 

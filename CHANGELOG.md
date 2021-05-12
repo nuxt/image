@@ -2,6 +2,62 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/nuxt/image/compare/v0.4.7...v0.4.8) (2021-04-28)
+
+
+### Bug Fixes
+
+* **image:** ratio calc regression (fixes [#238](https://github.com/nuxt/image/issues/238)) ([5e28edd](https://github.com/nuxt/image/commit/5e28edd005b76fc4872efc15b9ba9fb7cb75b66d))
+* ensure static image map is available on first load ([#236](https://github.com/nuxt/image/issues/236)) ([466d5a8](https://github.com/nuxt/image/commit/466d5a8e4e3146631090455bed9d9952cf34f86e))
+* generate static images even if lazy loaded ([#233](https://github.com/nuxt/image/issues/233)) ([5be72a5](https://github.com/nuxt/image/commit/5be72a563e13bbceccfbbc889fb4d4f60bcee68d)), closes [#232](https://github.com/nuxt/image/issues/232)
+* vercel provider improvements ([#231](https://github.com/nuxt/image/issues/231)) ([9561daf](https://github.com/nuxt/image/commit/9561dafc3841d66e23123f797ea637f1f7802a8d))
+
+### [0.4.7](https://github.com/nuxt/image/compare/v0.4.6...v0.4.7) (2021-04-23)
+
+
+### Bug Fixes
+
+* **pkg:** use --ext js to avoid issues with mjs ([a483e14](https://github.com/nuxt/image/commit/a483e14514385b9ddc7cceef2fb8c982c3c6e362))
+
+### [0.4.6](https://github.com/nuxt/image/compare/v0.4.5...v0.4.6) (2021-04-22)
+
+
+### Features
+
+* `staticFilename` option to customize static image filenames ([#220](https://github.com/nuxt/image/issues/220)) ([975b1a2](https://github.com/nuxt/image/commit/975b1a2c72a60172b0b373036dfa197980b1c32a))
+* type improvements ([#222](https://github.com/nuxt/image/issues/222)) ([6dc8aa0](https://github.com/nuxt/image/commit/6dc8aa059b6f12139301cb0c7732743565a877ea))
+
+
+### Bug Fixes
+
+* **deps:** add missing lru-cache ([0af0bf3](https://github.com/nuxt/image/commit/0af0bf39644c179f7c1cd664f60cdbb3e9aae2ea))
+
+### [0.4.5](https://github.com/nuxt/image/compare/v0.4.4...v0.4.5) (2021-04-19)
+
+
+### Features
+
+* support cloudinary fetch base url ([#218](https://github.com/nuxt/image/issues/218)) ([31bef1e](https://github.com/nuxt/image/commit/31bef1eb56c2ef5905c209d8000a7cde8597c16d))
+
+
+### Bug Fixes
+
+* limit static download concurrency ([#217](https://github.com/nuxt/image/issues/217)) ([bb4af1a](https://github.com/nuxt/image/commit/bb4af1a46929bc5a0260b53ffcb0b3dab4aeecc1))
+
+### [0.4.4](https://github.com/nuxt/image/compare/v0.4.3...v0.4.4) (2021-04-10)
+
+
+### Bug Fixes
+
+* enable default provider for resolving ([18ed241](https://github.com/nuxt/image/commit/18ed241109c0064ddacff9dc6877ce5f4e42139e))
+
+### [0.4.3](https://github.com/nuxt/image/compare/v0.4.2...v0.4.3) (2021-04-10)
+
+
+### Features
+
+* vercel image provider ([#210](https://github.com/nuxt/image/issues/210)) ([69e4af7](https://github.com/nuxt/image/commit/69e4af749103e730d758f7636ddfce1fee4d55c7))
+
 ### [0.4.2](https://github.com/nuxt/image/compare/v0.4.1...v0.4.2) (2021-04-07)
 
 
