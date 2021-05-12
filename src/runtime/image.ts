@@ -174,7 +174,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, _cHeight }, opts)
+      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
   }
 
