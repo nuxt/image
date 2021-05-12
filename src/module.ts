@@ -75,7 +75,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   if (
     (options.provider === 'static' && nuxt.options.dev) ||
     options.provider === 'ipx' ||
-    Object.keys(options.providers).includes('ipx')
+    'ipx' in options.providers
   ) {
     const rootDir = nuxt.options.rootDir
     const ipxOptions = {
