@@ -21,6 +21,9 @@ export default <NuxtConfig> {
       'https://unsplash.com',
       'https://upload.wikimedia.org'
     ],
+    screens: {
+      750: 750
+    },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
     },
@@ -28,7 +31,7 @@ export default <NuxtConfig> {
       baseURL: 'https://img2.storyblok.com/'
     },
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/demo/image/upload'
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     fastly: {
       baseURL: 'https://www.fastly.io'
