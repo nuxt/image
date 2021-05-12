@@ -1,6 +1,7 @@
-import { relative, resolve } from 'upath'
 import type { Module } from '@nuxt/types'
 import defu from 'defu'
+import { mkdirp, readFile, writeFile } from 'fs-extra'
+import { relative, resolve } from 'upath'
 
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
@@ -89,17 +90,29 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     const hasUserProvidedMiddleware = !!nuxt.options.serverMiddleware.find((mw: { path: string }) => mw.path && mw.path.startsWith('/_ipx'))
 
     if (!hasUserProvidedMiddleware) {
-      const { createIPX, createIPXMiddleware } = await import('ipx')
+      if (nuxt.options.dev) {
+        const { createIPX, createIPXMiddleware } = await import('ipx')
 
-      const ipx = createIPX(ipxOptions)
-      addServerMiddleware({
-        path: '/_ipx',
-        handle: createIPXMiddleware(ipx)
-      })
-    }
+        const ipx = createIPX(ipxOptions)
+        addServerMiddleware({
+          path: '/_ipx',
+          handle: createIPXMiddleware(ipx)
+        })
+      } else {
+        const handlerContents = await readFile(resolve(runtimeDir, 'ipx.js'), 'utf-8')
+        const imageDir = resolve(nuxt.options.buildDir, 'image')
+        const handlerFile = resolve(imageDir, 'ipx.js')
 
-    if (nuxt.options.dev && options.provider === 'ipx' && !hasUserProvidedMiddleware) {
-      console.warn('If you would like to use the `ipx` provider at runtime, make sure to follow the instructions at https://image.nuxtjs.org/providers/ipx.')
+        addServerMiddleware({ path: '/_ipx', handler: handlerFile })
+        nuxt.hook('build:done', async () => {
+          await mkdirp(imageDir)
+          await writeFile(handlerFile, handlerContents.replace(/.__IPX_OPTIONS__./, JSON.stringify(ipxOptions)))
+        })
+      }
+
+      if (nuxt.options.dev && options.provider === 'ipx') {
+        console.warn('If you would like to use the `ipx` provider at runtime, make sure to follow the instructions at https://image.nuxtjs.org/providers/ipx.')
+      }
     }
   }
 
