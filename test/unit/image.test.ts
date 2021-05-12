@@ -6,8 +6,6 @@ import type Vue from 'vue'
 import { Wrapper } from '@vue/test-utils'
 
 import { getSrc, mountWithImg } from './utils/mount'
-import { mockObserver } from './utils/observer'
-import { nextTick } from './utils/tick'
 
 import NuxtImg from '~/runtime/components/nuxt-img.vue'
 
@@ -53,29 +51,5 @@ describe('Renders simple image', () => {
   test('sizes', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
-  })
-
-  test('registers an observer for lazy loading', async () => {
-    const observer = mockObserver()
-    wrapper = mountWithImg(NuxtImg, {
-      loading: 'lazy',
-      width: 200,
-      height: 200,
-      sizes: '200,500:500,900:900',
-      src
-    })
-
-    expect(observer.wasAdded).toBe(true)
-    expect(observer.wasDestroyed).toBe(false)
-
-    expect(wrapper.html()).toMatchSnapshot()
-
-    observer.triggerVisibility()
-
-    await nextTick()
-    expect(wrapper.html()).toMatchSnapshot()
-
-    wrapper.destroy()
-    expect(observer.wasDestroyed).toBe(true)
   })
 })
