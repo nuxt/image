@@ -34,7 +34,6 @@ export interface CreateImageOptions {
   }
   presets: { [name: string]: ImageOptions }
   provider: string
-  intersectOptions: object
   screens?: Record<string, number>,
 }
 

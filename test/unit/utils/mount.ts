@@ -23,8 +23,7 @@ export function mountWithImg (Component: any, propsData: Record<string, any>) {
         }
       },
       presets: {},
-      provider: 'custom',
-      intersectOptions: {}
+      provider: 'custom'
     },
     {}
   )
