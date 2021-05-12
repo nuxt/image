@@ -39,6 +39,9 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    sanity: {
+      projectId: 'j1o4tmjp'
+    },
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
     },
