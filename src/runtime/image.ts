@@ -40,15 +40,17 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
 
       if (process.server) {
         const { ssrContext } = ctx.nuxtContext
-        const ssrState = ssrContext.nuxt
-        const ssrData = ssrContext.nuxt.data[0]
-        const staticImages = ssrState._img = ssrData._img = ssrData._img || {}
-        const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
-        if (typeof mapToStatic === 'function') {
-          const mappedURL = mapToStatic(image)
-          if (mappedURL) {
-            staticImages[image.url] = mappedURL
-            image.url = mappedURL
+        if (ssrContext) {
+          const ssrState = ssrContext.nuxt || { data: [] }
+          const ssrData = ssrState.data[0] || {}
+          const staticImages = ssrState._img = ssrData._img = ssrData._img || {}
+          const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
+          if (typeof mapToStatic === 'function') {
+            const mappedURL = mapToStatic(image)
+            if (mappedURL) {
+              staticImages[image.url] = mappedURL
+              image.url = mappedURL
+            }
           }
         }
       }
@@ -174,7 +176,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, _cHeight }, opts)
+      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
   }
 

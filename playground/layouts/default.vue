@@ -7,32 +7,7 @@
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/picture">
-          Picture
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/playground">
-          Playground
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/instagram">
-          Instagram
-        </NuxtLink>
-      </li>
-      <li>
-        <select v-model="selectedProvider">
-          <option value="">
-            Provider fixtures
-          </option>
-          <option value="">
-            --
-          </option>
-          <option v-for="provider in providers" :key="provider" :value="provider">
-            {{ provider }}
-          </option>
-        </select>
+        <ProviderSelector />
       </li>
     </ul>
     <Nuxt />
@@ -41,35 +16,12 @@
 
 <script>
 export default {
-  data: () => ({
-    providers: [
-      'cloudinary',
-      'fastly',
-      'imagekit',
-      'imgix',
-      'static',
-      'twicpics',
-      'storyblok',
-      'vercel'
-    ]
-  }),
-  computed: {
-    selectedProvider: {
-      get () {
-        return this.$route.params.provider || ''
-      },
-      set (provider) {
-        this.$router.push(`/providers/${provider}`)
-      }
-    }
-  }
 }
 </script>
 
 <style>
+/* Global styles */
 body {
-  padding: 0;
-  margin: 0;
   background: #111111;
   display: flex;
   flex-direction: column;
@@ -84,6 +36,9 @@ a {
 .nuxt-link-exact-active {
   border-bottom: 2px white solid;
 }
+</style>
+
+<style scoped>
 ul {
   list-style-type: none;
   display: flex;
