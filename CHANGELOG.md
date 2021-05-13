@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.9](https://github.com/nuxt/image/compare/v0.4.8...v0.4.9) (2021-05-13)
+
+
+### Features
+
+* add sanity provider ([#164](https://github.com/nuxt/image/issues/164)) ([6483c34](https://github.com/nuxt/image/commit/6483c341e6c62c2871a56404904ec8a17b2df676))
+* **vercel:** remove protocol from vercel domains ([086227c](https://github.com/nuxt/image/commit/086227ca5d3c1ea2d6dc424fbcf68b85e48318ce)), closes [#242](https://github.com/nuxt/image/issues/242)
+
+
+### Bug Fixes
+
+* add guard for `ssrContext` existence ([d8aa3a1](https://github.com/nuxt/image/commit/d8aa3a10668786b56b32b9acc2ae4b03e0653d44)), closes [#258](https://github.com/nuxt/image/issues/258) [#249](https://github.com/nuxt/image/issues/249)
+* fix typo regression for height modifier (fixes [#262](https://github.com/nuxt/image/issues/262)) ([9a93f19](https://github.com/nuxt/image/commit/9a93f19363e68421771496085ec0d3e441bb86d2))
+* remove lazy loading polyfill in favour of native ([#256](https://github.com/nuxt/image/issues/256)) ([424bd44](https://github.com/nuxt/image/commit/424bd447bcc0eee52cf98a6ebcab67045a929837)), closes [#213](https://github.com/nuxt/image/issues/213) [#190](https://github.com/nuxt/image/issues/190)
+* vue-loader support for PascalCase components ([#168](https://github.com/nuxt/image/issues/168)) ([8629e3f](https://github.com/nuxt/image/commit/8629e3f7ac84632992ce05f36356f1c165886e1d))
+* **cloudinary:** use `jpg` instead of `jpeg` ([#255](https://github.com/nuxt/image/issues/255)) ([7d49fa8](https://github.com/nuxt/image/commit/7d49fa8de9e5a5437068991b19659558b5db850c)), closes [#254](https://github.com/nuxt/image/issues/254)
+* **vercel:** fix vercel auto-detection and provide local vercel mode ([#246](https://github.com/nuxt/image/issues/246)) ([a156c66](https://github.com/nuxt/image/commit/a156c66fc52e2c27e7bf5e439ae8624f108d695d))
+
 ### [0.4.8](https://github.com/nuxt/image/compare/v0.4.7...v0.4.8) (2021-04-28)
 
 
