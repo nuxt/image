@@ -194,7 +194,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   // Only use srcset if it is a string
   if (typeof opts.srcset === 'string') {
     for (const entry of opts.srcset.split(/[ ,]+/).filter(e => e)) {
-      if (/^[x]\d+/.test(entry)) {
+      if (/^[x]\d\b/.test(entry)) {
         const dpiSize = parseInt(entry.replace(/^x/, ''))
         if (isNaN(dpiSize) || !opts.sizes) {
           continue
