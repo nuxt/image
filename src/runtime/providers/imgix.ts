@@ -2,7 +2,7 @@ import type { ProviderGetImage } from 'src'
 import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
-const operationsGenerator = createOperationsGenerator({
+export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',

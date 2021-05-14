@@ -17,6 +17,7 @@ export interface ImageProviders {
   fastly?: any
   imagekit?: any
   imgix?: any
+  prismic?: any
   twicpics?: any
   storyblok?: any,
   ipx?: Partial<IPXOptions>
