@@ -6,7 +6,8 @@ export const images = [
     twicpics: { url: '/test.png' },
     fastly: { url: '/test.png' },
     imgix: { url: '/test.png' },
-    imagekit: { url: '/test.png' }
+    imagekit: { url: '/test.png' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=100' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -15,7 +16,8 @@ export const images = [
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
     imgix: { url: '/test.png?w=200' },
-    imagekit: { url: '/test.png?tr=w-200' }
+    imagekit: { url: '/test.png?tr=w-200' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=100' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -24,7 +26,8 @@ export const images = [
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
     imgix: { url: '/test.png?h=200' },
-    imagekit: { url: '/test.png?tr=h-200' }
+    imagekit: { url: '/test.png?tr=h-200' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -33,7 +36,8 @@ export const images = [
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
     imgix: { url: '/test.png?w=200&h=200' },
-    imagekit: { url: '/test.png?tr=w-200,h-200' }
+    imagekit: { url: '/test.png?tr=w-200,h-200' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -42,7 +46,8 @@ export const images = [
     twicpics: { url: '/test.png?twic=v1/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill' },
-    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' }
+    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -51,7 +56,8 @@ export const images = [
     twicpics: { url: '/test.png?twic=v1/output=jpeg/contain=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
-    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' }
+    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' },
+    prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' }
   }
 ] as const
 
