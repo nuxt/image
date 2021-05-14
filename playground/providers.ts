@@ -59,6 +59,45 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Fastly
+  {
+    name: 'fastly',
+    samples: [
+      { src: '/image.jpg' },
+      { src: '/plant.jpeg' }
+    ]
+  },
+  // Prismic
+  {
+    name: 'prismic',
+    samples: [
+      {
+        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900'
+      },
+      {
+        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        width: 200
+      },
+      {
+        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        height: 200
+      },
+      {
+        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        width: 200,
+        height: 200,
+        fit: 'crop'
+      }
+    ]
+  },
+  // TwicPics
+  {
+    name: 'twicpics',
+    samples: [
+      { src: '/football.jpg' },
+      { src: '/football.jpg', width: 250, height: 400, focus: 'auto' }
+    ]
+  },
   // Sanity
   {
     name: 'sanity',
@@ -78,22 +117,6 @@ export const providers: Provider[] = [
         height: 200,
         fit: 'min'
       }
-    ]
-  },
-  // TwicPics
-  {
-    name: 'twicpics',
-    samples: [
-      { src: '/football.jpg' },
-      { src: '/football.jpg', width: 250, height: 400, focus: 'auto' }
-    ]
-  },
-  // Fastly
-  {
-    name: 'fastly',
-    samples: [
-      { src: '/image.jpg' },
-      { src: '/plant.jpeg' }
     ]
   },
   // Storyblok
