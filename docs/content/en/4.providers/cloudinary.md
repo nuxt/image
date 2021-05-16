@@ -80,11 +80,11 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
 
-<alert type="info">
+<d-alert type="info">
 
 The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
 
-</alert>
+</d-alert>
 
 ### `rotate`
 
@@ -265,8 +265,8 @@ Call a custom function on Cloudinary side. See [Custom Functions](https://cloudi
 
 To define the density number when converting a vector file to image format.
 
-<alert type="info">
+<d-alert type="info">
 
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
 
-</alert>
+</d-alert>
