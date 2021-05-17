@@ -23,10 +23,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
   const $img = function $img (input, modifiers = {}, options = {}) {
     return getImage(input, {
       ...options,
-      modifiers: {
-        ...options.modifiers,
-        ...modifiers
-      }
+      modifiers: defu(modifiers, options.modifiers || {})
     }).url
   } as $Img
 

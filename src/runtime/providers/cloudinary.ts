@@ -1,5 +1,6 @@
 import type { ProviderGetImage } from 'src'
 import { joinURL, encodePath } from 'ufo'
+import defu from 'defu'
 import { createOperationsGenerator } from '~image'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
@@ -80,7 +81,7 @@ const defaultModifiers = {
 }
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const mergeModifiers = { ...defaultModifiers, ...modifiers }
+  const mergeModifiers = defu(modifiers, defaultModifiers)
   const operations = operationsGenerator(mergeModifiers as any)
 
   const remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
