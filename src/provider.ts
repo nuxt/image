@@ -24,7 +24,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
-      domains: moduleOptions.domains.map(domain => parseURL(domain).host),
+      domains: moduleOptions.domains.map(domain => parseURL(domain, 'https://').host),
       sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
