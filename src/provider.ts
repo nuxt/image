@@ -1,8 +1,8 @@
 import { normalize, resolve, dirname } from 'upath'
 import { writeJson, mkdirp } from 'fs-extra'
 import { parseURL } from 'ufo'
-import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import { hash } from './utils'
+import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 
 const BuiltInProviders = [
   'cloudinary',

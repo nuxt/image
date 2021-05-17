@@ -1,6 +1,6 @@
-import type { ProviderGetImage } from 'src'
 import { joinURL, parseQuery, parseURL, stringifyQuery } from 'ufo'
 import { operationsGenerator } from './imgix'
+import type { ProviderGetImage } from 'src'
 
 const PRISMIC_IMGIX_BUCKET = 'https://images.prismic.io'
 

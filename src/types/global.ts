@@ -1,6 +1,6 @@
 import { } from '@nuxt/types'
-import type { $Img } from './image'
 import { ModuleOptions } from './module'
+import type { $Img } from './image'
 
 declare module '@nuxt/types' {
   interface Context {
