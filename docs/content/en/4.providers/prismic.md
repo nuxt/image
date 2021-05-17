@@ -7,9 +7,7 @@ category: Providers
 
 Integration between [Prismic](https://prismic.io/docs) and the image module.
 
-No specific configuration is required for Prismic support. You just need to specify `provider: 'prismic'` in your configuration to make it the default, or pass it directly when you need it, for example:
-```html
-<nuxt-img provider="prismic" src="..." />
+No specific configuration is required for Prismic support. You just need to specify `provider: 'prismic'` in your configuration to make it the default:
 
 ```js{}[nuxt.config.js]
 export default {
@@ -19,8 +17,14 @@ export default {
 }
 ```
 
-<alert type="info">
+You can also pass it directly to your component when you need it, for example:
+
+```html[*.vue]
+<nuxt-img provider="prismic" src="..." />
+```
+
+<d-alert type="info">
 
 Prismic allows content writer to manipulate images through its UI (cropping, rezising, etc.). To preserve that behavior this provider does not strip query parameters coming from Prismic. Instead it only overrides them when needed, keeping developers in control.
 
-</alert>
+</d-alert>
