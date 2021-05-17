@@ -10,6 +10,7 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'prismic',
   'sanity',
   'static',
   'twicpics',
