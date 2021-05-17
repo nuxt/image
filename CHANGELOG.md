@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.10](https://github.com/nuxt/image/compare/v0.4.9...v0.4.10) (2021-05-17)
+
+
+### Features
+
+* add prismic provider ([#269](https://github.com/nuxt/image/issues/269)) ([306064b](https://github.com/nuxt/image/commit/306064bc2b330ba38d20a575bdcae5e832959311))
+
+
+### Bug Fixes
+
+* **vercel:** add default proto for domains (fixes [#277](https://github.com/nuxt/image/issues/277)) ([f501914](https://github.com/nuxt/image/commit/f5019148cc358693817aa1d263316af424d3ef59))
+* don't allow undefined values to override defaults ([#274](https://github.com/nuxt/image/issues/274)) ([d2e65f9](https://github.com/nuxt/image/commit/d2e65f904b722b380ff9c1aa6d1617051625c654)), closes [#273](https://github.com/nuxt/image/issues/273)
+
 ### [0.4.9](https://github.com/nuxt/image/compare/v0.4.8...v0.4.9) (2021-05-13)
 
 
