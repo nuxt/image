@@ -7,7 +7,9 @@ category: Providers
 
 Integration between [Prismic](https://prismic.io/docs) and the image module.
 
-To use this provider you just need to specify an empty object at `prismic` key in Nuxt Image options object.
+No specific configuration is required for Prismic support. You just need to specify `provider: 'prismic'` in your configuration to make it the default, or pass it directly when you need it, for example:
+```html
+<nuxt-img provider="prismic" src="..." />
 
 ```js{}[nuxt.config.js]
 export default {
