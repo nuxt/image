@@ -3,7 +3,7 @@ import { withDocus } from 'docus'
 export default withDocus({
   rootDir: __dirname,
   socialImage: {
-    baseUrl: 'DOMIN',
+    baseUrl: 'https://image.nuxtjs.org',
     chrome: {
       browserWSEndpoint: 'wss://chrome.browserless.io/'
     }
