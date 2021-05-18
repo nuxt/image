@@ -15,6 +15,7 @@ cta:
 secondary:
   - Open on GitHub
   - https://github.com/nuxt/image
+snippet: yarn add --dev @nuxt/image
 :::
 
 ::::card-grid{title="What's included?"}
