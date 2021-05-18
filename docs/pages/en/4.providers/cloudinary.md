@@ -1,8 +1,8 @@
 ---
-menuTitle: Cloudinary
 title: Cloudinary Provider
 description: 'Nuxt Image has first class integration with Cloudinary'
-category: Providers
+navigation:
+  title: Cloudinary
 ---
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.
@@ -21,13 +21,11 @@ export default {
 
 ## Remote Images
 
-To handle remote image data, you can either use [fetch](https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url) 
-or [upload](https://cloudinary.com/documentation/fetch_remote_images#auto_upload_remote_resources). Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload)
-for the difference between the two.
+To handle remote image data, you can either use [fetch](https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url) or [upload](https://cloudinary.com/documentation/fetch_remote_images#auto_upload_remote_resources).
 
+Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload) for the difference between the two.
 
 ### Fetch
-
 
 ```js{}[nuxt.config.js]
 export default {
@@ -63,7 +61,6 @@ export default {
 
 Note: You will need to configure your "Auto upload mapping" to do the above.
 
-
 ## Cloudinary `fit` values
 
 Beside [the standard values for `fit` property](/components/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
@@ -80,17 +77,16 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 Beside the [standard modifiers](/components/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
 
-<alert type="info">
-
+:::alert{type="info"}
 The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
-
-</alert>
+:::
 
 ### `rotate`
 
 Accepted values:
-  * Any degree number, or
-  * `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
+
+* Any degree number, or
+* `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
 
 To rotate or flip a given asset by certain degrees, or automatically based on orientation.
 
@@ -98,9 +94,9 @@ To rotate or flip a given asset by certain degrees, or automatically based on or
 
 Round the specified corners of the desired image. If pass only a number or `max` (all corners will be applied). The syntax for other use cases is as below:
 
-  - Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
-  - Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
-  - Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
+* Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
+* Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
+* Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
 
 ```html
 <nuxt-img
@@ -111,6 +107,7 @@ Round the specified corners of the desired image. If pass only a number or `max`
   :modifiers="{ roundCorner: 'max' }"
 />
 ```
+
 ### `gravity`
 
 Detemine which part of the image to cropped or to place the overlay.
@@ -265,8 +262,6 @@ Call a custom function on Cloudinary side. See [Custom Functions](https://cloudi
 
 To define the density number when converting a vector file to image format.
 
-<alert type="info">
-
+:::alert{type="info"}
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
-
-</alert>
+:::

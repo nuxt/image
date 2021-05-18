@@ -1,8 +1,8 @@
 ---
-menuTitle: Prismic
 title: Prismic Provider
 description: 'Nuxt Image has first class integration with Prismic'
-category: Providers
+navigation:
+  title: Prismic
 ---
 
 Integration between [Prismic](https://prismic.io/docs) and the image module.
@@ -23,8 +23,6 @@ You can also pass it directly to your component when you need it, for example:
 <nuxt-img provider="prismic" src="..." />
 ```
 
-<d-alert type="info">
-
+:::alert{type="info"}
 Prismic allows content writer to manipulate images through its UI (cropping, rezising, etc.). To preserve that behavior this provider does not strip query parameters coming from Prismic. Instead it only overrides them when needed, keeping developers in control.
-
-</d-alert>
+:::
