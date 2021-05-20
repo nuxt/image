@@ -1,13 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "generate": "nuxt generate",
+    "generate": "nuxt generate --force-build",
     "build": "nuxt generate",
     "dev": "nuxt dev",
     "start": "nuxt start"
   },
   "devDependencies": {
-    "docus": "^0.5.1",
+    "docus": "^0.5.6",
     "vue-plausible": "^1.1.4"
   }
 }
