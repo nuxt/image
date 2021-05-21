@@ -1,5 +1,6 @@
 ---
-title: Vercel
+title: Vercel Provider
+navigation.title: Vercel
 description: Optimize images at Vercel's Edge Network
 navigation:
   title: Vercel

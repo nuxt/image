@@ -11,7 +11,7 @@ title: title
 description: description
 cta:
   - Get started
-  - /getting-started/introduction
+  - /getting-started/installation
 secondary:
   - Open on GitHub
   - https://github.com/nuxt/image
@@ -19,15 +19,17 @@ snippet: yarn add --dev @nuxt/image
 :::
 
 ::::card-grid{title="What's included?"}
-  :::card{icon="IconSSG" title="Full Static Support"}
-    Describe Full Static Support.
+  :::card{icon="IconNuxt" title="Zero Config"}
+    Using builtin image optimizer
   :::
 
-  :::card{icon="IconCDN" title="CDN Support"}
-    Describe CDN Support.
+  :::card{icon="IconCDN" title="Provider Agnostic"}
+    Suporting 10+ providers and custom integrations
   :::
 
-  :::card{icon="IconNuxt" title="Multiple providers"}
-    9 providers available!
+  :::card{icon="IconSSG" title="Native"}
+    Using native `<img>` and `<picture>` tags without any wrapper
   :::
 ::::
+
+
