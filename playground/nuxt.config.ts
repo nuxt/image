@@ -42,6 +42,7 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    prismic: {},
     sanity: {
       projectId: 'j1o4tmjp'
     },

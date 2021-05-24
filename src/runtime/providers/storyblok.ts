@@ -1,5 +1,5 @@
-import type { ProviderGetImage } from 'src'
 import { withBase, joinURL, parseURL } from 'ufo'
+import type { ProviderGetImage } from 'src'
 
 // https://www.storyblok.com/docs/image-service
 const storyblockCDN = 'https://img2.storyblok.com'

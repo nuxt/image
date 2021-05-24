@@ -1,8 +1,8 @@
 ---
-menuTitle: IPX (static)
 title: IPX Provider (static)
 description: 'Nuxt Image internally use IPX as static provider.'
-category: Providers
+navigation:
+  title: IPX (static)
 ---
 
 When no provider is specified globally, the default provider is `static` which uses [IPX](https://github.com/nuxt-contrib/ipx).
@@ -10,7 +10,6 @@ When no provider is specified globally, the default provider is `static` which u
 IPX is an opensource and self-hosted image optimizer based on [Sharp](https://github.com/lovell/sharp) developed by the Nuxt team.
 
 The image module internally uses IPX for static image optimization but you can also self-host it as a runtime optimizer by enabling the provider.
-
 
 ### Static assets
 

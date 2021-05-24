@@ -1,8 +1,8 @@
 import defu from 'defu'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext: any) {
   const staticImageManifest: Record<string, string> = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
@@ -23,10 +23,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
   const $img = function $img (input, modifiers = {}, options = {}) {
     return getImage(input, {
       ...options,
-      modifiers: {
-        ...options.modifiers,
-        ...modifiers
-      }
+      modifiers: defu(modifiers, options.modifiers || {})
     }).url
   } as $Img
 
@@ -41,9 +38,8 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
       if (process.server) {
         const { ssrContext } = ctx.nuxtContext
         if (ssrContext) {
-          const ssrState = ssrContext.nuxt || { data: [] }
-          const ssrData = ssrState.data[0] || {}
-          const staticImages = ssrState._img = ssrData._img = ssrData._img || {}
+          const ssrState = ssrContext.nuxt || {}
+          const staticImages = ssrState._img = ssrState._img || {}
           const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
           if (typeof mapToStatic === 'function') {
             const mappedURL = mapToStatic(image)
