@@ -2,12 +2,12 @@ import { resolve } from 'upath'
 
 import defu from 'defu'
 
+import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { createIPXMiddleware } from './ipx'
 import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
 import type { ModuleOptions, CreateImageOptions } from './types'
-import type { Module } from '@nuxt/types'
 
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this
