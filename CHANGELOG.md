@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.12](https://github.com/nuxt/image/compare/v0.4.11...v0.4.12) (2021-05-27)
+
+
+### Features
+
+* ipx production support ([#257](https://github.com/nuxt/image/issues/257)) ([f625c92](https://github.com/nuxt/image/commit/f625c9246b90a1aea5ea0175dad025c7ebc5c204))
+
 ### [0.4.11](https://github.com/nuxt/image/compare/v0.4.10...v0.4.11) (2021-05-26)
 
 
