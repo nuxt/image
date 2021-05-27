@@ -10,7 +10,9 @@ export default {
       'secondary-dark': '#01232D',
       'secondary-darker': '#001D25',
       'secondary-darkest': '#003543',
-      terciary: '#A8DDDB',
+      'mint-lighter': '#A8DDDB',
+      'mint-darker': '#003C3C',
+      'cloud-surface': '#E6F0F0',
       black: '#000',
       white: '#fff'
     }
