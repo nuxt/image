@@ -7,6 +7,7 @@ import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
 import * as imgix from '~/runtime/providers/imgix'
 import * as imagekit from '~/runtime/providers/imagekit'
+import * as prismic from '~/runtime/providers/prismic'
 
 describe('Providers', () => {
   test('ipx', () => {
@@ -116,6 +117,21 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = imagekit.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.imagekit)
+    }
+  })
+
+  test('prismic', () => {
+    const providerOptions = {
+      baseURL: '' // Use empty base URL for the sake of simplicity
+    }
+
+    const EXISTING_QUERY_PARAMETERS =
+      '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = prismic.getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.prismic)
     }
   })
 })

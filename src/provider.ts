@@ -1,8 +1,9 @@
 import { normalize, resolve, dirname } from 'upath'
 import { writeJson, mkdirp } from 'fs-extra'
 import { parseURL } from 'ufo'
-import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import { hash } from './utils'
+import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
   'cloudinary',
@@ -10,6 +11,7 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'prismic',
   'sanity',
   'static',
   'twicpics',
@@ -18,12 +20,16 @@ const BuiltInProviders = [
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
+  // IPX
+  ipx: ipxSetup,
+  static: ipxSetup,
+
   // https://vercel.com/docs/more/adding-your-framework#images
   async vercel (_providerOptions, moduleOptions, nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
-      domains: moduleOptions.domains.map(domain => parseURL(domain).host),
+      domains: moduleOptions.domains.map(domain => parseURL(domain, 'https://').host),
       sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
@@ -73,7 +79,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
   }
 }
 
-export function detectProvider (userInput?: string) {
+export function detectProvider (userInput?: string, isStatic: boolean = false) {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
@@ -86,5 +92,5 @@ export function detectProvider (userInput?: string) {
     return 'vercel'
   }
 
-  return 'static'
+  return isStatic ? 'static' : 'ipx'
 }

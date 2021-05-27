@@ -3,16 +3,23 @@ import type { } from '../src/types'
 
 export default <NuxtConfig> {
   components: true,
-  target: 'static',
+  // target: 'static',
   head: {
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   },
+  // serverMiddleware: {
+  //   '/_ipx': () => {
+  //     //
+  //   }
+  // },
   modules: [
-    '../src/module.ts'
+    // '@nuxt/image'
+    // '../src/module.ts'
   ],
   buildModules: [
+    '../src/module.ts',
     '@nuxt/typescript-build'
   ],
   image: {
@@ -21,6 +28,9 @@ export default <NuxtConfig> {
       'https://unsplash.com',
       'https://upload.wikimedia.org'
     ],
+    screens: {
+      750: 750
+    },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
     },
@@ -28,7 +38,7 @@ export default <NuxtConfig> {
       baseURL: 'https://img2.storyblok.com/'
     },
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/demo/image/upload'
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     fastly: {
       baseURL: 'https://www.fastly.io'
@@ -39,6 +49,7 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    prismic: {},
     sanity: {
       projectId: 'j1o4tmjp'
     },

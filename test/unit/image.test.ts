@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 
-import type Vue from 'vue'
 import { Wrapper } from '@vue/test-utils'
 
 import { getSrc, mountWithImg } from './utils/mount'
+import type Vue from 'vue'
 
 import NuxtImg from '~/runtime/components/nuxt-img.vue'
 

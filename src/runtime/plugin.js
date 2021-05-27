@@ -19,5 +19,13 @@ Vue.component('NPicture', NuxtPicture)
 
 export default function (nuxtContext, inject) {
   const $img = createImage(imageOptions, nuxtContext)
+
+  if (process.static && process.server) {
+    nuxtContext.beforeNuxtRender(({ nuxtState }) => {
+      const ssrData = nuxtState.data[0] || {}
+      ssrData._img = nuxtState._img || {}
+    })
+  }
+  
   inject('img', $img)
 }
