@@ -28,11 +28,13 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, n
   }
 
   // Warn if unhandled /_ipx endpoint only if not using `modules`
-  const installedInModules = nuxt.options.modules.some((mod: string) => mod.includes('@nuxt/image'))
+  const installedInModules = nuxt.options.modules.some(
+    (mod: string | (() => any)) => typeof mod === 'string' && mod.includes('@nuxt/image')
+  )
 
   if (!isStatic && !hasUserProvidedIPX && !installedInModules && lt(nuxt.constructor.version, '2.16.0')) {
     // eslint-disable-next-line no-console
-    console.warn('[@nuxt/image] If you would like to use the `ipx` provider at runtime, make sure to follow the instructions at https://image.nuxtjs.org/providers/ipx .')
+    console.warn('[@nuxt/image] If you would like to use the `ipx` provider at runtime.\nMake sure to follow the instructions at https://image.nuxtjs.org/providers/ipx .')
   }
 
   if (nuxt.options.dev || hasUserProvidedIPX) {
