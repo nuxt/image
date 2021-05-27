@@ -3,21 +3,12 @@ import type { } from '../src/types'
 
 export default <NuxtConfig> {
   components: true,
-  // target: 'static',
+  target: 'static',
   head: {
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   },
-  // serverMiddleware: {
-  //   '/_ipx': () => {
-  //     //
-  //   }
-  // },
-  modules: [
-    // '@nuxt/image'
-    // '../src/module.ts'
-  ],
   buildModules: [
     '../src/module.ts',
     '@nuxt/typescript-build'
