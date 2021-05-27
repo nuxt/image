@@ -11,30 +11,30 @@ IPX is an open source, self-hosted image optimizer based on [sharp](https://gith
 
 ## Self-hosting `ipx` in production
 
-### Using CDN
-
-This approach is recommended if you are planning to use images in a high load production and using other providers is not suitable.
+:::alert{type="info"}
+  Consider using a CDN instead if you are planning to use images in a high load production and using another provider is not suitable.
+:::
 
 ### Add `ipx` dependency
 
 You'll need to ensure that `ipx` is in your production dependencies.
 
-<d-code-group>
-  <d-code-block label="Yarn" active>
+:::::code-group
+  ::::code-block{label="Yarn" active}
 
-```bash
-yarn add ipx
-```
+  ```bash
+  yarn add ipx
+  ```
 
-  </d-code-block>
-  <d-code-block label="NPM">
+  ::::
+  ::::code-block{label="NPM"}
 
-```bash
-npm install ipx
-```
+  ```bash
+  npm install ipx
+  ```
 
-  </d-code-block>
-</d-code-group>
+  ::::
+:::::
 
 ### Add `serverMiddleware` handler
 
