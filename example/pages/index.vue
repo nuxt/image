@@ -6,7 +6,7 @@
       <nuxt-picture
         src="/images/mountains.jpg"
         width="3750"
-        height="576"
+        height="2500"
         sizes="xs:200px md:500px lg:1024"
       />
       <figcaption class="text-center text-gray-600 text-xs mt-3">
