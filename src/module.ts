@@ -2,11 +2,11 @@ import defu from 'defu'
 import { existsSync, mkdirp, readFile, writeFile } from 'fs-extra'
 import { relative, resolve } from 'upath'
 
+import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
 import type { ModuleOptions, CreateImageOptions } from './types'
-import type { Module } from '@nuxt/types'
 
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
   const { nuxt, addPlugin, addServerMiddleware } = this

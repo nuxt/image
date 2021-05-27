@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-import { imageMixin } from './image.mixin'
 import type { DefineComponentWithMixin } from '../../types/vue'
+import { imageMixin } from './image.mixin'
 
 import { getFileExtension } from '~image'
 
