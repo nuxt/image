@@ -47,7 +47,7 @@ export default defineComponent({
       {
         title: 'Standards compliant',
         description:
-          'Our components generate standard &lt;img&gt; and &lt;picture&gt; tags. No tricky wrapper so you can style your images with confidence.',
+          'Image components generate standard &lt;img&gt; and &lt;picture&gt; tags. No tricky wrapper so you can style your images with confidence.',
         icon: 'IconCollection'
       }
     ]
