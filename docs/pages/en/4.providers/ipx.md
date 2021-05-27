@@ -5,9 +5,7 @@ navigation:
   title: IPX
 ---
 
-
-Nuxt Image comes with a preconfigured instance of [ipx](/providers/ipx) to provide image transformations based on [sharp](https://github.com/lovell/sharp).
-IPX is an open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
+Nuxt Image comes with a preconfigured instance of [ipx](/providers/ipx), an open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
 
 ## Self-hosting `ipx` in production
 
