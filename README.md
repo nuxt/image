@@ -8,10 +8,10 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-:warning: Image module is under development and API changes might happen. Use with Caution!
-
-<!-- - [✨ &nbsp;Release Notes](https://image.nuxtjs.org/releases) -->
 - [📖 &nbsp;Documentation](https://image.nuxtjs.org)
+
+
+[![Try out @nuxt/image](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/nuxt/image/tree/main/example)
 
 ### Contributing
 
@@ -19,15 +19,12 @@
 2. Install dependencies using `yarn install`
 3. Start development server using `yarn dev`
 
-You can also contribute to this module online with CodeSandBox:
-
-[![Edit @nuxt/image](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/nuxt/image/tree/main/?fontsize=14&hidenavigation=1&theme=dark)
 
 ## 📑 License
 
 [MIT License](./LICENSE)
 
-Copyright (c) Nuxt.js Team
+Copyright (c) Nuxt Team
 
 <!-- Badges -->
 [npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image
