@@ -1,14 +1,10 @@
 <template>
   <div
     class="
-      mx-auto
-      px-4
+      d-container-content
       py-16
-      sm:px-6
       sm:pt-20
       sm:pb-24
-      lg:pt-24
-      lg:px-8
       relative
     "
   >
@@ -49,7 +45,7 @@ export default defineComponent({
         icon: 'IconSparkles'
       },
       {
-        title: 'Standard compliant',
+        title: 'Standards compliant',
         description:
           'Our components generate standard &lt;img&gt; and &lt;picture&gt; tags. No tricky wrapper so you can style your images with confidence.',
         icon: 'IconCollection'

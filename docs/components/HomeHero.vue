@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="d-container">
     <!-- Hero card -->
     <div class="relative sm:rounded-2xl sm:overflow-hidden">
       <!-- Background -->
@@ -68,7 +68,7 @@
                 rounded-md
                 shadow-sm
                 text-white
-                bg-primary-green
+                bg-primary-500
                 sm:px-8
               "
             >
@@ -76,7 +76,7 @@
             </nuxt-link>
 
             <a
-              href="https://github.com/nuxt/image"
+              href="https://githubbox.com/nuxt/image/tree/main/example"
               class="
                 flex
                 items-center
@@ -86,9 +86,11 @@
                 py-3
                 sm:px-8
                 text-white
+                rounded
+                hover:border
               "
             >
-              Open on Github
+              Play online
             </a>
           </div>
         </div>
