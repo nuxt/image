@@ -9,10 +9,8 @@ export default <NuxtConfig> {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   },
-  modules: [
-    '../src/module.ts'
-  ],
   buildModules: [
+    '../src/module.ts',
     '@nuxt/typescript-build'
   ],
   image: {

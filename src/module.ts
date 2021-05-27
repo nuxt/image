@@ -1,16 +1,14 @@
 import { resolve } from 'upath'
-
 import defu from 'defu'
 
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
-import { createIPXMiddleware } from './ipx'
 import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
 import type { ModuleOptions, CreateImageOptions } from './types'
 
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
-  const { nuxt, addPlugin, addServerMiddleware } = this
+  const { nuxt, addPlugin } = this
 
   const defaults: ModuleOptions = {
     staticFilename: '[publicPath]/image/[hash][ext]',
@@ -36,8 +34,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
-  options.provider = detectProvider(options.provider)
-
+  options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
   options[options.provider] = options[options.provider] || {}
 
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
@@ -73,16 +70,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     }
   })
 
-  addServerMiddleware({
-    path: '/_ipx',
-    handle: createIPXMiddleware({
-      dir: options.dir,
-      domains: options.domains,
-      sharp: options.sharp
-    })
-  })
-
-  // transform asset urls that pass to `src` attribute on image components
+  // Transform asset urls that pass to `src` attribute on image components
   nuxt.options.build.loaders = defu({
     vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
   }, nuxt.options.build.loaders || {})
@@ -102,6 +90,6 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   })
 }
 
-  ; (imageModule as any).meta = pkg
+; (imageModule as any).meta = pkg
 
 export default imageModule
