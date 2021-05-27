@@ -35,7 +35,7 @@ export default defineComponent({
       {
         title: 'Resize and transform',
         description:
-          'Generate images at the right size, defined in your components or following your breakpoints. Change the format and quality of your images.',
+          'Generate images at the right size, defined by component or following responsive breakpoints. Use modern formats and adjust quality of website images.',
         icon: 'IconResize'
       },
       {
