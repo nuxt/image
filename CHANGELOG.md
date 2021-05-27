@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.11](https://github.com/nuxt/image/compare/v0.4.10...v0.4.11) (2021-05-26)
+
+
+### Bug Fixes
+
+* allow full usage of $img in plugins ([#284](https://github.com/nuxt/image/issues/284)) ([b80f791](https://github.com/nuxt/image/commit/b80f79114fd14c0c7b36e38c867ee8db3e7d6711))
+
 ### [0.4.10](https://github.com/nuxt/image/compare/v0.4.9...v0.4.10) (2021-05-17)
 
 
