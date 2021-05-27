@@ -37,9 +37,8 @@
             text-white
           "
         >
-          Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem
-          cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat
-          aliqua.
+          Plug-and-play image optimization for Nuxt apps.
+          Resize and transform your images in your code using built-in optimiser or your favorite images CDN.
         </p>
 
         <div
