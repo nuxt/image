@@ -62,6 +62,10 @@
                 justify-center
                 px-4
                 py-3
+                transition
+                duration-300
+                hover:bg-primary-600
+                ring-white focus:ring-2 ring-offset-2 ring-offset-primary-800
                 border border-transparent
                 text-base
                 font-medium
