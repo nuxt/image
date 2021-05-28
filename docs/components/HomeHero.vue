@@ -1,7 +1,7 @@
 <template>
   <main class="d-container">
     <!-- Hero card -->
-    <div class="relative sm:rounded-2xl sm:overflow-hidden">
+    <div class="relative sm:overflow-hidden">
       <!-- Background -->
       <div class="absolute inset-0 hero-bg-wrapper">
         <div class="absolute inset-0 mix-blend-multiply" />
