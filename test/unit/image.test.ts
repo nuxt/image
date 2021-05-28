@@ -4,8 +4,8 @@
 
 import { Wrapper } from '@vue/test-utils'
 
-import { getSrc, mountWithImg } from './utils/mount'
 import type Vue from 'vue'
+import { getSrc, mountWithImg } from './utils/mount'
 
 import NuxtImg from '~/runtime/components/nuxt-img.vue'
 

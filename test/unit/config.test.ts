@@ -6,9 +6,9 @@ describe('undefined config', () => {
     config: {}
   })
 
-  test('does not optimize images', async () => {
+  test('defaults to ipx to optimize images', async () => {
     const { body } = await get('/')
-    expect(body).toContain('<img src="/2000px-Aconcagua2016.jpg" width="300" height="200">')
+    expect(body).toContain('<img src="/_ipx/2000px-Aconcagua2016.jpg?s=300_200" width="300" height="200">')
   })
 })
 

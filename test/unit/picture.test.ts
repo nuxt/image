@@ -4,9 +4,9 @@
 
 import { Wrapper } from '@vue/test-utils'
 
+import type Vue from 'vue'
 import { getSrc, mountWithImg } from './utils/mount'
 import { nextTick } from './utils/tick'
-import type Vue from 'vue'
 
 import NuxtPicture from '~/runtime/components/nuxt-picture.vue'
 
