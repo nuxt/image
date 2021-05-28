@@ -76,6 +76,8 @@
 
             <a
               href="https://githubbox.com/nuxt/image/tree/main/example"
+              target="_blank"
+              rel="noopener"
               class="
                 flex
                 items-center
