@@ -5,27 +5,35 @@ navigation:
   title: IPX
 ---
 
-Nuxt Image comes with a preconfigured instance of [ipx](/providers/ipx), an open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
+Nuxt Image comes with a preconfigured instance of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
 
-## Self-hosting `ipx` in production
+## Using `ipx` in production
 
 :::alert{type="info"}
-  Consider using a CDN instead if you are planning to use images in a high load production and using another provider is not suitable.
+  You don't need to follow this section if using `target: 'static'`.
+  Use IPX self-hosting image optimizer otherwise, consider using CDN providers for production.
 :::
 
-### Add `ipx` dependency
 
-You'll need to ensure that `ipx` is in your production dependencies.
+### Runtime Module
+
+Just add `@nuxt/image` to `modules` (instead of `buildModules`) in `nuxt.config`. This will ensure that the `/_ipx` endpoint continues to work in production.
+
+### Alternative: serverMiddleware
+
+If you have an advanced use case, you may instead create a custom server middleware that handles the `/_ipx` endpoint:
+
+1. Add `ipx` as a dependency:
 
 :::::code-group
-  ::::code-block{label="Yarn" active}
+  ::::code-block{label="yarn" active}
 
   ```bash
   yarn add ipx
   ```
 
   ::::
-  ::::code-block{label="NPM"}
+  ::::code-block{label="mpm"}
 
   ```bash
   npm install ipx
@@ -34,33 +42,23 @@ You'll need to ensure that `ipx` is in your production dependencies.
   ::::
 :::::
 
-### Add `serverMiddleware` handler
+2. Create `server/middleware/ipx.js`:
 
-Finally, just add `@nuxt/image` to your `modules` (instead of `buildModules`) in `nuxt.config`. This will ensure that the `/_ipx` endpoint continues to work at runtime.
-
-
-### Programmatic middidleware
-
-If you have an advanced use case, you may instead add the following code to your `nuxt.config` (or create a custom server middleware file directly that handles the `/_ipx` endpoint):
-
-```js [nuxt.config.js]
-import path from 'path'
+```js [server/middleware/ipx.js]
 import { createIPX, createIPXMiddleware } from 'ipx'
 
-const ipx = createIPX({
-  dir: path.join(__dirname, 'static'),
-  // https://image.nuxtjs.org/api/options#domains
-  domains: [],
-  // Any options you need to pass to sharp
-  sharp: {}
-})
+// https://github.com/unjs/ipx
+export default createIPXMiddleware(ipx)
+```
+
+3. Add `/_ipx` to `serverMiddleware`:
+
+
+```js [nuxt.config.js]
 
 export default {
-  serverMiddleware: [
-    {
-      path: '/_ipx',
-      handler: createIPXMiddleware(ipx)
-    }
-  ]
+  serverMiddleware: {
+    '/_ipx': '~/server/middleware/ipx.js'
+  }
 }
 ```
