@@ -1,17 +1,13 @@
-[![@nuxt/image](./docs/static/social.png)](https://image.nuxtjs.org)
-
-# Nuxt Image
+[![@nuxt/image](./docs/static/social.svg "Nuxt Image")](https://image.nuxtjs.org)
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![Checks][checks-src]][checks-href]
 [![Codecov][codecov-src]][codecov-href]
-[![License][license-src]][license-href]
 
-- [📖 &nbsp;Documentation](https://image.nuxtjs.org)
+- [📖 &nbsp;Read Documentation](https://image.nuxtjs.org)
+- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
 
-
-[![Try out @nuxt/image](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/nuxt/image/tree/main/example)
 
 ### Contributing
 
@@ -22,9 +18,9 @@
 
 ## 📑 License
 
-[MIT License](./LICENSE)
-
 Copyright (c) Nuxt Team
+
+
 
 <!-- Badges -->
 [npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image
@@ -36,4 +32,4 @@ Copyright (c) Nuxt Team
 [codecov-src]: https://flat.badgen.net/codecov/c/github/nuxt/image
 [codecov-href]: https://codecov.io/gh/nuxt/image
 [license-src]: https://img.shields.io/npm/l/@nuxt/image.svg
-[license-href]: https://npmjs.com/package/@nuxt/image
+[license-href]: https://github.com/nuxt/image/blob/main/LICENSE
