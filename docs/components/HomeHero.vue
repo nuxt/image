@@ -3,12 +3,7 @@
     <!-- Hero card -->
     <div class="relative sm:rounded-2xl sm:overflow-hidden">
       <!-- Background -->
-      <div class="absolute inset-0">
-        <img
-          class="h-full w-full object-cover"
-          src="~/static/nuxt_image_hero.svg"
-          alt="Nuxt Image Hero"
-        />
+      <div class="absolute inset-0 hero-bg-wrapper">
         <div class="absolute inset-0 mix-blend-multiply" />
       </div>
 
@@ -104,3 +99,12 @@
     </div>
   </main>
 </template>
+
+<style scoped>
+  .hero-bg-wrapper {
+    background-image: url('~/static/nuxt_image_hero.svg');
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
