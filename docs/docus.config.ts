@@ -16,7 +16,7 @@ export default {
   twitter: 'nuxt_js',
   github: {
     repo: 'nuxt/image',
-    branch: 'main',
-    releases: true
+    dir: 'docs',
+    branch: 'main'
   }
 }
