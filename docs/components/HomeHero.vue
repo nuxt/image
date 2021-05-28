@@ -88,10 +88,12 @@
                 font-medium
                 px-4
                 py-3
+                transition
+                duration-300
                 sm:px-8
                 text-white
                 rounded
-                hover:border
+                ring-white hover:ring-2
               "
             >
               Play online
