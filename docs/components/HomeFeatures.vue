@@ -41,7 +41,7 @@ export default defineComponent({
       {
         title: 'Image providers',
         description:
-          'Use your favorite image providers with ease or use the built-in one. Imgix, Cloudinary, Prismic, Twicpics, Vercel and more are supported by default.',
+          'Choose from 10+ ready-to-use popular providers, add your own custom provider in a few lines of code - or use the default settings to generate automatically optimized static images.',
         icon: 'IconSparkles'
       },
       {
