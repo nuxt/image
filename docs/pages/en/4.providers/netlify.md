@@ -7,18 +7,8 @@ navigation:
 
 Netlify offers dynamic image transformation for all JPEG, PNG, and GIF files you have set to be tracked with [Netlify Large Media](https://docs.netlify.com/large-media/overview/).
 
-Set [`provider`](https://image.nuxtjs.org/api/options#provider) option to `auto` to activate it in production when deploying to Netlify:
-
-```ts [nuxt.config]
-export default {
-  image: {
-    provider: 'auto'
-  }
-}
-```
-
 :::alert{type="warning"}
-Make sure you have followed the steps to enable [Netlify Large Media](https://docs.netlify.com/large-media/overview/).
+Before setting `provider: 'netlify'`, make sure you have followed the steps to enable [Netlify Large Media](https://docs.netlify.com/large-media/overview/).
 :::
 
 ## Modifiers
