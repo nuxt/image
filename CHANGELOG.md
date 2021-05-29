@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.13](https://github.com/nuxt/image/compare/v0.4.12...v0.4.13) (2021-05-29)
+
+
+### Features
+
+* add netlify provider ([#299](https://github.com/nuxt/image/issues/299)) ([003e144](https://github.com/nuxt/image/commit/003e14404789ca17688939104537fab7eee15f0e))
+
 ### [0.4.12](https://github.com/nuxt/image/compare/v0.4.11...v0.4.12) (2021-05-27)
 
 

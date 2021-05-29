@@ -67,6 +67,23 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' }
     ]
   },
+  // Netlify
+  {
+    name: 'netlify',
+    samples: [
+      {
+        src: '/images/apple.jpg',
+        width: 101,
+        fit: 'contain'
+      },
+      {
+        src: '/images/apple.jpg',
+        width: 200,
+        height: 200,
+        fit: 'fill'
+      }
+    ]
+  },
   // Prismic
   {
     name: 'prismic',

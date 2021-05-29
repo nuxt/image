@@ -7,6 +7,7 @@ export const images = [
     fastly: { url: '/test.png' },
     imgix: { url: '/test.png' },
     imagekit: { url: '/test.png' },
+    netlify: { url: '/test.png' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=100' }
   },
   {
@@ -17,6 +18,7 @@ export const images = [
     fastly: { url: '/test.png?width=200' },
     imgix: { url: '/test.png?w=200' },
     imagekit: { url: '/test.png?tr=w-200' },
+    netlify: { url: '/test.png?w=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=100' }
   },
   {
@@ -27,6 +29,7 @@ export const images = [
     fastly: { url: '/test.png?height=200' },
     imgix: { url: '/test.png?h=200' },
     imagekit: { url: '/test.png?tr=h-200' },
+    netlify: { url: '/test.png?h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=200' }
   },
   {
@@ -37,6 +40,7 @@ export const images = [
     fastly: { url: '/test.png?width=200&height=200' },
     imgix: { url: '/test.png?w=200&h=200' },
     imagekit: { url: '/test.png?tr=w-200,h-200' },
+    netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200' }
   },
   {
@@ -47,6 +51,7 @@ export const images = [
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill' },
     imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' },
+    netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill' }
   },
   {
@@ -57,6 +62,7 @@ export const images = [
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
     imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
     imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' },
+    netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' }
   }
 ] as const

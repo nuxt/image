@@ -8,15 +8,7 @@ navigation:
 
 When deploying your nuxt applications to [Vercel](https://vercel.com/) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
 
-Set [`provider`](https://image.nuxtjs.org/api/options#provider) option to `auto` to activate it in production when deploying to Vercel:
-
-```ts [nuxt.config]
-export default {
-  image: {
-    provider: 'auto'
-  }
-}
-```
+This provider will be enabled by default in vercel deployments.
 
 ## Domains
 
@@ -34,10 +26,11 @@ export default {
 }
 ```
 
-
 ## Sizes
 
 Specify any custom `width` property you use in `<nuxt-img>`, `<nuxt-picture>` and `$img`.
+
+If a width is not defined, image will fallback to closest possible width.
 
 **Example:**
 
