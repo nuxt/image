@@ -128,7 +128,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlify.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.netlify)
     }
   })
