@@ -1,5 +1,6 @@
 import { joinURL } from 'ufo'
 import type { ProviderGetImage } from 'src'
+import { ImageModifiers } from 'src/types'
 import { createOperationsGenerator } from '~image'
 
 export const operationsGenerator = createOperationsGenerator({
@@ -23,25 +24,22 @@ const isDev = process.env.NODE_ENV === 'development'
 // https://docs.netlify.com/large-media/transform-images/
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  if (modifiers.height || modifiers.width) {
-    if (!(modifiers.height && modifiers.width)) {
-      // smartcrop is only supported with both height and width
-      modifiers.fit = 'contain'
-      if (isDev) {
-        // eslint-disable-next-line
-        console.warn(`Reverting to fit=contain as smart cropping is only supported by providing both height and width. Warning originated from \`${src}\`.`)
-      }
-    } else {
-      modifiers.fit = modifiers.fit || 'contain'
-    }
-  }
   if (modifiers.format) {
     // Not currently supported
     delete modifiers.format
-    if (isDev) {
+  }
+  const hasTransformation = modifiers.height || modifiers.width
+  if (!modifiers.fit && hasTransformation) {
+    // fit is required for resizing images
+    modifiers.fit = 'contain'
+  }
+  if (hasTransformation && !(modifiers.height && modifiers.width)) {
+    // smartcrop is only supported with both height and width
+    if (isDev && modifiers.fit !== 'contain') {
       // eslint-disable-next-line
-      console.warn(`Providing format is not currently supported by the Netlify provider. Warning originated from \`${src}\`.`)
+      console.warn(`Defaulting to fit=contain as smart cropping is only supported when providing both height and width. Warning originated from \`${src}\`.`)
     }
+    modifiers.fit = 'contain'
   }
   if (isDev) {
     return { url: src }
