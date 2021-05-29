@@ -33,7 +33,7 @@ If you have an advanced use case, you may instead create a custom server middlew
   ```
 
   ::::
-  ::::code-block{label="mpm"}
+  ::::code-block{label="npm"}
 
   ```bash
   npm install ipx
