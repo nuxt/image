@@ -7,6 +7,7 @@ import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
 import * as imgix from '~/runtime/providers/imgix'
 import * as imagekit from '~/runtime/providers/imagekit'
+import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
 
 describe('Providers', () => {
@@ -117,6 +118,18 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = imagekit.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.imagekit)
+    }
+  })
+
+  test('netlify', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = netlify.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.netlify)
     }
   })
 

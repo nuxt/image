@@ -11,6 +11,7 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'netlify',
   'prismic',
   'sanity',
   'static',
@@ -86,6 +87,10 @@ export function detectProvider (userInput?: string, isStatic: boolean = false) {
 
   if (userInput && userInput !== 'auto') {
     return userInput
+  }
+
+  if (process.env.NETLIFY) {
+    return 'netlify'
   }
 
   if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {

@@ -40,6 +40,9 @@ export default <NuxtConfig> {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
+    netlify: {
+      baseURL: 'https://netlify-photo-gallery.netlify.app'
+    },
     prismic: {},
     sanity: {
       projectId: 'j1o4tmjp'
