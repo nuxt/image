@@ -32,9 +32,9 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
     // fit is required for resizing images
     modifiers.fit = 'contain'
   }
-  if (hasTransformation && !(modifiers.height && modifiers.width)) {
+  if (hasTransformation && modifiers.fit !== 'contain' && !(modifiers.height && modifiers.width)) {
     // smartcrop is only supported with both height and width
-    if (isDev && modifiers.fit !== 'contain') {
+    if (isDev) {
       // eslint-disable-next-line
       console.warn(`Defaulting to fit=contain as smart cropping is only supported when providing both height and width. Warning originated from \`${src}\`.`)
     }
