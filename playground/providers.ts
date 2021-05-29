@@ -126,13 +126,39 @@ export const providers: Provider[] = [
         src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
         width: 200,
         height: 200,
-        fit: 'crop'
+        fit: 'fill'
       },
       {
         src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
         width: 200,
         height: 200,
-        fit: 'min'
+        fit: 'cover'
+      },
+      {
+        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        width: 200,
+        height: 200,
+        fit: 'contain'
+      },
+      {
+        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        width: 200,
+        modifiers: {
+          crop: {
+            _type: 'sanity.imageCrop',
+            bottom: 0.36903637222484653,
+            left: 0.23801369863013686,
+            right: 0,
+            top: 0.009840969925995906
+          },
+          hotspot: {
+            _type: 'sanity.imageHotspot',
+            height: 0.6063612029601636,
+            width: 0.21575342465753433,
+            x: 0.4469178082191783,
+            y: 0.32778302629507167
+          }
+        }
       }
     ]
   },

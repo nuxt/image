@@ -9,6 +9,7 @@ import * as imgix from '~/runtime/providers/imgix'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
+import * as sanity from '~/runtime/providers/sanity'
 
 describe('Providers', () => {
   test('ipx', () => {
@@ -145,6 +146,19 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = prismic.getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.prismic)
+    }
+  })
+
+  test('sanity', () => {
+    const providerOptions = {
+      baseURL: '',
+      projectId: 'projectid'
+    }
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = sanity.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.sanity)
     }
   })
 })
