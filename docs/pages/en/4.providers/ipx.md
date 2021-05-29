@@ -9,9 +9,10 @@ Nuxt Image comes with a preconfigured instance of [ipx](https://github.com/unjs/
 
 ## Using `ipx` in production
 
+Use IPX for self-hosting as an alternative to use service providers for production.
+
 :::alert{type="info"}
   You don't need to follow this section if using `target: 'static'`.
-  Use IPX self-hosting image optimizer otherwise, consider using CDN providers for production.
 :::
 
 
@@ -48,6 +49,8 @@ If you have an advanced use case, you may instead create a custom server middlew
 import { createIPX, createIPXMiddleware } from 'ipx'
 
 // https://github.com/unjs/ipx
+const ipx = createIPX(/* options */)
+
 export default createIPXMiddleware(ipx)
 ```
 
