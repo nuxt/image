@@ -45,7 +45,7 @@ export default <NuxtConfig> {
     },
     prismic: {},
     sanity: {
-      projectId: 'j1o4tmjp'
+      projectId: 'zp7mbokg'
     },
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'

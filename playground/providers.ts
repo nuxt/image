@@ -120,28 +120,28 @@ export const providers: Provider[] = [
     name: 'sanity',
     samples: [
       {
-        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg'
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg'
       },
       {
-        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
         width: 200,
         height: 200,
         fit: 'fill'
       },
       {
-        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
         width: 200,
         height: 200,
         fit: 'cover'
       },
       {
-        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
         width: 200,
         height: 200,
         fit: 'contain'
       },
       {
-        src: 'image-7aa06723bb01a7a79055b6d6f5be80329a0e5b58-780x1170-jpg',
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
         width: 200,
         modifiers: {
           crop: {
