@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.14](https://github.com/nuxt/image/compare/v0.4.13...v0.4.14) (2021-06-02)
+
+
+### Features
+
+* **sanity:** sanity provider enhancements ([#301](https://github.com/nuxt/image/issues/301)) ([288997b](https://github.com/nuxt/image/commit/288997bd5aa7a8bc4a8284ad08e6a3b04f733fe8))
+
+
+### Bug Fixes
+
+* ensure payload includes up-to-date _img ([#303](https://github.com/nuxt/image/issues/303)) ([03ea6fe](https://github.com/nuxt/image/commit/03ea6fe2e7d214550a91ea312b0a79557dc50c60))
+
 ### [0.4.13](https://github.com/nuxt/image/compare/v0.4.12...v0.4.13) (2021-05-29)
 
 
