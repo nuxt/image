@@ -1,7 +1,9 @@
 import { normalize, resolve, dirname } from 'upath'
 import { writeJson, mkdirp } from 'fs-extra'
-import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import { parseURL } from 'ufo'
 import { hash } from './utils'
+import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
   'cloudinary',
@@ -9,6 +11,9 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'netlify',
+  'prismic',
+  'sanity',
   'static',
   'twicpics',
   'storyblok',
@@ -16,18 +21,22 @@ const BuiltInProviders = [
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
+  // IPX
+  ipx: ipxSetup,
+  static: ipxSetup,
+
   // https://vercel.com/docs/more/adding-your-framework#images
   async vercel (_providerOptions, moduleOptions, nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
-      domains: moduleOptions.domains,
-      sizes: Object.values(moduleOptions.screens)
+      domains: moduleOptions.domains.map(domain => parseURL(domain, 'https://').host),
+      sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
 }
 
-export function resolveProviders (nuxt, options: ModuleOptions): ImageModuleProvider[] {
+export function resolveProviders (nuxt: any, options: ModuleOptions): ImageModuleProvider[] {
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
@@ -65,13 +74,13 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
   return <ImageModuleProvider> {
     ...input,
     setup,
-    runtime: normalize(input.provider),
-    importName: `${key}Runtime$${hash(input.provider, 4)}`,
+    runtime: normalize(input.provider!),
+    importName: `${key}Runtime$${hash(input.provider!, 4)}`,
     runtimeOptions: input.options
   }
 }
 
-export function detectProvider (userInput?: string) {
+export function detectProvider (userInput?: string, isStatic: boolean = false) {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
@@ -80,9 +89,9 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.NOW_BUILDER) {
+  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {
     return 'vercel'
   }
 
-  return 'static'
+  return isStatic ? 'static' : 'ipx'
 }

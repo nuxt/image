@@ -26,7 +26,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
   const params = operationsGenerator(modifiers)
 
   if (hasProtocol(src)) {
-    if (!domains.find(d => src.startsWith(d))) {
+    if (!domains.find((d: string) => src.startsWith(d))) {
       return {
         url: src
       }

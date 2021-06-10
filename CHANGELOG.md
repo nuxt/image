@@ -2,6 +2,100 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.14](https://github.com/nuxt/image/compare/v0.4.13...v0.4.14) (2021-06-02)
+
+
+### Features
+
+* **sanity:** sanity provider enhancements ([#301](https://github.com/nuxt/image/issues/301)) ([288997b](https://github.com/nuxt/image/commit/288997bd5aa7a8bc4a8284ad08e6a3b04f733fe8))
+
+
+### Bug Fixes
+
+* ensure payload includes up-to-date _img ([#303](https://github.com/nuxt/image/issues/303)) ([03ea6fe](https://github.com/nuxt/image/commit/03ea6fe2e7d214550a91ea312b0a79557dc50c60))
+
+### [0.4.13](https://github.com/nuxt/image/compare/v0.4.12...v0.4.13) (2021-05-29)
+
+
+### Features
+
+* add netlify provider ([#299](https://github.com/nuxt/image/issues/299)) ([003e144](https://github.com/nuxt/image/commit/003e14404789ca17688939104537fab7eee15f0e))
+
+### [0.4.12](https://github.com/nuxt/image/compare/v0.4.11...v0.4.12) (2021-05-27)
+
+
+### Features
+
+* ipx production support ([#257](https://github.com/nuxt/image/issues/257)) ([f625c92](https://github.com/nuxt/image/commit/f625c9246b90a1aea5ea0175dad025c7ebc5c204))
+
+### [0.4.11](https://github.com/nuxt/image/compare/v0.4.10...v0.4.11) (2021-05-26)
+
+
+### Bug Fixes
+
+* allow full usage of $img in plugins ([#284](https://github.com/nuxt/image/issues/284)) ([b80f791](https://github.com/nuxt/image/commit/b80f79114fd14c0c7b36e38c867ee8db3e7d6711))
+
+### [0.4.10](https://github.com/nuxt/image/compare/v0.4.9...v0.4.10) (2021-05-17)
+
+
+### Features
+
+* add prismic provider ([#269](https://github.com/nuxt/image/issues/269)) ([306064b](https://github.com/nuxt/image/commit/306064bc2b330ba38d20a575bdcae5e832959311))
+
+
+### Bug Fixes
+
+* **vercel:** add default proto for domains (fixes [#277](https://github.com/nuxt/image/issues/277)) ([f501914](https://github.com/nuxt/image/commit/f5019148cc358693817aa1d263316af424d3ef59))
+* don't allow undefined values to override defaults ([#274](https://github.com/nuxt/image/issues/274)) ([d2e65f9](https://github.com/nuxt/image/commit/d2e65f904b722b380ff9c1aa6d1617051625c654)), closes [#273](https://github.com/nuxt/image/issues/273)
+
+### [0.4.9](https://github.com/nuxt/image/compare/v0.4.8...v0.4.9) (2021-05-13)
+
+
+### Features
+
+* add sanity provider ([#164](https://github.com/nuxt/image/issues/164)) ([6483c34](https://github.com/nuxt/image/commit/6483c341e6c62c2871a56404904ec8a17b2df676))
+* **vercel:** remove protocol from vercel domains ([086227c](https://github.com/nuxt/image/commit/086227ca5d3c1ea2d6dc424fbcf68b85e48318ce)), closes [#242](https://github.com/nuxt/image/issues/242)
+
+
+### Bug Fixes
+
+* add guard for `ssrContext` existence ([d8aa3a1](https://github.com/nuxt/image/commit/d8aa3a10668786b56b32b9acc2ae4b03e0653d44)), closes [#258](https://github.com/nuxt/image/issues/258) [#249](https://github.com/nuxt/image/issues/249)
+* fix typo regression for height modifier (fixes [#262](https://github.com/nuxt/image/issues/262)) ([9a93f19](https://github.com/nuxt/image/commit/9a93f19363e68421771496085ec0d3e441bb86d2))
+* remove lazy loading polyfill in favour of native ([#256](https://github.com/nuxt/image/issues/256)) ([424bd44](https://github.com/nuxt/image/commit/424bd447bcc0eee52cf98a6ebcab67045a929837)), closes [#213](https://github.com/nuxt/image/issues/213) [#190](https://github.com/nuxt/image/issues/190)
+* vue-loader support for PascalCase components ([#168](https://github.com/nuxt/image/issues/168)) ([8629e3f](https://github.com/nuxt/image/commit/8629e3f7ac84632992ce05f36356f1c165886e1d))
+* **cloudinary:** use `jpg` instead of `jpeg` ([#255](https://github.com/nuxt/image/issues/255)) ([7d49fa8](https://github.com/nuxt/image/commit/7d49fa8de9e5a5437068991b19659558b5db850c)), closes [#254](https://github.com/nuxt/image/issues/254)
+* **vercel:** fix vercel auto-detection and provide local vercel mode ([#246](https://github.com/nuxt/image/issues/246)) ([a156c66](https://github.com/nuxt/image/commit/a156c66fc52e2c27e7bf5e439ae8624f108d695d))
+
+### [0.4.8](https://github.com/nuxt/image/compare/v0.4.7...v0.4.8) (2021-04-28)
+
+
+### Bug Fixes
+
+* **image:** ratio calc regression (fixes [#238](https://github.com/nuxt/image/issues/238)) ([5e28edd](https://github.com/nuxt/image/commit/5e28edd005b76fc4872efc15b9ba9fb7cb75b66d))
+* ensure static image map is available on first load ([#236](https://github.com/nuxt/image/issues/236)) ([466d5a8](https://github.com/nuxt/image/commit/466d5a8e4e3146631090455bed9d9952cf34f86e))
+* generate static images even if lazy loaded ([#233](https://github.com/nuxt/image/issues/233)) ([5be72a5](https://github.com/nuxt/image/commit/5be72a563e13bbceccfbbc889fb4d4f60bcee68d)), closes [#232](https://github.com/nuxt/image/issues/232)
+* vercel provider improvements ([#231](https://github.com/nuxt/image/issues/231)) ([9561daf](https://github.com/nuxt/image/commit/9561dafc3841d66e23123f797ea637f1f7802a8d))
+
+### [0.4.7](https://github.com/nuxt/image/compare/v0.4.6...v0.4.7) (2021-04-23)
+
+
+### Bug Fixes
+
+* **pkg:** use --ext js to avoid issues with mjs ([a483e14](https://github.com/nuxt/image/commit/a483e14514385b9ddc7cceef2fb8c982c3c6e362))
+
+### [0.4.6](https://github.com/nuxt/image/compare/v0.4.5...v0.4.6) (2021-04-22)
+
+
+### Features
+
+* `staticFilename` option to customize static image filenames ([#220](https://github.com/nuxt/image/issues/220)) ([975b1a2](https://github.com/nuxt/image/commit/975b1a2c72a60172b0b373036dfa197980b1c32a))
+* type improvements ([#222](https://github.com/nuxt/image/issues/222)) ([6dc8aa0](https://github.com/nuxt/image/commit/6dc8aa059b6f12139301cb0c7732743565a877ea))
+
+
+### Bug Fixes
+
+* **deps:** add missing lru-cache ([0af0bf3](https://github.com/nuxt/image/commit/0af0bf39644c179f7c1cd664f60cdbb3e9aae2ea))
+
 ### [0.4.5](https://github.com/nuxt/image/compare/v0.4.4...v0.4.5) (2021-04-19)
 
 

@@ -5,31 +5,29 @@
         <NuxtLink to="/">
           Home
         </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/picture">
-          Picture
+        <NuxtLink to="/nuxt-img">
+          NuxtImg
+        </NuxtLink>
+        <NuxtLink to="/nuxt-picture">
+          NuxtPicture
         </NuxtLink>
       </li>
-      <!-- <li>
-        <NuxtLink to="/playground">
-          Playground
-        </NuxtLink>
-      </li> -->
       <li>
-        <NuxtLink to="/instagram">
-          Instagram
-        </NuxtLink>
+        <ProviderSelector />
       </li>
     </ul>
     <Nuxt />
   </main>
 </template>
 
+<script>
+export default {
+}
+</script>
+
 <style>
+/* Global styles */
 body {
-  padding: 0;
-  margin: 0;
   background: #111111;
   display: flex;
   flex-direction: column;
@@ -44,6 +42,9 @@ a {
 .nuxt-link-exact-active {
   border-bottom: 2px white solid;
 }
+</style>
+
+<style scoped>
 ul {
   list-style-type: none;
   display: flex;

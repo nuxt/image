@@ -1,5 +1,6 @@
-import type { ProviderGetImage } from 'src'
 import { joinURL, encodePath } from 'ufo'
+import defu from 'defu'
+import type { ProviderGetImage } from 'src'
 import { createOperationsGenerator } from '~image'
 
 const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
@@ -42,6 +43,9 @@ const operationsGenerator = createOperationsGenerator({
       cropping: 'crop',
       coverLimit: 'limit'
     },
+    format: {
+      jpeg: 'jpg'
+    },
     background (value: string) {
       return convertHextoRGBFormat(value)
     },
@@ -77,10 +81,10 @@ const defaultModifiers = {
 }
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const mergeModifiers = { ...defaultModifiers, ...modifiers }
+  const mergeModifiers = defu(modifiers, defaultModifiers)
   const operations = operationsGenerator(mergeModifiers as any)
 
-  let remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
+  const remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
   // Handle delivery remote media file URLs
   // see: https://cloudinary.com/documentation/fetch_remote_images
   // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory

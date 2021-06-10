@@ -1,5 +1,5 @@
-import type { ProviderGetImage } from 'src'
 import { withBase, joinURL, parseURL } from 'ufo'
+import type { ProviderGetImage } from 'src'
 
 // https://www.storyblok.com/docs/image-service
 const storyblockCDN = 'https://img2.storyblok.com'
@@ -28,10 +28,10 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
   const _filters = Object.entries(filters || {}).map(e => `${e[0]}(${e[1]})`).join(':')
 
   const options = joinURL(
-    fit && `fit-${fit}`,
-    doResize ? `${width}x${height}` : undefined,
-    smart && 'smart',
-    _filters && ('filters:' + _filters)
+    fit ? `fit-${fit}` : '',
+    doResize ? `${width}x${height}` : '',
+    smart ? 'smart' : '',
+    _filters ? ('filters:' + _filters) : ''
   )
 
   // TODO: check if hostname is https://a.storyblok.com ?

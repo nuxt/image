@@ -1,15 +1,17 @@
-import { resolve } from 'path'
+import { resolve } from 'upath'
 import defu from 'defu'
-import type { ModuleOptions, CreateImageOptions } from './types'
-import { pick, pkg } from './utils'
+
+import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
-import { createIPXMiddleware } from './ipx'
+import { pick, pkg } from './utils'
+import type { ModuleOptions, CreateImageOptions } from './types'
 
-async function imageModule (moduleOptions: ModuleOptions) {
-  const { nuxt, addPlugin, addServerMiddleware } = this
+const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
+  const { nuxt, addPlugin } = this
 
   const defaults: ModuleOptions = {
+    staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
     presets: {},
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
@@ -27,26 +29,24 @@ async function imageModule (moduleOptions: ModuleOptions) {
     },
     internalUrl: '',
     providers: {},
-    static: {},
-    intersectOptions: {}
+    static: {}
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
-  options.provider = detectProvider(options.provider)
-
+  options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
   options[options.provider] = options[options.provider] || {}
 
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
     'screens',
     'presets',
-    'provider',
-    'intersectOptions'
+    'provider'
   ])
 
+  options.static = options.static || {}
   options.static.domains = options.domains
 
-  const providers = await resolveProviders(nuxt, options)
+  const providers = resolveProviders(nuxt, options)
 
   // Run setup
   for (const p of providers) {
@@ -70,34 +70,26 @@ async function imageModule (moduleOptions: ModuleOptions) {
     }
   })
 
-  addServerMiddleware({
-    path: '/_ipx',
-    handle: createIPXMiddleware({
-      dir: options.dir,
-      domains: options.domains,
-      sharp: options.sharp
-    })
-  })
-
+  // Transform asset urls that pass to `src` attribute on image components
   nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src' } }
+    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
   }, nuxt.options.build.loaders || {})
 
   nuxt.hook('generate:before', () => {
     setupStaticGeneration(nuxt, options)
   })
 
-  const LruCache = require('lru-cache')
+  const LruCache = await import('lru-cache').then(r => r.default || r)
   const cache = new LruCache()
-  nuxt.hook('vue-renderer:context', (ssrContext) => {
+  nuxt.hook('vue-renderer:context', (ssrContext: any) => {
     ssrContext.cache = cache
   })
 
-  nuxt.hook('listen', (_, listener) => {
+  nuxt.hook('listen', (_: any, listener: any) => {
     options.internalUrl = `http://localhost:${listener.port}`
   })
 }
 
-(imageModule as any).meta = pkg
+; (imageModule as any).meta = pkg
 
 export default imageModule

@@ -9,10 +9,8 @@ export default <NuxtConfig> {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ]
   },
-  modules: [
-    '../src/module.ts'
-  ],
   buildModules: [
+    '../src/module.ts',
     '@nuxt/typescript-build'
   ],
   image: {
@@ -21,14 +19,17 @@ export default <NuxtConfig> {
       'https://unsplash.com',
       'https://upload.wikimedia.org'
     ],
+    screens: {
+      750: 750
+    },
     twicpics: {
-      baseURL: 'https://nuxt-demo.twic.pics'
+      baseURL: 'https://demo.twic.pics/'
     },
     storyblok: {
-      baseURL: 'https://img2.storyblok.com'
+      baseURL: 'https://img2.storyblok.com/'
     },
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/nuxt/image/upload'
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     fastly: {
       baseURL: 'https://www.fastly.io'
@@ -38,6 +39,13 @@ export default <NuxtConfig> {
     },
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
+    },
+    netlify: {
+      baseURL: 'https://netlify-photo-gallery.netlify.app'
+    },
+    prismic: {},
+    sanity: {
+      projectId: 'zp7mbokg'
     },
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
@@ -57,9 +65,6 @@ export default <NuxtConfig> {
           height: 50
         }
       }
-    },
-    intersectOptions: {
-      rootMargin: '50px'
     }
   }
 }

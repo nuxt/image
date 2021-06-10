@@ -1,15 +1,19 @@
-import { setupTest } from '@nuxt/test-utils'
+import { expectFileToBeGenerated, expectFileNotToBeGenerated, setupTest } from '@nuxt/test-utils'
 
-describe('undefined config', () => {
+describe.skip('no config', () => {
   setupTest({
-    fixture: 'fixture/base',
-    configFile: 'nuxt.config.ts',
     generate: true,
-    server: true,
-    config: {}
+    config: {
+      target: 'static',
+      image: {
+        provider: 'static'
+      }
+    }
   })
 
+  // TODO: test for generated/optimized files
   test('render index', () => {
-    expect(true).toBeTruthy()
+    expectFileToBeGenerated('/_nuxt/image/cc1019.jpg')
+    expectFileNotToBeGenerated('/2000px-Aconcagua2016.jpg')
   })
 })

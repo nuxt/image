@@ -1,240 +1,164 @@
-import fs from 'fs-extra'
-import { cleanDoubleSlashes } from '../../src/runtime/utils'
-import { local, cloudinary, twicpics, fastly, imgix, imagekit } from '../../src/runtime/providers'
+import { images } from '../providers'
 
-const images = [
-  {
-    args: ['/test.png', {}],
-    local: { isStatic: true, url: '/_image/local/remote/_/_/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_auto,q_auto/test' },
-    twicpics: { url: '/test.png' },
-    fastly: { url: '/test.png' },
-    imgix: { url: '/test.png' },
-    imagekit: { url: '/test.png' }
-  },
-  {
-    args: ['/test.png', { width: 200 }],
-    local: { isStatic: true, url: '/_image/local/remote/_/w_200/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_auto,q_auto,w_200/test' },
-    twicpics: { url: '/test.png?twic=v1/cover=200x-' },
-    fastly: { url: '/test.png?width=200' },
-    imgix: { url: '/test.png?w=200' },
-    imagekit: { url: '/test.png?tr=w-200' }
-  },
-  {
-    args: ['/test.png', { height: 200 }],
-    local: { isStatic: true, url: '/_image/local/remote/_/h_200/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_auto,q_auto,h_200/test' },
-    twicpics: { url: '/test.png?twic=v1/cover=-x200' },
-    fastly: { url: '/test.png?height=200' },
-    imgix: { url: '/test.png?h=200' },
-    imagekit: { url: '/test.png?tr=h-200' }
-  },
-  {
-    args: ['/test.png', { width: 200, height: 200 }],
-    local: { isStatic: true, url: '/_image/local/remote/_/s_200_200/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_auto,q_auto,w_200,h_200/test' },
-    twicpics: { url: '/test.png?twic=v1/cover=200x200' },
-    fastly: { url: '/test.png?width=200&height=200' },
-    imgix: { url: '/test.png?w=200&h=200' },
-    imagekit: { url: '/test.png?tr=w-200,h-200' }
-  },
-  {
-    args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
-    local: { isStatic: true, url: '/_image/local/remote/_/f_contain,s_200_200/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
-    twicpics: { url: '/test.png?twic=v1/contain=200x200' },
-    fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
-    imgix: { url: '/test.png?w=200&h=200&fit=fill' },
-    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' }
-  },
-  {
-    args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
-    local: { isStatic: true, url: '/_image/local/remote/jpeg/f_contain,s_200_200/http%3A%2F%2Flocalhost%3A3000%2Ftest.png' },
-    cloudinary: { url: '/f_jpeg,q_auto,w_200,h_200,c_scale/test' },
-    twicpics: { url: '/test.png?twic=v1/format=jpeg/contain=200x200' },
-    fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
-    imgix: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
-    imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' }
-  }
-]
+import { cleanDoubleSlashes } from '~/runtime/utils'
+import * as ipx from '~/runtime/providers/ipx'
+import * as cloudinary from '~/runtime/providers/cloudinary'
+import * as twicpics from '~/runtime/providers/twicpics'
+import * as fastly from '~/runtime/providers/fastly'
+import * as imgix from '~/runtime/providers/imgix'
+import * as imagekit from '~/runtime/providers/imagekit'
+import * as netlify from '~/runtime/providers/netlify'
+import * as prismic from '~/runtime/providers/prismic'
+import * as sanity from '~/runtime/providers/sanity'
 
 describe('Providers', () => {
-  test.skip('local', async () => {
+  test('ipx', () => {
     const providerOptions = {}
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = local(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = (await import(providerData.runtime))
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = ipx.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
       generated.url = cleanDoubleSlashes(generated.url)
-      expect(generated).toMatchObject(image.local)
+      expect(generated).toMatchObject(image.ipx)
     }
   })
 
-  test('cloudinary', async () => {
+  test('cloudinary', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '/'
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = cloudinary(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = (await import(providerData.runtime))
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = cloudinary.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.cloudinary)
     }
   })
 
-  test('cloudinary fetch', async () => {
+  test('cloudinary fetch', () => {
     const providerOptions = {
       baseURL: 'https://res.cloudinary.com/demo/image/fetch/'
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = cloudinary(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const runtime = (await import(providerData.runtime))
-
     // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
-    const generated = runtime.getImage(
-      'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png',
-      { modifiers: {
+    const remoteUrl = 'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
+    const generated = cloudinary.getImage(
+      remoteUrl,
+      {
+        modifiers: {
           width: 300,
-          height: 300,
-        }, ...providerData.runtimeOptions }
+          height: 300
+        },
+        ...providerOptions
+      }, {} as any
     )
     expect(generated).toMatchObject({
-      url: '/w_300,h_300/https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
+      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,w_300,h_300/${remoteUrl}`
     })
   })
 
-  test('cloudinary upload', async () => {
+  test('cloudinary upload', () => {
     const providerOptions = {
       baseURL: 'https://res.cloudinary.com/demo/image/upload/remote'
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = cloudinary(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const runtime = (await import(providerData.runtime))
-
-    const generated = runtime.getImage(
-        '1/13/Benedict_Cumberbatch_2011.png',
-        { modifiers: {
-            width: 300,
-            height: 300,
-          }, ...providerData.runtimeOptions }
+    const generated = cloudinary.getImage(
+      '/1/13/Benedict_Cumberbatch_2011.png',
+      {
+        modifiers: {
+          width: 300,
+          height: 300
+        },
+        ...providerOptions
+      }, {} as any
     )
     expect(generated).toMatchObject({
-      url: '/w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'
+      url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'
     })
   })
 
-  test('twicpics', async () => {
+  test('twicpics', () => {
     const providerOptions = {
       baseURL: ''
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = twicpics(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = await import(providerData.runtime)
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = twicpics.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.twicpics)
     }
   })
 
-  test('fastly', async () => {
+  test('fastly', () => {
     const providerOptions = {
       baseURL: ''
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = fastly(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = (await import(providerData.runtime))
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
-
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = fastly.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.fastly)
     }
   })
 
-  test('imgix', async () => {
+  test('imgix', () => {
     const providerOptions = {
       baseURL: ''
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = imgix(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = (await import(providerData.runtime))
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = imgix.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.imgix)
     }
   })
 
-  test('imagekit', async () => {
+  test('imagekit', () => {
     const providerOptions = {
       baseURL: ''
     }
-    const providerDataExpectedkeys = ['runtime', 'runtimeOptions']
-    const providerData = imagekit(providerOptions)
-
-    expect(Object.keys(providerData)).toEqual(expect.arrayContaining(providerDataExpectedkeys))
-
-    const isRuntimeExists = await fs.exists(providerData.runtime)
-    expect(isRuntimeExists).toEqual(true)
-
-    const runtime = (await import(providerData.runtime))
-    expect(typeof runtime).toEqual('object')
-    expect(typeof runtime.getImage).toEqual('function')
 
     for (const image of images) {
-      const generated = runtime.getImage(image.args[0], { modifiers: image.args[1], ...providerData.runtimeOptions })
+      const [src, modifiers] = image.args
+      const generated = imagekit.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.imagekit)
+    }
+  })
+
+  test('netlify', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.netlify)
+    }
+  })
+
+  test('prismic', () => {
+    const providerOptions = {
+      baseURL: '' // Use empty base URL for the sake of simplicity
+    }
+
+    const EXISTING_QUERY_PARAMETERS =
+      '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = prismic.getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.prismic)
+    }
+  })
+
+  test('sanity', () => {
+    const providerOptions = {
+      baseURL: '',
+      projectId: 'projectid'
+    }
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = sanity.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.sanity)
     }
   })
 })
