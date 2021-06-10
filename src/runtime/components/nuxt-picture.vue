@@ -65,7 +65,7 @@ export default defineComponent({
         const { srcset, sizes, src } = this.$img.getSizes(this.src, {
           ...this.nOptions,
           sizes: this.sizes || this.$img.options.screens,
-          densities: this.densities,
+          densities: this.densities || this.$img.options.densities,
           modifiers: {
             ...this.nModifiers,
             format
