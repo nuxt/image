@@ -21,7 +21,7 @@ export const imageMixin = defineMixin({
     provider: { type: String, default: undefined },
 
     sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
-    srcset: { type: String, default: undefined },
+    densities: { type: String, default: undefined },
 
     // <img> attributes
     width: { type: [String, Number], default: undefined },

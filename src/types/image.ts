@@ -14,7 +14,8 @@ export interface ImageOptions {
 }
 
 export interface ImageSizesOptions extends ImageOptions {
-  sizes: Record<string, string|number> | string
+  sizes: Record<string, string|number> | string,
+  densities?: string
 }
 
 // eslint-disable-next-line no-use-before-define
@@ -60,7 +61,7 @@ export interface Img {
   (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
   options: CreateImageOptions
   getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[], srcset?: string[]) => ImageSizes
+  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
   getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
 }
 
