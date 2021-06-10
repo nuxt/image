@@ -72,7 +72,7 @@ export const providers: Provider[] = [
     name: 'imagekit',
     samples: [
       {
-        src: '/girl.jpeg',
+        src: '/girl.jpeg'
       },
       {
         src: '/girl.jpeg',
@@ -101,7 +101,7 @@ export const providers: Provider[] = [
         width: 150,
         height: 150,
         modifiers: {
-          focus: "face",
+          focus: 'face',
           radius: 'max'
         }
       }

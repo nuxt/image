@@ -228,7 +228,7 @@ ImageKit's Nuxt Image integration provides name for each transformation paramete
 
 | Supported Parameter Name | Translates to Parameter |
 | ---                      | ---                     |
-| background | bg |
+| bg | bg |
 | aspectRatio | ar |
 | x | x |
 | y | y |
