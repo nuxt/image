@@ -52,7 +52,7 @@ See below example of how face cropping can be done in Nuxt Image using ImageKit-
 />
 ```
 
-Note: Set `your_imagekit_id` to `demo` in `nuxt.config.js` to see the above demo work. 
+Note: Set `your_imagekit_id` to `demo` in `nuxt.config.js` to run the above demo. 
 
 Check out ImageKit's documentation on [focus](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations#focus-fo) to learn more.
 
@@ -69,7 +69,7 @@ This can be used to blur an image. Use modifier `blur` to specify the Gaussian B
 />
 ```
 
-Note: Again here, set `your_imagekit_id` to `demo` in `nuxt.config.js` to see this example work. These examples can also be found in the IK documentation. You can use this and many more powerful transformations in your own images with your ImageKit ID!
+Note: Again here, set `your_imagekit_id` to `demo` in `nuxt.config.js` to run this example. These examples can also be found in the ImageKit documentation. You can use this and many more powerful transformations on your own images with your ImageKit ID!
 
 
 ### `effectGray`
@@ -85,9 +85,9 @@ Turn your image to a graycale version using `effectGray` modifier.
 ```
 
 ### `named`
-Use named transforms as an alias for an entire transformation string
+Use named transforms as an alias for an entire transformation string.
 
-For example, we can create a named transformation - `media_library_thumbnail` for a transformation string - `tr:w-100,h-100,c-at_max,fo-auto`
+For example, we can create a named transformation - `media_library_thumbnail` for a transformation string - `tr:w-100,h-100,c-at_max,fo-auto`.
 
 ```html
 <nuxt-img
@@ -99,7 +99,7 @@ For example, we can create a named transformation - `media_library_thumbnail` f
 
 ### `border`
 
-Add colored border to your images using modifier `border`.
+Add border to your images using modifier `border`. You can also set its width and color.
 
 ```html
 <nuxt-img
@@ -134,9 +134,9 @@ Give rounded corners to your image using `radius`. Possible values are- positive
 />
 ```
 
-### `background`
+### `bg`
 
-Specify background color and its opacity for your image using `background` modifier. 
+Specify background color and its opacity for your image using `bg` modifier. 
 
 Note: Don't add a leading `#` to the RGB or RGBA hex code.
 
@@ -147,11 +147,11 @@ Note: Don't add a leading `#` to the RGB or RGBA hex code.
   height="700"
   width="700"
   fit="pad_extract"
-  :modifiers="{ background : '272B38' }"
+  :modifiers="{ bg : '272B38' }"
 />
 ```
 
-### Read about ImageKit crop, resize and other common transformations [here](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations) for more details.
+### Read more about ImageKit crop, resize and other common transformations [here](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations).
 
 ## Overlay Transformation Modifiers
 Using ImageKit's Nuxt Image integration you can overlay images or text over other images for watermarking or creating a dynamic banner using custom text!
@@ -195,7 +195,7 @@ You can overlay text on an image and apply various transformations on it as per 
 </script>
 ```
 
-Read more about ImageKit's overlay transformation parameters in [docs](https://docs.imagekit.io/features/image-transformations/overlay).
+Read more about ImageKit's overlay transformation parameters [here](https://docs.imagekit.io/features/image-transformations/overlay).
 
 ## Image Enhancement Modifiers
 

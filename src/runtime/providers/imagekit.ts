@@ -9,7 +9,7 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     format: 'f',
     quality: 'q',
-    background: 'bg',
+    bg: 'bg',
     aspectRatio: 'ar',
     x: 'x',
     y: 'y',
