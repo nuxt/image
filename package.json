@@ -21,7 +21,8 @@
     "release": "standard-version && git push --follow-tags && npm publish",
     "test": "yarn lint && yarn jest --forceExit",
     "test:e2e": "jest test/e2e --forceExit",
-    "test:unit": "jest test/unit --forceExit"
+    "test:unit": "jest test/unit --forceExit",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "defu": "^5.0.0",
