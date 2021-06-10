@@ -67,6 +67,46 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' }
     ]
   },
+  // ImageKit
+  {
+    name: 'imagekit',
+    samples: [
+      {
+        src: '/girl.jpeg',
+      },
+      {
+        src: '/girl.jpeg',
+        width: 400,
+        height: 300,
+        fit: 'fill'
+      },
+      {
+        src: '/girl.jpeg',
+        width: 200,
+        height: 300,
+        modifiers: {
+          focus: 'auto'
+        }
+      },
+      {
+        src: '/girl.jpeg',
+        width: 150,
+        height: 150,
+        modifiers: {
+          focus: 'face'
+        }
+      },
+      {
+        src: '/girl.jpeg',
+        width: 150,
+        height: 150,
+        modifiers: {
+          focus: "face",
+          radius: 'max'
+        }
+      }
+    ]
+  },
   // Netlify
   {
     name: 'netlify',
