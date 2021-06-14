@@ -50,7 +50,7 @@ This can be used to blur an image. Use modifier `blur` to specify the Gaussian B
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   :modifiers="{ blur : 10}"
 />
 ```
@@ -63,7 +63,7 @@ Turn your image to a graycale version using `effectGray` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   height="300"
   :modifiers="{ effectGray : true}"
 />
@@ -84,7 +84,7 @@ Add border to your images using modifier `border`. You can also set its width an
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   width="300"
   :modifiers="{ border : '20_FF0000'}"
 />
@@ -98,7 +98,7 @@ Use `rotate` modifier to rotate your image. Possible values are-  `0`, `90`, `1
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   :modifiers="{ rotate : 90 }"
 />
 ```
@@ -111,7 +111,7 @@ Give rounded corners to your image using `radius`. Possible values are- positive
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   :modifiers="{ radius : 20}"
 />
 ```
@@ -124,9 +124,9 @@ Specify background color and its opacity for your image using `bg` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
-  height="700"
-  width="700"
+  src="/default-image.jpeg"
+  height="1200"
+  width="1200"
   fit="pad_extract"
   :modifiers="{ bg : '272B38' }"
 />
@@ -150,7 +150,7 @@ You can overlay text on an image and apply various transformations on it as per 
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   :modifiers="modifiers"
 />
 
@@ -182,7 +182,7 @@ Enhance contrast of an image using `effectContrast` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   height="300"
   :modifiers="{ effectContrast: true }"
 />
@@ -194,7 +194,7 @@ Sharpen the input image using `effectSharpen` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpg"
+  src="/default-image.jpeg"
   height="300"
   :modifiers="{ effectSharpen: 10 }"
 />
