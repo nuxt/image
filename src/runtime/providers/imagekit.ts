@@ -76,6 +76,12 @@ const operationsGenerator = createOperationsGenerator({
       extract: 'extract',
       pad_extract: 'pad_extract'
     },
+    background (value: string) {
+      if (value.startsWith('#')) {
+        return value.replace('#', '')
+      }
+      return value
+    },
     format: {
       auto: 'auto',
       jpg: 'jpg',

@@ -40,20 +40,6 @@ Custom coordinates can also be used to focus using parameter value `custom`.
 
 Moreover, ImageKit also provides smart cropping that can automatically detect most important part of the image using `auto`. And, `face` can be used to find out a face (or multiple faces) in an image and focus around that.
 
-See below example of how face cropping can be done in Nuxt Image using ImageKit-
-
-```html
-<nuxt-img
-  provider="imagekit"
-  src="/img/girl.jpeg"
-  width="150"
-  height="150"
-  :modifiers="{ focus: 'face' }"
-/>
-```
-
-Note: Set `your_imagekit_id` to `demo` in `nuxt.config.js` to run the above demo. 
-
 Check out ImageKit's documentation on [focus](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations#focus-fo) to learn more.
 
 
@@ -64,38 +50,32 @@ This can be used to blur an image. Use modifier `blur` to specify the Gaussian B
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   :modifiers="{ blur : 10}"
 />
 ```
 
-Note: Again here, set `your_imagekit_id` to `demo` in `nuxt.config.js` to run this example. These examples can also be found in the ImageKit documentation. You can use this and many more powerful transformations on your own images with your ImageKit ID!
-
 
 ### `effectGray`
+
 Turn your image to a graycale version using `effectGray` modifier.
 
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/sample_image.jpg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectGray : true}"
 />
 ```
 
+
 ### `named`
+
 Use named transforms as an alias for an entire transformation string.
 
 For example, we can create a named transformation - `media_library_thumbnail` for a transformation string - `tr:w-100,h-100,c-at_max,fo-auto`.
 
-```html
-<nuxt-img
-  provider="imagekit"
-  src="/default-image.jpg"
-  :modifiers="{ named: 'media_library_thumbnail' }"
-/>
-```
 
 ### `border`
 
@@ -104,11 +84,12 @@ Add border to your images using modifier `border`. You can also set its width an
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   width="300"
   :modifiers="{ border : '20_FF0000'}"
 />
 ```
+
 
 ### `rotate`
 
@@ -117,10 +98,11 @@ Use `rotate` modifier to rotate your image. Possible values are-  `0`, `90`, `1
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   :modifiers="{ rotate : 90 }"
 />
 ```
+
 
 ### `radius`
 
@@ -129,21 +111,20 @@ Give rounded corners to your image using `radius`. Possible values are- positive
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   :modifiers="{ radius : 20}"
 />
 ```
+
 
 ### `bg`
 
 Specify background color and its opacity for your image using `bg` modifier. 
 
-Note: Don't add a leading `#` to the RGB or RGBA hex code.
-
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   height="700"
   width="700"
   fit="pad_extract"
@@ -151,29 +132,25 @@ Note: Don't add a leading `#` to the RGB or RGBA hex code.
 />
 ```
 
+
 ### Read more about ImageKit crop, resize and other common transformations [here](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations).
 
 ## Overlay Transformation Modifiers
 Using ImageKit's Nuxt Image integration you can overlay images or text over other images for watermarking or creating a dynamic banner using custom text!
 
 ### `overlayImage`
-Overlay an image on top of another image (base image) using `overlayImage` modifier.
 
-```html
-<nuxt-img
-  provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
-  :modifiers="{ overlayImage: 'logo-white_SJwqB4Nfe.png' }"
-/>
-```
+Overlay an image on top of another image (base image) using `overlayImage` modifier. You can use this to create dynamic banners, watermarking etc.
+
 
 ### Overlay Text
+
 You can overlay text on an image and apply various transformations on it as per your needs.
 
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/medium_cafe_B1iTdD0C.jpg"
+  src="/default-image.jpg"
   :modifiers="modifiers"
 />
 
@@ -205,7 +182,7 @@ Enhance contrast of an image using `effectContrast` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/sample_image.jpg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectContrast: true }"
 />
@@ -217,7 +194,7 @@ Sharpen the input image using `effectSharpen` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/sample_image.jpg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectSharpen: 10 }"
 />
