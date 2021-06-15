@@ -23,7 +23,7 @@ export default function (nuxtContext, inject) {
   const $img = createImage(imageOptions, nuxtContext)
 
   // Vue 3
-  if (nuxtContext.app.component) {
+  if (nuxtContext.app?.component) {
     nuxtContext.app.component(NuxtImg.name, NuxtImg)
     nuxtContext.app.component(NuxtPicture.name, NuxtPicture)
     nuxtContext.app.component('NImg', NuxtImg)
