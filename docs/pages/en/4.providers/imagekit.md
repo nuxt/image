@@ -50,7 +50,7 @@ This can be used to blur an image. Use modifier `blur` to specify the Gaussian B
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   :modifiers="{ blur : 10}"
 />
 ```
@@ -63,7 +63,7 @@ Turn your image to a graycale version using `effectGray` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectGray : true}"
 />
@@ -84,7 +84,7 @@ Add border to your images using modifier `border`. You can also set its width an
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   width="300"
   :modifiers="{ border : '20_FF0000'}"
 />
@@ -98,7 +98,7 @@ Use `rotate` modifier to rotate your image. Possible values are-  `0`, `90`, `1
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   :modifiers="{ rotate : 90 }"
 />
 ```
@@ -111,7 +111,7 @@ Give rounded corners to your image using `radius`. Possible values are- positive
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   :modifiers="{ radius : 20}"
 />
 ```
@@ -124,7 +124,7 @@ Specify background color and its opacity for your image using `bg` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   height="1200"
   width="1200"
   fit="pad_extract"
@@ -142,6 +142,29 @@ Using ImageKit's Nuxt Image integration you can overlay images or text over othe
 
 Overlay an image on top of another image (base image) using `overlayImage` modifier. You can use this to create dynamic banners, watermarking etc.
 
+```html
+<nuxt-img
+  provider="imagekit"
+  src="/default-image.jpg"
+  :modifiers="modifiers"
+  />
+
+<script>
+  export default {
+    data() {
+      return {
+        modifiers: {
+          overlayImage: 'default-image.jpg',
+          overlaywidth: 300,
+          overlayHeight: 200,
+          overlayFocus: 'top_left',
+          overlayImageBorder: '5_FFFFFF',
+        }
+      }
+    }
+  }
+</script>
+```
 
 ### Overlay Text
 
@@ -150,7 +173,7 @@ You can overlay text on an image and apply various transformations on it as per 
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   :modifiers="modifiers"
 />
 
@@ -182,7 +205,7 @@ Enhance contrast of an image using `effectContrast` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectContrast: true }"
 />
@@ -194,7 +217,7 @@ Sharpen the input image using `effectSharpen` modifier.
 ```html
 <nuxt-img
   provider="imagekit"
-  src="/default-image.jpeg"
+  src="/default-image.jpg"
   height="300"
   :modifiers="{ effectSharpen: 10 }"
 />
@@ -215,6 +238,8 @@ ImageKit's Nuxt Image integration provides name for each transformation paramete
 | oiy | oiy |
 | oixc | oixc |
 | oiyc | oiyc |
+| crop | c |
+| cropMode | cm |
 | focus | fo |
 | radius | r |
 | border | b |

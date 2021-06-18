@@ -11,6 +11,8 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     bg: 'bg',
     background: 'bg',
+    crop: 'c',
+    cropMode: 'cm',
     aspectRatio: 'ar',
     x: 'x',
     y: 'y',
@@ -81,6 +83,17 @@ const operationsGenerator = createOperationsGenerator({
         return value.replace('#', '')
       }
       return value
+    },
+    crop: {
+      maintain_ratio: 'maintain_ratio',
+      force: 'force',
+      at_max: 'at_max',
+      at_least: 'at_least'
+    },
+    cropMode: {
+      pad_resize: 'pad_resize',
+      pad_extract: 'pad_extract',
+      extract: 'extract'
     },
     format: {
       auto: 'auto',
