@@ -5,6 +5,7 @@ import * as ipx from '~/runtime/providers/ipx'
 import * as cloudinary from '~/runtime/providers/cloudinary'
 import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
+import * as glide from '~/runtime/providers/glide'
 import * as imgix from '~/runtime/providers/imgix'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
@@ -84,6 +85,17 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = twicpics.getImage(src, { modifiers, ...providerOptions }, {} as any)
       expect(generated).toMatchObject(image.twicpics)
+    }
+  })
+
+  test('glide', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = glide.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      expect(generated).toMatchObject(image.glide)
     }
   })
 
