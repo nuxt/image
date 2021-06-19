@@ -33,6 +33,15 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     format: 'fm'
   },
+  valueMap: {
+    fit: {
+      fill: 'fill',
+      inside: 'max',
+      outside: 'stretch',
+      cover: 'crop',
+      contain: 'contain'
+    }
+  },
   joinWith: '&',
   formatter: (key, val) => encodeQueryItem(key, val)
 })
