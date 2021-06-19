@@ -15,6 +15,7 @@ export interface InputProvider<T = any> {
 export interface ImageProviders {
   cloudinary?: any
   fastly?: any
+  glide?: any
   imagekit?: any
   imgix?: any
   prismic?: any

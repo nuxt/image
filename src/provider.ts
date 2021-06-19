@@ -8,6 +8,7 @@ import { ipxSetup } from './ipx'
 const BuiltInProviders = [
   'cloudinary',
   'fastly',
+  'glide',
   'imagekit',
   'imgix',
   'ipx',
