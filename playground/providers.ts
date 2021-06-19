@@ -67,6 +67,13 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' }
     ]
   },
+  // Glide
+  {
+    name: 'glide',
+    samples: [
+      { src: '/zs77ih', width: 720, quality: 70 }
+    ]
+  },
   // Netlify
   {
     name: 'netlify',
