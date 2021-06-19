@@ -20,12 +20,6 @@ const operationsGenerator = createOperationsGenerator({
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const params = operationsGenerator(modifiers)
 
-  if (hasProtocol(src)) {
-    return {
-      url: src
-    }
-  }
-
   return {
     url: joinURL(baseURL, encodePath(src) + (params ? '?' + params : ''))
   }
