@@ -34,6 +34,9 @@ export default <NuxtConfig> {
     fastly: {
       baseURL: 'https://www.fastly.io'
     },
+    glide: {
+      baseURL: 'https://glide.herokuapp.com/1.0/'
+    },
     imgix: {
       baseURL: 'https://assets.imgix.net'
     },
