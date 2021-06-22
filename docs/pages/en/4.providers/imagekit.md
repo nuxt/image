@@ -95,7 +95,7 @@ Add a border to your images using the `border` modifier. You can also set its wi
 
 ### `rotate`
 
-Use the `rotate` modifier to rotate your image. Possible values are-  `0`, `90`, `180`, `270`, `360`, and `auto`.
+Use the `rotate` modifier to rotate your image. Possible values are - `0`, `90`, `180`, `270`, `360`, and `auto`.
 
 ```html
 <nuxt-img
