@@ -71,7 +71,7 @@ export const providers: Provider[] = [
   {
     name: 'glide',
     samples: [
-      { src: '/zs77ih', width: 720, quality: 70 }
+      { src: '/kayaks.jpg', width: 1000, quality: 70, modifiers: { gam: 0.9, sharp: 8 } }
     ]
   },
   // Netlify
