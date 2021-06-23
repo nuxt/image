@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.15](https://github.com/nuxt/image/compare/v0.4.14...v0.4.15) (2021-06-23)
+
+
+### Features
+
+* glide provider ([#328](https://github.com/nuxt/image/issues/328)) ([1d85042](https://github.com/nuxt/image/commit/1d8504297e9917efbd7c6df0391507e5e79ead3f))
+
 ### [0.4.14](https://github.com/nuxt/image/compare/v0.4.13...v0.4.14) (2021-06-02)
 
 
