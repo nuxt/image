@@ -5,12 +5,14 @@ import { lt } from 'semver'
 
 import type { ProviderSetup } from './types'
 
-export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, nuxt) => {
+export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions, nuxt) => {
+  providerOptions.options.domains = providerOptions.options.domains || moduleOptions.domains || []
+
   const isStatic = nuxt.options.target === 'static'
   const runtimeDir = resolve(__dirname, 'runtime')
   const ipxOptions = {
     dir: resolve(nuxt.options.rootDir, moduleOptions.dir),
-    domains: moduleOptions.domains,
+    domains: providerOptions.options.domains,
     sharp: moduleOptions.sharp
   }
 

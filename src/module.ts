@@ -43,9 +43,6 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     'provider'
   ])
 
-  options.static = options.static || {}
-  options.static.domains = options.domains
-
   const providers = resolveProviders(nuxt, options)
 
   // Run setup
