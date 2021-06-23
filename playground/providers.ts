@@ -67,6 +67,18 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' }
     ]
   },
+  // imgix
+  {
+    name: 'imgix',
+    samples: [
+      {
+        src: 'blog/woman-hat.jpg',
+        width: 300,
+        height: 300,
+        fit: 'cover'
+      }
+    ]
+  },
   // Glide
   {
     name: 'glide',
