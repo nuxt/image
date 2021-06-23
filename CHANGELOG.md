@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.17](https://github.com/nuxt/image/compare/v0.4.16...v0.4.17) (2021-06-23)
+
+
+### Bug Fixes
+
+* **pkg:** add missing consola and semver deps ([bc34597](https://github.com/nuxt/image/commit/bc345974da179e3dd7e4c068f59f77720c37c837))
+
 ### [0.4.16](https://github.com/nuxt/image/compare/v0.4.15...v0.4.16) (2021-06-23)
 
 
