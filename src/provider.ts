@@ -27,13 +27,11 @@ export const providerSetup: Record<string, ProviderSetup> = {
   static: ipxSetup,
 
   // https://vercel.com/docs/more/adding-your-framework#images
-  async vercel (providerOptions, moduleOptions, nuxt) {
-    providerOptions.options.domains = providerOptions.options.domains || moduleOptions.domains || []
-
+  async vercel (_providerOptions, moduleOptions, nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
-      domains: providerOptions.options.domains.map((domain: string) => parseURL(domain, 'https://').host),
+      domains: moduleOptions.domains.map((domain: string) => parseURL(domain, 'https://').host),
       sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
