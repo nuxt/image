@@ -16,7 +16,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeQueryItem(key, val)
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx', domains = [] } = {}) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { options: { domains = [] } }) => {
   if (modifiers.width && modifiers.height) {
     modifiers.resize = `${modifiers.width}_${modifiers.height}`
     delete modifiers.width

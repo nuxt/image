@@ -35,6 +35,7 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: string
   screens?: Record<string, number>,
+  domains?: string[]
 }
 
 export interface ImageInfo {
