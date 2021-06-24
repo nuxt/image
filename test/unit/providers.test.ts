@@ -5,11 +5,14 @@ import * as ipx from '~/runtime/providers/ipx'
 import * as cloudinary from '~/runtime/providers/cloudinary'
 import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
+import * as glide from '~/runtime/providers/glide'
 import * as imgix from '~/runtime/providers/imgix'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
 import * as sanity from '~/runtime/providers/sanity'
+
+const emptyContext = { options: {} } as any
 
 describe('Providers', () => {
   test('ipx', () => {
@@ -17,7 +20,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = ipx.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      const generated = ipx.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
       generated.url = cleanDoubleSlashes(generated.url)
       expect(generated).toMatchObject(image.ipx)
     }
@@ -30,7 +33,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = cloudinary.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = cloudinary.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudinary)
     }
   })
@@ -49,7 +52,7 @@ describe('Providers', () => {
           height: 300
         },
         ...providerOptions
-      }, {} as any
+      }, emptyContext
     )
     expect(generated).toMatchObject({
       url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,w_300,h_300/${remoteUrl}`
@@ -68,7 +71,7 @@ describe('Providers', () => {
           height: 300
         },
         ...providerOptions
-      }, {} as any
+      }, emptyContext
     )
     expect(generated).toMatchObject({
       url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'
@@ -82,8 +85,19 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = twicpics.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = twicpics.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.twicpics)
+    }
+  })
+
+  test('glide', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = glide.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.glide)
     }
   })
 
@@ -93,7 +107,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = fastly.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = fastly.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.fastly)
     }
   })
@@ -105,7 +119,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imgix.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = imgix.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.imgix)
     }
   })
@@ -117,7 +131,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imagekit.getImage(src, { modifiers, ...providerOptions }, {} as any)
+      const generated = imagekit.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.imagekit)
     }
   })
@@ -129,7 +143,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.netlify)
     }
   })
@@ -144,7 +158,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = prismic.getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, {} as any)
+      const generated = prismic.getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.prismic)
     }
   })
@@ -157,7 +171,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = sanity.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, {} as any)
+      const generated = sanity.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sanity)
     }
   })

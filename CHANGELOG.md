@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.17](https://github.com/nuxt/image/compare/v0.4.16...v0.4.17) (2021-06-23)
+
+
+### Bug Fixes
+
+* **pkg:** add missing consola and semver deps ([bc34597](https://github.com/nuxt/image/commit/bc345974da179e3dd7e4c068f59f77720c37c837))
+
+### [0.4.16](https://github.com/nuxt/image/compare/v0.4.15...v0.4.16) (2021-06-23)
+
+
+### Features
+
+* **imgix:** additional documentation and modifiers ([#316](https://github.com/nuxt/image/issues/316)) ([c90b484](https://github.com/nuxt/image/commit/c90b484208c478823f21368f0626fc253ec31250))
+
+
+### Bug Fixes
+
+* pass `domains` to runtime options ([#333](https://github.com/nuxt/image/issues/333)) ([33ada92](https://github.com/nuxt/image/commit/33ada92b5a9cfdfdee4353ad88a3190807a6c857)), closes [#324](https://github.com/nuxt/image/issues/324)
+
+### [0.4.15](https://github.com/nuxt/image/compare/v0.4.14...v0.4.15) (2021-06-23)
+
+
+### Features
+
+* glide provider ([#328](https://github.com/nuxt/image/issues/328)) ([1d85042](https://github.com/nuxt/image/commit/1d8504297e9917efbd7c6df0391507e5e79ead3f))
+
 ### [0.4.14](https://github.com/nuxt/image/compare/v0.4.13...v0.4.14) (2021-06-02)
 
 

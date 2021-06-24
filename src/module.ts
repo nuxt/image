@@ -40,11 +40,9 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
     'screens',
     'presets',
-    'provider'
+    'provider',
+    'domains'
   ])
-
-  options.static = options.static || {}
-  options.static.domains = options.domains
 
   const providers = resolveProviders(nuxt, options)
 

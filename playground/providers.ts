@@ -107,6 +107,25 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // imgix
+  {
+    name: 'imgix',
+    samples: [
+      {
+        src: 'blog/woman-hat.jpg',
+        width: 300,
+        height: 300,
+        fit: 'cover'
+      }
+    ]
+  },
+  // Glide
+  {
+    name: 'glide',
+    samples: [
+      { src: '/kayaks.jpg', width: 1000, quality: 70, modifiers: { gam: 0.9, sharp: 8 } }
+    ]
+  },
   // Netlify
   {
     name: 'netlify',
