@@ -30,7 +30,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 
         staticImages[url] = options.staticFilename.replace(/\[(\w+)]/g, (match, key) => params[key] || match)
       }
-      return staticImages[url]
+      return joinURL(nuxt.options.app.basePath, staticImages[url])
     }
   })
 
