@@ -20,6 +20,16 @@ Use IPX for self-hosting as an alternative to use service providers for producti
 
 Just add `@nuxt/image` to `modules` (instead of `buildModules`) in `nuxt.config`. This will ensure that the `/_ipx` endpoint continues to work in production.
 
+Images should be stored in the `static` directory as default.
+
+If we take our previous example:
+
+```html
+<nuxt-img src="/nuxt-icon.png" />
+```
+
+The `nuxt-icon.png` should be placed in `static` folder under the path `/static/nuxt-icon.png`.
+
 ### Alternative: serverMiddleware
 
 If you have an advanced use case, you may instead create a custom server middleware that handles the `/_ipx` endpoint:
