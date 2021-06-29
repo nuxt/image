@@ -23,6 +23,7 @@ export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCT
 export interface ImageProvider {
   defaults?: any
   getImage: ProviderGetImage
+  validateDomains?: Boolean
 }
 
 export interface CreateImageOptions {

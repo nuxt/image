@@ -34,3 +34,5 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel
     })
   }
 }
+
+export const validateDomains = true

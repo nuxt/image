@@ -29,3 +29,5 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
     url: joinURL(baseURL, encodePath(src) + (params ? '?' + params : ''))
   }
 }
+
+export const validateDomains = true
