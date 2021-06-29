@@ -23,6 +23,7 @@ export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCT
 export interface ImageProvider {
   defaults?: any
   getImage: ProviderGetImage
+  validateDomains?: Boolean
 }
 
 export interface CreateImageOptions {
@@ -35,7 +36,7 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: string
   screens?: Record<string, number>,
-  domains?: string[]
+  domains: string[]
 }
 
 export interface ImageInfo {

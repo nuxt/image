@@ -1,4 +1,5 @@
 import defu from 'defu'
+import { hasProtocol, parseURL } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
@@ -97,6 +98,17 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
+
+  // Externalize remote images if domain does not match with `domains`
+  if (provider.validateDomains && hasProtocol(input)) {
+    const inputHost = parseURL(input).host
+    // Domains are normalized to hostname in module
+    if (!ctx.options.domains.find(d => d === inputHost)) {
+      return {
+        url: input
+      }
+    }
+  }
 
   const _options: ImageOptions = defu(options, preset, defaults)
   _options.modifiers = { ..._options.modifiers }
