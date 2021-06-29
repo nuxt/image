@@ -3,12 +3,12 @@ import { createWriteStream } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 import { mkdirp } from 'fs-extra'
-import { dirname, join, relative, extname, basename, trimExt } from 'upath'
+import { dirname, join, relative, basename, trimExt } from 'upath'
 import fetch from 'node-fetch'
 import { joinURL, hasProtocol, parseURL, withoutTrailingSlash } from 'ufo'
 import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
-import { hash, logger } from './utils'
+import { hash, logger, guessExt } from './utils'
 
 const pipeline = promisify(stream.pipeline)
 
@@ -17,12 +17,12 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 
   nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext: any) => {
     renderContext.image = renderContext.image || {}
-    renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage, input) {
+    renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage, input: string) {
       if (!staticImages[url]) {
         const { pathname } = parseURL(input)
         const params: any = {
           name: trimExt(basename(pathname)),
-          ext: (format && `.${format}`) || pathname.split('.').pop() || '.png',
+          ext: (format && `.${format}`) || guessExt(input),
           hash: hash(url),
           // TODO: pass from runtimeConfig to mapStatic as param
           publicPath: withoutTrailingSlash(nuxt.options.build.publicPath)
