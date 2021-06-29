@@ -35,7 +35,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
   // Normalize domains to hostname
-  moduleOptions.domains = moduleOptions.domains
+  options.domains = options.domains
     .map(domain => parseURL(domain, 'https://').host)
     .filter(Boolean) as string[]
 
