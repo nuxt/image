@@ -17,13 +17,12 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 
   nuxt.hook('vue-renderer:ssr:prepareContext', (renderContext: any) => {
     renderContext.image = renderContext.image || {}
-    renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage) {
+    renderContext.image.mapToStatic = <MapToStatic> function ({ url, format }: ResolvedImage, input) {
       if (!staticImages[url]) {
-        const { pathname } = parseURL(url)
-        const [ext] = (extname(pathname) || '').split('%3F')
+        const { pathname } = parseURL(input)
         const params: any = {
           name: trimExt(basename(pathname)),
-          ext: (format && `.${format}`) || ext || '.png',
+          ext: (format && `.${format}`) || pathname.split('.').pop() || '.png',
           hash: hash(url),
           // TODO: pass from runtimeConfig to mapStatic as param
           publicPath: withoutTrailingSlash(nuxt.options.build.publicPath)

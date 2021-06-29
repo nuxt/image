@@ -106,4 +106,4 @@ export interface OperationGeneratorConfig {
   }
 }
 
-export type MapToStatic = (image: ResolvedImage) => string
+export type MapToStatic = (image: ResolvedImage, input: string) => string

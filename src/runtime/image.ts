@@ -46,7 +46,7 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext: any
           }
           const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
           if (typeof mapToStatic === 'function') {
-            const mappedURL = mapToStatic(image)
+            const mappedURL = mapToStatic(image, input)
             if (mappedURL) {
               staticImages[image.url] = mappedURL
               image.url = mappedURL
