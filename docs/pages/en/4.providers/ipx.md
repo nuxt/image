@@ -5,7 +5,7 @@ navigation:
   title: IPX
 ---
 
-Nuxt Image comes with a preconfigured instance of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
+Nuxt Image comes with a [preconfigured instance](/getting-started/providers#default-provider) of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
 
 ## Using `ipx` in production
 
@@ -15,20 +15,9 @@ Use IPX for self-hosting as an alternative to use service providers for producti
   You don't need to follow this section if using `target: 'static'`.
 :::
 
-
 ### Runtime Module
 
 Just add `@nuxt/image` to `modules` (instead of `buildModules`) in `nuxt.config`. This will ensure that the `/_ipx` endpoint continues to work in production.
-
-Images should be stored in the `static` directory as default.
-
-If we take our previous example:
-
-```html
-<nuxt-img src="/nuxt-icon.png" />
-```
-
-The `nuxt-icon.png` should be placed in `static` folder under the path `/static/nuxt-icon.png`.
 
 ### Alternative: serverMiddleware
 
