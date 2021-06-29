@@ -23,4 +23,5 @@ export function guessExt (input: string = '') {
   if (ext && /^[\w0-9]+$/.test(ext)) {
     return '.' + ext
   }
+  return ''
 }
