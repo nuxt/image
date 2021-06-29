@@ -1,4 +1,5 @@
 import defu from 'defu'
+import { hasProtocol } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
@@ -92,6 +93,20 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   if (input.startsWith('data:')) {
     return {
       url: input
+    }
+  }
+
+  /**
+   * Externalize remote images if domain does not match with `domains` options
+   *
+   * @see https://image.nuxtjs.org/api/options#domains
+   */
+  const domains = ctx.options.domains || []
+  if (hasProtocol(input)) {
+    if (!domains.find((d: string) => input.startsWith(d))) {
+      return {
+        url: input
+      }
     }
   }
 

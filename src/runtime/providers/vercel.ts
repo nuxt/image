@@ -1,21 +1,12 @@
 import { ProviderGetImage } from 'src'
-import { stringifyQuery, hasProtocol } from 'ufo'
+import { stringifyQuery } from 'ufo'
 
 // https://vercel.com/docs/more/adding-your-framework#images
 
-export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel/image' } = {}, { options: { domains = [], screens = {} } }) => {
+export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel/image' } = {}, { options: { screens = {} } }) => {
   const validWidths = Object.values(screens).sort()
   const largestWidth = validWidths[validWidths.length - 1]
   let width = Number(modifiers?.width || 0)
-
-  // Serve original src if domain is invalid
-  if (hasProtocol(src)) {
-    if (!domains.find((d: string) => src.startsWith(d))) {
-      return {
-        url: src
-      }
-    }
-  }
 
   if (!width) {
     width = largestWidth
