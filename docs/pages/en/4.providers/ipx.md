@@ -19,9 +19,9 @@ Use IPX for self-hosting as an alternative to use service providers for producti
 
 Just add `@nuxt/image` to `modules` (instead of `buildModules`) in `nuxt.config`. This will ensure that the `/_ipx` endpoint continues to work in production.
 
-### Alternative: serverMiddleware
+### Advanced: Custom ServerMiddleware
 
-If you have an advanced use case, you may instead create a custom server middleware that handles the `/_ipx` endpoint:
+If you have an usecase of a custom IPX instance serving other that `static/` dir, you may instead create a server Middleware that handles the `/_ipx` endpoint:
 
 1. Add `ipx` as a dependency:
 
@@ -48,7 +48,12 @@ If you have an advanced use case, you may instead create a custom server middlew
 import { createIPX, createIPXMiddleware } from 'ipx'
 
 // https://github.com/unjs/ipx
-const ipx = createIPX(/* options */)
+const ipx = createIPX({
+  dir: '', // absolute path to images dir
+  domains: [], // allowed external domains (should match domains option in nuxt.config)
+  alias: {}, // base alias
+  sharp: {}, // sharp options
+})
 
 export default createIPXMiddleware(ipx)
 ```
