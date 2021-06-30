@@ -25,12 +25,12 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
           ext: (format && `.${format}`) || extname(pathname) || '.png',
           hash: hash(url),
           // TODO: pass from runtimeConfig to mapStatic as param
-          publicPath: withoutTrailingSlash(nuxt.options.build.publicPath)
+          publicPath: nuxt.options.app.cdnURL ? '/' : withoutTrailingSlash(nuxt.options.build.publicPath)
         }
 
         staticImages[url] = options.staticFilename.replace(/\[(\w+)]/g, (match, key) => params[key] || match)
       }
-      return joinURL(nuxt.options.app.basePath, staticImages[url])
+      return joinURL(nuxt.options.app.cdnURL || nuxt.options.app.basePath, staticImages[url])
     }
   })
 
