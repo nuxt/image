@@ -16,7 +16,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeQueryItem(key, val)
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { nuxtContext: { base: nuxtBase = '/' } = {} }) => {
   if (modifiers.width && modifiers.height) {
     modifiers.resize = `${modifiers.width}_${modifiers.height}`
     delete modifiers.width
@@ -26,7 +26,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
   const params = operationsGenerator(modifiers)
 
   return {
-    url: joinURL(baseURL, encodePath(src) + (params ? '?' + params : ''))
+    url: joinURL(nuxtBase, baseURL, encodePath(src) + (params ? '?' + params : ''))
   }
 }
 

@@ -26,6 +26,17 @@ describe('Providers', () => {
     }
   })
 
+  test('ipx router base', () => {
+    const context = { ...emptyContext, nuxtContext: { base: '/app/' } }
+
+    const src = '/images/test.png'
+    const generated = ipx.getImage(src, { modifiers: {} }, context)
+    generated.url = cleanDoubleSlashes(generated.url)
+    expect(generated).toMatchObject({
+      url: '/app/_ipx/images/test.png'
+    })
+  })
+
   test('cloudinary', () => {
     const providerOptions = {
       baseURL: '/'
