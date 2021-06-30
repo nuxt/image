@@ -1,6 +1,6 @@
 import { resolve } from 'upath'
 import defu from 'defu'
-
+import { parseURL } from 'ufo'
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
@@ -33,6 +33,11 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
+
+  // Normalize domains to hostname
+  options.domains = options.domains
+    .map(domain => parseURL(domain, 'https://').host)
+    .filter(Boolean) as string[]
 
   options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
   options[options.provider] = options[options.provider] || {}

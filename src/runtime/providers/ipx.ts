@@ -1,5 +1,5 @@
 import { ProviderGetImage } from 'src'
-import { joinURL, encodeQueryItem, encodePath, hasProtocol } from 'ufo'
+import { joinURL, encodeQueryItem, encodePath } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -16,7 +16,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeQueryItem(key, val)
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { options: { domains = [] }, nuxtContext: { base: nuxtBase = '/' } = {} }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { nuxtContext: { base: nuxtBase = '/' } = {} }) => {
   if (modifiers.width && modifiers.height) {
     modifiers.resize = `${modifiers.width}_${modifiers.height}`
     delete modifiers.width
@@ -25,15 +25,9 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
 
   const params = operationsGenerator(modifiers)
 
-  if (hasProtocol(src)) {
-    if (!domains.find((d: string) => src.startsWith(d))) {
-      return {
-        url: src
-      }
-    }
-  }
-
   return {
     url: joinURL(nuxtBase, baseURL, encodePath(src) + (params ? '?' + params : ''))
   }
 }
+
+export const validateDomains = true
