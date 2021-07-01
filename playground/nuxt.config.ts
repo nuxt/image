@@ -16,11 +16,14 @@ export default <NuxtConfig> {
   image: {
     domains: [
       'https://nuxtjs.org',
-      'https://unsplash.com',
+      'https://images.unsplash.com',
       'https://upload.wikimedia.org'
     ],
     screens: {
       750: 750
+    },
+    alias: {
+      unsplash: 'https://images.unsplash.com'
     },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
