@@ -24,6 +24,7 @@ export interface ImageProvider {
   defaults?: any
   getImage: ProviderGetImage
   validateDomains?: Boolean
+  supportsAlias?: Boolean
 }
 
 export interface CreateImageOptions {
@@ -35,7 +36,8 @@ export interface CreateImageOptions {
   }
   presets: { [name: string]: ImageOptions }
   provider: string
-  screens?: Record<string, number>,
+  screens: Record<string, number>,
+  alias: Record<string, string>,
   domains: string[]
 }
 

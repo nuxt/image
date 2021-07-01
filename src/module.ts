@@ -1,6 +1,6 @@
 import { resolve } from 'upath'
 import defu from 'defu'
-import { parseURL } from 'ufo'
+import { parseURL, withLeadingSlash } from 'ufo'
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
@@ -29,7 +29,8 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     },
     internalUrl: '',
     providers: {},
-    static: {}
+    static: {},
+    alias: {}
   }
 
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
@@ -39,6 +40,9 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     .map(domain => parseURL(domain, 'https://').host)
     .filter(Boolean) as string[]
 
+  // Normalize alias to start with leading slash
+  options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
+
   options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
   options[options.provider] = options[options.provider] || {}
 
@@ -46,7 +50,8 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     'screens',
     'presets',
     'provider',
-    'domains'
+    'domains',
+    'alias'
   ])
 
   const providers = resolveProviders(nuxt, options)

@@ -32,7 +32,8 @@ export interface ModuleOptions extends ImageProviders {
   presets: { [name: string]: ImageOptions }
   dir: string
   domains: string[]
-  sharp: {}
+  sharp: any
+  alias: Record<string, string>
   screens: CreateImageOptions['screens'],
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
