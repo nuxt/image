@@ -53,7 +53,7 @@ export const providers: Provider[] = [
         src: '/remote/nuxt-org/blog/going-full-static/main'
       },
       {
-        src: '/remote/nuxt-org/blog/going-full-static/main',
+        src: '/blog/going-full-static/main',
         width: 200,
         height: 200,
         fit: 'cropping'

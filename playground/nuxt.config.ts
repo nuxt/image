@@ -23,7 +23,8 @@ export default <NuxtConfig> {
       750: 750
     },
     alias: {
-      unsplash: 'https://images.unsplash.com'
+      unsplash: 'https://images.unsplash.com', // ipx
+      blog: '/remote/nuxt-org/blog' // cloudinary
     },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
