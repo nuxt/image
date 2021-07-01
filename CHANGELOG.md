@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/nuxt/image/compare/v0.4.17...v0.5.0) (2021-07-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* prepend router base (#339)
+
+### Features
+
+* support alias ([#348](https://github.com/nuxt/image/issues/348)) ([3d11b87](https://github.com/nuxt/image/commit/3d11b8781bc01667b1b6394ac34f36c57d461f16))
+* **imagekit:** add modifiers and improve docs ([#336](https://github.com/nuxt/image/issues/336)) ([d53fda5](https://github.com/nuxt/image/commit/d53fda53df829fd8f5d9c5cd41e0747d2e04b52b))
+* validate external domains ([#343](https://github.com/nuxt/image/issues/343)) ([bee0040](https://github.com/nuxt/image/commit/bee00400837b4276bacf73731d56374e3f5ce3a0))
+
+
+### Bug Fixes
+
+* prepend router base ([#339](https://github.com/nuxt/image/issues/339)) ([2d7a04d](https://github.com/nuxt/image/commit/2d7a04daefdc00abf692d7b8efb27c7f30e24e15))
+* **static:** url encoded name included in generated ext ([#340](https://github.com/nuxt/image/issues/340)) ([58dd744](https://github.com/nuxt/image/commit/58dd744d39dc6a0e1f0c2dc89ea13f50efa7c91f))
+
 ### [0.4.17](https://github.com/nuxt/image/compare/v0.4.16...v0.4.17) (2021-06-23)
 
 
