@@ -1,5 +1,5 @@
 import defu from 'defu'
-import { hasProtocol, parseURL } from 'ufo'
+import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
@@ -86,7 +86,7 @@ async function getMeta (ctx: ImageCTX, input: string, options?: ImageOptions) {
 }
 
 function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
-  if (typeof input !== 'string') {
+  if (typeof input !== 'string' || input === '') {
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
 
@@ -98,6 +98,18 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
   const preset = getPreset(ctx, options.preset)
+
+  // Normalize input with leading slash
+  input = hasProtocol(input) ? input : withLeadingSlash(input)
+
+  // Resolve alias if provider is not ipx
+  if (!provider.supportsAlias) {
+    for (const base in ctx.options.alias) {
+      if (input.startsWith(base)) {
+        input = joinURL(ctx.options.alias[base], input.substr(base.length))
+      }
+    }
+  }
 
   // Externalize remote images if domain does not match with `domains`
   if (provider.validateDomains && hasProtocol(input)) {

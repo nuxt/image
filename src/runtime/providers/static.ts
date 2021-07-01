@@ -4,3 +4,5 @@ export const getImage: typeof _getImage = (src, options, ctx) => ({
   ..._getImage(src, options, ctx),
   isStatic: true
 })
+
+export const supportsAlias = true

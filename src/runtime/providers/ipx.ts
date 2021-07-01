@@ -30,4 +30,4 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
   }
 }
 
-export const validateDomains = true
+export const supportsAlias = true
