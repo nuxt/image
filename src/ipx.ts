@@ -3,15 +3,16 @@ import { update as updaterc } from 'rc9'
 import { mkdirp, readFile, writeFile } from 'fs-extra'
 import { lt } from 'semver'
 
-import type { ProviderSetup } from './types'
+import type { ProviderSetup, ImageProviders } from './types'
 
 export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, nuxt) => {
   const isStatic = nuxt.options.target === 'static'
   const runtimeDir = resolve(__dirname, 'runtime')
-  const ipxOptions = {
+  const ipxOptions: ImageProviders['ipx'] = {
     dir: resolve(nuxt.options.rootDir, moduleOptions.dir),
     domains: moduleOptions.domains,
-    sharp: moduleOptions.sharp
+    sharp: moduleOptions.sharp,
+    alias: moduleOptions.alias
   }
 
   // Add IPX middleware unless nuxtrc or user added a custom middleware
