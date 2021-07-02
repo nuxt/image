@@ -1,5 +1,5 @@
 import { ProviderGetImage } from 'src'
-import { joinURL, encodeQueryItem, encodePath } from 'ufo'
+import { joinURL, encodePath, encodeParam } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -12,13 +12,13 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     background: 'b'
   },
-  joinWith: '&',
-  formatter: (key, val) => encodeQueryItem(key, val)
+  joinWith: ',',
+  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { nuxtContext: { base: nuxtBase = '/' } = {} }) => {
   if (modifiers.width && modifiers.height) {
-    modifiers.resize = `${modifiers.width}_${modifiers.height}`
+    modifiers.resize = `${modifiers.width}x${modifiers.height}`
     delete modifiers.width
     delete modifiers.height
   }
@@ -26,7 +26,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
   const params = operationsGenerator(modifiers)
 
   return {
-    url: joinURL(nuxtBase, baseURL, encodePath(src) + (params ? '?' + params : ''))
+    url: joinURL(nuxtBase, baseURL, params, encodePath(src))
   }
 }
 
