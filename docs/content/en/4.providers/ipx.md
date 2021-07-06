@@ -82,9 +82,10 @@ You can use [additional modifiers](https://github.com/unjs/ipx/#modifiers) suppo
 
 ### Animated Images
 
-**Note:** This feature is currently experimental. When used, `gif` format is converted to `webp`
-([check browser support](https://caniuse.com/webp)). Setting size is also not supported yet
-supported yet (check [lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275) and [unjs/ipx#35](https://github.com/unjs/ipx/issues/35)).
+:::alert{type="info"}
+This feature is currently experimental. When using, `gif` format is converted to `webp`
+([check browser support](https://caniuse.com/webp)). Setting size is also not supported yet (check [lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275) and [unjs/ipx#35](https://github.com/unjs/ipx/issues/35)).
+:::
 
 **Example:**
 
