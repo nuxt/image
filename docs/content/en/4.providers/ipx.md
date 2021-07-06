@@ -7,24 +7,6 @@ navigation:
 
 Nuxt Image comes with a [preconfigured instance](/getting-started/providers#default-provider) of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
 
-## Using `ipx` modifiers
-
-[Modifiers](https://github.com/unjs/ipx/#modifiers) supported by IPX can be used.
-
-```html
-<nuxt-img src="/image.png" :modifiers="{ grayscale: true, tint: '#00DC82' }" />
-```
-
-### Animated images
-
-**Note:** Animated support is currently experimental. When used, `gif` format is converted to `webp`
-([check browser support](https://caniuse.com/webp)). Setting size is also not supported yet
-supported ([lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275)).
-
-```html
-<nuxt-img src="/image.gif" :modifiers="{ animated: true }" />
-```
-
 ## Using `ipx` in production
 
 Use IPX for self-hosting as an alternative to use service providers for production.
@@ -86,4 +68,26 @@ export default {
     '/_ipx': '~/server/middleware/ipx.js'
   }
 }
+```
+
+## Additional Modifiers
+
+You can use [additional modifiers](https://github.com/unjs/ipx/#modifiers) supported by IPX.
+
+**Example:**
+
+```html
+<nuxt-img src="/image.png" :modifiers="{ grayscale: true, tint: '#00DC82' }" />
+```
+
+### Animated Images
+
+**Note:** This feature is currently experimental. When used, `gif` format is converted to `webp`
+([check browser support](https://caniuse.com/webp)). Setting size is also not supported yet
+supported yet (check [lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275) and [unjs/ipx#35](https://github.com/unjs/ipx/issues/35)).
+
+**Example:**
+
+```html
+<nuxt-img src="/image.gif" :modifiers="{ animated: true }" />
 ```
