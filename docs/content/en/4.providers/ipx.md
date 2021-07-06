@@ -17,7 +17,7 @@ Nuxt Image comes with a [preconfigured instance](/getting-started/providers#defa
 
 ### Animated images
 
-They require an additional modifier and work by converting to webp
+**Note:** Animated support is currently experimental. When used, `gif` format is converted to `webp`
 ([browser support](https://caniuse.com/webp)). Resize operations are not yet
 supported ([lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275)).
 
