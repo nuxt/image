@@ -7,6 +7,24 @@ navigation:
 
 Nuxt Image comes with a [preconfigured instance](/getting-started/providers#default-provider) of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).
 
+## Using `ipx` modifiers
+
+[Modifiers](https://github.com/unjs/ipx/#modifiers) supported by IPX can be used.
+
+```html
+<nuxt-img src="/image.png" :modifiers="{ grayscale: true, tint: '#00DC82' }" />
+```
+
+### Animated images
+
+They require an additional modifier and work by converting to webp
+([browser support](https://caniuse.com/webp)). Resize operations are not yet
+supported ([lovell/sharp#2275](https://github.com/lovell/sharp/issues/2275)).
+
+```html
+<nuxt-img src="/image.gif" :modifiers="{ animated: true }" />
+```
+
 ## Using `ipx` in production
 
 Use IPX for self-hosting as an alternative to use service providers for production.
