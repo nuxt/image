@@ -32,6 +32,7 @@ export default <NuxtConfig> {
     storyblok: {
       baseURL: 'https://img2.storyblok.com/'
     },
+    // cloudflare: {},
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },

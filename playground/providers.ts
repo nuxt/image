@@ -45,6 +45,11 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Cloudflare
+  {
+    name: 'cloudflare',
+    samples: []
+  },
   // Cloudinary
   {
     name: 'cloudinary',
