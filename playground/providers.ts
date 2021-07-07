@@ -301,7 +301,7 @@ export const providers: Provider[] = [
     name: 'unsplash',
     samples: [
       {
-        src: '/unsplash/photo-1606112219348-204d7d8b94ee',
+        src: '/photo-1606112219348-204d7d8b94ee',
         width: 300,
         height: 300,
         fit: 'cover',
