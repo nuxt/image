@@ -13,7 +13,7 @@ To use this provider you just need to specify the base url of your service in gl
 export default {
   image: {
     glide: {
-      baseURL: 'https://glide.example.com'
+      baseURL: 'https://glide.herokuapp.com/1.0/'
     }
   }
 }
