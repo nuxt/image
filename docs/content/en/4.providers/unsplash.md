@@ -5,7 +5,7 @@ navigation:
   title: Unsplash
 ---
 
-Integration between [Unsplash](https://unsplash.com/documentation#dynamically-resizable-images) and the image module.
+Integration between [Unsplash](https://unsplash.com/documentation#dynamically-resizable-images) and the image module. See [Unsplash License](Unsplash photos are made to be used freely.) for what usage is permitted.
 
 ## Dynamically resizable images
 
