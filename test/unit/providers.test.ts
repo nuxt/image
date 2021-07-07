@@ -143,8 +143,8 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imgix.getImage(src, { modifiers, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.imgix)
+      const generated = unsplash.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.unsplash)
     }
   })
 
