@@ -296,6 +296,23 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Unsplash
+  {
+    name: 'unsplash',
+    samples: [
+      {
+        src: '/photo-1606112219348-204d7d8b94ee',
+        width: 300,
+        height: 300,
+        fit: 'cover',
+        quality: 75,
+        format: 'auto',
+        from: 'Photo by Omid Armin',
+        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+
+      }
+    ]
+  },
   // Vercel
   {
     name: 'vercel',

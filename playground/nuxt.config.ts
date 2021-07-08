@@ -54,6 +54,7 @@ export default <NuxtConfig> {
     sanity: {
       projectId: 'zp7mbokg'
     },
+    unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
     },

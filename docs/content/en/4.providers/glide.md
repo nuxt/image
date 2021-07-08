@@ -2,10 +2,10 @@
 title: Glide Provider
 description: 'Nuxt Image has first class integration with Glide'
 navigation:
-  title: glide
+  title: Glide
 ---
 
-Integration between [glide](https://glide.thephpleague.com/) and the image module.
+Integration between [Glide](https://glide.thephpleague.com/) and the image module.
 
 To use this provider you just need to specify the base url of your service in glide.
 
@@ -13,7 +13,8 @@ To use this provider you just need to specify the base url of your service in gl
 export default {
   image: {
     glide: {
-      baseURL: 'https://glide.example.com'
+      // baseURL of your laravel application
+      baseURL: 'https://glide.herokuapp.com/1.0/'
     }
   }
 }

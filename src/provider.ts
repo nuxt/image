@@ -17,6 +17,7 @@ const BuiltInProviders = [
   'static',
   'twicpics',
   'storyblok',
+  'unsplash',
   'vercel'
 ]
 
