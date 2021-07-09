@@ -1,7 +1,7 @@
 // https://glide.thephpleague.com/2.0/api/quick-reference/
 
 import { ProviderGetImage } from 'src'
-import { joinURL, encodeQueryItem, encodePath } from 'ufo'
+import { joinURL, encodeQueryItem, encodePath, withBase } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -50,6 +50,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   const params = operationsGenerator(modifiers)
 
   return {
-    url: joinURL(baseURL, encodePath(src) + (params ? '?' + params : ''))
+    url: withBase(joinURL(encodePath(src) + (params ? '?' + params : '')), baseURL)
   }
 }

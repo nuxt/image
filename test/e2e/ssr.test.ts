@@ -21,9 +21,9 @@ describe('browser (ssr: true)', () => {
     })
     page.goto(url('/'))
     const body = await page.innerHTML('body')
-    expect(body).toContain('/_ipx/2000px-Aconcagua2016.jpg?s=300_20')
+    expect(body).toContain('/_ipx/s_300x200/2000px-Aconcagua2016.jpg')
 
-    const positiveRequest = requests.find(request => request.match('/_ipx/2000px-Aconcagua2016.jpg'))
+    const positiveRequest = requests.find(request => request.match('/_ipx/s_300x200/2000px-Aconcagua2016.jpg'))
     expect(positiveRequest).toBeTruthy()
     const negativeRequest = requests.find(request => request.match('1280px-K2_2006b.jpg'))
     expect(negativeRequest).toBeFalsy()
@@ -31,7 +31,7 @@ describe('browser (ssr: true)', () => {
 
   test('change image location', async () => {
     await page.click('#button')
-    const positiveRequest = requests.find(request => request.match('/_ipx/1280px-K2_2006b.jpg'))
+    const positiveRequest = requests.find(request => request.match('/_ipx/s_300x200/1280px-K2_2006b.jpg'))
     expect(positiveRequest).toBeTruthy()
   })
 })
