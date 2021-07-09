@@ -1,7 +1,7 @@
 export const images = [
   {
     args: ['/test.png', {}],
-    ipx: { url: '/_ipx/test.png' },
+    ipx: { url: '/_ipx/_/test.png' },
     cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png' },
     fastly: { url: '/test.png' },
