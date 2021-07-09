@@ -23,7 +23,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_i
     delete modifiers.height
   }
 
-  const params = operationsGenerator(modifiers)
+  const params = operationsGenerator(modifiers) || '_'
 
   return {
     url: joinURL(nuxtBase, baseURL, params, encodePath(src))
