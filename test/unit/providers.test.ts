@@ -34,7 +34,7 @@ describe('Providers', () => {
     const generated = ipx.getImage(src, { modifiers: {} }, context)
     generated.url = cleanDoubleSlashes(generated.url)
     expect(generated).toMatchObject({
-      url: '/app/_ipx/images/test.png'
+      url: '/app/_ipx/_/images/test.png'
     })
   })
 
