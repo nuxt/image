@@ -37,7 +37,7 @@ const defaultModifiers = {
 }
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const mergeModifiers = defu(modifiers, defaultModifiers)
+  const mergeModifiers = { ...defaultModifiers, ...modifiers }
   const operations = operationsGenerator(mergeModifiers as any)
 
   /**
