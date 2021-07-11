@@ -36,7 +36,7 @@ const defaultModifiers = {
   format: 'auto'
 }
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/cdn-cgi/image/' } = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
   const operations = operationsGenerator(mergeModifiers as any)
 
