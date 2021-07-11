@@ -34,8 +34,7 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 const defaultModifiers = {
-  format: 'auto',
-  quality: 'auto'
+  format: 'auto'
 }
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
