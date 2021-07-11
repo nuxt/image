@@ -48,7 +48,13 @@ export const providers: Provider[] = [
   // Cloudflare
   {
     name: 'cloudflare',
-    samples: []
+    samples: [
+      {
+        src: 'https://s3.that-test.site/burger.jpeg',
+        height: 300,
+        fit: 'contain'
+      }
+    ]
   },
   // Cloudinary
   {
