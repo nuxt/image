@@ -20,17 +20,16 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, n
     .find((mw: { path: string }) => mw.path && mw.path.startsWith('/_ipx'))
 
   if (!hasUserProvidedIPX) {
-    try {
-      const { createIPX, createIPXMiddleware } = await import('ipx')
-      const ipx = createIPX(ipxOptions)
-      nuxt.options.serverMiddleware.push({
-        path: '/_ipx',
-        handle: createIPXMiddleware(ipx)
+    const { createIPX, createIPXMiddleware } = await import('ipx')
+      .catch((err) => {
+        console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization. Please run `yarn install -D ipx` / `npm install ipx --save-dev` or use an image provider. You can find more information here: https://image.nuxtjs.org/providers/ipx.')
+        throw new Error(err)
       })
-    } catch (err) {
-      console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization. Please run `yarn install -D ipx` or `npm install ipx --save-dev` or use an image provider. You can find more information here: https://image.nuxtjs.org/providers/ipx.')
-      throw new Error(err)
-    }
+    const ipx = createIPX(ipxOptions)
+    nuxt.options.serverMiddleware.push({
+      path: '/_ipx',
+      handle: createIPXMiddleware(ipx)
+    })
   }
 
   // Warn if unhandled /_ipx endpoint only if not using `modules`
