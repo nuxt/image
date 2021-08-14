@@ -7,6 +7,7 @@ import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
 import * as glide from '~/runtime/providers/glide'
 import * as imgix from '~/runtime/providers/imgix'
+import * as imgproxy from '~/runtime/providers/imgproxy'
 import * as unsplash from '~/runtime/providers/unsplash'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
@@ -133,6 +134,20 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = imgix.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.imgix)
+    }
+  })
+
+  test('imgproxy', () => {
+    const providerOptions = {
+      baseURL: '',
+      key: 'xxxxxxxxxxxxxx',
+      salt: 'xxxxxxxxxxxxxx'
+    }
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = imgproxy.getImage('/test.png', { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.imgproxy)
     }
   })
 

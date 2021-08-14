@@ -18,6 +18,7 @@ export interface ImageProviders {
   glide?: any
   imagekit?: any
   imgix?: any
+  imgproxy?: any
   prismic?: any
   twicpics?: any
   storyblok?: any,

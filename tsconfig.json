@@ -3,9 +3,14 @@
     "strict": true,
     "baseUrl": ".",
     "moduleResolution": "Node",
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "@types/create-hmac"],
     "paths": {
       "~image/*": ["src/runtime/*"],
       "~image": ["src/runtime"]

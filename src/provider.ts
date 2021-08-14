@@ -10,6 +10,7 @@ const BuiltInProviders = [
   'glide',
   'imagekit',
   'imgix',
+  'imgproxy',
   'ipx',
   'netlify',
   'prismic',
