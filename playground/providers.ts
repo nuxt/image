@@ -67,6 +67,26 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Contentful
+  {
+    name: 'contentful',
+    samples: [
+      {
+        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg'
+      },
+      {
+        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
+        width: 200,
+        height: 133
+      },
+      {
+        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
+        width: 200,
+        height: 200,
+        fit: 'contain'
+      }
+    ]
+  },
   // Fastly
   {
     name: 'fastly',
