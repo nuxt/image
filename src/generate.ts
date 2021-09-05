@@ -58,7 +58,7 @@ async function downloadImage ({ url, name, outDir }: { url: string, name: string
     await mkdirp(dirname(dstFile))
     await pipeline(response.body, createWriteStream(dstFile))
     logger.success('Generated static image ' + relative(process.cwd(), dstFile))
-  } catch (error) {
-    logger.error(error.message)
+  } catch (error: any) {
+    logger.error(error?.message)
   }
 }
