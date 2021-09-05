@@ -127,6 +127,18 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // imgproxy
+  {
+    name: 'imgproxy',
+    samples: [
+      {
+        src: '/wp-content/uploads/2021/08/messi-psg.jpg',
+        width: 300,
+        height: 300,
+        fit: 'cover'
+      }
+    ]
+  },
   // Glide
   {
     name: 'glide',

@@ -44,6 +44,11 @@ export default <NuxtConfig> {
     imgix: {
       baseURL: 'https://assets.imgix.net'
     },
+    imgproxy: {
+      baseURL: 'https://cc.cz/',
+      key: 'xxxxxxxxxxxxxx',
+      salt: 'xxxxxxxxxxxxxx'
+    },
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
