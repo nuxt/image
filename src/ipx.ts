@@ -22,7 +22,8 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, n
   if (!hasUserProvidedIPX) {
     const { createIPX, createIPXMiddleware } = await import('ipx')
       .catch((err) => {
-        console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization. Please run `yarn install -D ipx` / `npm install ipx --save-dev` or use an image provider. You can find more information here: https://image.nuxtjs.org/providers/ipx.')
+        // eslint-disable-next-line no-console
+        console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization and is not properly installed. Please try `npm install` or `yarn install` again.')
         throw new Error(err)
       })
     const ipx = createIPX(ipxOptions)
