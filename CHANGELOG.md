@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### ⚠ BREAKING CHANGES
 
-* update ipx to 0.8.x
+* update ipx to 0.8.x ([sharp changelog](https://github.com/lovell/sharp/blob/master/docs/changelog.md#v0290---17th-august-2021))
 
 ### Features
 
