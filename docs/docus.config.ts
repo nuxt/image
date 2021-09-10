@@ -1,5 +1,10 @@
 export default {
   title: 'Nuxt Image',
+  template: 'Docs',
+  layout: {
+    aside: true,
+    asideClass: ''
+  },
   url: 'https://image.nuxtjs.org',
   theme: {
     colors: {
@@ -7,10 +12,10 @@ export default {
     },
     header: {
       title: false,
-       logo: {
+      logo: {
         light: '/logo-light.svg',
         dark: '/logo-dark.svg'
-       }
+      }
     }
   },
   twitter: 'nuxt_js',
