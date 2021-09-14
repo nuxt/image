@@ -1,10 +1,5 @@
 <template>
-  <img
-    :key="nSrc"
-    :src="nSrc"
-    v-bind="nAttrs"
-    @load="onImageLoad"
-  >
+  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="listeners" />
 </template>
 
 <script lang="ts">
@@ -48,6 +43,9 @@ export default defineComponent({
           height: parseSize(this.height)
         }
       })
+    },
+    listeners() {
+      return {...this.$listeners}
     }
   },
   created () {
@@ -57,11 +55,6 @@ export default defineComponent({
         // eslint-disable-next-line no-unused-expressions
         this.nSizes
       }
-    }
-  },
-  methods: {
-    onImageLoad (e: Event) {
-      this.$emit('load', e)
     }
   }
 })
