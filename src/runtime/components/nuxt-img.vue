@@ -3,6 +3,7 @@
     :key="nSrc"
     :src="nSrc"
     v-bind="nAttrs"
+    @load="onImageLoad"
   >
 </template>
 
@@ -56,6 +57,11 @@ export default defineComponent({
         // eslint-disable-next-line no-unused-expressions
         this.nSizes
       }
+    }
+  },
+  methods: {
+    onImageLoad (e: Event) {
+      this.$emit('load', e)
     }
   }
 })
