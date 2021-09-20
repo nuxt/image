@@ -54,3 +54,6 @@ Some common best practices when using imgix, would be to include our auto parame
 
 This will return a 300 x 500 image, which has been compressed, will display next-gen formats for a browser, and has been cropped intelligently to the face of the [woman in the hat](https://assets.imgix.net/blog/woman-hat.jpg?w=300&h=500&fit=crop&crop=faces).
 
+## Additional Documentation
+
+You can find additional documentation and a step-by-step tutorial in an imgix blog article titled [Using the New Nuxt Component with imgix](https://blog.imgix.com/2021/09/14/nuxt-image-component).  
