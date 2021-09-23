@@ -1,5 +1,5 @@
 <template>
-  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="listeners" />
+  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
 </template>
 
 <script lang="ts">
@@ -43,9 +43,6 @@ export default defineComponent({
           height: parseSize(this.height)
         }
       })
-    },
-    listeners() {
-      return {...this.$listeners}
     }
   },
   created () {
