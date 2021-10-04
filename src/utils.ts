@@ -19,9 +19,12 @@ export function pick<O extends Record<any, any>, K extends keyof O> (obj: O, key
 }
 
 export function guessExt (input: string = '') {
-  const ext = input.split('.').pop()?.split('?')[0]
-  if (ext && /^[\w0-9]+$/.test(ext)) {
-    return '.' + ext
+  if(input) {
+    const ext = input.split(/[?#]/).shift()!.split('.').pop()
+    if (ext && /^[\w0-9]+$/.test(ext)) {
+      return '.' + ext
+    }
   }
+  
   return ''
 }
