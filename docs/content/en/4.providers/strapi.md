@@ -5,7 +5,7 @@ navigation:
   title: Strapi
 ---
 
-Integration between [Strapi](https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html) and the image module.
+Integration between [Strapi](https://strapi.io) and the image module.
 
 No specific configuration is required. You just need to specify `provider: 'strapi'` in your configuration to make it the default:
 
