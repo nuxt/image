@@ -11,6 +11,7 @@
       :src="nSources[0].src"
       :srcset="nSources[0].srcset"
       :sizes="nSources[0].sizes"
+      v-on="$listeners"
     >
   </picture>
 </template>
