@@ -13,6 +13,7 @@ import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
 import * as sanity from '~/runtime/providers/sanity'
+import * as contentful from '~/runtime/providers/contentful'
 
 const emptyContext = { options: {} } as any
 
@@ -209,6 +210,18 @@ describe('Providers', () => {
       const [, modifiers] = image.args
       const generated = sanity.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sanity)
+    }
+  })
+
+  test('contentful', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = contentful.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.contentful)
     }
   })
 })

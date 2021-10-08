@@ -12,7 +12,8 @@ export const images = [
     imagekit: { url: '/test.png' },
     netlify: { url: '/test.png' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=100' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?auto=format' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?auto=format' },
+    contentful: { url: '/test.png' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -27,7 +28,8 @@ export const images = [
     imagekit: { url: '/test.png?tr=w-200' },
     netlify: { url: '/test.png?w=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=100' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&auto=format' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&auto=format' },
+    contentful: { url: '/test.png?w=200' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -42,7 +44,8 @@ export const images = [
     imagekit: { url: '/test.png?tr=h-200' },
     netlify: { url: '/test.png?h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=200' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?h=200&auto=format' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?h=200&auto=format' },
+    contentful: { url: '/test.png?h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -57,7 +60,8 @@ export const images = [
     imagekit: { url: '/test.png?tr=w-200,h-200' },
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&auto=format' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&auto=format' },
+    contentful: { url: '/test.png?w=200&h=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -72,7 +76,8 @@ export const images = [
     imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize' },
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&auto=format&bg=ffffff' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&auto=format&bg=ffffff' },
+    contentful: { url: '/test.png?w=200&h=200&fit=fill' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -87,7 +92,8 @@ export const images = [
     imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' },
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' },
-    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&fm=jpg&bg=ffffff' }
+    sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&fm=jpg&bg=ffffff' },
+    contentful: { url: '/test.png?w=200&h=200&fit=fill&fm=jpg' }
   }
 ] as const
 

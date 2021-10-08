@@ -38,6 +38,7 @@ export default <NuxtConfig> {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
+    contentful: {},
     fastly: {
       baseURL: 'https://www.fastly.io'
     },

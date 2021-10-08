@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/nuxt/image/compare/v0.5.0...v0.6.0) (2021-09-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* update ipx to 0.8.x ([sharp changelog](https://github.com/lovell/sharp/blob/master/docs/changelog.md#v0290---17th-august-2021))
+
+### Features
+
+* add contentful provider ([#398](https://github.com/nuxt/image/issues/398)) ([3eccba6](https://github.com/nuxt/image/commit/3eccba645fb7cc8d04a835a8559e8b9ee1d53103))
+* **imgix:** format keys ([#364](https://github.com/nuxt/image/issues/364)) ([ce66fa7](https://github.com/nuxt/image/commit/ce66fa770c0a02381eb17b5e38b62fa08f318210))
+* **ipx:** compatible with 0.7.x ([017c335](https://github.com/nuxt/image/commit/017c33514df00267dfa5f05429a573bca39ecc7a))
+* **provider:** unsplash ([#357](https://github.com/nuxt/image/issues/357)) ([ad6c1ae](https://github.com/nuxt/image/commit/ad6c1ae3bcff9e9c4096bfab70de195abcb4601d))
+
+
+### Bug Fixes
+
+* **glide:** prevent adding duplicate base url ([#362](https://github.com/nuxt/image/issues/362)) ([d792e1e](https://github.com/nuxt/image/commit/d792e1eba3b9345dce733fe7b339c2004f929d53))
+* **ipx:** default modifiers to _ ([3c18ad8](https://github.com/nuxt/image/commit/3c18ad8bd8d54d1b82ef68538f28cef79b7f54f9))
+* move `ipx` to optional dependencies ([#403](https://github.com/nuxt/image/issues/403)) ([0affa9d](https://github.com/nuxt/image/commit/0affa9dbab1c582f27cce9133479517c2a4bd43a))
+
+
+* update ipx to 0.8.x ([7a75fa0](https://github.com/nuxt/image/commit/7a75fa00c43edbf9b0b9698d50a6c51f694c31fd))
+
 ## [0.5.0](https://github.com/nuxt/image/compare/v0.4.17...v0.5.0) (2021-07-01)
 
 

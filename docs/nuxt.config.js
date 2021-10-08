@@ -1,8 +1,32 @@
-import { withDocus } from 'docus'
+import { withDocus } from '@docus/app'
 
 export default withDocus({
   rootDir: __dirname,
-  buildModules: ['vue-plausible'],
+  buildModules: [
+    '@nuxt/typescript-build',
+    'vue-plausible',
+    '@docus/twitter',
+    '@docus/github'
+  ],
+  vite: {
+    server: {
+      fs: {
+        strict: false
+      }
+    },
+    optimizeDeps: {
+      exclude: ['vue-demi', 'scule', '@vueuse/integrations', 'ohmyfetch'],
+      include: [
+        'defu',
+        'theme-colors',
+        'cookie',
+        'js-cookie',
+        'clipboard',
+        'property-information',
+        'ufo'
+      ]
+    }
+  },
   head: {
     meta: [
       { charset: 'utf-8' },
@@ -39,5 +63,11 @@ export default withDocus({
   },
   plausible: {
     domain: 'image.nuxtjs.org'
+  },
+  build: {
+    transpile: ['ohmyfetch'],
+    loaders: {
+      imgUrl: { limit: 0 }
+    }
   }
 })
