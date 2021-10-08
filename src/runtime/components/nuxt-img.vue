@@ -1,9 +1,5 @@
 <template>
-  <img
-    :key="nSrc"
-    :src="nSrc"
-    v-bind="nAttrs"
-  >
+  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
 </template>
 
 <script lang="ts">
