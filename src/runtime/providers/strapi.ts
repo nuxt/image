@@ -1,5 +1,5 @@
 import { ProviderGetImage } from 'src'
-import { withBase, joinURL } from 'ufo'
+import { withBase, withoutLeadingSlash } from 'ufo'
 
 // https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#upload
 
@@ -8,16 +8,12 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = 'http://l
 
   if (!breakpoint) {
     return {
-      url: withBase(joinURL(src), baseURL)
+      url: withBase(src, baseURL)
     }
   }
 
-  if (src.startsWith('/')) {
-    src = src.slice(1)
-  }
-
   return {
-    url: withBase(joinURL(`${breakpoint}_${src}`), baseURL)
+    url: withBase(`${breakpoint}_${withoutLeadingSlash(src)}`, baseURL)
   }
 }
 
