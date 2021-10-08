@@ -7,8 +7,7 @@ navigation:
 
 Integration between [Strapi](https://strapi.io) and the image module.
 
-No specific configuration is required. You just need to specify `provider: 'strapi'` in your configuration to make it the default:
-
+No specific configuration is required. You just need to specify `strapi` in your configuration to make it the default:
 ```js{}[nuxt.config.js]
 export default {
   image: {
@@ -29,13 +28,15 @@ export default {
 ```
 
 ## Modifiers
-The `breakpoint` modifier is used to specify the breakpoint for the image.
+The `breakpoint` modifier is used to specify the size of the image.
 
 By default, when the image is uploaded and `Enable responsive friendly upload` Strapi setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
 
-* `small`: 500px
-* `medium`: 750px
-* `large`: 1000px
+|  Name   | Largest Dimension |
+| ------- | ----------------- |
+| `small` | 500px             |
+| `medium`| 750px             |
+| `large` | 1000px            |
 
 You can override the default breakpoints. See the [Upload configuration](https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#configuration) in the Strapi documentation.
 
