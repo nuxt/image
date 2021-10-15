@@ -1,7 +1,7 @@
 <template>
   <div>
     It works
-    <nuxt-img :src="image" width="300" height="200" />
+    <nuxt-img :src="image" width="300" height="200" @load="onLoad" />
     <button id="button" @click="changeImage">
       Change Image
     </button>
@@ -18,6 +18,9 @@ export default {
   methods: {
     changeImage () {
       this.image = '/1280px-K2_2006b.jpg'
+    },
+    onLoad () {
+      console.log('Image was loaded.')
     }
   }
 }
