@@ -30,6 +30,22 @@ export default defineComponent({
   props: {
     legacyFormat: { type: String, default: null }
   },
+  head () {
+    if (this.preload === true) {
+      const srcKey = typeof this.nSources[1] !== 'undefined' ? 1 : 0
+      const link = {
+        rel: 'preload',
+        as: 'image',
+        imagesrcset: this.nSources[srcKey].srcset
+      }
+      if (typeof this.nSources[srcKey].sizes !== 'undefined') {
+        link.imagesizes = this.nSources[srcKey].sizes
+      }
+      return {
+        link: [link]
+      }
+    }
+  },
   computed: {
     isTransparent (): boolean {
       return ['png', 'webp', 'gif'].includes(this.originalFormat)
