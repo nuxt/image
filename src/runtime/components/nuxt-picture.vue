@@ -7,7 +7,7 @@
       :sizes="nSources[1].sizes"
     >
     <img
-      v-bind="nImgAttrs"
+      v-bind="{...nImgAttrs, ...imgAttrs}"
       :src="nSources[0].src"
       :srcset="nSources[0].srcset"
       :sizes="nSources[0].sizes"
@@ -28,7 +28,8 @@ export default defineComponent({
   name: 'NuxtPicture',
   mixins: [imageMixin],
   props: {
-    legacyFormat: { type: String, default: null }
+    legacyFormat: { type: String, default: null },
+    imgAttrs: { type: Object, default: null }
   },
   computed: {
     isTransparent (): boolean {
