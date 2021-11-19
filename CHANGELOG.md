@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+* add imageengine provider (TODO: Add commit)
 * add contentful provider ([#398](https://github.com/nuxt/image/issues/398)) ([3eccba6](https://github.com/nuxt/image/commit/3eccba645fb7cc8d04a835a8559e8b9ee1d53103))
 * **imgix:** format keys ([#364](https://github.com/nuxt/image/issues/364)) ([ce66fa7](https://github.com/nuxt/image/commit/ce66fa770c0a02381eb17b5e38b62fa08f318210))
 * **ipx:** compatible with 0.7.x ([017c335](https://github.com/nuxt/image/commit/017c33514df00267dfa5f05429a573bca39ecc7a))
