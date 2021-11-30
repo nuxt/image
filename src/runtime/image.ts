@@ -160,9 +160,8 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
-  const height = parseSize(opts.modifiers?.height)
-  const hwRatio = (width && height) ? height / width : 0
-  const variants = []
+  const height = parseSize(opts.modifiers?.height) ?? 0
+  const hwRatio = (width) ? height / width : 0
 
   const sizes: Record<string, string> = {}
 
@@ -176,6 +175,14 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   } else {
     Object.assign(sizes, opts.sizes)
   }
+
+  // When an image is shown on a device with a higher resolution, we need to include
+  // an image that is x times bigger.
+  // By default, we also include all sizes x2 and x3 for high resolution devices.
+  const highDensityFactors = [1, 2, 3]
+
+  const sizeVariants = []
+  const srcVariants = []
 
   for (const key in sizes) {
     const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
@@ -195,25 +202,34 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
     const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
-    variants.push({
-      width: _cWidth,
-      size,
+
+    sizeVariants.push({
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
+      size
     })
+
+    for (const factor of highDensityFactors) {
+      srcVariants.push({
+        width: _cWidth,
+        src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * factor, height: _cHeight * factor }, opts)
+      })
+    }
   }
 
-  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  srcVariants.sort((v1, v2) => v1.width - v2.width)
 
-  const defaultVar = variants[variants.length - 1]
-  if (defaultVar) {
-    defaultVar.media = ''
+  const defaultSize = sizeVariants[sizeVariants.length - 1]
+  if (defaultSize) {
+    defaultSize.media = ''
   }
+
+  const defaultSrc = srcVariants[srcVariants.length - 1]
 
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar?.src
+    sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    srcset: srcVariants.map(v => `${v.src} ${v.width}w`).join(', '),
+    src: defaultSrc?.src
   }
 }
