@@ -75,7 +75,7 @@ Example 2: Instruct ImageEngine to keep the image's EXIF metadata (which is norm
 
 ImageEngine automatically detects the best format and quality for your image based on the characteristics of the specific device that requested it.
 
-This feature is very effective and it is not recommended that you disable it, but if you must, you can manually specify the format (ex: `format='webp'`) and quality (`quality='80`).
+This feature is very effective and it is not recommended that you disable it, but if you must, you can manually specify the format (ex: `format='webp'`) and quality (`quality='80'`).
 
 ### ImageEngine settings
 
