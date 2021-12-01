@@ -218,6 +218,23 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   }
 
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+
+  // Remove duplicate size variants,
+  // `sizes="(max-width: 320px) 100vw, (max-width: 375px) 100vw, (max-width: 400px) 100vw, (max-width: 500px) 100vw, (max-width: 1000px) 100vw, 1000px"`
+  // which could be shorter:
+  // `sizes="(max-width: 1000px) 100vw, 1000px"`
+  // We can do this by removing duplicate values and only keeping the largest one
+  let previousSize = ''
+
+  // Loop in reverse order to allow safe deletion
+  for (let i = sizeVariants.length - 1; i >= 0; i--) {
+    const sizeVariant = sizeVariants[i]
+    if (sizeVariant.size === previousSize) {
+      sizeVariants.splice(i, 1)
+    }
+    previousSize = sizeVariant.size
+  }
+
   srcVariants.sort((v1, v2) => v1.width - v2.width)
 
   const defaultSize = sizeVariants[sizeVariants.length - 1]
