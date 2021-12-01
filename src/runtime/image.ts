@@ -211,7 +211,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
 
     for (const factor of highDensityFactors) {
       srcVariants.push({
-        width: _cWidth,
+        width: _cWidth * factor,
         src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * factor, height: _cHeight * factor }, opts)
       })
     }
