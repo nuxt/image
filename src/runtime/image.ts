@@ -160,8 +160,8 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
-  const height = parseSize(opts.modifiers?.height) ?? 0
-  const hwRatio = (width) ? height / width : 0
+  const height = parseSize(opts.modifiers?.height)
+  const hwRatio = (width && height) ? height / width : 0
 
   const sizes: Record<string, string> = {}
 
@@ -212,7 +212,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     for (const factor of highDensityFactors) {
       srcVariants.push({
         width: _cWidth * factor,
-        src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * factor, height: _cHeight * factor }, opts)
+        src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * factor, height: _cHeight ? _cHeight * factor : undefined }, opts)
       })
     }
   }
