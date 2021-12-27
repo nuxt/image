@@ -7,6 +7,7 @@ import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
 import * as glide from '~/runtime/providers/glide'
 import * as imgix from '~/runtime/providers/imgix'
+import * as gumlet from '~/runtime/providers/gumlet'
 import * as unsplash from '~/runtime/providers/unsplash'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
@@ -122,6 +123,18 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = fastly.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.fastly)
+    }
+  })
+
+  test('gumlet', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = gumlet.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.gumlet)
     }
   })
 

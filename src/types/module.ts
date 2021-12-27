@@ -17,6 +17,7 @@ export interface ImageProviders {
   contentful?: any
   fastly?: any
   glide?: any
+  gumlet?: any
   imagekit?: any
   imgix?: any
   prismic?: any
