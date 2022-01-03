@@ -36,25 +36,13 @@ export const operationsGenerator = createOperationsGenerator({
     focalPointZoom: 'fp-z',
     chromaSubsampling: 'chromasub',
     colorQuantization: 'colorquant',
-    colorSpace: 'cs',
-    download: 'dl',
+    colorSpace: 'colorspace',
     dotsPerInch: 'dpi',
-    losslessCompression: 'lossless',
-    maskBackgroundColor: 'mask-bg',
-    maskCornerRadius: 'corner-radius',
     pdfPageNumber: 'page',
     pixelDensity: 'dpr',
-    orientation: 'orient',
-    flipAxis: 'flip',
     aspectRatio: 'ar',
-    maximumHeight: 'max-h',
-    maximumWidth: 'max-w',
-    minimumHeight: 'min-h',
-    minimumWidth: 'min-w',
     sourceRectangleRegion: 'rect',
-    monochrome: 'monochrome',
-    pixellate: 'px',
-    sepiaTone: 'sepia'
+    monochrome: 'monochrome'
   },
   valueMap: {
     fit: {
