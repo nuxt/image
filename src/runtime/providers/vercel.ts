@@ -4,7 +4,7 @@ import { stringifyQuery } from 'ufo'
 // https://vercel.com/docs/more/adding-your-framework#images
 
 export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel/image' } = {}, ctx) => {
-  const validWidths = Object.values(ctx.options.screens || {}).sort()
+  const validWidths = Object.values(ctx.options.screens || {}).sort((a, b) => a - b)
   const largestWidth = validWidths[validWidths.length - 1]
   let width = Number(modifiers?.width || 0)
 
