@@ -33,6 +33,14 @@ describe('browser (ssr: false)', () => {
     expect(negativeRequest).toBeFalsy()
   })
 
+  test('should emit load event', async () => {
+    await page.waitForEvent('console', (msg) => {
+      expect(msg.text()).toBe('Image was loaded.')
+
+      return true
+    })
+  })
+
   test('change image location', async () => {
     await page.click('#button')
     const positiveRequest = requests.find(request => request.match('/_ipx/s_300x200/1280px-K2_2006b.jpg'))

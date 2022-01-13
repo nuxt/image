@@ -1,9 +1,5 @@
 <template>
-  <img
-    :key="nSrc"
-    :src="nSrc"
-    v-bind="nAttrs"
-  >
+  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
 </template>
 
 <script lang="ts">
@@ -23,6 +19,19 @@ type NAttrs = typeof imageMixin['nImgAttrs'] & {
 export default defineComponent({
   name: 'NuxtImg',
   mixins: [imageMixin],
+  head () {
+    if (this.preload === true) {
+      return {
+        link: [
+          {
+            rel: 'preload',
+            as: 'image',
+            href: this.nSrc
+          }
+        ]
+      }
+    }
+  },
   computed: {
     nAttrs (): NAttrs {
       const attrs: NAttrs = this.nImgAttrs
