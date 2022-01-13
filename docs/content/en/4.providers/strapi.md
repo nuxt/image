@@ -30,7 +30,7 @@ export default {
 ## Modifiers
 The `breakpoint` modifier is used to specify the size of the image.
 
-By default, when the image is uploaded and `Enable responsive friendly upload` Strapi setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
+By default, when the image is uploaded and **Enable responsive friendly upload** Strapi setting is enabled in the settings panel the plugin will generate the following responsive image sizes:
 
 |  Name   | Largest Dimension |
 | ------- | ----------------- |
