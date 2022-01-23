@@ -1,5 +1,5 @@
 <template>
-  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
+  <img :key="nSrc" v-bind="nAttrs" ref="img" :src="image" v-on="$listeners">
 </template>
 
 <script lang="ts">
@@ -56,9 +56,23 @@ export default defineComponent({
           height: parseSize(this.height)
         }
       })
+    },
+    image (): string {
+      return this.placeholder ? this.placeholder : this.nSrc
     }
   },
-  created () {
+  mounted () {
+    if (this.placeholder) {
+      this.image = this.placeholder
+      const img = new Image()
+      img.src = this.nSrc
+      const ref = this
+      img.onload = () => {
+        ref.$refs.img.src = ref.nSrc
+        ref.image = ref.nSrc
+      }
+    }
+
     if (process.server && process.static) {
       if (this.sizes) {
         // Force compute sources into ssrContext
