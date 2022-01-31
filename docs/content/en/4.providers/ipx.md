@@ -21,7 +21,7 @@ Just add `@nuxt/image` to `modules` (instead of `buildModules`) in `nuxt.config`
 
 ### Advanced: Custom ServerMiddleware
 
-If you have an usecase of a custom IPX instance serving other that `static/` dir, you may instead create a server Middleware that handles the `/_ipx` endpoint:
+If you have a use case of a custom IPX instance serving other that `static/` dir, you may instead create a server Middleware that handles the `/_ipx` endpoint:
 
 1. Add `ipx` as a dependency:
 
