@@ -1,5 +1,5 @@
-import { ProviderGetImage } from 'src'
 import { joinURL, encodePath, encodeParam } from 'ufo'
+import { ProviderGetImage } from 'src'
 import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
