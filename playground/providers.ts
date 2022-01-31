@@ -147,6 +147,19 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // imageengine
+  {
+    name: 'imageengine',
+    samples: [
+      {
+        src: '/images/image.jpg',
+        width: 300,
+        height: 300,
+        fit: 'inside',
+        modifiers: { metadata: 'true', sharpen: 10 }
+      }
+    ]
+  },
   // Glide
   {
     name: 'glide',

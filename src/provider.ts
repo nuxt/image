@@ -19,7 +19,8 @@ const BuiltInProviders = [
   'twicpics',
   'storyblok',
   'unsplash',
-  'vercel'
+  'vercel',
+  'imageengine'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
