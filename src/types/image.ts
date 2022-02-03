@@ -36,6 +36,7 @@ export interface CreateImageOptions {
   }
   presets: { [name: string]: ImageOptions }
   provider: string
+  strategy: 'desktop-first' | 'mobile-first'
   screens: Record<string, number>,
   alias: Record<string, string>,
   domains: string[]

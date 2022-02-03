@@ -36,6 +36,7 @@ export interface ModuleOptions extends ImageProviders {
   domains: string[]
   sharp: any
   alias: Record<string, string>
+  strategy: 'mobile-first' | 'desktop-first'
   screens: CreateImageOptions['screens'],
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders

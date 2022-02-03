@@ -52,4 +52,16 @@ describe('Renders simple image', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
   })
+
+  test('sizes in mobile-first', () => {
+    wrapper = mountWithImg(NuxtImg, {
+      width: 200,
+      height: 200,
+      sizes: '20vw,500:50vw,700:70vw,900:90vw',
+      src
+    }, 'mobile-first')
+
+    const sizes = wrapper.find('img').element.getAttribute('sizes')
+    expect(sizes).toBe('(min-width: 900px) 90vw, (min-width: 700px) 70vw, 50vw')
+  })
 })
