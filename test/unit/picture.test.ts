@@ -3,11 +3,9 @@
  */
 
 import { Wrapper } from '@vue/test-utils'
-
 import type Vue from 'vue'
 import { getSrc, mountWithImg } from './utils/mount'
 import { nextTick } from './utils/tick'
-
 import NuxtPicture from '~/runtime/components/nuxt-picture.vue'
 
 describe('Renders simple image', () => {
