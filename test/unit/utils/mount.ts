@@ -6,10 +6,10 @@ export function getSrc (path: string) {
   return '/_custom' + path
 }
 
-export function mountWithImg (Component: any, propsData: Record<string, any>, strategy: CreateImageOptions['strategy'] = 'desktop-first') {
+export function mountWithImg (Component: any, propsData: Record<string, any>, mobileFirst: CreateImageOptions['mobileFirst'] = false) {
   const $img = createImage(
     {
-      strategy,
+      mobileFirst,
       providers: {
         custom: {
           defaults: {},
