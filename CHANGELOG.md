@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/nuxt/image/compare/v0.6.1...v0.6.2) (2022-02-17)
+
+
+### Features
+
+* gumlet image provider  ([#489](https://github.com/nuxt/image/issues/489)) ([8aaab14](https://github.com/nuxt/image/commit/8aaab1466f6591e78b9a1eb28fe8cfbb607c0fb8))
+* strapi provider ([#406](https://github.com/nuxt/image/issues/406)) ([8245c22](https://github.com/nuxt/image/commit/8245c22119dc14809b66ef08140951879bf54cf1))
+
+
+### Bug Fixes
+
+* avoid dynamic import of `lru-cache` (resolves [#481](https://github.com/nuxt/image/issues/481)) ([61bcb90](https://github.com/nuxt/image/commit/61bcb90f0403df804506ccbecebfe13605ae56b4))
+
 ### [0.6.1](https://github.com/nuxt/image/compare/v0.6.0...v0.6.1) (2022-01-31)
 
 
