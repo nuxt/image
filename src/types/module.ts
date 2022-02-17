@@ -21,6 +21,8 @@ export interface ImageProviders {
   imgix?: any
   prismic?: any
   twicpics?: any
+  storyblok?: any,
+  strapi?: any,
   storyblok?: any
   imageengine?: any,
   ipx?: Partial<IPXOptions>
