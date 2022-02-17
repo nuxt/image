@@ -135,6 +135,18 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // gumlet
+  {
+    name: 'gumlet',
+    samples: [
+      {
+        src: '/sea.jpeg',
+        width: 300,
+        height: 300,
+        fit: 'cover'
+      }
+    ]
+  },
   // imgix
   {
     name: 'imgix',

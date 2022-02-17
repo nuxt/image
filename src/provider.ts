@@ -10,6 +10,7 @@ const BuiltInProviders = [
   'fastly',
   'glide',
   'imagekit',
+  'gumlet',
   'imgix',
   'ipx',
   'netlify',
