@@ -3,11 +3,9 @@
  */
 
 import { Wrapper } from '@vue/test-utils'
-
 import type Vue from 'vue'
 import { getSrc, mountWithImg } from './utils/mount'
 import { nextTick } from './utils/tick'
-
 import NuxtPicture from '~/runtime/components/nuxt-picture.vue'
 
 describe('Renders simple image', () => {
@@ -79,5 +77,18 @@ describe('Renders simple image', () => {
   test('sizes', () => {
     const sizes = wrapper.find('source').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
+  })
+
+  test('sizes in mobile-first', () => {
+    wrapper = mountWithImg(NuxtPicture, {
+      loading: 'lazy',
+      width: 200,
+      height: 200,
+      sizes: '20vw,500:50vw,700:70vw,900:90vw',
+      src
+    }, 'mobile-first')
+
+    const sizes = wrapper.find('source').element.getAttribute('sizes')
+    expect(sizes).toBe('(min-width: 900px) 90vw, (min-width: 700px) 70vw, 50vw')
   })
 })

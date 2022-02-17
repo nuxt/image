@@ -177,8 +177,9 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     Object.assign(sizes, opts.sizes)
   }
 
+  const { mobileFirst } = ctx.options
   for (const key in sizes) {
-    const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
+    const screenWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
     let size = String(sizes[key])
     const isFluid = size.endsWith('vw')
     if (!isFluid && /^\d+$/.test(size)) {
@@ -188,23 +189,29 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       continue
     }
     let _cWidth = parseInt(size)
-    if (!screenMaxWidth || !_cWidth) {
+    if (!screenWidth || !_cWidth) {
       continue
     }
     if (isFluid) {
-      _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
+      _cWidth = Math.round((_cWidth / 100) * screenWidth)
     }
     const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
     variants.push({
       width: _cWidth,
       size,
-      screenMaxWidth,
-      media: `(max-width: ${screenMaxWidth}px)`,
+      screenWidth,
+      media: `(${mobileFirst ? 'min' : 'max'}-width: ${screenWidth}px)`,
       src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
   }
 
-  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  variants.sort((v1, v2) => {
+    if (mobileFirst) {
+      return v2.screenWidth - v1.screenWidth
+    } else {
+      return v1.screenWidth - v2.screenWidth
+    }
+  })
 
   const defaultVar = variants[variants.length - 1]
   if (defaultVar) {

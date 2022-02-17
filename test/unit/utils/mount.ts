@@ -1,13 +1,15 @@
 import { mount } from '@vue/test-utils'
+import { CreateImageOptions } from '~/types'
 import { createImage } from '~image/image'
 
 export function getSrc (path: string) {
   return '/_custom' + path
 }
 
-export function mountWithImg (Component: any, propsData: Record<string, any>) {
+export function mountWithImg (Component: any, propsData: Record<string, any>, mobileFirst: CreateImageOptions['mobileFirst'] = false) {
   const $img = createImage(
     {
+      mobileFirst,
       providers: {
         custom: {
           defaults: {},

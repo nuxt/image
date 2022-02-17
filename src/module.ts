@@ -18,6 +18,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
     domains: [],
     sharp: {},
+    mobileFirst: false,
     // https://tailwindcss.com/docs/breakpoints
     screens: {
       xs: 320,
@@ -52,7 +53,8 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     'presets',
     'provider',
     'domains',
-    'alias'
+    'alias',
+    'mobileFirst'
   ])
 
   const providers = resolveProviders(nuxt, options)
