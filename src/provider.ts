@@ -18,9 +18,11 @@ const BuiltInProviders = [
   'sanity',
   'static',
   'twicpics',
+  'strapi',
   'storyblok',
   'unsplash',
-  'vercel'
+  'vercel',
+  'imageengine'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

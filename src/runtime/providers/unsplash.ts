@@ -1,8 +1,8 @@
 // https://unsplash.com/documentation#dynamically-resizable-images
 
 import { joinURL, withBase } from 'ufo'
-import type { ProviderGetImage } from 'src'
 import { operationsGenerator } from './imgix'
+import type { ProviderGetImage } from 'src'
 
 const unsplashCDN = 'https://images.unsplash.com/'
 

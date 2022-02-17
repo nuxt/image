@@ -8,6 +8,7 @@ import * as fastly from '~/runtime/providers/fastly'
 import * as glide from '~/runtime/providers/glide'
 import * as imgix from '~/runtime/providers/imgix'
 import * as gumlet from '~/runtime/providers/gumlet'
+import * as imageengine from '~/runtime/providers/imageengine'
 import * as unsplash from '~/runtime/providers/unsplash'
 import * as imagekit from '~/runtime/providers/imagekit'
 import * as netlify from '~/runtime/providers/netlify'
@@ -148,6 +149,37 @@ describe('Providers', () => {
       const generated = imgix.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.imgix)
     }
+  })
+
+  test('imageengine', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = imageengine.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.imageengine)
+    }
+  })
+
+  test('imageengine compression', () => {
+    const providerOptions = {
+      baseURL: 'https://foo.bar.com'
+    }
+    const generated = imageengine.getImage(
+      '/test.jpg',
+      {
+        modifiers: {
+          width: 150,
+          quality: 0
+        },
+        ...providerOptions
+      }, emptyContext
+    )
+    expect(generated).toMatchObject({
+      url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99'
+    })
   })
 
   test('unsplash', () => {
