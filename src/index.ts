@@ -1,2 +1,2 @@
-export * from './module'
+export { default } from './module'
 export * from './types'

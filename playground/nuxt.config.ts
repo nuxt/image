@@ -62,6 +62,9 @@ export default <NuxtConfig> {
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
     },
+    imageengine: {
+      baseURL: 'https://abc123.imgeng.in'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

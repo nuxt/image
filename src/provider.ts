@@ -20,7 +20,8 @@ const BuiltInProviders = [
   'strapi',
   'storyblok',
   'unsplash',
-  'vercel'
+  'vercel',
+  'imageengine'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
