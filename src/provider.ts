@@ -10,6 +10,7 @@ const BuiltInProviders = [
   'fastly',
   'glide',
   'imagekit',
+  'gumlet',
   'imgix',
   'ipx',
   'netlify',
@@ -17,9 +18,11 @@ const BuiltInProviders = [
   'sanity',
   'static',
   'twicpics',
+  'strapi',
   'storyblok',
   'unsplash',
-  'vercel'
+  'vercel',
+  'imageengine'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

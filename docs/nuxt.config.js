@@ -22,8 +22,7 @@ export default withDocus({
         'cookie',
         'js-cookie',
         'clipboard',
-        'property-information',
-        'ufo'
+        'property-information'
       ]
     }
   },
