@@ -1,17 +1,24 @@
-import { resolve } from 'upath'
+import { defineNuxtModule, addPluginTemplate, addComponent } from '@nuxt/kit'
+import { join, resolve } from 'upath'
 import defu from 'defu'
 import { parseURL, withLeadingSlash } from 'ufo'
 import LruCache from 'lru-cache'
-import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
+
 import type { ModuleOptions, CreateImageOptions } from './types'
+export interface ModuleHooks {
+  'my-module:init': any;
+}
 
-const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
-  const { nuxt, addPlugin } = this
-
-  const defaults: ModuleOptions = {
+export default defineNuxtModule<ModuleOptions>({
+  meta: {
+    name: pkg.name,
+    version: pkg.version,
+    configKey: 'image'
+  },
+  defaults: nuxt => ({
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
     presets: {},
@@ -32,72 +39,70 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     providers: {},
     static: {},
     alias: {}
-  }
+  }),
+  async setup (options, nuxt) {
+    // Normalize domains to hostname
+    options.domains = options.domains
+      .map(domain => parseURL(domain, 'https://').host)
+      .filter(Boolean) as string[]
 
-  const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
+    // Normalize alias to start with leading slash
+    options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
 
-  // Normalize domains to hostname
-  options.domains = options.domains
-    .map(domain => parseURL(domain, 'https://').host)
-    .filter(Boolean) as string[]
+    options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
+    options[options.provider] = options[options.provider] || {}
 
-  // Normalize alias to start with leading slash
-  options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
+    const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
+      'screens',
+      'presets',
+      'provider',
+      'domains',
+      'alias'
+    ])
 
-  options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
-  options[options.provider] = options[options.provider] || {}
+    const providers = await resolveProviders(nuxt, options)
 
-  const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
-    'screens',
-    'presets',
-    'provider',
-    'domains',
-    'alias'
-  ])
-
-  const providers = resolveProviders(nuxt, options)
-
-  // Run setup
-  for (const p of providers) {
-    if (typeof p.setup === 'function') {
-      await p.setup(p, options, nuxt)
+    // Run setup
+    for (const p of providers) {
+      if (typeof p.setup === 'function') {
+        await p.setup(p, options, nuxt)
+      }
     }
+
+    // Transpile and alias runtime
+    const runtimeDir = resolve(__dirname, 'runtime')
+    nuxt.options.alias['~image'] = runtimeDir
+    nuxt.options.build.transpile.push(runtimeDir, '@nuxt/image', 'allowlist', 'defu', 'ufo')
+
+    // importing components
+    addComponent({ filePath: join(runtimeDir, 'components', 'nuxt-img.vue'), name: 'nuxt-img', global: true })
+    addComponent({ filePath: join(runtimeDir, 'components', 'nuxt-picture.vue'), name: 'nuxt-picture', global: true })
+    // Add plugin
+    addPluginTemplate({
+      fileName: 'image.js',
+      src: resolve(runtimeDir, 'plugin.js'),
+      options: {
+        imageOptions,
+        providers
+      }
+    })
+
+    // Transform asset urls that pass to `src` attribute on image components
+    nuxt.options.build.loaders = defu({
+      vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
+    }, nuxt.options.build.loaders || {})
+
+    nuxt.hook('generate:before', () => {
+      setupStaticGeneration(nuxt, options)
+    })
+
+    const cache = new LruCache()
+    nuxt.hook('vue-renderer:context', (ssrContext: any) => {
+      ssrContext.cache = cache
+    })
+
+    nuxt.hook('listen', (_: any, listener: any) => {
+      options.internalUrl = `http://localhost:${listener.port}`
+    })
   }
-
-  // Transpile and alias runtime
-  const runtimeDir = resolve(__dirname, 'runtime')
-  nuxt.options.alias['~image'] = runtimeDir
-  nuxt.options.build.transpile.push(runtimeDir, '@nuxt/image', 'allowlist', 'defu', 'ufo')
-
-  // Add plugin
-  addPlugin({
-    fileName: 'image.js',
-    src: resolve(runtimeDir, 'plugin.js'),
-    options: {
-      imageOptions,
-      providers
-    }
-  })
-
-  // Transform asset urls that pass to `src` attribute on image components
-  nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
-  }, nuxt.options.build.loaders || {})
-
-  nuxt.hook('generate:before', () => {
-    setupStaticGeneration(nuxt, options)
-  })
-
-  const cache = new LruCache()
-  nuxt.hook('vue-renderer:context', (ssrContext: any) => {
-    ssrContext.cache = cache
-  })
-
-  nuxt.hook('listen', (_: any, listener: any) => {
-    options.internalUrl = `http://localhost:${listener.port}`
-  })
-}
-
-; (imageModule as any).meta = pkg
-
-export default imageModule
+})

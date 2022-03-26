@@ -4,16 +4,23 @@
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "require": "./dist/module.cjs",
+      "import": "./dist/module.mjs"
+    }
+  },
   "sideEffects": false,
-  "main": "dist/module.js",
-  "types": "dist/types.d.ts",
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
   "files": [
     "dist",
     "vetur"
   ],
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime -d --ext js",
-    "dev": "yarn nuxt playground",
+    "build": "nuxt-module-build",
+    "dev:setup": "nuxt-module-build --stub && nuxi prepare playground",
+    "dev": "yarn nuxt dev playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
@@ -24,6 +31,7 @@
     "test:unit": "jest test/unit --forceExit"
   },
   "dependencies": {
+    "@nuxt/kit": "npm:@nuxt/kit-edge@latest",
     "consola": "^2.15.3",
     "defu": "^5.0.1",
     "fs-extra": "^10.0.0",
@@ -43,6 +51,7 @@
     "@babel/preset-env": "latest",
     "@babel/preset-typescript": "latest",
     "@cyrilf/vue-dat-gui": "latest",
+    "@nuxt/module-builder": "latest",
     "@nuxt/test-utils": "latest",
     "@nuxt/types": "latest",
     "@nuxt/typescript-build": "latest",
@@ -61,12 +70,13 @@
     "jsdom": "latest",
     "jsdom-global": "latest",
     "mkdist": "latest",
-    "nuxt-edge": "latest",
+    "nuxt3": "^3.0.0-27470397.9ebea90",
     "playwright": "latest",
     "siroc": "latest",
     "standard-version": "latest",
     "ts-loader": "^8",
     "typescript": "latest",
+    "vue": "^3.2.31",
     "vue-jest": "latest"
   },
   "optionalDependencies": {

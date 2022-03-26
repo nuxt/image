@@ -1,11 +1,13 @@
 import { relative, resolve } from 'upath'
 import { update as updaterc } from 'rc9'
+import { Nuxt } from '@nuxt/schema'
 import { mkdirp, readFile, writeFile } from 'fs-extra'
 import { lt } from 'semver'
 
+import { addServerMiddleware } from '@nuxt/kit'
 import type { ProviderSetup, ImageProviders } from './types'
 
-export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, nuxt) => {
+export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, nuxt: Nuxt) => {
   const isStatic = nuxt.options.target === 'static'
   const runtimeDir = resolve(__dirname, 'runtime')
   const ipxOptions: ImageProviders['ipx'] = {
@@ -27,7 +29,7 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, n
         throw new Error(err)
       })
     const ipx = createIPX(ipxOptions)
-    nuxt.options.serverMiddleware.push({
+    addServerMiddleware({
       path: '/_ipx',
       handle: createIPXMiddleware(ipx)
     })
@@ -35,10 +37,10 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions, n
 
   // Warn if unhandled /_ipx endpoint only if not using `modules`
   const installedInModules = nuxt.options.modules.some(
-    (mod: string | (() => any)) => typeof mod === 'string' && mod.includes('@nuxt/image')
+    mod => typeof mod === 'string' && mod.includes('@nuxt/image')
   )
 
-  if (!isStatic && !hasUserProvidedIPX && !installedInModules && lt(nuxt.constructor.version, '2.16.0')) {
+  if (!isStatic && !hasUserProvidedIPX && !installedInModules && lt(nuxt._version, '2.16.0')) {
     // eslint-disable-next-line no-console
     console.warn('[@nuxt/image] If you would like to use the `ipx` provider at runtime.\nMake sure to follow the instructions at https://image.nuxtjs.org/providers/ipx .')
   }

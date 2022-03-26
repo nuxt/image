@@ -1,5 +1,7 @@
 import { normalize, resolve, dirname } from 'upath'
 import { writeJson, mkdirp } from 'fs-extra'
+import { resolvePath } from '@nuxt/kit'
+import { Nuxt } from '@nuxt/schema'
 import { hash } from './utils'
 import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import { ipxSetup } from './ipx'
@@ -31,7 +33,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
   static: ipxSetup,
 
   // https://vercel.com/docs/more/adding-your-framework#images
-  async vercel (_providerOptions, moduleOptions, nuxt) {
+  async vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
     await mkdirp(dirname(imagesConfig))
     await writeJson(imagesConfig, {
@@ -41,23 +43,23 @@ export const providerSetup: Record<string, ProviderSetup> = {
   }
 }
 
-export function resolveProviders (nuxt: any, options: ModuleOptions): ImageModuleProvider[] {
+export async function resolveProviders (nuxt: Nuxt, options: ModuleOptions): Promise<ImageModuleProvider[]> {
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
     if (BuiltInProviders.includes(key)) {
-      providers.push(resolveProvider(nuxt, key, { provider: key, options: options[key] }))
+      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key] }))
     }
   }
 
   for (const key in options.providers) {
-    providers.push(resolveProvider(nuxt, key, options.providers[key]))
+    providers.push(await resolveProvider(nuxt, key, options.providers[key]))
   }
 
   return providers
 }
 
-export function resolveProvider (nuxt: any, key: string, input: InputProvider): ImageModuleProvider {
+export async function resolveProvider (_nuxt: Nuxt, key: string, input: InputProvider): Promise<ImageModuleProvider> {
   if (typeof input === 'string') {
     input = { name: input }
   }
@@ -72,7 +74,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
 
   input.provider = BuiltInProviders.includes(input.provider)
     ? require.resolve('./runtime/providers/' + input.provider)
-    : nuxt.resolver.resolvePath(input.provider)
+    : await resolvePath(input.provider)
 
   const setup = input.setup || providerSetup[input.name]
 

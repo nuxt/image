@@ -1,15 +1,13 @@
 <template>
-  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
+  <img :key="nSrc" :src="nSrc" v-bind="{ ...$attrs, nAttrs }">
 </template>
 
 <script lang="ts">
-import type { DefineComponentWithMixin } from '../../types/vue'
+import { defineComponent } from 'vue'
 import type { ImageSizes } from '../../types'
-import { imageMixin } from './image.mixin'
+import imageMixin from './image'
 
 import { parseSize } from '~image'
-
-const defineComponent: DefineComponentWithMixin = (opts: any) => opts
 
 type NAttrs = typeof imageMixin['nImgAttrs'] & {
     sizes?: string
@@ -18,7 +16,7 @@ type NAttrs = typeof imageMixin['nImgAttrs'] & {
 
 export default defineComponent({
   name: 'NuxtImg',
-  mixins: [imageMixin],
+  extends: imageMixin,
   head () {
     if (this.preload === true) {
       return {

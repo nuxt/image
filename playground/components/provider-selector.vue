@@ -9,22 +9,18 @@
   </select>
 </template>
 
-<script lang="ts">
-import { providers } from '../providers'
+<script lang="ts" setup>
+import { providers as p } from '../providers'
 
-export default {
-  computed: {
-    providers: () => providers,
-    providerName: {
-      get () {
-        return this.$route.params.provider || ''
-      },
-      set (provider) {
-        if (provider) {
-          this.$router.push(`/provider/${provider}`)
-        }
-      }
+const providers = computed(() => p)
+const providerName = computed({
+  get () {
+    return this.$route.params.provider || ''
+  },
+  set (provider) {
+    if (provider) {
+      this.$router.push(`/provider/${provider}`)
     }
   }
-}
+})
 </script>

@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import { providers as providerList } from '../providers'
+
+const providers = computed(() => providerList)
+</script>
+
 <template>
   <div>
     <h2>Providers</h2>
@@ -10,13 +16,3 @@
     </ul>
   </div>
 </template>
-
-<script lang="ts">
-import { providers } from '../providers'
-
-export default {
-  computed: {
-    providers: () => providers
-  }
-}
-</script>

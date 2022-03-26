@@ -16,7 +16,8 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}, { nuxtContext: { base: nuxtBase = '/' } = {} }) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/_ipx' } = {}) => {
+  const nuxtBase = '/' // TODO: where to find nuxt base in kit?
   if (modifiers.width && modifiers.height) {
     modifiers.resize = `${modifiers.width}x${modifiers.height}`
     delete modifiers.width

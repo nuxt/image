@@ -1,10 +1,7 @@
+import { defineComponent } from 'vue'
 import { parseSize } from '../utils'
-import type { DefineMixin } from '../../types/vue'
 
-const defineMixin: DefineMixin = (opts: any) => opts
-
-// @vue/component
-export const imageMixin = defineMixin({
+export default defineComponent({
   props: {
     // input source
     src: { type: String, required: true },
@@ -31,10 +28,11 @@ export const imageMixin = defineMixin({
     usemap: { type: String, default: undefined },
     longdesc: { type: String, default: undefined },
     ismap: { type: Boolean, default: undefined },
-    crossorigin: { type: [Boolean, String] as unknown as () => boolean | '' | 'anonymous' | 'use-credentials', default: undefined, validator: val => ['anonymous', 'use-credentials', '', true, false].includes(val) },
+    crossorigin: { type: [Boolean, String] as unknown as () => boolean | '' | 'anonymous' | 'use-credentials', default: undefined, validator: (val: string | boolean) => ['anonymous', 'use-credentials', '', true, false].includes(val) },
     loading: { type: String, default: undefined },
-    decoding: { type: String as () => 'async' | 'auto' | 'sync', default: undefined, validator: val => ['async', 'auto', 'sync'].includes(val) }
+    decoding: { type: String as () => 'async' | 'auto' | 'sync', default: undefined, validator: (val: string) => ['async', 'auto', 'sync'].includes(val) }
   },
+
   computed: {
     nImgAttrs (): {
       width?: number

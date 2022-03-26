@@ -5,14 +5,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  data () {
-    return {
-      isLoaded: false
-    }
-  }
-})
+<script lang="ts" setup>
+const isLoaded = ref(false)
 </script>

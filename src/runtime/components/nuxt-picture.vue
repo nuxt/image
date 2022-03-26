@@ -7,26 +7,23 @@
       :sizes="nSources[1].sizes"
     >
     <img
-      v-bind="{...nImgAttrs, ...imgAttrs}"
+      v-bind="{...nImgAttrs, ...imgAttrs, ...$attrs}"
       :src="nSources[0].src"
       :srcset="nSources[0].srcset"
       :sizes="nSources[0].sizes"
-      v-on="$listeners"
     >
   </picture>
 </template>
 
 <script lang="ts">
-import type { DefineComponentWithMixin } from '../../types/vue'
-import { imageMixin } from './image.mixin'
+import { defineComponent } from 'vue'
+import imageMixin from './image'
 
 import { getFileExtension } from '~image'
 
-const defineComponent: DefineComponentWithMixin = (opts: any) => opts
-
 export default defineComponent({
   name: 'NuxtPicture',
-  mixins: [imageMixin],
+  extends: imageMixin,
   props: {
     legacyFormat: { type: String, default: null },
     imgAttrs: { type: Object, default: null }
@@ -37,10 +34,11 @@ export default defineComponent({
       const link = {
         rel: 'preload',
         as: 'image',
-        imagesrcset: this.nSources[srcKey].srcset
+        imagesrcset: this.nSources[srcKey].srcset,
+        imagesizes: ''
       }
       if (typeof this.nSources[srcKey].sizes !== 'undefined') {
-        link.imagesizes = this.nSources[srcKey].sizes
+        link.imagesizes = this.nSources[srcKey].sizes as string
       }
       return {
         link: [link]

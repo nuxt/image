@@ -16,13 +16,13 @@
         <ProviderSelector />
       </li>
     </ul>
-    <Nuxt />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </main>
 </template>
 
-<script>
-export default {
-}
+<script setup lang="ts">
 </script>
 
 <style>
