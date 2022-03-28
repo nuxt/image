@@ -1,13 +1,13 @@
 export interface Provider {
-  name: string
+  name: string;
   samples: {
-    src: string,
-    from?: string,
-    link?: string,
-    width?: number,
-    height?: number,
-    [key: string]: any
-  }[]
+    src: string;
+    from?: string;
+    link?: string;
+    width?: number;
+    height?: number;
+    [key: string]: any;
+  }[];
 }
 
 export const providers: Provider[] = [
@@ -20,7 +20,8 @@ export const providers: Provider[] = [
         from: 'Jeremy Thomas',
         width: 300,
         height: 300,
-        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+        link:
+          'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       },
       {
         src: '/images/everest.jpg',
@@ -41,7 +42,8 @@ export const providers: Provider[] = [
         from: 'Photo by Omid Armin',
         width: 300,
         height: 300,
-        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+        link:
+          'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       }
     ]
   },
@@ -72,15 +74,18 @@ export const providers: Provider[] = [
     name: 'contentful',
     samples: [
       {
-        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg'
+        src:
+          '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg'
       },
       {
-        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
+        src:
+          '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
         width: 200,
         height: 133
       },
       {
-        src: '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
+        src:
+          '//images.ctfassets.net/fbr4i5aajb0w/6y0psij2o02YIwGScEo4kS/1b3f09b8fcedece1d17ea58417b55eb4/photo-1421986527537-888d998adb74.jpeg',
         width: 200,
         height: 200,
         fit: 'contain'
@@ -90,10 +95,7 @@ export const providers: Provider[] = [
   // Fastly
   {
     name: 'fastly',
-    samples: [
-      { src: '/image.jpg' },
-      { src: '/plant.jpeg' }
-    ]
+    samples: [{ src: '/image.jpg' }, { src: '/plant.jpeg' }]
   },
   // ImageKit
   {
@@ -176,7 +178,12 @@ export const providers: Provider[] = [
   {
     name: 'glide',
     samples: [
-      { src: '/kayaks.jpg', width: 1000, quality: 70, modifiers: { gam: 0.9, sharp: 8 } }
+      {
+        src: '/kayaks.jpg',
+        width: 1000,
+        quality: 70,
+        modifiers: { gam: 0.9, sharp: 8 }
+      }
     ]
   },
   // Netlify
@@ -196,23 +203,36 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Layer0
+  {
+    name: 'layer0',
+    samples: [
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
+    ]
+  },
   // Prismic
   {
     name: 'prismic',
     samples: [
       {
-        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900'
+        src:
+          'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900'
       },
       {
-        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        src:
+          'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
         width: 200
       },
       {
-        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        src:
+          'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
         height: 200
       },
       {
-        src: 'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
+        src:
+          'https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900',
         width: 200,
         height: 200,
         fit: 'crop'
@@ -309,27 +329,32 @@ export const providers: Provider[] = [
     name: 'storyblok',
     samples: [
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Original'
       },
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Resized static',
         width: 500,
         height: 500
       },
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Proportional to Width',
         width: 500
       },
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Proportional to Height',
         height: 500
       },
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Fit in with background CCCCCC',
         width: 200,
         height: 200,
@@ -337,33 +362,38 @@ export const providers: Provider[] = [
         filters: { fill: 'CCCCCC' }
       },
       {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Change image format',
         width: 200,
         format: 'webp'
       },
       {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Resized without Smart Crop',
         width: 600,
         height: 130
       },
       {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Resized with Smart Crop (Facial detection)',
         width: 600,
         height: 130,
         smart: true
       },
       {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Custom focal point (Focus on the bottom of the image)',
         width: 600,
         height: 130,
         operations: { filters: { focal: '450x500:550x600' } }
       },
       {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src:
+          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Custom focal point (Focus on the top of the image)',
         width: 600,
         height: 130,
@@ -383,8 +413,8 @@ export const providers: Provider[] = [
         quality: 75,
         format: 'auto',
         from: 'Photo by Omid Armin',
-        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
-
+        link:
+          'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       }
     ]
   },
