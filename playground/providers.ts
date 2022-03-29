@@ -223,8 +223,303 @@ export const providers: Provider[] = [
   {
     name: 'twicpics',
     samples: [
-      { src: '/football.jpg' },
-      { src: '/football.jpg', width: 250, height: 400, focus: 'auto' }
+      {
+        src: '/football.jpg'
+      }, // basic
+      {
+        src: '/football.jpg',
+        width: 501
+      }, // horizontal resizing with respect to the initial ratio
+      {
+        src: '/icon-500.png',
+        width: 501,
+        background: 'red'
+      }, // background transformation
+      {
+        src: '/components/peacock.jpg',
+        width: 501,
+        format: 'avif'
+      }, // output format
+      {
+        src: '/components/peacock.jpg',
+        width: 501,
+        format: 'preview'
+      }, // output format : mode preview
+      {
+        src: '/components/peacock.jpg',
+        width: 501,
+        format: 'maincolor'
+      }, // output format : mode maincolor
+      {
+        src: '/components/peacock.jpg',
+        width: 501,
+        format: 'blank'
+      }, // output format : blank
+      {
+        src: '/components/peacock.jpg',
+        quality: 100
+      }, // output quality : max
+      {
+        src: '/components/peacock.jpg',
+        quality: 1
+      }, // output quality : poor quality
+      {
+        src: '/components/portraits/woman-14.jpg'
+      }, // original
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 501,
+        height: 301,
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // cover 501x301
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 501,
+        fit: 'contain',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // contain width 501
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 301,
+        fit: 'contain',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // contain width 301
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 501,
+        fit: 'fill',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // fill 501x301 (no ratio respect)
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 501,
+        fit: 'inside',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // inside width 501
+      {
+        src: 'cat_1x1.jpg',
+        width: 300,
+        fit: 'resize',
+        modifiers:
+        {
+          cover: '4:3'
+        }
+      }, // ratio
+      {
+        src: 'cat_1x1.jpg',
+        modifiers:
+        {
+          contain: '200x300'
+        }
+      }, // contain
+      {
+        src: 'cat_1x1.jpg',
+        modifiers:
+        {
+          'contain-max': '200x500'
+        }
+      }, // contain-max
+      {
+        src: 'cat_1x1.jpg',
+        modifiers:
+        {
+          'cover-max': '200x500'
+        }
+      }, // cover-max
+      {
+        src: '/components/portraits/woman-14.jpg',
+        width: 501,
+        fit: 'outside',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // outside width 501
+      {
+        src: '/components/fox.jpg',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          contain: '200x500'
+        }
+      }, // contain api
+      {
+        src: '/components/fox.jpg',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          cover: '200x500'
+        }
+      }, // cover api
+      {
+        src: '/components/fox.jpg',
+        width: 501,
+        fit: 'fill',
+        modifiers:
+        {
+          focus: 'auto',
+          cover: '1:3'
+        }
+      }, // cover ratio api
+      {
+        src: '/components/cat.jpg',
+        modifiers:
+        {
+          crop: '500x100'
+        }
+      }, // crop api
+      {
+        src: '/components/cat.jpg',
+        width: 501,
+        modifiers:
+        {
+          crop: '500x100@700x400'
+        }
+      }, // crop api with coordinates
+      {
+        src: '/components/cat.jpg',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          crop: '500x100'
+        }
+      }, // crop api with focus auto
+      {
+        src: '/components/puppy.jpg',
+        width: 501,
+        modifiers:
+        {
+          flip: 'both'
+        }
+      }, // flip api
+      {
+        src: '/components/greece.jpg',
+        modifiers:
+        {
+          resize: '200'
+        }
+      }, // resize api
+      {
+        src: '/components/greece.jpg',
+        modifiers:
+        {
+          resize: '-x200'
+        }
+      }, // resize api
+      {
+        src: '/components/greece.jpg',
+        modifiers:
+        {
+          resize: '200x200'
+        }
+      }, // resize api
+      {
+        src: '/components/greece.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          resize: '1:1'
+        }
+      }, // resize api
+      {
+        src: '/components/peacock.jpg',
+        format: 'png',
+        modifiers:
+        {
+          truecolor: true
+        }
+      }, // truecolor api
+      {
+        src: '/components/peacock.jpg',
+        format: 'png',
+        modifiers:
+        {
+          truecolor: false
+        }
+      }, // truecolor api
+      {
+        src: '/components/portraits/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 'left'
+        }
+      }, // turn api
+      {
+        src: '/components/portraits/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 80
+        }
+      }, // turn api
+      {
+        src: '/components/portraits/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 90
+        }
+      }, // turn api
+      {
+        src: '/components/flip/cherry-3.jpg',
+        format: 'png',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          zoom: 1.5
+        }
+      }, // zoom api
+      {
+        src: '/components/flip/cherry-3.jpg',
+        format: 'png',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          zoom: 3
+        }
+      }, // zoom api
+      {
+        src: '/football.jpg',
+        format: 'png',
+        modifiers:
+        {
+          cover: '16:9',
+          focus: 'auto',
+          turn: 'left'
+        }
+      },
+      {
+        src: '/football.jpg',
+        format: 'png',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          turn: 'left',
+          cover: '16:9'
+        }
+      }
     ]
   },
   // Sanity
