@@ -7,7 +7,7 @@ const fits = createMapper({
   inside: 'contain',
   outside: 'contain',
   cover: 'cover',
-  contain: 'contain',
+  contain: 'inside',
   missingValue: 'cover'
 })
 

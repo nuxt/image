@@ -228,8 +228,41 @@ export const providers: Provider[] = [
       }, // basic
       {
         src: '/football.jpg',
-        width: 501
-      }, // horizontal resizing with respect to the initial ratio
+        width: 501,
+        height: 501,
+        fit: 'cover'
+      }, // cover
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'contain'
+      }, // contain
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'fill'
+      }, // fill
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 501,
+        fit: 'inside'
+      }, // inside
+      {
+        src: 'cat_1x1.jpg',
+        width: 300,
+        height:600,
+        fit: 'inside',
+        background: 'red',
+      }, // ratio
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'outside'
+      }, // outside
       {
         src: '/icon-500.png',
         width: 501,
@@ -278,33 +311,6 @@ export const providers: Provider[] = [
       {
         src: '/components/portraits/woman-14.jpg',
         width: 501,
-        fit: 'contain',
-        modifiers:
-        {
-          focus: 'auto'
-        }
-      }, // contain width 501
-      {
-        src: '/components/portraits/woman-14.jpg',
-        width: 301,
-        fit: 'contain',
-        modifiers:
-        {
-          focus: 'auto'
-        }
-      }, // contain width 301
-      {
-        src: '/components/portraits/woman-14.jpg',
-        width: 501,
-        fit: 'fill',
-        modifiers:
-        {
-          focus: 'auto'
-        }
-      }, // fill 501x301 (no ratio respect)
-      {
-        src: '/components/portraits/woman-14.jpg',
-        width: 501,
         fit: 'inside',
         modifiers:
         {
@@ -320,64 +326,6 @@ export const providers: Provider[] = [
           cover: '4:3'
         }
       }, // ratio
-      {
-        src: 'cat_1x1.jpg',
-        modifiers:
-        {
-          contain: '200x300'
-        }
-      }, // contain
-      {
-        src: 'cat_1x1.jpg',
-        modifiers:
-        {
-          'contain-max': '200x500'
-        }
-      }, // contain-max
-      {
-        src: 'cat_1x1.jpg',
-        modifiers:
-        {
-          'cover-max': '200x500'
-        }
-      }, // cover-max
-      {
-        src: '/components/portraits/woman-14.jpg',
-        width: 501,
-        fit: 'outside',
-        modifiers:
-        {
-          focus: 'auto'
-        }
-      }, // outside width 501
-      {
-        src: '/components/fox.jpg',
-        width: 501,
-        modifiers:
-        {
-          focus: 'auto',
-          contain: '200x500'
-        }
-      }, // contain api
-      {
-        src: '/components/fox.jpg',
-        width: 501,
-        modifiers:
-        {
-          focus: 'auto',
-          cover: '200x500'
-        }
-      }, // cover api
-      {
-        src: '/components/fox.jpg',
-        width: 501,
-        fit: 'fill',
-        modifiers:
-        {
-          focus: 'auto',
-          cover: '1:3'
-        }
-      }, // cover ratio api
       {
         src: '/components/cat.jpg',
         modifiers:
@@ -403,6 +351,22 @@ export const providers: Provider[] = [
         }
       }, // crop api with focus auto
       {
+        src: '/cat_1x1.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          crop: '500x500'
+        }
+      }, // crop api with focus auto
+      {
+        src: '/football.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          cover: '1:1'
+        }
+      }, // crop api with focus auto
+      {
         src: '/components/puppy.jpg',
         width: 501,
         modifiers:
@@ -410,35 +374,6 @@ export const providers: Provider[] = [
           flip: 'both'
         }
       }, // flip api
-      {
-        src: '/components/greece.jpg',
-        modifiers:
-        {
-          resize: '200'
-        }
-      }, // resize api
-      {
-        src: '/components/greece.jpg',
-        modifiers:
-        {
-          resize: '-x200'
-        }
-      }, // resize api
-      {
-        src: '/components/greece.jpg',
-        modifiers:
-        {
-          resize: '200x200'
-        }
-      }, // resize api
-      {
-        src: '/components/greece.jpg',
-        modifiers:
-        {
-          focus: 'auto',
-          resize: '1:1'
-        }
-      }, // resize api
       {
         src: '/components/peacock.jpg',
         format: 'png',
@@ -501,7 +436,6 @@ export const providers: Provider[] = [
       }, // zoom api
       {
         src: '/football.jpg',
-        format: 'png',
         modifiers:
         {
           cover: '16:9',
@@ -511,8 +445,6 @@ export const providers: Provider[] = [
       },
       {
         src: '/football.jpg',
-        format: 'png',
-        width: 501,
         modifiers:
         {
           focus: 'auto',
