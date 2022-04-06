@@ -17,8 +17,6 @@ Using the TwicPics Provider you can, out of the box, benefit from at least :
 
 And using the TwicPics API, you will be able to access all these features: [smart cropping with TwicPics focus auto](#focus), [true color](#truecolor), [flip](#flip), [turn](#turn), [crop](#crop), [zoom](#zoom).
 
-TwicPics also offers additional functionalities through its own [Nuxt components](#go-further-with-twicpics): [LQIP](https://www.twicpics.com/blog/blurred-placeholders#how-to-use-the-blurred-preview-feature), [CLS optimization](https://www.twicpics.com/blog/images-and-core-web-vitals#images-and-cumulative-layout-shift), [content driven and lazy-loading](https://www.twicpics.com/features), and video handling.
-
 ## Requirement
 
 The only requirement is to have a TwicPics account. 
@@ -183,7 +181,7 @@ More informations [about background here](https://www.twicpics.com/docs/api/tran
 In addition to the standard parameters, the specific features of the TwicPics API are accessible via the `modifiers` prop of `nuxt-img` or `nuxt-picture`. 
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="twicpics"
   src="/path-to-nuxt-demo.jpg"
   ...
@@ -204,17 +202,17 @@ Syntax: `{ crop: `[`size`](https://www.twicpics.com/docs/api/manipulations/?utm_
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/components/cat.jpg"
+  src="/cat.jpg"
   :modifiers="{crop:'500x100'}" <!-- no coordinates given -->
 />
 <NuxtImg
   provider="twicpics"
-  src="/components/cat.jpg"
+  src="/cat.jpg"
   :modifiers="{crop:'500x100@700x400'}" <!-- passing coordinates -->
 />
 <NuxtImg
   provider="twicpics"
-  src="/components/cat.jpg"
+  src="/cat.jpg"
   :modifiers="{focus:'auto', crop:'500x100'}" <!-- using focus auto -->
 />
 ```
@@ -230,17 +228,17 @@ Syntax: `{ flip: 'both'|'x'|'y' }`
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/components/puppy.jpg"
+  src="/puppy.jpg"
   :modifiers="{flip:'both'}" <!-- horizontal and vertical -->
 />
 <NuxtImg
   provider="twicpics"
-  src="/components/puppy.jpg"
+  src="/puppy.jpg"
   :modifiers="{flip:'x'}" <!-- horizontal -->
 />
 <NuxtImg
   provider="twicpics"
-  src="/components/puppy.jpg"
+  src="/puppy.jpg"
   :modifiers="{flip:'y'}" <!-- vertical -->
 />
 ```
@@ -292,14 +290,14 @@ Use truecolor if you want to distribute substantially larger but more accurate i
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/components/peacock.jpg"
+  src="/peacock.jpg"
   format="png" 
   :modifiers="{truecolor:true}" <!-- disallowes color quantization -->
 />
 
 <NuxtImg
   provider="twicpics"
-  src="/components/peacock.jpg"
+  src="/peacock.jpg"
   format="png"
   :modifiers="{truecolor:false}" <!-- allowes color quantization (default value) -->
 />
@@ -338,25 +336,25 @@ Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/api/manipulations/?ut
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/components/flip/cherry-3.jpg"
+  src="/cherry-3.jpg"
   :modifiers="{zoom:1.5}" <!-- zooms into image by a factor 1.5 -->
 />
 
 <NuxtImg
   provider="twicpics"
-  src="/components/flip/cherry-3.jpg"
+  src="/cherry-3.jpg"
  :modifiers="{zoom:3}" <!-- zooms into image by a factor 3 -->
 />
 
 <NuxtImg
   provider="twicpics"
-  src="/components/flip/cherry-3.jpg"
+  src="/cherry-3.jpg"
  :modifiers="{focus:'auto', zoom:3}" <!-- zooms into image by a factor 3 in direction of the focus-->
 />
 
 <NuxtImg
   provider="twicpics"
-  src="/components/flip/cherry-3.jpg"
+  src="/cherry-3.jpg"
  :modifiers="{focus:'200x200', zoom:3}" <!-- zooms into image by a factor 3 in direction of the focus-->
 />
 
@@ -379,7 +377,7 @@ This will return a variant of image for which we have, in order:
 
 The result is a 9:16 (not 16:9) image with a possibly false area of interest.
 ```html
-<nuxt-img
+<NuxtImg
   provider="twicpics"
   src="/football.jpg"
   :modifiers="{cover:'16:9', focus:'auto', turn:'left'}"
@@ -393,7 +391,7 @@ This will return a variant of your image for which we have, in order:
 
 The result is a cropped image with the area of interest retained and displayed in 16:9 format.
 ```html
-<nuxt-img
+<NuxtImg
   provider="twicpics"
   src="/football.jpg"
   fit="fill"

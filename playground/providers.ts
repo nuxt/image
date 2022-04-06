@@ -269,38 +269,38 @@ export const providers: Provider[] = [
         background: 'red'
       }, // background transformation
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         width: 501,
         format: 'avif'
       }, // output format
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         width: 501,
         format: 'preview'
       }, // output format : mode preview
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         width: 501,
         format: 'maincolor'
       }, // output format : mode maincolor
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         width: 501,
         format: 'blank'
       }, // output format : blank
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         quality: 100
       }, // output quality : max
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         quality: 1
       }, // output quality : poor quality
       {
-        src: '/components/portraits/woman-14.jpg'
+        src: '/woman-14.jpg'
       }, // original
       {
-        src: '/components/portraits/woman-14.jpg',
+        src: '/woman-14.jpg',
         width: 501,
         height: 301,
         modifiers:
@@ -309,7 +309,7 @@ export const providers: Provider[] = [
         }
       }, // cover 501x301
       {
-        src: '/components/portraits/woman-14.jpg',
+        src: '/woman-14.jpg',
         width: 501,
         fit: 'inside',
         modifiers:
@@ -327,14 +327,14 @@ export const providers: Provider[] = [
         }
       }, // ratio
       {
-        src: '/components/cat.jpg',
+        src: '/cat.jpg',
         modifiers:
         {
           crop: '500x100'
         }
       }, // crop api
       {
-        src: '/components/cat.jpg',
+        src: '/cat.jpg',
         width: 501,
         modifiers:
         {
@@ -342,7 +342,7 @@ export const providers: Provider[] = [
         }
       }, // crop api with coordinates
       {
-        src: '/components/cat.jpg',
+        src: '/cat.jpg',
         width: 501,
         modifiers:
         {
@@ -367,7 +367,7 @@ export const providers: Provider[] = [
         }
       }, // crop api with focus auto
       {
-        src: '/components/puppy.jpg',
+        src: '/puppy.jpg',
         width: 501,
         modifiers:
         {
@@ -375,7 +375,7 @@ export const providers: Provider[] = [
         }
       }, // flip api
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         format: 'png',
         modifiers:
         {
@@ -383,7 +383,7 @@ export const providers: Provider[] = [
         }
       }, // truecolor api
       {
-        src: '/components/peacock.jpg',
+        src: '/peacock.jpg',
         format: 'png',
         modifiers:
         {
@@ -391,7 +391,7 @@ export const providers: Provider[] = [
         }
       }, // truecolor api
       {
-        src: '/components/portraits/man-13.jpg',
+        src: '/man-13.jpg',
         format: 'png',
         modifiers:
         {
@@ -399,7 +399,7 @@ export const providers: Provider[] = [
         }
       }, // turn api
       {
-        src: '/components/portraits/man-13.jpg',
+        src: '/man-13.jpg',
         format: 'png',
         modifiers:
         {
@@ -407,7 +407,7 @@ export const providers: Provider[] = [
         }
       }, // turn api
       {
-        src: '/components/portraits/man-13.jpg',
+        src: '/man-13.jpg',
         format: 'png',
         modifiers:
         {
@@ -415,7 +415,7 @@ export const providers: Provider[] = [
         }
       }, // turn api
       {
-        src: '/components/flip/cherry-3.jpg',
+        src: '/cherry-3.jpg',
         format: 'png',
         width: 501,
         modifiers:
@@ -425,7 +425,7 @@ export const providers: Provider[] = [
         }
       }, // zoom api
       {
-        src: '/components/flip/cherry-3.jpg',
+        src: '/cherry-3.jpg',
         format: 'png',
         width: 501,
         modifiers:
