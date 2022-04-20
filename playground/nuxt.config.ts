@@ -36,6 +36,10 @@ export default <NuxtConfig> {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     contentful: {},
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'https://cdn.scaleflex.it/demo/'
+    },
     fastly: {
       baseURL: 'https://www.fastly.io'
     },
@@ -68,7 +72,7 @@ export default <NuxtConfig> {
     imageengine: {
       baseURL: 'https://abc123.imgeng.in'
     },
-    providers: {
+   providers: {
       custom: {
         provider: '~/providers/custom',
         options: {
