@@ -72,7 +72,7 @@ export default <NuxtConfig> {
     imageengine: {
       baseURL: 'https://abc123.imgeng.in'
     },
-   providers: {
+    providers: {
       custom: {
         provider: '~/providers/custom',
         options: {

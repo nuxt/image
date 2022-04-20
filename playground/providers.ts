@@ -424,5 +424,5 @@ export const providers: Provider[] = [
         quality: 75
       }
     ]
-  },
+  }
 ]
