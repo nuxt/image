@@ -12,8 +12,39 @@ export interface InputProvider<T = any> {
   setup?: ProviderSetup
 }
 
+export interface CloudinaryModifiers {
+  fit: string
+  width: string
+  height: string
+  format: string
+  quality: string
+  background: string
+  rotate: string
+  roundCorner: string
+  gravity: string
+  effect: string
+  color: string
+  flags: string
+  dpr: string
+  opacity: string
+  overlay: string
+  underlay: string
+  transformation: string
+  zoom: string
+  colorSpace: string
+  customFunc: string
+  density: string
+  [modifier: string]: string
+}
+
+export interface CloudinaryOptions {
+  baseURL: string
+  modifiers:  Partial<CloudinaryModifiers>
+  [option: string]: any
+}
+
 export interface ImageProviders {
-  cloudinary?: any
+  cloudinary?: Partial<CloudinaryOptions>
   contentful?: any
   fastly?: any
   glide?: any
