@@ -1,5 +1,5 @@
 import type { IPXOptions } from 'ipx'
-import type { ImageOptions, CreateImageOptions } from './image'
+import type { ImageOptions, CreateImageOptions, ImageModifiers } from './image'
 
 // eslint-disable-next-line no-use-before-define
 export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt: any)
@@ -12,35 +12,31 @@ export interface InputProvider<T = any> {
   setup?: ProviderSetup
 }
 
-export interface CloudinaryModifiers {
-  fit: string
-  width: string
-  height: string
+export interface CloudinaryModifiers extends ImageModifiers {
   format: string
   quality: string
   background: string
-  rotate: string
+  rotate: 'auto_right' | 'auto_left' | 'ignore' | 'vflip' | 'hflip' | number
   roundCorner: string
   gravity: string
   effect: string
   color: string
   flags: string
   dpr: string
-  opacity: string
+  opacity: number
   overlay: string
   underlay: string
   transformation: string
-  zoom: string
+  zoom: number
   colorSpace: string
   customFunc: string
-  density: string
-  [modifier: string]: string
+  density: number
 }
 
 export interface CloudinaryOptions {
   baseURL: string
-  modifiers:  Partial<CloudinaryModifiers>
-  [option: string]: any
+  modifiers: Partial<CloudinaryModifiers>
+  [key: string]: any
 }
 
 export interface ImageProviders {
