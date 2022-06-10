@@ -42,6 +42,9 @@ export default <NuxtConfig> {
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/'
     },
+    gumlet: {
+      baseURL: 'https://demo.gumlet.io'
+    },
     imgix: {
       baseURL: 'https://assets.imgix.net'
     },
@@ -54,6 +57,9 @@ export default <NuxtConfig> {
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'
+    },
+    strapi: {
+      baseURL: 'http://localhost:1337/uploads/'
     },
     unsplash: {},
     vercel: {

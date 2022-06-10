@@ -17,11 +17,13 @@ export interface ImageProviders {
   contentful?: any
   fastly?: any
   glide?: any
+  gumlet?: any
   imagekit?: any
   imgix?: any
   prismic?: any
   twicpics?: any
-  storyblok?: any
+  storyblok?: any,
+  strapi?: any,
   imageengine?: any,
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
