@@ -1,13 +1,13 @@
 export interface Provider {
-  name: string;
+  name: string
   samples: {
-    src: string;
-    from?: string;
-    link?: string;
-    width?: number;
-    height?: number;
-    [key: string]: any;
-  }[];
+    src: string,
+    from?: string,
+    link?: string,
+    width?: number,
+    height?: number,
+    [key: string]: any
+  }[]
 }
 
 export const providers: Provider[] = [
