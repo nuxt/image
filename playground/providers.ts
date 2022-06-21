@@ -299,9 +299,9 @@ export const providers: Provider[] = [
       {
         src: 'cat_1x1.jpg',
         width: 300,
-        height:600,
+        height: 600,
         fit: 'inside',
-        background: 'red',
+        background: 'red'
       }, // ratio
       {
         src: '/football.jpg',
@@ -582,32 +582,27 @@ export const providers: Provider[] = [
     name: 'storyblok',
     samples: [
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Original'
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Resized static',
         width: 500,
         height: 500
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Proportional to Width',
         width: 500
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Proportional to Height',
         height: 500
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Fit in with background CCCCCC',
         width: 200,
         height: 200,
@@ -615,38 +610,33 @@ export const providers: Provider[] = [
         filters: { fill: 'CCCCCC' }
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
         alt: 'Change image format',
         width: 200,
         format: 'webp'
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Resized without Smart Crop',
         width: 600,
         height: 130
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Resized with Smart Crop (Facial detection)',
         width: 600,
         height: 130,
         smart: true
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Custom focal point (Focus on the bottom of the image)',
         width: 600,
         height: 130,
         operations: { filters: { focal: '450x500:550x600' } }
       },
       {
-        src:
-          'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
         alt: 'Custom focal point (Focus on the top of the image)',
         width: 600,
         height: 130,
@@ -666,8 +656,7 @@ export const providers: Provider[] = [
         quality: 75,
         format: 'auto',
         from: 'Photo by Omid Armin',
-        link:
-          'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       }
     ]
   },
