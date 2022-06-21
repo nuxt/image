@@ -58,6 +58,7 @@ export default <NuxtConfig> {
     netlify: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
+    layer0: {},
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'

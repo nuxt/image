@@ -202,7 +202,12 @@ export const providers: Provider[] = [
   {
     name: 'glide',
     samples: [
-      { src: '/kayaks.jpg', width: 1000, quality: 70, modifiers: { gam: 0.9, sharp: 8 } }
+      {
+        src: '/kayaks.jpg',
+        width: 1000,
+        quality: 70,
+        modifiers: { gam: 0.9, sharp: 8 }
+      }
     ]
   },
   // Netlify
@@ -220,6 +225,15 @@ export const providers: Provider[] = [
         height: 200,
         fit: 'fill'
       }
+    ]
+  },
+  // Layer0
+  {
+    name: 'layer0',
+    samples: [
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
     ]
   },
   // Prismic
@@ -279,9 +293,9 @@ export const providers: Provider[] = [
       {
         src: 'cat_1x1.jpg',
         width: 300,
-        height:600,
+        height: 600,
         fit: 'inside',
-        background: 'red',
+        background: 'red'
       }, // ratio
       {
         src: '/football.jpg',
@@ -637,7 +651,6 @@ export const providers: Provider[] = [
         format: 'auto',
         from: 'Photo by Omid Armin',
         link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
-
       }
     ]
   },
