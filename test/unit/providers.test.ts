@@ -15,6 +15,7 @@ import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
 import * as sanity from '~/runtime/providers/sanity'
 import * as contentful from '~/runtime/providers/contentful'
+import * as cloudimage from '~/runtime/providers/cloudimage'
 
 const emptyContext = { options: {} } as any
 
@@ -255,6 +256,18 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = contentful.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.contentful)
+    }
+  })
+
+  test('cloudimage', () => {
+    const providerOptions = {
+      token: 'demo'
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = cloudimage.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.cloudimage)
     }
   })
 })
