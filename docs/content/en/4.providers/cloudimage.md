@@ -18,43 +18,41 @@ export default {
   }
 }
 ```
+
+**Note:** Current integration uses API `v7`.
+
+## Options
+
 You can override default options:
 
-## token
+### `token`
 
-###### Type: **String** | Default: **"demo"** | _required_
+- Type: **String** (required)
+- Default: `demo`
 
-Your Cloudimage customer token.
-[Subscribe](https://www.cloudimage.io/en/register_page) for a
-Cloudimage account to get one. The subscription takes less than a
-minute and is totally free.
+Your Cloudimage customer token. [register](https://www.cloudimage.io/en/register_page) for a Cloudimage account to get one. The subscription takes less than a minute and is totally free.
 
-## baseURL
+### `baseURL`
 
-###### Type: **String** | _optional_
+- Type: **String**
 
-Your image folder on server; this alows to shorten your origin image URLs.
+Your uploads base URL. This alows to shorten your origin image URLs.
 
 ```js{}[nuxt.config.js]
 export default {
   image: {
     cloudimage: {
       token: 'demo',
-      baseURL: 'https://cdn.scaleflex.it/demo/' // optional
+      baseURL: 'sample.li'  // optional
    }
   }
 }
 ```
-## doNotReplaceURL
 
-###### Type: **bool** | Default: **false**
+### `cdnURL`
 
-If set to **true**, the plugin will only add query parameters to the provided image source URL.
-
-## apiVersion
-
-###### Type: **String** | Default: **'v7'** | _optional_
-Allow to use a specific version of API.
+- Type: **String**
+- Default: `https://{token}.cloudimg.io/v7`
 
 ## Cloudimage modifiers
 

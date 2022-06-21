@@ -38,7 +38,7 @@ export default <NuxtConfig> {
     contentful: {},
     cloudimage: {
       token: 'demo',
-      baseURL: 'https://cdn.scaleflex.it/demo/'
+      baseURL: 'sample.li'
     },
     fastly: {
       baseURL: 'https://www.fastly.io'

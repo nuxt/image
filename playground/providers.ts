@@ -92,20 +92,20 @@ export const providers: Provider[] = [
     name: 'cloudimage',
     samples: [
       {
-        src: 'luca-bravo-121932.jpg',
+        src: 'bag.jpg',
         width: 500,
         height: 500,
         fit: 'contain'
       },
       {
-        src: 'alain.jpg',
+        src: 'boat.jpg',
         width: 800,
         height: 800,
         quality: 75,
         fit: 'cover'
       },
       {
-        src: 'ameen-fahmy.jpg',
+        src: 'img.jpg',
         width: 300,
         height: 300,
         format: 'webp',
