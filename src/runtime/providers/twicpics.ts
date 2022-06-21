@@ -4,10 +4,10 @@ import { createMapper, createOperationsGenerator } from '~image'
 
 const fits = createMapper({
   fill: 'resize',
-  inside: 'contain-max',
-  outside: 'contain-min',
+  inside: 'contain',
+  outside: 'contain',
   cover: 'cover',
-  contain: 'contain',
+  contain: 'inside',
   missingValue: 'cover'
 })
 
@@ -53,9 +53,18 @@ const operationsGenerator = createOperationsGenerator({
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const { width, height, fit, ...providerModifiers } = modifiers
 
+  let w = width
+  let h = height
+
   if (width || height) {
-    providerModifiers[fits(fit)] = `${width || '-'}x${height || '-'}`
+    if (fit && fit === 'outside') {
+      // fit = outside is equivalent to twicPics contain ( max( width, height ) x max( width, height ) )
+      w = Math.max(width || 0, height || 0)
+      h = Math.max(width || 0, height || 0)
+    }
+    providerModifiers[fits(fit)] = `${w || '-'}x${h || '-'}`
   }
+
   const operations = operationsGenerator(providerModifiers)
   return {
     url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : ''))
