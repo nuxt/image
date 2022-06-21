@@ -16,6 +16,7 @@
             tracking-tight
             sm:text-5xl
             lg:text-6xl
+            text-white
           "
         >
           <span class="block">Optimized images</span>
@@ -29,6 +30,7 @@
             mx-auto
             text-center text-xl
             sm:max-w-3xl
+            text-white
           "
         >
           Plug-and-play image optimization for Nuxt apps. Resize and transform
@@ -68,6 +70,7 @@
                 shadow-sm
                 bg-primary-500
                 sm:px-8
+                text-white
               "
             >
               Get started
@@ -89,6 +92,7 @@
                 sm:px-8
                 rounded
                 ring-white hover:ring-2
+                text-white
               "
             >
               Play online

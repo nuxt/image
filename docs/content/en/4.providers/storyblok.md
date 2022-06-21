@@ -11,7 +11,7 @@ Integration between [Storyblok](https://www.storyblok.com/docs/image-service/) a
 export default {
   image: {
     storyblok: {
-      baseURL: 'https://img2.storyblok.com'
+      baseURL: 'https://a.storyblok.com'
     }
   }
 }
