@@ -80,6 +80,7 @@ export interface ImageCTX {
     isDev: boolean
     isStatic: boolean
     nuxtState?: any
+    base?: string
   }
   $img?: $Img
 }
