@@ -30,9 +30,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeQueryItem(key, val)
 })
 
-const defaultModifiers = {
-  format: 'auto'
-}
+const defaultModifiers = {}
 
 // https://developers.cloudflare.com/images/image-resizing/url-format/
 export const getImage: ProviderGetImage = (src, {
@@ -43,7 +41,7 @@ export const getImage: ProviderGetImage = (src, {
   const operations = operationsGenerator(mergeModifiers as any)
 
   // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
-  const url = joinURL(baseURL, 'cdn-cgi/image', operations, src)
+  const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : joinURL(baseURL, src)
 
   return {
     url
