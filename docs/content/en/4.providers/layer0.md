@@ -7,6 +7,8 @@ navigation:
 
 Layer0 provides a simple HTTP service for optimizing images. See the [Documentation](https://docs.layer0.co/guides/image_optimization) for more information.
 
+**Note:** The image optimizer will only return an optimized image for mobile browsers. Desktop browsers are served the original image.
+
 This integration works out of the box without need to configure!
 
 ## Modifiers
