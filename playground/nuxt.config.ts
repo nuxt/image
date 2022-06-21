@@ -30,12 +30,16 @@ export default <NuxtConfig> {
       baseURL: 'https://demo.twic.pics/'
     },
     storyblok: {
-      baseURL: 'https://img2.storyblok.com/'
+      baseURL: 'https://a.storyblok.com/'
     },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     contentful: {},
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'sample.li'
+    },
     fastly: {
       baseURL: 'https://www.fastly.io'
     },
