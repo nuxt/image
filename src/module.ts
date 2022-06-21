@@ -88,7 +88,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     setupStaticGeneration(nuxt, options)
   })
 
-  const cache = new LruCache()
+  const cache = new LruCache({ max: 1000 })
   nuxt.hook('vue-renderer:context', (ssrContext: any) => {
     ssrContext.cache = cache
   })
