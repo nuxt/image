@@ -26,7 +26,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   const params = operationsGenerator(modifiers) || '_'
 
   if (!baseURL) {
-    baseURL = joinURL(ctx.nuxtContext.base || '/', '/_ipx')
+    baseURL = joinURL(ctx.nuxtContext?.base || '/', '/_ipx')
   }
 
   return {
