@@ -34,7 +34,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
     _filters ? ('filters:' + _filters) : ''
   )
 
-  // TODO: check if hostname is https://a.storyblok.com ?
   const { pathname } = parseURL(src)
 
   const modifier = options ? '/m/' : ''
