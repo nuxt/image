@@ -20,8 +20,7 @@ export const providers: Provider[] = [
         from: 'Jeremy Thomas',
         width: 300,
         height: 300,
-        link:
-          'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       },
       {
         src: '/images/everest.jpg',
@@ -42,8 +41,7 @@ export const providers: Provider[] = [
         from: 'Photo by Omid Armin',
         width: 300,
         height: 300,
-        link:
-          'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       }
     ]
   },
@@ -118,7 +116,10 @@ export const providers: Provider[] = [
   // Fastly
   {
     name: 'fastly',
-    samples: [{ src: '/image.jpg' }, { src: '/plant.jpeg' }]
+    samples: [
+      { src: '/image.jpg' },
+      { src: '/plant.jpeg' }
+    ]
   },
   // ImageKit
   {
