@@ -5,7 +5,7 @@ navigation:
   title: Layer0
 ---
 
-Layer0 provides a simple HTTP service for optimizing images.
+Layer0 provides a simple HTTP service for optimizing images. See the [Documentation](https://docs.layer0.co/guides/image_optimization) for more information.
 
 This integration works out of the box without need to configure!
 
