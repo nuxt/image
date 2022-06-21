@@ -2,7 +2,7 @@ import { withBase, joinURL, parseURL } from 'ufo'
 import type { ProviderGetImage } from 'src'
 
 // https://www.storyblok.com/docs/image-service
-const storyblockCDN = 'https://img2.storyblok.com'
+const storyblockCDN = 'https://a.storyblok.com'
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = storyblockCDN } = {}) => {
   const {
@@ -34,10 +34,11 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
     _filters ? ('filters:' + _filters) : ''
   )
 
-  // TODO: check if hostname is https://a.storyblok.com ?
   const { pathname } = parseURL(src)
 
-  const url = withBase(joinURL(options, pathname), baseURL)
+  const modifier = options ? '/m/' : ''
+
+  const url = withBase(joinURL(pathname, modifier, options), baseURL)
 
   return {
     url
