@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/nuxt/image/compare/v0.6.1...v0.6.2) (2022-02-17)
+
+
+### Features
+
+* gumlet image provider  ([#489](https://github.com/nuxt/image/issues/489)) ([8aaab14](https://github.com/nuxt/image/commit/8aaab1466f6591e78b9a1eb28fe8cfbb607c0fb8))
+* strapi provider ([#406](https://github.com/nuxt/image/issues/406)) ([8245c22](https://github.com/nuxt/image/commit/8245c22119dc14809b66ef08140951879bf54cf1))
+
+
+### Bug Fixes
+
+* avoid dynamic import of `lru-cache` (resolves [#481](https://github.com/nuxt/image/issues/481)) ([61bcb90](https://github.com/nuxt/image/commit/61bcb90f0403df804506ccbecebfe13605ae56b4))
+
+### [0.6.1](https://github.com/nuxt/image/compare/v0.6.0...v0.6.1) (2022-01-31)
+
+
+### Features
+
+* add `imgAttrs` property to `<nuxt-picture>` ([#445](https://github.com/nuxt/image/issues/445)) ([448d9ef](https://github.com/nuxt/image/commit/448d9efd5b80deb37d0bf544208357663c2795cf))
+* add ImageEngine provider ([#456](https://github.com/nuxt/image/issues/456)) ([3f00cf3](https://github.com/nuxt/image/commit/3f00cf33a4f255cb2501d1fa7ec9fdc2b315e0ed))
+* add preload functionality ([#444](https://github.com/nuxt/image/issues/444)) ([6f245c6](https://github.com/nuxt/image/commit/6f245c67fc51179ae6abd6395571be036eaa9c79))
+* emit native `<img>` events ([#416](https://github.com/nuxt/image/issues/416)) ([f22ae01](https://github.com/nuxt/image/commit/f22ae016912470c083c7b565fd67947a8f441093))
+
+
+### Bug Fixes
+
+* **vercel:** sort valid widths before picking largest ([#472](https://github.com/nuxt/image/issues/472)) ([f4a408f](https://github.com/nuxt/image/commit/f4a408f74e01eca50b2135bddde9b3e4be776cf5))
+
 ## [0.6.0](https://github.com/nuxt/image/compare/v0.5.0...v0.6.0) (2021-09-05)
 
 

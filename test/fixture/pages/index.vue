@@ -20,6 +20,7 @@ export default {
       this.image = '/1280px-K2_2006b.jpg'
     },
     onLoad () {
+      // eslint-disable-next-line no-console
       console.log('Image was loaded.')
     }
   }

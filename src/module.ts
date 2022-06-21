@@ -1,6 +1,7 @@
 import { resolve } from 'upath'
 import defu from 'defu'
 import { parseURL, withLeadingSlash } from 'ufo'
+import LruCache from 'lru-cache'
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
@@ -87,7 +88,6 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     setupStaticGeneration(nuxt, options)
   })
 
-  const LruCache = await import('lru-cache').then(r => r.default || r)
   const cache = new LruCache()
   nuxt.hook('vue-renderer:context', (ssrContext: any) => {
     ssrContext.cache = cache

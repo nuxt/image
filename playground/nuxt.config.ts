@@ -30,17 +30,27 @@ export default <NuxtConfig> {
       baseURL: 'https://demo.twic.pics/'
     },
     storyblok: {
-      baseURL: 'https://img2.storyblok.com/'
+      baseURL: 'https://a.storyblok.com/'
+    },
+    cloudflare: {
+      baseURL: 'https://that-test.site'
     },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     contentful: {},
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'sample.li'
+    },
     fastly: {
       baseURL: 'https://www.fastly.io'
     },
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/'
+    },
+    gumlet: {
+      baseURL: 'https://demo.gumlet.io'
     },
     imgix: {
       baseURL: 'https://assets.imgix.net'
@@ -51,13 +61,20 @@ export default <NuxtConfig> {
     netlify: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
+    layer0: {},
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'
     },
+    strapi: {
+      baseURL: 'http://localhost:1337/uploads/'
+    },
     unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
+    },
+    imageengine: {
+      baseURL: 'https://abc123.imgeng.in'
     },
     providers: {
       custom: {

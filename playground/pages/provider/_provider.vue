@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="provider">
-      <h1>{{ provider.name }}</h1><br>
+      <h1>{{ provider.name }}</h1>
+      <br>
       <div class="providerShowcase">
         <div v-for="sample of provider.samples" :key="sample.src">
           <nuxt-img :provider="provider.name" v-bind="sample" />
@@ -24,7 +25,9 @@ export default {
     provider () {
       const providerName = this.$route.params.provider || 'default'
       const p = providers.find(p => p.name === providerName)
-      if (!p) { return null }
+      if (!p) {
+        return null
+      }
       return p
     }
   }

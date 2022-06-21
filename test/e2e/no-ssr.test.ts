@@ -1,7 +1,7 @@
 import { setupTest, createPage, url } from '@nuxt/test-utils'
 import type { Page } from 'playwright'
 
-describe('browser (ssr: false)', () => {
+describe.skip('browser (ssr: false)', () => {
   setupTest({
     config: {
       ssr: false,

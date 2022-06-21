@@ -5,21 +5,27 @@ import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup }
 import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
+  'cloudflare',
   'cloudinary',
   'contentful',
+  'cloudimage',
   'fastly',
   'glide',
   'imagekit',
+  'gumlet',
   'imgix',
   'ipx',
   'netlify',
+  'layer0',
   'prismic',
   'sanity',
   'static',
   'twicpics',
+  'strapi',
   'storyblok',
   'unsplash',
-  'vercel'
+  'vercel',
+  'imageengine'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

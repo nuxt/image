@@ -1,5 +1,5 @@
-import { ProviderGetImage } from 'src'
 import { stringifyQuery } from 'ufo'
+import { ProviderGetImage } from 'src'
 
 // https://vercel.com/docs/more/adding-your-framework#images
 
