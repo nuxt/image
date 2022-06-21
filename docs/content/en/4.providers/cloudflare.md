@@ -31,6 +31,8 @@ export default {
 
 ### `baseURL`
 
+Default: `/`
+
 Your deployment's domain (zone).
 
 **Note:** `/cdn-cgi/image/` will be automatically appended for generating URLs.
