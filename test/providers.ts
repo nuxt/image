@@ -2,6 +2,7 @@ export const images = [
   {
     args: ['/test.png', {}],
     ipx: { url: '/_ipx/_/test.png' },
+    cloudflare: { url: '/test.png' },
     cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png' },
     fastly: { url: '/test.png' },
@@ -20,6 +21,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200 }],
     ipx: { url: '/_ipx/w_200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
@@ -38,6 +40,7 @@ export const images = [
   {
     args: ['/test.png', { height: 200 }],
     ipx: { url: '/_ipx/h_200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
@@ -56,6 +59,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200 }],
     ipx: { url: '/_ipx/s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
@@ -74,6 +78,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
     ipx: { url: '/_ipx/fit_contain,s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/inside=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
@@ -92,6 +97,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     ipx: { url: '/_ipx/fit_contain,f_jpeg,s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain,f=jpeg/test.png' },
     cloudinary: { url: '/f_jpg,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/output=jpeg/inside=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },

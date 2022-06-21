@@ -40,6 +40,7 @@ export interface CloudinaryOptions {
 }
 
 export interface ImageProviders {
+  cloudflare?: any
   cloudinary?: Partial<CloudinaryOptions>
   contentful?: any
   cloudimage?: any
