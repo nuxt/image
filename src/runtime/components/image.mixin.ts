@@ -33,7 +33,6 @@ export const imageMixin = defineMixin({
     ismap: { type: Boolean, default: undefined },
     crossorigin: { type: [Boolean, String] as unknown as () => boolean | '' | 'anonymous' | 'use-credentials', default: undefined, validator: val => ['anonymous', 'use-credentials', '', true, false].includes(val) },
     loading: { type: String, default: undefined },
-    placeholder: { type: String, default: undefined },
     decoding: { type: String as () => 'async' | 'auto' | 'sync', default: undefined, validator: val => ['async', 'auto', 'sync'].includes(val) }
   },
   computed: {
@@ -48,7 +47,6 @@ export const imageMixin = defineMixin({
       crossorigin?: '' | 'anonymous' | 'use-credentials'
       loading?: string
       decoding?: 'async' | 'auto' | 'sync'
-      placeholder?: string
       } {
       return {
         width: parseSize(this.width),
@@ -60,8 +58,7 @@ export const imageMixin = defineMixin({
         ismap: this.ismap,
         crossorigin: this.crossorigin === true ? 'anonymous' : this.crossorigin || undefined,
         loading: this.loading,
-        decoding: this.decoding,
-        placeholder: this.placeholder
+        decoding: this.decoding
       }
     },
     nModifiers (): { width?: number, height?: number, format?: string, quality?: string | number, background?: string, fit?: string } & Record<string, any> {
