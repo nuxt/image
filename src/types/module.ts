@@ -42,6 +42,7 @@ export interface CloudinaryOptions {
 export interface ImageProviders {
   cloudinary?: Partial<CloudinaryOptions>
   contentful?: any
+  cloudimage?: any
   fastly?: any
   glide?: any
   gumlet?: any

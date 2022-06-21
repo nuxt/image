@@ -87,6 +87,32 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Cloudimage
+  {
+    name: 'cloudimage',
+    samples: [
+      {
+        src: 'bag.jpg',
+        width: 500,
+        height: 500,
+        fit: 'contain'
+      },
+      {
+        src: 'boat.jpg',
+        width: 800,
+        height: 800,
+        quality: 75,
+        fit: 'cover'
+      },
+      {
+        src: 'img.jpg',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        fit: 'fill'
+      }
+    ]
+  },
   // Fastly
   {
     name: 'fastly',
