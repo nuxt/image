@@ -14,14 +14,8 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`
 })
 
-const isDev = process.env.NODE_ENV === 'development'
-
 export const getImage: ProviderGetImage = (src, { modifiers = {} } = {}) => {
   const operations = operationsGenerator(modifiers)
-
-  if (isDev) {
-    return { url: src }
-  }
 
   return {
     url: joinURL(endpoint, '?img=' + src + (operations ? ('&' + operations) : ''))
