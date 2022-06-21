@@ -1,7 +1,5 @@
-// https://developers.cloudflare.com/images/url-format
-
+import { joinURL, encodeQueryItem } from 'ufo'
 import { ProviderGetImage } from 'src'
-import { joinURL, encodeQueryItem, withBase } from 'ufo'
 import { createOperationsGenerator } from '~image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -36,16 +34,18 @@ const defaultModifiers = {
   format: 'auto'
 }
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/cdn-cgi/image/' } = {}) => {
+// https://developers.cloudflare.com/images/image-resizing/url-format/
+export const getImage: ProviderGetImage = (src, {
+  modifiers = {},
+  baseURL = '/'
+} = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
   const operations = operationsGenerator(mergeModifiers as any)
 
-  /**
-   * The path is not URL-encoded, so the resizing URL can be safely constructed by
-   * concatenating /cdn-cgi/image/options and the original image URL,
-   * e.g. /cdn-cgi/image/width=100/https://s3.example.com/bucket/image.png.
-   */
+  // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
+  const url = joinURL(baseURL, 'cdn-cgi/image', operations, src)
+
   return {
-    url: withBase(joinURL(operations, src), baseURL)
+    url
   }
 }
