@@ -5,8 +5,10 @@ import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup }
 import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
+  'cloudflare',
   'cloudinary',
   'contentful',
+  'cloudimage',
   'fastly',
   'glide',
   'imagekit',
@@ -14,6 +16,7 @@ const BuiltInProviders = [
   'imgix',
   'ipx',
   'netlify',
+  'layer0',
   'prismic',
   'sanity',
   'static',

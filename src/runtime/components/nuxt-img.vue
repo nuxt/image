@@ -1,5 +1,5 @@
 <template>
-  <img :key="nSrc" :src="nSrc" v-bind="nAttrs" v-on="$listeners">
+  <img :key="nSrc" v-bind="nAttrs" ref="img" :src="nSrc" v-on="$listeners">
 </template>
 
 <script lang="ts">
@@ -19,6 +19,9 @@ type NAttrs = typeof imageMixin['nImgAttrs'] & {
 export default defineComponent({
   name: 'NuxtImg',
   mixins: [imageMixin],
+  props: {
+    placeholder: { type: [Boolean, String, Number, Array], default: undefined }
+  },
   head () {
     if (this.preload === true) {
       return {
@@ -42,7 +45,7 @@ export default defineComponent({
       }
       return attrs
     },
-    nSrc (): string {
+    nMainSrc (): string {
       return this.sizes ? this.nSizes.src : this.$img(this.src, this.nModifiers, this.nOptions)
     },
     /* eslint-disable no-undef */
@@ -56,9 +59,36 @@ export default defineComponent({
           height: parseSize(this.height)
         }
       })
+    },
+    nSrc (): string {
+      return this.nPlaceholder ? this.nPlaceholder : this.nMainSrc
+    },
+    nPlaceholder () {
+      let placeholder = this.placeholder
+      if (placeholder === '') { placeholder = true }
+      if (!placeholder || this.placeholderLoaded) { return false }
+      if (typeof placeholder === 'string') { return placeholder }
+      const size = (Array.isArray(placeholder)
+        ? placeholder
+        : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number]
+      return this.$img(this.src, {
+        ...this.nModifiers,
+        width: size[0],
+        height: size[1],
+        quality: size[2] || 50
+      }, this.nOptions)
     }
   },
-  created () {
+  mounted () {
+    if (this.nPlaceholder) {
+      const img = new Image()
+      img.src = this.nMainSrc
+      img.onload = () => {
+        // @ts-ignore
+        this.$refs.img.src = this.nMainSrc
+        this.placeholderLoaded = true
+      }
+    }
     if (process.server && process.static) {
       if (this.sizes) {
         // Force compute sources into ssrContext

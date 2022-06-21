@@ -2,6 +2,7 @@ export const images = [
   {
     args: ['/test.png', {}],
     ipx: { url: '/_ipx/_/test.png' },
+    cloudflare: { url: '/test.png' },
     cloudinary: { url: '/f_auto,q_auto/test' },
     twicpics: { url: '/test.png' },
     fastly: { url: '/test.png' },
@@ -14,11 +15,13 @@ export const images = [
     netlify: { url: '/test.png' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=100' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?auto=format' },
-    contentful: { url: '/test.png' }
+    contentful: { url: '/test.png' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png' }
   },
   {
     args: ['/test.png', { width: 200 }],
     ipx: { url: '/_ipx/w_200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x-' },
     fastly: { url: '/test.png?width=200' },
@@ -31,11 +34,13 @@ export const images = [
     netlify: { url: '/test.png?w=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=100' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&auto=format' },
-    contentful: { url: '/test.png?w=200' }
+    contentful: { url: '/test.png?w=200' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200' }
   },
   {
     args: ['/test.png', { height: 200 }],
     ipx: { url: '/_ipx/h_200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
     fastly: { url: '/test.png?height=200' },
@@ -48,11 +53,13 @@ export const images = [
     netlify: { url: '/test.png?h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=200' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?h=200&auto=format' },
-    contentful: { url: '/test.png?h=200' }
+    contentful: { url: '/test.png?h=200' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?height=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
     ipx: { url: '/_ipx/s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
     fastly: { url: '/test.png?width=200&height=200' },
@@ -65,13 +72,15 @@ export const images = [
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&auto=format' },
-    contentful: { url: '/test.png?w=200&h=200' }
+    contentful: { url: '/test.png?w=200&h=200' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
     ipx: { url: '/_ipx/fit_contain,s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
-    twicpics: { url: '/test.png?twic=v1/contain=200x200' },
+    twicpics: { url: '/test.png?twic=v1/inside=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds' },
     glide: { url: '/test.png?w=200&h=200&fit=contain' },
     gumlet: { url: '/test.png?w=200&h=200&fit=fill' },
@@ -82,13 +91,15 @@ export const images = [
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&auto=format&bg=ffffff' },
-    contentful: { url: '/test.png?w=200&h=200&fit=fill' }
+    contentful: { url: '/test.png?w=200&h=200&fit=fill' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     ipx: { url: '/_ipx/fit_contain,f_jpeg,s_200x200/test.png' },
+    cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain,f=jpeg/test.png' },
     cloudinary: { url: '/f_jpg,q_auto,w_200,h_200,c_scale/test' },
-    twicpics: { url: '/test.png?twic=v1/output=jpeg/contain=200x200' },
+    twicpics: { url: '/test.png?twic=v1/output=jpeg/inside=200x200' },
     fastly: { url: '/test.png?width=200&height=200&fit=bounds&format=jpeg' },
     glide: { url: '/test.png?w=200&h=200&fit=contain&fm=jpeg' },
     gumlet: { url: '/test.png?w=200&h=200&fit=fill&format=jpeg' },
@@ -99,7 +110,8 @@ export const images = [
     netlify: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&fm=jpg&bg=ffffff' },
-    contentful: { url: '/test.png?w=200&h=200&fit=fill&fm=jpg' }
+    contentful: { url: '/test.png?w=200&h=200&fit=fill&fm=jpg' },
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit&force_format=jpeg' }
   }
 ] as const
 

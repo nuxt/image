@@ -2,6 +2,7 @@ import { images } from '../providers'
 
 import { cleanDoubleSlashes } from '~/runtime/utils'
 import * as ipx from '~/runtime/providers/ipx'
+import * as cloudflare from '~/runtime/providers/cloudflare'
 import * as cloudinary from '~/runtime/providers/cloudinary'
 import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
@@ -15,6 +16,7 @@ import * as netlify from '~/runtime/providers/netlify'
 import * as prismic from '~/runtime/providers/prismic'
 import * as sanity from '~/runtime/providers/sanity'
 import * as contentful from '~/runtime/providers/contentful'
+import * as cloudimage from '~/runtime/providers/cloudimage'
 
 const emptyContext = { options: {} } as any
 
@@ -39,6 +41,17 @@ describe('Providers', () => {
     expect(generated).toMatchObject({
       url: '/app/_ipx/_/images/test.png'
     })
+  })
+
+  test('cloudflare', () => {
+    const providerOptions = {
+      baseURL: '/'
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = cloudflare.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.cloudflare)
+    }
   })
 
   test('cloudinary', () => {
@@ -255,6 +268,18 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = contentful.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.contentful)
+    }
+  })
+
+  test('cloudimage', () => {
+    const providerOptions = {
+      token: 'demo'
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = cloudimage.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.cloudimage)
     }
   })
 })

@@ -45,6 +45,17 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Cloudflare
+  {
+    name: 'cloudflare',
+    samples: [
+      {
+        src: 'https://s3.that-test.site/burger.jpeg',
+        height: 300,
+        fit: 'contain'
+      }
+    ]
+  },
   // Cloudinary
   {
     name: 'cloudinary',
@@ -84,6 +95,32 @@ export const providers: Provider[] = [
         width: 200,
         height: 200,
         fit: 'contain'
+      }
+    ]
+  },
+  // Cloudimage
+  {
+    name: 'cloudimage',
+    samples: [
+      {
+        src: 'bag.jpg',
+        width: 500,
+        height: 500,
+        fit: 'contain'
+      },
+      {
+        src: 'boat.jpg',
+        width: 800,
+        height: 800,
+        quality: 75,
+        fit: 'cover'
+      },
+      {
+        src: 'img.jpg',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        fit: 'fill'
       }
     ]
   },
@@ -176,7 +213,12 @@ export const providers: Provider[] = [
   {
     name: 'glide',
     samples: [
-      { src: '/kayaks.jpg', width: 1000, quality: 70, modifiers: { gam: 0.9, sharp: 8 } }
+      {
+        src: '/kayaks.jpg',
+        width: 1000,
+        quality: 70,
+        modifiers: { gam: 0.9, sharp: 8 }
+      }
     ]
   },
   // Netlify
@@ -194,6 +236,15 @@ export const providers: Provider[] = [
         height: 200,
         fit: 'fill'
       }
+    ]
+  },
+  // Layer0
+  {
+    name: 'layer0',
+    samples: [
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
     ]
   },
   // Prismic
@@ -223,8 +274,235 @@ export const providers: Provider[] = [
   {
     name: 'twicpics',
     samples: [
-      { src: '/football.jpg' },
-      { src: '/football.jpg', width: 250, height: 400, focus: 'auto' }
+      {
+        src: '/football.jpg'
+      }, // basic
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 501,
+        fit: 'cover'
+      }, // cover
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'contain'
+      }, // contain
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'fill'
+      }, // fill
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 501,
+        fit: 'inside'
+      }, // inside
+      {
+        src: 'cat_1x1.jpg',
+        width: 300,
+        height: 600,
+        fit: 'inside',
+        background: 'red'
+      }, // ratio
+      {
+        src: '/football.jpg',
+        width: 501,
+        height: 1001,
+        fit: 'outside'
+      }, // outside
+      {
+        src: '/icon-500.png',
+        width: 501,
+        background: 'red'
+      }, // background transformation
+      {
+        src: '/peacock.jpg',
+        width: 501,
+        format: 'avif'
+      }, // output format
+      {
+        src: '/peacock.jpg',
+        width: 501,
+        format: 'preview'
+      }, // output format : mode preview
+      {
+        src: '/peacock.jpg',
+        width: 501,
+        format: 'maincolor'
+      }, // output format : mode maincolor
+      {
+        src: '/peacock.jpg',
+        width: 501,
+        format: 'blank'
+      }, // output format : blank
+      {
+        src: '/peacock.jpg',
+        quality: 100
+      }, // output quality : max
+      {
+        src: '/peacock.jpg',
+        quality: 1
+      }, // output quality : poor quality
+      {
+        src: '/woman-14.jpg'
+      }, // original
+      {
+        src: '/woman-14.jpg',
+        width: 501,
+        height: 301,
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // cover 501x301
+      {
+        src: '/woman-14.jpg',
+        width: 501,
+        fit: 'inside',
+        modifiers:
+        {
+          focus: 'auto'
+        }
+      }, // inside width 501
+      {
+        src: 'cat_1x1.jpg',
+        width: 300,
+        fit: 'resize',
+        modifiers:
+        {
+          cover: '4:3'
+        }
+      }, // ratio
+      {
+        src: '/cat.jpg',
+        modifiers:
+        {
+          crop: '500x100'
+        }
+      }, // crop api
+      {
+        src: '/cat.jpg',
+        width: 501,
+        modifiers:
+        {
+          crop: '500x100@700x400'
+        }
+      }, // crop api with coordinates
+      {
+        src: '/cat.jpg',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          crop: '500x100'
+        }
+      }, // crop api with focus auto
+      {
+        src: '/cat_1x1.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          crop: '500x500'
+        }
+      }, // crop api with focus auto
+      {
+        src: '/football.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          cover: '1:1'
+        }
+      }, // crop api with focus auto
+      {
+        src: '/puppy.jpg',
+        width: 501,
+        modifiers:
+        {
+          flip: 'both'
+        }
+      }, // flip api
+      {
+        src: '/peacock.jpg',
+        format: 'png',
+        modifiers:
+        {
+          truecolor: true
+        }
+      }, // truecolor api
+      {
+        src: '/peacock.jpg',
+        format: 'png',
+        modifiers:
+        {
+          truecolor: false
+        }
+      }, // truecolor api
+      {
+        src: '/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 'left'
+        }
+      }, // turn api
+      {
+        src: '/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 80
+        }
+      }, // turn api
+      {
+        src: '/man-13.jpg',
+        format: 'png',
+        modifiers:
+        {
+          turn: 90
+        }
+      }, // turn api
+      {
+        src: '/cherry-3.jpg',
+        format: 'png',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          zoom: 1.5
+        }
+      }, // zoom api
+      {
+        src: '/cherry-3.jpg',
+        format: 'png',
+        width: 501,
+        modifiers:
+        {
+          focus: 'auto',
+          zoom: 3
+        }
+      }, // zoom api
+      {
+        src: '/football.jpg',
+        modifiers:
+        {
+          cover: '16:9',
+          focus: 'auto',
+          turn: 'left'
+        }
+      },
+      {
+        src: '/football.jpg',
+        modifiers:
+        {
+          focus: 'auto',
+          turn: 'left',
+          cover: '16:9'
+        }
+      }
     ]
   },
   // Sanity
@@ -384,7 +662,6 @@ export const providers: Provider[] = [
         format: 'auto',
         from: 'Photo by Omid Armin',
         link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
-
       }
     ]
   },

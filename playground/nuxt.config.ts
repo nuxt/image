@@ -30,12 +30,19 @@ export default <NuxtConfig> {
       baseURL: 'https://demo.twic.pics/'
     },
     storyblok: {
-      baseURL: 'https://img2.storyblok.com/'
+      baseURL: 'https://a.storyblok.com/'
+    },
+    cloudflare: {
+      baseURL: 'https://that-test.site'
     },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
     },
     contentful: {},
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'sample.li'
+    },
     fastly: {
       baseURL: 'https://www.fastly.io'
     },
@@ -54,6 +61,7 @@ export default <NuxtConfig> {
     netlify: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
+    layer0: {},
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'
