@@ -1,13 +1,12 @@
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
-  extends: ['./node_modules/@docus/docs-theme'],
-  modules: ['@nuxthq/admin', '@docus/github', 'vue-plausible'],
-  github: {
-    owner: 'nuxt',
-    repo: 'image',
-    branch: 'main'
-  },
+  extends: [
+    require.resolve('@docus/docs-theme')
+  ],
+  modules: [
+    'vue-plausible'
+  ],
   theme: {},
   plausible: {
     domain: 'image.nuxtjs.org'
