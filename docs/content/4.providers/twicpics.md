@@ -1,8 +1,6 @@
 ---
-title: Twicpics Provider
-description: 'Nuxt Image internally use Twicpics as static provider.'
-navigation:
-  title: Twicpics
+title: Twicpics
+description: Nuxt Image internally use Twicpics as static provider
 ---
 
 Integration between [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) and the image module.
@@ -19,7 +17,7 @@ And using the TwicPics API, you will be able to access all these features: [smar
 
 ## Requirement
 
-The only requirement is to have a TwicPics account. 
+The only requirement is to have a TwicPics account.
 If you don't already have one, you can easily [create your own TwicPics account for free](https://account.twicpics.com/signup/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
 ## Setup
@@ -75,7 +73,7 @@ This will bring your image back to a 300x600 area with respect to the ratio (1:1
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/cat_1x1.jpg" 
+  src="/cat_1x1.jpg"
   fit="contain"
   height=600
   width=300
@@ -86,7 +84,7 @@ The letterboxing strips are transparent areas. Feel free to select the color of 
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/cat_1x1.jpg" 
+  src="/cat_1x1.jpg"
   fit="contain"
   height=600
   width=300
@@ -143,7 +141,7 @@ Example:
   src="/cat_1x1.jpg"
   quality=1
 />
-``` 
+```
 
 More informations [about quality here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=quality#truecolor).
 
@@ -166,7 +164,7 @@ Example:
 ```html
 <NuxtImg
   provider="twicpics"
-  src="/cat_1x1.jpg" 
+  src="/cat_1x1.jpg"
   fit="contain"
   height=600
   width=300
@@ -178,7 +176,7 @@ More informations [about background here](https://www.twicpics.com/docs/api/tran
 
 ## TwicPics modifiers
 
-In addition to the standard parameters, the specific features of the TwicPics API are accessible via the `modifiers` prop of `nuxt-img` or `nuxt-picture`. 
+In addition to the standard parameters, the specific features of the TwicPics API are accessible via the `modifiers` prop of `nuxt-img` or `nuxt-picture`.
 
 ```html
 <NuxtImg
@@ -249,7 +247,7 @@ More informations [about `flip` here](https://www.twicpics.com/docs/api/transfor
 
 `focus` will set the focus point coordinates. It doesn't modify the output image in any way but will change the behavior of further transformations that take the focus point into account (namely cover, crop and resize).
 
-If `auto` is used in place of actual coordinates, the focus point will be chosen automagically for you! 
+If `auto` is used in place of actual coordinates, the focus point will be chosen automagically for you!
 
 Syntax: `{ focus: `[`coordinates`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-coordinates)`|'auto' }`
 
@@ -291,7 +289,7 @@ Use truecolor if you want to distribute substantially larger but more accurate i
 <NuxtImg
   provider="twicpics"
   src="/peacock.jpg"
-  format="png" 
+  format="png"
   :modifiers="{truecolor:true}" <!-- disallowes color quantization -->
 />
 
@@ -362,7 +360,7 @@ Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/api/manipulations/?ut
 
 More informations [about `zoom` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#zoom).
 
-## Combination of parameters 
+## Combination of parameters
 
 You can combine several transformations of the [TwicPics API](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
@@ -427,7 +425,7 @@ Or, with `focus`='auto'
 
 ## Go further with TwicPics
 
-TwicPics offers a [collection of web components](https://www.npmjs.com/package/@twicpics/components) that will allow you to exploit all its power : 
+TwicPics offers a [collection of web components](https://www.npmjs.com/package/@twicpics/components) that will allow you to exploit all its power :
 
 - Pixel Perfect
 - Layout Driven

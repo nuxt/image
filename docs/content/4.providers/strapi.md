@@ -1,8 +1,6 @@
 ---
-title: Strapi Provider
-description: 'Nuxt Image with Strapi integration'
-navigation:
-  title: Strapi
+title: Strapi
+description: Nuxt Image with Strapi integration
 ---
 
 Integration between [Strapi](https://strapi.io) and the image module.

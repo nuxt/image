@@ -1,8 +1,6 @@
 ---
-title: Cloudinary Provider
-description: 'Nuxt Image has first class integration with Cloudinary'
-navigation:
-  title: Cloudinary
+title: Cloudinary
+description: Nuxt Image has first class integration with Cloudinary
 ---
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.

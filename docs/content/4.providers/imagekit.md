@@ -1,13 +1,11 @@
 ---
-title: ImageKit Provider
-description: "Nuxt Image has first class integration with ImageKit"
-navigation:
-  title: ImageKit
+title: ImageKit
+description: Nuxt Image has first class integration with ImageKit
 ---
 
 Integration between [ImageKit](https://docs.imagekit.io/) and the image module.
 
-To use the ImageKit provider, you need to set your ImageKit account URL-endpoint as the base url like below. 
+To use the ImageKit provider, you need to set your ImageKit account URL-endpoint as the base url like below.
 
 ```js{}[nuxt.config.js]
 export default {
@@ -121,7 +119,7 @@ Give rounded corners to your image using `radius`. Possible values are - positiv
 
 ### `bg`
 
-Specify background color and its opacity for your image using the `bg` modifier. 
+Specify background color and its opacity for your image using the `bg` modifier.
 
 ```html
 <nuxt-img

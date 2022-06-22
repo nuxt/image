@@ -1,8 +1,7 @@
 ---
-title: Imgix Provider
-description: 'Nuxt Image has first class integration with Imgix'
-navigation:
-  title: Imgix
+title: Imgix
+description: Nuxt Image has first class integration with Imgix
+
 ---
 
 Integration between [Imgix](https://docs.imgix.com/) and the image module.
@@ -56,4 +55,4 @@ This will return a 300 x 500 image, which has been compressed, will display next
 
 ## Additional Documentation
 
-You can find additional documentation and a step-by-step tutorial in an imgix blog article titled [Using the New Nuxt Component with imgix](https://blog.imgix.com/2021/09/14/nuxt-image-component).  
+You can find additional documentation and a step-by-step tutorial in an imgix blog article titled [Using the New Nuxt Component with imgix](https://blog.imgix.com/2021/09/14/nuxt-image-component).

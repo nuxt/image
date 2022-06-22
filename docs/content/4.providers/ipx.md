@@ -1,8 +1,6 @@
 ---
-title: IPX Provider
-description: 'Self hosted image provider'
-navigation:
-  title: IPX
+title: IPX
+description: Self hosted image provider
 ---
 
 Nuxt Image comes with a [preconfigured instance](/getting-started/providers#default-provider) of [ipx](https://github.com/unjs/ipx). An open source, self-hosted image optimizer based on [sharp](https://github.com/lovell/sharp).

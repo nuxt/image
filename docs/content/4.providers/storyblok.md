@@ -1,8 +1,6 @@
 ---
-title: Storyblok Provider
-description: 'Nuxt Image internally use Storyblok as static provider.'
-navigation:
-  title: Storyblok
+title: Storyblok
+description: Nuxt Image internally use Storyblok as static provider
 ---
 
 Integration between [Storyblok](https://www.storyblok.com/docs/image-service/) and the image module. To use this provider you just need to specify the base url of your service in Storyblok.

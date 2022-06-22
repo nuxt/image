@@ -1,9 +1,6 @@
 ---
-title: Vercel Provider
-navigation.title: Vercel
+title: Vercel
 description: Optimize images at Vercel's Edge Network
-navigation:
-  title: Vercel
 ---
 
 When deploying your nuxt applications to [Vercel](https://vercel.com/) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.

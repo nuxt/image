@@ -1,8 +1,6 @@
 ---
-title: ImageEngine Provider
-description: 'Nuxt Image has first class integration with ImageEngine'
-navigation:
-  title: ImageEngine
+title: ImageEngine
+description: Nuxt Image has first class integration with ImageEngine
 ---
 
 Integration between [ImageEngine](https://imageengine.io/) and the image module.
