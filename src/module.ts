@@ -1,6 +1,6 @@
 import { resolve } from 'upath'
 import defu from 'defu'
-import { parseURL, withLeadingSlash } from 'ufo'
+import { withLeadingSlash } from 'ufo'
 import LruCache from 'lru-cache'
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
@@ -40,7 +40,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
 
   // Normalize domains to hostname
   options.domains = options.domains
-    .map(domain => parseURL(domain, 'https://').host)
+    .map(domain => new URL(domain, 'https://').hostname)
     .filter(Boolean) as string[]
 
   // Normalize alias to start with leading slash
