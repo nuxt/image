@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* domain normalization when no protocol and port are provided ([c6c7085](https://github.com/nuxt/image/commit/c6c70855b5eaf302614bdfb5b4d611a4aca42781))
+
 ## [0.7.0](https://github.com/nuxt/image/compare/v0.6.2...v0.7.0) (2022-06-22)
 
 
