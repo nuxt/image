@@ -1,22 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "generate": "nuxt generate",
-    "build": "nuxt generate",
-    "dev": "nuxt dev",
-    "start": "nuxt start"
-  },
-  "resolutions": {
-    "nuxt-windicss": "npm:nuxt-windicss@latest",
-    "@docus/core": "1.1.1"
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi build",
+    "preview": "nuxi preview"
   },
   "devDependencies": {
-    "@docus/app": "1.1.3",
-    "@docus/github": "1.0.4",
-    "@docus/social-image": "1.0.3",
-    "@docus/theme": "1.1.5",
-    "@docus/twitter": "1.0.4",
-    "@nuxt/typescript-build": "^2.1.0",
-    "vue-plausible": "^1.2.1"
+    "@docus/docs-theme": "npm:@docus/docs-theme-edge@latest",
+    "@docus/github": "npm:@docus/github-edge@latest",
+    "nuxt": "^3.0.0-rc.3",
+    "vue-plausible": "^1.3.1"
   }
 }
