@@ -46,6 +46,7 @@ export default defineComponent({
         link: [link]
       }
     }
+    return {}
   },
   computed: {
     isTransparent (): boolean {

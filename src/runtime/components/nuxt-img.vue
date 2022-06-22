@@ -34,6 +34,7 @@ export default defineComponent({
         ]
       }
     }
+    return {}
   },
   computed: {
     nAttrs (): NAttrs {
