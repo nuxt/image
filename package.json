@@ -17,8 +17,8 @@
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
-    "prepublishOnly": "yarn build",
-    "release": "standard-version && git push --follow-tags && npm publish",
+    "prepack": "yarn build",
+    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
     "test": "yarn lint && yarn jest --forceExit",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
