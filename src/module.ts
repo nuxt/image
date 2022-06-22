@@ -8,6 +8,8 @@ import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
 import type { ModuleOptions, CreateImageOptions } from './types'
 
+export * from './types'
+
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
   const { nuxt, addPlugin } = this
 

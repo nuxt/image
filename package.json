@@ -5,14 +5,14 @@
   "repository": "nuxt/image",
   "license": "MIT",
   "sideEffects": false,
-  "main": "dist/module.js",
-  "types": "dist/types.d.ts",
+  "main": "./dist/module.cjs",
+  "types": "./dist/module.d.ts",
   "files": [
     "dist",
     "vetur"
   ],
   "scripts": {
-    "build": "siroc build && mkdist --src src/runtime --dist dist/runtime -d --ext js",
+    "build": "unbuild",
     "dev": "yarn nuxt playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
@@ -64,10 +64,10 @@
     "mkdist": "latest",
     "nuxt-edge": "latest",
     "playwright": "latest",
-    "siroc": "latest",
     "standard-version": "latest",
     "ts-loader": "^8",
     "typescript": "latest",
+    "unbuild": "^0.7.4",
     "vue-jest": "latest"
   },
   "optionalDependencies": {
