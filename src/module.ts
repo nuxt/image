@@ -39,9 +39,10 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
   // Normalize domains to hostname
-  options.domains = options.domains
-    .map(domain => new URL(domain, 'https://').hostname)
-    .filter(Boolean) as string[]
+  options.domains = options.domains.map((d) => {
+    if (!d.startsWith('http')) { d = 'http://' + d }
+    return new URL(d).hostname
+  }).filter(Boolean) as string[]
 
   // Normalize alias to start with leading slash
   options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
