@@ -12,7 +12,7 @@
     <h1>Placeholder</h1>
     <nuxt-img
       :src="src"
-      placeholder
+      :placeholder="9"
       width="500"
       height="500"
       @load="isLoaded = true"
