@@ -1,12 +1,14 @@
 import { resolve } from 'upath'
 import defu from 'defu'
-import { parseURL, withLeadingSlash } from 'ufo'
+import { withLeadingSlash } from 'ufo'
 import LruCache from 'lru-cache'
 import type { Module } from '@nuxt/types'
 import { setupStaticGeneration } from './generate'
 import { resolveProviders, detectProvider } from './provider'
 import { pick, pkg } from './utils'
 import type { ModuleOptions, CreateImageOptions } from './types'
+
+export * from './types'
 
 const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
   const { nuxt, addPlugin } = this
@@ -37,9 +39,10 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
   const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
 
   // Normalize domains to hostname
-  options.domains = options.domains
-    .map(domain => parseURL(domain, 'https://').host)
-    .filter(Boolean) as string[]
+  options.domains = options.domains.map((d) => {
+    if (!d.startsWith('http')) { d = 'http://' + d }
+    return new URL(d).hostname
+  }).filter(Boolean) as string[]
 
   // Normalize alias to start with leading slash
   options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
@@ -88,7 +91,7 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     setupStaticGeneration(nuxt, options)
   })
 
-  const cache = new LruCache()
+  const cache = new LruCache({ max: 1000 })
   nuxt.hook('vue-renderer:context', (ssrContext: any) => {
     ssrContext.cache = cache
   })

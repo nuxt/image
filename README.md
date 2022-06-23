@@ -1,4 +1,4 @@
-[![@nuxt/image](./docs/static/social.svg "Nuxt Image")](https://image.nuxtjs.org)
+[![@nuxt/image](./docs/public/cover.jpg "Nuxt Image")](https://image.nuxtjs.org)
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]

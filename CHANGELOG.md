@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* domain normalization when no protocol and port are provided ([c6c7085](https://github.com/nuxt/image/commit/c6c70855b5eaf302614bdfb5b4d611a4aca42781))
+
+## [0.7.0](https://github.com/nuxt/image/compare/v0.6.2...v0.7.0) (2022-06-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **pkg:** add engines field to require `node>=14.16`
+* switch to unbuild
+* update dependencies
+
+### Features
+
+* cloudflare provider ([#359](https://github.com/nuxt/image/issues/359)) ([94625ce](https://github.com/nuxt/image/commit/94625ce94a398471312010d7af4f02e52a4ec57c))
+* cloudimage provider ([#523](https://github.com/nuxt/image/issues/523)) ([33b36bc](https://github.com/nuxt/image/commit/33b36bcba339d6ebfd83397c90b5f48824eb7523))
+* **cloudinary:** add types for options and modifiers ([#511](https://github.com/nuxt/image/issues/511)) ([79c1580](https://github.com/nuxt/image/commit/79c1580d3f2a3a8dba37d54ff67b55b849c9935f))
+* layer0 provider ([#501](https://github.com/nuxt/image/issues/501)) ([5de4eb6](https://github.com/nuxt/image/commit/5de4eb6bf0f094ef206902b119669d78bbcb8909))
+* **pkg:** add engines field to require `node>=14.16` ([38d77f1](https://github.com/nuxt/image/commit/38d77f125ade661dca369babc2e6bc881da2a553))
+* **storyblok:** update to the new service ([#497](https://github.com/nuxt/image/issues/497)) ([3edbd22](https://github.com/nuxt/image/commit/3edbd22f647c77b8d7c92ab8fccd47155c3178a1))
+* support placeholder ([#477](https://github.com/nuxt/image/issues/477)) ([fc7e3d5](https://github.com/nuxt/image/commit/fc7e3d57f0f713c8d089f811640cb3d16b287da4))
+* **twicpics:** fix modifiers and improve documentation ([#503](https://github.com/nuxt/image/issues/503)) ([7942232](https://github.com/nuxt/image/commit/7942232bfa2cd60e27ac63bffe011f2f7a15f716))
+* update dependencies ([d4de9d3](https://github.com/nuxt/image/commit/d4de9d3502a89470f32da67d264715efb118239e))
+
+
+### Bug Fixes
+
+* **ipx:** `nuxtContext` is optional ([37f09b0](https://github.com/nuxt/image/commit/37f09b0f04d1f6c15378c792d2447887907f5a4c))
+* **ipx:** allow overriding `baseURL` regardless of router base ([#484](https://github.com/nuxt/image/issues/484)) ([2720956](https://github.com/nuxt/image/commit/2720956035416191df71642822b8bf9c1b5e97bd))
+* normalize domains to hostname (resolves [#486](https://github.com/nuxt/image/issues/486)) ([9f53d28](https://github.com/nuxt/image/commit/9f53d28067dc6dc5739754f06c2b64eb17edd500))
+* **nuxt-img, nuxt-picture:** return empty object from `head` when preload is disabled ([#528](https://github.com/nuxt/image/issues/528)) ([86088e4](https://github.com/nuxt/image/commit/86088e4f43e9f9e351e15afb8d9da4bb6e10b436))
+
+
+### build
+
+* switch to unbuild ([d7bb617](https://github.com/nuxt/image/commit/d7bb6178322480a176c07b57f96a580974e67a13))
+
 ### [0.6.2](https://github.com/nuxt/image/compare/v0.6.1...v0.6.2) (2022-02-17)
 
 

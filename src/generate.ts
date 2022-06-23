@@ -4,13 +4,11 @@ import { promisify } from 'util'
 import stream from 'stream'
 import { mkdirp } from 'fs-extra'
 import { dirname, join, relative, basename, trimExt } from 'upath'
-import fetch from 'node-fetch'
+import { fetch } from 'node-fetch-native'
 import { joinURL, hasProtocol, parseURL, withoutTrailingSlash } from 'ufo'
 import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
 import { hash, logger, guessExt } from './utils'
-
-const pipeline = promisify(stream.pipeline)
 
 export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   const staticImages: Record<string, string> = {} // url ~> hashed file name
@@ -50,13 +48,14 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   })
 }
 
+const pipeline = promisify(stream.pipeline)
 async function downloadImage ({ url, name, outDir }: { url: string, name: string, outDir: string }) {
   try {
     const response = await fetch(url)
     if (!response.ok) { throw new Error(`Unexpected response ${response.statusText}`) }
     const dstFile = join(outDir, name)
     await mkdirp(dirname(dstFile))
-    await pipeline(response.body, createWriteStream(dstFile))
+    await pipeline(response.body as any, createWriteStream(dstFile))
     logger.success('Generated static image ' + relative(process.cwd(), dstFile))
   } catch (error: any) {
     logger.error(error?.message)
