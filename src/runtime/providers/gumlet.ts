@@ -1,6 +1,6 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from 'src'
-import { createOperationsGenerator } from '~image'
+import type { ProviderGetImage } from '../../types'
+import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {

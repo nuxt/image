@@ -1,12 +1,13 @@
 import type { ImageInfo, ImageCTX } from '../../types/image'
 
-export async function imageMeta (ctx: ImageCTX, url: string): Promise<ImageInfo> {
-  const cache = getCache<ImageInfo>(ctx)
+export async function imageMeta (_ctx: ImageCTX, url: string): Promise<ImageInfo> {
+  // TODO: Reimplement cache using storage
+  // const cache = getCache<ImageInfo>(ctx)
 
-  const cacheKey = 'image:meta:' + url
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey)
-  }
+  // const cacheKey = 'image:meta:' + url
+  // if (cache.has(cacheKey)) {
+  //   return cache.get(cacheKey)
+  // }
 
   const meta = await _imageMeta(url).catch((err) => {
     // eslint-disable-next-line no-console
@@ -18,13 +19,13 @@ export async function imageMeta (ctx: ImageCTX, url: string): Promise<ImageInfo>
     }
   })
 
-  cache.set(cacheKey, meta)
+  // cache.set(cacheKey, meta)
   return meta
 }
 
 async function _imageMeta (url: string): Promise<ImageInfo> {
   if (process.server) {
-    const imageMeta = await import('image-meta').then(r => r.default || r)
+    const imageMeta = await import('image-meta').then(r => r.imageMeta)
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
     const metadata = imageMeta(data)
     if (!metadata) {
@@ -56,26 +57,4 @@ async function _imageMeta (url: string): Promise<ImageInfo> {
     img.onerror = err => reject(err)
     img.src = url
   })
-}
-
-interface Cache<T> {
-  get: (id: string) => T,
-  set: (id: string, value: T) => void,
-  has: (id: string) => boolean
-}
-
-function getCache <T = any> (ctx: ImageCTX): Cache<T> {
-  if (!ctx.nuxtContext.cache) {
-    if (ctx.nuxtContext.ssrContext && ctx.nuxtContext.ssrContext.cache) {
-      ctx.nuxtContext.cache = ctx.nuxtContext.ssrContext.cache
-    } else {
-      const _cache: Record<string, any> = {}
-      ctx.nuxtContext.cache = {
-        get: (id: string) => _cache[id],
-        set: (id: string, value: any) => { _cache[id] = value },
-        has: (id: string) => typeof _cache[id] !== 'undefined'
-      }
-    }
-  }
-  return ctx.nuxtContext.cache
 }

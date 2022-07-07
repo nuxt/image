@@ -1,5 +1,6 @@
 import type { IPXOptions } from 'ipx'
-import type { ImageOptions, CreateImageOptions, ImageModifiers } from './image'
+import type { ModuleOptions } from '../module'
+import type { ImageModifiers } from './image'
 
 // eslint-disable-next-line no-use-before-define
 export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt: any)
@@ -57,21 +58,6 @@ export interface ImageProviders {
   imageengine?: any,
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
-}
-
-// TODO: use types from CreateImageOptions
-export interface ModuleOptions extends ImageProviders {
-  staticFilename: string,
-  provider: CreateImageOptions['provider']
-  presets: { [name: string]: ImageOptions }
-  dir: string
-  domains: string[]
-  sharp: any
-  alias: Record<string, string>
-  screens: CreateImageOptions['screens'],
-  internalUrl: string
-  providers: { [name: string]: InputProvider | any } & ImageProviders
-  [key: string]: any
 }
 
 export interface ImageModuleProvider {

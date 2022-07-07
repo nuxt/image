@@ -13,7 +13,7 @@ export interface Provider {
 export const providers: Provider[] = [
   // IPX
   {
-    name: 'static',
+    name: 'ipx',
     samples: [
       {
         src: '/images/colors.jpg',

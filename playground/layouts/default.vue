@@ -5,10 +5,10 @@
         <NuxtLink to="/">
           Home
         </NuxtLink>
-        <NuxtLink to="/nuxt-img">
+        <NuxtLink to="/img">
           NuxtImg
         </NuxtLink>
-        <NuxtLink to="/nuxt-picture">
+        <NuxtLink to="/picture">
           NuxtPicture
         </NuxtLink>
       </li>
@@ -16,7 +16,7 @@
         <ProviderSelector />
       </li>
     </ul>
-    <Nuxt />
+    <slot />
   </main>
 </template>
 

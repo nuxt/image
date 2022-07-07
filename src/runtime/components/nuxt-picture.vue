@@ -11,18 +11,15 @@
       :src="nSources[0].src"
       :srcset="nSources[0].srcset"
       :sizes="nSources[0].sizes"
-      v-on="$listeners"
     >
   </picture>
 </template>
 
 <script lang="ts">
-import type { DefineComponentWithMixin } from '../../types/vue'
+import { defineComponent } from 'vue'
 import { imageMixin } from './image.mixin'
 
-import { getFileExtension } from '~image'
-
-const defineComponent: DefineComponentWithMixin = (opts: any) => opts
+import { getFileExtension } from '#image'
 
 export default defineComponent({
   name: 'NuxtPicture',

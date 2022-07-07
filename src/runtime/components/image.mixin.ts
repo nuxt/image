@@ -1,10 +1,7 @@
+import type { ComponentOptions } from 'vue'
 import { parseSize } from '../utils'
-import type { DefineMixin } from '../../types/vue'
 
-const defineMixin: DefineMixin = (opts: any) => opts
-
-// @vue/component
-export const imageMixin = defineMixin({
+export const imageMixin: ComponentOptions = {
   props: {
     // input source
     src: { type: String, required: true },
@@ -79,4 +76,4 @@ export const imageMixin = defineMixin({
       }
     }
   }
-})
+}

@@ -1,64 +1,25 @@
-import defu from 'defu'
+import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
-import { useStaticImageMap } from './utils/static-map'
 
-export function createImage (globalOptions: CreateImageOptions, nuxtContext: any) {
-  const staticImageManifest: Record<string, string> = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
-
+export function createImage (globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
-    options: globalOptions,
-    nuxtContext
+    options: globalOptions
   }
 
-  const getImage: $Img['getImage'] = function (input: string, options = {}) {
+  const getImage: $Img['getImage'] = (input: string, options = {}) => {
     const image = resolveImage(ctx, input, options)
-    if (image.isStatic) {
-      handleStaticImage(image, input)
-    }
     return image
   }
 
-  const $img = function $img (input, modifiers = {}, options = {}) {
+  const $img = ((input, modifiers = {}, options = {}) => {
     return getImage(input, {
       ...options,
       modifiers: defu(modifiers, options.modifiers || {})
     }).url
-  } as $Img
-
-  function handleStaticImage (image: ResolvedImage, input: string) {
-    if (process.static) {
-      if (process.client && 'fetchPayload' in window.$nuxt) {
-        const mappedURL = staticImageManifest[image.url]
-        image.url = mappedURL || input
-        return image
-      }
-
-      if (process.server) {
-        const { ssrContext } = ctx.nuxtContext
-        if (ssrContext) {
-          const ssrState = ssrContext.nuxt || {}
-          const staticImages = ssrState._img = ssrState._img || {}
-          const ssrData = ssrState.data?.[0]
-          if (ssrData) {
-            ssrData._img = staticImages
-          }
-          const mapToStatic: MapToStatic = ssrContext.image?.mapToStatic
-          if (typeof mapToStatic === 'function') {
-            const mappedURL = mapToStatic(image, input)
-            if (mappedURL) {
-              staticImages[image.url] = mappedURL
-              image.url = mappedURL
-            }
-          }
-        }
-      }
-    } else if (process.env.NODE_ENV === 'production') {
-      image.url = input
-    }
-  }
+  }) as $Img
 
   for (const presetName in globalOptions.presets) {
     $img[presetName] = ((source, modifiers, options) =>

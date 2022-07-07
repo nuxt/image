@@ -1,6 +1,6 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from 'src'
-import { createMapper, createOperationsGenerator } from '~image'
+import type { ProviderGetImage } from '../../types'
+import { createMapper, createOperationsGenerator } from '#image'
 
 const fits = createMapper({
   fill: 'resize',

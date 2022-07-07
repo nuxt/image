@@ -1,15 +1,3 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "baseUrl": ".",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "types": ["node", "jest"],
-    "paths": {
-      "~image/*": ["src/runtime/*"],
-      "~image": ["src/runtime"]
-    }
-  },
-  "exclude": ["dist"]
+  "extends": "./playground/.nuxt/tsconfig.json"
 }

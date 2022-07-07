@@ -8,6 +8,7 @@
 - [📖 &nbsp;Read Documentation](https://image.nuxtjs.org)
 - [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
 
+**Note:** This branch is for Nuxt 3 compatible module. Checkout [`v0` branch](https://github.com/nuxt/bridge/tree/v0) for Nuxt 2 support.
 
 ### Contributing
 
@@ -15,12 +16,9 @@
 2. Install dependencies using `yarn install`
 3. Start development server using `yarn dev`
 
-
 ## 📑 License
 
-Copyright (c) Nuxt Team
-
-
+Published under the [MIT License](./LICENSE)
 
 <!-- Badges -->
 [npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image

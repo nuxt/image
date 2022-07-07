@@ -1,24 +1,31 @@
-import { resolve } from 'upath'
-import defu from 'defu'
 import { withLeadingSlash } from 'ufo'
-import LruCache from 'lru-cache'
-import type { Module } from '@nuxt/types'
-import { setupStaticGeneration } from './generate'
+import { defineNuxtModule, addTemplate, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolveProviders, detectProvider } from './provider'
-import { pick, pkg } from './utils'
-import type { ModuleOptions, CreateImageOptions } from './types'
+import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
+
+export interface ModuleOptions extends ImageProviders {
+  staticFilename: string,
+  provider: CreateImageOptions['provider']
+  presets: { [name: string]: ImageOptions }
+  dir: string
+  domains: string[]
+  sharp: any
+  alias: Record<string, string>
+  screens: CreateImageOptions['screens'],
+  internalUrl: string
+  providers: { [name: string]: InputProvider | any } & ImageProviders
+  [key: string]: any
+}
 
 export * from './types'
 
-const imageModule: Module<ModuleOptions> = async function imageModule (moduleOptions) {
-  const { nuxt, addPlugin } = this
-
-  const defaults: ModuleOptions = {
+export default defineNuxtModule<ModuleOptions>({
+  defaults: {
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
+    dir: undefined,
     presets: {},
-    dir: resolve(nuxt.options.srcDir, nuxt.options.dir.static),
-    domains: [],
+    domains: [] as string[],
     sharp: {},
     // https://tailwindcss.com/docs/breakpoints
     screens: {
@@ -32,75 +39,89 @@ const imageModule: Module<ModuleOptions> = async function imageModule (moduleOpt
     },
     internalUrl: '',
     providers: {},
-    static: {},
     alias: {}
-  }
-
-  const options: ModuleOptions = defu(moduleOptions, nuxt.options.image, defaults)
-
-  // Normalize domains to hostname
-  options.domains = options.domains.map((d) => {
-    if (!d.startsWith('http')) { d = 'http://' + d }
-    return new URL(d).hostname
-  }).filter(Boolean) as string[]
-
-  // Normalize alias to start with leading slash
-  options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
-
-  options.provider = detectProvider(options.provider, nuxt.options.target === 'static')
-  options[options.provider] = options[options.provider] || {}
-
-  const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
-    'screens',
-    'presets',
-    'provider',
-    'domains',
-    'alias'
-  ])
-
-  const providers = resolveProviders(nuxt, options)
-
-  // Run setup
-  for (const p of providers) {
-    if (typeof p.setup === 'function') {
-      await p.setup(p, options, nuxt)
+  },
+  meta: {
+    name: '@nuxt/image',
+    configKey: 'image',
+    compatibility: {
+      nuxt: '^3.0.0'
     }
-  }
+  },
+  async setup (options, nuxt) {
+    const resolver = createResolver(import.meta.url)
 
-  // Transpile and alias runtime
-  const runtimeDir = resolve(__dirname, 'runtime')
-  nuxt.options.alias['~image'] = runtimeDir
-  nuxt.options.build.transpile.push(runtimeDir, '@nuxt/image', 'allowlist', 'defu', 'ufo')
+    // Normalize domains to hostname
+    options.domains = options.domains.map((d) => {
+      if (!d.startsWith('http')) { d = 'http://' + d }
+      return new URL(d).hostname
+    }).filter(Boolean) as string[]
 
-  // Add plugin
-  addPlugin({
-    fileName: 'image.js',
-    src: resolve(runtimeDir, 'plugin.js'),
-    options: {
-      imageOptions,
-      providers
+    // Normalize alias to start with leading slash
+    options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
+
+    options.provider = detectProvider(options.provider)
+    options[options.provider] = options[options.provider] || {}
+
+    const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
+      'screens',
+      'presets',
+      'provider',
+      'domains',
+      'alias'
+    ])
+
+    const providers = await resolveProviders(nuxt, options)
+
+    // Run setup
+    for (const p of providers) {
+      if (typeof p.setup === 'function') {
+        await p.setup(p, options, nuxt)
+      }
     }
-  })
 
-  // Transform asset urls that pass to `src` attribute on image components
-  nuxt.options.build.loaders = defu({
-    vue: { transformAssetUrls: { 'nuxt-img': 'src', 'nuxt-picture': 'src', NuxtPicture: 'src', NuxtImg: 'src' } }
-  }, nuxt.options.build.loaders || {})
+    // Transpile and alias runtime
+    const runtimeDir = resolver.resolve('./runtime')
+    nuxt.options.alias['#image'] = runtimeDir
+    nuxt.options.build.transpile.push(runtimeDir)
 
-  nuxt.hook('generate:before', () => {
-    setupStaticGeneration(nuxt, options)
-  })
+    // Add components
+    addComponent({
+      name: 'NuxtImg',
+      filePath: resolver.resolve('./runtime/components/nuxt-img.vue')
+    })
+    addComponent({
+      name: 'NuxtPicture',
+      filePath: resolver.resolve('./runtime/components/nuxt-picture.vue')
+    })
 
-  const cache = new LruCache({ max: 1000 })
-  nuxt.hook('vue-renderer:context', (ssrContext: any) => {
-    ssrContext.cache = cache
-  })
+    // Add runtime options
+    addTemplate({
+      filename: 'image-options.mjs',
+      getContents () {
+        return `
+${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
 
-  nuxt.hook('listen', (_: any, listener: any) => {
-    options.internalUrl = `http://localhost:${listener.port}`
-  })
+export const imageOptions = ${JSON.stringify(imageOptions, null, 2)}
+
+imageOptions.providers = {
+${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
 }
+        `
+      }
+    })
 
-; (imageModule as any).meta = pkg
+    // Add runtime plugin
+    addPlugin({ src: resolver.resolve('./runtime/plugin') })
 
-export default imageModule
+    // TODO: Transform asset urls that pass to `src` attribute on image components
+  }
+})
+
+function pick<O extends Record<any, any>, K extends keyof O> (obj: O, keys: K[]): Pick<O, K> {
+  const newobj = {} as Pick<O, K>
+  for (const key of keys) {
+    newobj[key] = obj[key]
+  }
+  return newobj
+}

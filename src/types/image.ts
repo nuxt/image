@@ -50,7 +50,6 @@ export interface ImageInfo {
 export interface ResolvedImage {
   url: string,
   format?: string
-  isStatic?: boolean
   getMeta?: () => Promise<ImageInfo>
 }
 
@@ -74,14 +73,6 @@ export type $Img = Img & {
 
 export interface ImageCTX {
   options: CreateImageOptions,
-  nuxtContext: {
-    ssrContext: any
-    cache?: any
-    isDev: boolean
-    isStatic: boolean
-    nuxtState?: any
-    base?: string
-  }
   $img?: $Img
 }
 

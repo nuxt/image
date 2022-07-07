@@ -21,9 +21,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
+export default {
   data () {
     return {
       isLoaded: false,
@@ -31,5 +29,5 @@ export default Vue.extend({
         'https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
     }
   }
-})
+}
 </script>

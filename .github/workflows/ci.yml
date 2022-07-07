@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn build
+      # - run: yarn vitest --coverage
+      # - uses: codecov/codecov-action@v3

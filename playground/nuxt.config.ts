@@ -1,17 +1,8 @@
-import type { NuxtConfig } from '@nuxt/types'
-import type { } from '../src/types'
+import { defineNuxtConfig } from 'nuxt'
 
-export default <NuxtConfig> {
-  components: true,
-  target: 'static',
-  head: {
-    meta: [
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-    ]
-  },
+export default defineNuxtConfig({
   buildModules: [
-    '../src/module.ts',
-    '@nuxt/typescript-build'
+    '../src/module'
   ],
   image: {
     domains: [
@@ -93,4 +84,4 @@ export default <NuxtConfig> {
       }
     }
   }
-}
+})

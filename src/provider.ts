@@ -1,7 +1,9 @@
-import { normalize, resolve, dirname } from 'upath'
-import { writeJson, mkdirp } from 'fs-extra'
-import { hash } from './utils'
-import type { ModuleOptions, InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import { normalize, resolve, dirname } from 'pathe'
+import { resolvePath } from '@nuxt/kit'
+import * as fse from 'fs-extra'
+import { hash } from 'ohash'
+import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
@@ -19,7 +21,6 @@ const BuiltInProviders = [
   'layer0',
   'prismic',
   'sanity',
-  'static',
   'twicpics',
   'strapi',
   'storyblok',
@@ -36,31 +37,31 @@ export const providerSetup: Record<string, ProviderSetup> = {
   // https://vercel.com/docs/more/adding-your-framework#images
   async vercel (_providerOptions, moduleOptions, nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
-    await mkdirp(dirname(imagesConfig))
-    await writeJson(imagesConfig, {
+    await fse.mkdirp(dirname(imagesConfig))
+    await fse.writeJson(imagesConfig, {
       domains: moduleOptions.domains,
       sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
     })
   }
 }
 
-export function resolveProviders (nuxt: any, options: ModuleOptions): ImageModuleProvider[] {
+export async function resolveProviders (nuxt: any, options: ModuleOptions): Promise<ImageModuleProvider[]> {
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
     if (BuiltInProviders.includes(key)) {
-      providers.push(resolveProvider(nuxt, key, { provider: key, options: options[key] }))
+      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key] }))
     }
   }
 
   for (const key in options.providers) {
-    providers.push(resolveProvider(nuxt, key, options.providers[key]))
+    providers.push(await resolveProvider(nuxt, key, options.providers[key]))
   }
 
   return providers
 }
 
-export function resolveProvider (nuxt: any, key: string, input: InputProvider): ImageModuleProvider {
+export async function resolveProvider (_nuxt: any, key: string, input: InputProvider): Promise<ImageModuleProvider> {
   if (typeof input === 'string') {
     input = { name: input }
   }
@@ -75,7 +76,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
 
   input.provider = BuiltInProviders.includes(input.provider)
     ? require.resolve('./runtime/providers/' + input.provider)
-    : nuxt.resolver.resolvePath(input.provider)
+    : await resolvePath(input.provider)
 
   const setup = input.setup || providerSetup[input.name]
 
@@ -88,7 +89,7 @@ export function resolveProvider (nuxt: any, key: string, input: InputProvider): 
   }
 }
 
-export function detectProvider (userInput?: string, isStatic: boolean = false) {
+export function detectProvider (userInput?: string) {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
@@ -101,5 +102,5 @@ export function detectProvider (userInput?: string, isStatic: boolean = false) {
     return 'vercel'
   }
 
-  return isStatic ? 'static' : 'ipx'
+  return 'ipx'
 }
