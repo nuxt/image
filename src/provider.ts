@@ -1,5 +1,5 @@
 import { normalize, resolve, dirname } from 'pathe'
-import { resolvePath } from '@nuxt/kit'
+import { createResolver, resolvePath } from '@nuxt/kit'
 import * as fse from 'fs-extra'
 import { hash } from 'ohash'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
@@ -74,8 +74,9 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
     input.provider = input.name
   }
 
+  const resolver = createResolver(import.meta.url)
   input.provider = BuiltInProviders.includes(input.provider)
-    ? require.resolve('./runtime/providers/' + input.provider)
+    ? await resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
 
   const setup = input.setup || providerSetup[input.name]
