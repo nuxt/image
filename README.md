@@ -1,15 +1,17 @@
 [![@nuxt/image](./docs/public/cover.jpg "Nuxt Image")](./docs/public/cover.jpg)
-
 [![npm version][npm-version-src]][npm-version-href]
-<!-- [![npm downloads][npm-downloads-src]][npm-downloads-href] -->
 [![Checks][checks-src]][checks-href]
+<!-- [![npm downloads][npm-downloads-src]][npm-downloads-href] -->
 <!-- [![Codecov][codecov-src]][codecov-href] -->
 
 - [📖 &nbsp;Read Documentation (v1)](https://v1.image.nuxtjs.org)
 - [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/v1/example)
 
+
 ---
-**Note:** This branch is for **Nuxt 3** compatible module. Checkout [`v1` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
+
+**Note:** This branch is for **Nuxt 3** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
+
 ---
 
 ### Contributing
