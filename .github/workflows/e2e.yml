@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - main
+      - v0
   pull_request:
     branches:
-      - main
+      - v0
 
 jobs:
   test-e2e:
