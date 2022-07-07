@@ -1,7 +1,7 @@
 <template>
-  <main>
-    <!-- https://image.nuxtjs.org/components/nuxt-picture -->
-    <!-- https://image.nuxtjs.org/components/nuxt-img -->
+  <NuxtLayout>
+    <!-- https://v1.image.nuxtjs.org/components/nuxt-picture -->
+    <!-- https://v1.image.nuxtjs.org/components/nuxt-img -->
     <figure>
       <nuxt-picture
         src="/images/mountains.jpg"
@@ -13,7 +13,7 @@
         Photo by <a href="https://unsplash.com/@kydroon" target="_blank" class="underline">Kurt Cotoaga</a> on <a href="https://unsplash.com/s/photos/mountain" target="_blank" class="underline">Unsplash</a>
       </figcaption>
     </figure>
-  </main>
+  </NuxtLayout>
 </template>
 
 <script>

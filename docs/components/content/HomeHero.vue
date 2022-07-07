@@ -77,7 +77,7 @@
             </nuxt-link>
 
             <a
-              href="https://githubbox.com/nuxt/image/tree/main/example"
+              href="https://githubbox.com/nuxt/image/tree/v1/example"
               target="_blank"
               rel="noopener"
               class="

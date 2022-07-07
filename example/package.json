@@ -1,13 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "dev": "nuxt",
     "build": "nuxt build",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "start": "nuxt start"
+    "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@nuxt/image": "^0.7.1",
-    "nuxt": "^2.15.8"
+    "@nuxt/image-edge": "1.0.0-testing",
+    "nuxt": "^3.0.0-rc.4"
   }
 }
