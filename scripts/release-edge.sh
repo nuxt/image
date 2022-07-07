@@ -5,7 +5,7 @@
 set -xe
 
 # Bump versions to edge
-yarn release:bump-edge
+node ./scripts/bump-edge.mjs
 
 # Update token
 if [[ ! -z ${NODE_AUTH_TOKEN} ]] ; then

@@ -21,7 +21,6 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepack": "yarn build",
     "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "release:bump-edge": "jiti ./scripts/bump-edge",
     "test": "yarn lint"
   },
   "dependencies": {

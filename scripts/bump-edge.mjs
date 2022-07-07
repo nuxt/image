@@ -5,12 +5,12 @@ import { globby } from 'globby'
 
 // Temporary forked from nuxt/framework
 
-async function loadPackage (dir: string) {
+async function loadPackage (dir) {
   const pkgPath = resolve(dir, 'package.json')
   const data = JSON.parse(await fsp.readFile(pkgPath, 'utf-8').catch(() => '{}'))
   const save = () => fsp.writeFile(pkgPath, JSON.stringify(data, null, 2) + '\n')
 
-  const updateDeps = (reviver: Function) => {
+  const updateDeps = (reviver) => {
     for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
       if (!data[type]) { continue }
       for (const e of Object.entries(data[type])) {
@@ -31,14 +31,11 @@ async function loadPackage (dir: string) {
   }
 }
 
-type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
-type Package = ThenArg<ReturnType<typeof loadPackage>>
-
-async function loadWorkspace (dir: string) {
+async function loadWorkspace (dir) {
   const workspacePkg = await loadPackage(dir)
   const pkgDirs = await globby(workspacePkg.data.workspaces || [], { onlyDirectories: true })
 
-  const packages: Package[] = [workspacePkg]
+  const packages= [workspacePkg]
 
   for (const pkgDir of pkgDirs) {
     const pkg = await loadPackage(pkgDir)
@@ -46,7 +43,7 @@ async function loadWorkspace (dir: string) {
     packages.push(pkg)
   }
 
-  const find = (name: string) => {
+  const find = (name) => {
     const pkg = packages.find(pkg => pkg.data.name === name)
     if (!pkg) {
       throw new Error('Workspace package not found: ' + name)
@@ -54,7 +51,7 @@ async function loadWorkspace (dir: string) {
     return pkg
   }
 
-  const rename = (from: string, to: string) => {
+  const rename = (from, to) => {
     find(from).data.name = to
     for (const pkg of packages) {
       pkg.updateDeps((dep) => {
@@ -65,7 +62,7 @@ async function loadWorkspace (dir: string) {
     }
   }
 
-  const setVersion = (name: string, newVersion: string) => {
+  const setVersion = (name, newVersion) => {
     find(name).data.version = newVersion
     for (const pkg of packages) {
       pkg.updateDeps((dep) => {
