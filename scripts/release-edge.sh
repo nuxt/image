@@ -8,7 +8,7 @@ set -xe
 git restore -s@ -SW  -- .
 
 # Bump versions to edge
-node ../node_modules/.bin/jiti ./scripts/bump-edge
+npx jiti ./scripts/bump-edge
 
 # Resolve yarn
 YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
