@@ -20,6 +20,8 @@ jobs:
           cache: "yarn"
       - run: yarn install
       - run: yarn lint
+      - run: yarn dev:prepare
       - run: yarn build
+      - run: yarn dev:build
       # - run: yarn vitest --coverage
       # - uses: codecov/codecov-action@v3

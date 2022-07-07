@@ -15,6 +15,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:generate": "nuxi generate playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "yarn nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
