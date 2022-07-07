@@ -10,7 +10,7 @@
 
 ---
 
-**Note:** This branch is for **Nuxt 2** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 3** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
+**Note:** This branch is for **Nuxt 2** compatible module. Checkout [`v1` branch](https://github.com/nuxt/image/tree/v1) for **Nuxt 3** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
 
 ---
 
