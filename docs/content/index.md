@@ -5,21 +5,15 @@ layout: fluid
 navigation: false
 ---
 
-::home-hero
-::
-
-::home-features
-::
-
 ::block-hero
 ---
 cta:
   - Get Started
-  - /setup
+  - /getting-started/installation
 secondary:
   - Star on GitHub →
-  - https://github.com/nuxt-community/strapi-module
-snippet: yarn add -D @nuxtjs/strapi
+  - https://github.com/nuxt/image
+snippet: yarn add -D @nuxt/image
 ---
 
 #top
