@@ -2,10 +2,10 @@ import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
   extends: [
-    require.resolve('@docus/docs-theme')
+    '@nuxt-themes/docus'
   ],
   modules: [
-    'vue-plausible'
+    // 'vue-plausible'
   ],
   theme: {},
   plausible: {
