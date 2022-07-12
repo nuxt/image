@@ -1,6 +1,6 @@
+import { promises as fsp } from 'fs'
 import { normalize, resolve, dirname } from 'pathe'
 import { createResolver, resolvePath } from '@nuxt/kit'
-import * as fse from 'fs-extra'
 import { hash } from 'ohash'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
@@ -37,11 +37,11 @@ export const providerSetup: Record<string, ProviderSetup> = {
   // https://vercel.com/docs/more/adding-your-framework#images
   async vercel (_providerOptions, moduleOptions, nuxt) {
     const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
-    await fse.mkdirp(dirname(imagesConfig))
-    await fse.writeJson(imagesConfig, {
+    await fsp.mkdir(dirname(imagesConfig), { recursive: true })
+    await fsp.writeFile(imagesConfig, JSON.stringify({
       domains: moduleOptions.domains,
       sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
-    })
+    }, null, 2))
   }
 }
 
