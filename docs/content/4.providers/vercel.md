@@ -9,7 +9,7 @@ This provider will be enabled by default in vercel deployments.
 
 ## Domains
 
-To use external URLs (images not in `static/` directory), hostnames should be whitelisted.
+To use external URLs (images not in `public/` directory), hostnames should be whitelisted.
 
 **Example:**
 
