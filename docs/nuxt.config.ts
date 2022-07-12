@@ -5,9 +5,14 @@ export default defineNuxtConfig({
     '@nuxt-themes/docus'
   ],
   modules: [
+    '@nuxtlabs/github-module',
     // 'vue-plausible'
   ],
-  theme: {},
+  github: {
+    owner: 'nuxt',
+    repo: 'image',
+    branch: 'v1'
+  },
   plausible: {
     domain: 'image.nuxtjs.org'
   },
