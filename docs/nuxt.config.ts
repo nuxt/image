@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ],
   modules: [
     '@nuxtlabs/github-module',
-    // 'vue-plausible'
+    'vue-plausible'
   ],
   github: {
     owner: 'nuxt',

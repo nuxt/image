@@ -27,8 +27,8 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 
 #extra
   ::list
-  - `<nuxt-img>` drop-in replacement for the native `<img>` element
-  - `<nuxt-picture>` drop-in replacement for the native `<picture>` element.
+  - [`<nuxt-img>`](/components/nuxt-img) drop-in replacement for the native `<img>` element
+  - [`<nuxt-picture>`](/components/nuxt-picture) drop-in replacement for the native `<picture>` element.
   - Built-in image resizer and transformer with [unjs/ipx](https://github.com/unjs/ipx)
   - Support [15+ providers](/providers/cloudflare)
   - Generate `width` and `height` based on ratio
