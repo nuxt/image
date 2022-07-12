@@ -1,13 +1,21 @@
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
-  extends: [
-    '@nuxt-themes/docus'
-  ],
+  extends: '@nuxt-themes/docus',
   modules: [
     '@nuxtlabs/github-module',
-    'vue-plausible'
   ],
+  app: {
+    head: {
+      script: [
+        {
+          defer: true,
+          'data-domain': 'image.nuxtjs.org',
+          src: 'https://plausible.io/js/script.js'
+        }
+      ]
+    }
+  },
   github: {
     owner: 'nuxt',
     repo: 'image',
