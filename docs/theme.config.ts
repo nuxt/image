@@ -12,6 +12,10 @@ export default defineTheme({
       label: 'Nuxt'
     }
   },
+  cover: {
+    src: '/cover.jpg',
+    alt: 'Nuxt Image'
+  },
   github: {
     root: 'docs/content'
   },
