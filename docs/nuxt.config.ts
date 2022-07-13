@@ -19,10 +19,9 @@ export default defineNuxtConfig({
   github: {
     owner: 'nuxt',
     repo: 'image',
-    branch: 'v1'
-  },
-  plausible: {
-    domain: 'image.nuxtjs.org'
+    branch: 'v1',
+    releases: false,
+    contributors: false
   },
   tailwindcss: {
     config: {
