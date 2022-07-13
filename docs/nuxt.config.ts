@@ -1,15 +1,27 @@
 import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
-  extends: [
-    require.resolve('@docus/docs-theme')
-  ],
+  extends: '@nuxt-themes/docus',
   modules: [
-    'vue-plausible'
+    // '@nuxtlabs/github-module'
   ],
-  theme: {},
-  plausible: {
-    domain: 'image.nuxtjs.org'
+  app: {
+    head: {
+      script: [
+        {
+          defer: true,
+          'data-domain': 'image.nuxtjs.org',
+          src: 'https://plausible.io/js/script.js'
+        }
+      ]
+    }
+  },
+  github: {
+    owner: 'nuxt',
+    repo: 'image',
+    branch: 'v1',
+    releases: false,
+    contributors: false
   },
   tailwindcss: {
     config: {
