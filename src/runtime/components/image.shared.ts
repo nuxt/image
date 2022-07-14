@@ -151,7 +151,7 @@ export const prepareNuxtImg = (props: Partial<ImgProps>) => {
     }, nOptions.value)
   })
 
-  return { nAttrs, nMainSrc, nSrc, nPlaceholder, placeholderLoaded }
+  return { nAttrs, nMainSrc, nSrc, nSizes, nPlaceholder, placeholderLoaded }
 }
 
 export const prepareNuxtPicture = (props: Partial<PictureProps>) => {

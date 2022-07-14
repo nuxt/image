@@ -6,11 +6,23 @@ export default defineComponent({
   name: 'NuxtImg',
   props: imgProps,
   setup: (props, ctx) => {
-    const { nSrc, nMainSrc, nAttrs, nPlaceholder, placeholderLoaded } = prepareNuxtImg(props)
+    const { nSrc, nMainSrc, nSizes, nAttrs, nPlaceholder, placeholderLoaded } = prepareNuxtImg(props)
 
     if (props.preload) {
+      const isResponsive = Object.values(nSizes.value).every(v => v)
+
       useHead({
-        link: [{ rel: 'preload', as: 'image', href: nSrc.value }]
+        link: [{
+          rel: 'preload',
+          as: 'image',
+          ...(!isResponsive
+            ? { href: nSrc.value }
+            : {
+                href: nSizes.value.src,
+                imagesizes: nSizes.value.sizes,
+                imagesrcset: nSizes.value.srcset
+              })
+        }]
       })
     }
 
