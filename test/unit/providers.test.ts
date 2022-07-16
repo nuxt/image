@@ -4,6 +4,7 @@ import { cleanDoubleSlashes } from '~/runtime/utils'
 import * as ipx from '~/runtime/providers/ipx'
 import * as cloudflare from '~/runtime/providers/cloudflare'
 import * as cloudinary from '~/runtime/providers/cloudinary'
+import * as directus from '~/runtime/providers/directus'
 import * as twicpics from '~/runtime/providers/twicpics'
 import * as fastly from '~/runtime/providers/fastly'
 import * as glide from '~/runtime/providers/glide'
@@ -104,6 +105,18 @@ describe('Providers', () => {
     expect(generated).toMatchObject({
       url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'
     })
+  })
+
+  test('directus', () => {
+    const providerOptions = {
+      baseURL: '/'
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = directus.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.directus)
+    }
   })
 
   test('twicpics', () => {

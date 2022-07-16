@@ -124,6 +124,29 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Directus
+  {
+    name: 'directus',
+    samples: [
+      {
+        src: 'c0c8a61c-d69e-4dc8-b403-1426d9bded48',
+        width: 100,
+        height: 100,
+        fit: 'contain'
+      },
+      {
+        src: 'c0c8a61c-d69e-4dc8-b403-1426d9bded48',
+        transforms: [['blur', 45],
+          ['tint', 'rgb(255, 0, 0)'],
+          ['expand', { right: 200, bottom: 150 }]
+        ]
+      },
+      {
+        src: 'c0c8a61c-d69e-4dc8-b403-1426d9bded48',
+        key: 'test-preset'
+      }
+    ]
+  },
   // Fastly
   {
     name: 'fastly',

@@ -73,6 +73,9 @@ export default <NuxtConfig> {
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image'
     },
+    directus: {
+      baseURL: 'https://cms.developling.nl'
+    },
     imageengine: {
       baseURL: 'https://abc123.imgeng.in'
     },
