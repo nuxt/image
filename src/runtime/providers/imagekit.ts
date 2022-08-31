@@ -171,6 +171,14 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   operations = operations.replace('c-pad_extract', 'cm-pad_extract')
   operations = operations.replace('c-extract', 'cm-extract')
 
+  const url = new URL(joinURL(baseURL, src))
+
+  if (url.search) {
+    return {
+      url: joinURL(baseURL, src + (operations ? `&tr=${operations}` : ''))
+    }
+  }
+
   return {
     url: joinURL(baseURL, src + (operations ? `?tr=${operations}` : ''))
   }
