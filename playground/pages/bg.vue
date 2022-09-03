@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-const { generate } = useImage()
+const $img = useImage()
 
 const bg = computed(() => {
-  const imgUrl = generate('/images/colors.jpg', {
+  const imgUrl = $img('/images/colors.jpg', {
     width: 300,
     height: 300,
     quality: 80
