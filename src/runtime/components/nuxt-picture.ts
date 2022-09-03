@@ -1,12 +1,55 @@
 import { h, defineComponent } from 'vue'
-import { pictureProps, prepareNuxtPicture } from './image.shared'
+import { useBaseImage, baseImageProps } from './_base'
 import { useHead } from '#imports'
+import { getFileExtension } from '#image'
+
+export const pictureProps = {
+  ...baseImageProps,
+  legacyFormat: { type: String, default: null },
+  imgAttrs: { type: Object, default: null }
+}
 
 export default defineComponent({
   name: 'NuxtPicture',
   props: pictureProps,
   setup: (props, ctx) => {
-    const { nSources, nImgAttrs } = prepareNuxtPicture(props)
+    const $img = useImage()
+    const _base = useBaseImage(props)
+
+    const isTransparent = computed(() => ['png', 'webp', 'gif'].includes(originalFormat.value))
+
+    const originalFormat = computed(() => getFileExtension(props.src))
+
+    const format = computed(() => props.format || originalFormat.value === 'svg' ? 'svg' : 'webp')
+
+    const legacyFormat = computed(() => {
+      if (props.legacyFormat) { return props.legacyFormat }
+      const formats: Record<string, string> = {
+        webp: isTransparent.value ? 'png' : 'jpeg',
+        svg: 'png'
+      }
+      return formats[format.value] || originalFormat.value
+    })
+
+    const nSources = computed<Array<{ srcset: string, src?: string, type?: string, sizes?: string }>>(() => {
+      if (format.value === 'svg') {
+        return [{ srcset: props.src }]
+      }
+
+      const formats = legacyFormat.value !== format.value
+        ? [legacyFormat.value, format.value]
+        : [format.value]
+
+      return formats.map((format) => {
+        const { srcset, sizes, src } = $img.getSizes(props.src, {
+          ..._base.options.value,
+          sizes: props.sizes || $img.options.screens,
+          modifiers: { ..._base.modifiers.value, format }
+        })
+
+        return { src, type: `image/${format}`, sizes, srcset }
+      })
+    })
 
     if (props.preload) {
       const srcKey = nSources.value?.[1] ? 1 : 0
@@ -25,7 +68,7 @@ export default defineComponent({
         srcset: nSources.value[1].srcset
       })]),
       h('img', {
-        ...nImgAttrs.value,
+        ..._base.attrs.value,
         ...props.imgAttrs,
         ...ctx.attrs,
         src: nSources.value[0].src,
