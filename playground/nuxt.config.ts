@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   buildModules: [
     '../src/module'
   ],
+  imports: {
+    autoImport: false
+  },
   image: {
     domains: [
       'https://nuxtjs.org',

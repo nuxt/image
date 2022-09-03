@@ -1,4 +1,4 @@
-import { h, defineComponent } from 'vue'
+import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { baseImageProps, useBaseImage } from './_base'

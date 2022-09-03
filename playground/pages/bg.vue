@@ -3,6 +3,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useImage, computed } from '#imports'
+
 const $img = useImage()
 
 const bg = computed(() => {

@@ -1,6 +1,6 @@
-import { h, defineComponent } from 'vue'
+import { h, defineComponent, computed } from 'vue'
 import { useBaseImage, baseImageProps } from './_base'
-import { useHead } from '#imports'
+import { useImage, useHead } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
