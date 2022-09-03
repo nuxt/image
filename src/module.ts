@@ -45,7 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@nuxt/image',
     configKey: 'image',
     compatibility: {
-      nuxt: '^3.0.0'
+      nuxt: '^3.0.0-rc.4'
     }
   },
   async setup (options, nuxt) {
