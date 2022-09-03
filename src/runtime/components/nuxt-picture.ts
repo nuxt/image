@@ -62,11 +62,13 @@ export default defineComponent({
     }
 
     return () => h('picture', { key: nSources.value[0].src }, [
-      ...(nSources.value?.[1] && [h('source', {
-        type: nSources.value[1].type,
-        sizes: nSources.value[1].sizes,
-        srcset: nSources.value[1].srcset
-      })]),
+      ...(nSources.value?.[1]
+        ? [h('source', {
+            type: nSources.value[1].type,
+            sizes: nSources.value[1].sizes,
+            srcset: nSources.value[1].srcset
+          })]
+        : []),
       h('img', {
         ..._base.attrs.value,
         ...props.imgAttrs,
