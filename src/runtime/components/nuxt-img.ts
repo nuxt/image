@@ -52,7 +52,7 @@ export default defineComponent({
         ? placeholder
         : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number]
 
-      return $img.generate(props.src, {
+      return $img(props.src, {
         ..._base.modifiers.value,
         width: size[0],
         height: size[1],
@@ -63,7 +63,7 @@ export default defineComponent({
     const mainSrc = computed(() =>
       props.sizes
         ? sizes.value.src
-        : $img.generate(props.src, _base.modifiers.value, _base.options.value)
+        : $img(props.src, _base.modifiers.value, _base.options.value)
     )
 
     const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
