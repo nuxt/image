@@ -3419,10 +3419,20 @@ gzip-size@^7.0.0:
   dependencies:
     duplexer "^0.1.2"
 
-h3@^0.7.12, h3@^0.7.19, h3@^0.7.20:
+h3@^0.7.12, h3@^0.7.19:
   version "0.7.20"
   resolved "https://registry.yarnpkg.com/h3/-/h3-0.7.20.tgz#e4f7b0eae6d8d344ef961ab2e415395bc4538c46"
   integrity sha512-8/66Rm4JrJXpV9xI5v/lYd/3o0vEj5VGK0hv4N+T0ZeLQvtqvkkoZPc7pdN6mQu/BwhebgyIr+hW+PatSboLdQ==
+  dependencies:
+    cookie-es "^0.5.0"
+    destr "^1.1.1"
+    radix3 "^0.1.2"
+    ufo "^0.8.5"
+
+h3@^0.7.21:
+  version "0.7.21"
+  resolved "https://registry.yarnpkg.com/h3/-/h3-0.7.21.tgz#2ca1125c6731cf39b0871b3d8cc9c9d27a616f08"
+  integrity sha512-F/qdr3JKh8zBLiZyiprH5kuzG6vjoTK3nFnIYFUIQPLsw755GI5JezAFc3HJxbgYlzawcGeJlmsw4xu2t/0n/Q==
   dependencies:
     cookie-es "^0.5.0"
     destr "^1.1.1"
@@ -3665,22 +3675,22 @@ ioredis@^5.2.2:
     redis-parser "^3.0.0"
     standard-as-callback "^2.1.0"
 
-ipx@^0.9.10:
-  version "0.9.10"
-  resolved "https://registry.yarnpkg.com/ipx/-/ipx-0.9.10.tgz#8e97d9742c165bd15f8d95046bbb6c6970f95e03"
-  integrity sha512-HymTmXe2QBiPMgsJg1EQtUYgTXfIB9ha7j8tHCQqYGDS7bTYMNWyq/fBdI3S+wc9ic+hbPlTim+uf8QgZcEykQ==
+ipx@^0.9.11:
+  version "0.9.11"
+  resolved "https://registry.yarnpkg.com/ipx/-/ipx-0.9.11.tgz#89bbeffc6f62df80dfd0f8fe1e68c6638d09251c"
+  integrity sha512-/wsBt7hV8rvNR6O4kwgOUAhtm0F/M/mXaolXot/Bz7fdOD+W7i9OtWuoASWv1PFwwtOunhZGaoCx8BOpSdG2VQ==
   dependencies:
     consola "^2.15.3"
-    defu "^6.0.0"
+    defu "^6.1.0"
     destr "^1.1.1"
     etag "^1.8.1"
     image-meta "^0.1.1"
-    listhen "^0.2.13"
+    listhen "^0.2.15"
     ohmyfetch "^0.4.18"
-    pathe "^0.3.2"
+    pathe "^0.3.5"
     sharp "^0.30.7"
     ufo "^0.8.5"
-    xss "^1.0.13"
+    xss "^1.0.14"
 
 is-arrayish@^0.2.1:
   version "0.2.1"
@@ -6812,10 +6822,10 @@ ws@^8.8.1:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
   integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==
 
-xss@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.13.tgz#6e48f616128b39f366dfadc57411e1eb5b341c6c"
-  integrity sha512-clu7dxTm1e8Mo5fz3n/oW3UCXBfV89xZ72jM8yzo1vR/pIS0w3sgB3XV2H8Vm6zfGnHL0FzvLJPJEBhd86/z4Q==
+xss@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/xss/-/xss-1.0.14.tgz#4f3efbde75ad0d82e9921cc3c95e6590dd336694"
+  integrity sha512-og7TEJhXvn1a7kzZGQ7ETjdQVS2UfZyTlsEdDOqvQF7GoxNfY+0YLCzBy1kPdsDDx4QuNAonQPddpsn6Xl/7sw==
   dependencies:
     commander "^2.20.3"
     cssfilter "0.0.10"
