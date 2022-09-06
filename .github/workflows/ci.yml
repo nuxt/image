@@ -19,8 +19,8 @@ jobs:
           node-version: 16
           cache: "yarn"
       - run: yarn install
-      - run: yarn lint
       - run: yarn dev:prepare
+      - run: yarn lint
       - run: yarn build
       - run: yarn dev:build
       - name: Release Edge
