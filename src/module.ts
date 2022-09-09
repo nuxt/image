@@ -1,5 +1,5 @@
 import { withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, createResolver, addComponent, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, addTemplate, addAutoImport, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolveProviders, detectProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
@@ -45,7 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@nuxt/image',
     configKey: 'image',
     compatibility: {
-      nuxt: '^3.0.0'
+      nuxt: '^3.0.0-rc.4'
     }
   },
   async setup (options, nuxt) {
@@ -85,14 +85,19 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.alias['#image'] = runtimeDir
     nuxt.options.build.transpile.push(runtimeDir)
 
+    addAutoImport({
+      name: 'useImage',
+      from: resolver.resolve('runtime/composables')
+    })
+
     // Add components
     addComponent({
       name: 'NuxtImg',
-      filePath: resolver.resolve('./runtime/components/nuxt-img.vue')
+      filePath: resolver.resolve('./runtime/components/nuxt-img')
     })
     addComponent({
       name: 'NuxtPicture',
-      filePath: resolver.resolve('./runtime/components/nuxt-picture.vue')
+      filePath: resolver.resolve('./runtime/components/nuxt-picture')
     })
 
     // Add runtime options
