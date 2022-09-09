@@ -1,4 +1,5 @@
 import { createImage } from '#image'
+// @ts-ignore
 import { imageOptions } from '#build/image-options'
 import { defineNuxtPlugin } from '#imports'
 
