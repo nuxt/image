@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, withQuery } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -171,15 +171,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   operations = operations.replace('c-pad_extract', 'cm-pad_extract')
   operations = operations.replace('c-extract', 'cm-extract')
 
-  const url = new URL(joinURL(baseURL, src))
-
-  if (url.search) {
-    return {
-      url: joinURL(baseURL, src + (operations ? `&tr=${operations}` : ''))
-    }
-  }
-
   return {
-    url: joinURL(baseURL, src + (operations ? `?tr=${operations}` : ''))
+    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src))
   }
 }
