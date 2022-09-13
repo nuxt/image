@@ -33,6 +33,7 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions) =
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
     })
+    return
   }
 
   // Add as dev handler for development
