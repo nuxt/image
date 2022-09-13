@@ -1,5 +1,6 @@
-import { promises as fsp } from 'fs'
-import { normalize, resolve, dirname } from 'pathe'
+import { normalize } from 'pathe'
+import { defu } from 'defu'
+import type { Nuxt } from '@nuxt/schema'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
@@ -35,13 +36,17 @@ export const providerSetup: Record<string, ProviderSetup> = {
   static: ipxSetup,
 
   // https://vercel.com/docs/more/adding-your-framework#images
-  async vercel (_providerOptions, moduleOptions, nuxt) {
-    const imagesConfig = resolve(nuxt.options.rootDir, '.vercel_build_output/config/images.json')
-    await fsp.mkdir(dirname(imagesConfig), { recursive: true })
-    await fsp.writeFile(imagesConfig, JSON.stringify({
-      domains: moduleOptions.domains,
-      sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
-    }, null, 2))
+  vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {
+    nuxt.options.nitro = defu(nuxt.options.nitro, {
+      vercel: {
+        config: {
+          image: {
+            domains: moduleOptions.domains,
+            sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
+          }
+        }
+      }
+    })
   }
 }
 
