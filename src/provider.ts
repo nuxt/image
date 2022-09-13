@@ -1,6 +1,7 @@
 import { normalize } from 'pathe'
 import { defu } from 'defu'
 import type { Nuxt } from '@nuxt/schema'
+import type { NitroOptions } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
@@ -38,10 +39,11 @@ export const providerSetup: Record<string, ProviderSetup> = {
   // https://vercel.com/docs/more/adding-your-framework#images
   vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
-      vercel: {
+      vercel: <NitroOptions['vercel']>{
         config: {
-          image: {
+          images: {
             domains: moduleOptions.domains,
+            minimumCacheTTL: 60 * 5,
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
           }
         }
