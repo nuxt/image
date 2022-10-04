@@ -211,9 +211,11 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     defaultVar.media = ''
   }
 
+  const defaultSrcWithAdaptedSize = ctx.$img!(input, { ...opts.modifiers, width, height }, opts)
+
   return {
     sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
     srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar?.src
+    src: defaultSrcWithAdaptedSize
   }
 }
