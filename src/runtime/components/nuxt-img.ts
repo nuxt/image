@@ -1,8 +1,9 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
+import { appendHeader } from 'h3'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { baseImageProps, useBaseImage } from './_base'
-import { useHead } from '#imports'
+import { useHead, useRequestEvent } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
@@ -83,6 +84,14 @@ export default defineComponent({
               })
         }]
       })
+    }
+
+    if (typeof process !== 'undefined' && process.env && process.env.prerender) {
+      const sources = [
+        src.value,
+        ...(sizes.value.srcset || '').split(',').map(s => s.split(' ')[0])
+      ].filter(s => s && s.includes('/_ipx/'))
+      appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
     }
 
     const imgEl = ref<HTMLImageElement>(null)

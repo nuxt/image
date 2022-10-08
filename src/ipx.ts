@@ -17,22 +17,21 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions) =
 
   // Options
   const ipxOptions: ImageProviders['ipx'] = {
-    dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
+    dir: resolve(nuxt.options.srcDir, process.env.prerender ? '.output/public' : moduleOptions.dir || nuxt.options.dir.public),
     domains: moduleOptions.domains,
     sharp: moduleOptions.sharp,
     alias: moduleOptions.alias
   }
-
   // Add handler for production
   if (!nuxt.options.dev) {
     // TODO: Avoid adding for non-Node.js environments with a warning
     const resolver = createResolver(import.meta.url)
-    ipxOptions.dir = '' // Set at runtime
     nuxt.options.runtimeConfig.ipx = ipxOptions
     nuxt.options.serverHandlers.push({
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
     })
+    return
   }
 
   // Add as dev handler for development
