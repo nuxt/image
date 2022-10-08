@@ -17,6 +17,7 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions) =
 
   // Options
   const ipxOptions: ImageProviders['ipx'] = {
+    // TODO: Switch to storage API when ipx supports it
     dir: resolve(nuxt.options.srcDir, process.env.prerender ? '.output/public' : moduleOptions.dir || nuxt.options.dir.public),
     domains: moduleOptions.domains,
     sharp: moduleOptions.sharp,
