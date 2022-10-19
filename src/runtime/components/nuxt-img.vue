@@ -14,6 +14,7 @@ const defineComponent: DefineComponentWithMixin = (opts: any) => opts
 type NAttrs = typeof imageMixin['nImgAttrs'] & {
     sizes?: string
     srcset?: string
+    densities?: string
 }
 
 export default defineComponent({
@@ -54,6 +55,7 @@ export default defineComponent({
       return this.$img.getSizes(this.src, {
         ...this.nOptions,
         sizes: this.sizes,
+        densities: this.densities,
         modifiers: {
           ...this.nModifiers,
           width: parseSize(this.width),
