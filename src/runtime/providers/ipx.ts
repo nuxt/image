@@ -12,7 +12,7 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     background: 'b'
   },
-  joinWith: ',',
+  joinWith: '&',
   formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
 })
 

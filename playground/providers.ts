@@ -27,6 +27,7 @@ export const providers: Provider[] = [
         from: 'Mount Everest Wikipedia page (alias)',
         width: 300,
         height: 300,
+        quality: 70,
         link: 'https://en.wikipedia.org/wiki/Mount_Everest'
       },
       {
