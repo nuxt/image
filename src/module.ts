@@ -1,5 +1,5 @@
 import { withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addAutoImport, createResolver, addComponent, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolveProviders, detectProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
@@ -85,7 +85,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.alias['#image'] = runtimeDir
     nuxt.options.build.transpile.push(runtimeDir)
 
-    addAutoImport({
+    addImports({
       name: 'useImage',
       from: resolver.resolve('runtime/composables')
     })
