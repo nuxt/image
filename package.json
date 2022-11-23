@@ -17,36 +17,36 @@
     "dev:generate": "nuxi generate playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "docs:build": "cd docs && nuxt generate",
-    "docs:dev": "yarn nuxt dev docs",
+    "docs:dev": "pnpm nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
-    "prepack": "yarn build",
-    "release": "yarn test && standard-version && git push --follow-tags && npm publish",
-    "test": "yarn lint"
+    "prepack": "pnpm build",
+    "release": "pnpm test && standard-version && git push --follow-tags && npm publish",
+    "test": "pnpm lint"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.9",
+    "@nuxt/kit": "^3.0.0",
     "consola": "^2.15.3",
-    "defu": "^6.1.0",
-    "h3": "^0.7.21",
+    "defu": "^6.1.1",
+    "h3": "^1.0.1",
     "image-meta": "^0.1.1",
-    "node-fetch-native": "^0.1.4",
-    "ohash": "^0.1.5",
-    "pathe": "^0.3.7",
-    "ufo": "^0.8.5"
+    "node-fetch-native": "^1.0.1",
+    "ohash": "^1.0.0",
+    "pathe": "^1.0.0",
+    "ufo": "^1.0.0"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "latest",
-    "@nuxtjs/eslint-config-typescript": "latest",
-    "eslint": "latest",
-    "jiti": "latest",
-    "nuxt": "^3.0.0-rc.9",
+    "@nuxt/module-builder": "0.2.1",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "eslint": "8.28.0",
+    "jiti": "1.16.0",
+    "nuxt": "^3.0.0",
     "standard-version": "latest",
-    "typescript": "latest"
+    "typescript": "4.9.3"
   },
   "optionalDependencies": {
-    "ipx": "^0.9.11"
+    "ipx": "1.0.0-0"
   },
   "engines": {
-    "node": "^14.16.0 || ^16.11.0 || ^17.0.0 || ^18.0.0"
+    "node": "^14.16.0 || ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   }
 }
