@@ -14,12 +14,12 @@ export function getInt (x: unknown): number | undefined {
   return undefined
 }
 
-export function getFileExtension (url: string = '') {
+export function getFileExtension (url = '') {
   const extension = url.split(/[?#]/).shift()!.split('/').pop()!.split('.').pop()!
   return extension
 }
 
-export function cleanDoubleSlashes (path: string = '') {
+export function cleanDoubleSlashes (path = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
 
@@ -77,7 +77,7 @@ export function renderTag (tag: string, attrs: Attrs, contents?: string) {
   return html + contents + `</${tag}>`
 }
 
-export function generateAlt (src: string = '') {
+export function generateAlt (src = '') {
   return src.split(/[?#]/).shift()!.split('/').pop()!.split('.').shift()
 }
 
