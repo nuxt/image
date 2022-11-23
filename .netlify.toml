@@ -2,6 +2,6 @@
 
 [build]
   base    = "docs"
-  command = "yarn build"
+  command = "pnpm build"
   publish = "dist"
   ignore  = "git diff --quiet HEAD^ HEAD . ../package.json"
