@@ -79,9 +79,7 @@ export default defineComponent({
         : []),
       h('img', {
         ..._base.attrs.value,
-        // ...imgAttrs,
-        ...props.imgAttrs,
-        ...ctx.attrs,
+        ...imgAttrs,
         src: nSources.value[0].src,
         sizes: nSources.value[0].sizes,
         srcset: nSources.value[0].srcset
