@@ -23,7 +23,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
-    dir: undefined,
+    dir: '',
     presets: {},
     domains: [] as string[],
     sharp: {},
