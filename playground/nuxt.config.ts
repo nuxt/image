@@ -1,7 +1,7 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  buildModules: [
+  modules: [
     '../src/module'
   ],
   image: {

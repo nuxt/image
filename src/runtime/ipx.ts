@@ -8,7 +8,8 @@ export default lazyEventHandler(() => {
   const ipxOptions = {
     ...(useRuntimeConfig().ipx || {}),
     // TODO: Switch to storage API when ipx supports it
-    dir: fileURLToPath(new URL('../public', import.meta.url))
+    // TODO: Using relative paths for POC only
+    dir: fileURLToPath(new URL(process.env.prerender ? '../../.output/public' : '../public', import.meta.url))
   }
 
   const ipx = createIPX(ipxOptions)

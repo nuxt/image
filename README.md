@@ -18,9 +18,9 @@
 
 - Clone this repository
 - Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
-- Install dependencies using `yarn install`
-- Run `yarn dev:prepare` to generate type stubs.
-- Use `yarn dev` to start [playground](./playground) in development mode.
+- Install dependencies using `pnpm install`
+- Run `pnpm dev:prepare` to generate type stubs.
+- Use `pnpm dev` to start [playground](./playground) in development mode.
 
 ## 📑 License
 
