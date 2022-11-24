@@ -61,6 +61,14 @@ export default defineComponent({
       useHead({ link: [link] })
     }
 
+    // Only passdown supported <image> attributes
+    const imgAttrs = { ...props.imgAttrs }
+    for (const key in ctx.attrs) {
+      if (key in baseImageProps && !(key in imgAttrs)) {
+        imgAttrs[key] = ctx.attrs[key]
+      }
+    }
+
     return () => h('picture', { key: nSources.value[0].src }, [
       ...(nSources.value?.[1]
         ? [h('source', {
@@ -71,8 +79,7 @@ export default defineComponent({
         : []),
       h('img', {
         ..._base.attrs.value,
-        ...props.imgAttrs,
-        ...ctx.attrs,
+        ...imgAttrs,
         src: nSources.value[0].src,
         sizes: nSources.value[0].sizes,
         srcset: nSources.value[0].srcset
