@@ -64,7 +64,7 @@ export default defineComponent({
     // Only passdown supported <image> attributes
     const imgAttrs = { ...props.imgAttrs }
     for (const key in ctx.attrs) {
-      if (key in baseImageProps) {
+      if (key in baseImageProps && !(key in imgAttrs)) {
         imgAttrs[key] = ctx.attrs[key]
       }
     }
