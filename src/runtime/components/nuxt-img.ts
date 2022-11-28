@@ -86,7 +86,7 @@ export default defineComponent({
       })
     }
 
-    if (typeof process !== 'undefined' && process.env && process.env.prerender) {
+    if (process.server && process.env.prerender) {
       const sources = [
         src.value,
         ...(sizes.value.srcset || '').split(',').map(s => s.split(' ')[0])
