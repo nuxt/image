@@ -1,6 +1,6 @@
 import { h, defineComponent, computed } from 'vue'
 import { useBaseImage, baseImageProps } from './_base'
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useRequestEvent } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
@@ -59,6 +59,15 @@ export default defineComponent({
       if (nSources.value?.[srcKey]?.sizes) { link.imagesizes = nSources.value[srcKey].sizes }
 
       useHead({ link: [link] })
+    }
+
+    if (process.server && process.env.prerender) {
+      const srcKey = nSources.value?.[1] ? 1 : 0
+      const sources = [
+        nSources.value[srcKey].src,
+        ...(nSources.value[srcKey].srcset || '').split(',').map(s => s.trim().split(' ')[0])
+      ].filter(s => s && s.includes('/_ipx/'))
+      appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
     }
 
     // Only passdown supported <image> attributes
