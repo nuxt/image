@@ -89,7 +89,7 @@ export default defineComponent({
     if (process.server && process.env.prerender) {
       const sources = [
         src.value,
-        ...(sizes.value.srcset || '').split(',').map(s => s.split(' ')[0])
+        ...(sizes.value.srcset || '').split(',').map(s => s.trim().split(' ')[0])
       ].filter(s => s && s.includes('/_ipx/'))
       appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
     }

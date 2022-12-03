@@ -20,6 +20,7 @@ export const providers: Provider[] = [
         from: 'Jeremy Thomas',
         width: 300,
         height: 300,
+        quality: 70,
         link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       },
       {
