@@ -2,6 +2,7 @@ import { h, defineComponent, computed } from 'vue'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead, useRequestEvent } from '#imports'
 import { getFileExtension } from '#image'
+import { appendHeader } from 'h3'
 
 export const pictureProps = {
   ...baseImageProps,
