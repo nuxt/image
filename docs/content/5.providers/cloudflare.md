@@ -1,7 +1,6 @@
----
-title: Cloudflare
-description: Nuxt Image has first class integration with Cloudflare
----
+# Cloudflare
+
+Nuxt Image has first class integration with Cloudflare
 
 Integration between [Cloudflare](https://developers.cloudflare.com/images/) and the image module.
 
@@ -11,12 +10,12 @@ Availability only for Business and Enterprise Customers. Normally Cloudflare [pa
 
 To use this provider you just need to specify the base url (zone) of your service:
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     baseURL: 'https://that-test.site'
   }
-}
+})
 ```
 
 **Example:**

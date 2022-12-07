@@ -1,20 +1,19 @@
----
-title: ImageEngine
-description: Nuxt Image has first class integration with ImageEngine
----
+# ImageEngine
+
+Nuxt Image has first class integration with ImageEngine
 
 Integration between [ImageEngine](https://imageengine.io/) and the image module.
 
 At a minimum, you must configure the `imageengine` provider with the `baseURL` set to your ImageEngine Delivery Address:
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     imageengine: {
       baseURL: 'https://xxxxx.imgeng.in'
     }
   }
-}
+})
 ```
 
 ## ImageEngine `fit` values

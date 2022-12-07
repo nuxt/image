@@ -1,6 +1,5 @@
 <template>
   <svg
-    class="w-auto h-8 text-[#18181B] dark:text-white"
     width="198"
     height="40"
     viewBox="0 0 198 40"
@@ -15,3 +14,16 @@
     <circle cx="6.55953" cy="10.56" r="3.04" fill="white" />
   </svg>
 </template>
+
+<style lang="ts" scoped>
+css({
+  svg: {
+    width: 'auto',
+    height: '2rem',
+    color: '#18181B',
+    '@dark': {
+      color: '{color.white}'
+    }
+  }
+})
+</style>

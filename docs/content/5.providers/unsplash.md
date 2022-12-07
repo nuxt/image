@@ -1,7 +1,6 @@
----
-title: Unsplash
-description: Nuxt Image has first class integration with Unsplash
----
+# Unsplash
+
+Nuxt Image has first class integration with Unsplash
 
 Integration between [Unsplash](https://unsplash.com/documentation#dynamically-resizable-images) and the image module. See [Unsplash License](https://unsplash.com/license) for what usage is permitted.
 

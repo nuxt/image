@@ -1,7 +1,6 @@
----
-title: Twicpics
-description: Nuxt Image internally use Twicpics as static provider
----
+# Twicpics
+
+Nuxt Image internally use Twicpics as static provider
 
 Integration between [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) and the image module.
 
@@ -24,8 +23,8 @@ If you don't already have one, you can easily [create your own TwicPics account 
 
 You just need to configure the `TwicPics` provider with the `baseURL` set to your TwicPics [Domain](https://www.twicpics.com/docs/getting-started/subdomain/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     twicpics: {
       baseURL: "https://<your-twicpics-domain>/"
@@ -33,7 +32,7 @@ export default {
       // baseUrl: 'https://demo.twic.pics/'
     }
   }
-}
+})
 ```
 
 ## Standard properties
