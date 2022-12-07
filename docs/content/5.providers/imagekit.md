@@ -1,6 +1,7 @@
----
-title: ImageKit
-description: Nuxt Image has first class integration with ImageKit
+# ImageKit
+
+Nuxt Image has first class integration with ImageKit
+
 ---
 
 Integration between [ImageKit](https://docs.imagekit.io/) and the image module.

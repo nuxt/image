@@ -1,6 +1,7 @@
----
-title: Cloudimage
-description: Nuxt Image has first class integration with Cloudimage
+# Cloudimage
+
+Nuxt Image has first class integration with Cloudimage
+
 ---
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.

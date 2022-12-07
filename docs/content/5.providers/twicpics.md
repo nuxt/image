@@ -1,6 +1,7 @@
----
-title: Twicpics
-description: Nuxt Image internally use Twicpics as static provider
+# Twicpics
+
+Nuxt Image internally use Twicpics as static provider
+
 ---
 
 Integration between [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) and the image module.

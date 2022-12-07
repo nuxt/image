@@ -1,6 +1,7 @@
----
-title: Fastly
-description: Nuxt Image has first class integration with Fastly
+# Fastly
+
+Nuxt Image has first class integration with Fastly
+
 ---
 
 Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimization-api) and the image module.

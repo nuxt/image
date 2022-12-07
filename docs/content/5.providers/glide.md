@@ -1,6 +1,7 @@
----
-title: Glide
-description: Nuxt Image has first class integration with Glide
+# Glide
+
+Nuxt Image has first class integration with Glide
+
 ---
 
 Integration between [Glide](https://glide.thephpleague.com/) and the image module.

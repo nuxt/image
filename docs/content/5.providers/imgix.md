@@ -1,6 +1,6 @@
----
-title: Imgix
-description: Nuxt Image has first class integration with Imgix
+# Imgix
+
+Nuxt Image has first class integration with Imgix
 
 ---
 

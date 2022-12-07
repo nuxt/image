@@ -1,6 +1,7 @@
----
-title: Prismic
-description: Nuxt Image has first class integration with Prismic
+# Prismic
+
+Nuxt Image has first class integration with Prismic
+
 ---
 
 Integration between [Prismic](https://prismic.io/docs) and the image module.

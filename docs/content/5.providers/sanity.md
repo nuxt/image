@@ -1,6 +1,7 @@
----
-title: Sanity
-description: Nuxt Image has first class integration with Sanity
+# Sanity
+
+Nuxt Image has first class integration with Sanity
+
 ---
 
 Integration between [Sanity](https://www.sanity.io/docs/image-urls) and Nuxt Image.

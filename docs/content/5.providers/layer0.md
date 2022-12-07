@@ -1,6 +1,7 @@
----
-title: Layer0
-description: Optimize images with Layer0's optimization service
+# Layer0
+
+Optimize images with Layer0's optimization service
+
 ---
 
 Layer0 provides a simple HTTP service for optimizing images.

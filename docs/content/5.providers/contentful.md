@@ -1,6 +1,7 @@
----
-title: Contentful
-description: Nuxt Image has first class integration with Contentful
+# Contentful
+
+Nuxt Image has first class integration with Contentful
+
 ---
 
 Integration between [Contentful](https://www.contentful.com/) and the image module.

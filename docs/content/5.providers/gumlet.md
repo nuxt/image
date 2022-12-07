@@ -1,6 +1,7 @@
----
-title: Gumlet
-description: Nuxt Image has first class integration with Gumlet
+# Gumlet
+
+Nuxt Image has first class integration with Gumlet
+
 ---
 
 Integration between [Gumlet](https://docs.gumlet.com/) and the image module.
