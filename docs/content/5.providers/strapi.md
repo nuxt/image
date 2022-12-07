@@ -2,8 +2,6 @@
 
 Nuxt Image with Strapi integration
 
----
-
 Integration between [Strapi](https://strapi.io) and the image module.
 
 No specific configuration is required. You just need to specify `strapi` in your configuration to make it the default:

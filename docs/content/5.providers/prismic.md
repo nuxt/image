@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with Prismic
 
----
-
 Integration between [Prismic](https://prismic.io/docs) and the image module.
 
 No specific configuration is required for Prismic support. You just need to specify `provider: 'prismic'` in your configuration to make it the default:

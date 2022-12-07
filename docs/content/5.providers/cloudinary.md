@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with Cloudinary
 
----
-
 Integration between [Cloudinary](https://cloudinary.com) and the image module.
 
 To use this provider you just need to specify the base url of your project in cloudinary.

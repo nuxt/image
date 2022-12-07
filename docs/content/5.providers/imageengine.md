@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with ImageEngine
 
----
-
 Integration between [ImageEngine](https://imageengine.io/) and the image module.
 
 At a minimum, you must configure the `imageengine` provider with the `baseURL` set to your ImageEngine Delivery Address:

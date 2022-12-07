@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with Cloudimage
 
----
-
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.
 
 To use this provider you just need to specify the token of your project in cloudimage.

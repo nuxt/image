@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with ImageKit
 
----
-
 Integration between [ImageKit](https://docs.imagekit.io/) and the image module.
 
 To use the ImageKit provider, you need to set your ImageKit account URL-endpoint as the base url like below.

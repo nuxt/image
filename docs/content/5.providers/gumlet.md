@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with Gumlet
 
----
-
 Integration between [Gumlet](https://docs.gumlet.com/) and the image module.
 
 To use this provider you just need to specify the base url of your service in Gumlet.

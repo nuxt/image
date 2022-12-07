@@ -2,8 +2,6 @@
 
 Nuxt Image has first class integration with Sanity
 
----
-
 Integration between [Sanity](https://www.sanity.io/docs/image-urls) and Nuxt Image.
 
 To use this provider you just need to specify the `projectId` of your project in Sanity.
