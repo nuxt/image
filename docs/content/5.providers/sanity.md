@@ -8,8 +8,8 @@ Integration between [Sanity](https://www.sanity.io/docs/image-urls) and Nuxt Ima
 
 To use this provider you just need to specify the `projectId` of your project in Sanity.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     sanity: {
       projectId: 'yourprojectid',
@@ -17,7 +17,7 @@ export default {
       // dataset: 'development'
     }
   }
-}
+})
 ```
 
 ## Modifiers

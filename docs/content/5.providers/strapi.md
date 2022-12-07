@@ -7,23 +7,25 @@ Nuxt Image with Strapi integration
 Integration between [Strapi](https://strapi.io) and the image module.
 
 No specific configuration is required. You just need to specify `strapi` in your configuration to make it the default:
-```js{}[nuxt.config.js]
-export default {
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     strapi: {}
   }
-}
+})
 ```
 
 Override default options:
-```js{}[nuxt.config.js]
-export default {
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     strapi: {
       baseURL: 'http://localhost:1337/uploads/'
     }
   }
-}
+})
 ```
 
 ## Modifiers

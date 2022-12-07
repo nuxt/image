@@ -8,14 +8,14 @@ Integration between [Cloudinary](https://cloudinary.com) and the image module.
 
 To use this provider you just need to specify the base url of your project in cloudinary.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/'
     }
   }
-}
+})
 ```
 
 ## Remote Images
@@ -26,14 +26,14 @@ Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetc
 
 ### Fetch
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch/'
     }
   }
-}
+})
 ```
 
 ```vue
@@ -44,14 +44,14 @@ Note: You will need to configure your "Allowed fetch domains" to do the above.
 
 ### Upload
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/<mapping-folder>'
     }
   }
-}
+})
 ```
 
 ```vue

@@ -8,14 +8,14 @@ Integration between [ImageKit](https://docs.imagekit.io/) and the image module.
 
 To use the ImageKit provider, you need to set your ImageKit account URL-endpoint as the base url like below.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     imagekit: {
       baseURL: 'https://ik.imagekit.io/your_imagekit_id'
     }
   }
-}
+})
 ```
 
 > You can get [URL-endpoint](https://docs.imagekit.io/integration/url-endpoints#default-url-endpoint) from your ImageKit dashboard - [https://imagekit.io/dashboard#url-endpoints](https://imagekit.io/dashboard#url-endpoints).

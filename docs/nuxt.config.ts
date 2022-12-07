@@ -1,14 +1,11 @@
 export default defineNuxtConfig({
   extends: '@nuxt-themes/docus',
-  app: {
-    head: {
-      script: [
-        {
-          defer: true,
-          'data-domain': 'image.nuxtjs.org',
-          src: 'https://plausible.io/js/script.js'
-        }
-      ]
-    }
+  modules: ['nuxt-plausible'],
+  plausible: {
+    domain: 'image.nuxtjs.org'
+  },
+  // To by-pass .npmrc at the root
+  imports: {
+    autoImport: true
   }
 })

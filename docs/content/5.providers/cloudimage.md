@@ -8,14 +8,14 @@ Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the imag
 
 To use this provider you just need to specify the token of your project in cloudimage.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudimage: {
       token: 'demo'
    }
   }
-}
+})
 ```
 
 **Note:** Current integration uses API `v7`.
@@ -37,15 +37,15 @@ Your Cloudimage customer token. [register](https://www.cloudimage.io/en/register
 
 Your uploads base URL. This alows to shorten your origin image URLs.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudimage: {
       token: 'demo',
       baseURL: 'sample.li'  // optional
    }
   }
-}
+})
 ```
 
 ### `cdnURL`

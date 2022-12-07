@@ -8,12 +8,12 @@ Integration between [Fastly](https://docs.fastly.com/en/guides/image-optimizatio
 
 To use this provider you just need to specify the base url of your service in Fastly.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     fastly: {
       baseURL: 'https://www.fastly.io'
     }
   }
-}
+})
 ```

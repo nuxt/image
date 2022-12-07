@@ -8,14 +8,14 @@ Integration between [Imgix](https://docs.imgix.com/) and the image module.
 
 To use this provider you just need to specify the base url of your service in Imgix.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     imgix: {
       baseURL: 'https://assets.imgix.net'
     }
   }
-}
+})
 ```
 
 ## imgix `fit` values

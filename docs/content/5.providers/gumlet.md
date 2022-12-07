@@ -8,14 +8,14 @@ Integration between [Gumlet](https://docs.gumlet.com/) and the image module.
 
 To use this provider you just need to specify the base url of your service in Gumlet.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     gumlet: {
       baseURL: 'https://demo.gumlet.io'
     }
   }
-}
+})
 ```
 
 ## gumlet `mode` values

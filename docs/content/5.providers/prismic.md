@@ -8,12 +8,12 @@ Integration between [Prismic](https://prismic.io/docs) and the image module.
 
 No specific configuration is required for Prismic support. You just need to specify `provider: 'prismic'` in your configuration to make it the default:
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     prismic: {}
   }
-}
+})
 ```
 
 You can also pass it directly to your component when you need it, for example:
