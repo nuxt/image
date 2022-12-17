@@ -46,7 +46,7 @@ export default defineComponent({
           sizes: props.sizes || $img.options.screens,
           modifiers: { ..._base.modifiers.value, format }
         })
-
+        if (format === 'svg') { return { srcset } }
         return { src, type: `image/${format}`, sizes, srcset }
       })
     })
