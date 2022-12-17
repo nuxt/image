@@ -26,10 +26,6 @@ export default defineComponent({
     })
 
     const nSources = computed<Array<{ srcset: string, src?: string, type?: string, sizes?: string }>>(() => {
-      if (originalFormat.value === 'svg') {
-        return [{ srcset: props.src }]
-      }
-
       const format = props.format || originalFormat.value
       const formats = format.split(',')
 
@@ -46,7 +42,7 @@ export default defineComponent({
           sizes: props.sizes || $img.options.screens,
           modifiers: { ..._base.modifiers.value, format }
         })
-        if (format === 'svg') { return { srcset } }
+        if (format === 'svg') { return { srcset: src } }
         return { src, type: `image/${format}`, sizes, srcset }
       })
     })
