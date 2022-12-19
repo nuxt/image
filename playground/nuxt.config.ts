@@ -52,6 +52,9 @@ export default defineNuxtConfig({
     netlify: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
+    supabase: {
+      baseURL: 'https://demo.supabase.co/storage/v1/render/image/public/bucket/'
+    },
     layer0: {},
     prismic: {},
     sanity: {

@@ -238,6 +238,23 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Supabase
+  {
+    name: 'supabase',
+    samples: [
+      {
+        src: '/images/apple.jpg',
+        width: 101,
+        fit: 'contain'
+      },
+      {
+        src: '/images/apple.jpg',
+        width: 200,
+        height: 200,
+        fit: 'fill'
+      }
+    ]
+  },
   // Layer0
   {
     name: 'layer0',
