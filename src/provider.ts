@@ -20,6 +20,7 @@ const BuiltInProviders = [
   'imgix',
   'ipx',
   'netlify',
+  'supabase',
   'layer0',
   'prismic',
   'sanity',
