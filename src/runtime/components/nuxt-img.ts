@@ -90,7 +90,7 @@ export default defineComponent({
       const sources = [
         src.value,
         ...(sizes.value.srcset || '').split(',').map(s => s.split(' ')[0])
-      ].filter(s => s && s.includes('/_ipx/'))
+      ].filter(s => s && s.includes('/_ipx/')).map((source) => source.replace(',', '&'));
       appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
     }
 
