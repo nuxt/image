@@ -13,6 +13,7 @@ export const imgProps = {
 export default defineComponent({
   name: 'NuxtImg',
   props: imgProps,
+  emits: ['load'],
   setup: (props, ctx) => {
     const $img = useImage()
     const _base = useBaseImage(props)
@@ -103,6 +104,11 @@ export default defineComponent({
         img.onload = () => {
           imgEl.value.src = mainSrc.value
           placeholderLoaded.value = true
+          ctx.emit('load')
+        }
+      } else {
+        imgEl.value.onload = () => {
+          ctx.emit('load')
         }
       }
     })
