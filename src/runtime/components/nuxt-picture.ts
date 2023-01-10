@@ -70,11 +70,11 @@ export default defineComponent({
       }
     }
 
-    const imgEl = ref<HTMLImageElement>(null)
+    const imgEl = ref<HTMLImageElement>()
 
     onMounted(() => {
-      imgEl.value.onload = () => {
-        ctx.emit('load')
+      imgEl.value!.onload = (event) => {
+        ctx.emit('load', event)
       }
     })
 

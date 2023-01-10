@@ -95,20 +95,20 @@ export default defineComponent({
       appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
     }
 
-    const imgEl = ref<HTMLImageElement>(null)
+    const imgEl = ref<HTMLImageElement>()
 
     onMounted(() => {
       if (placeholder.value) {
         const img = new Image()
         img.src = mainSrc.value
-        img.onload = () => {
-          imgEl.value.src = mainSrc.value
+        img.onload = (event) => {
+          imgEl.value!.src = mainSrc.value
           placeholderLoaded.value = true
-          ctx.emit('load')
+          ctx.emit('load', event)
         }
       } else {
-        imgEl.value.onload = () => {
-          ctx.emit('load')
+        imgEl.value!.onload = (event) => {
+          ctx.emit('load', event)
         }
       }
     })
