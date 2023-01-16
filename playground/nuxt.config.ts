@@ -53,6 +53,7 @@ export default defineNuxtConfig({
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
     layer0: {},
+    edgio: {},
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'

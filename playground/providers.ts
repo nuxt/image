@@ -247,6 +247,15 @@ export const providers: Provider[] = [
       { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
     ]
   },
+  // Edgio
+  {
+    name: 'edgio',
+    samples: [
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
+      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
+    ]
+  },
   // Prismic
   {
     name: 'prismic',

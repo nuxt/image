@@ -51,6 +51,7 @@ export interface ImageProviders {
   imagekit?: any
   imgix?: any
   layer0?: any
+  edgio?: any
   prismic?: any
   twicpics?: any
   storyblok?: any,
