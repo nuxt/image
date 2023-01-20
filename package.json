@@ -1,6 +1,6 @@
 {
   "name": "@nuxt/image",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Nuxt Image Module",
   "repository": "nuxt/image",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepack": "yarn build",
     "release": "yarn test && standard-version && git push --follow-tags && npm publish",
+    "release:no-test": "standard-version && git push --follow-tags && npm publish",
     "test": "yarn lint && yarn jest --forceExit",
     "test:e2e": "jest test/e2e --forceExit",
     "test:unit": "jest test/unit --forceExit"
@@ -74,7 +75,7 @@
     "ipx": "^0.9.9"
   },
   "engines": {
-    "node": ">=14.16.0"
+    "node": ">=14.18.0"
   },
   "publishConfig": {
     "access": "public"
