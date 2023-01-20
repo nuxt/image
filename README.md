@@ -1,3 +1,9 @@
+# HEY
+
+This is a fork, to fix the fingerprinting of static files. This package should in fact use the contents of the file to create the `[hash]` part of static filename.
+
+---
+
 [![@nuxt/image](./docs/public/cover.jpg "Nuxt Image")](https://image.nuxtjs.org)
 
 [![npm version][npm-version-src]][npm-version-href]
@@ -8,21 +14,18 @@
 - [📖 &nbsp;Read Documentation](https://image.nuxtjs.org)
 - [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
 
-
 ### Contributing
 
 1. Clone this repository
 2. Install dependencies using `yarn install`
 3. Start development server using `yarn dev`
 
-
 ## 📑 License
 
 Copyright (c) Nuxt Team
 
-
-
 <!-- Badges -->
+
 [npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image
 [npm-version-href]: https://npmjs.com/package/@nuxt/image
 [npm-downloads-src]: https://flat.badgen.net/npm/dm/@nuxt/image
