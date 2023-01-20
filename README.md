@@ -2,11 +2,21 @@
 
 This is a fork, to fix the fingerprinting of static files. This package should in fact use the contents of the file to create the `[hash]` part of static filename.
 
-I couldn't work out the best way to report back this change to the main module as they are preparing for a new release, so it exists here, with the `dist` folder commited, for you to:
+I couldn't work out the best way to report back this change to the main module as they are preparing for a new release, so it exists here, for you to:
 
 ## Install
 
-`yarn add jthawme/nuxt-image-fork`
+`yarn add jthawme-image-fork`
+
+With nuxt 2 you also have to add this package to the `transpile` property in `nuxt.config.js`
+
+```
+...
+build: {
+  // other config etc.
+  transpile: ["jthawme-nuxt-image"]
+},
+```
 
 ---
 
