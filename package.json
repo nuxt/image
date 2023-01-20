@@ -12,6 +12,7 @@
     "vetur"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "unbuild",
     "dev": "yarn nuxt playground",
     "docs:build": "cd docs && nuxt generate",
