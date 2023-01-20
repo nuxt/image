@@ -2,6 +2,12 @@
 
 This is a fork, to fix the fingerprinting of static files. This package should in fact use the contents of the file to create the `[hash]` part of static filename.
 
+I couldn't work out the best way to report back this change to the main module as they are preparing for a new release, so it exists here, with the `dist` folder commited, for you to:
+
+## Install
+
+`yarn add jthawme/nuxt-image-fork`
+
 ---
 
 [![@nuxt/image](./docs/public/cover.jpg "Nuxt Image")](https://image.nuxtjs.org)
