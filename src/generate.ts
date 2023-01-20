@@ -1,14 +1,26 @@
 
-import { createWriteStream } from 'fs'
+import { createWriteStream, existsSync } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
+import path from 'path'
 import { mkdirp } from 'fs-extra'
 import { dirname, join, relative, basename, trimExt } from 'upath'
 import { fetch } from 'node-fetch-native'
 import { joinURL, hasProtocol, parseURL, withoutTrailingSlash } from 'ufo'
+import hasha from 'hasha'
 import pLimit from 'p-limit'
 import { ModuleOptions, MapToStatic, ResolvedImage } from './types'
 import { hash, logger, guessExt } from './utils'
+
+function getHash (input: string, url: string) {
+  const staticFile = path.join(process.cwd(), 'static', input)
+
+  if (existsSync(staticFile)) {
+    return hasha.fromFileSync(staticFile)
+  }
+
+  return hash(url)
+}
 
 export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   const staticImages: Record<string, string> = {} // url ~> hashed file name
@@ -21,7 +33,7 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
         const params: any = {
           name: trimExt(basename(pathname)),
           ext: (format && `.${format}`) || guessExt(input),
-          hash: hash(url),
+          hash: getHash(input, url),
           // TODO: pass from runtimeConfig to mapStatic as param
           publicPath: nuxt.options.app.cdnURL ? '/' : withoutTrailingSlash(nuxt.options.build.publicPath)
         }
