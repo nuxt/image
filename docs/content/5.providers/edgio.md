@@ -1,6 +1,6 @@
-# Edgio
+# Edgio (formerly Layer0)
 
-Optimize images with Edgio's optimization service
+Optimize images with Edgio (formerly Layer0)'s optimization service
 
 Edgio provides a simple HTTP service for optimizing images.
 
