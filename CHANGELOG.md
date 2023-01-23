@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.5](https://github.com/jthawme/nuxt-image-fork/compare/v0.8.4...v0.8.5) (2023-01-23)
+
+
+### Bug Fixes
+
+* added prepare script for local install ([520a945](https://github.com/jthawme/nuxt-image-fork/commit/520a945469906affc659c1bcfa0adb379e2f0b20))
+* fixed issue of unique urls not being generated ([a0c420f](https://github.com/jthawme/nuxt-image-fork/commit/a0c420fcf49c1b35f7324560b7455d0e5c976813))
+* readjusted node version ([6704ef1](https://github.com/jthawme/nuxt-image-fork/commit/6704ef149d724184b145a48a8d17a43331933516))
+* updated readme and remove dist again in favour of npm ([0aa502e](https://github.com/jthawme/nuxt-image-fork/commit/0aa502e3b67d9de596ad6c582a45bbff2382d791))
+* updated readme for context ([5a441a9](https://github.com/jthawme/nuxt-image-fork/commit/5a441a98035b5d9c5fe79aa0bd10eb80e87b8600))
+
 ### [0.8.4](https://github.com/jthawme/nuxt-image-fork/compare/v0.8.3...v0.8.4) (2023-01-20)
 
 ### [0.8.3](https://github.com/nuxt/image/compare/v0.8.2...v0.8.3) (2023-01-20)
