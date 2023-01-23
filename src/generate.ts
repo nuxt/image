@@ -16,7 +16,7 @@ function getHash (input: string, url: string) {
   const staticFile = path.join(process.cwd(), 'static', input)
 
   if (existsSync(staticFile)) {
-    return hasha.fromFileSync(staticFile)
+    return hash(`${hasha.fromFileSync(staticFile)}${url}`)
   }
 
   return hash(url)

@@ -6,7 +6,7 @@ export const logger = consola.withScope('@nuxt/image')
 
 export const pkg = { name, version }
 
-export function hash (value: string, length = 6) {
+export function hash (value: string, length = 32) {
   return hasha(value).substr(0, length)
 }
 
