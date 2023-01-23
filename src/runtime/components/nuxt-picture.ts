@@ -1,4 +1,4 @@
-import { h, defineComponent, computed } from 'vue'
+import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead } from '#imports'
 import { getFileExtension } from '#image'
@@ -12,6 +12,7 @@ export const pictureProps = {
 export default defineComponent({
   name: 'NuxtPicture',
   props: pictureProps,
+  emits: ['load'],
   setup: (props, ctx) => {
     const $img = useImage()
     const _base = useBaseImage(props)
@@ -69,6 +70,14 @@ export default defineComponent({
       }
     }
 
+    const imgEl = ref<HTMLImageElement>()
+
+    onMounted(() => {
+      imgEl.value!.onload = (event) => {
+        ctx.emit('load', event)
+      }
+    })
+
     return () => h('picture', { key: nSources.value[0].src }, [
       ...(nSources.value?.[1]
         ? [h('source', {
@@ -78,6 +87,7 @@ export default defineComponent({
           })]
         : []),
       h('img', {
+        ref: imgEl,
         ..._base.attrs.value,
         ...imgAttrs,
         src: nSources.value[0].src,
