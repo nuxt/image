@@ -21,6 +21,7 @@ const BuiltInProviders = [
   'ipx',
   'netlify',
   'layer0',
+  'edgio',
   'prismic',
   'sanity',
   'twicpics',
