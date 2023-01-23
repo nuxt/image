@@ -52,8 +52,12 @@ export default defineNuxtConfig({
     netlify: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
-    layer0: {},
-    edgio: {},
+    layer0: {
+      baseURL: 'https://opt.moovweb.net'
+    },
+    edgio: {
+      baseURL: 'https://opt.moovweb.net'
+    },
     prismic: {},
     sanity: {
       projectId: 'zp7mbokg'
