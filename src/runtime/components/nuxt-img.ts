@@ -1,9 +1,9 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
-import { appendHeader } from 'h3'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
+import { prerenderStaticImages } from '../utils/prerender'
 import { baseImageProps, useBaseImage } from './_base'
-import { useHead, useRequestEvent } from '#imports'
+import { useHead } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
@@ -87,12 +87,9 @@ export default defineComponent({
       })
     }
 
+    // Prerender static images
     if (process.server && process.env.prerender) {
-      const sources = [
-        src.value,
-        ...(sizes.value.srcset || '').split(',').map(s => s.split(' ')[0])
-      ].filter(s => s && s.includes('/_ipx/'))
-      appendHeader(useRequestEvent(), 'X-Nitro-Prerender', sources.join(','))
+      prerenderStaticImages(src.value, sizes.value.srcset)
     }
 
     const imgEl = ref<HTMLImageElement>()
