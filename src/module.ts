@@ -1,4 +1,4 @@
-import { withLeadingSlash } from 'ufo'
+import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolveProviders, detectProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
@@ -54,7 +54,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Normalize domains to hostname
     options.domains = options.domains.map((d) => {
       if (!d.startsWith('http')) { d = 'http://' + d }
-      return new URL(d).hostname
+      return parseURL(d).host
     }).filter(Boolean) as string[]
 
     // Normalize alias to start with leading slash
