@@ -664,7 +664,7 @@ export const providers: Provider[] = [
         link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
       },
       {
-        src: 'https://images.unsplash.com/photo-1532236204992-f5e85c024202?crop=entropy&cs=tinysrgb&ixid=MnwxOTgwMDZ8MHwxfHNlYXJjaHwyOHx8dG9reW98ZW58MHx8fHwxNjczNzk3MDIz',
+        src: 'https://images.unsplash.com/photo-1532236204992-f5e85c024202?crop=entropy&cs=tinysrgb&ixid=MnwxOTgwMDZ8MHwxfHNlYXJjaHwyOHx8dG9reW98ZW58MHx8fHwxNjczNzk3MDIz&w=500',
         width: 300,
         height: 300,
         fit: 'cover',

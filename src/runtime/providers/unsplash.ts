@@ -1,6 +1,6 @@
 // https://unsplash.com/documentation#dynamically-resizable-images
 
-import { joinURL, withBase } from 'ufo'
+import { getQuery, withBase, withQuery } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { operationsGenerator } from './imgix'
 
@@ -8,8 +8,8 @@ const unsplashCDN = 'https://images.unsplash.com/'
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = unsplashCDN } = {}) => {
   const operations = operationsGenerator(modifiers)
-  const hasQueryParams = src.includes('?')
+  // withQuery requires query parameters as an object, so I parse the modifiers into an object with getQuery
   return {
-    url: withBase(joinURL(src + (operations ? ((hasQueryParams ? '&' : '?') + operations) : '')), baseURL)
+    url: withQuery(withBase(src, baseURL), getQuery('?' + operations))
   }
 }
