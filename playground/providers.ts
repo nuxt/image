@@ -671,6 +671,16 @@ export const providers: Provider[] = [
         format: 'auto',
         from: 'Photo by Omid Armin',
         link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1532236204992-f5e85c024202?crop=entropy&cs=tinysrgb&ixid=MnwxOTgwMDZ8MHwxfHNlYXJjaHwyOHx8dG9reW98ZW58MHx8fHwxNjczNzk3MDIz&w=500',
+        width: 300,
+        height: 300,
+        fit: 'cover',
+        quality: 75,
+        format: 'auto',
+        from: 'Photo by Jezael Melgoza',
+        link: 'https://unsplash.com/@jezar?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'
       }
     ]
   },
