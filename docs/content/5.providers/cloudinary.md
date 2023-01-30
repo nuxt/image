@@ -259,6 +259,10 @@ Call a custom function on Cloudinary side. See [Custom Functions](https://cloudi
 
 To define the density number when converting a vector file to image format.
 
+### `aspectRatio`
+
+To crop or resize the asset to a new aspect ratio, for use with a crop/resize mode that determines how the asset is adjusted to the new dimensions.
+
 ::alert{type="info"}
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
 ::
