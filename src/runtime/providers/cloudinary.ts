@@ -28,7 +28,8 @@ const operationsGenerator = createOperationsGenerator({
     zoom: 'z',
     colorSpace: 'cs',
     customFunc: 'fn',
-    density: 'dpi'
+    density: 'dn',
+    aspectRatio: 'ar',
   },
   valueMap: {
     fit: {
