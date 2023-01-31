@@ -32,6 +32,7 @@ export interface CloudinaryModifiers extends ImageModifiers {
   colorSpace: string
   customFunc: string
   density: number
+  aspectRatio: string
 }
 
 export interface CloudinaryOptions {
