@@ -32,6 +32,7 @@ export interface CloudinaryModifiers extends ImageModifiers {
   colorSpace: string
   customFunc: string
   density: number
+  aspectRatio: string
 }
 
 export interface CloudinaryOptions {
@@ -51,6 +52,7 @@ export interface ImageProviders {
   imagekit?: any
   imgix?: any
   layer0?: any
+  edgio?: any
   prismic?: any
   twicpics?: any
   storyblok?: any,

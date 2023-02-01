@@ -1,4 +1,5 @@
-import { h, defineComponent, computed } from 'vue'
+import { h, defineComponent, ref, computed, onMounted } from 'vue'
+import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead } from '#imports'
 import { getFileExtension } from '#image'
@@ -12,6 +13,7 @@ export const pictureProps = {
 export default defineComponent({
   name: 'NuxtPicture',
   props: pictureProps,
+  emits: ['load'],
   setup: (props, ctx) => {
     const $img = useImage()
     const _base = useBaseImage(props)
@@ -31,9 +33,10 @@ export default defineComponent({
       return formats[format.value] || originalFormat.value
     })
 
-    const nSources = computed<Array<{ srcset: string, src?: string, type?: string, sizes?: string }>>(() => {
+    type Source = { srcset: string, src?: string, type?: string, sizes?: string }
+    const sources = computed<Source[]>(() => {
       if (format.value === 'svg') {
-        return [{ srcset: props.src }]
+        return [<Source>{ srcset: props.src }]
       }
 
       const formats = legacyFormat.value !== format.value
@@ -41,22 +44,22 @@ export default defineComponent({
         : [format.value]
 
       return formats.map((format) => {
-        const { srcset, sizes, src } = $img.getSizes(props.src, {
+        const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
           modifiers: { ..._base.modifiers.value, format }
         })
 
-        return { src, type: `image/${format}`, sizes, srcset }
+        return <Source> { src, type: `image/${format}`, sizes, srcset }
       })
     })
 
     if (props.preload) {
-      const srcKey = nSources.value?.[1] ? 1 : 0
+      const srcKey = sources.value?.[1] ? 1 : 0
 
-      const link: any = { rel: 'preload', as: 'image', imagesrcset: nSources.value[srcKey].srcset }
+      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[srcKey].srcset }
 
-      if (nSources.value?.[srcKey]?.sizes) { link.imagesizes = nSources.value[srcKey].sizes }
+      if (sources.value?.[srcKey]?.sizes) { link.imagesizes = sources.value[srcKey].sizes }
 
       useHead({ link: [link] })
     }
@@ -69,20 +72,36 @@ export default defineComponent({
       }
     }
 
-    return () => h('picture', { key: nSources.value[0].src }, [
-      ...(nSources.value?.[1]
+    const imgEl = ref<HTMLImageElement>()
+
+    // Prerender static images
+    if (process.server && process.env.prerender) {
+      for (const src of sources.value as Source[]) {
+        prerenderStaticImages(src.src, src.srcset)
+      }
+    }
+
+    onMounted(() => {
+      imgEl.value!.onload = (event) => {
+        ctx.emit('load', event)
+      }
+    })
+
+    return () => h('picture', { key: sources.value[0].src }, [
+      ...(sources.value?.[1]
         ? [h('source', {
-            type: nSources.value[1].type,
-            sizes: nSources.value[1].sizes,
-            srcset: nSources.value[1].srcset
+            type: sources.value[1].type,
+            sizes: sources.value[1].sizes,
+            srcset: sources.value[1].srcset
           })]
         : []),
       h('img', {
+        ref: imgEl,
         ..._base.attrs.value,
         ...imgAttrs,
-        src: nSources.value[0].src,
-        sizes: nSources.value[0].sizes,
-        srcset: nSources.value[0].srcset
+        src: sources.value[0].src,
+        sizes: sources.value[0].sizes,
+        srcset: sources.value[0].srcset
       })
     ])
   }

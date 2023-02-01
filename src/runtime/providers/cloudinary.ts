@@ -3,7 +3,7 @@ import { defu } from 'defu'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
-const convertHextoRGBFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
+const convertHexToRgbFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
 const removePathExtension = (value: string) => value.replace(/\.[^/.]+$/, '')
 
 const operationsGenerator = createOperationsGenerator({
@@ -28,7 +28,8 @@ const operationsGenerator = createOperationsGenerator({
     zoom: 'z',
     colorSpace: 'cs',
     customFunc: 'fn',
-    density: 'dpi'
+    density: 'dn',
+    aspectRatio: 'ar'
   },
   valueMap: {
     fit: {
@@ -47,10 +48,10 @@ const operationsGenerator = createOperationsGenerator({
       jpeg: 'jpg'
     },
     background (value: string) {
-      return convertHextoRGBFormat(value)
+      return convertHexToRgbFormat(value)
     },
     color (value: string) {
-      return convertHextoRGBFormat(value)
+      return convertHexToRgbFormat(value)
     },
     gravity: {
       auto: 'auto',
