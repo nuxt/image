@@ -9,7 +9,8 @@ export interface ImageModifiers {
 export interface ImageOptions {
   provider?: string,
   preset?: string,
-  modifiers?: Partial<ImageModifiers>
+  modifiers?: Partial<ImageModifiers>,
+  dpi?: number[],
   [key: string]: any
 }
 

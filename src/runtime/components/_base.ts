@@ -19,6 +19,7 @@ export const baseImageProps = {
 
   sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
   preload: { type: Boolean, default: undefined },
+  dpi: { type: Array, default: () => [] },
 
   // <img> attributes
   width: { type: [String, Number], default: undefined },

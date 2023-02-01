@@ -156,24 +156,44 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
     const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
+
     variants.push({
       width: _cWidth,
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
+      dpi: 1,
       src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
+
+    if (opts.dpi) {
+      opts.dpi.forEach((dpi) => {
+        const fullWidth = Math.round(_cWidth * dpi)
+        const fullHeight = _cHeight ? Math.round(_cHeight * dpi) : undefined
+
+        variants.push({
+          width: fullWidth,
+          size: null,
+          screenMaxWidth,
+          media: null,
+          dpi,
+          src: ctx.$img!(input, { ...opts.modifiers, width: fullWidth, height: fullHeight }, opts)
+        });
+      });
+    }
   }
 
   variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  const defaultVar = variants[variants.length - 1]
+  const sizeVariants = variants.filter(v => v.size);
+
+  const defaultVar = sizeVariants[sizeVariants.length - 1]
   if (defaultVar) {
     defaultVar.media = ''
   }
 
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
     srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
     src: defaultVar?.src
   }
