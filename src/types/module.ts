@@ -58,6 +58,7 @@ export interface ImageProviders {
   storyblok?: any,
   strapi?: any,
   imageengine?: any,
+  uploadcare?: any,
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
 }

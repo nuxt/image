@@ -29,7 +29,8 @@ const BuiltInProviders = [
   'storyblok',
   'unsplash',
   'vercel',
-  'imageengine'
+  'imageengine',
+  'uploadcare'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

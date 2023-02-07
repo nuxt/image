@@ -694,5 +694,22 @@ export const providers: Provider[] = [
         quality: 75
       }
     ]
+  },
+  // Uploadcare
+  {
+    name: 'uploadcare',
+    samples: [
+      {
+        src: 'c160afba-8b42-45a9-a46a-d393248b0072',
+        width: 512,
+        height: 512
+      },
+      {
+        src: '678053e2-ad98-42be-8443-e114b8a1b294',
+        width: 512,
+        height: 512,
+        fit: 'cover'
+      }
+    ]
   }
 ]

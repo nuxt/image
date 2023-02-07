@@ -72,6 +72,8 @@ export default defineNuxtConfig({
     imageengine: {
       baseURL: 'https://abc123.imgeng.in'
     },
+    uploadcare: {
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',
