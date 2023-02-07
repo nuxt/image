@@ -34,24 +34,30 @@ export const getImage: ProviderGetImage = (
 ) => {
   // If width or height is specified, use smart_resize instead
   if (modifiers?.width || modifiers?.height) {
-    if (modifiers?.width && modifiers?.height) {
-      modifiers.smart_resize = `${modifiers.width}x${modifiers.height}`
-    } else if (modifiers?.width) {
-      modifiers.resize = `${modifiers.width}x`
-    } else if (modifiers?.height) {
-      modifiers.resize = `x${modifiers.height}`
-    }
+    modifiers.resize = `${modifiers?.width || ''}x${modifiers?.height || ''}`
 
-    delete modifiers.width
-    delete modifiers.height
+    delete modifiers?.width
+    delete modifiers?.height
   }
 
   // If fit is specified, use a different operation
   if (modifiers?.fit) {
     switch (modifiers.fit) {
+      case 'cover':
+        modifiers.scale_crop = [modifiers.resize, 'center']
+        delete modifiers.resize
+        break
+      case 'contain':
+        modifiers.stretch = 'off'
+        break
+        //   case 'fill':
+        //   case 'inside':
+        //   case 'outside':
+        //     modifiers.crop = modifiers.smart_resize
+        //     break
       default:
-        modifiers.scale_crop = modifiers.smart_resize
-        delete modifiers.smart_resize
+        modifiers.smart_resize = modifiers.resize
+        delete modifiers.resize
         break
     }
     delete modifiers.fit
