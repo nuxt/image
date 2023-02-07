@@ -25,7 +25,7 @@ import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   joinWith: '',
-  formatter: (key, value) => `-/${key}/${value}/`
+  formatter: (key:string, value:string | string[]) => `-/${key}/${Array.isArray(value) ? value.join('/') : value}/`
 })
 
 export const getImage: ProviderGetImage = (
