@@ -13,7 +13,9 @@ To use this provider you just need to specify the base url (zone) of your servic
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    baseURL: 'https://that-test.site'
+    cloudflare: {
+      baseURL: 'https://that-test.site'
+    }
   }
 })
 ```

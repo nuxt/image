@@ -4,7 +4,7 @@ import { useNuxt, createResolver } from '@nuxt/kit'
 
 import type { ProviderSetup, ImageProviders } from './types'
 
-export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions) => {
+export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) => {
   const nuxt = useNuxt()
 
   // Add IPX middleware unless nuxtrc or user added a custom middleware
@@ -18,6 +18,7 @@ export const ipxSetup: ProviderSetup = async (_providerOptions, moduleOptions) =
   // Options
   const ipxOptions: ImageProviders['ipx'] = {
     dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
+    maxAge: providerOptions.options?.maxAge,
     domains: moduleOptions.domains,
     sharp: moduleOptions.sharp,
     alias: moduleOptions.alias
