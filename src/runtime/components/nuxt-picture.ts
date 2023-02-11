@@ -40,7 +40,7 @@ export default defineComponent({
     const sources = computed<Source[]>(() => {
       const format = props.format || originalFormat.value;
       const formats = format.split(",");
-      if (format.value === "svg") {
+      if (format === "svg") {
         return [<Source>{ srcset: props.src }];
       }
 
@@ -104,15 +104,13 @@ export default defineComponent({
     const lastSourceIndex = computed(() => sources.value.length - 1);
     return () =>
       h("picture", { key: sources.value[0].src }, [
-        ...(sources.value?.[1]
-          ? [
-              h("source", {
-                type: sources.value[1].type,
-                sizes: sources.value[1].sizes,
-                srcset: sources.value[1].srcset,
-              }),
-            ]
-          : []),
+        sources.value.slice(0, -1).map((source) =>
+          h("source", {
+            type: source.type,
+            sizes: source.sizes,
+            srcset: source.srcset,
+          })
+        ),
         h("img", {
           ref: imgEl,
           ..._base.attrs.value,
