@@ -65,13 +65,13 @@ export default defineComponent({
     }
 
     // Only passdown supported <image> attributes
-    const imgAttrs = { ...props.imgAttrs }
+    const imgAttrs: {[key: string]: string|unknown} = { ...props.imgAttrs, 'data-nuxt-pic': '' }
     for (const key in ctx.attrs) {
       if (key in baseImageProps && !(key in imgAttrs)) {
         imgAttrs[key] = ctx.attrs[key]
       }
     }
-
+    
     const imgEl = ref<HTMLImageElement>()
 
     // Prerender static images
