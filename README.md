@@ -2,8 +2,9 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![Checks][checks-src]][checks-href]
-[![Codecov][codecov-src]][codecov-href]
+[![License][license-src]][license-href]
+[![Nuxt][nuxt-src]][nuxt-href]
+[![Volta][volta-src]][volta-href]
 
 - [📖 &nbsp;Read Documentation (v0)](https://image.nuxtjs.org)
 - [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/v0/example)
@@ -26,13 +27,17 @@
 Published under the [MIT License](./LICENSE)
 
 <!-- Badges -->
-[npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image
+[npm-version-src]: https://img.shields.io/npm/v/@nuxt/image/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-version-href]: https://npmjs.com/package/@nuxt/image
-[npm-downloads-src]: https://flat.badgen.net/npm/dm/@nuxt/image
-[npm-downloads-href]: https://npmjs.com/package/@nuxt/image-edge
-[checks-src]: https://flat.badgen.net/github/checks/nuxt/image/v0
-[checks-href]: https://github.com/nuxt/image/actions
-[codecov-src]: https://flat.badgen.net/codecov/c/github/nuxt/image
-[codecov-href]: https://codecov.io/gh/nuxt/image
-[license-src]: https://img.shields.io/npm/l/@nuxt/image.svg
-[license-href]: https://github.com/nuxt/image/blob/v0/LICENSE
+
+[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/@nuxt/image
+
+[license-src]: https://img.shields.io/npm/l/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/@nuxt/image
+
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
+[nuxt-href]: https://nuxt.com
+
+[volta-src]: https://user-images.githubusercontent.com/904724/209143798-32345f6c-3cf8-4e06-9659-f4ace4a6acde.svg
+[volta-href]: https://volta.net/nuxt/image?utm_source=nuxt_image_readme
