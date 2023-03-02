@@ -112,7 +112,7 @@ export default defineComponent({
 
     return () => h('img', {
       ref: imgEl,
-      key: src.value,
+      key: props.src,
       src: src.value,
       ...attrs.value,
       ...ctx.attrs
