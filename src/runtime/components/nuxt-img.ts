@@ -37,7 +37,7 @@ export default defineComponent({
     }))
 
     const attrs = computed(() => {
-      const attrs: AttrsT = {..._base.attrs.value, 'data-nuxt-img': ''}
+      const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': ''}
       if (props.sizes) {
         attrs.sizes = sizes.value.sizes
         attrs.srcset = sizes.value.srcset
