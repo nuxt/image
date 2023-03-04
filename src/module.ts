@@ -116,8 +116,13 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
       }
     })
 
-    // Add runtime plugin
-    addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    // Add image plugin
+    addPlugin({ src: resolver.resolve('./runtime/plugins/image') })
+
+    // Add performance plugin only in development mode
+    if(process.env.NODE_ENV === 'development') {
+      addPlugin({ src: resolver.resolve('./runtime/plugins/performance.client') })
+    }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
   }
