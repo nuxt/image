@@ -122,7 +122,7 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     addPlugin({ src: resolver.resolve('./runtime/plugins/image') })
 
     // Add performance plugin only in development mode or when enabled from the configuration by using `hints` option
-    if(options.hints || process.env.NODE_ENV === 'development') {
+    if (options.hints || process.env.NODE_ENV === 'development') {
       addPlugin({ src: resolver.resolve('./runtime/plugins/performance.client') })
     }
 
