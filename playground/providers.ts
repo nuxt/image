@@ -61,7 +61,31 @@ export const providers: Provider[] = [
     name: 'cloudinary',
     samples: [
       {
-        src: '/remote/nuxt-org/blog/going-full-static/main'
+        src: '/v1664783246/cld-sample-5.jpg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          zoom: 0.5,
+          grayscale: true,
+          overlays: [{
+            width: 2670 - 20,
+            crop: 'fit',
+            position: {
+              x: 10,
+              y: 10,
+              gravity: 'north_west',
+            },
+            text: {
+              color: 'blueviolet',
+              fontFamily: 'Source Sans Pro',
+              fontSize: 160,
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              letterSpacing: 14,
+              text: 'Cool Beans'
+            }
+          }]
+        }
       },
       {
         src: '/blog/going-full-static/main',
