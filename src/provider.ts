@@ -26,6 +26,7 @@ const BuiltInProviders = [
   'sanity',
   'twicpics',
   'strapi',
+  'strapisharp',
   'storyblok',
   'unsplash',
   'vercel',

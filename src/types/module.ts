@@ -57,6 +57,7 @@ export interface ImageProviders {
   twicpics?: any
   storyblok?: any,
   strapi?: any,
+  strapisharp?: any,
   imageengine?: any,
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
