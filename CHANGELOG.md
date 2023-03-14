@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/nuxt/image/compare/v0.7.1...v2.0.0) (2023-03-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* improve prerendering support (#725)
+
+### Features
+
+* add `data-nuxt-img` and `data-nuxt-pic` attrs ([#747](https://github.com/nuxt/image/issues/747)) ([9739e4d](https://github.com/nuxt/image/commit/9739e4d421744c4d39c4c2c03a0b8274fd4f5cea))
+* initial rewrite for nuxt 3 support ([64dfecc](https://github.com/nuxt/image/commit/64dfecc0f7c43038c8b021d385c7b42fedc71099))
+* migrate to composition api ([#571](https://github.com/nuxt/image/issues/571)) ([6f2a430](https://github.com/nuxt/image/commit/6f2a4306cef9ee0d84f021b05666fa939d8a8915))
+* support `load` event for `nuxt-img` and `nuxt-picture` ([#702](https://github.com/nuxt/image/issues/702)) ([f280824](https://github.com/nuxt/image/commit/f28082413e0962da5a0a97c1702a8664778271da))
+* support prerendering static images ([#614](https://github.com/nuxt/image/issues/614)) ([cd7258b](https://github.com/nuxt/image/commit/cd7258b07cf695b99b55275a43f6264107166dd5))
+* **vercel:** set image config using v3 output api ([4d8aab0](https://github.com/nuxt/image/commit/4d8aab01b3a539120a5182b06d3a66d8eeabb683))
+
+
+### Bug Fixes
+
+* add implicit imports ([db0934c](https://github.com/nuxt/image/commit/db0934c1afb124c579c7c272c0f8c103e360baf5))
+* add missing `defineNuxtPlugin` import ([e5ca160](https://github.com/nuxt/image/commit/e5ca160f73913d029e5b936ad8b882375254aaed))
+* addAutoImport has been renamed to addImports ([#648](https://github.com/nuxt/image/issues/648)) ([194d2d6](https://github.com/nuxt/image/commit/194d2d6fd121c6bebf48406f33d9b0bbca2ba77b))
+* **cloudinary:** update mapping key for `density` ([#730](https://github.com/nuxt/image/issues/730)) ([dbd8de8](https://github.com/nuxt/image/commit/dbd8de8b753fc44b2c4e5da571f08fd5a5f7d814))
+* default dir value ([cc4a09d](https://github.com/nuxt/image/commit/cc4a09dc36ab7e86cf84164a832de63daf784b53))
+* **imagekit:** transformation query param generation ([#610](https://github.com/nuxt/image/issues/610)) ([4b0219a](https://github.com/nuxt/image/commit/4b0219a9e66df0af979aef42ad761996a3588363))
+* improve prerendering support ([#725](https://github.com/nuxt/image/issues/725)) ([96fd3d0](https://github.com/nuxt/image/commit/96fd3d0512fa864b700cd905d9d08b4e97332bbe))
+* **ipx:** ensure leading slash is added to ipx url ([93ce78a](https://github.com/nuxt/image/commit/93ce78aa0736268de132bf30b2d9f6d062c7c3c8))
+* **module:** parse options.domains with parseURL [#659](https://github.com/nuxt/image/issues/659) ([#680](https://github.com/nuxt/image/issues/680)) ([d943bb0](https://github.com/nuxt/image/commit/d943bb04eb83cd32a5f8faa0b8f50ff99829b627))
+* **nuxt-img:** access `prerender.env` only in server side ([#661](https://github.com/nuxt/image/issues/661)) ([bc9ddc0](https://github.com/nuxt/image/commit/bc9ddc0caf4fe32b63f18118ad1b392c7160ddf9))
+* **nuxt-picture:** only pass defined props to `<nuxt-img>` component ([#620](https://github.com/nuxt/image/issues/620)) ([522ffa2](https://github.com/nuxt/image/commit/522ffa20b327a8ba49f958f9cd43022f5817d855))
+* pass ipx maxAge option from options ([#706](https://github.com/nuxt/image/issues/706)) ([5a49fab](https://github.com/nuxt/image/commit/5a49fabc04ae8f8fffd9263bae4dfd924638a969))
+* provide empty array if source data is not present ([#606](https://github.com/nuxt/image/issues/606)) ([7994db4](https://github.com/nuxt/image/commit/7994db47238663263c9e99401991b0c5728c76df))
+* **unsplash:** merge query params with src ([#712](https://github.com/nuxt/image/issues/712)) ([a55b8b2](https://github.com/nuxt/image/commit/a55b8b2fc62ecac2d2a14856332c47ad04ce019a))
+* update ipx ([b087201](https://github.com/nuxt/image/commit/b0872016355896470402bbe7a16f5ca91baebf8f))
+* update nuxt version constraint ([#603](https://github.com/nuxt/image/issues/603)) ([f825207](https://github.com/nuxt/image/commit/f825207e21c01644ffc643ea00df13693a339af9))
+* use resolver to resolve built-in providers ([bb8381c](https://github.com/nuxt/image/commit/bb8381c06a6c999791e9ae8b64ab630c0917272c))
+* **vercel:** remove dependency of `fs-extra` ([23076b8](https://github.com/nuxt/image/commit/23076b8aa97d050cb89aa5d6f9c008d3f8ddba9f)), closes [#565](https://github.com/nuxt/image/issues/565)
+* **vercel:** update `image` to `images` and add ttl ([a3cd82c](https://github.com/nuxt/image/commit/a3cd82c6a8c6f70786ccfa5b53db7aa01a163f14))
+
 ### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
 
 
