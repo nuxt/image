@@ -14,6 +14,7 @@ export interface ModuleOptions extends ImageProviders {
   screens: CreateImageOptions['screens'],
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
+  densities: number[]
   [key: string]: any
 }
 
@@ -39,7 +40,8 @@ export default defineNuxtModule<ModuleOptions>({
     },
     internalUrl: '',
     providers: {},
-    alias: {}
+    alias: {},
+    densities: []
   },
   meta: {
     name: '@nuxt/image',
@@ -62,13 +64,15 @@ export default defineNuxtModule<ModuleOptions>({
 
     options.provider = detectProvider(options.provider)
     options[options.provider] = options[options.provider] || {}
+    options.densities = options.densities || []
 
     const imageOptions: Omit<CreateImageOptions, 'providers'> = pick(options, [
       'screens',
       'presets',
       'provider',
       'domains',
-      'alias'
+      'alias',
+      'densities'
     ])
 
     const providers = await resolveProviders(nuxt, options)

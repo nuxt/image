@@ -91,3 +91,11 @@ export function parseSize (input: string | number | undefined = '') {
     }
   }
 }
+
+export function parseDensities (input: string | undefined = '') :number[] {
+  if (!input.length) {
+    return []
+  }
+
+  return input.split(' ').map(size => parseInt(size.replace('x', '')))
+}
