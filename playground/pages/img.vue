@@ -3,8 +3,18 @@
     <h1>Original</h1>
     <nuxt-img
       src="/images/colors.jpg"
-      width="50"
-      densities="1x 2x"
+      width="500"
+      height="500"
+      @load="isLoaded = true"
+    />
+    <p>Received onLoad event: {{ isLoaded }}</p>
+
+    <h1>Placeholder</h1>
+    <nuxt-img
+      :src="src"
+      placeholder
+      width="500"
+      height="500"
       @load="isLoaded = true"
     />
   </div>
