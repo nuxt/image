@@ -658,6 +658,57 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // wagtail
+  {
+    name: 'wagtail',
+    samples: [
+      {
+        alt: 'no specified width or height uses original maximum image size',
+        src: '329944'
+      },
+      {
+        alt: 'Resize',
+        width: 600,
+        height: 600,
+        src: '329944'
+      },
+      {
+        alt: 'Just width, height is proportional',
+        width: 250,
+        src: '329944'
+      },
+      {
+        alt: 'Just height, width is proportional',
+        height: 250,
+        src: '329944'
+      },
+      {
+        alt: 'Format to jpeg (webp{default}, jpeg, png)',
+        width: 600,
+        height: 600,
+        format: 'jpeg',
+        src: '329944'
+      },
+      {
+        alt: 'low quality jpeg (quality default = 70)',
+        width: 600,
+        height: 600,
+        format: 'jpeg',
+        quality: 2,
+        src: '329944'
+      },
+      {
+        alt: 'Focus Zoom on the CMS assigned focal point of the image (0 - 100) CMS provided focal point is around the glass dorrs and 3 winddows on the very left of the house',
+        width: 200,
+        height: 200,
+        src: '329944',
+        modifiers:
+        {
+          focusZoom: 100
+        }
+      }
+    ]
+  },
   // Unsplash
   {
     name: 'unsplash',

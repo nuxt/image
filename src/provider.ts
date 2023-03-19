@@ -29,6 +29,7 @@ const BuiltInProviders = [
   'storyblok',
   'unsplash',
   'vercel',
+  'wagtail',
   'imageengine'
 ]
 

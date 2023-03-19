@@ -23,6 +23,9 @@ export default defineNuxtConfig({
     storyblok: {
       baseURL: 'https://a.storyblok.com/'
     },
+    wagtail: {
+      baseURL: 'https://cms.demo.nypr.digital/images/'
+    },
     cloudflare: {
       baseURL: 'https://that-test.site'
     },
