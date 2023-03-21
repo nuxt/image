@@ -5,7 +5,7 @@
 [![Volta][volta-src]][volta-href]
 
 - [📖 &nbsp;Read Documentation (v1)](https://v1.image.nuxtjs.org)
-- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/v1/example)
+- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
 
 ---
 
