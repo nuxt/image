@@ -1,7 +1,6 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@cloudinary-util/url-loader': ^3.0.0
   '@nuxt/kit': ^3.1.1
   '@nuxt/module-builder': 0.2.1
   '@nuxtjs/eslint-config-typescript': ^12.0.0
@@ -22,7 +21,6 @@ specifiers:
   ufo: ^1.0.1
 
 dependencies:
-  '@cloudinary-util/url-loader': 3.0.0
   '@nuxt/kit': 3.1.1
   consola: 2.15.3
   defu: 6.1.2
@@ -336,29 +334,6 @@ packages:
     dependencies:
       mime: 3.0.0
     dev: true
-
-  /@cloudinary-util/url-loader/3.0.0:
-    resolution: {integrity: sha512-WIpVpt7eSHU3zZux4PSOb7qY1vCF9/0BNFP0qKlQsD/71r7hrzZZx2cHNNk8VSdYY7iNtXgsFmn3LXYaNdkC4Q==}
-    dependencies:
-      '@cloudinary-util/util': 2.0.0
-      '@cloudinary/url-gen': 1.9.2
-    dev: false
-
-  /@cloudinary-util/util/2.0.0:
-    resolution: {integrity: sha512-7WHFR7uIizW+MRLk+RhLVFQ6jzPKYrBZGICqy6s38hakj+zpXd4nISmMfKbZgwFTBp53oHRi8dW9G2kzXmVe3w==}
-    dev: false
-
-  /@cloudinary/transformation-builder-sdk/1.2.7:
-    resolution: {integrity: sha512-Q1fhw37BXXmN6/BCxdnw3OUJ6aAy/zpDWH5t+xIwmG5GtYUYMZqOjvdOkOhWBmus9ptq9znuGsYn8h5vtSjT+w==}
-    dependencies:
-      '@cloudinary/url-gen': 1.9.2
-    dev: false
-
-  /@cloudinary/url-gen/1.9.2:
-    resolution: {integrity: sha512-LFL79Galcj8WZaXW6QOOt5LQVkioQdH7DR7blYcU9Zi0ae1y0L4Ujmr69RsUNshCNy/EdVAg0aVG/jjqKDnJsg==}
-    dependencies:
-      '@cloudinary/transformation-builder-sdk': 1.2.7
-    dev: false
 
   /@esbuild/android-arm/0.15.15:
     resolution: {integrity: sha512-JJjZjJi2eBL01QJuWjfCdZxcIgot+VoK6Fq7eKF9w4YHm9hwl7nhBR1o2Wnt/WcANk5l9SkpvrldW1PLuXxcbw==}
