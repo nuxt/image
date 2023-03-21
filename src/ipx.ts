@@ -49,7 +49,7 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
   nuxt.options.devServerHandlers.push({
     route: '/_ipx',
     handler: eventHandler(async (event) => {
-      await middleware(event.req, event.res)
+      await middleware(event.node.req, event.node.res)
     })
   })
 }
