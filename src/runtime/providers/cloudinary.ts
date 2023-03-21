@@ -1,5 +1,5 @@
+import { constructCloudinaryUrl } from '@cloudinary-util/url-loader'
 import type { ProviderGetImage } from '../../types'
-import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   return {
@@ -11,8 +11,8 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
       config: {
         cloud: {
           cloudName: baseURL.replace('https://res.cloudinary.com/', '').split('/')[0]
-        },
-      },
+        }
+      }
     })
   }
 }

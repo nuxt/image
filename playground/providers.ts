@@ -73,7 +73,7 @@ export const providers: Provider[] = [
             position: {
               x: 10,
               y: 10,
-              gravity: 'north_west',
+              gravity: 'north_west'
             },
             text: {
               color: 'blueviolet',
