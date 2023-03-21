@@ -1,4 +1,6 @@
-import { normalize } from 'pathe'
+import { mkdir, writeFile } from 'fs/promises'
+import { existsSync } from 'fs'
+import { dirname, join, normalize } from 'pathe'
 import { defu } from 'defu'
 import type { Nuxt } from '@nuxt/schema'
 import type { NitroOptions } from 'nitropack'
@@ -50,6 +52,16 @@ export const providerSetup: Record<string, ProviderSetup> = {
         }
       }
     })
+    // TODO: Implement `vercel-static` preset: https://github.com/unjs/nitro/issues/818
+    if (nuxt.options._generate) {
+      nuxt.hook('nitro:build:public-assets', async () => {
+        const vercelConfig = join(nuxt.options.rootDir, '.vercel/output/config.json')
+        if (!existsSync(vercelConfig)) {
+          await mkdir(dirname(vercelConfig), { recursive: true })
+        }
+        await writeFile(join(nuxt.options.rootDir, '.vercel/output/config.json'), JSON.stringify(nuxt.options.nitro.vercel!.config))
+      })
+    }
   }
 }
 
