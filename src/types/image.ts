@@ -34,6 +34,9 @@ export interface CreateImageOptions {
       provider: ImageProvider
     }
   }
+  nuxt: {
+    baseURL: string
+  }
   presets: { [name: string]: ImageOptions }
   provider: string
   screens: Record<string, number>
