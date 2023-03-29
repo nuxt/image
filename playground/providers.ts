@@ -694,5 +694,15 @@ export const providers: Provider[] = [
         quality: 75
       }
     ]
+  },
+  // Directus
+  {
+    name: 'directus',
+    samples: [
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: 'Image 1'
+      }
+    ]
   }
 ]
