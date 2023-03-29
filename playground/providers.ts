@@ -702,6 +702,22 @@ export const providers: Provider[] = [
       {
         src: 'ad514db1-eb90-4523-8183-46781437e7ee',
         alt: 'Image 1'
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '1024px width',
+        width: 1024
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '512px width',
+        width: 512
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp'
       }
     ]
   }
