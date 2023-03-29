@@ -14,10 +14,10 @@ export const operationsGenerator = createOperationsGenerator({
   },
   valueMap: {
     fit: {
-      cover: 'crop',
-      contain: 'fill',
-      inside: 'max',
-      outside: 'min'
+      cover: 'cover',
+      contain: 'contain',
+      inside: 'inside',
+      outside: 'outside'
     },
     format: {
       jpg: 'jpg',
