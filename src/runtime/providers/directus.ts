@@ -4,6 +4,7 @@ import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {
+    key: 'key',
     width: 'width',
     height: 'height',
     format: 'format',
