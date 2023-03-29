@@ -10,6 +10,7 @@ export const operationsGenerator = createOperationsGenerator({
     format: 'format',
     quality: 'quality',
     fit: 'fit',
+    withoutEnlargement: 'withoutEnlargement',
     transforms: 'transforms'
   },
   valueMap: {
@@ -24,6 +25,10 @@ export const operationsGenerator = createOperationsGenerator({
       png: 'png',
       webp: 'webp',
       tiff: 'tiff'
+    },
+    withoutEnlargement: {
+      true: 'true',
+      false: 'false'
     }
   },
   joinWith: '&',
