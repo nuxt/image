@@ -30,7 +30,10 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
     const resolver = createResolver(import.meta.url)
     nuxt.hook('nitro:init', (nitro) => {
       ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
-      nitro.options.runtimeConfig.ipx = ipxOptions
+      // TODO: Workaround for prerender support
+      // https://github.com/nuxt/image/pull/784
+      nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
+      nitro.options._config.runtimeConfig.ipx = nitro.options.runtimeConfig.ipx = ipxOptions
     })
     nuxt.options.serverHandlers.push({
       route: '/_ipx/**',
