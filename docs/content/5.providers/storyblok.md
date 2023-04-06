@@ -1,18 +1,17 @@
----
-title: Storyblok
-description: Nuxt Image internally use Storyblok as static provider
----
+# Storyblok
+
+Nuxt Image internally use Storyblok as static provider
 
 Integration between [Storyblok](https://www.storyblok.com/docs/image-service/) and the image module. To use this provider you just need to specify the base url of your service in Storyblok.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     storyblok: {
       baseURL: 'https://a.storyblok.com'
     }
   }
-}
+})
 ```
 
 ## Storyblok modifiers

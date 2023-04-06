@@ -1,7 +1,6 @@
----
-title: Netlify
-description: Optimize images with Netlify's dynamic image transformation service
----
+# Netlify
+
+Optimize images with Netlify's dynamic image transformation service
 
 Netlify offers dynamic image transformation for all JPEG, PNG, and GIF files you have set to be tracked with [Netlify Large Media](https://docs.netlify.com/large-media/overview/).
 

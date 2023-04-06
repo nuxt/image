@@ -1,20 +1,19 @@
----
-title: Cloudinary
-description: Nuxt Image has first class integration with Cloudinary
----
+# Cloudinary
+
+Nuxt Image has first class integration with Cloudinary
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.
 
 To use this provider you just need to specify the base url of your project in cloudinary.
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/'
     }
   }
-}
+})
 ```
 
 ## Remote Images
@@ -25,14 +24,14 @@ Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetc
 
 ### Fetch
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch/'
     }
   }
-}
+})
 ```
 
 ```vue
@@ -43,14 +42,14 @@ Note: You will need to configure your "Allowed fetch domains" to do the above.
 
 ### Upload
 
-```js{}[nuxt.config.js]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/<mapping-folder>'
     }
   }
-}
+})
 ```
 
 ```vue
@@ -259,6 +258,10 @@ Call a custom function on Cloudinary side. See [Custom Functions](https://cloudi
 ### `density`
 
 To define the density number when converting a vector file to image format.
+
+### `aspectRatio`
+
+To crop or resize the asset to a new aspect ratio, for use with a crop/resize mode that determines how the asset is adjusted to the new dimensions.
 
 ::alert{type="info"}
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
