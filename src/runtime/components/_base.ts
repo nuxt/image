@@ -18,8 +18,8 @@ export const baseImageProps = {
   provider: { type: String, default: undefined },
 
   sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
+  dprs: { type: Array as () => number[], default: () => [] },
   preload: { type: Boolean, default: undefined },
-  dpi: { type: Array, default: () => [] },
 
   // <img> attributes
   width: { type: [String, Number], default: undefined },

@@ -28,7 +28,7 @@ export default defineComponent({
 
     const sizes = computed(() => $img.getSizes(props.src, {
       ..._base.options.value,
-      dpi: props.dpi,
+      dprs: props.dprs,
       sizes: props.sizes || `lg:${props.width}`,
       modifiers: {
         ..._base.modifiers.value,
@@ -40,8 +40,8 @@ export default defineComponent({
     const attrs = computed(() => {
       const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
 
-      if (props.sizes || props.dpi) attrs.srcset = sizes.value.srcset
-      if (props.sizes || props.dpi) attrs.sizes = sizes.value.sizes
+      if (props.sizes || props.dprs) attrs.srcset = sizes.value.srcset
+      if (props.sizes) attrs.sizes = sizes.value.sizes
 
       return attrs
     })
@@ -65,7 +65,7 @@ export default defineComponent({
     })
 
     const mainSrc = computed(() =>
-      props.sizes || props.dpi
+      props.sizes || props.dprs
         ? sizes.value.src
         : $img(props.src, _base.modifiers.value, _base.options.value)
     )

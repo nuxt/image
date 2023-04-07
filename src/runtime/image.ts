@@ -162,21 +162,21 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
-      dpi: 1,
+      dpr: 1,
       src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
 
-    if (opts.dpi) {
-      opts.dpi.forEach((dpi) => {
-        const fullWidth = Math.round(_cWidth * dpi)
-        const fullHeight = _cHeight ? Math.round(_cHeight * dpi) : undefined
+    if (opts.dprs) {
+      opts.dprs.forEach((dpr: number) => {
+        const fullWidth = Math.round(_cWidth * dpr)
+        const fullHeight = _cHeight ? Math.round(_cHeight * dpr) : undefined
 
         variants.push({
           width: fullWidth,
           size: null,
           screenMaxWidth,
           media: null,
-          dpi,
+          dpr,
           src: ctx.$img!(input, { ...opts.modifiers, width: fullWidth, height: fullHeight }, opts)
         });
       });

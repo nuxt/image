@@ -10,13 +10,19 @@ export interface ImageOptions {
   provider?: string
   preset?: string
   modifiers?: Partial<ImageModifiers>
-  dpi?: number[]
   [key: string]: any
 }
 
-export interface ImageSizesOptions extends ImageOptions {
+interface _ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
+
+interface _ImageDprsOptions extends ImageOptions {
+  sizes?: Record<string, string | number> | string
+  dprs: number[]
+}
+
+export type ImageSizesOptions = _ImageSizesOptions | _ImageDprsOptions
 
 // eslint-disable-next-line no-use-before-define
 export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCTX) => ResolvedImage
