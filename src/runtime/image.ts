@@ -123,7 +123,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
   const hwRatio = (width && height) ? height / width : 0
-  const variants = [] as Array<{
+  let variants = [] as Array<{
     width: number
     size: string | null
     screenMaxWidth: number
@@ -178,10 +178,6 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
         const fullWidth = Math.round(_cWidth * dpr)
         const fullHeight = _cHeight ? Math.round(_cHeight * dpr) : undefined
 
-        const alreadyPushedVariant = variants.find(({ width }) => width === fullWidth);
-
-        if (alreadyPushedVariant) return;
-
         variants.push({
           width: fullWidth,
           size: null,
@@ -197,6 +193,10 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
   const sizeVariants = variants.filter(v => v.size);
+  // Remove copies by width
+  variants = variants.filter(({ width }, index, self) =>
+    index === self.findIndex(({ width: localWidth }) => width === localWidth)
+  )
 
   const defaultVar = sizeVariants[sizeVariants.length - 1]
   if (defaultVar) {
