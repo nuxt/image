@@ -1,10 +1,16 @@
 import { createImage } from '#image'
 // @ts-ignore
 import { imageOptions } from '#build/image-options'
-import { defineNuxtPlugin } from '#imports'
+import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin(() => {
-  const img = createImage(imageOptions)
+  const config = useRuntimeConfig()
+  const img = createImage({
+    ...imageOptions,
+    nuxt: {
+      baseURL: config.app.baseURL
+    }
+  })
   return {
     provide: {
       img
