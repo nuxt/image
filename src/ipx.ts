@@ -1,4 +1,4 @@
-import { resolve } from 'pathe'
+import { relative, resolve } from 'pathe'
 import { eventHandler } from 'h3'
 import { useNuxt, createResolver } from '@nuxt/kit'
 
@@ -28,8 +28,16 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
   if (!nuxt.options.dev) {
     // TODO: Avoid adding for non-Node.js environments with a warning
     const resolver = createResolver(import.meta.url)
-    ipxOptions.dir = '' // Set at runtime
-    nuxt.options.runtimeConfig.ipx = ipxOptions
+    nuxt.hook('nitro:init', (nitro) => {
+      // Use absolute path for prerenderer
+      // TODO: Workaround for prerender support
+      // https://github.com/nuxt/image/pull/784
+      nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
+      nitro.options._config.runtimeConfig.ipx = { ...ipxOptions }
+      // Use relative path for built app
+      ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
+      nitro.options.runtimeConfig.ipx = ipxOptions
+    })
     nuxt.options.serverHandlers.push({
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
@@ -49,7 +57,7 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
   nuxt.options.devServerHandlers.push({
     route: '/_ipx',
     handler: eventHandler(async (event) => {
-      await middleware(event.req, event.res)
+      await middleware(event.node.req, event.node.res)
     })
   })
 }

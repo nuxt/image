@@ -7,15 +7,15 @@ export interface ImageModifiers {
 }
 
 export interface ImageOptions {
-  provider?: string,
-  preset?: string,
-  modifiers?: Partial<ImageModifiers>,
-  dpi?: number[],
+  provider?: string
+  preset?: string
+  modifiers?: Partial<ImageModifiers>
+  dpi?: number[]
   [key: string]: any
 }
 
 export interface ImageSizesOptions extends ImageOptions {
-  sizes: Record<string, string|number> | string
+  sizes: Record<string, string | number> | string
 }
 
 // eslint-disable-next-line no-use-before-define
@@ -31,21 +31,24 @@ export interface ImageProvider {
 export interface CreateImageOptions {
   providers: {
     [name: string]: {
-      defaults: any,
+      defaults: any
       provider: ImageProvider
     }
   }
+  nuxt: {
+    baseURL: string
+  }
   presets: { [name: string]: ImageOptions }
   provider: string
-  screens: Record<string, number>,
-  alias: Record<string, string>,
+  screens: Record<string, number>
+  alias: Record<string, string>
   domains: string[]
 }
 
 export interface ImageInfo {
-  width: number,
-  height: number,
-  placeholder?: string,
+  width: number
+  height: number
+  placeholder?: string
 }
 
 export interface ResolvedImage {
@@ -73,20 +76,20 @@ export type $Img = Img & {
 }
 
 export interface ImageCTX {
-  options: CreateImageOptions,
+  options: CreateImageOptions
   $img?: $Img
 }
 
 export interface ImageSize {
-  width: number;
-  media: string;
-  breakpoint: number;
-  format: string;
-  url: string;
+  width: number
+  media: string
+  breakpoint: number
+  format: string
+  url: string
 }
 
 export interface RuntimePlaceholder extends ImageInfo {
-  url: string;
+  url: string
 }
 
 export type OperationFormatter = (key: string, value: string) => string

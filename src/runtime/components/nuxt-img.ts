@@ -23,6 +23,7 @@ export default defineComponent({
     type AttrsT = typeof _base.attrs.value & {
       sizes?: string
       srcset?: string
+      'data-nuxt-img'?: string
     }
 
     const sizes = computed(() => $img.getSizes(props.src, {
@@ -37,7 +38,7 @@ export default defineComponent({
     }))
 
     const attrs = computed(() => {
-      const attrs: AttrsT = _base.attrs.value
+      const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
 
       if (props.sizes || props.dpi) attrs.srcset = sizes.value.srcset
       if (props.sizes || props.dpi) attrs.sizes = sizes.value.sizes
