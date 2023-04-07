@@ -123,7 +123,14 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
   const hwRatio = (width && height) ? height / width : 0
-  const variants = []
+  const variants = [] as Array<{
+    width: number
+    size: string | null
+    screenMaxWidth: number
+    media: string | null
+    dpr: number
+    src: string
+  }>
 
   const sizes: Record<string, string> = {}
 
@@ -170,6 +177,10 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       opts.dprs.forEach((dpr: number) => {
         const fullWidth = Math.round(_cWidth * dpr)
         const fullHeight = _cHeight ? Math.round(_cHeight * dpr) : undefined
+
+        const alreadyPushedVariant = variants.find(({ width }) => width === fullWidth);
+
+        if (alreadyPushedVariant) return;
 
         variants.push({
           width: fullWidth,
