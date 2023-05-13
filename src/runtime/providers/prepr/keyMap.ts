@@ -11,8 +11,8 @@ const keyMap = {
   width: 'w'
 } as const
 
-type OperationsKeyMapKey = keyof typeof keyMap
-type OperationsKeyMapValue= typeof keyMap[OperationsKeyMapKey]
+type KeyMapKey = keyof typeof keyMap
+type KeyMapValue= typeof keyMap[KeyMapKey]
 
 export { keyMap }
-export type { OperationsKeyMapKey, OperationsKeyMapValue }
+export type { KeyMapKey, KeyMapValue }

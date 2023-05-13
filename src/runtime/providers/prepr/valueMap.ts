@@ -24,8 +24,8 @@ const valueMap = {
   }
 } as const
 
-type OperationsValuesMapKey = keyof typeof valueMap
-type OperationsValuesMapValue = typeof valueMap[OperationsValuesMapKey]
+type ValuesMapKey = keyof typeof valueMap
+type ValuesMapValue = typeof valueMap[ValuesMapKey]
 
 export { valueMap }
-export type { OperationsValuesMapKey, OperationsValuesMapValue }
+export type { ValuesMapKey, ValuesMapValue }
