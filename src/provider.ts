@@ -8,7 +8,7 @@ import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
-const BuiltInProviders = [
+const BuiltInProviders: string[] = [
   'cloudflare',
   'cloudimage',
   'cloudinary',
@@ -23,6 +23,7 @@ const BuiltInProviders = [
   'ipx',
   'layer0',
   'netlify',
+  'prepr',
   'prismic',
   'sanity',
   'storyblok',

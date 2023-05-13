@@ -19,7 +19,7 @@ export default {
       get () {
         return this.$route.params.provider || ''
       },
-      set (provider) {
+      set (provider: string) {
         if (provider) {
           this.$router.push(`/provider/${provider}`)
         }

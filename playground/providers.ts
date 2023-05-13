@@ -256,6 +256,47 @@ export const providers: Provider[] = [
       { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 }
     ]
   },
+  // Prepr
+  {
+    name: 'prepr',
+    samples: [
+      { src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg', quality: 5 },
+      { src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg', height: 200 },
+      { src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg', width: 200 },
+      { src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg', width: 200, height: 200 },
+      {
+        src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg',
+        modifiers: {
+          w: 250,
+          h: 250
+        }
+      },
+      {
+        src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg',
+        width: 250,
+        height: 200,
+        modifiers: {
+          crop: 'southeast'
+        }
+      },
+      {
+        src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg',
+        width: 250,
+        height: 200,
+        modifiers: {
+          crop: 'centre'
+        }
+      },
+      {
+        src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg',
+        width: 250,
+        height: 200,
+        fit: {
+          cover: true
+        }
+      }
+    ]
+  },
   // Prismic
   {
     name: 'prismic',
