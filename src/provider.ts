@@ -10,26 +10,26 @@ import { ipxSetup } from './ipx'
 
 const BuiltInProviders = [
   'cloudflare',
+  'cloudimage',
   'cloudinary',
   'contentful',
-  'cloudimage',
+  'edgio',
   'fastly',
   'glide',
-  'imagekit',
   'gumlet',
+  'imageengine',
+  'imagekit',
   'imgix',
   'ipx',
-  'netlify',
   'layer0',
-  'edgio',
+  'netlify',
   'prismic',
   'sanity',
-  'twicpics',
-  'strapi',
   'storyblok',
+  'strapi',
+  'twicpics',
   'unsplash',
-  'vercel',
-  'imageengine'
+  'vercel'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
