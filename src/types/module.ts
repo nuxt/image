@@ -71,6 +71,8 @@ export interface ModuleOptions extends ImageProviders {
   screens: CreateImageOptions['screens'],
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
+  skipGeneration?: (destFile: string, fetch: any, imageDictionary: string[]) => Promise<boolean>,
+  fetchImageDictionary?: (staticImageDictionary: Record<string, string>) => Promise<string[]>,
   [key: string]: any
 }
 

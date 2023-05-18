@@ -45,6 +45,8 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
   })
 
   nuxt.hook('generate:done', async () => {
+    const images = options.fetchImageDictionary ? await options.fetchImageDictionary(staticImages) : []
+
     const limit = pLimit(8)
     const downloads = Object.entries(staticImages).map(([url, name]) => {
       if (!hasProtocol(url)) {
@@ -53,7 +55,9 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
       return limit(() => downloadImage({
         url,
         name,
-        outDir: nuxt.options.generate.dir
+        outDir: nuxt.options.generate.dir,
+        skip: options.skipGeneration,
+        imageDictionary: images
       }))
     })
     await Promise.all(downloads)
@@ -61,11 +65,21 @@ export function setupStaticGeneration (nuxt: any, options: ModuleOptions) {
 }
 
 const pipeline = promisify(stream.pipeline)
-async function downloadImage ({ url, name, outDir }: { url: string, name: string, outDir: string }) {
+async function downloadImage ({ url, name, outDir, skip, imageDictionary }: { url: string, name: string, outDir: string, imageDictionary: string[], skip?: ModuleOptions['skipGeneration'] }) {
   try {
+    const dstFile = join(outDir, name)
+
+    if (skip) {
+      const shouldSkip = await skip(name, fetch, imageDictionary).then(shouldSkip => shouldSkip)
+
+      if (shouldSkip) {
+        logger.success('Skipping generation for ' + relative(process.cwd(), dstFile))
+        return
+      }
+    }
+
     const response = await fetch(url)
     if (!response.ok) { throw new Error(`Unexpected response ${response.statusText}`) }
-    const dstFile = join(outDir, name)
     await mkdirp(dirname(dstFile))
     await pipeline(response.body as any, createWriteStream(dstFile))
     logger.success('Generated static image ' + relative(process.cwd(), dstFile))
