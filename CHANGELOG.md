@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.6](https://github.com/jthawme/nuxt-image-fork/compare/v0.8.5...v0.8.6) (2023-05-18)
+
+
+### Bug Fixes
+
+* added image skip generation logic ([989df57](https://github.com/jthawme/nuxt-image-fork/commit/989df5744ed0bdf0374db9357f4b6b1b2b92fb68))
+
 ### [0.8.5](https://github.com/jthawme/nuxt-image-fork/compare/v0.8.4...v0.8.5) (2023-01-23)
 
 
