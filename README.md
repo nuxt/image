@@ -6,7 +6,9 @@ I couldn't work out the best way to report back this change to the main module a
 
 ## Install
 
-`yarn add jthawme-image-fork`
+```
+yarn add jthawme-nuxt-image // or npm install jthawme-nuxt-image
+```
 
 With nuxt 2 you also have to add this package to the `transpile` property in `nuxt.config.js`
 
