@@ -5,12 +5,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  data () {
-    return {
-      isLoaded: false
-    }
-  }
-}
+<script setup lang="ts">
+import { ref } from '#imports'
+
+const isLoaded = ref(false)
 </script>
