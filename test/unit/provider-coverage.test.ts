@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
 
 const missingProviderTests = [
+  'strapi', // covered in a unique test
   'layer0' // backwards-compatible alias for edgio
 ]
 
