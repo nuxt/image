@@ -16,7 +16,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=100' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?auto=format' },
     contentful: { url: '/test.png' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png' },
+    storyblok: { url: 'https://a.storyblok.com/test.png' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -35,7 +38,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=100' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&auto=format' },
     contentful: { url: '/test.png?w=200' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200' },
+    storyblok: { url: 'https://a.storyblok.com/test.png/m/200x0' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -54,7 +60,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=100&h=200' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?h=200&auto=format' },
     contentful: { url: '/test.png?h=200' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?height=200' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?height=200' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png&height=200' },
+    storyblok: { url: 'https://a.storyblok.com/test.png/m/0x200' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -73,7 +82,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&auto=format' },
     contentful: { url: '/test.png?w=200&h=200' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200' },
+    storyblok: { url: 'https://a.storyblok.com/test.png/m/200x200' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -92,7 +104,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&auto=format&bg=ffffff' },
     contentful: { url: '/test.png?w=200&h=200&fit=fill' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200&fit=contain' },
+    storyblok: { url: 'https://a.storyblok.com/test.png/m/fit-contain/200x200' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -111,7 +126,10 @@ export const images = [
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&fm=jpg&bg=ffffff' },
     contentful: { url: '/test.png?w=200&h=200&fit=fill&fm=jpg' },
-    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit&force_format=jpeg' }
+    cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit&force_format=jpeg' },
+    edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200&fit=contain&format=jpeg' },
+    storyblok: { url: 'https://a.storyblok.com/test.png/m/fit-contain/200x200/filters:format(jpeg)' },
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
   }
 ] as const
 

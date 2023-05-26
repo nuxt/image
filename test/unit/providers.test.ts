@@ -4,26 +4,40 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
-import { cleanDoubleSlashes } from '../../src/runtime/utils'
-import * as ipx from '../../src/runtime/providers/ipx'
-import * as cloudflare from '../../src/runtime/providers/cloudflare'
-import * as cloudinary from '../../src/runtime/providers/cloudinary'
-import * as twicpics from '../../src/runtime/providers/twicpics'
-import * as fastly from '../../src/runtime/providers/fastly'
-import * as glide from '../../src/runtime/providers/glide'
-import * as imgix from '../../src/runtime/providers/imgix'
-import * as gumlet from '../../src/runtime/providers/gumlet'
-import * as imageengine from '../../src/runtime/providers/imageengine'
-import * as unsplash from '../../src/runtime/providers/unsplash'
-import * as imagekit from '../../src/runtime/providers/imagekit'
-import * as netlify from '../../src/runtime/providers/netlify'
-import * as prismic from '../../src/runtime/providers/prismic'
-import * as sanity from '../../src/runtime/providers/sanity'
-import * as contentful from '../../src/runtime/providers/contentful'
-import * as cloudimage from '../../src/runtime/providers/cloudimage'
+import { cleanDoubleSlashes } from '#image/utils'
+import * as ipx from '#image/providers/ipx'
+import * as cloudflare from '#image/providers/cloudflare'
+import * as cloudinary from '#image/providers/cloudinary'
+import * as twicpics from '#image/providers/twicpics'
+import * as fastly from '#image/providers/fastly'
+import * as glide from '#image/providers/glide'
+import * as imgix from '#image/providers/imgix'
+import * as gumlet from '#image/providers/gumlet'
+import * as imageengine from '#image/providers/imageengine'
+import * as unsplash from '#image/providers/unsplash'
+import * as imagekit from '#image/providers/imagekit'
+import * as netlify from '#image/providers/netlify'
+import * as prismic from '#image/providers/prismic'
+import * as sanity from '#image/providers/sanity'
+import * as contentful from '#image/providers/contentful'
+import * as cloudimage from '#image/providers/cloudimage'
+import * as edgio from '#image/providers/edgio'
+import * as layer0 from '#image/providers/layer0'
+import * as storyblok from '#image/providers/storyblok'
+import * as strapi from '#image/providers/strapi'
+import * as vercel from '#image/providers/vercel'
 
 const emptyContext = {
   options: {
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536
+    },
     nuxt: useNuxtApp()
   }
 } as any
@@ -288,6 +302,53 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = cloudimage.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudimage)
+    }
+  })
+
+  it('edgio', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = edgio.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.edgio)
+    }
+  })
+
+  it('layer0', () => {
+    expect(layer0.getImage).toBe(edgio.getImage)
+  })
+
+  it('storyblok', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = storyblok.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.storyblok)
+    }
+  })
+
+  it('strapi', () => {
+    const test = {
+      '': 'http://localhost:1337/uploads/test.png',
+      break: 'http://localhost:1337/uploads/break_test.png'
+    }
+
+    for (const [breakpoint, expected] of Object.entries(test)) {
+      const generated = strapi.getImage('/test.png', { modifiers: { breakpoint } }, emptyContext)
+      expect(generated.url).toBe(expected)
+    }
+  })
+
+  it('vercel', () => {
+    const providerOptions = {
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = vercel.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.vercel)
     }
   })
 })

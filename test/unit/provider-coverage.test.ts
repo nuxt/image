@@ -4,11 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
 
 const missingProviderTests = [
-  'edgio',
-  'layer0',
-  'storyblok',
-  'strapi',
-  'vercel'
+  'layer0' // backwards-compatible alias for edgio
 ]
 
 describe('Provider coverage', async () => {
