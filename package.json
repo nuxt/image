@@ -15,7 +15,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:generate": "nuxi generate playground",
-    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxt-module-build prepare",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "pnpm nuxt dev docs",
     "lint": "eslint --ext .ts --ext .vue .",
@@ -35,7 +35,7 @@
     "ufo": "^1.1.2"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "0.3.1",
+    "@nuxt/module-builder": "0.4.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@types/node": "^18.16.15",
     "eslint": "8.41.0",
