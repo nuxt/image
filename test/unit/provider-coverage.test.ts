@@ -2,6 +2,7 @@ import { readdir } from 'fs/promises'
 import { fileURLToPath } from 'url'
 import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
+import { providers as playgroundProviders } from '../../playground/providers'
 
 const missingProviderTests = [
   'strapi', // covered in a unique test
@@ -16,6 +17,7 @@ describe('Provider coverage', async () => {
     if (missingProviderTests.includes(provider)) {
       return
     }
-    expect(provider in images[0]).toBe(true)
+    expect(playgroundProviders.find(p => p.name === provider)).toBeTruthy()
+    expect(provider in images[0]).toBeTruthy()
   })
 })
