@@ -13,6 +13,7 @@ const operationsGenerator = createOperationsGenerator({
     // Convenience modifiers
     background: 'bg',
     download: 'dl',
+    dpr: 'dpr',
     sharpen: 'sharp',
     orientation: 'or',
     'min-height': 'min-h',

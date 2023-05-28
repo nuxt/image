@@ -11,12 +11,6 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { providers } from '../providers'
-
-export default {
-  computed: {
-    providers: () => providers
-  }
-}
 </script>

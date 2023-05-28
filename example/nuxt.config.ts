@@ -1,6 +1,8 @@
-export default {
-  head: {
-    title: 'Nuxt Image Example'
+export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'Nuxt Image Example'
+    }
   },
   modules: [
     '@nuxt/image-edge'
@@ -11,4 +13,4 @@ export default {
       'https://source.unsplash.com'
     ]
   }
-}
+})
