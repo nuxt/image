@@ -38,16 +38,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    l (txt) {
-      return 'https://textoverimage.moesif.com/image?image_url=https%3A%2F%2Fraw.githubusercontent.com%2Fnuxt%2Fnuxt.js%2Fdev%2F.github%2Fnuxt.png&text=' + txt
-    }
-  }
-}
-</script>
-
 <style scoped>
 .responsive-placeholder-img {
   width: 400px

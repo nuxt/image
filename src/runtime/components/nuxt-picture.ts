@@ -22,7 +22,7 @@ export default defineComponent({
 
     const originalFormat = computed(() => getFileExtension(props.src))
 
-    const format = computed(() => props.format || originalFormat.value === 'svg' ? 'svg' : 'webp')
+    const format = computed(() => props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp'))
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
