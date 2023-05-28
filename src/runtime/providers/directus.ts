@@ -35,9 +35,12 @@ export const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = 'http://localhost:8055/assets' } = {}) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
   const operations = operationsGenerator(modifiers)
+  if (baseURL !== null && !baseURL.endsWith('/assets')) {
+    baseURL += '/assets'
+  }
   return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
+    url: joinURL(baseURL || 'http://localhost:8055/assets', src + (operations ? ('?' + operations) : ''))
   }
 }
