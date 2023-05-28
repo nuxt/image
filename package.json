@@ -21,7 +21,7 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepack": "pnpm build",
     "release": "pnpm test && standard-version && git push --follow-tags && npm publish",
-    "test": "pnpm lint"
+    "test": "nuxi prepare playground && pnpm vitest run"
   },
   "dependencies": {
     "@nuxt/kit": "^3.5.1",
