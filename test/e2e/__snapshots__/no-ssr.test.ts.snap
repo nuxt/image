@@ -60,6 +60,24 @@ exports[`browser (ssr: false) > contentful should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: false) > directus should render images 1`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=[[\\"blur\\", 4], [\\"negate\\"]]&width=256&format=webp",
+]
+`;
+
+exports[`browser (ssr: false) > directus should render images 2`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=[[%22blur%22,%204],%20[%22negate%22]]&width=256&format=webp",
+]
+`;
+
 exports[`browser (ssr: false) > edgio should render images 1`] = `
 [
   "https://opt.moovweb.net/?img=https://i.imgur.com/LFtQeX2.jpeg&height=200",
@@ -390,15 +408,5 @@ exports[`browser (ssr: false) > vercel should render images 1`] = `
 exports[`browser (ssr: false) > vercel should render images 2`] = `
 [
   "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
-]
-`;
-
-export[`browser (ssr: false) > directus should rendere image 1`] = `
-[
-  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4"
-  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200"
-  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200"
-  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain"
-  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg"
 ]
 `;
