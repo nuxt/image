@@ -8,28 +8,29 @@ import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
+// Please add new providers alphabetically to the list below
 const BuiltInProviders = [
   'cloudflare',
+  'cloudimage',
   'cloudinary',
   'contentful',
-  'cloudimage',
+  'edgio',
   'fastly',
   'glide',
-  'imagekit',
   'gumlet',
+  'imageengine',
+  'imagekit',
   'imgix',
   'ipx',
-  'netlify',
   'layer0',
-  'edgio',
+  'netlify',
   'prismic',
   'sanity',
-  'twicpics',
-  'strapi',
   'storyblok',
+  'strapi',
+  'twicpics',
   'unsplash',
-  'vercel',
-  'imageengine'
+  'vercel'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
