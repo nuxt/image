@@ -392,3 +392,13 @@ exports[`browser (ssr: false) > vercel should render images 2`] = `
   "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
 ]
 `;
+
+export[`browser (ssr: false) > directus should rendere image 1`] = `
+[
+  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4"
+  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200"
+  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200"
+  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain"
+  "http://localhost:8055/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg"
+]
+`;

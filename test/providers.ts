@@ -19,7 +19,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png' },
     storyblok: { url: 'https://a.storyblok.com/test.png' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -41,7 +42,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200' },
     storyblok: { url: 'https://a.storyblok.com/test.png/m/200x0' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -63,7 +65,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?height=200' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png&height=200' },
     storyblok: { url: 'https://a.storyblok.com/test.png/m/0x200' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?height=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -85,7 +88,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200' },
     storyblok: { url: 'https://a.storyblok.com/test.png/m/200x200' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -107,7 +111,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200&fit=contain' },
     storyblok: { url: 'https://a.storyblok.com/test.png/m/fit-contain/200x200' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -129,7 +134,8 @@ export const images = [
     cloudimage: { url: 'https://demo.cloudimg.io/v7/test.png?width=200&height=200&func=fit&force_format=jpeg' },
     edgio: { url: 'https://opt.moovweb.net/?img=/test.png&width=200&height=200&fit=contain&format=jpeg' },
     storyblok: { url: 'https://a.storyblok.com/test.png/m/fit-contain/200x200/filters:format(jpeg)' },
-    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' }
+    vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
+    directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg' }
   }
 ] as const
 
