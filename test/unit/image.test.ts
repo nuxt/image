@@ -5,9 +5,6 @@ import { VueWrapper, mount } from '@vue/test-utils'
 
 import { NuxtImg } from '#components'
 
-
-const sleep = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms))
-
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
