@@ -24,7 +24,7 @@ describe('ipx provider', () => {
     const ctx = useTestContext()
     const outputDir = resolve(ctx.nuxt!.options.nitro.output?.dir || '', 'public/_ipx')
     const files = await globby(outputDir)
-    expect(files.map(f => f.replace(outputDir, '/_ipx'))).toMatchInlineSnapshot(`
+    expect(files.sort().map(f => f.replace(outputDir, '/_ipx'))).toMatchInlineSnapshot(`
       [
         "/_ipx/_/images/nuxt.png",
         "/_ipx/s_300x300/images/colors.jpg",
