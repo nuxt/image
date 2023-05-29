@@ -80,4 +80,13 @@ describe('Renders simple image', () => {
     const sizes = wrapper.find('source').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
   })
+
+  it('renders src when svg is passed', () => {
+    const wrapper = mount(NuxtPicture, {
+      propsData: {
+        src: '/image.svg'
+      }
+    })
+    expect(wrapper.html()).toMatchInlineSnapshot('"<picture><img data-nuxt-pic=\\"\\" src=\\"/image.svg\\"></picture>"')
+  })
 })
