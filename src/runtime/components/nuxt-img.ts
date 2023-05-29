@@ -103,7 +103,7 @@ export default defineComponent({
           img.sizes = sizes.value.sizes
           img.srcset = sizes.value.srcset
         }
-        img.onload = () => {
+        img.onload = (event) => {
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
