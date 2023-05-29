@@ -1,9 +1,12 @@
 // @vitest-environment nuxt
 
-import { beforeEach, describe, it, expect } from 'vitest'
+import { beforeEach, describe, it, expect, vi } from 'vitest'
 import { VueWrapper, mount } from '@vue/test-utils'
 
 import { NuxtImg } from '#components'
+
+
+const sleep = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -41,5 +44,97 @@ describe('Renders simple image', () => {
   it('sizes', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
+  })
+})
+
+const getImageLoad = (cb = () => {}) => {
+  let resolve = () => {}
+  let image = {} as HTMLImageElement
+  const loadEvent = Symbol('loadEvent')
+  const ImageMock = vi.fn(() => {
+    const _image = {
+      onload: () => {}
+    } as unknown as HTMLImageElement
+    image = _image
+    // @ts-ignore
+    resolve = () => _image.onload?.(loadEvent)
+
+    return _image
+  })
+
+  vi.stubGlobal('Image', ImageMock)
+  cb()
+  vi.unstubAllGlobals()
+
+  return {
+    resolve,
+    image,
+    loadEvent
+  }
+}
+
+describe('Renders placeholded image', () => {
+  let wrapper: VueWrapper<any>
+  const src = '/image.png'
+
+  it.only('props.placeholder with src', async () => {
+    const {
+      resolve: resolveImage,
+      image: placeholderImage,
+      loadEvent
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          placeholder: true
+        }
+      })
+    })
+
+    let domSrc = wrapper.find('img').element.getAttribute('src')
+
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&s_10x10/image.png"')
+    expect(placeholderImage.src).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+
+    resolveImage()
+    await nextTick()
+
+    domSrc = wrapper.find('img').element.getAttribute('src')
+
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
+  })
+
+  it.only('props.placeholder with sizes', async () => {
+    const {
+      resolve: resolveImage,
+      image: placeholderImage,
+      loadEvent
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          sizes: '200,500:500,900:900',
+          placeholder: true
+        }
+      })
+    })
+
+    let sizes = wrapper.find('img').element.getAttribute('sizes')
+
+    expect(sizes).toBe(null)
+    expect(placeholderImage.sizes).toBe('(max-width: 500px) 500px, 900px')
+
+    resolveImage()
+    await nextTick()
+
+    sizes = wrapper.find('img').element.getAttribute('sizes')
+
+    expect(sizes).toBe('(max-width: 500px) 500px, 900px')
+    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
   })
 })
