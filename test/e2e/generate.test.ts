@@ -26,6 +26,7 @@ describe('ipx provider', () => {
     const files = await globby(outputDir)
     expect(files.map(f => f.replace(outputDir, '/_ipx'))).toMatchInlineSnapshot(`
       [
+        "/_ipx/_/images/nuxt.png",
         "/_ipx/s_300x300/images/colors.jpg",
         "/_ipx/s_300x300/images/everest.jpg",
         "/_ipx/s_300x300/images/tacos.svg",
