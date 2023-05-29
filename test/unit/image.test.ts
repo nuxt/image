@@ -77,7 +77,7 @@ describe('Renders placeholded image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
 
-  it.only('props.placeholder with src', async () => {
+  it('props.placeholder with src', async () => {
     const {
       resolve: resolveImage,
       image: placeholderImage,
@@ -107,7 +107,7 @@ describe('Renders placeholded image', () => {
     expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
   })
 
-  it.only('props.placeholder with sizes', async () => {
+  it('props.placeholder with sizes', async () => {
     const {
       resolve: resolveImage,
       image: placeholderImage,
