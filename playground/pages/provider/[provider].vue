@@ -10,7 +10,6 @@
         </div>
       </div>
     </div>
-    {{ img }}
   </div>
 </template>
 
