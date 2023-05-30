@@ -40,7 +40,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
   static: ipxSetup,
 
   // https://vercel.com/docs/more/adding-your-framework#images
-  vercel(_providerOptions, moduleOptions, nuxt: Nuxt) {
+  vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       vercel: {
         config: {
@@ -55,7 +55,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
   }
 }
 
-export async function resolveProviders(nuxt: any, options: ModuleOptions): Promise<ImageModuleProvider[]> {
+export async function resolveProviders (nuxt: any, options: ModuleOptions): Promise<ImageModuleProvider[]> {
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
@@ -71,7 +71,7 @@ export async function resolveProviders(nuxt: any, options: ModuleOptions): Promi
   return providers
 }
 
-export async function resolveProvider(_nuxt: any, key: string, input: InputProvider): Promise<ImageModuleProvider> {
+export async function resolveProvider (_nuxt: any, key: string, input: InputProvider): Promise<ImageModuleProvider> {
   if (typeof input === 'string') {
     input = { name: input }
   }
@@ -91,7 +91,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 
   const setup = input.setup || providerSetup[input.name]
 
-  return <ImageModuleProvider>{
+  return <ImageModuleProvider> {
     ...input,
     setup,
     runtime: normalize(input.provider!),
@@ -100,7 +100,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
   }
 }
 
-export function detectProvider(userInput?: string) {
+export function detectProvider (userInput?: string) {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
