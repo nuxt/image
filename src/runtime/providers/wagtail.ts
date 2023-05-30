@@ -17,12 +17,12 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   const doHeight = width === '0' && height !== '0'
   const doOriginal = width === '0' && height === '0'
 
-  const fomatting = `|format-${format}|${format}quality-${quality}`
+  const formatting = `|format-${format}|${format}quality-${quality}`
   const options = joinURL(
-    doFill ? `fill-${width}x${height}-c${focusZoom}${fomatting}` : '',
-    doWidth ? `width-${width}${fomatting}` : '',
-    doHeight ? `height-${height}${fomatting}` : '',
-    doOriginal ? `original${fomatting}` : ''
+    doFill ? `fill-${width}x${height}-c${focusZoom}${formatting}` : '',
+    doWidth ? `width-${width}${formatting}` : '',
+    doHeight ? `height-${height}${formatting}` : '',
+    doOriginal ? `original${formatting}` : ''
   )
 
   const url = withBase(joinURL(src, options), baseURL)
