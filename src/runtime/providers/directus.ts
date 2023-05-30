@@ -37,7 +37,7 @@ export const operationsGenerator = createOperationsGenerator({
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
   const operations = operationsGenerator(modifiers)
-  if (baseURL !== null && !baseURL.endsWith('/assets')) {
+  if (baseURL !== null && !/\/assets\/?$/.test(baseURL)) {
     baseURL += '/assets'
   }
   return {
