@@ -22,7 +22,7 @@ export default defineComponent({
 
     const originalFormat = computed(() => getFileExtension(props.src))
 
-    const format = computed(() => props.format || originalFormat.value === 'svg' ? 'svg' : 'webp')
+    const format = computed(() => props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp'))
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
@@ -36,7 +36,7 @@ export default defineComponent({
     type Source = { srcset: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
       if (format.value === 'svg') {
-        return [<Source>{ srcset: props.src }]
+        return [<Source>{ src: props.src }]
       }
 
       const formats = legacyFormat.value !== format.value

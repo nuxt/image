@@ -39,7 +39,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
   const modifier = options ? '/m/' : ''
 
   const url = withBase(joinURL(pathname, modifier, options), baseURL)
-
   return {
     url
   }

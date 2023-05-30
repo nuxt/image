@@ -9,22 +9,20 @@
   </select>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { providers } from '../providers'
 
-export default {
-  computed: {
-    providers: () => providers,
-    providerName: {
-      get () {
-        return this.$route.params.provider || ''
-      },
-      set (provider) {
-        if (provider) {
-          this.$router.push(`/provider/${provider}`)
-        }
-      }
+const route = useRoute()
+const router = useRouter()
+
+const providerName = computed({
+  get () {
+    return route.params.provider || ''
+  },
+  set (provider) {
+    if (provider) {
+      router.push(`/provider/${provider}`)
     }
   }
-}
+})
 </script>
