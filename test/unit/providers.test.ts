@@ -357,7 +357,8 @@ describe('Providers', () => {
     const providerOptions = {}
     const testImageId = '329944'
     for (const image of images) {
-      const [src, modifiers] = image.args
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [_src, modifiers] = image.args
       const generated = wagtail.getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.wagtail)
     }
