@@ -39,12 +39,18 @@ describe('browser (ssr: false)', () => {
 
     expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
   })
+})
 
-  it.todo('should emit load event', async () => {
-    // await page.waitForEvent('console', (msg) => {
-    //   expect(msg.text()).toBe('Image was loaded.')
+describe('browser (ssr: false) common', () => {
+  it('should emit load and error events', async () => {
+    const page = await createPage(url('/events'))
+    const logs: string[] = []
 
-    //   return true
-    // })
+    page.on('console', msg => { logs.push(msg.text()) })
+
+    await page.waitForLoadState('networkidle')
+
+    expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
+    expect(logs.filter(log => log === 'Error loading image').length).toBe(1)
   })
 })
