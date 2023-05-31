@@ -1,3 +1,5 @@
+import type { Plugin } from 'nuxt/app'
+import type { $Img } from '../types'
 import { createImage } from '#image'
 // @ts-ignore
 import { imageOptions } from '#build/image-options'
@@ -16,4 +18,4 @@ export default defineNuxtPlugin(() => {
       img
     }
   }
-})
+}) as Plugin<{ img: $Img }>
