@@ -4,12 +4,15 @@ Nuxt Image with Directus integration
 
 Integration between [Directus](https://directus.io/) and the image module.
 
-No specific configuration is required. You just need to specify `directus` in your configuration to make it the default provider:
+To use this provider you just need to specify the base URL of your project.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    directus: {}
+    directus: {
+      // This URL needs to include the final `assets/` directory
+      baseURL: 'http://localhost:8055/assets/',
+    }
   }
 })
 ```
@@ -23,7 +26,7 @@ export default defineNuxtConfig({
       baseURL: 'http://mydirectus-domain.com/assets/',
       modifiers: {
         withoutEnlargement: 'true',
-        transforms: '[["blur", 4], ["negate"]]'
+        transforms: ['blur:4', 'negate']
       }
     }
   }
