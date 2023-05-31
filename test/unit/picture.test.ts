@@ -70,10 +70,10 @@ describe('Renders simple image', () => {
 
     await nextTick()
 
-      ;[['source', 'srcset', '/_ipx/f_webp&s_500x500/image.jpeg'], ['img', 'src']].forEach(([element, attribute, src]) => {
-        const domSrc = wrapper.find(element).element.getAttribute(attribute)
-        expect(domSrc).toContain(src || newSource)
-      })
+    ;[['source', 'srcset', '/_ipx/f_webp&s_500x500/image.jpeg'], ['img', 'src']].forEach(([element, attribute, src]) => {
+      const domSrc = wrapper.find(element).element.getAttribute(attribute)
+      expect(domSrc).toContain(src || newSource)
+    })
   })
 
   it('sizes', () => {
