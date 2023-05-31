@@ -4,6 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
+import { provider } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
@@ -108,7 +109,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {
+  if (provider === 'vercel' || process.env.VERCEL_ENV) {
     return 'vercel'
   }
 
