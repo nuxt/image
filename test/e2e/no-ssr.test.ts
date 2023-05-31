@@ -46,7 +46,7 @@ describe('browser (ssr: false) common', () => {
     const page = await createPage(url('/events'))
     const logs: string[] = []
 
-    page.on('console', msg => { logs.push(msg.text()) })
+    page.on('console', (msg) => { logs.push(msg.text()) })
 
     await page.waitForLoadState('networkidle')
 
