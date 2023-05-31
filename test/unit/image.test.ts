@@ -42,4 +42,16 @@ describe('Renders simple image', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
   })
+
+  it('encodes characters', () => {
+    const img = mount(NuxtImg, {
+      propsData: {
+        width: 200,
+        height: 200,
+        sizes: '200,500:500,900:900',
+        src: '/汉字.png'
+      }
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_900x900/%E6%B1%89%E5%AD%97.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/s_900x900/%E6%B1%89%E5%AD%97.png 900w\\">"')
+  })
 })
