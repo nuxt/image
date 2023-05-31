@@ -1,5 +1,6 @@
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
+import { resolve } from 'pathe'
 import { resolveProviders, detectProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
@@ -21,11 +22,11 @@ export interface ModuleOptions extends ImageProviders {
 export * from './types'
 
 export default defineNuxtModule<ModuleOptions>({
-  defaults: {
+  defaults: nuxt => ({
     inject: false,
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
-    dir: '',
+    dir: nuxt.options.dir.public,
     presets: {},
     domains: [] as string[],
     sharp: {},
@@ -42,7 +43,7 @@ export default defineNuxtModule<ModuleOptions>({
     internalUrl: '',
     providers: {},
     alias: {}
-  },
+  }),
   meta: {
     name: '@nuxt/image',
     configKey: 'image',
@@ -52,6 +53,9 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
+
+    // fully resolve directory
+    options.dir = resolve(nuxt.options.srcDir, options.dir)
 
     // Normalize domains to hostname
     options.domains = options.domains.map((d) => {

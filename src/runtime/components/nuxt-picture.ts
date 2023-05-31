@@ -82,8 +82,10 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      imgEl.value!.onload = (event) => {
-        ctx.emit('load', event)
+      if (imgEl.value) {
+        imgEl.value.onload = (event) => {
+          ctx.emit('load', event)
+        }
       }
     })
 
