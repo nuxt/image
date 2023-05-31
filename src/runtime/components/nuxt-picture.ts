@@ -1,7 +1,7 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
@@ -81,7 +81,12 @@ export default defineComponent({
       }
     }
 
+    const nuxtApp = useNuxtApp()
+    const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
+      if (imgEl.value!.complete && initialLoad && imgEl.value!.naturalWidth !== 0) {
+        ctx.emit('load', new Event('load'))
+      }
       imgEl.value!.onload = (event) => {
         ctx.emit('load', event)
       }

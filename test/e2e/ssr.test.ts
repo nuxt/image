@@ -40,4 +40,18 @@ describe('browser (ssr: true)', () => {
 
     expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
   })
+
+  it('should emit load and error events', async () => {
+    const page = await createPage()
+    const logs: string[] = []
+
+    page.on('console', (msg) => { logs.push(msg.text()) })
+
+    page.goto(url('/events'))
+
+    await page.waitForLoadState('networkidle')
+
+    expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
+    expect(logs.filter(log => log === 'Error loading image').length).toBe(1)
+  })
 })

@@ -39,9 +39,7 @@ describe('browser (ssr: false)', () => {
 
     expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
   })
-})
 
-describe('browser (ssr: false) common', () => {
   it('should emit load and error events', async () => {
     const page = await createPage(url('/events'))
     const logs: string[] = []
