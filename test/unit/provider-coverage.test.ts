@@ -5,7 +5,6 @@ import { images } from '../providers'
 import { providers as playgroundProviders } from '../../playground/providers'
 
 const missingProviderTests = [
-  'null', // don't need playground test as it's empty
   'strapi', // covered in a unique test
   'layer0' // backwards-compatible alias for edgio
 ]

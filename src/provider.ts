@@ -25,6 +25,7 @@ const BuiltInProviders = [
   'ipx',
   'layer0',
   'netlify',
+  'null',
   'prismic',
   'sanity',
   'storyblok',
@@ -112,6 +113,4 @@ export function detectProvider (userInput?: string) {
   if (provider === 'vercel' || process.env.VERCEL_ENV) {
     return 'vercel'
   }
-
-  return 'ipx'
 }
