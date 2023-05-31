@@ -100,12 +100,17 @@ export default defineComponent({
         const img = new Image()
         img.src = mainSrc.value
         img.onload = (event) => {
-          imgEl.value!.src = mainSrc.value
+          if (imgEl.value) {
+            imgEl.value.src = mainSrc.value
+          }
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
-      } else {
-        imgEl.value!.onload = (event) => {
+        return
+      }
+
+      if (imgEl.value) {
+        imgEl.value.onload = (event) => {
           ctx.emit('load', event)
         }
       }
