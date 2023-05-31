@@ -65,7 +65,7 @@ exports[`browser (ssr: false) > directus should render images 1`] = `
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
-  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=[[\\"blur\\", 4], [\\"negate\\"]]&width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
 ]
 `;
 
@@ -74,7 +74,7 @@ exports[`browser (ssr: false) > directus should render images 2`] = `
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
   "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
-  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=[[%22blur%22,%204],%20[%22negate%22]]&width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
 ]
 `;
 

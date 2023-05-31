@@ -50,10 +50,10 @@ Since Directus exposes [the full sharp API](https://sharp.pixelplumbing.com/api-
 <nuxt-img
   provider="directus"
   src="ad514db1-eb90-4523-8183-46781437e7ee"
-  :modifiers="{ withoutEnlargement: 'true', transforms: '[[&quot;blur&quot;, 4], [&quot;negate&quot;]]' }"
+  :modifiers="{ height: '512', withoutEnlargement: 'true', transforms: ['blur:4', 'negate'] }"
 />
 ```
 
 ::alert{type="info"}
-The `transforms` parameter accepts a two-dimensional JSON array. This means that we should either pass an object to our `modifiers` prop or use `&quot;` to wrap around our parameters in the third quotation layer.
+Directus exposes a `transforms` parameter that accepts a two-dimensional JSON array to communicate directly with the [sharp API](https://sharp.pixelplumbing.com/api-operation). However, for ease of use, we instead decided to expose a single-dimensional array, passing a list of strings as `key:value` or just `key`.
 ::
