@@ -36,7 +36,7 @@ export default defineComponent({
     type Source = { srcset: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
       if (format.value === 'svg') {
-        return [<Source>{ srcset: props.src }]
+        return [<Source>{ src: props.src }]
       }
 
       const formats = legacyFormat.value !== format.value
