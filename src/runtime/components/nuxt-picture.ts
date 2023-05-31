@@ -84,10 +84,12 @@ export default defineComponent({
     const nuxtApp = useNuxtApp()
     const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
-      if (imgEl.value!.complete && initialLoad && imgEl.value!.naturalWidth !== 0) {
+      if (!imgEl.value) { return }
+
+      if (imgEl.value.complete && initialLoad && imgEl.value.naturalWidth !== 0) {
         ctx.emit('load', new Event('load'))
       }
-      imgEl.value!.onload = (event) => {
+      imgEl.value.onload = (event) => {
         ctx.emit('load', event)
       }
     })
