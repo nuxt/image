@@ -3,6 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   modules: ['@nuxt/image-edge'],
   image: {
+    inject: true,
     domains: [
       'https://nuxtjs.org',
       'https://images.unsplash.com',

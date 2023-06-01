@@ -11,6 +11,7 @@ await setup({
   nuxtConfig: {
     ssr: false,
     image: {
+      inject: false,
       provider: 'ipx'
     }
   }
