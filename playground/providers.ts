@@ -722,7 +722,7 @@ export const providers: Provider[] = [
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
-        modifiers: { withoutEnlargement: 'true', transforms: ['blur:4', 'negate'] }
+        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
       }
     ]
   }

@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       baseURL: 'http://mydirectus-domain.com/assets/',
       modifiers: {
         withoutEnlargement: 'true',
-        transforms: ['blur:4', 'negate']
+        transforms: [['blur', 4], ['negate']]
       }
     }
   }
@@ -53,10 +53,10 @@ Since Directus exposes [the full sharp API](https://sharp.pixelplumbing.com/api-
 <nuxt-img
   provider="directus"
   src="ad514db1-eb90-4523-8183-46781437e7ee"
-  :modifiers="{ height: '512', withoutEnlargement: 'true', transforms: ['blur:4', 'negate'] }"
+  :modifiers="{ height: '512', withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }"
 />
 ```
 
 ::alert{type="info"}
-Directus exposes a `transforms` parameter that accepts a two-dimensional JSON array to communicate directly with the [sharp API](https://sharp.pixelplumbing.com/api-operation). However, for ease of use, we instead decided to expose a single-dimensional array, passing a list of strings as `key:value` or just `key`.
+Directus exposes a `transforms` parameter that accepts a two-dimensional JSON array to communicate directly with the [sharp API](https://sharp.pixelplumbing.com/api-operation). You can easily manage any transforms as a list of lists.
 ::

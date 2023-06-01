@@ -38,11 +38,9 @@ export const operationsGenerator = createOperationsGenerator({
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
   // Separating the transforms from the rest of the modifiers
   const transforms = modifiers.transforms
-  if (transforms && transforms.length > 0 && !Array.isArray(transforms[0])) {
-    // Since transforms is one-dimensional array, we need to convert it to two-dimensional
-    const twoDimArray = transforms.map((x: string) => x.split(':')).map((x: string[]) => [x[0], isNaN(Number(x[1])) ? x[1] : Number(x[1])].filter(Boolean))
-    // We stringify and encode in URL, then apply back to the modifiers
-    modifiers.transforms = new URLSearchParams(JSON.stringify(twoDimArray)).toString().replace(/=+$/, '')
+  if (transforms && transforms.length > 0) {
+    // We stringify and encode in URL the list of lists, then apply it back to the modifiers
+    modifiers.transforms = new URLSearchParams(JSON.stringify(transforms)).toString().replace(/=+$/, '') as unknown as (string | number)[][]
   }
   const operations = operationsGenerator(modifiers)
   return {
