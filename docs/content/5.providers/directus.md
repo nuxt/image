@@ -58,5 +58,5 @@ Since Directus exposes [the full sharp API](https://sharp.pixelplumbing.com/api-
 ```
 
 ::alert{type="info"}
-Directus exposes a `transforms` parameter that accepts a two-dimensional JSON array to communicate directly with the [sharp API](https://sharp.pixelplumbing.com/api-operation). You can easily manage any transforms as a list of lists.
+Note that the `transform` parameter, as stated in the [Directus documentation](https://docs.directus.io/reference/files.html#advanced-transformations), is basically a list of lists. This is to facilitate the use of those sharp functions, like [`normalise`](https://sharp.pixelplumbing.com/api-operation#normalise), that would need multiple values in input: `transforms: [[normalise, 1, 99], ['blur', 4], ['negate']]`.
 ::
