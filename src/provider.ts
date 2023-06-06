@@ -1,18 +1,21 @@
 import { normalize } from 'pathe'
 import { defu } from 'defu'
 import type { Nuxt } from '@nuxt/schema'
-import type { NitroOptions } from 'nitropack'
+import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
+import { provider } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
-const BuiltInProviders: string[] = [
+// Please add new providers alphabetically to the list below
+const BuiltInProviders = [
   'cloudflare',
   'cloudimage',
   'cloudinary',
   'contentful',
+  'directus',
   'edgio',
   'fastly',
   'glide',
@@ -24,13 +27,15 @@ const BuiltInProviders: string[] = [
   'layer0',
   'netlify',
   'prepr',
+  'none',
   'prismic',
   'sanity',
   'storyblok',
   'strapi',
   'twicpics',
   'unsplash',
-  'vercel'
+  'vercel',
+  'wagtail'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
@@ -41,7 +46,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
   // https://vercel.com/docs/more/adding-your-framework#images
   vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
-      vercel: <NitroOptions['vercel']>{
+      vercel: {
         config: {
           images: {
             domains: moduleOptions.domains,
@@ -49,7 +54,7 @@ export const providerSetup: Record<string, ProviderSetup> = {
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {})))
           }
         }
-      }
+      } satisfies NitroConfig['vercel']
     })
   }
 }
@@ -94,7 +99,7 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
     ...input,
     setup,
     runtime: normalize(input.provider!),
-    importName: `${key}Runtime$${hash(input.provider!, 4)}`,
+    importName: `${key}Runtime$${hash(input.provider)}`,
     runtimeOptions: input.options
   }
 }
@@ -108,9 +113,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {
+  if (provider === 'vercel') {
     return 'vercel'
   }
-
-  return 'ipx'
 }

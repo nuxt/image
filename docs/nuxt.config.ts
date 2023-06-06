@@ -9,8 +9,4 @@ export default defineNuxtConfig({
   plausible: {
     domain: 'image.nuxtjs.org'
   },
-  // To by-pass .nuxtrc at the root
-  imports: {
-    autoImport: true
-  }
 })

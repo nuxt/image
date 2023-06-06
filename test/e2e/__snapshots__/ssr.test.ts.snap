@@ -60,6 +60,24 @@ exports[`browser (ssr: true) > contentful should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: true) > directus should render images 1`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
+]
+`;
+
+exports[`browser (ssr: true) > directus should render images 2`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
+]
+`;
+
 exports[`browser (ssr: true) > edgio should render images 1`] = `
 [
   "https://opt.moovweb.net/?img=https://i.imgur.com/LFtQeX2.jpeg&height=200",
@@ -203,6 +221,24 @@ exports[`browser (ssr: true) > netlify should render images 2`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 1`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 2`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
 ]
 `;
 
@@ -390,5 +426,29 @@ exports[`browser (ssr: true) > vercel should render images 1`] = `
 exports[`browser (ssr: true) > vercel should render images 2`] = `
 [
   "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
+]
+`;
+
+exports[`browser (ssr: true) > wagtail should render images 1`] = `
+[
+  "https://cms.demo.nypr.digital/images/329944/original|format-webp|webpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0|format-webp|webpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/width-250|format-webp|webpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/height-250|format-webp|webpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0|format-jpeg|jpegquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0|format-jpeg|jpegquality-2",
+  "https://cms.demo.nypr.digital/images/329944/fill-200x200-c100|format-webp|webpquality-70",
+]
+`;
+
+exports[`browser (ssr: true) > wagtail should render images 2`] = `
+[
+  "https://cms.demo.nypr.digital/images/329944/original%7Cformat-webp%7Cwebpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0%7Cformat-webp%7Cwebpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/width-250%7Cformat-webp%7Cwebpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/height-250%7Cformat-webp%7Cwebpquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0%7Cformat-jpeg%7Cjpegquality-70",
+  "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0%7Cformat-jpeg%7Cjpegquality-2",
+  "https://cms.demo.nypr.digital/images/329944/fill-200x200-c100%7Cformat-webp%7Cwebpquality-70",
 ]
 `;

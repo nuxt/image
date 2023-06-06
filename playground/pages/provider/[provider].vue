@@ -31,10 +31,15 @@ const provider = computed(() => {
   }
   return p
 })
+
+if (route.params.provider === 'ipx') {
+  useImage().getImage('/images/nuxt.png')
+}
 </script>
 
 <style scoped>
 img {
   max-width: 80vw;
+  height: auto;
 }
 </style>

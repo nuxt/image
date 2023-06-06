@@ -80,4 +80,30 @@ describe('Renders simple image', () => {
     const sizes = wrapper.find('source').element.getAttribute('sizes')
     expect(sizes).toBe('(max-width: 500px) 500px, 900px')
   })
+
+  it('renders src when svg is passed', () => {
+    const wrapper = mount(NuxtPicture, {
+      propsData: {
+        src: '/image.svg'
+      }
+    })
+    expect(wrapper.html()).toMatchInlineSnapshot('"<picture><img data-nuxt-pic=\\"\\" src=\\"/image.svg\\"></picture>"')
+  })
+
+  it('encodes characters', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        loading: 'lazy',
+        width: 200,
+        height: 200,
+        sizes: '200,500:500,900:900',
+        src: '/汉字.png'
+      }
+    })
+    expect(img.html()).toMatchInlineSnapshot(`
+      "<picture>
+        <source type=\\"image/webp\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_webp&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_webp&s_900x900/%E6%B1%89%E5%AD%97.png 900w\\"><img width=\\"200\\" height=\\"200\\" data-nuxt-pic=\\"\\" src=\\"/_ipx/f_png&s_900x900/%E6%B1%89%E5%AD%97.png\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_png&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_png&s_900x900/%E6%B1%89%E5%AD%97.png 900w\\">
+      </picture>"
+    `)
+  })
 })

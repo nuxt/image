@@ -16,7 +16,7 @@ export default lazyEventHandler(() => {
   const middleware = createIPXMiddleware(ipx)
 
   return eventHandler(async (event) => {
-    event.node.req.url = withLeadingSlash(event.context.params._)
+    event.node.req.url = withLeadingSlash(event.context.params!._)
     await middleware(event.node.req, event.node.res)
   })
 })
