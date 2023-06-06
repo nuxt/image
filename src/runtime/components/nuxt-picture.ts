@@ -1,9 +1,8 @@
-
+import { getFileExtension } from '#image'
+import { useHead, useImage, useNuxtApp } from '#imports'
 import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { baseImageProps, useBaseImage } from './_base'
-import { useHead, useImage } from '#imports'
-import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
@@ -39,7 +38,7 @@ export default defineComponent({
       sizes?: string;
     };
     const sources = computed<Source[]>(() => {
-      const format = props.format || originalFormat.value
+      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
       const formats = format.split(',')
       if (format === 'svg') {
         return [<Source>{ srcset: props.src }]
@@ -62,19 +61,12 @@ export default defineComponent({
         return <Source>{ src, type: `image/${format}`, sizes, srcset }
       })
     })
+    const lastSourceIndex = computed(() => sources.value.length - 1)
 
     if (props.preload) {
-      const srcKey = sources.value?.[1] ? 1 : 0
+      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[lastSourceIndex.value].srcset }
 
-      const link: any = {
-        rel: 'preload',
-        as: 'image',
-        imagesrcset: sources.value[srcKey].srcset
-      }
-
-      if (sources.value?.[srcKey]?.sizes) {
-        link.imagesizes = sources.value[srcKey].sizes
-      }
+      if (sources.value?.[lastSourceIndex.value]?.sizes) { link.imagesizes = sources.value[lastSourceIndex.value].sizes }
 
       useHead({ link: [link] })
     }
@@ -96,25 +88,32 @@ export default defineComponent({
       }
     }
 
+    const nuxtApp = useNuxtApp()
+    const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
-      imgEl.value!.onload = (event) => {
+      if (!imgEl.value) { return }
+
+      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
+        ctx.emit('load', new Event('load'))
+      }
+      imgEl.value.onload = (event) => {
         ctx.emit('load', event)
       }
     })
 
-    const lastSourceIndex = computed(() => sources.value.length - 1)
     return () =>
       h('picture', { key: sources.value[0].src }, [
-        sources.value.slice(0, -1).map(source =>
-          h('source', {
+        ...sources.value.slice(0, -1).map((source) => {
+          return h('source', {
             type: source.type,
             sizes: source.sizes,
             srcset: source.srcset
           })
-        ),
+        }),
         h('img', {
           ref: imgEl,
           ..._base.attrs.value,
+          ...(process.server ? { onerror: "this.setAttribute('data-error', 1)" } : {}),
           ...imgAttrs,
           src: sources.value[lastSourceIndex.value].src,
           sizes: sources.value[lastSourceIndex.value].sizes,

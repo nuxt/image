@@ -2,6 +2,140 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.0.0-rc.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.0...v1.0.0-rc.1)
+
+### 🚀 Enhancements
+
+  - Initial rewrite for nuxt 3 support ([64dfecc](https://github.com/nuxt/image/commit/64dfecc))
+  - Migrate to composition api ([#571](https://github.com/nuxt/image/pull/571))
+  - **vercel:** Set image config using v3 output api ([4d8aab0](https://github.com/nuxt/image/commit/4d8aab0))
+  - Support prerendering static images ([#614](https://github.com/nuxt/image/pull/614))
+  - Support load event for nuxt-img and nuxt-picture ([#702](https://github.com/nuxt/image/pull/702))
+  - Add `data-nuxt-img` and `data-nuxt-pic` attrs ([#747](https://github.com/nuxt/image/pull/747))
+  - Add none provider and only enable ipx when node present ([#840](https://github.com/nuxt/image/pull/840))
+  - Add directus provider ([#787](https://github.com/nuxt/image/pull/787))
+  - Add wagtail provider ([#774](https://github.com/nuxt/image/pull/774))
+
+### 🔥 Performance
+
+  - Do not inject $img by default ([#836](https://github.com/nuxt/image/pull/836))
+
+### 🩹 Fixes
+
+  - Add missing defineNuxtPlugin import ([e5ca160](https://github.com/nuxt/image/commit/e5ca160))
+  - Use resolver to resolve built-in providers ([bb8381c](https://github.com/nuxt/image/commit/bb8381c))
+  - **ipx:** Ensure leading slash is added to ipx url ([93ce78a](https://github.com/nuxt/image/commit/93ce78a))
+  - **vercel:** Remove dependency of fs-extra ([23076b8](https://github.com/nuxt/image/commit/23076b8))
+  - Update nuxt version constraint ([#603](https://github.com/nuxt/image/pull/603))
+  - Add implicit imports ([db0934c](https://github.com/nuxt/image/commit/db0934c))
+  - Provide empty array if source data is not present ([#606](https://github.com/nuxt/image/pull/606))
+  - **vercel:** Update image to images and add ttl ([a3cd82c](https://github.com/nuxt/image/commit/a3cd82c))
+  - **imagekit:** Transformation query param generation ([#610](https://github.com/nuxt/image/pull/610))
+  - AddAutoImport has been renamed to addImports ([#648](https://github.com/nuxt/image/pull/648))
+  - Update ipx ([b087201](https://github.com/nuxt/image/commit/b087201))
+  - **nuxt-picture:** Only pass defined props to `<nuxt-img>` component ([#620](https://github.com/nuxt/image/pull/620))
+  - Default dir value ([cc4a09d](https://github.com/nuxt/image/commit/cc4a09d))
+  - **nuxt-img:** Access prerender.env only in server side ([#661](https://github.com/nuxt/image/pull/661))
+  - Pass ipx maxAge option from options ([#706](https://github.com/nuxt/image/pull/706))
+  - ⚠️  Improve prerendering support ([#725](https://github.com/nuxt/image/pull/725))
+  - **module:** Parse options.domains with parseURL #659 ([#680](https://github.com/nuxt/image/pull/680), [#659](https://github.com/nuxt/image/issues/659))
+  - **cloudinary:** Update mapping key for density ([#730](https://github.com/nuxt/image/pull/730))
+  - **unsplash:** Merge query params with src ([#712](https://github.com/nuxt/image/pull/712))
+  - **ipx:** Use actual relative ipx dir ([#779](https://github.com/nuxt/image/pull/779))
+  - **ipx:** Support runtime nuxt baseURL ([#778](https://github.com/nuxt/image/pull/778))
+  - **ipx:** Set prerenderer config as well ([#784](https://github.com/nuxt/image/pull/784))
+  - Use absolute path for prerenderer ([#788](https://github.com/nuxt/image/pull/788))
+  - **sanity:** Add dpr modifier ([#789](https://github.com/nuxt/image/pull/789))
+  - **pkg:** Relax upper node version constraint ([#818](https://github.com/nuxt/image/pull/818))
+  - Correctly apply provided format to `<NuxtPicture>` ([#827](https://github.com/nuxt/image/pull/827))
+  - Type vercel nitro config correctly ([2679d60](https://github.com/nuxt/image/commit/2679d60))
+  - Remove ignored second arg for hash ([52ba7aa](https://github.com/nuxt/image/commit/52ba7aa))
+  - Prerender static images when calling createImage ([d927447](https://github.com/nuxt/image/commit/d927447))
+  - **nuxt-picture:** Render svgs with src not srcset ([46939f1](https://github.com/nuxt/image/commit/46939f1))
+  - Ensure $img injection is correctly typed ([ed573bb](https://github.com/nuxt/image/commit/ed573bb))
+  - Test for imgEl before setting src ([e5a294e](https://github.com/nuxt/image/commit/e5a294e))
+  - Respect dir option from module for ipx ([7e187e5](https://github.com/nuxt/image/commit/7e187e5))
+  - Use publicDir for runtime ipx  generation ([#849](https://github.com/nuxt/image/pull/849))
+  - **pkg:** Use esm build as main field ([#848](https://github.com/nuxt/image/pull/848))
+  - Emit synthetic load and error events on initial hydration ([#842](https://github.com/nuxt/image/pull/842))
+
+### 💅 Refactors
+
+  - **ipx:** Use `event.node.req` and `event.node.res` ([#777](https://github.com/nuxt/image/pull/777))
+
+### 📖 Documentation
+
+  - Advice modules instead of buildModules ([#557](https://github.com/nuxt/image/pull/557))
+  - Update static/ dir to public/ ([#558](https://github.com/nuxt/image/pull/558))
+  - Update lint to nuxt 3 ([4e029e2](https://github.com/nuxt/image/commit/4e029e2))
+  - Update default provider section ([35c8a9d](https://github.com/nuxt/image/commit/35c8a9d))
+  - Change static/ to public/ ([#566](https://github.com/nuxt/image/pull/566))
+  - Upgrade docus and improve structure ([#564](https://github.com/nuxt/image/pull/564))
+  - Fix link to unsplash license ([#579](https://github.com/nuxt/image/pull/579))
+  - Update to script setup ([4b27db3](https://github.com/nuxt/image/commit/4b27db3))
+  - Upgrade to latest Docus ([#678](https://github.com/nuxt/image/pull/678))
+  - Fix cloudflare usage example ([255d991](https://github.com/nuxt/image/commit/255d991))
+  - Fix typo ([#670](https://github.com/nuxt/image/pull/670))
+  - Fix typo in api docs ([#754](https://github.com/nuxt/image/pull/754))
+  - Update badge ([4cee565](https://github.com/nuxt/image/commit/4cee565))
+  - Update codesandbox link and refresh example lockfile ([10c8735](https://github.com/nuxt/image/commit/10c8735))
+  - Update nuxt config definition ([#816](https://github.com/nuxt/image/pull/816))
+  - Update default dir value ([f293072](https://github.com/nuxt/image/commit/f293072))
+
+### 📦 Build
+
+  - Change node engine requirement to be same as nuxt3 ([4c23770](https://github.com/nuxt/image/commit/4c23770))
+
+### ✅ Tests
+
+  - Add back and update tests ([#830](https://github.com/nuxt/image/pull/830))
+  - Update implementation of `<ProviderSelector>` ([295b8c4](https://github.com/nuxt/image/commit/295b8c4))
+  - Test types in module and fixtures ([28f550d](https://github.com/nuxt/image/commit/28f550d))
+  - Sort file snapshot ([b3a9089](https://github.com/nuxt/image/commit/b3a9089))
+  - Remove leftover code ([c7531e0](https://github.com/nuxt/image/commit/c7531e0))
+  - Add test for URI encoding ([852371a](https://github.com/nuxt/image/commit/852371a))
+  - Add test for load and error events ([#841](https://github.com/nuxt/image/pull/841))
+  - Add unit test for correct crop sizing ([682b674](https://github.com/nuxt/image/commit/682b674))
+  - Extract mountImage helper ([5c21f4c](https://github.com/nuxt/image/commit/5c21f4c))
+
+### 🎨 Styles
+
+  - **cloudinary:** Remove dangle comma ([#733](https://github.com/nuxt/image/pull/733))
+  - Fix lint ([2ed711e](https://github.com/nuxt/image/commit/2ed711e))
+
+### ❤️  Contributors
+
+- Bono (@bonomite)
+- Daniel Roe (@danielroe)
+- Sandro Circi (@Sandros94)
+- Raphael Lima (@oraphadev)
+- Pooya Parsa (@pi0)
+- Th3R3alAndr3 (@th3r3alandr3)
+- Damian Głowala (@DamianGlowala)
+- Clément Ollivier (@clemcode)
+- Bartosz Podlewski (@podlebar)
+- Kara (@kara)
+- Sébastien Chopin (@atinux)
+- Rubén Rodríguez (@rubenRP)
+- Levi (Nguyễn Lương Huy) (@huynl-96)
+- Daniel, Petrica Andrei-Daniel (@danielpetrica)
+- Matthias Esterl (@madc)
+- Roald-di (@roald-di)
+- XLor (@yjl9903)
+- Alex (@piscis)
+- Baffo (@baffo)
+- Yaël Guilloux (@Tahul)
+- Ross (@chadsr)
+- Duy NGUYEN (@nthduy)
+- Daniil Chudo (@daniil4udo)
+- Abhinavr4 (@Abhinavr4)
+- Conrawl Rogers (@Diizzayy)
+- Thomas Bnt (@thomasbnt)
+- Zernonia (@Zernonia)
+- Nick Medrano (@dosstx)
+
 ### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
 
 
