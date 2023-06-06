@@ -4,6 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
+import { provider } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
@@ -14,6 +15,7 @@ const BuiltInProviders = [
   'cloudimage',
   'cloudinary',
   'contentful',
+  'directus',
   'edgio',
   'fastly',
   'glide',
@@ -24,13 +26,15 @@ const BuiltInProviders = [
   'ipx',
   'layer0',
   'netlify',
+  'none',
   'prismic',
   'sanity',
   'storyblok',
   'strapi',
   'twicpics',
   'unsplash',
-  'vercel'
+  'vercel',
+  'wagtail'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
@@ -108,9 +112,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.NOW_BUILDER) {
+  if (provider === 'vercel') {
     return 'vercel'
   }
-
-  return 'ipx'
 }

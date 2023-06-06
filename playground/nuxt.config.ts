@@ -1,10 +1,9 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  modules: [
-    '../src/module'
-  ],
+  modules: ['@nuxt/image-edge'],
   image: {
+    inject: true,
     domains: [
       'https://nuxtjs.org',
       'https://images.unsplash.com',
@@ -13,6 +12,7 @@ export default defineNuxtConfig({
     screens: {
       750: 750
     },
+    none: {},
     alias: {
       unsplash: 'https://images.unsplash.com', // ipx
       blog: '/remote/nuxt-org/blog' // cloudinary
@@ -22,6 +22,9 @@ export default defineNuxtConfig({
     },
     storyblok: {
       baseURL: 'https://a.storyblok.com/'
+    },
+    wagtail: {
+      baseURL: 'https://cms.demo.nypr.digital/images/'
     },
     cloudflare: {
       baseURL: 'https://that-test.site'
@@ -33,6 +36,9 @@ export default defineNuxtConfig({
     cloudimage: {
       token: 'demo',
       baseURL: 'sample.li'
+    },
+    directus: {
+      baseURL: 'http://localhost:8055/assets/'
     },
     fastly: {
       baseURL: 'https://www.fastly.io'
