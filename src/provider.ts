@@ -25,7 +25,7 @@ const BuiltInProviders = [
   'ipx',
   'layer0',
   'netlify',
-  'null',
+  'none',
   'prismic',
   'sanity',
   'storyblok',

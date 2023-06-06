@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     screens: {
       750: 750
     },
-    null: {},
+    none: {},
     alias: {
       unsplash: 'https://images.unsplash.com', // ipx
       blog: '/remote/nuxt-org/blog' // cloudinary

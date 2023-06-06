@@ -124,10 +124,10 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
 
     nuxt.hook('nitro:init', async (nitro) => {
       if (!options.provider || options.provider === 'ipx') {
-        imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'null'
+        imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'none'
         options[options.provider] = options[options.provider] || {}
 
-        if (options.provider === 'null') { return }
+        if (options.provider === 'none') { return }
 
         const p = await resolveProvider(nuxt, 'ipx', options.ipx as {})
         if (!providers.some(p => p.name === 'ipx')) {

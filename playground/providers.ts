@@ -13,7 +13,7 @@ export interface Provider {
 export const providers: Provider[] = [
   // null provider (for non-node environments)
   {
-    name: 'null',
+    name: 'none',
     samples: [
       {
         src: '/images/colors.jpg',

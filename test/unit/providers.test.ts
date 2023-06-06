@@ -6,7 +6,7 @@ import { images } from '../providers'
 
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
-import * as nullProvider from '#image/providers/null'
+import * as none from '~/src/runtime/providers/none'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -353,14 +353,14 @@ describe('Providers', () => {
     }
   })
 
-  it('null', () => {
+  it('none', () => {
     const providerOptions = {
     }
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = nullProvider.getImage(src, { modifiers, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.null)
+      const generated = none.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.none)
     }
   })
 })
