@@ -144,6 +144,9 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     if (options.inject) {
       // Add runtime plugin
       addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    } else if (nuxt.options.dev) {
+      // Add placeholder runtime plugin
+      addPlugin({ src: resolver.resolve('./runtime/plugin.placeholder') })
     }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
