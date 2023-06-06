@@ -110,7 +110,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (provider === 'vercel' || process.env.VERCEL_ENV) {
+  if (provider === 'vercel') {
     return 'vercel'
   }
 }
