@@ -27,6 +27,7 @@ import * as layer0 from '#image/providers/layer0'
 import * as storyblok from '#image/providers/storyblok'
 import * as strapi from '#image/providers/strapi'
 import * as vercel from '#image/providers/vercel'
+import * as wagtail from '#image/providers/wagtail'
 
 const emptyContext = {
   options: {
@@ -350,6 +351,17 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = vercel.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.vercel)
+    }
+  })
+
+  it('wagtail', () => {
+    const providerOptions = {}
+    const testImageId = '329944'
+    for (const image of images) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [_src, modifiers] = image.args
+      const generated = wagtail.getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.wagtail)
     }
   })
 

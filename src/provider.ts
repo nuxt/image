@@ -33,7 +33,8 @@ const BuiltInProviders = [
   'strapi',
   'twicpics',
   'unsplash',
-  'vercel'
+  'vercel',
+  'wagtail'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {
