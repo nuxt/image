@@ -1,7 +1,7 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
@@ -81,11 +81,16 @@ export default defineComponent({
       }
     }
 
+    const nuxtApp = useNuxtApp()
+    const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
-      if (imgEl.value) {
-        imgEl.value.onload = (event) => {
-          ctx.emit('load', event)
-        }
+      if (!imgEl.value) { return }
+
+      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
+        ctx.emit('load', new Event('load'))
+      }
+      imgEl.value.onload = (event) => {
+        ctx.emit('load', event)
       }
     })
 
@@ -100,6 +105,7 @@ export default defineComponent({
       h('img', {
         ref: imgEl,
         ..._base.attrs.value,
+        ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
         ...imgAttrs,
         src: sources.value[0].src,
         sizes: sources.value[0].sizes,
