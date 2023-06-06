@@ -1,8 +1,8 @@
-import { h, defineComponent, ref, computed, onMounted } from 'vue'
-import { prerenderStaticImages } from '../utils/prerender'
-import { useBaseImage, baseImageProps } from './_base'
-import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
+import { useHead, useImage, useNuxtApp } from '#imports'
+import { computed, defineComponent, h, onMounted, ref } from 'vue'
+import { prerenderStaticImages } from '../utils/prerender'
+import { baseImageProps, useBaseImage } from './_base'
 
 export const pictureProps = {
   ...baseImageProps,
@@ -35,31 +35,35 @@ export default defineComponent({
 
     type Source = { srcset: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      if (format.value === 'svg') {
-        return [<Source>{ src: props.src }]
+      const format = props.format || originalFormat.value
+      const formats = format.split(',')
+      if (format === 'svg') {
+        return [<Source>{ srcset: props.src }]
       }
 
-      const formats = legacyFormat.value !== format.value
-        ? [legacyFormat.value, format.value]
-        : [format.value]
+      if (!formats.includes(legacyFormat.value)) {
+        formats.push(legacyFormat.value)
+      } else {
+        formats.splice(formats.indexOf(legacyFormat.value), 1)
+        formats.push(legacyFormat.value)
+      }
 
-      return formats.map((format) => {
+      return formats.map((format: string) => {
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
           modifiers: { ..._base.modifiers.value, format }
         })
 
-        return <Source> { src, type: `image/${format}`, sizes, srcset }
+        return <Source>{ src, type: `image/${format}`, sizes, srcset }
       })
     })
+    const lastSourceIndex = computed(() => sources.value.length - 1)
 
     if (props.preload) {
-      const srcKey = sources.value?.[1] ? 1 : 0
+      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[lastSourceIndex.value].srcset }
 
-      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[srcKey].srcset }
-
-      if (sources.value?.[srcKey]?.sizes) { link.imagesizes = sources.value[srcKey].sizes }
+      if (sources.value?.[lastSourceIndex.value]?.sizes) { link.imagesizes = sources.value[lastSourceIndex.value].sizes }
 
       useHead({ link: [link] })
     }
@@ -94,23 +98,24 @@ export default defineComponent({
       }
     })
 
-    return () => h('picture', { key: sources.value[0].src }, [
-      ...(sources.value?.[1]
-        ? [h('source', {
-            type: sources.value[1].type,
-            sizes: sources.value[1].sizes,
-            srcset: sources.value[1].srcset
-          })]
-        : []),
-      h('img', {
-        ref: imgEl,
-        ..._base.attrs.value,
-        ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-        ...imgAttrs,
-        src: sources.value[0].src,
-        sizes: sources.value[0].sizes,
-        srcset: sources.value[0].srcset
-      })
-    ])
+    return () =>
+      h('picture', { key: sources.value[0].src }, [
+        ...sources.value.slice(0, -1).map((source) => {
+          return h('source', {
+            type: source.type,
+            sizes: source.sizes,
+            srcset: source.srcset
+          })
+        }),
+        h('img', {
+          ref: imgEl,
+          ..._base.attrs.value,
+          ...(process.server ? { onerror: "this.setAttribute('data-error', 1)" } : {}),
+          ...imgAttrs,
+          src: sources.value[lastSourceIndex.value].src,
+          sizes: sources.value[lastSourceIndex.value].sizes,
+          srcset: sources.value[lastSourceIndex.value].srcset
+        })
+      ])
   }
 })
