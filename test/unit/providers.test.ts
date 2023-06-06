@@ -11,6 +11,7 @@ import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
 import * as fastly from '#image/providers/fastly'
+import * as prepr from '#image/providers/prepr'
 import * as glide from '#image/providers/glide'
 import * as imgix from '#image/providers/imgix'
 import * as gumlet from '#image/providers/gumlet'
@@ -282,6 +283,19 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.sanity)
     }
   })
+
+  it('prepr', () => {
+    const providerOptions = {
+      projectName: 'projectName'
+    }
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = prepr.getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.prepr)
+    }
+  })
+
 
   it('contentful', () => {
     const providerOptions = {

@@ -132,6 +132,12 @@ exports[`browser (ssr: false) > gumlet should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: false) > gumlet should render images 3`] = `
+[
+  "https://demo.gumlet.io/sea.jpeg?w=300&h=300&fit=crop",
+]
+`;
+
 exports[`browser (ssr: false) > imageengine should render images 1`] = `
 [
   "https://abc123.imgeng.in/images/image.jpg?imgeng=/meta_true/s_10/w_300/h_300/m_box",
@@ -239,6 +245,32 @@ exports[`browser (ssr: false) > none should render images 2`] = `
   "/images/everest.jpg",
   "/images/tacos.svg",
   "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
+exports[`browser (ssr: false) > prepr should render images 1`] = `
+[
+  "https://nuxt-prepr-demo.stream.prepr.io/q_5//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_200,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_250,h_250//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/c_southeast,w_250,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/c_centre,w_250,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_250,h_200,fit_[object Object]//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+]
+`;
+
+exports[`browser (ssr: false) > prepr should render images 2`] = `
+[
+  "https://nuxt-prepr-demo.stream.prepr.io/q_5//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_200,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_250,h_250//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/c_southeast,w_250,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/c_centre,w_250,h_200//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
+  "https://nuxt-prepr-demo.stream.prepr.io/w_250,h_200,fit_[object%20Object]//4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg",
 ]
 `;
 
