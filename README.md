@@ -26,14 +26,14 @@
 Published under the [MIT License](./LICENSE)
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/@nuxt/image-edge/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-version-href]: https://npmjs.com/package/@nuxt/image-edge
+[npm-version-src]: https://img.shields.io/npm/v/@nuxt/image/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/@nuxt/image/v/rc
 
 [npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-downloads-href]: https://npmjs.com/package/@nuxt/image
+[npm-downloads-href]: https://npmjs.com/package/@nuxt/image/v/rc
 
 [license-src]: https://img.shields.io/npm/l/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://npmjs.com/package/@nuxt/image
+[license-href]: https://npmjs.com/package/@nuxt/image/v/rc
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
