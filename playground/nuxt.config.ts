@@ -34,6 +34,9 @@ export default defineNuxtConfig({
       token: 'demo',
       baseURL: 'sample.li'
     },
+    directus: {
+      baseURL: 'http://localhost:8055/assets/'
+    },
     fastly: {
       baseURL: 'https://www.fastly.io'
     },

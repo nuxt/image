@@ -728,5 +728,36 @@ export const providers: Provider[] = [
         quality: 75
       }
     ]
+  },
+  // Directus
+  {
+    name: 'directus',
+    samples: [
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: 'Image 1'
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee.jpg',
+        alt: '1024px width',
+        width: 1024,
+        height: 256,
+        fit: 'cover',
+        modifiers: { withoutEnlargement: 'true' }
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp'
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp',
+        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
+      }
+    ]
   }
 ]

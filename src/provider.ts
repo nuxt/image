@@ -15,6 +15,7 @@ const BuiltInProviders = [
   'cloudimage',
   'cloudinary',
   'contentful',
+  'directus',
   'edgio',
   'fastly',
   'glide',
