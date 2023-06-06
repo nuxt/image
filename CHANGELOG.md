@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.0.0-rc.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.0...v1.0.0-rc.1)
+
+
+### 🩹 Fixes
+
+  - Remove placeholder plugin ([1cd2ef1](https://github.com/nuxt/image/commit/1cd2ef1))
+
+### ❤️  Contributors
+
+- Daniel Roe <daniel@roe.dev>
+
 ### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
 
 
