@@ -86,7 +86,7 @@ export default defineComponent({
     onMounted(() => {
       if (!imgEl.value) { return }
 
-      if (imgEl.value.complete && initialLoad && imgEl.value.naturalWidth !== 0) {
+      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
         ctx.emit('load', new Event('load'))
       }
       imgEl.value.onload = (event) => {
@@ -105,6 +105,7 @@ export default defineComponent({
       h('img', {
         ref: imgEl,
         ..._base.attrs.value,
+        ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
         ...imgAttrs,
         src: sources.value[0].src,
         sizes: sources.value[0].sizes,
