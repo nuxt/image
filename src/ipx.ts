@@ -36,7 +36,7 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
     nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
     nitro.options._config.runtimeConfig.ipx = { ...ipxOptions }
     // Use relative path for built app
-    ipxOptions.dir = relative(nitro.options.output.serverDir, moduleOptions.dir)
+    ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
     nitro.options.runtimeConfig.ipx = ipxOptions
 
     const handler: NitroEventHandler = {
