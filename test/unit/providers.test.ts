@@ -6,6 +6,7 @@ import { images } from '../providers'
 
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
+import * as none from '~/src/runtime/providers/none'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -361,6 +362,17 @@ describe('Providers', () => {
       const [_src, modifiers] = image.args
       const generated = wagtail.getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.wagtail)
+    }
+  })
+
+  it('none', () => {
+    const providerOptions = {
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = none.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.none)
     }
   })
 })

@@ -60,6 +60,24 @@ exports[`browser (ssr: true) > contentful should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: true) > directus should render images 1`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
+]
+`;
+
+exports[`browser (ssr: true) > directus should render images 2`] = `
+[
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee.jpg?withoutEnlargement=true&width=1024&height=256&fit=cover",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?width=256&format=webp",
+  "http://localhost:8055/assets/ad514db1-eb90-4523-8183-46781437e7ee?withoutEnlargement=true&transforms=%5B%5B%22blur%22%2C4%5D%2C%5B%22negate%22%5D%5D&width=256&format=webp",
+]
+`;
+
 exports[`browser (ssr: true) > edgio should render images 1`] = `
 [
   "https://opt.moovweb.net/?img=https://i.imgur.com/LFtQeX2.jpeg&height=200",
@@ -203,6 +221,24 @@ exports[`browser (ssr: true) > netlify should render images 2`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 1`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 2`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
 ]
 `;
 
