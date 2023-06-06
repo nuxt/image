@@ -64,9 +64,7 @@ export default defineNuxtConfig({
     edgio: {
       baseURL: 'https://opt.moovweb.net'
     },
-    prismic: {
-
-    },
+    prismic: {},
     prepr: {
       projectName: 'nuxt-prepr-demo'
     },
