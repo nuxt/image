@@ -10,6 +10,9 @@ await setup({
   rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
   build: true,
   nuxtConfig: {
+    image: {
+      inject: false
+    },
     hooks: {
       'modules:before' () {
         const nuxt = useNuxt()

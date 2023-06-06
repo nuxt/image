@@ -5,14 +5,15 @@ import { resolveProviders, detectProvider, resolveProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
 export interface ModuleOptions extends ImageProviders {
-  staticFilename: string,
+  inject: boolean
+  staticFilename: string
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
   domains: string[]
   sharp: any
   alias: Record<string, string>
-  screens: CreateImageOptions['screens'],
+  screens: CreateImageOptions['screens']
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
   [key: string]: any
@@ -22,6 +23,7 @@ export * from './types'
 
 export default defineNuxtModule<ModuleOptions>({
   defaults: nuxt => ({
+    inject: false,
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
     dir: nuxt.options.dir.public,
@@ -139,8 +141,13 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
       }
     })
 
-    // Add runtime plugin
-    addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    if (options.inject) {
+      // Add runtime plugin
+      addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    } else if (nuxt.options.dev) {
+      // Add placeholder runtime plugin
+      addPlugin({ src: resolver.resolve('./runtime/plugin.placeholder') })
+    }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
   }

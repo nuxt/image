@@ -10,6 +10,7 @@ await setup({
   browser: true,
   nuxtConfig: {
     image: {
+      inject: false,
       provider: 'ipx'
     }
   }
