@@ -1,7 +1,7 @@
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolve } from 'pathe'
-import { resolveProviders, detectProvider } from './provider'
+import { resolveProviders, detectProvider, resolveProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
 export interface ModuleOptions extends ImageProviders {
@@ -66,8 +66,10 @@ export default defineNuxtModule<ModuleOptions>({
     // Normalize alias to start with leading slash
     options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
 
-    options.provider = detectProvider(options.provider)
-    options[options.provider] = options[options.provider] || {}
+    options.provider = detectProvider(options.provider)!
+    if (options.provider) {
+      options[options.provider] = options[options.provider] || {}
+    }
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt'> = pick(options, [
       'screens',
@@ -81,7 +83,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Run setup
     for (const p of providers) {
-      if (typeof p.setup === 'function') {
+      if (typeof p.setup === 'function' && p.name !== 'ipx') {
         await p.setup(p, options, nuxt)
       }
     }
@@ -119,6 +121,23 @@ imageOptions.providers = {
 ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
 }
         `
+      }
+    })
+
+    nuxt.hook('nitro:init', async (nitro) => {
+      if (!options.provider || options.provider === 'ipx') {
+        imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'none'
+        options[options.provider] = options[options.provider] || {}
+
+        if (options.provider === 'none') { return }
+
+        const p = await resolveProvider(nuxt, 'ipx', options.ipx as {})
+        if (!providers.some(p => p.name === 'ipx')) {
+          providers.push(p)
+        }
+        if (typeof p.setup === 'function') {
+          await p.setup(p, options, nuxt)
+        }
       }
     })
 

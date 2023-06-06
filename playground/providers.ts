@@ -11,6 +11,40 @@ export interface Provider {
 }
 
 export const providers: Provider[] = [
+  // null provider (for non-node environments)
+  {
+    name: 'none',
+    samples: [
+      {
+        src: '/images/colors.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+      },
+      {
+        src: '/images/everest.jpg',
+        from: 'Mount Everest Wikipedia page (alias)',
+        width: 300,
+        height: 300,
+        link: 'https://en.wikipedia.org/wiki/Mount_Everest'
+      },
+      {
+        src: '/images/tacos.svg',
+        from: 'Illustration from Icons8',
+        width: 300,
+        height: 300,
+        link: 'https://icons8.com/illustrations/illustration/abstract-1419'
+      },
+      {
+        src: '/unsplash/photo-1606112219348-204d7d8b94ee',
+        from: 'Photo by Omid Armin',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+      }
+    ]
+  },
   // IPX
   {
     name: 'ipx',

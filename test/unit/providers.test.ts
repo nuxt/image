@@ -6,6 +6,7 @@ import { images } from '../providers'
 
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
+import * as none from '~/src/runtime/providers/none'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -349,6 +350,17 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = vercel.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.vercel)
+    }
+  })
+
+  it('none', () => {
+    const providerOptions = {
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = none.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.none)
     }
   })
 })

@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
 import { describe, it, expect } from 'vitest'
-import { setup, createPage, url } from '@nuxt/test-utils'
+import { setup, createPage, url, fetch } from '@nuxt/test-utils'
 
 import { providers } from '../../playground/providers'
 
@@ -40,5 +40,10 @@ describe('browser (ssr: true)', () => {
     expect(sources).toMatchSnapshot()
 
     expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
+  })
+
+  it('works with runtime ipx', async () => {
+    const res = await fetch(url('/_ipx/s_300x300/images/colors.jpg'))
+    expect(res.headers.get('content-type')).toBe('image/jpeg')
   })
 })
