@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/image-edge'],
+  modules: ['@nuxt/image'],
   image: {
     inject: true,
     domains: [
