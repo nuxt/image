@@ -1,8 +1,8 @@
 // @vitest-environment nuxt
 
-import { NuxtPicture } from '#components'
 import { VueWrapper, mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { NuxtPicture } from '#components'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
