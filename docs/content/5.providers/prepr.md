@@ -21,9 +21,7 @@ export default defineNuxtConfig({
 
 The Prepr provider supports a number of additional modifiers. For a full list,
 check out [the Prepr documentation](https://docs.prepr.io/reference/rest/v1/assets-resizing/).
-All current transformations currently mentioned in Prepr docs are supported. According
-to Prepr Support team, more modifiers will be added soon, and the documentation
-page is due for an update.
+All current transformations currently mentioned in Prepr docs are supported.
 
 For the time being you might find the following links useful:
 
