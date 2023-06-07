@@ -1,10 +1,12 @@
-import { resolve } from 'pathe'
+import { relative, resolve } from 'pathe'
 import { eventHandler } from 'h3'
-import { useNuxt, createResolver } from '@nuxt/kit'
+import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
+import type { NitroEventHandler, NitroDevEventHandler } from 'nitropack'
 
 import type { ProviderSetup, ImageProviders } from './types'
 
 export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) => {
+  const nitro = useNitro()
   const nuxt = useNuxt()
 
   // Add IPX middleware unless nuxtrc or user added a custom middleware
@@ -28,12 +30,22 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
   if (!nuxt.options.dev) {
     // TODO: Avoid adding for non-Node.js environments with a warning
     const resolver = createResolver(import.meta.url)
-    ipxOptions.dir = '' // Set at runtime
-    nuxt.options.runtimeConfig.ipx = ipxOptions
-    nuxt.options.serverHandlers.push({
+    // Use absolute path for prerenderer
+    // TODO: Workaround for prerender support
+    // https://github.com/nuxt/image/pull/784
+    nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
+    nitro.options._config.runtimeConfig.ipx = { ...ipxOptions }
+    // Use relative path for built app
+    ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
+    nitro.options.runtimeConfig.ipx = ipxOptions
+
+    const handler: NitroEventHandler = {
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
-    })
+    }
+    nitro.options.handlers.push(handler)
+    // TODO: Workaround for prerender support
+    nitro.options._config.handlers!.push(handler)
     return
   }
 
@@ -46,10 +58,13 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
     })
   const ipx = createIPX(ipxOptions)
   const middleware = createIPXMiddleware(ipx)
-  nuxt.options.devServerHandlers.push({
+  const devHandler: NitroDevEventHandler = {
     route: '/_ipx',
     handler: eventHandler(async (event) => {
-      await middleware(event.req, event.res)
+      await middleware(event.node.req, event.node.res)
     })
-  })
+  }
+  nitro.options.devHandlers.push(devHandler)
+  // TODO: Workaround for prerender support
+  nitro.options._config.devHandlers!.push(devHandler)
 }

@@ -1,12 +1,11 @@
-[![@nuxt/image](./docs/public/cover.jpg "Nuxt Image")](./docs/public/cover.jpg)
 [![npm version][npm-version-src]][npm-version-href]
-[![Checks][checks-src]][checks-href]
-<!-- [![npm downloads][npm-downloads-src]][npm-downloads-href] -->
-<!-- [![Codecov][codecov-src]][codecov-href] -->
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![License][license-src]][license-href]
+[![Nuxt][nuxt-src]][nuxt-href]
+[![Volta][volta-src]][volta-href]
 
 - [📖 &nbsp;Read Documentation (v1)](https://v1.image.nuxtjs.org)
-- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/v1/example)
-
+- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
 
 ---
 
@@ -27,13 +26,17 @@
 Published under the [MIT License](./LICENSE)
 
 <!-- Badges -->
-[npm-version-src]: https://flat.badgen.net/npm/v/@nuxt/image-edge
-[npm-version-href]: https://npmjs.com/package/@nuxt/image-edge
-[npm-downloads-src]: https://flat.badgen.net/npm/dm/@nuxt/image-edge
-[npm-downloads-href]: https://npmjs.com/package/@nuxt/image-edge
-[checks-src]: https://flat.badgen.net/github/checks/nuxt/image/v1
-[checks-href]: https://github.com/nuxt/image/actions
-[codecov-src]: https://flat.badgen.net/codecov/c/github/nuxt/image
-[codecov-href]: https://codecov.io/gh/nuxt/image
-[license-src]: https://img.shields.io/npm/l/@nuxt/image.svg
-[license-href]: https://github.com/nuxt/image/blob/v1/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/@nuxt/image/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/@nuxt/image/v/rc
+
+[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/@nuxt/image/v/rc
+
+[license-src]: https://img.shields.io/npm/l/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/@nuxt/image/v/rc
+
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
+[nuxt-href]: https://nuxt.com
+
+[volta-src]: https://user-images.githubusercontent.com/904724/209143798-32345f6c-3cf8-4e06-9659-f4ace4a6acde.svg
+[volta-href]: https://volta.net/nuxt/image?utm_source=nuxt_image_readme

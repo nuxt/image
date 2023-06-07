@@ -1,7 +1,7 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
-import { useImage, useHead } from '#imports'
+import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
@@ -22,7 +22,7 @@ export default defineComponent({
 
     const originalFormat = computed(() => getFileExtension(props.src))
 
-    const format = computed(() => props.format || originalFormat.value === 'svg' ? 'svg' : 'webp')
+    const format = computed(() => props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp'))
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
@@ -36,7 +36,7 @@ export default defineComponent({
     type Source = { srcset: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
       if (format.value === 'svg') {
-        return [<Source>{ srcset: props.src }]
+        return [<Source>{ src: props.src }]
       }
 
       const formats = legacyFormat.value !== format.value
@@ -65,7 +65,7 @@ export default defineComponent({
     }
 
     // Only passdown supported <image> attributes
-    const imgAttrs = { ...props.imgAttrs }
+    const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
     for (const key in ctx.attrs) {
       if (key in baseImageProps && !(key in imgAttrs)) {
         imgAttrs[key] = ctx.attrs[key]
@@ -81,8 +81,15 @@ export default defineComponent({
       }
     }
 
+    const nuxtApp = useNuxtApp()
+    const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
-      imgEl.value!.onload = (event) => {
+      if (!imgEl.value) { return }
+
+      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
+        ctx.emit('load', new Event('load'))
+      }
+      imgEl.value.onload = (event) => {
         ctx.emit('load', event)
       }
     })
@@ -98,6 +105,7 @@ export default defineComponent({
       h('img', {
         ref: imgEl,
         ..._base.attrs.value,
+        ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
         ...imgAttrs,
         src: sources.value[0].src,
         sizes: sources.value[0].sizes,

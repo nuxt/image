@@ -3,6 +3,7 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
 import { parseSize } from './utils'
+import { prerenderStaticImages } from './utils/prerender'
 
 export function createImage (globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
@@ -11,6 +12,12 @@ export function createImage (globalOptions: CreateImageOptions) {
 
   const getImage: $Img['getImage'] = (input: string, options = {}) => {
     const image = resolveImage(ctx, input, options)
+
+    // Prerender static images
+    if (process.server && process.env.prerender) {
+      prerenderStaticImages(image.url)
+    }
+
     return image
   }
 

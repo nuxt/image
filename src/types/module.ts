@@ -79,6 +79,7 @@ export interface ImageProviders {
   prismic?: any
   twicpics?: any
   storyblok?: any,
+  wagtail?: any,
   strapi?: any,
   imageengine?: any,
   uploadcare?: Partial<UploadcareOptions>,

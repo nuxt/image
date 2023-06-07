@@ -16,7 +16,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, _ctx) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {
   if (modifiers.width && modifiers.height) {
     modifiers.resize = `${modifiers.width}x${modifiers.height}`
     delete modifiers.width
@@ -26,8 +26,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   const params = operationsGenerator(modifiers) || '_'
 
   if (!baseURL) {
-    // TODO: Support base url
-    baseURL = joinURL('/', '/_ipx')
+    baseURL = joinURL(ctx.options.nuxt.baseURL, '/_ipx')
   }
 
   return {
