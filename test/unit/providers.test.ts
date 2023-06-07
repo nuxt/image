@@ -295,8 +295,6 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.prepr)
     }
   })
-
-
   it('contentful', () => {
     const providerOptions = {
       baseURL: ''
