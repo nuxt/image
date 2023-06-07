@@ -64,6 +64,47 @@ describe('Renders simple image', () => {
     expect(wrapper.find('[type="image/webp"]').exists()).toBe(true)
   })
 
+  it('renders single format and fallback', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif',
+        src
+      }
+    })
+    expect(img.find('[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('[type="image/png"]').exists()).toBe(true)
+  })
+
+  it('renders avif, webp and fallback', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif,webp',
+        src
+      }
+    })
+    expect(img.find('[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('[type="image/webp"]').exists()).toBe(true)
+    expect(img.find('[type="image/png"]').exists()).toBe(true)
+  })
+
+  it('renders avif, gif and fallback', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif',
+        src
+      }
+    })
+    expect(img.find('[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('[type="image/gif"]').exists()).toBe(true)
+    expect(img.find('[type="image/png"]').exists()).toBe(true)
+  })
+
   it('props.src is reactive', async () => {
     const newSource = '/image.jpeg'
     wrapper.setProps({ src: newSource })
