@@ -11,6 +11,40 @@ export interface Provider {
 }
 
 export const providers: Provider[] = [
+  // null provider (for non-node environments)
+  {
+    name: 'none',
+    samples: [
+      {
+        src: '/images/colors.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+      },
+      {
+        src: '/images/everest.jpg',
+        from: 'Mount Everest Wikipedia page (alias)',
+        width: 300,
+        height: 300,
+        link: 'https://en.wikipedia.org/wiki/Mount_Everest'
+      },
+      {
+        src: '/images/tacos.svg',
+        from: 'Illustration from Icons8',
+        width: 300,
+        height: 300,
+        link: 'https://icons8.com/illustrations/illustration/abstract-1419'
+      },
+      {
+        src: '/unsplash/photo-1606112219348-204d7d8b94ee',
+        from: 'Photo by Omid Armin',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText'
+      }
+    ]
+  },
   // IPX
   {
     name: 'ipx',
@@ -692,6 +726,88 @@ export const providers: Provider[] = [
         src: 'colors.jpg',
         width: 750,
         quality: 75
+      }
+    ]
+  },
+  // wagtail
+  {
+    name: 'wagtail',
+    samples: [
+      {
+        alt: 'no specified width or height uses original maximum image size',
+        src: '329944'
+      },
+      {
+        alt: 'Resize',
+        width: 600,
+        height: 600,
+        src: '329944'
+      },
+      {
+        alt: 'Just width, height is proportional',
+        width: 250,
+        src: '329944'
+      },
+      {
+        alt: 'Just height, width is proportional',
+        height: 250,
+        src: '329944'
+      },
+      {
+        alt: 'Format to jpeg (webp{default}, jpeg, png)',
+        width: 600,
+        height: 600,
+        format: 'jpeg',
+        src: '329944'
+      },
+      {
+        alt: 'low quality jpeg (quality default = 70)',
+        width: 600,
+        height: 600,
+        format: 'jpeg',
+        quality: 2,
+        src: '329944'
+      },
+      {
+        alt: 'Focus Zoom on the CMS assigned focal point of the image (0 - 100) CMS provided focal point is around the glass dorrs and 3 winddows on the very left of the house',
+        width: 200,
+        height: 200,
+        src: '329944',
+        modifiers:
+        {
+          focusZoom: 100
+        }
+      }
+    ]
+  },
+  // Directus
+  {
+    name: 'directus',
+    samples: [
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: 'Image 1'
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee.jpg',
+        alt: '1024px width',
+        width: 1024,
+        height: 256,
+        fit: 'cover',
+        modifiers: { withoutEnlargement: 'true' }
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp'
+      },
+      {
+        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp',
+        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
       }
     ]
   }

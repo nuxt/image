@@ -11,6 +11,9 @@
         <NuxtLink to="/picture">
           NuxtPicture
         </NuxtLink>
+        <NuxtLink to="/events">
+          Events
+        </NuxtLink>
       </li>
       <li>
         <ProviderSelector />

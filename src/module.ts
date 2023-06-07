@@ -1,17 +1,19 @@
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
-import { resolveProviders, detectProvider } from './provider'
+import { resolve } from 'pathe'
+import { resolveProviders, detectProvider, resolveProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
 export interface ModuleOptions extends ImageProviders {
-  staticFilename: string,
+  inject: boolean
+  staticFilename: string
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
   domains: string[]
   sharp: any
   alias: Record<string, string>
-  screens: CreateImageOptions['screens'],
+  screens: CreateImageOptions['screens']
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
   [key: string]: any
@@ -20,10 +22,11 @@ export interface ModuleOptions extends ImageProviders {
 export * from './types'
 
 export default defineNuxtModule<ModuleOptions>({
-  defaults: {
+  defaults: nuxt => ({
+    inject: false,
     staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
-    dir: '',
+    dir: nuxt.options.dir.public,
     presets: {},
     domains: [] as string[],
     sharp: {},
@@ -40,7 +43,7 @@ export default defineNuxtModule<ModuleOptions>({
     internalUrl: '',
     providers: {},
     alias: {}
-  },
+  }),
   meta: {
     name: '@nuxt/image',
     configKey: 'image',
@@ -51,6 +54,9 @@ export default defineNuxtModule<ModuleOptions>({
   async setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
+    // fully resolve directory
+    options.dir = resolve(nuxt.options.srcDir, options.dir)
+
     // Normalize domains to hostname
     options.domains = options.domains.map((d) => {
       if (!d.startsWith('http')) { d = 'http://' + d }
@@ -60,8 +66,10 @@ export default defineNuxtModule<ModuleOptions>({
     // Normalize alias to start with leading slash
     options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
 
-    options.provider = detectProvider(options.provider)
-    options[options.provider] = options[options.provider] || {}
+    options.provider = detectProvider(options.provider)!
+    if (options.provider) {
+      options[options.provider] = options[options.provider] || {}
+    }
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt'> = pick(options, [
       'screens',
@@ -75,7 +83,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Run setup
     for (const p of providers) {
-      if (typeof p.setup === 'function') {
+      if (typeof p.setup === 'function' && p.name !== 'ipx') {
         await p.setup(p, options, nuxt)
       }
     }
@@ -116,8 +124,27 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
       }
     })
 
-    // Add runtime plugin
-    addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    nuxt.hook('nitro:init', async (nitro) => {
+      if (!options.provider || options.provider === 'ipx') {
+        imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'none'
+        options[options.provider] = options[options.provider] || {}
+
+        if (options.provider === 'none') { return }
+
+        const p = await resolveProvider(nuxt, 'ipx', options.ipx as {})
+        if (!providers.some(p => p.name === 'ipx')) {
+          providers.push(p)
+        }
+        if (typeof p.setup === 'function') {
+          await p.setup(p, options, nuxt)
+        }
+      }
+    })
+
+    if (options.inject) {
+      // Add runtime plugin
+      addPlugin({ src: resolver.resolve('./runtime/plugin') })
+    }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
   }

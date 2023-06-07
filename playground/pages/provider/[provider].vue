@@ -40,5 +40,6 @@ if (route.params.provider === 'ipx') {
 <style scoped>
 img {
   max-width: 80vw;
+  height: auto;
 }
 </style>
