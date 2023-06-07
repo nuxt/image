@@ -1,11 +1,12 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "@nuxtjs"
+    "github>nuxt/renovate-config-nuxt"
   ],
   "baseBranches": [
     "main"
   ],
   "ignoreDeps": [
-    "@nuxt/image-edge"
+    "@nuxt/image"
   ]
 }

@@ -1,13 +1,11 @@
-import { createImage } from '#image'
-// @ts-ignore
-import { imageOptions } from '#build/image-options'
-import { defineNuxtPlugin } from '#imports'
+import type { Plugin } from 'nuxt/app'
+import type { $Img } from '../types'
+import { defineNuxtPlugin, useImage } from '#imports'
 
 export default defineNuxtPlugin(() => {
-  const img = createImage(imageOptions)
   return {
     provide: {
-      img
+      img: useImage()
     }
   }
-})
+}) as Plugin<{ img: $Img }>
