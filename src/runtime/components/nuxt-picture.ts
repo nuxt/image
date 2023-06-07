@@ -27,7 +27,7 @@ export default defineComponent({
       return isTransparent.value ? 'png' : 'jpeg'
     })
 
-    type Source = { srcset?: string, src: string, type?: string, sizes?: string, };
+    type Source = { srcset?: string, src: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
       const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
       const formats = format.split(',')
