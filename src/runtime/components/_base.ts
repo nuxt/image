@@ -33,12 +33,12 @@ export const baseImageProps = {
   crossorigin: {
     type: [Boolean, String] as unknown as () => 'anonymous' | 'use-credentials' | boolean,
     default: undefined,
-    validator: val => ['anonymous', 'use-credentials', '', true, false].includes(val)
+    validator: (val: any) => ['anonymous', 'use-credentials', '', true, false].includes(val)
   },
   decoding: {
     type: String as () => 'async' | 'auto' | 'sync',
     default: undefined,
-    validator: val => ['async', 'auto', 'sync'].includes(val)
+    validator: (val: any) => ['async', 'auto', 'sync'].includes(val)
   }
 }
 
@@ -74,7 +74,7 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
   })
 
   const attrs = computed<BaseImageAttrs>(() => {
-    return <BaseImageAttrs>{
+    return <BaseImageAttrs> {
       width: parseSize(props.width),
       height: parseSize(props.height),
       alt: props.alt,

@@ -13,29 +13,33 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { providers } from '../../providers'
 
-export default {
+definePageMeta({
   validate ({ params }) {
     return Boolean(providers.find(p => p.name === params.provider))
-  },
-  computed: {
-    providers: () => providers,
-    provider () {
-      const providerName = this.$route.params.provider || 'default'
-      const p = providers.find(p => p.name === providerName)
-      if (!p) {
-        return null
-      }
-      return p
-    }
   }
+})
+
+const route = useRoute()
+const provider = computed(() => {
+  const providerName = route.params.provider || 'default'
+  const p = providers.find(p => p.name === providerName)
+  if (!p) {
+    return null
+  }
+  return p
+})
+
+if (route.params.provider === 'ipx') {
+  useImage().getImage('/images/nuxt.png')
 }
 </script>
 
 <style scoped>
 img {
   max-width: 80vw;
+  height: auto;
 }
 </style>

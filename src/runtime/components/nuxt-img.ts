@@ -3,7 +3,7 @@ import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
 import { baseImageProps, useBaseImage } from './_base'
-import { useHead } from '#imports'
+import { useHead, useNuxtApp } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
@@ -13,7 +13,7 @@ export const imgProps = {
 export default defineComponent({
   name: 'NuxtImg',
   props: imgProps,
-  emits: ['load'],
+  emits: ['load', 'error'],
   setup: (props, ctx) => {
     const $img = useImage()
     const _base = useBaseImage(props)
@@ -26,7 +26,7 @@ export default defineComponent({
       'data-nuxt-img'?: string
     }
 
-    const sizes = computed(() => $img.getSizes(props.src, {
+    const sizes = computed(() => $img.getSizes(props.src!, {
       ..._base.options.value,
       sizes: props.sizes,
       modifiers: {
@@ -65,7 +65,7 @@ export default defineComponent({
         ? placeholder
         : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number]
 
-      return $img(props.src, {
+      return $img(props.src!, {
         ..._base.modifiers.value,
         width: size[0],
         height: size[1],
@@ -76,7 +76,7 @@ export default defineComponent({
     const mainSrc = computed(() =>
       props.sizes
         ? sizes.value.src
-        : $img(props.src, _base.modifiers.value, _base.options.value)
+        : $img(props.src!, _base.modifiers.value, _base.options.value)
     )
 
     const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
@@ -105,19 +105,37 @@ export default defineComponent({
 
     const imgEl = ref<HTMLImageElement>()
 
+    const nuxtApp = useNuxtApp()
+    const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
       if (placeholder.value) {
         const img = new Image()
         img.src = mainSrc.value
         img.onload = (event) => {
-          imgEl.value!.src = mainSrc.value
+          if (imgEl.value) {
+            imgEl.value.src = mainSrc.value
+          }
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
-      } else {
-        imgEl.value!.onload = (event) => {
-          ctx.emit('load', event)
+        return
+      }
+
+      if (!imgEl.value) { return }
+
+      if (imgEl.value.complete && initialLoad) {
+        if (imgEl.value.getAttribute('data-error')) {
+          ctx.emit('error', new Event('error'))
+        } else {
+          ctx.emit('load', new Event('load'))
         }
+      }
+
+      imgEl.value.onload = (event) => {
+        ctx.emit('load', event)
+      }
+      imgEl.value.onerror = (event) => {
+        ctx.emit('error', event)
       }
     })
 
@@ -125,6 +143,7 @@ export default defineComponent({
       ref: imgEl,
       key: src.value,
       src: src.value,
+      ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
       ...ctx.attrs
     })
