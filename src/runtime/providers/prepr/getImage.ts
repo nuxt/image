@@ -30,9 +30,9 @@ const getImage: PreprProviderGetImage = (src, options, _ctx) => {
 
   const fileBucket = 'stream'
   const fileOperations = operationsGenerator(options.modifiers)
-  const filePath = fileOperations ? `${fileOperations}/${src}` : src
+  const filePath = fileOperations ? joinURL(fileOperations, src) : src
 
-  const projectUrl = `https://${projectNameTrimmed}.${fileBucket}.prepr.io`
+  const projectUrl = `https://${projectName.trim()}.${fileBucket}.prepr.io`
 
   return {
     url: joinURL(projectUrl, filePath)
