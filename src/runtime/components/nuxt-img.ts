@@ -38,7 +38,7 @@ export default defineComponent({
 
     const attrs = computed(() => {
       const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
-      if (props.sizes) {
+      if (props.sizes && (!props.placeholder || placeholderLoaded.value)) {
         attrs.sizes = sizes.value.sizes
         attrs.srcset = sizes.value.srcset
       }
@@ -101,10 +101,11 @@ export default defineComponent({
       if (placeholder.value) {
         const img = new Image()
         img.src = mainSrc.value
+        if (props.sizes) {
+          img.sizes = sizes.value.sizes
+          img.srcset = sizes.value.srcset
+        }
         img.onload = (event) => {
-          if (imgEl.value) {
-            imgEl.value.src = mainSrc.value
-          }
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
