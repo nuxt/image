@@ -98,8 +98,7 @@ export default defineComponent({
           return h('source', {
             type: source.type,
             sizes: source.sizes,
-            srcset: source.srcset,
-            src: source.src
+            srcset: source.srcset
           })
         }),
         h('img', {
