@@ -1,35 +1,35 @@
-import { getFileExtension } from '#image'
-import { useHead, useImage, useNuxtApp } from '#imports'
-import { computed, defineComponent, h, onMounted, ref } from 'vue'
-import { prerenderStaticImages } from '../utils/prerender'
-import { baseImageProps, useBaseImage } from './_base'
+import { getFileExtension } from "#image";
+import { useHead, useImage, useNuxtApp } from "#imports";
+import { computed, defineComponent, h, onMounted, ref } from "vue";
+import { prerenderStaticImages } from "../utils/prerender";
+import { baseImageProps, useBaseImage } from "./_base";
 
 export const pictureProps = {
   ...baseImageProps,
   legacyFormat: { type: String, default: null },
-  imgAttrs: { type: Object, default: null }
-}
+  imgAttrs: { type: Object, default: null },
+};
 
 export default defineComponent({
-  name: 'NuxtPicture',
+  name: "NuxtPicture",
   props: pictureProps,
-  emits: ['load'],
+  emits: ["load"],
   setup: (props, ctx) => {
-    const $img = useImage()
-    const _base = useBaseImage(props)
+    const $img = useImage();
+    const _base = useBaseImage(props);
 
     const isTransparent = computed(() =>
-      ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value)
-    )
+      ["png", "webp", "gif", "svg"].includes(originalFormat.value)
+    );
 
-    const originalFormat = computed(() => getFileExtension(props.src))
+    const originalFormat = computed(() => getFileExtension(props.src));
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) {
-        return props.legacyFormat
+        return props.legacyFormat;
       }
-      return isTransparent.value ? 'png' : 'jpeg'
-    })
+      return isTransparent.value ? "png" : "jpeg";
+    });
 
     type Source = {
       srcset: string;
@@ -38,87 +38,105 @@ export default defineComponent({
       sizes?: string;
     };
     const sources = computed<Source[]>(() => {
-      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
-      const formats = format.split(',')
-      if (format === 'svg') {
-        return [<Source>{ srcset: props.src }]
+      const format =
+        props.format || (originalFormat.value === "svg" ? "svg" : "webp");
+      const formats = format.split(",");
+      if (format === "svg") {
+        return [<Source>{ srcset: props.src }];
       }
 
       if (!formats.includes(legacyFormat.value)) {
-        formats.push(legacyFormat.value)
+        formats.push(legacyFormat.value);
       } else {
-        formats.splice(formats.indexOf(legacyFormat.value), 1)
-        formats.push(legacyFormat.value)
+        formats.splice(formats.indexOf(legacyFormat.value), 1);
+        formats.push(legacyFormat.value);
       }
 
-      return formats.map((format: string) => {
+      return formats.map((format) => {
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
-          modifiers: { ..._base.modifiers.value, format }
-        })
+          modifiers: { ..._base.modifiers.value, format },
+        });
 
-        return <Source>{ src, type: `image/${format}`, sizes, srcset }
-      })
-    })
-    const lastSourceIndex = computed(() => sources.value.length - 1)
+        return <Source>{ src, type: `image/${format}`, sizes, srcset };
+      });
+    });
+    const lastSourceIndex = computed(() => sources.value.length - 1);
 
     if (props.preload) {
-      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[lastSourceIndex.value].srcset }
+      const link: any = {
+        rel: "preload",
+        as: "image",
+        imagesrcset: sources.value[lastSourceIndex.value].srcset,
+      };
 
-      if (sources.value?.[lastSourceIndex.value]?.sizes) { link.imagesizes = sources.value[lastSourceIndex.value].sizes }
+      if (sources.value?.[lastSourceIndex.value]?.sizes) {
+        link.imagesizes = sources.value[lastSourceIndex.value].sizes;
+      }
 
-      useHead({ link: [link] })
+      useHead({ link: [link] });
     }
 
     // Only passdown supported <image> attributes
-    const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
+    const imgAttrs: Record<string, string | unknown> = {
+      ...props.imgAttrs,
+      "data-nuxt-pic": "",
+    };
     for (const key in ctx.attrs) {
       if (key in baseImageProps && !(key in imgAttrs)) {
-        imgAttrs[key] = ctx.attrs[key]
+        imgAttrs[key] = ctx.attrs[key];
       }
     }
 
-    const imgEl = ref<HTMLImageElement>()
+    const imgEl = ref<HTMLImageElement>();
 
     // Prerender static images
     if (process.server && process.env.prerender) {
       for (const src of sources.value as Source[]) {
-        prerenderStaticImages(src.src, src.srcset)
+        prerenderStaticImages(src.src, src.srcset);
       }
     }
 
-    const nuxtApp = useNuxtApp()
-    const initialLoad = nuxtApp.isHydrating
+    const nuxtApp = useNuxtApp();
+    const initialLoad = nuxtApp.isHydrating;
     onMounted(() => {
-      if (!imgEl.value) { return }
+      if (!imgEl.value) {
+        return;
+      }
 
-      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
-        ctx.emit('load', new Event('load'))
+      if (
+        imgEl.value.complete &&
+        initialLoad &&
+        !imgEl.value.getAttribute("data-error")
+      ) {
+        ctx.emit("load", new Event("load"));
       }
       imgEl.value.onload = (event) => {
-        ctx.emit('load', event)
-      }
-    })
+        ctx.emit("load", event);
+      };
+    });
 
     return () =>
-      h('picture', { key: sources.value[0].src }, [
+      h("picture", { key: sources.value[0].src }, [
         ...sources.value.slice(0, -1).map((source) => {
-          return h('source', {
+          return h("source", {
             type: source.type,
             sizes: source.sizes,
-            srcset: source.srcset
-          })
+            srcset: source.srcset,
+          });
         }),
-        h('img', {
+        h("img", {
           ref: imgEl,
           ..._base.attrs.value,
-          ...(process.server ? { onerror: "this.setAttribute('data-error', 1)" } : {}),
+          ...(process.server
+            ? { onerror: "this.setAttribute('data-error', 1)" }
+            : {}),
           ...imgAttrs,
           src: sources.value[lastSourceIndex.value].src,
           sizes: sources.value[lastSourceIndex.value].sizes,
-          srcset: sources.value[lastSourceIndex.value].srcset
-        })
-      ])
-  }
-})
+          srcset: sources.value[lastSourceIndex.value].srcset,
+        }),
+      ]);
+  },
+});
