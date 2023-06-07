@@ -43,9 +43,6 @@ export default defineComponent({
       }
 
       return formats.map((format) => {
-        if (format === 'svg') {
-          return <Source>{ src: props.src }
-        }
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
