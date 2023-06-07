@@ -18,25 +18,16 @@ export default defineComponent({
     const $img = useImage()
     const _base = useBaseImage(props)
 
-    const isTransparent = computed(() =>
-      ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value)
-    )
+    const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
     const originalFormat = computed(() => getFileExtension(props.src))
 
     const legacyFormat = computed(() => {
-      if (props.legacyFormat) {
-        return props.legacyFormat
-      }
+      if (props.legacyFormat) { return props.legacyFormat }
       return isTransparent.value ? 'png' : 'jpeg'
     })
 
-    type Source = {
-      srcset: string;
-      src?: string;
-      type?: string;
-      sizes?: string;
-    };
+    type Source = { srcset: string; src?: string; type?: string; sizes?: string; };
     const sources = computed<Source[]>(() => {
       const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
       const formats = format.split(',')
