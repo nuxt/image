@@ -1,8 +1,8 @@
-import { getFileExtension } from '#image'
-import { useHead, useImage, useNuxtApp } from '#imports'
-import { computed, defineComponent, h, onMounted, ref } from 'vue'
+import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
-import { baseImageProps, useBaseImage } from './_base'
+import { useBaseImage, baseImageProps } from './_base'
+import { useImage, useHead, useNuxtApp } from '#imports'
+import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
