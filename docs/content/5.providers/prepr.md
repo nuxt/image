@@ -29,7 +29,7 @@ For the time being you might find the following links useful:
 - [Understanding your marketing and design team workflows](https://docs.prepr.io/managing-content/images)
 
 ::alert{type="info"}
-prepr.io does not provide away to restrict what domains can
+prepr.io does not provide a way to restrict what domains can
 request assets to your project's CDN, nor limit the maximum size in `pixels` or
 `bytes` of images that are served from the CDN.
 ::
