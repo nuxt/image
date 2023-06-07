@@ -64,7 +64,7 @@ describe('Renders simple image', () => {
     expect(wrapper.find('[type="image/webp"]').exists()).toBe(true)
   })
 
-  it('renders single format and fallback', () => {
+  it('renders single format and fallback image tag', () => {
     const img = mount(NuxtPicture, {
       propsData: {
         width: 200,
@@ -73,11 +73,11 @@ describe('Renders simple image', () => {
         src
       }
     })
-    expect(img.find('[type="image/avif"]').exists()).toBe(true)
-    expect(img.find('[type="image/png"]').exists()).toBe(true)
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true);
+    expect(img.find('img').exists()).toBe(true)
   })
 
-  it('renders avif, webp and fallback', () => {
+  it('renders avif, webp and fallback image tag', () => {
     const img = mount(NuxtPicture, {
       propsData: {
         width: 200,
@@ -86,23 +86,23 @@ describe('Renders simple image', () => {
         src
       }
     })
-    expect(img.find('[type="image/avif"]').exists()).toBe(true)
-    expect(img.find('[type="image/webp"]').exists()).toBe(true)
-    expect(img.find('[type="image/png"]').exists()).toBe(true)
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true);
+    expect(img.find('source[type="image/webp"]').exists()).toBe(true);
+    expect(img.find('img').exists()).toBe(true)
   })
 
-  it('renders avif, gif and fallback', () => {
+  it('renders avif, gif and fallback image tag', () => {
     const img = mount(NuxtPicture, {
       propsData: {
         width: 200,
         height: 200,
-        format: 'avif',
+        format: 'avif,gif',
         src
       }
     })
-    expect(img.find('[type="image/avif"]').exists()).toBe(true)
-    expect(img.find('[type="image/gif"]').exists()).toBe(true)
-    expect(img.find('[type="image/png"]').exists()).toBe(true)
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true);
+    expect(img.find('source[type="image/gif"]').exists()).toBe(true);
+    expect(img.find('img').exists()).toBe(true)
   })
 
   it('props.src is reactive', async () => {
