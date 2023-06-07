@@ -24,14 +24,8 @@ const operationsGenerator = createOperationsGenerator({
 const getImage: PreprProviderGetImage = (src, options, _ctx) => {
   const { projectName } = options
 
-  if (typeof projectName !== 'string') {
-    throw new TypeError('The ImageProvider \'prepr\' expects a string to be defined in your nuxt configuration at \'image.prepr.projectName\'')
-  }
-
-  const projectNameTrimmed = projectName.trim()
-
-  if (projectNameTrimmed === '') {
-    throw new Error('It appears your nuxt configuration includes an empty string at \'image.prepr.projectName\'')
+  if (typeof projectName !== 'string' || !projectName.trim()) {
+    throw new TypeError('[nuxt] [image] [prepr] No project name provided.')
   }
 
   const fileBucket = 'stream'
