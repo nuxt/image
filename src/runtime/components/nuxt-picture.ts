@@ -27,12 +27,12 @@ export default defineComponent({
       return isTransparent.value ? 'png' : 'jpeg'
     })
 
-    type Source = { srcset: string; src?: string; type?: string; sizes?: string; };
+    type Source = { srcset?: string, src: string, type?: string, sizes?: string, };
     const sources = computed<Source[]>(() => {
       const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
       const formats = format.split(',')
       if (format === 'svg') {
-        return [<Source>{ srcset: props.src }]
+        return [<Source>{ src: props.src }]
       }
 
       if (!formats.includes(legacyFormat.value)) {
@@ -43,6 +43,9 @@ export default defineComponent({
       }
 
       return formats.map((format) => {
+        if (format === 'svg') {
+          return <Source>{ src: props.src }
+        }
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
