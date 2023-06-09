@@ -221,7 +221,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   return {
     sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
     srcset: srcsetVariants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar.src
+    src: defaultVar?.src
   }
 }
 
