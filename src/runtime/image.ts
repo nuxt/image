@@ -130,10 +130,11 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
-  const hwRatio = (width && height) ? height / width : 0
   const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
+
+  const hwRatio = (width && height) ? height / width : 0
   const sizeVariants = []
-  const srcVariants = []
+  const srcsetVariants = []
 
   const sizes: Record<string, string> = {}
 
@@ -166,17 +167,18 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
     const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
+
+    // add size variant with 'media'
     sizeVariants.push({
-      width: _cWidth,
       size,
       screenMaxWidth,
-      media: `(max-width: ${screenMaxWidth}px)`,
-      src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
+      media: `(max-width: ${screenMaxWidth}px)`
     })
 
     if (densities) {
+      // add srcset variants for all densities (for current 'size' processed)
       for (const density of densities) {
-        srcVariants.push({
+        srcsetVariants.push({
           width: _cWidth * density,
           src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * density, height: _cHeight ? _cHeight * density : undefined }, opts)
         })
@@ -186,34 +188,50 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
 
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  let previousSize = ''
-  for (let i = sizeVariants.length - 1; i >= 0; i--) {
-    const sizeVariant = sizeVariants[i]
-    if (sizeVariant.media === previousSize) {
-      sizeVariants.splice(i, 1)
-    }
-    previousSize = sizeVariant.size
+  // for last size variant, always remove `media` (convention)
+  if (sizeVariants[sizeVariants.length - 1]) {
+    sizeVariants[sizeVariants.length - 1].media = ''
   }
 
-  srcVariants.sort((v1, v2) => v1.width - v2.width)
+  // de-duplicate size variants (by key `media`)
+  let previousMedia = null
+  for (let i = sizeVariants.length - 1; i >= 0; i--) {
+    const sizeVariant = sizeVariants[i]
+    if (sizeVariant.media === previousMedia) {
+      sizeVariants.splice(i, 1)
+    }
+    previousMedia = sizeVariant.media
+  }
 
-  const defaultVar = srcVariants[srcVariants.length - 1]
+  srcsetVariants.sort((v1, v2) => v1.width - v2.width)
+
+  // de-duplicate srcset variants (by key `width`)
+  let previousWidth = null
+  for (let i = srcsetVariants.length - 1; i >= 0; i--) {
+    const sizeVariant = srcsetVariants[i]
+    if (sizeVariant.width === previousWidth) {
+      srcsetVariants.splice(i, 1)
+    }
+    previousWidth = sizeVariant.width
+  }
+
+  // use last (:= largest) srcset variant as the image `src`
+  const defaultVar = srcsetVariants[srcsetVariants.length - 1]
 
   return {
     sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: srcVariants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar?.src
+    srcset: srcsetVariants.map(v => `${v.src} ${v.width}w`).join(', '),
+    src: defaultVar.src
   }
 }
 
 function getDensitySet (ctx: ImageCTX, input: string, opts: ImageSizesOptions): string|undefined {
-  const srcSet :{ density: string, src: string }[] = []
-  let densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
-  densities = densities.filter(density => density !== 1)
-
+  const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
   if (densities.length === 0) {
     return undefined
   }
+
+  const srcsetVariants :{ density: string, src: string }[] = []
 
   for (const density of densities) {
     const modifiers = { ...opts.modifiers }
@@ -223,11 +241,11 @@ function getDensitySet (ctx: ImageCTX, input: string, opts: ImageSizesOptions): 
     if (modifiers.height) {
       modifiers.height = modifiers.height * density
     }
-    srcSet.push({
-      density: `x${density}`,
+    srcsetVariants.push({
+      density: `${density}x`,
       src: ctx.$img!(input, modifiers, opts)
     })
   }
 
-  return srcSet.map(v => `${v.src} ${v.density}`).join(', ')
+  return srcsetVariants.map(v => `${v.src} ${v.density}`).join(', ')
 }

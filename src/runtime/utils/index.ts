@@ -93,9 +93,12 @@ export function parseSize (input: string | number | undefined = '') {
 }
 
 export function parseDensities (input: string | undefined = ''): number[] {
-  if (!input.length) {
+  if (input === undefined || !input.length) {
     return []
   }
 
-  return input.split(' ').map(size => parseInt(size.replace('x', '')))
+  const densities = input.split(' ').map(size => parseInt(size.replace('x', '')))
+
+  // de-duplicate and return
+  return densities.filter((value, index) => densities.indexOf(value) === index)
 }

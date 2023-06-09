@@ -29,6 +29,7 @@ export default defineComponent({
     const sizes = computed(() => $img.getSizes(props.src!, {
       ..._base.options.value,
       sizes: props.sizes,
+      densities: props.densities,
       modifiers: {
         ..._base.modifiers.value,
         width: parseSize(props.width),
