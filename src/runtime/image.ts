@@ -225,13 +225,13 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   }
 }
 
-function getDensitySet (ctx: ImageCTX, input: string, opts: ImageSizesOptions): string|undefined {
+function getDensitySet (ctx: ImageCTX, input: string, opts: ImageSizesOptions): string | undefined {
   const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
   if (densities.length === 0) {
     return undefined
   }
 
-  const srcsetVariants :{ density: string, src: string }[] = []
+  const srcsetVariants: Array<{ density: string, src: string }> = []
 
   for (const density of densities) {
     const modifiers = { ...opts.modifiers }
