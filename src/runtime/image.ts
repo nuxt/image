@@ -37,7 +37,7 @@ export function createImage (globalOptions: CreateImageOptions) {
   $img.getImage = getImage
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
   $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
-  $img.getDensitySet = ((input: string, options: ImageSizesOptions) => getDensitySet(ctx, input, options)) as $Img['getSrcSet']
+  $img.getDensitySet = ((input: string, options: ImageSizesOptions) => getDensitySet(ctx, input, options)) as $Img['getDensitySet']
 
   ctx.$img = $img as $Img
 

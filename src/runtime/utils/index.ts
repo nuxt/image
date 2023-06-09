@@ -92,7 +92,7 @@ export function parseSize (input: string | number | undefined = '') {
   }
 }
 
-export function parseDensities (input: string | undefined = '') :number[] {
+export function parseDensities (input: string | undefined = ''): number[] {
   if (!input.length) {
     return []
   }
