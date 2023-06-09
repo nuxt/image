@@ -44,7 +44,7 @@ export default defineNuxtModule<ModuleOptions>({
     internalUrl: '',
     providers: {},
     alias: {},
-    densities: []
+    densities: [1, 2]
   }),
   meta: {
     name: '@nuxt/image',
