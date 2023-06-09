@@ -106,4 +106,14 @@ describe('Renders simple image', () => {
       </picture>"
     `)
   })
+
+  it('renders <img> with custom format', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        format: 'avif',
+        src: '/test.png'
+      }
+    })
+    expect(img.find('img').exists()).toBe(true)
+  })
 })
