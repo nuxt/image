@@ -46,7 +46,7 @@ describe('Renders simple image', () => {
   it('Matches snapshot', () => {
     expect(wrapper.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type=\\"image/webp\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_webp&s_500x500/image.png 500w, /_ipx/f_webp&s_900x900/image.png 900w\\"><img width=\\"200\\" height=\\"200\\" data-nuxt-pic=\\"\\" src=\\"/_ipx/f_png&s_900x900/image.png\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_png&s_500x500/image.png 500w, /_ipx/f_png&s_900x900/image.png 900w\\">
+        <source type=\\"image/webp\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_webp&s_500x500/image.png 500w, /_ipx/f_webp&s_900x900/image.png 900w, /_ipx/f_webp&s_1000x1000/image.png 1000w, /_ipx/f_webp&s_1800x1800/image.png 1800w\\"><img width=\\"200\\" height=\\"200\\" data-nuxt-pic=\\"\\" src=\\"/_ipx/f_png&s_1800x1800/image.png\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_png&s_500x500/image.png 500w, /_ipx/f_png&s_900x900/image.png 900w, /_ipx/f_png&s_1000x1000/image.png 1000w, /_ipx/f_png&s_1800x1800/image.png 1800w\\">
       </picture>"
     `)
   })
@@ -102,7 +102,7 @@ describe('Renders simple image', () => {
     })
     expect(img.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type=\\"image/webp\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_webp&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_webp&s_900x900/%E6%B1%89%E5%AD%97.png 900w\\"><img width=\\"200\\" height=\\"200\\" data-nuxt-pic=\\"\\" src=\\"/_ipx/f_png&s_900x900/%E6%B1%89%E5%AD%97.png\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_png&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_png&s_900x900/%E6%B1%89%E5%AD%97.png 900w\\">
+        <source type=\\"image/webp\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_webp&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_webp&s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/f_webp&s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/f_webp&s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w\\"><img width=\\"200\\" height=\\"200\\" data-nuxt-pic=\\"\\" src=\\"/_ipx/f_png&s_1800x1800/%E6%B1%89%E5%AD%97.png\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/f_png&s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_png&s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/f_png&s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/f_png&s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w\\">
       </picture>"
     `)
   })
