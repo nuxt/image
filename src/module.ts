@@ -16,6 +16,7 @@ export interface ModuleOptions extends ImageProviders {
   screens: CreateImageOptions['screens']
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
+  densities: number[]
   [key: string]: any
 }
 
@@ -42,7 +43,8 @@ export default defineNuxtModule<ModuleOptions>({
     },
     internalUrl: '',
     providers: {},
-    alias: {}
+    alias: {},
+    densities: [1, 2]
   }),
   meta: {
     name: '@nuxt/image',
@@ -70,13 +72,15 @@ export default defineNuxtModule<ModuleOptions>({
     if (options.provider) {
       options[options.provider] = options[options.provider] || {}
     }
+    options.densities = options.densities || []
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt'> = pick(options, [
       'screens',
       'presets',
       'provider',
       'domains',
-      'alias'
+      'alias',
+      'densities'
     ])
 
     const providers = await resolveProviders(nuxt, options)
@@ -129,10 +133,8 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
         imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'none'
         options[options.provider] = options[options.provider] || {}
 
-        if (options.provider === 'none') { return }
-
-        const p = await resolveProvider(nuxt, 'ipx', options.ipx as {})
-        if (!providers.some(p => p.name === 'ipx')) {
+        const p = await resolveProvider(nuxt, options.provider, options[options.provider])
+        if (!providers.some(p => p.name === options.provider)) {
           providers.push(p)
         }
         if (typeof p.setup === 'function') {
