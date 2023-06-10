@@ -1,7 +1,7 @@
 // @vitest-environment nuxt
 
-import { beforeEach, describe, it, expect } from 'vitest'
 import { VueWrapper, mount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
 
 describe('Renders simple image', () => {
@@ -62,6 +62,47 @@ describe('Renders simple image', () => {
 
   it('renders webp image source', () => {
     expect(wrapper.find('[type="image/webp"]').exists()).toBe(true)
+  })
+
+  it('renders single format and fallback image tag', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif',
+        src
+      }
+    })
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('img').exists()).toBe(true)
+  })
+
+  it('renders avif, webp and fallback image tag', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif,webp',
+        src
+      }
+    })
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('source[type="image/webp"]').exists()).toBe(true)
+    expect(img.find('img').exists()).toBe(true)
+  })
+
+  it('renders avif, gif and fallback image tag', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: 'avif,gif',
+        src
+      }
+    })
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('source[type="image/gif"]').exists()).toBe(true)
+    expect(img.find('img').exists()).toBe(true)
   })
 
   it('props.src is reactive', async () => {
