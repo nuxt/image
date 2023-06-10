@@ -18,30 +18,29 @@ export default defineComponent({
     const $img = useImage()
     const _base = useBaseImage(props)
 
-    const isTransparent = computed(() => ['png', 'webp', 'gif'].includes(originalFormat.value))
+    const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
     const originalFormat = computed(() => getFileExtension(props.src))
 
-    const format = computed(() => props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp'))
-
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
-      const formats: Record<string, string> = {
-        webp: isTransparent.value ? 'png' : 'jpeg',
-        svg: 'png'
-      }
-      return formats[format.value] || originalFormat.value
+      return isTransparent.value ? 'png' : 'jpeg'
     })
 
-    type Source = { srcset: string, src?: string, type?: string, sizes?: string }
+    type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      if (format.value === 'svg') {
+      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
+      const formats = format.split(',')
+      if (format === 'svg') {
         return [<Source>{ src: props.src }]
       }
 
-      const formats = legacyFormat.value !== format.value
-        ? [legacyFormat.value, format.value]
-        : [format.value]
+      if (!formats.includes(legacyFormat.value)) {
+        formats.push(legacyFormat.value)
+      } else {
+        formats.splice(formats.indexOf(legacyFormat.value), 1)
+        formats.push(legacyFormat.value)
+      }
 
       return formats.map((format) => {
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
@@ -50,16 +49,15 @@ export default defineComponent({
           modifiers: { ..._base.modifiers.value, format }
         })
 
-        return <Source> { src, type: `image/${format}`, sizes, srcset }
+        return <Source>{ src, type: `image/${format}`, sizes, srcset }
       })
     })
+    const lastSourceIndex = computed(() => sources.value.length - 1)
 
     if (props.preload) {
-      const srcKey = sources.value?.[1] ? 1 : 0
+      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[0].srcset }
 
-      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[srcKey].srcset }
-
-      if (sources.value?.[srcKey]?.sizes) { link.imagesizes = sources.value[srcKey].sizes }
+      if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
 
       useHead({ link: [link] })
     }
@@ -94,23 +92,24 @@ export default defineComponent({
       }
     })
 
-    return () => h('picture', { key: sources.value[0].src }, [
-      ...(sources.value?.[1]
-        ? [h('source', {
-            type: sources.value[1].type,
-            sizes: sources.value[1].sizes,
-            srcset: sources.value[1].srcset
-          })]
-        : []),
-      h('img', {
-        ref: imgEl,
-        ..._base.attrs.value,
-        ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-        ...imgAttrs,
-        src: sources.value[0].src,
-        sizes: sources.value[0].sizes,
-        srcset: sources.value[0].srcset
-      })
-    ])
+    return () =>
+      h('picture', { key: sources.value[0].src }, [
+        ...sources.value.slice(0, -1).map((source) => {
+          return h('source', {
+            type: source.type,
+            sizes: source.sizes,
+            srcset: source.srcset
+          })
+        }),
+        h('img', {
+          ref: imgEl,
+          ..._base.attrs.value,
+          ...(process.server ? { onerror: "this.setAttribute('data-error', 1)" } : {}),
+          ...imgAttrs,
+          src: sources.value[lastSourceIndex.value].src,
+          sizes: sources.value[lastSourceIndex.value].sizes,
+          srcset: sources.value[lastSourceIndex.value].srcset
+        })
+      ])
   }
 })
