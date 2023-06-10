@@ -94,7 +94,7 @@ export default defineComponent({
       }
     })
 
-    return () => h('picture', { key: sources.value[0].src }, [
+    return () => h('picture', {}, [
       ...(sources.value?.[1]
         ? [h('source', {
             type: sources.value[1].type,
