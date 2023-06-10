@@ -52,6 +52,16 @@ describe('Renders simple image', () => {
     expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1200x1800/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_900x1350/image.png 900w, /_ipx/s_1200x1800/image.png 1200w\\">"')
   })
 
+  it('de-duplicates sizes & srcset', () => {
+    const img = mountImage({
+      width: 200,
+      height: 300,
+      sizes: '200:200px,300:200px,400:400px,400:400px,500:500px,800:800px',
+      src: 'image.png'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1600x2400/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 200px) 200px, (max-width: 300px) 200px, (max-width: 400px) 400px, (max-width: 500px) 500px, 800px\\" srcset=\\"/_ipx/s_200x300/image.png 200w, /_ipx/s_400x600/image.png 400w, /_ipx/s_500x750/image.png 500w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_1000x1500/image.png 1000w, /_ipx/s_1600x2400/image.png 1600w\\">"')
+  })
+
   it('encodes characters', () => {
     const img = mountImage({
       width: 200,
