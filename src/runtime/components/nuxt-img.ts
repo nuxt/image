@@ -29,6 +29,7 @@ export default defineComponent({
     const sizes = computed(() => $img.getSizes(props.src!, {
       ..._base.options.value,
       sizes: props.sizes,
+      densities: props.densities,
       modifiers: {
         ..._base.modifiers.value,
         width: parseSize(props.width),
@@ -41,6 +42,16 @@ export default defineComponent({
       if (props.sizes && (!props.placeholder || placeholderLoaded.value)) {
         attrs.sizes = sizes.value.sizes
         attrs.srcset = sizes.value.srcset
+      } else if (props.densities || $img.options.densities) {
+        attrs.srcset = $img.getDensitySet(props.src!, {
+          ..._base.options.value,
+          densities: props.densities,
+          modifiers: {
+            ..._base.modifiers.value,
+            width: parseSize(props.width),
+            height: parseSize(props.height)
+          }
+        })
       }
       return attrs
     })
