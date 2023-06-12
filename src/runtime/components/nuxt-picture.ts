@@ -93,7 +93,7 @@ export default defineComponent({
     })
 
     return () =>
-      h('picture', { key: sources.value[0].src }, [
+      h('picture', null, [
         ...sources.value.slice(0, -1).map((source) => {
           return h('source', {
             type: source.type,
