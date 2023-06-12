@@ -107,6 +107,7 @@ export default defineNuxtModule<ModuleOptions>({
       name: 'NuxtImg',
       filePath: resolver.resolve('./runtime/components/nuxt-img')
     })
+
     addComponent({
       name: 'NuxtPicture',
       filePath: resolver.resolve('./runtime/components/nuxt-picture')
