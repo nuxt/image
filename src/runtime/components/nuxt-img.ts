@@ -143,7 +143,6 @@ export default defineComponent({
 
     return () => h('img', {
       ref: imgEl,
-      key: src.value,
       src: src.value,
       ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
