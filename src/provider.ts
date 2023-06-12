@@ -26,6 +26,7 @@ const BuiltInProviders = [
   'ipx',
   'layer0',
   'netlify',
+  'prepr',
   'none',
   'prismic',
   'sanity',
