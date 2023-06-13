@@ -39,19 +39,9 @@ export default defineComponent({
 
     const attrs = computed(() => {
       const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
-      if (props.sizes && (!props.placeholder || placeholderLoaded.value)) {
+      if (!props.placeholder || placeholderLoaded.value) {
         attrs.sizes = sizes.value.sizes
         attrs.srcset = sizes.value.srcset
-      } else if (props.densities || $img.options.densities) {
-        attrs.srcset = $img.getDensitySet(props.src!, {
-          ..._base.options.value,
-          densities: props.densities,
-          modifiers: {
-            ..._base.modifiers.value,
-            width: parseSize(props.width),
-            height: parseSize(props.height)
-          }
-        })
       }
       return attrs
     })
@@ -113,7 +103,7 @@ export default defineComponent({
         const img = new Image()
         img.src = mainSrc.value
         if (props.sizes) {
-          img.sizes = sizes.value.sizes
+          img.sizes = sizes.value.sizes || ''
           img.srcset = sizes.value.srcset
         }
         img.onload = (event) => {
