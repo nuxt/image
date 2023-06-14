@@ -14,15 +14,15 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
     format,
     quality
   } = modifiers
-  
-  const isSVG = src.endsWith(".svg")
-  const doResize = !isSVG && (width !== "0" || height !== "0")
 
-  if(!isSVG) {
+  const isSVG = src.endsWith('.svg')
+  const doResize = !isSVG && (width !=='0' || height !== '0')
+
+  if (!isSVG) {
     if (format) {
       filters.format = format + ''
     }
-  
+
     if (quality) {
       filters.quality = quality + ''
     }
