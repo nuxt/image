@@ -16,7 +16,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
   } = modifiers
 
   const isSVG = src.endsWith('.svg')
-  const doResize = !isSVG && (width !=='0' || height !== '0')
+  const doResize = !isSVG && (width !== '0' || height !== '0')
 
   if (!isSVG) {
     if (format) {
