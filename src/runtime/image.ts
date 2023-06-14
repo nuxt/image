@@ -131,10 +131,8 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
   const sizes = parseSizes(opts.sizes)
-  const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities // TODO: test empty string with whitespaces
+  const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities
   if (densities.length === 0) {
-    // TODO: add test with empty densities
-    // TODO: throw error or fallback to '1x' or to global default `ctx.options.densities`
     throw new Error('\'densities\' must not be empty, configure to \'1\' to render regular size only (DPR 1.0)')
   }
 

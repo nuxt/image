@@ -52,6 +52,37 @@ describe('Renders simple image', () => {
     expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1200x1800/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_900x1350/image.png 900w, /_ipx/s_1200x1800/image.png 1200w\\">"')
   })
 
+  it('empty densities (fallback to global)', () => {
+    const img = mountImage({
+      width: 200,
+      height: 300,
+      sizes: '300:300px,400:400px',
+      densities: '',
+      src: 'image.png'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_800x1200/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w\\">"')
+  })
+
+  it('empty string densities (fallback to global)', () => {
+    const img = mountImage({
+      width: 200,
+      height: 300,
+      sizes: '300:300px,400:400px',
+      densities: ' ',
+      src: 'image.png'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_800x1200/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w\\">"')
+  })
+
+  it('error on invalid densities', () => {
+    expect(() => mountImage({
+      width: 200,
+      height: 300,
+      densities: 'x',
+      src: 'image.png'
+    })).toThrow(Error)
+  })
+
   it('with single sizes entry', () => {
     const img = mountImage({
       src: '/image.png',
