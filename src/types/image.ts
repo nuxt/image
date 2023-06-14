@@ -107,3 +107,10 @@ export interface OperationGeneratorConfig {
 }
 
 export type MapToStatic = (image: ResolvedImage, input: string) => string
+
+export interface ImageSizesVariant {
+  size?: string
+  screenMaxWidth: number
+  _cWidth: number
+  _cHeight?: number | undefined
+}
