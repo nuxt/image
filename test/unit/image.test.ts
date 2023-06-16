@@ -19,7 +19,7 @@ describe('Renders simple image', () => {
   })
 
   it('Matches snapshot', () => {
-    expect(wrapper.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1800x1800/image.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w\\">"')
+    expect(wrapper.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1800x1800/image.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 200px) 200px, (max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w\\">"')
   })
 
   it('props.src is picked up by getImage()', () => {
@@ -38,7 +38,7 @@ describe('Renders simple image', () => {
 
   it('sizes', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
-    expect(sizes).toBe('(max-width: 500px) 500px, 900px')
+    expect(sizes).toBe('(max-width: 200px) 200px, (max-width: 500px) 500px, 900px')
   })
 
   it('applies densities', () => {
@@ -50,6 +50,57 @@ describe('Renders simple image', () => {
       src: 'image.png'
     })
     expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1200x1800/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_900x1350/image.png 900w, /_ipx/s_1200x1800/image.png 1200w\\">"')
+  })
+
+  it('empty densities (fallback to global)', () => {
+    const img = mountImage({
+      width: 200,
+      height: 300,
+      sizes: '300:300px,400:400px',
+      densities: '',
+      src: 'image.png'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_800x1200/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w\\">"')
+  })
+
+  it('empty string densities (fallback to global)', () => {
+    const img = mountImage({
+      width: 200,
+      height: 300,
+      sizes: '300:300px,400:400px',
+      densities: ' ',
+      src: 'image.png'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_800x1200/image.png\\" width=\\"200\\" height=\\"300\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 300px) 300px, 400px\\" srcset=\\"/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w\\">"')
+  })
+
+  it('error on invalid densities', () => {
+    expect(() => mountImage({
+      width: 200,
+      height: 300,
+      densities: 'x',
+      src: 'image.png'
+    })).toThrow(Error)
+  })
+
+  it('with single sizes entry', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: '150'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_150x200/image.png 1x, /_ipx/s_300x400/image.png 2x\\">"')
+  })
+
+  it('with single sizes entry (responsive)', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: 'sm:150'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_150x200/image.png 1x, /_ipx/s_300x400/image.png 2x\\">"')
   })
 
   it('de-duplicates sizes & srcset', () => {
@@ -69,7 +120,7 @@ describe('Renders simple image', () => {
       sizes: '200,500:500,900:900',
       src: '/汉字.png'
     })
-    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w\\">"')
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" sizes=\\"(max-width: 200px) 200px, (max-width: 500px) 500px, 900px\\" srcset=\\"/_ipx/s_200x200/%E6%B1%89%E5%AD%97.png 200w, /_ipx/s_400x400/%E6%B1%89%E5%AD%97.png 400w, /_ipx/s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w\\">"')
   })
 
   it('correctly sets crop', () => {
@@ -173,14 +224,14 @@ describe('Renders placeholded image', () => {
     let sizes = wrapper.find('img').element.getAttribute('sizes')
 
     expect(sizes).toBe(null)
-    expect(placeholderImage.sizes).toBe('(max-width: 500px) 500px, 900px')
+    expect(placeholderImage.sizes).toBe('(max-width: 200px) 200px, (max-width: 500px) 500px, 900px')
 
     resolveImage()
     await nextTick()
 
     sizes = wrapper.find('img').element.getAttribute('sizes')
 
-    expect(sizes).toBe('(max-width: 500px) 500px, 900px')
+    expect(sizes).toBe('(max-width: 200px) 200px, (max-width: 500px) 500px, 900px')
     expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
   })
 })
