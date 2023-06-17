@@ -5,7 +5,7 @@ import type { NitroEventHandler, NitroDevEventHandler } from 'nitropack'
 
 import type { ProviderSetup, ImageProviders } from './types'
 
-export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) => {
+export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup = setupOptions => async (providerOptions, moduleOptions) => {
   const nitro = useNitro()
   const nuxt = useNuxt()
 
@@ -43,7 +43,9 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
     }
-    nitro.options.handlers.push(handler)
+    if (!setupOptions?.isStatic) {
+      nitro.options.handlers.push(handler)
+    }
     // TODO: Workaround for prerender support
     nitro.options._config.handlers!.push(handler)
     return
