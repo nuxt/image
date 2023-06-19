@@ -17,6 +17,7 @@ export interface ModuleOptions extends ImageProviders {
   internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
   densities: number[]
+  format: CreateImageOptions['format']
   [key: string]: any
 }
 
@@ -31,6 +32,7 @@ export default defineNuxtModule<ModuleOptions>({
     presets: {},
     domains: [] as string[],
     sharp: {},
+    format: ['webp'],
     // https://tailwindcss.com/docs/breakpoints
     screens: {
       xs: 320,
@@ -80,7 +82,8 @@ export default defineNuxtModule<ModuleOptions>({
       'provider',
       'domains',
       'alias',
-      'densities'
+      'densities',
+      'format'
     ])
 
     const providers = await resolveProviders(nuxt, options)
