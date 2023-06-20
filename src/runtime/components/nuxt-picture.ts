@@ -29,7 +29,7 @@ export default defineComponent({
 
     type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      const format = props.format || $img.options.format?.[0] || (originalFormat.value === 'svg' ? 'svg' : 'webp')
+      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : ($img.options.format?.[0] || 'webp'))
       const formats = String(format).split(',')
       if (format === 'svg') {
         return [<Source>{ src: props.src }]
