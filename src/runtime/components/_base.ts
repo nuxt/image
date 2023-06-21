@@ -88,13 +88,15 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
     }
   })
 
+  const $img = useImage()
+
   const modifiers = computed<BaseImageModifiers>(() => {
     return <BaseImageModifiers> {
       ...props.modifiers,
       width: parseSize(props.width),
       height: parseSize(props.height),
       format: props.format,
-      quality: props.quality,
+      quality: props.quality || $img.options.quality,
       background: props.background,
       fit: props.fit
     }

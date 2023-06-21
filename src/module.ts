@@ -18,6 +18,7 @@ export interface ModuleOptions extends ImageProviders {
   providers: { [name: string]: InputProvider | any } & ImageProviders
   densities: number[]
   format: CreateImageOptions['format']
+  quality?: CreateImageOptions['quality'],
   [key: string]: any
 }
 
@@ -83,7 +84,8 @@ export default defineNuxtModule<ModuleOptions>({
       'domains',
       'alias',
       'densities',
-      'format'
+      'format',
+      'quality'
     ])
 
     const providers = await resolveProviders(nuxt, options)
