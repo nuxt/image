@@ -51,7 +51,7 @@ export const images = [
     vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
     wagtail: { url: '329944/width-200|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200' },
-    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' }
+    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x/' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -78,7 +78,7 @@ export const images = [
     vercel: { url: '/_vercel/image?url=/test.png&w=1536&q=100' },
     wagtail: { url: '329944/height-200|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?height=200' },
-    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' }
+    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/x200/' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -105,7 +105,7 @@ export const images = [
     vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
     wagtail: { url: '329944/fill-200x200-c0|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200' },
-    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' }
+    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -132,7 +132,7 @@ export const images = [
     vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
     wagtail: { url: '329944/fill-200x200-c0|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain' },
-    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' }
+    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/-/stretch/off/' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -159,7 +159,7 @@ export const images = [
     vercel: { url: '/_vercel/image?url=/test.png&w=320&q=100' },
     wagtail: { url: '329944/fill-200x200-c0|format-jpeg|jpegquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg' },
-    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' }
+    uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/format/jpeg/-/resize/200x200/-/stretch/off/' }
   }
 ] as const
 
