@@ -29,6 +29,7 @@ export default defineComponent({
     const sizes = computed(() => $img.getSizes(props.src!, {
       ..._base.options.value,
       sizes: props.sizes,
+      densities: props.densities,
       modifiers: {
         ..._base.modifiers.value,
         width: parseSize(props.width),
@@ -38,7 +39,7 @@ export default defineComponent({
 
     const attrs = computed(() => {
       const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
-      if (props.sizes && (!props.placeholder || placeholderLoaded.value)) {
+      if (!props.placeholder || placeholderLoaded.value) {
         attrs.sizes = sizes.value.sizes
         attrs.srcset = sizes.value.srcset
       }
@@ -102,7 +103,7 @@ export default defineComponent({
         const img = new Image()
         img.src = mainSrc.value
         if (props.sizes) {
-          img.sizes = sizes.value.sizes
+          img.sizes = sizes.value.sizes || ''
           img.srcset = sizes.value.srcset
         }
         img.onload = (event) => {
@@ -132,7 +133,6 @@ export default defineComponent({
 
     return () => h('img', {
       ref: imgEl,
-      key: src.value,
       src: src.value,
       ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,

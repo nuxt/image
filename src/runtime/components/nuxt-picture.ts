@@ -6,6 +6,7 @@ import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
+  format: { type: [String, Array], default: undefined },
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null }
 }
@@ -18,9 +19,8 @@ export default defineComponent({
     const $img = useImage()
     const _base = useBaseImage(props)
 
-    const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
-
     const originalFormat = computed(() => getFileExtension(props.src))
+    const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
@@ -29,9 +29,8 @@ export default defineComponent({
 
     type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
-      const formats = format.split(',')
-      if (format === 'svg') {
+      const formats = (Array.isArray(props.format) ? props.format : props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))) as string[]
+      if (formats[0] === 'svg') {
         return [<Source>{ src: props.src }]
       }
 
@@ -93,7 +92,7 @@ export default defineComponent({
     })
 
     return () =>
-      h('picture', { key: sources.value[0].src }, [
+      h('picture', null, [
         ...sources.value.slice(0, -1).map((source) => {
           return h('source', {
             type: source.type,
