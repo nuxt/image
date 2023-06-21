@@ -4,10 +4,6 @@ Nuxt Image has first class integration with Cloudflare
 
 Integration between [Cloudflare](https://developers.cloudflare.com/images/) and the image module.
 
-::alert{type="info"}
-Availability only for Business and Enterprise Customers. Normally Cloudflare [pages](https://pages.cloudflare.com/) users can already benefit from build-time image optimization.
-::
-
 To use this provider you just need to specify the base url (zone) of your service:
 
 ```ts [nuxt.config.ts]

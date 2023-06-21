@@ -44,6 +44,7 @@ export interface CreateImageOptions {
   alias: Record<string, string>
   domains: string[]
   densities: number[]
+  format: string[]
 }
 
 export interface ImageInfo {
@@ -60,7 +61,7 @@ export interface ResolvedImage {
 
 export interface ImageSizes {
   srcset: string
-  sizes: string
+  sizes: string | undefined
   src: string
 }
 
@@ -107,3 +108,10 @@ export interface OperationGeneratorConfig {
 }
 
 export type MapToStatic = (image: ResolvedImage, input: string) => string
+
+export interface ImageSizesVariant {
+  size?: string
+  screenMaxWidth: number
+  _cWidth: number
+  _cHeight?: number | undefined
+}

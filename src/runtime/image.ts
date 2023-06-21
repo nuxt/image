@@ -1,8 +1,9 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img } from '../types/image'
+import { ImageSizes, ImageSizesVariant } from '../types/image'
 import { imageMeta } from './utils/meta'
-import { parseDensities, parseSize } from './utils'
+import { parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
 
 export function createImage (globalOptions: CreateImageOptions) {
@@ -37,7 +38,6 @@ export function createImage (globalOptions: CreateImageOptions) {
   $img.getImage = getImage
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
   $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
-  $img.getDensitySet = ((input: string, options: ImageSizesOptions) => getDensitySet(ctx, input, options)) as $Img['getDensitySet']
 
   ctx.$img = $img as $Img
 
@@ -127,65 +127,119 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
+function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
-  const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
+  const sizes = parseSizes(opts.sizes)
+  const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities
+  if (densities.length === 0) {
+    throw new Error('\'densities\' must not be empty, configure to \'1\' to render regular size only (DPR 1.0)')
+  }
 
   const hwRatio = (width && height) ? height / width : 0
   const sizeVariants = []
   const srcsetVariants = []
 
-  const sizes: Record<string, string> = {}
+  if (Object.keys(sizes).length > 1) {
+    // 'sizes path'
+    for (const key in sizes) {
+      const variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
+      if (variant === undefined) {
+        continue
+      }
 
-  // string => object
-  if (typeof opts.sizes === 'string') {
-    for (const entry of opts.sizes.split(/[\s,]+/).filter(e => e)) {
-      const s = entry.split(':')
-      if (s.length !== 2) { continue }
-      sizes[s[0].trim()] = s[1].trim()
-    }
-  } else {
-    Object.assign(sizes, opts.sizes)
-  }
+      // add size variant with 'media'
+      sizeVariants.push({
+        size: variant.size,
+        screenMaxWidth: variant.screenMaxWidth,
+        media: `(max-width: ${variant.screenMaxWidth}px)`
+      })
 
-  for (const key in sizes) {
-    const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
-    let size = String(sizes[key])
-    const isFluid = size.endsWith('vw')
-    if (!isFluid && /^\d+$/.test(size)) {
-      size = size + 'px'
-    }
-    if (!isFluid && !size.endsWith('px')) {
-      continue
-    }
-    let _cWidth = parseInt(size)
-    if (!screenMaxWidth || !_cWidth) {
-      continue
-    }
-    if (isFluid) {
-      _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
-    }
-    const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
-
-    // add size variant with 'media'
-    sizeVariants.push({
-      size,
-      screenMaxWidth,
-      media: `(max-width: ${screenMaxWidth}px)`
-    })
-
-    if (densities) {
       // add srcset variants for all densities (for current 'size' processed)
       for (const density of densities) {
         srcsetVariants.push({
-          width: _cWidth * density,
-          src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * density, height: _cHeight ? _cHeight * density : undefined }, opts)
+          width: variant._cWidth * density,
+          src: getVariantSrc(ctx, input, opts, variant, density)
         })
       }
     }
+
+    finaliseSizeVariants(sizeVariants)
+  } else {
+    // 'densities path'
+    for (const density of densities) {
+      const key = Object.keys(sizes)[0]
+      let variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
+
+      // unable to resolve variant, fallback to default modifiers
+      if (variant === undefined) {
+        variant = {
+          size: '',
+          screenMaxWidth: 0,
+          _cWidth: opts.modifiers?.width as number,
+          _cHeight: opts.modifiers?.height as number
+        }
+      }
+
+      srcsetVariants.push({
+        width: density,
+        src: getVariantSrc(ctx, input, opts, variant, density)
+      })
+    }
   }
 
+  finaliseSrcsetVariants(srcsetVariants)
+
+  // use last (:= largest) srcset variant as the image `src`
+  const defaultVariant = srcsetVariants[srcsetVariants.length - 1]
+
+  const sizesVal = sizeVariants.length ? sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', ') : undefined
+  const suffix = sizesVal ? 'w' : 'x'
+  const srcsetVal = srcsetVariants.map(v => `${v.src} ${v.width}${suffix}`).join(', ')
+
+  return {
+    sizes: sizesVal,
+    srcset: srcsetVal,
+    src: defaultVariant?.src
+  }
+}
+
+function getSizesVariant (key: string, size: string, height: number | undefined, hwRatio: number, ctx: ImageCTX): ImageSizesVariant | undefined {
+  const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
+  const isFluid = size.endsWith('vw')
+  if (!isFluid && /^\d+$/.test(size)) {
+    size = size + 'px'
+  }
+  if (!isFluid && !size.endsWith('px')) {
+    return undefined
+  }
+  let _cWidth = parseInt(size)
+  if (!screenMaxWidth || !_cWidth) {
+    return undefined
+  }
+  if (isFluid) {
+    _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
+  }
+  const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
+  return {
+    size,
+    screenMaxWidth,
+    _cWidth,
+    _cHeight
+  }
+}
+
+function getVariantSrc (ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
+  return ctx.$img!(input,
+    {
+      ...opts.modifiers,
+      width: variant._cWidth ? variant._cWidth * density : undefined,
+      height: variant._cHeight ? variant._cHeight * density : undefined
+    },
+    opts)
+}
+
+function finaliseSizeVariants (sizeVariants: any[]) {
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
   // for last size variant, always remove `media` (convention)
@@ -202,7 +256,10 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     }
     previousMedia = sizeVariant.media
   }
+}
 
+function finaliseSrcsetVariants (srcsetVariants: any[]) {
+  // sort by width
   srcsetVariants.sort((v1, v2) => v1.width - v2.width)
 
   // de-duplicate srcset variants (by key `width`)
@@ -214,38 +271,4 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
     }
     previousWidth = sizeVariant.width
   }
-
-  // use last (:= largest) srcset variant as the image `src`
-  const defaultVar = srcsetVariants[srcsetVariants.length - 1]
-
-  return {
-    sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: srcsetVariants.map(v => `${v.src} ${v.width}w`).join(', '),
-    src: defaultVar?.src
-  }
-}
-
-function getDensitySet (ctx: ImageCTX, input: string, opts: ImageSizesOptions): string | undefined {
-  const densities = opts.densities ? parseDensities(opts.densities) : ctx.options.densities
-  if (densities.length === 0) {
-    return undefined
-  }
-
-  const srcsetVariants: Array<{ density: string, src: string }> = []
-
-  for (const density of densities) {
-    const modifiers = { ...opts.modifiers }
-    if (modifiers.width) {
-      modifiers.width = modifiers.width * density
-    }
-    if (modifiers.height) {
-      modifiers.height = modifiers.height * density
-    }
-    srcsetVariants.push({
-      density: `${density}x`,
-      src: ctx.$img!(input, modifiers, opts)
-    })
-  }
-
-  return srcsetVariants.map(v => `${v.src} ${v.density}`).join(', ')
 }

@@ -325,9 +325,7 @@ export const providers: Provider[] = [
         src: '4rhkcc7xzk7d-claymemoirscom-spider-pic.jpg',
         width: 250,
         height: 200,
-        fit: {
-          cover: true
-        }
+        fit: 'cover'
       }
     ]
   },
