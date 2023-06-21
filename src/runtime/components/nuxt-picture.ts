@@ -18,14 +18,8 @@ export default defineComponent({
     const $img = useImage()
     const _base = useBaseImage(props)
 
-<<<<<<< HEAD
-    const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
-
-    const originalFormat = computed(() => getFileExtension(props.src))
-=======
     const originalFormat = computed(() => getFileExtension(props.src))
     const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
->>>>>>> upstream/main
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) { return props.legacyFormat }
@@ -34,14 +28,8 @@ export default defineComponent({
 
     type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-<<<<<<< HEAD
-      const format = props.format || (originalFormat.value === 'svg' ? 'svg' : 'webp')
-      const formats = format.split(',')
-      if (format === 'svg') {
-=======
       const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
       if (formats[0] === 'svg') {
->>>>>>> upstream/main
         return [<Source>{ src: props.src }]
       }
 
@@ -103,11 +91,7 @@ export default defineComponent({
     })
 
     return () =>
-<<<<<<< HEAD
-      h('picture', { key: sources.value[0].src }, [
-=======
       h('picture', null, [
->>>>>>> upstream/main
         ...sources.value.slice(0, -1).map((source) => {
           return h('source', {
             type: source.type,
