@@ -6,6 +6,7 @@ import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
+  format: { type: [String, Array], default: undefined },
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null }
 }
@@ -28,7 +29,7 @@ export default defineComponent({
 
     type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
+      const formats = (Array.isArray(props.format) ? props.format : props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))) as string[]
       if (formats[0] === 'svg') {
         return [<Source>{ src: props.src }]
       }

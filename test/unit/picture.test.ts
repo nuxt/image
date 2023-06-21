@@ -78,6 +78,7 @@ describe('Renders simple image', () => {
       }
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
+    expect(img.findAll('source').length).toBe(1)
     expect(img.find('img').exists()).toBe(true)
   })
 
@@ -92,6 +93,7 @@ describe('Renders simple image', () => {
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
     expect(img.find('source[type="image/webp"]').exists()).toBe(true)
+    expect(img.findAll('source').length).toBe(2)
     expect(img.find('img').exists()).toBe(true)
   })
 
@@ -106,6 +108,22 @@ describe('Renders simple image', () => {
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
     expect(img.find('source[type="image/gif"]').exists()).toBe(true)
+    expect(img.findAll('source').length).toBe(2)
+    expect(img.find('img').exists()).toBe(true)
+  })
+
+  it('checks that multiple formats can also be parsed as array', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        width: 200,
+        height: 200,
+        format: ['avif', 'webp'],
+        src
+      }
+    })
+    expect(img.find('source[type="image/avif"]').exists()).toBe(true)
+    expect(img.find('source[type="image/webp"]').exists()).toBe(true)
+    expect(img.findAll('source').length).toBe(2)
     expect(img.find('img').exists()).toBe(true)
   })
 
