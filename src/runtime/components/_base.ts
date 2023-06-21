@@ -18,6 +18,7 @@ export const baseImageProps = {
   provider: { type: String, default: undefined },
 
   sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
+  densities: { type: String, default: undefined },
   preload: { type: Boolean, default: undefined },
 
   // <img> attributes
@@ -87,13 +88,15 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
     }
   })
 
+  const $img = useImage()
+
   const modifiers = computed<BaseImageModifiers>(() => {
     return <BaseImageModifiers> {
       ...props.modifiers,
       width: parseSize(props.width),
       height: parseSize(props.height),
       format: props.format,
-      quality: props.quality,
+      quality: props.quality || $img.options.quality,
       background: props.background,
       fit: props.fit
     }

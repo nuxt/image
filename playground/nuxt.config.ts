@@ -65,6 +65,9 @@ export default defineNuxtConfig({
       baseURL: 'https://opt.moovweb.net'
     },
     prismic: {},
+    prepr: {
+      projectName: 'nuxt-prepr-demo'
+    },
     sanity: {
       projectId: 'zp7mbokg'
     },

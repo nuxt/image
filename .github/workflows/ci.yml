@@ -8,11 +8,11 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v3
       - run: corepack enable
@@ -45,10 +45,28 @@ jobs:
         
       - run: pnpm dev:prepare
       - run: pnpm lint
-      - run: pnpm test
+      - run: pnpm test -- --coverage
       - run: pnpm build
       - run: pnpm test:types
       - run: pnpm dev:build
+      - uses: codecov/codecov-action@v3
+
+  release:
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip-release]')
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm dev:prepare
+      - run: pnpm build
       - name: Release Edge
         if: |
           github.event_name == 'push' &&
