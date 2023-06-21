@@ -6,8 +6,8 @@
  * URL format: https://ucarecdn.com/:uuid/-/:operation/:params/:filename
  *
  * Operations:
- * [ ] Image Compression
- * [ ] Image Geometry
+ * [X] Image Compression
+ * [/] Image Geometry
  * [ ] Image Overlays
  * [ ] Image Colours
  * [ ] Image Definition
