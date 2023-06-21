@@ -32,7 +32,7 @@ export const getImage: ProviderGetImage = (
   uuid,
   { modifiers, cdnURL = '' } = {}
 ) => {
-  // If width or height is specified, use smart_resize instead
+  // If width or height is specified, use resize instead
   if (modifiers?.width || modifiers?.height) {
     modifiers.resize = `${modifiers?.width || ''}x${modifiers?.height || ''}`
 
