@@ -19,7 +19,7 @@
  * - Custom CNAME: https://uploadcare.com/docs/delivery/cdn/#custom-cdn-cname
  *  */
 
-import { joinURL } from 'ufo'
+import { joinURL, withTrailingSlash } from 'ufo'
 import { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -64,6 +64,6 @@ export const getImage: ProviderGetImage = (
   }
 
   const operations = operationsGenerator(modifiers)
-  const url = joinURL(cdnURL || 'https://ucarecdn.com', uuid, operations)
+  const url = withTrailingSlash(joinURL(cdnURL || 'https://ucarecdn.com', uuid, operations))
   return { url }
 }
