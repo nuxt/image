@@ -45,6 +45,7 @@ export interface CreateImageOptions {
   domains: string[]
   densities: number[]
   format: string[]
+  quality?: number
 }
 
 export interface ImageInfo {
