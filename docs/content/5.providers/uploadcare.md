@@ -42,7 +42,7 @@ Please feel free to open a PR to improve support for additional operations.
 
 ## Configuration
 
-> By default, all file URL's use the `ucarecdn.com` domain. By setting a custom CDN CNAME, the file URL's can use `cdn.mycompany.com` instead.
+> By default, all file URLs use the `ucarecdn.com` domain. By setting a custom CDN CNAME, file URLs can use `cdn.mycompany.com` instead.
 
 See the [Uploadcare documentation](https://uploadcare.com/docs/delivery/cdn/#custom-cdn-cname) for how to enable a custom domain in your project. To tell Nuxt Image about the custom CDN name, use the following configuration:
 
