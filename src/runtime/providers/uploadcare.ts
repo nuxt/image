@@ -16,7 +16,6 @@
  * Other stuff to think about later:
  * - Signed URLs
  * - File Groups
- * - Custom CNAME: https://uploadcare.com/docs/delivery/cdn/#custom-cdn-cname
  *  */
 
 import { joinURL, withTrailingSlash } from 'ufo'
