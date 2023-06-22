@@ -5,9 +5,9 @@ import { eventHandler, lazyEventHandler } from 'h3'
 import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(() => {
-  const opts = useRuntimeConfig().ipx
+  const opts = useRuntimeConfig().ipx || {}
   const ipxOptions = {
-    ...(opts || {}),
+    ...opts,
     // TODO: Switch to storage API when ipx supports it
     dir: fileURLToPath(new URL(opts.dir, import.meta.url))
   }
