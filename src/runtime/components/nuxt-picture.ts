@@ -6,7 +6,7 @@ import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
-  format: { type: [String, Array], default: undefined },
+  format: { type: [String, Array<string>], default: undefined },
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null }
 }
