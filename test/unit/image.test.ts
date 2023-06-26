@@ -268,6 +268,26 @@ describe('Renders image, applies module config', () => {
     `)
   })
 
+  it('Module config .format applies, uses last value of array', () => {
+    nuxtApp._img = createImage({
+      ...imageOptions,
+      nuxt: {
+        baseURL: config.app.baseURL
+      },
+      format: ['avif', 'webp']
+    })
+    const img = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 200,
+        height: 200
+      }
+    })
+    expect(img.html()).toMatchInlineSnapshot(`
+      "<img src=\\"/_ipx/f_webp&s_200x200/image.png\\" width=\\"200\\" height=\\"200\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/f_webp&s_200x200/image.png 1x, /_ipx/f_webp&s_400x400/image.png 2x\\">"
+    `)
+  })
+
   it('Module config .quality + props.quality => props.quality applies', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
