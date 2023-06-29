@@ -103,17 +103,14 @@ export function parseDensities (input: string | undefined = ''): number[] {
   return densities.filter((value, index) => densities.indexOf(value) === index)
 }
 
-export function parseSizes (input: Record<string, string | number> | string): Record<string, string> {
-  const sizes: Record<string, string> = {}
+export function parseSizes (input: Record<string, string | number> | string): Record<string, string[]> {
+  const sizes: Record<string, string[]> = {}
   // string => object
   if (typeof input === 'string') {
     for (const entry of input.split(/[\s,]+/).filter(e => e)) {
       const s = entry.split(':')
-      if (s.length !== 2) {
-        sizes[s[0].trim()] = s[0].trim()
-      } else {
-        sizes[s[0].trim()] = s[1].trim()
-      }
+
+      sizes[s[0].trim()] = (s.length !== 2 ? s[0].trim() : s[1].trim()).split('_')
     }
   } else {
     Object.assign(sizes, input)
