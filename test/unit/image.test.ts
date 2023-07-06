@@ -268,7 +268,7 @@ describe('Renders image, applies module config', () => {
     `)
   })
 
-  it('Module config .format applies, uses last value of array', () => {
+  it('Module config .format applies, uses first value of array', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
