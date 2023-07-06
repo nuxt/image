@@ -9,6 +9,11 @@ export default defineNuxtConfig({
   plausible: {
     domain: 'image.nuxtjs.org'
   },
+  nitro: {
+    prerender: {
+      ignore: ['/providers/layer0', '/__pinceau_tokens_config.json', '/__pinceau_tokens_schema.json']
+    }
+  },
   routeRules: {
     '/providers/layer0': { redirect: '/providers/edgio' }
   }
