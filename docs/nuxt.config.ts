@@ -9,4 +9,7 @@ export default defineNuxtConfig({
   plausible: {
     domain: 'image.nuxtjs.org'
   },
+  routeRules: {
+    '/providers/layer0': { redirect: '/providers/edgio' }
+  }
 })
