@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      ignore: ['/providers/layer0', '/__pinceau_tokens_config.json', '/__pinceau_tokens_schema.json']
+      ignore: ['/__pinceau_tokens_config.json', '/__pinceau_tokens_schema.json']
     }
   },
   routeRules: {
