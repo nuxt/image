@@ -140,7 +140,6 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   const sizeVariants = []
   const srcsetVariants = []
 
-
   if (Object.keys(sizes).length >= 1) {
     // 'sizes path'
     for (const key in sizes) {
@@ -193,7 +192,6 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
 
   // use last (:= largest) srcset variant as the image `src`
   const defaultVariant = srcsetVariants[srcsetVariants.length - 1]
-  console.log('srcsetVariants', srcsetVariants)
 
   const sizesVal = sizeVariants.length ? sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', ') : undefined
   const suffix = sizesVal ? 'w' : 'x'
