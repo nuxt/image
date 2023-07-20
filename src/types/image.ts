@@ -44,6 +44,8 @@ export interface CreateImageOptions {
   alias: Record<string, string>
   domains: string[]
   densities: number[]
+  format: string[]
+  quality?: number
 }
 
 export interface ImageInfo {

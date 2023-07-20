@@ -768,6 +768,58 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Uploadcare
+  {
+    name: 'uploadcare',
+    samples: [
+      {
+        src: 'c160afba-8b42-45a9-a46a-d393248b0072',
+        width: 512,
+        height: 512
+      },
+      {
+        src: '4740215e-ed0f-478f-8dbd-4859d8ea4e60',
+        width: 512
+      },
+      {
+        src: '2e36710d-21ea-42b3-ac9e-3caa80f7e7bc',
+        height: 512
+      },
+      {
+        src: '678053e2-ad98-42be-8443-e114b8a1b294',
+        width: 1080,
+        height: 300,
+        fit: 'cover'
+      },
+      {
+        src: '034e80f0-14af-408a-9eae-1e233c361256',
+        width: 1080,
+        height: 300,
+        fit: 'contain',
+        modifiers: {
+          setfill: '000000'
+        }
+      },
+      {
+        src: '6d7dd597-a829-4f03-a3cc-f87ff8a94d14',
+        width: 1080,
+        height: 300,
+        fit: 'fill'
+      },
+      {
+        src: 'beb68506-f5c3-4b85-8d8c-143ad62d5390',
+        width: 1080,
+        height: 300,
+        fit: 'inside'
+      },
+      {
+        src: '31e84033-f22e-4ed0-9462-76f9179e13e1',
+        width: 1080,
+        height: 300,
+        fit: 'outside'
+      }
+    ]
+  },
   // wagtail
   {
     name: 'wagtail',

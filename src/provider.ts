@@ -34,6 +34,7 @@ const BuiltInProviders = [
   'strapi',
   'twicpics',
   'unsplash',
+  'uploadcare',
   'vercel',
   'wagtail'
 ]

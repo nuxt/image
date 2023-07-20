@@ -3,7 +3,15 @@ import { eventHandler } from 'h3'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler, NitroDevEventHandler } from 'nitropack'
 
-import type { ProviderSetup, ImageProviders } from './types'
+import type { ProviderSetup } from './types'
+
+interface IPXRuntimeConfig {
+  dir: string
+  maxAge?: any
+  domains: string[]
+  sharp: any
+  alias: Record<string, string>
+}
 
 export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup = setupOptions => async (providerOptions, moduleOptions) => {
   const nitro = useNitro()
@@ -18,13 +26,13 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
   }
 
   // Options
-  const ipxOptions: ImageProviders['ipx'] = {
+  const ipxOptions = {
     dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
     maxAge: providerOptions.options?.maxAge,
     domains: moduleOptions.domains,
     sharp: moduleOptions.sharp,
     alias: moduleOptions.alias
-  }
+  } satisfies IPXRuntimeConfig
 
   // Add handler for production
   if (!nuxt.options.dev) {
@@ -69,4 +77,10 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
   nitro.options.devHandlers.push(devHandler)
   // TODO: Workaround for prerender support
   nitro.options._config.devHandlers!.push(devHandler)
+}
+
+declare module 'nitropack' {
+  interface NitroRuntimeConfig {
+    ipx?: IPXRuntimeConfig
+  }
 }
