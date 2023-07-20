@@ -30,6 +30,7 @@ const BuiltInProviders = [
   'none',
   'prismic',
   'sanity',
+  'static',
   'storyblok',
   'strapi',
   'twicpics',

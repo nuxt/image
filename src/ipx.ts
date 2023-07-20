@@ -75,8 +75,6 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
     })
   }
   nitro.options.devHandlers.push(devHandler)
-  // TODO: Workaround for prerender support
-  nitro.options._config.devHandlers!.push(devHandler)
 }
 
 declare module 'nitropack' {

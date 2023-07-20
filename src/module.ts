@@ -88,7 +88,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Run setup
     for (const p of providers) {
-      if (typeof p.setup === 'function' && p.name !== 'ipx') {
+      if (typeof p.setup === 'function' && p.name !== 'ipx' && p.name !== 'static') {
         await p.setup(p, options, nuxt)
       }
     }
@@ -131,12 +131,16 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
-      if (!options.provider || options.provider === 'ipx') {
-        imageOptions.provider = options.provider = nitro.options.node ? 'ipx' : 'none'
-        options[options.provider] = options[options.provider] || {}
+      if (!options.provider || options.provider === 'ipx' || options.provider === 'static') {
+        const resolvedProvider = nitro.options.static || options.provider === 'static'
+          ? 'static'
+          : nitro.options.node ? 'ipx' : 'none'
 
-        const p = await resolveProvider(nuxt, options.provider, options[options.provider])
-        if (!providers.some(p => p.name === options.provider)) {
+        imageOptions.provider = options.provider = resolvedProvider
+        options[resolvedProvider] = options[resolvedProvider] || {}
+
+        const p = await resolveProvider(nuxt, resolvedProvider, options[resolvedProvider])
+        if (!providers.some(p => p.name === resolvedProvider)) {
           providers.push(p)
         }
         if (typeof p.setup === 'function') {
