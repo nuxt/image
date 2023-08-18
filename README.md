@@ -1,4 +1,4 @@
-[![nuxt-image-social-card](https://github.com/nuxt/image/assets/904724/5af726c5-0113-4676-9ee9-c464393caee0)](https://image.nuxtjs.org)
+[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://image.nuxtjs.org)
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
