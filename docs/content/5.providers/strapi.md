@@ -42,12 +42,12 @@ You can override the default breakpoints. See the [Upload configuration](https:/
 If you don't set breakpoint modifier, the original image size will be used:
 
 ```html
-<nuxt-img provider="strapi" src="..." />
+<NuxtImg provider="strapi" src="..." />
 ```
 
 Define breakpoint modifier:
 ```html
-<nuxt-img provider="strapi" src="..." :modifiers="{ breakpoint: 'small' }" />
+<NuxtImg provider="strapi" src="..." :modifiers="{ breakpoint: 'small' }" />
 ```
 
 ::alert{type="info"}

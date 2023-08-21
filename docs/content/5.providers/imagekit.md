@@ -47,7 +47,7 @@ Check out ImageKit's documentation on [focus](https://docs.imagekit.io/features/
 This can be used to blur an image. Use modifier `blur` to specify the Gaussian Blur radius that is to be applied to the image. Possible values include integers between `1` to `100`.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   :modifiers="{blur: 10}"
@@ -60,7 +60,7 @@ This can be used to blur an image. Use modifier `blur` to specify the Gaussian B
 Turn your image to a grayscale version using the `effectGray` modifier.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   height="300"
@@ -81,7 +81,7 @@ For example, we can create a named transformation - `media_library_thumbnail` fo
 Add a border to your images using the `border` modifier. You can also set its width and color.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   width="300"
@@ -95,7 +95,7 @@ Add a border to your images using the `border` modifier. You can also set its wi
 Use the `rotate` modifier to rotate your image. Possible values are - `0`, `90`, `180`, `270`, `360`, and `auto`.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   :modifiers="{rotate: 90}"
@@ -108,7 +108,7 @@ Use the `rotate` modifier to rotate your image. Possible values are - `0`, `90`,
 Give rounded corners to your image using `radius`. Possible values are - positive integers and `max`.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   :modifiers="{radius: 20}"
@@ -121,7 +121,7 @@ Give rounded corners to your image using `radius`. Possible values are - positiv
 Specify background color and its opacity for your image using the `bg` modifier.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   height="1200"
@@ -141,7 +141,7 @@ Using ImageKit's Nuxt Image integration, you can overlay images or text over oth
 Overlay an image on top of another image (base image) using the `overlayImage` modifier. You can use this to create dynamic banners, watermarking, etc.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   :modifiers="modifiers"
@@ -169,7 +169,7 @@ Overlay an image on top of another image (base image) using the `overlayImage` m
 You can overlay text on an image and apply various transformations to it as per your needs.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   :modifiers="modifiers"
@@ -201,7 +201,7 @@ Read more about ImageKit's overlay transformation parameters [here](https://docs
 Enhance contrast of an image using the `effectContrast` modifier.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   height="300"
@@ -213,7 +213,7 @@ Enhance contrast of an image using the `effectContrast` modifier.
 Sharpen the input image using the `effectSharpen` modifier.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imagekit"
   src="/default-image.jpg"
   height="300"

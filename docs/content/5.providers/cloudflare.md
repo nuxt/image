@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 **Example:**
 
 ```vue
-<nuxt-img provider="cloudflare" src="/burger.jpeg" height="300" :modifiers="{ fit: 'contain' }" />
+<NuxtImg provider="cloudflare" src="/burger.jpeg" height="300" :modifiers="{ fit: 'contain' }" />
 ```
 
 ## Options

@@ -13,7 +13,7 @@ This integration works out of the box without need to configure!  See the [Docum
 **Example:**
 
 ```vue
-<nuxt-img provider="edgio" src="https://i.imgur.com/LFtQeX2.jpeg" width="200" height="200" quality="80" />
+<NuxtImg provider="edgio" src="https://i.imgur.com/LFtQeX2.jpeg" width="200" height="200" quality="80" />
 ```
 
 ## Modifiers

@@ -45,7 +45,7 @@ In addition to the [standard modifiers](/components/nuxt-img#modifiers), you can
 Example 1: Cropping an image to a width and height of 100x80, starting 10 pixels from the top and 20 pixels from the left:
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imageengine"
   src="/some-image.jpg"
   width="100"
@@ -57,7 +57,7 @@ Example 1: Cropping an image to a width and height of 100x80, starting 10 pixels
 Example 2: Instruct ImageEngine to keep the image's EXIF metadata (which is normally removed to reduce the image byte size):
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="imageengine"
   src="/some-image.jpg"
   width="100"

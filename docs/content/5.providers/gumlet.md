@@ -32,7 +32,7 @@ For a full list of these modifiers and their uses, check out [Gumlet's image Ren
 Some common best practices when using Gumlet, would be to include our `format=auto` parameter, which will automatically apply the best format for an image and compress the image as well. Combine this with some top of intelligent cropping and resizing and you will have a great image!
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="gumlet"
   src="/sea.jpeg"
   width="300"

@@ -11,5 +11,5 @@ You can use [additional modifiers](https://github.com/unjs/ipx/#modifiers) suppo
 **Example:**
 
 ```html
-<nuxt-img src="/image.png" :modifiers="{ grayscale: true, tint: '#00DC82' }" />
+<NuxtImg src="/image.png" :modifiers="{ grayscale: true, tint: '#00DC82' }" />
 ```

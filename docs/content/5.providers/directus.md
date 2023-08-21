@@ -37,7 +37,7 @@ export default defineNuxtConfig({
 All the default modifiers from [Directus documentation](https://docs.directus.io/reference/files.html#requesting-a-thumbnail) are available.
 
 ```vue
-<nuxt-img
+<NuxtImg
   provider="directus"
   src="ad514db1-eb90-4523-8183-46781437e7ee"
   height="512"
@@ -50,7 +50,7 @@ All the default modifiers from [Directus documentation](https://docs.directus.io
 Since Directus exposes [the full sharp API](https://sharp.pixelplumbing.com/api-operation) through the `transforms` parameter, we can use it inside our `modifiers` prop:
 
 ```vue
-<nuxt-img
+<NuxtImg
   provider="directus"
   src="ad514db1-eb90-4523-8183-46781437e7ee"
   :modifiers="{ height: '512', withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }"

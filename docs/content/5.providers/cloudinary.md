@@ -96,7 +96,7 @@ Round the specified corners of the desired image. If pass only a number or `max`
 * Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
@@ -111,7 +111,7 @@ Detemine which part of the image to cropped or to place the overlay.
 Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces`, `multipleFacesCenter`, `north`, `northEast`, `northWest`, `west`, `southWest`, `south`, `southEast`, `east`, `center`
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
@@ -126,7 +126,7 @@ Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces
 Apply a filter or an effect on the desired asset. See [Effects for images](https://cloudinary.com/documentation/image_transformation_reference#effect_parameter) for the full list of syntax and available effects.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
@@ -141,7 +141,7 @@ Apply a filter or an effect on the desired asset. See [Effects for images](https
 Color to use when text captions, shadow effect and colorize effect are in use.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
@@ -162,7 +162,7 @@ The target device pixel ratio for the asset. `auto` means automatically matching
 Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
@@ -175,7 +175,7 @@ Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 Create a layer **over** the base image. This can be use with `x`, `y`, `gravity` to customize the position of the overlay.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="100"
@@ -214,7 +214,7 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
 
 ```html [index.vue]
 <template>
-  <nuxt-img
+  <NuxtImg
     provider="cloudinary"
     src="/remote/nuxt-org/blog/going-full-static/main.png"
     width="100"
@@ -243,7 +243,7 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
 Color space to use for the delivery image url. See [Color space Documentation](https://cloudinary.com/documentation/image_transformation_reference#color_space_parameter) for accepted values details.
 
 ```html
-<nuxt-img
+<NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
   width="300"
