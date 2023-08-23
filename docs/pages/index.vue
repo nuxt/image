@@ -17,7 +17,8 @@ const source = ref('npm i @nuxt/image@rc')
 const { copy, copied } = useClipboard({ source })
 
 const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio', 'fastly', 'glide', 'gumlet', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel']
-const img = useImage()
+// Disabling because svg to png does not work now with SSG
+// const img = useImage()
 </script>
 
 <template>
@@ -99,7 +100,8 @@ const img = useImage()
     </template>
     <div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
       <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" class="block lg:hover:scale-110 transition">
-        <NuxtImg :placeholder="useImage()(`/providers/${provider}.svg`, { h: 10, f: 'png', blur: 2, q: 50 })" :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" />
+        <!-- <NuxtImg :placeholder="img(`/providers/${provider}.svg`, { h: 10, f: 'png', blur: 2, q: 50 })" :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" /> -->
+        <NuxtImg :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" />
       </NuxtLink>
     </div>
   </ULandingSection>
