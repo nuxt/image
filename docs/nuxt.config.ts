@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
     'nuxt-og-image',
   ],
+  colorMode: {
+    preference: 'dark'
+  },
   ui: {
     icons: ['heroicons', 'simple-icons', 'ph'],
   },
@@ -27,6 +30,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
+      // Waiting for https://github.com/nuxt/nuxt/issues/22763
       concurrency: 1,
       routes: ['/api/search.json']
     }

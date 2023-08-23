@@ -59,15 +59,10 @@ provide('navigation', navigation)
   <UFooter :links="links">
     <template #left>
       <span class="text-sm">
-        Docs made with <a href="https://elements.nuxt.com" class="font-bold">Nuxt Elements</a>
-      </span>
-    </template>
-    <template #center>
-      <p class="text-xs text-center text-gray-700 dark:text-gray-300">
         Published under <NuxtLink to="https://github.com/nuxt/image" target="_blank" class="underline">
           MIT License
         </NuxtLink>
-      </p>
+      </span>
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
