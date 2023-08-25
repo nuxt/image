@@ -21,7 +21,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 - Support 20+ providers
 - Generate responsive sizes
 - Optimize using modern formats such as webp and avif
-- [... and more](https://image.nuxtjs.0org)
+- [... and more](https://image.nuxtjs.org)
 
 ## Nuxt 2
 
