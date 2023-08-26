@@ -96,7 +96,7 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
       ...props.modifiers,
       width: parseSize(props.width),
       height: parseSize(props.height),
-      format: props.format,
+      format: props.format || $img.options.format[0],
       quality: props.quality || $img.options.quality,
       background: props.background,
       fit: props.fit
