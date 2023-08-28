@@ -10,8 +10,8 @@ useSeoMeta({
   ogTitle: title, 
   description,
   ogDescription: description,
-  ogImage: '/social-card.png',
-  twitterImage: '/social-card.png',
+  ogImage: 'https://image.nuxt.com/social-card.png',
+  twitterImage: 'https://image.nuxt.com/social-card.png',
 })
 const source = ref('npm i @nuxt/image@rc')
 const { copy, copied } = useClipboard({ source })
