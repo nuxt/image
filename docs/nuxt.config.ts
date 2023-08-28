@@ -42,12 +42,12 @@ export default defineNuxtConfig({
     // Downside: bigger JS bundle
     // With sync: 465KB, gzip: 204KB
     // Without: 418KB, gzip: 184KB
-    'components:extend': (components) => {
-      components.forEach((component) => {
-        if (component.global) {
-          component.global = 'sync'
+    'components:extend' (components) {
+      for (const comp of components) {
+        if (comp.global) {
+          comp.global = 'sync'
         }
-      })
+      }
     }
   }
 })
