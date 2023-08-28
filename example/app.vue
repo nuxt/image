@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout>
-    <!-- https://v1.image.nuxtjs.org/components/nuxt-picture -->
-    <!-- https://v1.image.nuxtjs.org/components/nuxt-img -->
+    <!-- https://image.nuxt.com/usage/nuxt-picture -->
+    <!-- https://image.nuxt.com/usage/nuxt-img -->
     <figure>
       <nuxt-picture
         src="/images/mountains.jpg"

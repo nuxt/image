@@ -11,13 +11,13 @@
           Welcome to Nuxt Image!
         </h2>
         <p class="mt-3 text-gray-600">
-          Feel free to check out the full <a href="https://image.nuxtjs.org" target="_blank" class="text-green-500 hover:underline">documentation</a> to see everything you can do.<br>
+          Feel free to check out the full <a href="https://image.nuxt.com" target="_blank" class="text-green-500 hover:underline">documentation</a> to see everything you can do.<br>
         </p>
         <div class="block my-4 border-b" />
         <slot />
         <div class="block my-4 border-b" />
         <p class="mt-3 text-gray-600">
-          You can edit the props or the <a href="https://image.nuxtjs.org/components/nuxt-picture" target="_blank" class="text-green-500 hover:underline">&lt;nuxt-picture&gt;</a> component in sandbox to see what you can do. Have fun!
+          You can edit the props or the <a href="https://image.nuxt.com/usage/nuxt-picture" target="_blank" class="text-green-500 hover:underline">&lt;nuxt-picture&gt;</a> component in sandbox to see what you can do. Have fun!
         </p>
       </div>
       <!-- Footer -->
