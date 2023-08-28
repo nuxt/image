@@ -18,7 +18,9 @@ const isProvider = page.value._path.startsWith('/providers')
 useSeoMeta({
   titleTemplate: isProvider ? '%s - Nuxt Image Providers' : '%s - Nuxt Image',
   title: page.value.title,
+  ogTitle: page.value.title,
   description: page.value.description,
+  ogDescription: page.value.description
 })
 
 defineOgImage({
