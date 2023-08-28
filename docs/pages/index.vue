@@ -18,6 +18,7 @@ const { copy, copied } = useClipboard({ source })
 
 const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio', 'fastly', 'glide', 'gumlet', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel']
 // Disabling because svg to png does not work now with SSG
+// Related issue: https://github.com/unjs/ipx/issues/160
 // const img = useImage()
 </script>
 
