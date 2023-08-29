@@ -17,8 +17,6 @@ export default defineNuxtConfig({
 })
 ```
 
-**Note:** Current integration uses API `v7`.
-
 ## Options
 
 You can override default options:
@@ -47,10 +45,31 @@ export default defineNuxtConfig({
 })
 ```
 
+### `apiVersion`
+
+- Type: **String**
+- Default: `v7`
+
+Allow to use a specific version of API.
+
+**Note:** For tokens created after **20.10.2021**, `apiVersion` need to be set to empty string or you can use `cdnURL` with value `https://{token}.cloudimg.io`.
+
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      token: 'demo',
+      apiVersion: 'v7' // optional
+    }
+  }
+})
+```
+
 ### `cdnURL`
 
 - Type: **String**
-- Default: `https://{token}.cloudimg.io/v7`
+- Default: `https://{token}.cloudimg.io/{apiVersion}`
 
 ## Cloudimage modifiers
 
