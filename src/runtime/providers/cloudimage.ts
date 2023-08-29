@@ -26,11 +26,12 @@ export const getImage: ProviderGetImage = (src, {
   modifiers = {},
   baseURL = '',
   token = 'demo',
+  apiVersion = 'v7',
   cdnURL = ''
 } = {}) => {
   const operations = operationsGenerator(modifiers)
   if (!cdnURL) {
-    cdnURL = `https://${token}.cloudimg.io/v7`
+    cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
   }
   return {
     url: joinURL(cdnURL, baseURL, src) + (operations ? ('?' + operations) : '')
