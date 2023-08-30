@@ -21,8 +21,6 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`
 })
 
-const isDev = process.env.NODE_ENV === 'development'
-
 // https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction
 export const getImage: ProviderGetImage = (src, {
   modifiers = {},
@@ -32,16 +30,26 @@ export const getImage: ProviderGetImage = (src, {
   cdnURL = ''
 } = {}) => {
   const operations = operationsGenerator(modifiers)
-  if (!cdnURL) {
-    cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
+  const warning = []
+
+  if (!baseURL) {
+    warning.push('<baseURL>')
   }
 
-  if (isDev) {
-    // eslint-disable-next-line
-    console.warn('[cloudimage] <token> and <baseURL> has to be set to build image URL')
+  if (!token && !cdnURL) {
+    warning.push('<token> or <cdnURL>')
+  }
+
+  if (process.dev && warning.length > 0) {
+    // eslint-disable-next-line no-console
+    console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
     return {
       url: joinURL('<token>', '<baseURL>', src) + (operations ? ('?' + operations) : '')
     }
+  }
+
+  if (!cdnURL) {
+    cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
   }
 
   return {
