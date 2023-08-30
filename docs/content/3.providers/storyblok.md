@@ -25,8 +25,8 @@ Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#res
 
 the logic is:
 
-- If you not defining the width or height it's taking the original image size.
-- If you defined only the width or height it will resize proportionaly based ont he one defined
+- If you are not defining the width or height it's taking the original image size.
+- If you defined only the width or height it will resize proportionaly based on the one defined
 
 Example:
 
