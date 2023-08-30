@@ -13,7 +13,7 @@ useHead({
     lang: 'en',
   },
   link: () => [
-    { rel: 'canonical', href: `'https://image.nuxt.com${withoutTrailingSlash(route.path)}` }
+    { rel: 'canonical', href: `https://image.nuxt.com${withoutTrailingSlash(route.path)}` }
   ]
 })
 const links = [{
