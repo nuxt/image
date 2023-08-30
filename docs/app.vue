@@ -1,16 +1,20 @@
 <script setup>
+import { withoutTrailingSlash } from 'ufo'
 const { mapContentNavigation } = useElementsHelpers()
 
+const route = useRoute()
 useServerSeoMeta({
   titleTemplate: '%s - Nuxt Image',
-  ogUrl: 'https://image.nuxt.com',
   ogSiteName: 'Nuxt Image',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
 })
 useHead({
   htmlAttrs: {
     lang: 'en',
   },
+  link: () => [
+    { rel: 'canonical', href: `'https://image.nuxt.com${withoutTrailingSlash(route.path)}` }
+  ]
 })
 const links = [{
   label: 'Documentation',
