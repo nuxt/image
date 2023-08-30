@@ -70,10 +70,10 @@ export default defineNuxtConfig({
 Allow to use a specific version of API.
 
 ::callout
-For tokens created before **20.10.2021**, `apiVersion` need to be set to `v7`.
+For tokens created before **20.10.2021**, `apiVersion` needs to be set to `v7`.
 ::
 
-Here's an official demo config. `demo` is an old token hence the `apiVersion` need to be defined as well.
+Here's an official demo config. `demo` is an old token hence `apiVersion` needs to be defined as well.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -92,7 +92,7 @@ export default defineNuxtConfig({
 - Type: **String**
 - Default: `https://{token}.cloudimg.io/{apiVersion}`
 
-Replaces the dynamicaly built URL
+Replaces the dynamically built URL
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
