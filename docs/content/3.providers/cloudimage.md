@@ -58,16 +58,12 @@ export default defineNuxtConfig({
 })
 ```
 
-
-
-
-
 ### `apiVersion`
 
 - Type: **String**
 - Default: `empty string`
 
-Allow to use a specific version of API.
+Allow using a specific version of the API.
 
 ::callout
 For tokens created before **20.10.2021**, `apiVersion` needs to be set to `v7`.
