@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxthq/ui',
+    '@nuxthq/studio',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
     '@nuxtjs/google-fonts',
