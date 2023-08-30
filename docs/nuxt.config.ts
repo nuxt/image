@@ -31,8 +31,6 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      // Waiting for https://github.com/nuxt/nuxt/issues/22763
-      concurrency: 1,
       routes: ['/api/search.json']
     }
   },
