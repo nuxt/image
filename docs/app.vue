@@ -78,7 +78,5 @@ if (process.server) {
       <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
     </template>
   </UFooter>
-  <ClientOnly>
-    <LazyUDocsSearch v-if="enableDocsSearch" :files="files" :navigation="navigation" :links="links" />
-  </ClientOnly>
+  <UDocsSearch v-if="enableDocsSearch" :files="files" :navigation="navigation" :links="links" />
 </template>
