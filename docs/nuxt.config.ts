@@ -29,6 +29,9 @@ export default defineNuxtConfig({
       'DM+Sans': [400, 500, 600, 700],
     },
   },
+  experimental: {
+    headNext: true
+  },
   nitro: {
     prerender: {
       routes: ['/api/search.json'],
