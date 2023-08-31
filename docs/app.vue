@@ -56,8 +56,8 @@ if (process.server) {
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
-      <LazyUDocsSearchButton size="md" class="w-full mb-4" />
-      <LazyUNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
+      <UDocsSearchButton size="md" class="w-full mb-4" />
+      <UNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
     </template>
   </UHeader>
   <NuxtLayout>

@@ -18,6 +18,20 @@ export default defineNuxtModule({
       'Markdown',
     ])
 
+    const globals = new Set<string>()
+
+    nuxt.hook('vite:extendConfig', config => {
+      config.build = defu(config.build, {
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              'prose': [...globals]
+            }
+          }
+        }
+      })
+    })
+
     nuxt.hook('components:extend', components => {
       for (const component of components) {
         if (nonGlobals.has(component.pascalName)) {
@@ -31,7 +45,8 @@ export default defineNuxtModule({
         // With sync: 465KB, gzip: 204KB
         // Without: 418KB, gzip: 184KB
         if (component.global) {
-          component.global = 'sync'
+          globals.add(component.filePath)
+          component.global = true
         }
       }
     })
