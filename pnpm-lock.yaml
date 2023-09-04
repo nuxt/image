@@ -111,14 +111,14 @@ importers:
         specifier: ^1.1.68
         version: 1.1.68
       '@nuxt/content':
-        specifier: npm:@nuxt/content-edge@2.8.1-28223207.b680b47
-        version: /@nuxt/content-edge@2.8.1-28223207.b680b47(rollup@3.28.1)(vue@3.3.4)
+        specifier: ^2.8.2
+        version: 2.8.2(rollup@3.28.1)(vue@3.3.4)
       '@nuxt/image':
         specifier: link:..
         version: link:..
       '@nuxthq/elements':
         specifier: npm:@nuxthq/elements-edge@0.0.1-28223632.89f04cc
-        version: /@nuxthq/elements-edge@0.0.1-28223632.89f04cc(@nuxt/content@2.8.1)(@nuxthq/ui-edge@2.7.0-28223581.ead87a9)(vue@3.3.4)
+        version: /@nuxthq/elements-edge@0.0.1-28223632.89f04cc(@nuxt/content@2.8.2)(@nuxthq/ui-edge@2.7.0-28223581.ead87a9)(vue@3.3.4)
       '@nuxthq/studio':
         specifier: ^0.13.4
         version: 0.13.4(rollup@3.28.1)
@@ -1331,18 +1331,18 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxt/content-edge@2.8.1-28223207.b680b47(rollup@3.28.1)(vue@3.3.4):
-    resolution: {integrity: sha512-x0PSz57bGOkrcFR3pcPB4QN00yILBXeSQxcgltCfqvGf19FEKns+Q0er2GhFZX57tMvmjKinQsnPTyRRzRXOCQ==}
+  /@nuxt/content@2.8.2(rollup@3.28.1)(vue@3.3.4):
+    resolution: {integrity: sha512-fi5/axuYNGccJ/dXyaf5C/WqgEd5wSijpGHZ9O+pH7754S2NeKyx8fUFGfXsLN9VyJP+Mx8EUihfWKJm09SCRA==}
     dependencies:
       '@nuxt/kit': 3.7.0(rollup@3.28.1)
-      '@nuxtjs/mdc': 0.1.5(rollup@3.28.1)
+      '@nuxtjs/mdc': 0.1.6(rollup@3.28.1)
       '@vueuse/head': 1.3.1(vue@3.3.4)
       consola: 3.2.3
       defu: 6.1.2
       destr: 2.0.1
       json5: 2.2.3
       knitwork: 1.0.0
-      listhen: 1.4.3
+      listhen: 1.4.4
       mdurl: 1.0.1
       micromark: 4.0.0
       micromark-util-sanitize-uri: 2.0.0
@@ -1732,13 +1732,13 @@ packages:
       - vti
       - vue-tsc
 
-  /@nuxthq/elements-edge@0.0.1-28223632.89f04cc(@nuxt/content@2.8.1)(@nuxthq/ui-edge@2.7.0-28223581.ead87a9)(vue@3.3.4):
+  /@nuxthq/elements-edge@0.0.1-28223632.89f04cc(@nuxt/content@2.8.2)(@nuxthq/ui-edge@2.7.0-28223581.ead87a9)(vue@3.3.4):
     resolution: {integrity: sha512-ctc1/NTh81u1eD29Iyx8VfizWwt5rT9zw/HLLAfGAmSyB7itK6Oo6iewmDS3zSTxCFjTpAGMsxA0p1wAhv2dDQ==}
     peerDependencies:
       '@nuxt/content': latest
       '@nuxthq/ui': npm:@nuxthq/ui-edge@latest
     dependencies:
-      '@nuxt/content': 2.8.1(rollup@3.28.1)(vue@3.3.4)
+      '@nuxt/content': 2.8.2(rollup@3.28.1)(vue@3.3.4)
       '@nuxthq/ui': /@nuxthq/ui-edge@2.7.0-28223581.ead87a9(rollup@3.28.1)(vue@3.3.4)(webpack@5.88.2)
       '@vueuse/core': 10.4.1(vue@3.3.4)
       lodash-es: 4.17.21
@@ -1885,8 +1885,8 @@ packages:
       - supports-color
     dev: false
 
-  /@nuxtjs/mdc@0.1.5(rollup@3.28.1):
-    resolution: {integrity: sha512-cI35QDyeeUN2bnFcO8T4sFZJ8G2oQ0+IxR6Zpt09VAfWtcQD+apUbeZhByYm+LMyhHP/a2bRu8ScguAySya14A==}
+  /@nuxtjs/mdc@0.1.6(rollup@3.28.1):
+    resolution: {integrity: sha512-zJuq5KwU3d1Dlh1sudnpVtIFoap09ZrvO9IAM1iP4tipzSRkgHFbCOTMEmK17Rx7KSdmvBbFP+/4MBaJdj1NqQ==}
     dependencies:
       '@nuxt/kit': 3.7.0(rollup@3.28.1)
       '@types/hast': 3.0.0
@@ -7680,6 +7680,28 @@ packages:
       ufo: 1.3.0
       untun: 0.1.2
       uqr: 0.1.2
+
+  /listhen@1.4.4:
+    resolution: {integrity: sha512-xoZWbfziou7xPWj9nlFXeroFTJZVIyJ6wKrLea2jxvWgMkcz/vLMoZACYHLRmcLGi5hZkcDF48tmkmv1Y6Y42Q==}
+    hasBin: true
+    dependencies:
+      '@parcel/watcher': 2.3.0
+      '@parcel/watcher-wasm': 2.3.0
+      citty: 0.1.3
+      clipboardy: 3.0.0
+      consola: 3.2.3
+      defu: 6.1.2
+      get-port-please: 3.0.2
+      h3: 1.8.1
+      http-shutdown: 1.2.2
+      jiti: 1.19.3
+      mlly: 1.4.1
+      node-forge: 1.3.1
+      pathe: 1.1.1
+      ufo: 1.3.0
+      untun: 0.1.2
+      uqr: 0.1.2
+    dev: false
 
   /loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
