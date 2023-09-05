@@ -194,7 +194,7 @@ describe('Renders placeholded image', () => {
 
     let domSrc = wrapper.find('img').element.getAttribute('src')
 
-    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&s_10x10/image.png"')
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
     expect(placeholderImage.src).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
 
     resolveImage()
