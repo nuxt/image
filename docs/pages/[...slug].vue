@@ -78,17 +78,9 @@ const communityLinks = computed(() => [
     <template v-if="page.body?.toc?.links?.length" #right>
       <UDocsToc :links="page.body.toc.links">
         <template #bottom>
-          <div class="hidden lg:block">
-            <hr v-if="page.body?.toc?.links?.length" class="border-gray-200 dark:border-gray-800 border-dashed my-6">
-            <p class="text-sm/6 font-semibold flex items-center gap-1.5 mb-3">
-              Community
-            </p>
-            <div class="space-y-2">
-              <NuxtLink v-for="link of communityLinks" :key="link.to" :to="link.to" :target="link.target" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                <UIcon :name="link.icon" class="w-4 h-4" />
-                <span class="text-sm font-medium">{{ link.label }}</span>
-              </NuxtLink>
-            </div>
+          <div class="hidden lg:block space-y-6 !mt-6">
+            <UDivider v-if="page.body?.toc?.links?.length" dashed />
+            <UPageLinks title="Community" :links="communityLinks" />
           </div>
         </template>
       </UDocsToc>
