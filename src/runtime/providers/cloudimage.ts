@@ -30,21 +30,24 @@ export const getImage: ProviderGetImage = (src, {
   cdnURL = ''
 } = {}) => {
   const operations = operationsGenerator(modifiers)
-  const warning = []
 
-  if (!baseURL) {
-    warning.push('<baseURL>')
-  }
+  if (process.dev) {
+    const warning = []
 
-  if (!token && !cdnURL) {
-    warning.push('<token> or <cdnURL>')
-  }
+    if (!baseURL) {
+      warning.push('<baseURL>')
+    }
 
-  if (process.dev && warning.length > 0) {
-    // eslint-disable-next-line no-console
-    console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
-    return {
-      url: joinURL('<token>', '<baseURL>', src) + (operations ? ('?' + operations) : '')
+    if (!token && !cdnURL) {
+      warning.push('<token> or <cdnURL>')
+    }
+
+    if (warning.length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
+      return {
+        url: joinURL('<token>', '<baseURL>', src) + (operations ? ('?' + operations) : '')
+      }
     }
   }
 
