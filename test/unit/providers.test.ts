@@ -29,6 +29,7 @@ import * as storyblok from '#image/providers/storyblok'
 import * as strapi from '#image/providers/strapi'
 import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
+import * as uploadcare from '#image/providers/uploadcare'
 
 const emptyContext = {
   options: {
@@ -309,7 +310,8 @@ describe('Providers', () => {
 
   it('cloudimage', () => {
     const providerOptions = {
-      token: 'demo'
+      token: 'demo',
+      apiVersion: 'v7'
     }
 
     for (const image of images) {
@@ -374,6 +376,15 @@ describe('Providers', () => {
       const [_src, modifiers] = image.args
       const generated = wagtail.getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.wagtail)
+    }
+  })
+
+  it('uploadcare', () => {
+    const providerOptions = {}
+    const testImageId = 'c160afba-8b42-45a9-a46a-d393248b0072'
+    for (const image of images) {
+      const generated = uploadcare.getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.uploadcare)
     }
   })
 
