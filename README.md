@@ -1,4 +1,4 @@
-[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://image.nuxtjs.org)
+[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://image.nuxt.com)
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -10,7 +10,7 @@
 
 Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN.
 
-- [📖 &nbsp;Read Documentation](https://image.nuxtjs.org)
+- [📖 &nbsp;Read Documentation](https://image.nuxt.com)
 - [👾 &nbsp;Playground](https://githubbox.com/nuxt/image/tree/main/example)
 
 ## Features
@@ -21,7 +21,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 - Support 20+ providers
 - Generate responsive sizes
 - Optimize using modern formats such as webp and avif
-- [... and more](https://image.nuxtjs.0org)
+- [... and more](https://image.nuxtjs.org)
 
 ## Nuxt 2
 
