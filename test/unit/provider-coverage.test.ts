@@ -5,7 +5,7 @@ import { images } from '../providers'
 import { providers as playgroundProviders } from '../../playground/providers'
 
 const missingProviderTests = [
-  'ipx-static', // build-time-only alias for ipx
+  'ipxStatic', // build-time-only alias for ipx
   'strapi', // covered in a unique test
   'layer0' // backwards-compatible alias for edgio
 ]
