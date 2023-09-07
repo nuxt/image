@@ -54,13 +54,14 @@ export default defineComponent({
 
       const size = (Array.isArray(placeholder)
         ? placeholder
-        : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number]
+        : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
 
       return $img(props.src!, {
         ..._base.modifiers.value,
         width: size[0],
         height: size[1],
-        quality: size[2] || 50
+        quality: size[2] || 50,
+        blur: size[3] || 3
       }, _base.options.value)
     })
 

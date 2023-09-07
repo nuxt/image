@@ -1,13 +1,34 @@
 {
+  "name": "nuxt-image-docs",
   "private": true,
   "scripts": {
-    "dev": "nuxi dev",
-    "build": "nuxi generate",
-    "generate": "nuxi generate"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@iconify-json/ph": "^1.1.6",
+    "@iconify-json/simple-icons": "^1.1.69",
+    "@nuxt/content": "^2.8.2",
+    "@nuxt/image": "rc",
+    "@nuxthq/elements": "npm:@nuxthq/elements-edge@0.0.1-28233683.5219c54",
+    "@nuxthq/studio": "^0.14.0",
+    "@nuxthq/ui": "npm:@nuxthq/ui-edge@2.7.0-28233674.a2970cb",
+    "@nuxtjs/fontaine": "^0.4.1",
+    "@nuxtjs/google-fonts": "^3.0.2",
+    "@nuxtjs/plausible": "^0.2.1",
+    "@vueuse/core": "^10.4.1",
+    "@vueuse/nuxt": "^10.4.1",
+    "shikiji": "^0.6.7"
   },
   "devDependencies": {
-    "@nuxt-themes/docus": "^1.14.3",
-    "@nuxtjs/plausible": "latest",
-    "nuxt": "^3.6.5"
+    "@antfu/eslint-config": "^0.41.0",
+    "@nuxt/devtools": "0.8.3",
+    "@types/node": "^20.5.9",
+    "eslint": "^8.48.0",
+    "nuxt": "^3.7.1",
+    "nuxt-og-image": "^2.0.25"
   }
 }
