@@ -140,7 +140,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   const sizeVariants = []
   const srcsetVariants = []
 
-  if (Object.keys(sizes).length > 1) {
+  if (Object.keys(sizes).length >= 1) {
     // 'sizes path'
     for (const key in sizes) {
       const variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
