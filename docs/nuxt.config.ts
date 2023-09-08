@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@nuxt/content',
-    '@nuxthq/ui',
+    '@nuxt/ui',
     '@nuxthq/studio',
     '@vueuse/nuxt',
     '@nuxtjs/fontaine',
@@ -31,7 +31,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/api/search.json']
+      routes: ['/api/search.json'],
+      autoSubfolderIndex: false
     }
   },
   hooks: {

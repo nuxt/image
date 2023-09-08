@@ -1,5 +1,4 @@
 <script setup>
-import { withoutTrailingSlash } from 'ufo'
 const { mapContentNavigation } = useElementsHelpers()
 
 const route = useRoute()
@@ -11,10 +10,7 @@ useServerSeoMeta({
 useHead({
   htmlAttrs: {
     lang: 'en',
-  },
-  link: () => [
-    { rel: 'canonical', href: `https://image.nuxt.com${withoutTrailingSlash(route.path)}` }
-  ]
+  }
 })
 const links = [{
   label: 'Documentation',
