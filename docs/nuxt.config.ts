@@ -35,6 +35,14 @@ export default defineNuxtConfig({
       autoSubfolderIndex: false
     }
   },
+  routeRules: {
+    '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
+    '/configuration': { redirect: { to: '/get-started/configuration', statusCode: 301 } },
+    '/providers/introduction': { redirect: { to: '/get-started/providers', statusCode: 301 } },
+    '/components/nuxt-img': { redirect: { to: '/usage/nuxt-img', statusCode: 301 } },
+    '/components/nuxt-picture': { redirect: { to: '/usage/nuxt-picture', statusCode: 301 } },
+    '/api/use-image': { redirect: { to: '/usage/use-image', statusCode: 301 } },
+  },
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558
     // Adding all global components to the main entry
