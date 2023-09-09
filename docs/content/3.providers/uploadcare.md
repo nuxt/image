@@ -23,10 +23,10 @@ To see all possible modifiers and their options, check out the [image transforma
 Types are provided for the following modifiers:
 ```ts [src/types/module.ts]
   // Image Compression
-  format: 'jpeg'|'png'|'webp'|'auto'
-  quality: 'smart'|'smart_retina'|'normal'|'better'|'best'|'lighter'|'lightest'
-  progressive: 'yes'|'no'
-  strip_meta: 'all'|'none'|'sensitive'
+  format: 'jpeg' | 'png' | 'webp' | 'auto'
+  quality: 'smart' | 'smart_retina' | 'normal' | 'better' | 'best' | 'lighter' | 'lightest'
+  progressive: 'yes' | 'no'
+  strip_meta: 'all' | 'none' | 'sensitive'
 
   // Image Geometry
   preview: `${number}x${number}` // Height x Width

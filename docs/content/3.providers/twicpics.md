@@ -221,7 +221,7 @@ More informations [about `crop` here](https://www.twicpics.com/docs/api/transfor
 
 `flip` will invert the image horizontally, vertically or both depending on the expression provided.
 
-Syntax: `{ flip: 'both'|'x'|'y' }`
+Syntax: `{ flip: 'both' | 'x' | 'y' }`
 
 ```html
 <NuxtImg
@@ -307,7 +307,7 @@ More informations [about `truecolor` here](https://www.twicpics.com/docs/api/tra
 
 `turn` will change the orientation of the image. It accepts an angle in degrees or an expression. Angles will be rounded to the closest multiple of 90°.
 
-Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)`|'flip'|'left'|'right' }`
+Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` | 'flip' | 'left' | 'right' }`
 
 ```html
 <NuxtImg
