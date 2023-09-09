@@ -3,7 +3,7 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img } from '../types/image'
 import { ImageSizes, ImageSizesVariant } from '../types/image'
 import { imageMeta } from './utils/meta'
-import { parseDensities, parseSize, parseSizes } from './utils'
+import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
 
 export function createImage (globalOptions: CreateImageOptions) {
@@ -134,6 +134,9 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities
   if (densities.length === 0) {
     throw new Error('\'densities\' must not be empty, configure to \'1\' to render regular size only (DPR 1.0)')
+  }
+  if (process.dev) {
+    checkDensities(densities)
   }
 
   const hwRatio = (width && height) ? height / width : 0
