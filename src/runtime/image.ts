@@ -132,12 +132,7 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   const height = parseSize(opts.modifiers?.height)
   const sizes = parseSizes(opts.sizes)
   const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities
-  if (densities.length === 0) {
-    throw new Error('\'densities\' must not be empty, configure to \'1\' to render regular size only (DPR 1.0)')
-  }
-  if (process.dev) {
-    checkDensities(densities)
-  }
+  checkDensities(densities)
 
   const hwRatio = (width && height) ? height / width : 0
   const sizeVariants = []
