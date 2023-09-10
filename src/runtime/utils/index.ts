@@ -111,7 +111,7 @@ export function checkDensities (densities: number[]) {
     throw new Error('\'densities\' must not be empty, configure to \'1\' to render regular size only (DPR 1.0)')
   }
   if (process.dev && Array.from(densities).some(d => d > 2)) {
-    console.warn('[nuxt] [image] Density values above 2 are not recommended. See https://observablehq.com/@eeeps/visual-acuity-and-device-pixel-ratio.')
+    console.warn('[nuxt] [image] Density values above `2` are not recommended. See https://observablehq.com/@eeeps/visual-acuity-and-device-pixel-ratio.')
   }
 }
 
