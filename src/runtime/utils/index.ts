@@ -97,10 +97,22 @@ export function parseDensities (input: string | undefined = ''): number[] {
     return []
   }
 
-  const densities = input.split(' ').map(size => parseInt(size.replace('x', '')))
+  const densities = new Set<number>()
+  for (const density of input.split(' ')) {
+    const d = parseInt(density.replace('x', ''))
+    if (d) { densities.add(d) }
+  }
 
-  // de-duplicate and return
-  return densities.filter((value, index) => densities.indexOf(value) === index)
+  return Array.from(densities)
+}
+
+export function checkDensities (densities: number[]) {
+  if (densities.length === 0) {
+    throw new Error('`densities` must not be empty, configure to `1` to render regular size only (DPR 1.0)')
+  }
+  if (process.dev && Array.from(densities).some(d => d > 2)) {
+    console.warn('[nuxt] [image] Density values above `2` are not recommended. See https://observablehq.com/@eeeps/visual-acuity-and-device-pixel-ratio.')
+  }
 }
 
 export function parseSizes (input: Record<string, string | number> | string): Record<string, string> {
