@@ -172,7 +172,7 @@ const getImageLoad = (cb = () => {}) => {
   }
 }
 
-describe('Renders placeholded image', () => {
+describe('Renders placeholder image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
 
