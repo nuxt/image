@@ -11,6 +11,12 @@ export default defineNuxtConfig({
     domains: [
       'https://images.unsplash.com',
       'https://source.unsplash.com'
-    ]
+    ],
+    ipx: {
+      maxAge: 900,
+      modifiers: {
+        enlarge: true
+      }
+    }
   }
 })

@@ -28,10 +28,10 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
   // Options
   const ipxOptions = {
     dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
-    maxAge: providerOptions.options?.maxAge,
-    domains: moduleOptions.domains,
-    sharp: moduleOptions.sharp,
-    alias: moduleOptions.alias
+    maxAge: providerOptions.options?.maxAge || moduleOptions.ipx?.maxAge,
+    domains: moduleOptions.domains || moduleOptions.ipx?.domains,
+    sharp: moduleOptions.sharp || moduleOptions.ipx?.sharp,
+    alias: moduleOptions.alias || moduleOptions.ipx?.alias
   } satisfies IPXRuntimeConfig
 
   // Add handler for production
