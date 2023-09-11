@@ -10,10 +10,13 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     resize: 's',
     quality: 'q',
-    background: 'b'
+    background: 'b',
+    position: 'pos',
+    extract: 'crop'
   },
   joinWith: '&',
-  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
+  formatter: (key, value) =>
+    String(value) === 'true' ? encodeParam(key) : `${encodeParam(key)}_${encodeParam(value)}`
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {
