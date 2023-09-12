@@ -119,7 +119,6 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
   }
 }
 
-
 export const useBasePicture = (props: ExtractPropTypes<typeof basePictureProps>) => {
   const options = computed(() => {
     return {
