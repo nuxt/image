@@ -2,14 +2,15 @@ import { fileURLToPath } from 'node:url'
 import { createIPX, createIPXMiddleware } from 'ipx'
 import { withLeadingSlash } from 'ufo'
 import { eventHandler, lazyEventHandler } from 'h3'
+import type { NitroRuntimeConfig } from 'nitropack'
 import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(() => {
-  const opts = useRuntimeConfig().ipx
+  const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
   const ipxOptions = {
-    ...(opts || {}),
+    ...opts,
     // TODO: Switch to storage API when ipx supports it
-    dir: fileURLToPath(new URL(opts.dir, import.meta.url))
+    dir: opts.dir ? fileURLToPath(new URL(opts.dir, import.meta.url)) : undefined
   }
 
   const ipx = createIPX(ipxOptions)

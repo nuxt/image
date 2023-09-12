@@ -92,7 +92,7 @@ describe('Renders simple image', () => {
       height: 400,
       sizes: '150'
     })
-    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_150x200/image.png 1x, /_ipx/s_300x400/image.png 2x\\">"')
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" sizes=\\"150px\\" srcset=\\"/_ipx/s_150x200/image.png 150w, /_ipx/s_300x400/image.png 300w\\">"')
   })
 
   it('with single sizes entry (responsive)', () => {
@@ -102,7 +102,7 @@ describe('Renders simple image', () => {
       height: 400,
       sizes: 'sm:150'
     })
-    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_150x200/image.png 1x, /_ipx/s_300x400/image.png 2x\\">"')
+    expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" sizes=\\"150px\\" srcset=\\"/_ipx/s_150x200/image.png 150w, /_ipx/s_300x400/image.png 300w\\">"')
   })
 
   it('de-duplicates sizes & srcset', () => {
@@ -172,7 +172,7 @@ const getImageLoad = (cb = () => {}) => {
   }
 }
 
-describe('Renders placeholded image', () => {
+describe('Renders placeholder image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
 
@@ -194,7 +194,7 @@ describe('Renders placeholded image', () => {
 
     let domSrc = wrapper.find('img').element.getAttribute('src')
 
-    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&s_10x10/image.png"')
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
     expect(placeholderImage.src).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
 
     resolveImage()

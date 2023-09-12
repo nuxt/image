@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import type { ExtractPropTypes } from 'vue'
 import { parseSize } from '../utils'
+import { useImage } from '#imports'
 
 export const baseImageProps = {
   // input source

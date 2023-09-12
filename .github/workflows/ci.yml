@@ -14,7 +14,7 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: corepack enable
       - uses: actions/setup-node@v3
         with:
@@ -58,11 +58,11 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: corepack enable
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 20.5
           cache: "pnpm"
       - run: pnpm install
       - run: pnpm dev:prepare

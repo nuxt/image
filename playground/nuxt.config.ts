@@ -35,7 +35,8 @@ export default defineNuxtConfig({
     contentful: {},
     cloudimage: {
       token: 'demo',
-      baseURL: 'sample.li'
+      baseURL: 'sample.li',
+      apiVersion: 'v7'
     },
     directus: {
       baseURL: 'http://localhost:8055/assets/'
@@ -80,6 +81,8 @@ export default defineNuxtConfig({
     },
     imageengine: {
       baseURL: 'https://abc123.imgeng.in'
+    },
+    uploadcare: {
     },
     providers: {
       custom: {
