@@ -24,7 +24,7 @@ const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio'
 
 <template>
   <span class="gradient" />
-  <ULandingHero direction="horizontal" :ui="{ container: 'flex lg:gap-12' }">
+  <ULandingHero orientation="horizontal" :ui="{ container: 'flex lg:gap-12' }">
     <Illustration class="hidden lg:block h-64" />
     <template #title>
       Optimized Images for your <span class="text-primary-400">Nuxt Apps</span>
