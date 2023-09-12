@@ -1,17 +1,31 @@
+[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://image.nuxt.com)
+
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 [![Volta][volta-src]][volta-href]
 
-- [📖 &nbsp;Read Documentation (v1)](https://v1.image.nuxtjs.org)
-- [▶️ &nbsp;Play online](https://githubbox.com/nuxt/image/tree/main/example)
+# Nuxt Image
 
----
+Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN.
+
+- [📖 &nbsp;Read Documentation](https://image.nuxt.com)
+- [👾 &nbsp;Playground](https://stackblitz.com/github/nuxt/image/tree/main/example)
+
+## Features
+
+- `<nuxt-img>` drop-in replacement for the native <img> element
+- `<nuxt-picture>` drop-in replacement for the native <picture> element.
+- Built-in image resizer and transformer with [unjs/ipx](https://github.com/unjs/ipx)
+- Support 20+ providers
+- Generate responsive sizes
+- Optimize using modern formats such as webp and avif
+- [... and more](https://image.nuxtjs.org)
+
+## Nuxt 2
 
 **Note:** This branch is for **Nuxt 3** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
-
----
 
 ### Contributing
 

@@ -1,12 +1,12 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
-import { useBaseImage, baseImageProps } from './_base'
+import { baseImageProps, useBasePicture } from './_base'
 import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
-  format: { type: [String, Array], default: undefined },
+  format: { type: [String, Array<string>], default: undefined },
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null }
 }
@@ -17,7 +17,7 @@ export default defineComponent({
   emits: ['load'],
   setup: (props, ctx) => {
     const $img = useImage()
-    const _base = useBaseImage(props)
+    const _base = useBasePicture(props)
 
     const originalFormat = computed(() => getFileExtension(props.src))
     const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))

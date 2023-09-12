@@ -6,7 +6,6 @@ import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } 
 
 export interface ModuleOptions extends ImageProviders {
   inject: boolean
-  staticFilename: string
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
@@ -14,7 +13,6 @@ export interface ModuleOptions extends ImageProviders {
   sharp: any
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
-  internalUrl: string
   providers: { [name: string]: InputProvider | any } & ImageProviders
   densities: number[]
   format: CreateImageOptions['format']
@@ -27,7 +25,6 @@ export * from './types'
 export default defineNuxtModule<ModuleOptions>({
   defaults: nuxt => ({
     inject: false,
-    staticFilename: '[publicPath]/image/[hash][ext]',
     provider: 'auto',
     dir: nuxt.options.dir.public,
     presets: {},
@@ -44,7 +41,6 @@ export default defineNuxtModule<ModuleOptions>({
       xxl: 1536,
       '2xl': 1536
     },
-    internalUrl: '',
     providers: {},
     alias: {},
     densities: [1, 2]
