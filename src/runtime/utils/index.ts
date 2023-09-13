@@ -122,7 +122,7 @@ export function parseSizes (input: Record<string, string | number> | string): Re
     for (const entry of input.split(/[\s,]+/).filter(e => e)) {
       const s = entry.split(':')
       if (s.length !== 2) {
-        sizes[s[0].trim()] = s[0].trim()
+        sizes['1px'] = s[0].trim()
       } else {
         sizes[s[0].trim()] = s[1].trim()
       }
