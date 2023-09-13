@@ -1,4 +1,8 @@
 export default defineAppConfig({
+  ui: {
+    primary: 'green',
+    gray: 'slate',
+  },
   elements: {
     variables: {
       light: {
@@ -6,7 +10,7 @@ export default defineAppConfig({
         foreground: 'var(--color-gray-700)',
       },
       dark: {
-        background: 'var(--color-gray-900)',
+        background: 'var(--color-gray-950)',
         foreground: 'var(--color-gray-200)',
       },
     },
