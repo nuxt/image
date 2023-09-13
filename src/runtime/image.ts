@@ -141,7 +141,9 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   if (Object.keys(sizes).length >= 1) {
     // 'sizes path'
     for (const key in sizes) {
-      const variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
+      const _height = sizes[key][1] ? parseSize(sizes[key][1]) : height
+
+      const variant = getSizesVariant(key, sizes[key][0], _height, hwRatio, ctx)
       if (variant === undefined) {
         continue
       }
