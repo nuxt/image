@@ -13,7 +13,7 @@ interface IPXRuntimeConfig {
   alias: Record<string, string>
 }
 
-export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) => {
+export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup = setupOptions => async (providerOptions, moduleOptions) => {
   const nitro = useNitro()
   const nuxt = useNuxt()
 
@@ -51,7 +51,9 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
       route: '/_ipx/**',
       handler: resolver.resolve('./runtime/ipx')
     }
-    nitro.options.handlers.push(handler)
+    if (!setupOptions?.isStatic) {
+      nitro.options.handlers.push(handler)
+    }
     // TODO: Workaround for prerender support
     nitro.options._config.handlers!.push(handler)
     return
@@ -73,8 +75,6 @@ export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) =>
     })
   }
   nitro.options.devHandlers.push(devHandler)
-  // TODO: Workaround for prerender support
-  nitro.options._config.devHandlers!.push(devHandler)
 }
 
 declare module 'nitropack' {
