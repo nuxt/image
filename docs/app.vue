@@ -38,7 +38,7 @@ provide('navigation', navigation)
 
 watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
   if (!query) return
-  useTrackEvent('Search', { props: { results: `${search.value?.commandPaletteRef.results.length}` } })
+  useTrackEvent('Search', { props: { query, results: `${search.value?.commandPaletteRef.results.length}` } })
 }, 500))
 </script>
 
