@@ -26,14 +26,21 @@ const links = [{
   to: 'https://github.com/nuxt/image/releases',
   target: '_blank',
 }]
-const { data: files } = useLazyFetch('/api/search.json', {
-  default: () => [],
-  server: false,
+
+const enableDocsSearch = ref(false)
+const files = shallowRef([])
+onNuxtReady(async () => {
+  files.value = await $fetch('/api/search.json')
+  enableDocsSearch.value = true
 })
-const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation())
 
 // Provide
+const navigation = useState()
 provide('navigation', navigation)
+
+if (process.server) {
+  navigation.value = await fetchContentNavigation()
+}
 </script>
 
 <template>
@@ -49,8 +56,8 @@ provide('navigation', navigation)
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
-      <LazyUDocsSearchButton size="md" class="w-full mb-4" />
-      <LazyUNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
+      <UDocsSearchButton size="md" class="w-full mb-4" />
+      <UNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
     </template>
   </UHeader>
   <NuxtLayout>
@@ -71,7 +78,5 @@ provide('navigation', navigation)
       <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
     </template>
   </UFooter>
-  <ClientOnly>
-    <LazyUDocsSearch :files="files" :navigation="navigation" :links="links" />
-  </ClientOnly>
+  <UDocsSearch v-if="enableDocsSearch" :files="files" :navigation="navigation" :links="links" />
 </template>
