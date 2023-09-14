@@ -1,7 +1,8 @@
 <script setup>
+import { debounce } from 'perfect-debounce'
 const { mapContentNavigation } = useElementsHelpers()
 
-const route = useRoute()
+const search = ref(null)
 useServerSeoMeta({
   titleTemplate: '%s - Nuxt Image',
   ogSiteName: 'Nuxt Image',
@@ -34,6 +35,11 @@ const { data: navigation } = await useAsyncData('navigation', () => fetchContent
 
 // Provide
 provide('navigation', navigation)
+
+watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
+  if (!query) return
+  useTrackEvent('Search', { props: { results: `${search.value?.commandPaletteRef.results.length}` } })
+}, 500))
 </script>
 
 <template>
@@ -72,6 +78,6 @@ provide('navigation', navigation)
     </template>
   </UFooter>
   <ClientOnly>
-    <LazyUDocsSearch :files="files" :navigation="navigation" :links="links" />
+    <LazyUDocsSearch ref="search" :files="files" :navigation="navigation" :links="links" />
   </ClientOnly>
 </template>
