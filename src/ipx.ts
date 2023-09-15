@@ -2,16 +2,10 @@ import { relative, resolve } from 'pathe'
 import { eventHandler } from 'h3'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler, NitroDevEventHandler } from 'nitropack'
-
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import type { ProviderSetup } from './types'
 
-interface IPXRuntimeConfig {
-  dir: string
-  maxAge?: any
-  domains: string[]
-  sharp: any
-  alias: Record<string, string>
-}
+type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions }
 
 export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup = setupOptions => async (providerOptions, moduleOptions) => {
   const nitro = useNitro()
@@ -27,10 +21,14 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
 
   // Options
   const ipxOptions = {
-    dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
+    fs: {
+      dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)
+    },
+    http: {
+      domains: moduleOptions.domains
+    },
     maxAge: providerOptions.options?.maxAge,
-    domains: moduleOptions.domains,
-    sharp: moduleOptions.sharp,
+    sharpOptions: moduleOptions.sharp,
     alias: moduleOptions.alias
   } satisfies IPXRuntimeConfig
 
@@ -44,7 +42,7 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
     nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
     nitro.options._config.runtimeConfig.ipx = { ...ipxOptions }
     // Use relative path for built app
-    ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
+    ipxOptions.fs.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
     nitro.options.runtimeConfig.ipx = ipxOptions
 
     const handler: NitroEventHandler = {
@@ -60,19 +58,21 @@ export const ipxSetup: (setupOptions?: { isStatic: boolean }) => ProviderSetup =
   }
 
   // Add as dev handler for development
-  const { createIPX, createIPXMiddleware } = await import('ipx')
+  const { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage } = await import('ipx')
     .catch((err) => {
       // eslint-disable-next-line no-console
       console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization and is not installed.')
       throw new Error(err)
     })
-  const ipx = createIPX(ipxOptions)
-  const middleware = createIPXMiddleware(ipx)
+  const ipx = createIPX({
+    ...ipxOptions,
+    storage: ipxFSStorage(ipxOptions.fs),
+    httpStorage: ipxHttpStorage(ipxOptions.http)
+  })
   const devHandler: NitroDevEventHandler = {
     route: '/_ipx',
-    handler: eventHandler(async (event) => {
-      await middleware(event.node.req, event.node.res)
-    })
+    handler: createIPXH3Handler(ipx)
+
   }
   nitro.options.devHandlers.push(devHandler)
 }
