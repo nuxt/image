@@ -87,7 +87,10 @@ export default defineComponent({
                 href: sizes.value.src,
                 imagesizes: sizes.value.sizes,
                 imagesrcset: sizes.value.srcset
-              })
+              }),
+          ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
+            ? { fetchpriority: props.preload.fetchPriority }
+            : {})
         }]
       })
     }

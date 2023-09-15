@@ -60,7 +60,10 @@ export default defineComponent({
         rel: 'preload',
         as: 'image',
         imagesrcset: sources.value[0].srcset,
-        nonce: props.nonce
+        nonce: props.nonce,
+        ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
+          ? { fetchpriority: props.preload.fetchPriority }
+          : {})
       }
 
       if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
