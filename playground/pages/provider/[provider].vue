@@ -5,7 +5,7 @@
       <br>
       <div class="providerShowcase">
         <div v-for="sample of provider.samples" :key="sample.src">
-          <nuxt-img :provider="provider.name" v-bind="sample" />
+          <nuxt-img :provider="provider.name" v-bind="sample" :preload="{ fetchPriority: 'auto' }" />
           <pre>{{ sample }}</pre>
         </div>
       </div>
