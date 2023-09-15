@@ -49,7 +49,7 @@ jobs:
       - run: pnpm build
       - run: pnpm test:types
       - run: pnpm dev:build
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v3
 
   release:
     runs-on: ubuntu-latest
