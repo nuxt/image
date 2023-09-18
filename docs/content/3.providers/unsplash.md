@@ -17,14 +17,15 @@ Under the hood, Unsplash uses [Imgix](/providers/imgix), a powerful image manipu
 
 Unsplash officially support the parameters:
 
-`w, h`: for adjusting the width and height of a photo
-`crop`: for applying cropping to the photo
-`fm`: for converting image format
-`auto=format`: for automatically choosing the optimal image format depending on user browser
-`q`: for changing the compression quality when using lossy file formats
-`fit`: for changing the fit of the image within the specified dimensions
-`dpr`: for adjusting the device pixel ratio of the image
+- `w, h`: for adjusting the width and height of a photo
+- `crop`: for applying cropping to the photo
+- `fm`: for converting image format
+- `auto=format`: for automatically choosing the optimal image format depending on user browser
+- `q`: for changing the compression quality when using lossy file formats
+- `fit`: for changing the fit of the image within the specified dimensions
+- `dpr`: for adjusting the device pixel ratio of the image
+
 The other parameters offered by Imgix can be used, but we don’t officially support them and may remove support for them at any time in the future.
 
->💫 Tip
+>💫 Tip  
 >The API returns image URLs containing an ixid parameter. All resizing and manipulations of image URLs must keep this parameter as it allows for your application to report photo views and be compliant with the API Guidelines.
