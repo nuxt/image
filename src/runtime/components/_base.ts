@@ -38,7 +38,7 @@ export const baseImageProps = {
   },
   decoding: {
     type: String as () => 'async' | 'auto' | 'sync',
-    default: undefined,
+    default: 'async',
     validator: (val: any) => ['async', 'auto', 'sync'].includes(val)
   }
 }
@@ -85,6 +85,7 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
       ismap: props.ismap,
       crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
       loading: props.loading,
+      fetchpriority: props.preload === true ? 'high' : 'auto',
       decoding: props.decoding
     }
   })
