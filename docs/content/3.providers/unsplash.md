@@ -27,5 +27,5 @@ Unsplash officially support the parameters:
 
 The other parameters offered by Imgix can be used, but we don’t officially support them and may remove support for them at any time in the future.
 
->💫 Tip  
+>💫 Tip
 >The API returns image URLs containing an ixid parameter. All resizing and manipulations of image URLs must keep this parameter as it allows for your application to report photo views and be compliant with the API Guidelines.
