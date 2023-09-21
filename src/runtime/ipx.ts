@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage, IPXOptions } from 'ipx'
 import { lazyEventHandler, useBase } from 'h3'
-import { isAbsolute, join } from 'pathe'
+import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 import { useRuntimeConfig } from '#imports'
 

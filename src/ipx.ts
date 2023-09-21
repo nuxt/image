@@ -2,8 +2,8 @@ import { relative, resolve } from 'pathe'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
 import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
+import { defu } from 'defu'
 import type { ProviderSetup } from './types'
-import defu from 'defu'
 
 type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
   baseURL: string
@@ -35,7 +35,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
     alias: moduleOptions.alias,
     baseURL: ipxBase,
     fs: {
-      dir: nuxt.options.dev ? absoluteDir : relativeDir,
+      dir: nuxt.options.dev ? absoluteDir : relativeDir
     },
     http: {
       domains: moduleOptions.domains
@@ -57,7 +57,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
 
   // Prerenderer
   if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir }}, ipxOptions)
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
 }
