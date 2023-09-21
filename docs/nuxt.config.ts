@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   colorMode: {
-    preference: 'dark'
+    preference: 'dark',
   },
   ui: {
     icons: ['heroicons', 'simple-icons', 'ph'],
@@ -32,8 +32,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/api/search.json'],
-      autoSubfolderIndex: false
-    }
+      autoSubfolderIndex: false,
+    },
   },
   routeRules: {
     '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
@@ -50,12 +50,11 @@ export default defineNuxtConfig({
     // Downside: bigger JS bundle
     // With sync: 465KB, gzip: 204KB
     // Without: 418KB, gzip: 184KB
-    'components:extend' (components) {
+    'components:extend': function (components) {
       for (const comp of components) {
-        if (comp.global) {
+        if (comp.global)
           comp.global = 'sync'
-        }
       }
-    }
-  }
+    },
+  },
 })
