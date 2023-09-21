@@ -1,23 +1,29 @@
 import { fileURLToPath } from 'node:url'
-import { createIPX, createIPXMiddleware } from 'ipx'
-import { withLeadingSlash } from 'ufo'
-import { eventHandler, lazyEventHandler } from 'h3'
+import { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage, IPXOptions } from 'ipx'
+import { lazyEventHandler, useBase } from 'h3'
+import { isAbsolute, join } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
-  const ipxOptions = {
-    ...opts,
-    // TODO: Switch to storage API when ipx supports it
-    dir: opts.dir ? fileURLToPath(new URL(opts.dir, import.meta.url)) : undefined
+
+  // TODO: Migrate to unstorage layer
+  const fsDir = opts.fs?.dir ? isAbsolute(opts.fs.dir) ? opts.fs.dir : fileURLToPath(new URL(opts.fs.dir, import.meta.url)) : undefined
+
+  const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : undefined
+  const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined
+  if (!fsStorage && !httpStorage) {
+    throw new Error('IPX storage is not configured!')
+  }
+
+  const ipxOptions: IPXOptions = {
+    storage: (fsStorage || httpStorage)!,
+    httpStorage
   }
 
   const ipx = createIPX(ipxOptions)
-  const middleware = createIPXMiddleware(ipx)
 
-  return eventHandler(async (event) => {
-    event.node.req.url = withLeadingSlash(event.context.params!._)
-    await middleware(event.node.req, event.node.res)
-  })
+  const ipxHandler = createIPXH3Handler(ipx)
+  return useBase(opts.baseURL, ipxHandler)
 })
