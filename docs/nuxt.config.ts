@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  extends: '@nuxt/ui-pro',
+  devtools: { enabled: true },
+  extends: process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro',
   modules: [
     '@nuxt/image',
     '@nuxt/content',
