@@ -27,8 +27,8 @@ const links = [{
   to: 'https://github.com/nuxt/image/releases',
   target: '_blank',
 }]
-const { data: files } = useLazyFetch <ParsedContent[]> ('/api/search.json', { default: () => [], server: false })
-const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation()) as any
+const { data: files } = useLazyFetch<ParsedContent[]>('/api/search.json', { default: () => [], server: false })
+const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation())
 
 // Provide
 provide('navigation', navigation)
