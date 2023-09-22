@@ -3,7 +3,6 @@ definePageMeta({
   layout: 'docs',
 })
 const route = useRoute()
-const { findPageHeadline } = useElementsHelpers()
 
 const { data: page } = await useAsyncData(`docs-${route.path}`, () => queryContent(route.path).findOne())
 if (!page.value)
@@ -20,7 +19,7 @@ useSeoMeta({
   title: page.value.title,
   ogTitle: `${page.value.title} - ${isProvider ? 'Nuxt Image Providers' : 'Nuxt Image'}`,
   description: page.value.description,
-  ogDescription: page.value.description
+  ogDescription: page.value.description,
 })
 
 defineOgImage({
