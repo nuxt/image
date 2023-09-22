@@ -1,5 +1,5 @@
 import type { IPXOptions } from 'ipx'
-import type { Nuxt } from 'nuxt/schema'
+import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../module'
 import type { ImageModifiers } from './image'
 
