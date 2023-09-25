@@ -33,9 +33,9 @@ export default defineComponent({
             ...(!isResponsive
             ? { href: this.nSrc }
             : {
-                href: this.nSrc.src,
-                imagesizes: this.nSrc.sizes,
-                imagesrcset: this.nSrc.srcset
+                href: this.nSizes.src,
+                imagesizes: this.nSizes.sizes,
+                imagesrcset: this.nSizes.srcset
               })
           }
         ]
