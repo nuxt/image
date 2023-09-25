@@ -24,12 +24,19 @@ export default defineComponent({
   },
   head () {
     if (this.preload === true) {
+      const isResponsive = Object.values(this.nSizes).every(v => v)
       return {
         link: [
           {
             rel: 'preload',
             as: 'image',
-            href: this.nSrc
+            ...(!isResponsive
+            ? { href: this.nSrc }
+            : {
+                href: this.nSrc.src,
+                imagesizes: this.nSrc.sizes,
+                imagesrcset: this.nSrc.srcset
+              })
           }
         ]
       }
