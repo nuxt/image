@@ -54,7 +54,12 @@ export default defineComponent({
     const lastSourceIndex = computed(() => sources.value.length - 1)
 
     if (props.preload) {
-      const link: any = { rel: 'preload', as: 'image', nonce: props.nonce, imagesrcset: sources.value[0].srcset }
+      const link: any = {
+        rel: 'preload',
+        as: 'image',
+        imagesrcset: sources.value[0].srcset,
+        ...(props.nonce ? { nonce: props.nonce } : {})
+      }
 
       if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
 

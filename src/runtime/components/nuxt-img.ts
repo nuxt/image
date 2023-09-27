@@ -78,8 +78,8 @@ export default defineComponent({
       useHead({
         link: [{
           rel: 'preload',
-          nonce: props.nonce,
           as: 'image',
+          ...(props.nonce ? { nonce: props.nonce } : {}),
           ...(!isResponsive
             ? { href: src.value }
             : {
