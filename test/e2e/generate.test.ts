@@ -38,9 +38,11 @@ describe('ipx provider', () => {
         "/_ipx/s_300x300/images/colors.jpg",
         "/_ipx/s_300x300/images/everest.jpg",
         "/_ipx/s_300x300/images/tacos.svg",
+        "/_ipx/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
         "/_ipx/s_600x600/images/colors.jpg",
         "/_ipx/s_600x600/images/everest.jpg",
         "/_ipx/s_600x600/images/tacos.svg",
+        "/_ipx/s_600x600/unsplash/photo-1606112219348-204d7d8b94ee",
       ]
     `)
   })

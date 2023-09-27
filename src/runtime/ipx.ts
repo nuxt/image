@@ -18,6 +18,7 @@ export default lazyEventHandler(() => {
   }
 
   const ipxOptions: IPXOptions = {
+    ...opts,
     storage: (fsStorage || httpStorage)!,
     httpStorage
   }
