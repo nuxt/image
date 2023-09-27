@@ -144,6 +144,17 @@ describe('Renders simple image', () => {
     })
     expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_300x400/image.png 1x, /_ipx/s_600x800/image.png 2x, /_ipx/s_900x1200/image.png 3x\\">"')
   })
+
+  it('with nonce', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      nonce: 'stub-nonce'
+    })
+    const domNonce = img.element.getAttribute('nonce')
+    expect(domNonce).toBe('stub-nonce')
+  })
 })
 
 const getImageLoad = (cb = () => {}) => {
