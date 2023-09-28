@@ -74,7 +74,7 @@ const operationsGenerator = createOperationsGenerator({
     }
   },
   joinWith: ',',
-  formatter: (key, value) => key === 'e_blur' ? `${key}:${value}` : `${key}_${value}`
+  formatter: (key, value) => key.includes('_') ? `${key}:${value}` : `${key}_${value}`
 })
 
 const defaultModifiers = {
