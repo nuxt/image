@@ -79,6 +79,9 @@ export default defineComponent({
         link: [{
           rel: 'preload',
           as: 'image',
+          ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
+            ? { fetchpriority: props.preload.fetchPriority }
+            : {}),
           ...(!isResponsive
             ? { href: src.value }
             : {
