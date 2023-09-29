@@ -1,5 +1,5 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
-import type { Head } from 'zhead'
+import type { Head } from '@unhead/vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead, useNuxtApp } from '#imports'
