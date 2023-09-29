@@ -10,5 +10,17 @@
     "@nuxt/image",
     "@vitest/coverage-v8",
     "vitest"
+  ],
+  "packageRules": [
+    {
+      "groupName": "docs",
+      "matchPackageNames": [
+        "@nuxt/content",
+        "@nuxt/ui-pro"
+      ],
+      "matchPackagePatterns": [
+        "^@nuxthq/"
+      ]
+    }
   ]
 }
