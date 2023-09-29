@@ -113,6 +113,26 @@ describe('Providers', () => {
     })
   })
 
+  it('cloudinary blur param', () => {
+    const providerOptions = {
+      baseURL: 'https://res.cloudinary.com/demo/image/fetch/'
+    }
+    // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
+    const remoteUrl = 'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
+    const generated = cloudinary.getImage(
+      remoteUrl,
+      {
+        modifiers: {
+          blur: 100
+        },
+        ...providerOptions
+      }, emptyContext
+    )
+    expect(generated).toMatchObject({
+      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,e_blur:100/${remoteUrl}`
+    })
+  })
+
   it('cloudinary upload', () => {
     const providerOptions = {
       baseURL: 'https://res.cloudinary.com/demo/image/upload/remote'
