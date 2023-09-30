@@ -11,7 +11,7 @@
 Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN.
 
 - [📖 &nbsp;Read Documentation](https://image.nuxt.com)
-- [👾 &nbsp;Playground](https://githubbox.com/nuxt/image/tree/main/example)
+- [👾 &nbsp;Playground](https://stackblitz.com/github/nuxt/image/tree/main/example)
 
 ## Features
 

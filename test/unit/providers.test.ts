@@ -310,7 +310,8 @@ describe('Providers', () => {
 
   it('cloudimage', () => {
     const providerOptions = {
-      token: 'demo'
+      token: 'demo',
+      apiVersion: 'v7'
     }
 
     for (const image of images) {
