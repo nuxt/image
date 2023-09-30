@@ -240,11 +240,6 @@ function getVariantSrc (ctx: ImageCTX, input: string, opts: ImageSizesOptions, v
 function finaliseSizeVariants (sizeVariants: any[]) {
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  // for last size variant, always remove `media` (convention)
-  if (sizeVariants[sizeVariants.length - 1]) {
-    sizeVariants[sizeVariants.length - 1].media = ''
-  }
-
   // de-duplicate size variants (by key `media`)
   let previousMedia = null
   for (let i = sizeVariants.length - 1; i >= 0; i--) {
@@ -253,6 +248,10 @@ function finaliseSizeVariants (sizeVariants: any[]) {
       sizeVariants.splice(i, 1)
     }
     previousMedia = sizeVariant.media
+  }
+
+  for (let i = 0; i < sizeVariants.length; i++) {
+    sizeVariants[i].media = sizeVariants[i + 1]?.media || ''
   }
 }
 

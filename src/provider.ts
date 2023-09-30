@@ -24,6 +24,7 @@ const BuiltInProviders = [
   'imagekit',
   'imgix',
   'ipx',
+  'ipxStatic',
   'layer0',
   'netlify',
   'prepr',
@@ -41,8 +42,8 @@ const BuiltInProviders = [
 
 export const providerSetup: Record<string, ProviderSetup> = {
   // IPX
-  ipx: ipxSetup,
-  static: ipxSetup,
+  ipx: ipxSetup(),
+  ipxStatic: ipxSetup({ isStatic: true }),
 
   // https://vercel.com/docs/more/adding-your-framework#images
   vercel (_providerOptions, moduleOptions, nuxt: Nuxt) {

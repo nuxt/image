@@ -111,6 +111,7 @@ export function checkDensities (densities: number[]) {
     throw new Error('`densities` must not be empty, configure to `1` to render regular size only (DPR 1.0)')
   }
   if (process.dev && Array.from(densities).some(d => d > 2)) {
+    // eslint-disable-next-line no-console
     console.warn('[nuxt] [image] Density values above `2` are not recommended. See https://observablehq.com/@eeeps/visual-acuity-and-device-pixel-ratio.')
   }
 }
@@ -122,7 +123,7 @@ export function parseSizes (input: Record<string, string | number> | string): Re
     for (const entry of input.split(/[\s,]+/).filter(e => e)) {
       const s = entry.split(':')
       if (s.length !== 2) {
-        sizes[s[0].trim()] = s[0].trim()
+        sizes['1px'] = s[0].trim()
       } else {
         sizes[s[0].trim()] = s[1].trim()
       }

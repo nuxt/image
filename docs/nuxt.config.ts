@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  extends: process.env.NUXT_ELEMENTS_PATH || '@nuxthq/elements',
+  extends: '@nuxt/ui-pro',
   modules: [
     '@nuxt/image',
     '@nuxt/content',
@@ -13,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
     'nuxt-og-image',
   ],
+  devtools: { enabled: true },
   colorMode: {
     preference: 'dark'
   },
