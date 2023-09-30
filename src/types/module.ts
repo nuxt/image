@@ -43,10 +43,10 @@ export interface CloudinaryOptions {
 
 export interface UploadcareModifiers extends ImageModifiers{
   // Image Compression
-  format: 'jpeg'|'png'|'webp'|'auto'
-  quality: 'smart'|'smart_retina'|'normal'|'better'|'best'|'lighter'|'lightest'
-  progressive: 'yes'|'no'
-  strip_meta: 'all'|'none'|'sensitive'
+  format: 'jpeg' | 'png' | 'webp' | 'auto'
+  quality: 'smart' | 'smart_retina' | 'normal' | 'better' | 'best' | 'lighter' | 'lightest'
+  progressive: 'yes' | 'no'
+  strip_meta: 'all' | 'none' | 'sensitive'
   // Image Geometry
   preview: `${number}x${number}`
   resize: `${number}x${number}` | `${number}x`| `x${number}`

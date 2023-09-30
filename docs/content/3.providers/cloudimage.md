@@ -5,43 +5,79 @@ description: Nuxt Image has first class integration with Cloudimage.
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.
 
-To use this provider you just need to specify the token of your project in cloudimage.
+To use this provider you need to specify your Cloudimage `token` and the `baseURL` of your image storage.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudimage: {
-      token: 'demo'
+      token: 'your_cloudimage_token',
+      baseURL: 'origin_image_url' // or alias
     }
   }
 })
 ```
 
-**Note:** Current integration uses API `v7`.
-
 ## Options
-
-You can override default options:
 
 ### `token`
 
 - Type: **String** (required)
-- Default: `demo`
 
-Your Cloudimage customer token. [register](https://www.cloudimage.io/en/register_page) for a Cloudimage account to get one. The subscription takes less than a minute and is totally free.
+Your Cloudimage customer token. [Register](https://www.cloudimage.io/en/register_page) for a Cloudimage account to get one. Registration takes less than a minute and is totally free.
 
 ### `baseURL`
 
-- Type: **String**
+- Type: **String** (required)
 
-Your uploads base URL. This alows to shorten your origin image URLs.
+Your origin image URL or storage alias that allows to shorten your origin image URLs.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudimage: {
       token: 'demo',
-      baseURL: 'sample.li' // optional
+      baseURL: 'sample.li'
+    }
+  }
+})
+```
+
+These formats all work as well:
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'sample.li/images',
+      baseURL: 'https://sample.li/images',
+      baseURL: '_sl_' // alias defined in your Cloudimage storage settings
+    }
+  }
+})
+```
+
+### `apiVersion`
+
+- Type: **String**
+- Default: `empty string`
+
+Allow using a specific version of the API.
+
+::callout
+For tokens created before **20.10.2021**, `apiVersion` needs to be set to `v7`.
+::
+
+Here's an official demo config. `demo` is an old token hence `apiVersion` needs to be defined as well.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      token: 'demo',
+      baseURL: 'sample.li',
+      apiVersion: 'v7'
     }
   }
 })
@@ -50,7 +86,19 @@ export default defineNuxtConfig({
 ### `cdnURL`
 
 - Type: **String**
-- Default: `https://{token}.cloudimg.io/v7`
+- Default: `https://{token}.cloudimg.io/{apiVersion}`
+
+Replaces the dynamically built URL
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      cdnURL: 'https://demo.cloudimg.io/v7',
+    }
+  }
+})
+```
 
 ## Cloudimage modifiers
 
