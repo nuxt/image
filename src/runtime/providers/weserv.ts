@@ -1,7 +1,7 @@
 import { withBase } from 'ufo'
 import type { OperationGeneratorConfig, ProviderGetImage, ImageOptions } from '../../types'
 import { createOperationsGenerator } from '#image'
-import { createError } from '#imports';
+import { createError } from '#imports'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
