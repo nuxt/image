@@ -1,6 +1,5 @@
 <script setup>
 import { debounce } from 'perfect-debounce'
-const { mapContentNavigation } = useElementsHelpers()
 
 const search = ref(null)
 useServerSeoMeta({

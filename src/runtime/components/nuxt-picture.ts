@@ -1,4 +1,5 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
+import type { Head } from '@unhead/vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead, useNuxtApp } from '#imports'
@@ -54,7 +55,13 @@ export default defineComponent({
     const lastSourceIndex = computed(() => sources.value.length - 1)
 
     if (props.preload) {
-      const link: any = { rel: 'preload', as: 'image', imagesrcset: sources.value[0].srcset }
+      const link: NonNullable<Head['link']>[number] = {
+        rel: 'preload',
+        as: 'image',
+        imagesrcset: sources.value[0].srcset,
+        // @ts-expect-error might need to resolve upstream in unhead
+        nonce: props.nonce
+      }
 
       if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
 
