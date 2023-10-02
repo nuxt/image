@@ -21,7 +21,7 @@
     "lint": "eslint --ext .ts --ext .vue .",
     "prepack": "pnpm build",
     "release": "pnpm run prerelease",
-    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease=rc --push && npm publish",
+    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease=rc --push && npm publish --tag rc",
     "test": "nuxi prepare playground && pnpm vitest run",
     "test:types": "vue-tsc --noEmit && nuxi typecheck playground && nuxi typecheck example"
   },
