@@ -1,12 +1,13 @@
 // @vitest-environment nuxt
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vitest } from 'vitest'
 
 import { images } from '../providers'
 
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
 import * as none from '~/src/runtime/providers/none'
+import * as weserv from '~/src/runtime/providers/weserv'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -406,6 +407,32 @@ describe('Providers', () => {
       const generated = uploadcare.getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.uploadcare)
     }
+  })
+
+  // todo - test it throws when no baseURL is provided
+  it('weserv', () => {
+    const providerOptions = {
+      baseURL: 'https://my-website.com/'
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = weserv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.weserv)
+    }
+
+    vitest.stubEnv('NODE_ENV', 'production')
+    const generated = weserv.getImage('test.png', {}, emptyContext)
+
+    // in production falling back to the image from the server
+    expect(generated).toMatchObject({ url: 'test.png' })
+
+    vitest.stubEnv('NODE_ENV', 'development')
+
+    expect(() => weserv.getImage('test.png', {}, emptyContext))
+      .toThrowErrorMatchingInlineSnapshot('"The weserve provider requires the baseURL of your website."')
+
+    vitest.unstubAllEnvs()
   })
 
   it('none', () => {
