@@ -901,5 +901,29 @@ export const providers: Provider[] = [
         modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
       }
     ]
+  },
+  {
+    name: 'weserv',
+    samples: [
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp'
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle' }
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle', filter: 'sepia' }
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle', filter: 'sepia', quality: 80 }
+      }
+    ]
   }
 ]
