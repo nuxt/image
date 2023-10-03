@@ -25,7 +25,7 @@ export const images = [
     wagtail: { url: '329944/original|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' },
-    weserv: { url: 'https://wsrv.nl/?filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&url=https://my-website.com/test.png' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -53,7 +53,7 @@ export const images = [
     wagtail: { url: '329944/width-200|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x/' },
-    weserv: { url: 'https://wsrv.nl/?w=200&filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&url=https://my-website.com/test.png' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -81,7 +81,7 @@ export const images = [
     wagtail: { url: '329944/height-200|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?height=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/x200/' },
-    weserv: { url: 'https://wsrv.nl/?h=200&filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&h=200&url=https://my-website.com/test.png' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -109,7 +109,7 @@ export const images = [
     wagtail: { url: '329944/fill-200x200-c0|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/' },
-    weserv: { url: 'https://wsrv.nl/?w=200&h=200&filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&url=https://my-website.com/test.png' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -137,7 +137,7 @@ export const images = [
     wagtail: { url: '329944/fill-200x200-c0|format-webp|webpquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/-/stretch/off/' },
-    weserv: { url: 'https://wsrv.nl/?w=200&h=200&fit=contain&filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&url=https://my-website.com/test.png' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -165,7 +165,7 @@ export const images = [
     wagtail: { url: '329944/fill-200x200-c0|format-jpeg|jpegquality-70' },
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/format/jpeg/-/resize/200x200/-/stretch/off/' },
-    weserv: { url: 'https://wsrv.nl/?w=200&h=200&fit=contain&output=jpg&filename=test.png&url=https://my-website.com/test.png&we' }
+    weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&output=jpg&url=https://my-website.com/test.png' }
   }
 ] as const
 

@@ -97,15 +97,11 @@ export const getImage = (
   }
 
   // https://images.weserv.nl/docs/quick-reference.html
-  const defaultModifiers = {
-    filename,
-    url: withBase(src, options.baseURL)
-  } as const satisfies Record<string, string>
-
   const operations = operationsGenerator({
+    filename,
     we: 'true',
     ...options.modifiers as Record<string, string>,
-    ...defaultModifiers
+    url: withBase(src, options.baseURL)
   })
     .replace('=true', '')
 
