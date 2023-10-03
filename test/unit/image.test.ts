@@ -1,7 +1,8 @@
 // @vitest-environment nuxt
 
 import { beforeEach, describe, it, expect, vi } from 'vitest'
-import { ComponentMountingOptions, VueWrapper, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 // @ts-expect-error virtual file
 import { imageOptions } from '#build/image-options'
 import { NuxtImg } from '#components'
