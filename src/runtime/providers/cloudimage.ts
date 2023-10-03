@@ -55,6 +55,12 @@ export const getImage: ProviderGetImage = (src, {
     cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
   }
 
+  if (src.startsWith('http')) {
+    return {
+      url: joinURL(src) + (operations ? ('?' + operations) : '')
+    }
+  }
+
   return {
     url: joinURL(cdnURL, baseURL, src) + (operations ? ('?' + operations) : '')
   }
