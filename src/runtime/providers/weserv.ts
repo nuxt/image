@@ -68,6 +68,13 @@ export interface WeservOptions extends ImageOptions {
      * The url of your site that is exposed to the internet.
      */
     baseURL: string;
+
+    /**
+     * The url of the weserv service.
+     *
+     * @default https://wsrv.nl
+     */
+    weservURL?: string;
 }
 
 export const getImage = (
@@ -106,6 +113,9 @@ export const getImage = (
     .replace('=true', '')
 
   return {
-    url: withBase(operations.length ? '?' + operations : '', 'https://wsrv.nl')
+    url: withBase(
+      operations.length ? '?' + operations : '',
+      options.weservURL ?? 'https://wsrv.nl'
+    )
   }
 }
