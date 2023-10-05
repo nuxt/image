@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, hasProtocol } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -30,6 +30,7 @@ export const getImage: ProviderGetImage = (src, {
   cdnURL = ''
 } = {}) => {
   const operations = operationsGenerator(modifiers)
+  const query = (operations ? ('?' + operations) : '')
 
   if (process.dev) {
     const warning = []
@@ -46,7 +47,7 @@ export const getImage: ProviderGetImage = (src, {
       // eslint-disable-next-line no-console
       console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
       return {
-        url: joinURL('<token>', '<baseURL>', src) + (operations ? ('?' + operations) : '')
+        url: joinURL('<token>', '<baseURL>', src) + query
       }
     }
   }
@@ -55,7 +56,13 @@ export const getImage: ProviderGetImage = (src, {
     cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
   }
 
+  if (hasProtocol(src)) {
+    return {
+      url: joinURL(src) + query
+    }
+  }
+
   return {
-    url: joinURL(cdnURL, baseURL, src) + (operations ? ('?' + operations) : '')
+    url: joinURL(cdnURL, baseURL, src) + query
   }
 }
