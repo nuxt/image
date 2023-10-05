@@ -81,7 +81,7 @@ export const getImage = (
       throw createError({
         statusCode: 500,
         statusMessage: 'Internal Server Error',
-        message: 'The weserve provider requires the baseURL of your website.',
+        message: 'The weserv provider requires the baseURL of your website.',
         data: {
           provider: 'weserv',
           src,

@@ -430,7 +430,7 @@ describe('Providers', () => {
     vitest.stubEnv('NODE_ENV', 'development')
 
     expect(() => weserv.getImage('test.png', {}, emptyContext))
-      .toThrowErrorMatchingInlineSnapshot('"The weserve provider requires the baseURL of your website."')
+      .toThrowErrorMatchingInlineSnapshot('"The weserv provider requires the baseURL of your website."')
 
     vitest.unstubAllEnvs()
   })
