@@ -59,7 +59,6 @@ export default defineComponent({
         rel: 'preload',
         as: 'image',
         imagesrcset: sources.value[0].srcset,
-        // @ts-expect-error might need to resolve upstream in unhead
         nonce: props.nonce
       }
 

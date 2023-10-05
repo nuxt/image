@@ -79,7 +79,6 @@ export default defineComponent({
         link: [{
           rel: 'preload',
           as: 'image',
-          // @ts-expect-error might need to resolve upstream in unhead
           nonce: props.nonce,
           ...(!isResponsive
             ? { href: src.value }
