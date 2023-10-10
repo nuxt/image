@@ -94,8 +94,7 @@ export interface IPXModifiers extends ImageModifiers {
   animated: true | 'true'
 }
 
-export interface StaticIPXOptions extends Partial<Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions }> {
-  baseURL: string
+export interface StaticIPXOptions extends Partial<Omit<IPXOptions, 'storage' | 'httpStorage' | 'alias' | 'sharpOptions'> & { http: HTTPStorageOptions, fs: NodeFSSOptions }> {
   modifiers: Partial<IPXModifiers>
 }
 
