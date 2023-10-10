@@ -24,7 +24,7 @@ const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio'
 
 <template>
   <span class="gradient" />
-  <ULandingHero direction="horizontal" :ui="{ container: 'flex lg:gap-12' }">
+  <ULandingHero orientation="horizontal" :ui="{ container: 'flex lg:gap-12' }">
     <Illustration class="hidden lg:block h-64" />
     <template #title>
       Optimized Images for your <span class="text-primary-400">Nuxt Apps</span>
@@ -63,27 +63,16 @@ const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio'
       Get the most of your images with<br><span class="text-primary-400">dynamic features</span>
     </template>
     <UPageGrid>
-      <UPageCard to="/usage/nuxt-img" icon="i-ph-image-duotone">
-        <template #title>
-          Drop-in Replacement
+      <ULandingCard to="/usage/nuxt-img" title="Drop-in Replacement" icon="i-ph-image-duotone">
+        <template #description>
+          Leverage <code>&lt;nuxt-img&gt;</code> and <code>&lt;nuxt-picture&gt;</code> drop-in replacement for the native <code>&lt;img&gt;</code> and <code>&lt;picture&gt;</code> elements.
         </template>
-        Leverage <code>&lt;nuxt-img&gt;</code> and <code>&lt;nuxt-picture&gt;</code> drop-in replacement for the native <code>&lt;img&gt;</code> and <code>&lt;picture&gt;</code> elements.
-      </UPageCard>
-      <UPageCard to="/providers/ipx" title="Built-in resizer" icon="i-ph-crop">
-        Unlock the power of our built-in image resizer and transformer with IPX.
-      </UPageCard>
-      <UPageCard to="/get-started/providers" title="20+ Providers Supported" icon="i-ph-plug-duotone">
-        Choose over 20 image providers to optimize your images, no vendor lock-in.
-      </UPageCard>
-      <UPageCard to="/usage/nuxt-img#sizes" title="Responsive Ready" icon="i-ph-frame-corners">
-        Nuxt Image dynamically generates responsive sizes. Your visuals adapt effortlessly to every screen size, offering a seamless user experience.
-      </UPageCard>
-      <UPageCard to="/usage/nuxt-img#format" title="Future-Proof Formats" icon="i-ph-magic-wand-duotone">
-        Embrace the future of visual optimization with support for modern formats like webp and avif.
-      </UPageCard>
-      <UPageCard to="/get-started/installation" title="Streamlined Performance" icon="i-ph-rocket-launch-duotone">
-        Deliver visually stunning content with lightning-fast load times, keeping your audience engaged and delighted.
-      </UPageCard>
+      </ULandingCard>
+      <ULandingCard to="/providers/ipx" title="Built-in resizer" icon="i-ph-crop" description="Unlock the power of our built-in image resizer and transformer with IPX." />
+      <ULandingCard to="/get-started/providers" title="20+ Providers Supported" icon="i-ph-plug-duotone" description="Choose over 20 image providers to optimize your images, no vendor lock-in." />
+      <ULandingCard to="/usage/nuxt-img#sizes" title="Responsive Ready" icon="i-ph-frame-corners" description="Nuxt Image dynamically generates responsive sizes. Your visuals adapt effortlessly to every screen size, offering a seamless user experience." />
+      <ULandingCard to="/usage/nuxt-img#format" title="Future-Proof Formats" icon="i-ph-magic-wand-duotone" description="Embrace the future of visual optimization with support for modern formats like webp and avif." />
+      <ULandingCard to="/get-started/installation" title="Streamlined Performance" icon="i-ph-rocket-launch-duotone" description="Deliver visually stunning content with lightning-fast load times, keeping your audience engaged and delighted." />
     </UPageGrid>
   </ULandingSection>
   <ULandingSection align="left">
@@ -100,7 +89,7 @@ const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio'
       </UButton>
     </template>
     <div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
-      <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" class="block lg:hover:scale-110 transition">
+      <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" :title="provider" class="block lg:hover:scale-110 transition">
         <!-- <NuxtImg :placeholder="img(`/providers/${provider}.svg`, { h: 10, f: 'png', blur: 2, q: 50 })" :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" /> -->
         <NuxtImg :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" />
       </NuxtLink>

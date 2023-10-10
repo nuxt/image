@@ -40,7 +40,10 @@ export const baseImageProps = {
     type: String as () => 'async' | 'auto' | 'sync',
     default: undefined,
     validator: (val: any) => ['async', 'auto', 'sync'].includes(val)
-  }
+  },
+
+  // csp
+  nonce: { type: [String], default: undefined }
 }
 
 export interface BaseImageAttrs {
@@ -54,6 +57,7 @@ export interface BaseImageAttrs {
   crossorigin?: '' | 'anonymous' | 'use-credentials'
   loading?: string
   decoding?: 'async' | 'auto' | 'sync'
+  nonce?: string
 }
 
 export interface BaseImageModifiers {
@@ -85,7 +89,8 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
       ismap: props.ismap,
       crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
       loading: props.loading,
-      decoding: props.decoding
+      decoding: props.decoding,
+      nonce: props.nonce
     }
   })
 

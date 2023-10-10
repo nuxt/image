@@ -1,7 +1,7 @@
 <script setup>
-const { mapContentNavigation } = useElementsHelpers()
+import { debounce } from 'perfect-debounce'
 
-const route = useRoute()
+const search = ref(null)
 useServerSeoMeta({
   titleTemplate: '%s - Nuxt Image',
   ogSiteName: 'Nuxt Image',
@@ -34,6 +34,11 @@ const { data: navigation } = await useAsyncData('navigation', () => fetchContent
 
 // Provide
 provide('navigation', navigation)
+
+watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
+  if (!query) return
+  useTrackEvent('Search', { props: { query, results: `${search.value?.commandPaletteRef.results.length}` } })
+}, 500))
 </script>
 
 <template>
@@ -43,9 +48,9 @@ provide('navigation', navigation)
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" />
-      <USocialButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" />
-      <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
+      <UButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" color="gray" variant="ghost" />
+      <UButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" color="gray" variant="ghost" />
+      <UButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" color="gray" variant="ghost" />
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
@@ -66,30 +71,12 @@ provide('navigation', navigation)
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" />
-      <USocialButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" />
-      <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
+      <UButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" color="gray" variant="ghost" />
+      <UButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" color="gray" variant="ghost" />
+      <UButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" color="gray" variant="ghost" />
     </template>
   </UFooter>
   <ClientOnly>
-    <LazyUDocsSearch :files="files" :navigation="navigation" :links="links" />
+    <LazyUDocsSearch ref="search" :files="files" :navigation="navigation" :links="links" />
   </ClientOnly>
 </template>
-
-<style>
-html.dark {
-  color-scheme: dark;
-}
-
-.shiki {
-  padding: 0.6rem;
-  border-radius: 0.2rem;
-  border: 1px solid #8882;
-}
-
-html.dark .shiki,
-html.dark .shiki span {
-  color: var(--s-dark) !important;
-  background-color: var(--s-dark-bg) !important;
-}
-</style>

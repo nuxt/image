@@ -29,7 +29,8 @@ const operationsGenerator = createOperationsGenerator({
     colorSpace: 'cs',
     customFunc: 'fn',
     density: 'dn',
-    aspectRatio: 'ar'
+    aspectRatio: 'ar',
+    blur: 'e_blur'
   },
   valueMap: {
     fit: {
@@ -73,7 +74,7 @@ const operationsGenerator = createOperationsGenerator({
     }
   },
   joinWith: ',',
-  formatter: (key, value) => `${key}_${value}`
+  formatter: (key, value) => key.includes('_') ? `${key}:${value}` : `${key}_${value}`
 })
 
 const defaultModifiers = {

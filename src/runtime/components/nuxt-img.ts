@@ -79,6 +79,7 @@ export default defineComponent({
         link: [{
           rel: 'preload',
           as: 'image',
+          nonce: props.nonce,
           ...(!isResponsive
             ? { href: src.value }
             : {

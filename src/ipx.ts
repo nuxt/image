@@ -1,80 +1,65 @@
 import { relative, resolve } from 'pathe'
-import { eventHandler } from 'h3'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
-import type { NitroEventHandler, NitroDevEventHandler } from 'nitropack'
-
+import type { NitroEventHandler } from 'nitropack'
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
+import { defu } from 'defu'
 import type { ProviderSetup } from './types'
 
-interface IPXRuntimeConfig {
-  dir: string
-  maxAge?: any
-  domains: string[]
-  sharp: any
-  alias: Record<string, string>
+type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
+  baseURL: string
 }
 
-export const ipxSetup: ProviderSetup = async (providerOptions, moduleOptions) => {
+type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
+
+export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptions) => {
+  const resolver = createResolver(import.meta.url)
   const nitro = useNitro()
   const nuxt = useNuxt()
 
-  // Add IPX middleware unless nuxtrc or user added a custom middleware
+  const ipxBase = moduleOptions.base /* TODO */ || '/_ipx'
+
+  // Avoid overriding user custom handler
   const hasUserProvidedIPX =
-    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith('/_ipx')) ||
-    nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith('/_ipx'))
+    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBase)) ||
+    nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBase))
   if (hasUserProvidedIPX) {
     return
   }
 
   // Options
-  const ipxOptions = {
-    dir: resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public),
-    maxAge: providerOptions.options?.maxAge || moduleOptions.ipx?.maxAge,
-    domains: moduleOptions.domains || moduleOptions.ipx?.domains,
-    sharp: moduleOptions.sharp || moduleOptions.ipx?.sharp,
-    alias: moduleOptions.alias || moduleOptions.ipx?.alias
-  } satisfies IPXRuntimeConfig
-
-  // Add handler for production
-  if (!nuxt.options.dev) {
-    // TODO: Avoid adding for non-Node.js environments with a warning
-    const resolver = createResolver(import.meta.url)
-    // Use absolute path for prerenderer
-    // TODO: Workaround for prerender support
-    // https://github.com/nuxt/image/pull/784
-    nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
-    nitro.options._config.runtimeConfig.ipx = { ...ipxOptions }
-    // Use relative path for built app
-    ipxOptions.dir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
-    nitro.options.runtimeConfig.ipx = ipxOptions
-
-    const handler: NitroEventHandler = {
-      route: '/_ipx/**',
-      handler: resolver.resolve('./runtime/ipx')
+  const absoluteDir = resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)
+  const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
+  const ipxOptions: IPXRuntimeConfig = {
+    maxAge: providerOptions.options?.maxAge,
+    sharpOptions: moduleOptions.sharp,
+    alias: moduleOptions.alias,
+    baseURL: ipxBase,
+    fs: {
+      dir: nuxt.options.dev ? absoluteDir : relativeDir
+    },
+    http: {
+      domains: moduleOptions.domains
     }
-    nitro.options.handlers.push(handler)
-    // TODO: Workaround for prerender support
-    nitro.options._config.handlers!.push(handler)
-    return
   }
 
-  // Add as dev handler for development
-  const { createIPX, createIPXMiddleware } = await import('ipx')
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error('[@nuxt/image] `ipx` is an optional dependency for local image optimization and is not installed.')
-      throw new Error(err)
-    })
-  const ipx = createIPX(ipxOptions)
-  const middleware = createIPXMiddleware(ipx)
-  const devHandler: NitroDevEventHandler = {
-    route: '/_ipx',
-    handler: eventHandler(async (event) => {
-      await middleware(event.node.req, event.node.res)
-    })
+  nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
+  nitro.options.runtimeConfig.ipx = ipxOptions
+
+  const ipxHandler = <NitroEventHandler>{
+    route: `${ipxBase}/**`,
+    middleware: false,
+    handler: resolver.resolve('./runtime/ipx')
   }
-  nitro.options.devHandlers.push(devHandler)
-  // TODO: Workaround for prerender support
-  nitro.options._config.devHandlers!.push(devHandler)
+
+  if (!setupOptions?.isStatic) {
+    nitro.options.handlers.push(ipxHandler)
+  }
+
+  // Prerenderer
+  if (!nitro.options.dev) {
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
+    nitro.options._config.handlers!.push(ipxHandler)
+  }
 }
 
 declare module 'nitropack' {

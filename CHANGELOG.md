@@ -2,6 +2,164 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.0.0-rc.3
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.2...v1.0.0-rc.3)
+
+### 🚀 Enhancements
+
+- ⚠️  Migrate to ipx v2 ([#988](https://github.com/nuxt/image/pull/988))
+- Add `nonce` support ([#1012](https://github.com/nuxt/image/pull/1012))
+
+### 🩹 Fixes
+
+- **cloudinary:** Handle blur modifier correctly ([#985](https://github.com/nuxt/image/pull/985))
+
+### 📖 Documentation
+
+- Track anonymous search queries ([dd4451e](https://github.com/nuxt/image/commit/dd4451e))
+- Add query in search event ([92f71da](https://github.com/nuxt/image/commit/92f71da))
+- Update deps ([d39eab1](https://github.com/nuxt/image/commit/d39eab1))
+- Display supported unsplash parameters as a list ([#995](https://github.com/nuxt/image/pull/995))
+- Update to ui pro ([a9cc6bd](https://github.com/nuxt/image/commit/a9cc6bd))
+- Add contribution guide ([fdc0975](https://github.com/nuxt/image/commit/fdc0975))
+- Remove stray code block ([#1016](https://github.com/nuxt/image/pull/1016))
+
+### 🏡 Chore
+
+- Split out docs updates into separate prs ([8cb7c50](https://github.com/nuxt/image/commit/8cb7c50))
+- Expand renovate group to nuxt ui prefix ([adbdff3](https://github.com/nuxt/image/commit/adbdff3))
+- Build before releasing ([db4d4a8](https://github.com/nuxt/image/commit/db4d4a8))
+- Use explicit build command ([e638a0e](https://github.com/nuxt/image/commit/e638a0e))
+
+### 🤖 CI
+
+- Revert codecov update ([7d120ca](https://github.com/nuxt/image/commit/7d120ca))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Migrate to ipx v2 ([#988](https://github.com/nuxt/image/pull/988))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+- Nestor Vera ([@hacknug](http://github.com/hacknug))
+- Patrik 
+- Thomas Rijpstra 
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Joe Winger <github@joewinger.com>
+
+## v1.0.0-rc.2
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.1...v1.0.0-rc.2)
+
+### 🚀 Enhancements
+
+- Support `densities` for devices with `DevicePixelRatio` > 1 ([#769](https://github.com/nuxt/image/pull/769))
+- **nuxt-picture:** Support multiple image formats ([#684](https://github.com/nuxt/image/pull/684))
+- Add `prepr` cms image provider integration ([#823](https://github.com/nuxt/image/pull/823))
+- Allow setting global `format` defaults in config ([#880](https://github.com/nuxt/image/pull/880))
+- Allow setting global `quality` defaults in config ([#884](https://github.com/nuxt/image/pull/884))
+- Add `uploadcare` provider ([#740](https://github.com/nuxt/image/pull/740))
+- **nuxt-img:** Placeholder default blur + improve playground ([#966](https://github.com/nuxt/image/pull/966))
+- Add `apiVersion` to cloudimage provider ([#955](https://github.com/nuxt/image/pull/955))
+- ⚠️  Switch `sizes` default to responsive-first ([#977](https://github.com/nuxt/image/pull/977))
+- Add `ipxStatic` provider ([#878](https://github.com/nuxt/image/pull/878))
+
+### 🩹 Fixes
+
+- Apply `sizes`/`srcset` when using placeholder ([#676](https://github.com/nuxt/image/pull/676))
+- Run setup and add `none` to providers list ([#860](https://github.com/nuxt/image/pull/860))
+- Remove `key` for picture/image to stop flicker when loading ([#760](https://github.com/nuxt/image/pull/760))
+- **storyblok:** Don't apply resize/format/filter on vector ([#870](https://github.com/nuxt/image/pull/870))
+- Address miscellaneous bugs with new 'densities' prop ([#872](https://github.com/nuxt/image/pull/872))
+- Add explicit import for `useImage` ([4865ccb](https://github.com/nuxt/image/commit/4865ccb))
+- Augment runtime config with explicit `ipx` key ([d73833b](https://github.com/nuxt/image/commit/d73833b))
+- Provide default ipx opts earlier ([2f62c05](https://github.com/nuxt/image/commit/2f62c05))
+- Respect densities prop with `<nuxt-picture>` ([#928](https://github.com/nuxt/image/pull/928))
+- Warn in dev mode if density is provided above 2x ([#973](https://github.com/nuxt/image/pull/973))
+- Generate sizes when only a single `sizes` is provided ([#920](https://github.com/nuxt/image/pull/920))
+
+### 📖 Documentation
+
+- Add `rc` tag to home page cta ([d50d705](https://github.com/nuxt/image/commit/d50d705))
+- **providers:** Cloudflare image is available to all plans now ([99cb37f](https://github.com/nuxt/image/commit/99cb37f))
+- Remove unused module options ([07836ae](https://github.com/nuxt/image/commit/07836ae))
+- Update link to v0 docs ([37395b7](https://github.com/nuxt/image/commit/37395b7))
+- Make it nice ([08d5645](https://github.com/nuxt/image/commit/08d5645))
+- Fix link ([cb96767](https://github.com/nuxt/image/commit/cb96767))
+- Fix link ([343dda0](https://github.com/nuxt/image/commit/343dda0))
+- Upgraded documentation ([#953](https://github.com/nuxt/image/pull/953))
+- Update elements ([c3a2e25](https://github.com/nuxt/image/commit/c3a2e25))
+- Add Nuxt Studio ([bad4420](https://github.com/nuxt/image/commit/bad4420))
+- Update deps and add canonical ([#957](https://github.com/nuxt/image/pull/957))
+- Improve gradient ([9f026b2](https://github.com/nuxt/image/commit/9f026b2))
+- Update color palette (green) ([9f93a2e](https://github.com/nuxt/image/commit/9f93a2e))
+- Update deps ([f6b038a](https://github.com/nuxt/image/commit/f6b038a))
+- Leverage UPageLinks ([8423773](https://github.com/nuxt/image/commit/8423773))
+- Fix typo in Storyblok provider ([#959](https://github.com/nuxt/image/pull/959))
+- Move to @nuxt/ui and leverage autoSubfolderIndex false ([549cbf5](https://github.com/nuxt/image/commit/549cbf5))
+- Migrate to routeRules for redirects ([4db1c5a](https://github.com/nuxt/image/commit/4db1c5a))
+- Move to ULandingCard ([e0a8183](https://github.com/nuxt/image/commit/e0a8183))
+- Fix text center on hero ([bfcb955](https://github.com/nuxt/image/commit/bfcb955))
+- Update colors ([23ef384](https://github.com/nuxt/image/commit/23ef384))
+- Remove unused styles ([bd00755](https://github.com/nuxt/image/commit/bd00755))
+
+### 🏡 Chore
+
+- **release:** V1.0.0-rc.1 ([1e4a95a](https://github.com/nuxt/image/commit/1e4a95a))
+- Update changelog for rc.0 ([8cd9b0f](https://github.com/nuxt/image/commit/8cd9b0f))
+- Add link to social card ([56d8b71](https://github.com/nuxt/image/commit/56d8b71))
+- Ignore vitest updates for now ([eb5702f](https://github.com/nuxt/image/commit/eb5702f))
+- Upgrade dependencies and dedupe lockfile ([#947](https://github.com/nuxt/image/pull/947))
+- Bump h3 dependency ([75ecf56](https://github.com/nuxt/image/commit/75ecf56))
+- Revert to Nitro 2.6.2 ([680fe4c](https://github.com/nuxt/image/commit/680fe4c))
+- Update docs and dev dependencies ([#972](https://github.com/nuxt/image/pull/972))
+- Update lockfile ([6058c63](https://github.com/nuxt/image/commit/6058c63))
+- Add stackblitz playground link ([fc98960](https://github.com/nuxt/image/commit/fc98960))
+- Add reproduire workflows ([ae81f77](https://github.com/nuxt/image/commit/ae81f77))
+- Fix typo ([60b96ae](https://github.com/nuxt/image/commit/60b96ae))
+
+### ✅ Tests
+
+- Ensure `<img>` is rendered with custom format ([fcc9b7a](https://github.com/nuxt/image/commit/fcc9b7a))
+- Pass string to `fit` ([1a8c782](https://github.com/nuxt/image/commit/1a8c782))
+- Iterate over providers array with for/of ([df062d0](https://github.com/nuxt/image/commit/df062d0))
+- Move to v8 coverage engine ([6fb8ef6](https://github.com/nuxt/image/commit/6fb8ef6))
+
+### 🎨 Styles
+
+- Add spaces around string literal types ([3badcb8](https://github.com/nuxt/image/commit/3badcb8))
+
+### 🤖 CI
+
+- Test coverage and split out release job ([c4a8ff6](https://github.com/nuxt/image/commit/c4a8ff6))
+- Run tests on node 20.5 until hotfix arrives ([a5bd7de](https://github.com/nuxt/image/commit/a5bd7de))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Switch `sizes` default to responsive-first ([#977](https://github.com/nuxt/image/pull/977))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Jakub Andrzejewski <jakub.andrzejewski.dev@gmail.com>
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Tibor 
+- Ausir Lo ([@ausir0726](http://github.com/ausir0726))
+- David Stranava 
+- Luke Nelson <luke@nelson.zone>
+- Tragio Quievera 
+- Hartmut <info@hartmut.co.uk>
+- Ryan Mulready <ryan.mulready@gmail.com>
+- Francisco Barros ([@FranciscoKloganB](http://github.com/FranciscoKloganB))
+- Chris Spiegl ([@chrisspiegl](http://github.com/chrisspiegl))
+- Marcel Pfeifer 
+- Михаил ([@Mihanik71](http://github.com/Mihanik71))
+- Dmitriy
+
 ## v1.0.0-rc.1
 
 [compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.0...v1.0.0-rc.1)
