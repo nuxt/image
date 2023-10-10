@@ -94,7 +94,7 @@ export interface IPXModifiers extends ImageModifiers {
   animated: true | 'true'
 }
 
-export interface StaticOptions extends Partial<IPXOptions> {
+export interface StaticIPXOptions extends Partial<IPXOptions> {
   baseURL: string
   modifiers: Partial<IPXModifiers>
 }
@@ -118,8 +118,8 @@ export interface ImageProviders {
   strapi?: any
   imageengine?: any
   uploadcare?: Partial<UploadcareOptions>
-  ipx?: Partial<StaticOptions>
-  static?: Partial<StaticOptions>
+  ipx?: Partial<StaticIPXOptions>
+  static?: Partial<StaticIPXOptions>
 }
 
 export interface ImageModuleProvider {
