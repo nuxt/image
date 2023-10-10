@@ -10,7 +10,7 @@ import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
 // Please add new providers alphabetically to the list below
-const BuiltInProviders = [
+export const BuiltInProviders = [
   'cloudflare',
   'cloudimage',
   'cloudinary',

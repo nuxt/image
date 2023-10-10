@@ -1,4 +1,4 @@
-import type { IPXOptions } from 'ipx'
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../module'
 import type { ImageModifiers } from './image'
@@ -94,7 +94,7 @@ export interface IPXModifiers extends ImageModifiers {
   animated: true | 'true'
 }
 
-export interface StaticIPXOptions extends Partial<IPXOptions> {
+export interface StaticIPXOptions extends Partial<Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions }> {
   baseURL: string
   modifiers: Partial<IPXModifiers>
 }
@@ -119,7 +119,7 @@ export interface ImageProviders {
   imageengine?: any
   uploadcare?: Partial<UploadcareOptions>
   ipx?: Partial<StaticIPXOptions>
-  static?: Partial<StaticIPXOptions>
+  static?: Partial<StaticIPXOptions> // TODO: rename to ipxStatic or remove this ?
 }
 
 export interface ImageModuleProvider {

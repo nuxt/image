@@ -109,7 +109,10 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 }
 
 function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
-  const provider = ctx.options.providers[name]
+  let provider = ctx.options.providers[name]
+  if (!provider && name === 'ipx') {
+    provider = ctx.options.providers.ipxStatic
+  }
   if (!provider) {
     throw new Error('Unknown provider: ' + name)
   }

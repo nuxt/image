@@ -1,7 +1,7 @@
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolve } from 'pathe'
-import { resolveProviders, detectProvider, resolveProvider } from './provider'
+import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
 
 export interface ModuleOptions extends ImageProviders {
@@ -139,7 +139,13 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
         imageOptions.provider = options.provider = resolvedProvider
         options[resolvedProvider] = options[resolvedProvider] || {}
 
-        const p = await resolveProvider(nuxt, resolvedProvider, options[resolvedProvider])
+        const p = await resolveProvider(
+          nuxt,
+          resolvedProvider,
+          BuiltInProviders.includes(resolvedProvider)
+            ? { provider: resolvedProvider, options: options[resolvedProvider] }
+            : options[resolvedProvider]
+        )
         if (!providers.some(p => p.name === resolvedProvider)) {
           providers.push(p)
         }

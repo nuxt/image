@@ -35,9 +35,11 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
     alias: moduleOptions.alias,
     baseURL: ipxBase,
     fs: {
+      ...providerOptions.options?.fs,
       dir: nuxt.options.dev ? absoluteDir : relativeDir
     },
     http: {
+      ...providerOptions.options?.http,
       domains: moduleOptions.domains
     }
   }

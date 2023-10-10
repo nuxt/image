@@ -13,9 +13,11 @@ export default defineNuxtConfig({
       'https://source.unsplash.com'
     ],
     ipx: {
-      maxAge: 900,
       modifiers: {
         enlarge: true
+      },
+      fs: {
+        maxAge: 900
       }
     }
   }
