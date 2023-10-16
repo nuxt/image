@@ -120,8 +120,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(rollup@3.29.4)(vue@3.3.4)(webpack@5.88.2)
       '@nuxthq/studio':
-        specifier: ^1.0.0
-        version: 1.0.0(rollup@3.29.4)
+        specifier: ^1.0.1
+        version: 1.0.1(rollup@3.29.4)
       '@nuxtjs/fontaine':
         specifier: ^0.4.1
         version: 0.4.1(rollup@3.29.4)
@@ -1172,6 +1172,7 @@ packages:
 
   /@ioredis/commands@1.2.0:
     resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
+    requiresBuild: true
 
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1788,8 +1789,8 @@ packages:
       - vti
       - vue-tsc
 
-  /@nuxthq/studio@1.0.0(rollup@3.29.4):
-    resolution: {integrity: sha512-W4dUsj4ypJc2jG6cE8ECmnAx99SKX0qqzoAYqj1KJ9QmknLON/DIHdyhUtIoPMHlzcBgErTeUzy4prxsO5cHBg==}
+  /@nuxthq/studio@1.0.1(rollup@3.29.4):
+    resolution: {integrity: sha512-7geTulbJ2ZEhgtoBHZDxbWrorNT7nZiAwXOoGtjciCrsnJhuQiHiQDq/007yvvvz5tN/sDZBaxn8glct6pFzgg==}
     dependencies:
       '@nuxt/kit': 3.7.4(rollup@3.29.4)
       defu: 6.1.2
@@ -3024,33 +3025,15 @@ packages:
       pretty-format: 29.7.0
     dev: true
 
-  /@volar/language-core@1.10.1:
-    resolution: {integrity: sha512-JnsM1mIPdfGPxmoOcK1c7HYAsL6YOv0TCJ4aW3AXPZN/Jb4R77epDyMZIVudSGjWMbvv/JfUa+rQ+dGKTmgwBA==}
-    dependencies:
-      '@volar/source-map': 1.10.1
-    dev: false
-
   /@volar/language-core@1.10.4:
     resolution: {integrity: sha512-Na69qA6uwVIdA0rHuOc2W3pHtVQQO8hCNim7FOaKNpRJh0oAFnu5r9i7Oopo5C4cnELZkPNjTrbmpcCTiW+CMQ==}
     dependencies:
       '@volar/source-map': 1.10.4
 
-  /@volar/source-map@1.10.1:
-    resolution: {integrity: sha512-3/S6KQbqa7pGC8CxPrg69qHLpOvkiPHGJtWPkI/1AXCsktkJ6gIk/5z4hyuMp8Anvs6eS/Kvp/GZa3ut3votKA==}
-    dependencies:
-      muggle-string: 0.3.1
-    dev: false
-
   /@volar/source-map@1.10.4:
     resolution: {integrity: sha512-RxZdUEL+pV8p+SMqnhVjzy5zpb1QRZTlcwSk4bdcBO7yOu4rtEWqDGahVCEj4CcXour+0yJUMrMczfSCpP9Uxg==}
     dependencies:
       muggle-string: 0.3.1
-
-  /@volar/typescript@1.10.1:
-    resolution: {integrity: sha512-+iiO9yUSRHIYjlteT+QcdRq8b44qH19/eiUZtjNtuh6D9ailYM7DVR0zO2sEgJlvCaunw/CF9Ov2KooQBpR4VQ==}
-    dependencies:
-      '@volar/language-core': 1.10.1
-    dev: false
 
   /@volar/typescript@1.10.4:
     resolution: {integrity: sha512-BCCUEBASBEMCrz7qmNSi2hBEWYsXD0doaktRKpmmhvb6XntM2sAWYu6gbyK/MluLDgluGLFiFRpWgobgzUqolg==}
@@ -3142,8 +3125,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@volar/language-core': 1.10.1
-      '@volar/source-map': 1.10.1
+      '@volar/language-core': 1.10.4
+      '@volar/source-map': 1.10.4
       '@vue/compiler-dom': 3.3.4
       '@vue/reactivity': 3.3.4
       '@vue/shared': 3.3.4
@@ -4254,6 +4237,7 @@ packages:
   /cluster-key-slot@1.1.2:
     resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
 
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -4744,6 +4728,7 @@ packages:
   /denque@2.1.0:
     resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
     engines: {node: '>=0.10'}
+    requiresBuild: true
 
   /depd@1.1.2:
     resolution: {integrity: sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ==}
@@ -7469,9 +7454,11 @@ packages:
 
   /lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
+    requiresBuild: true
 
   /lodash.isarguments@3.1.0:
     resolution: {integrity: sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg==}
+    requiresBuild: true
 
   /lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
@@ -10222,10 +10209,12 @@ packages:
   /redis-errors@1.2.0:
     resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
     engines: {node: '>=4'}
+    requiresBuild: true
 
   /redis-parser@3.0.0:
     resolution: {integrity: sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       redis-errors: 1.2.0
 
@@ -10901,6 +10890,7 @@ packages:
 
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
+    requiresBuild: true
 
   /statuses@1.5.0:
     resolution: {integrity: sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==}
@@ -12309,7 +12299,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@volar/typescript': 1.10.1
+      '@volar/typescript': 1.10.4
       '@vue/language-core': 1.8.15(typescript@5.2.2)
       typesafe-path: 0.2.2
       typescript: 5.2.2
