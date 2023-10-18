@@ -151,7 +151,7 @@ importers:
         specifier: ^0.43.1
         version: 0.43.1(eslint@8.51.0)(typescript@5.2.2)
       '@nuxt/devtools':
-        specifier: 0.8.5
+        specifier: ^0.8.5
         version: 0.8.5(nuxt@3.7.4)(rollup@3.29.4)(vite@4.4.11)
       '@types/node':
         specifier: ^20.8.6
@@ -1482,7 +1482,7 @@ packages:
       hookable: 5.5.3
       image-meta: 0.1.1
       is-installed-globally: 0.4.0
-      launch-editor: 2.6.0
+      launch-editor: 2.6.1
       local-pkg: 0.4.3
       magicast: 0.3.0
       nuxt: 3.7.4(@types/node@20.8.6)(eslint@8.51.0)(rollup@3.29.4)(typescript@5.2.2)(vue-tsc@1.8.19)
@@ -7324,19 +7324,11 @@ packages:
   /kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
 
-  /launch-editor@2.6.0:
-    resolution: {integrity: sha512-JpDCcQnyAAzZZaZ7vEiSqL690w7dAEyLao+KC96zBplnYbJS7TYNjvM3M7y3dGz+v7aIsJk3hllWuc0kWAjyRQ==}
-    dependencies:
-      picocolors: 1.0.0
-      shell-quote: 1.8.1
-    dev: true
-
   /launch-editor@2.6.1:
     resolution: {integrity: sha512-eB/uXmFVpY4zezmGp5XtU21kwo7GBbKB+EQ+UZeWtGb9yAM5xt/Evk+lYH3eRNAtId+ej4u7TYPFZ07w4s7rRw==}
     dependencies:
       picocolors: 1.0.0
       shell-quote: 1.8.1
-    dev: false
 
   /lazystream@1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
