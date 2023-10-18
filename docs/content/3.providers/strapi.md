@@ -1,6 +1,11 @@
 ---
 title: Strapi
 description: Nuxt Image with Strapi integration.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/strapi.ts
+    size: xs
 ---
 
 Integration between [Strapi](https://strapi.io) and the image module.

@@ -1,6 +1,11 @@
 ---
 title: Unsplash
 description: Nuxt Image has first class integration with Unsplash.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/unsplash.ts
+    size: xs
 ---
 
 Integration between [Unsplash](https://unsplash.com/documentation#dynamically-resizable-images) and the image module. See [Unsplash License](https://unsplash.com/license) for what usage is permitted.
