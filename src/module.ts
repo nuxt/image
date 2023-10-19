@@ -10,7 +10,6 @@ export interface ModuleOptions extends ImageProviders {
   presets: { [name: string]: ImageOptions }
   dir: string
   domains: string[]
-  sharp: any
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
   providers: { [name: string]: InputProvider | any } & ImageProviders
@@ -139,7 +138,9 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
         imageOptions.provider = options.provider = resolvedProvider
         options[resolvedProvider] = options[resolvedProvider] || {}
 
-        const p = await resolveProvider(nuxt, resolvedProvider, options[resolvedProvider])
+        const p = await resolveProvider(nuxt, resolvedProvider, {
+          options: options[resolvedProvider]
+        })
         if (!providers.some(p => p.name === resolvedProvider)) {
           providers.push(p)
         }

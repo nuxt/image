@@ -13,6 +13,14 @@ export default defineNuxtConfig({
       750: 750
     },
     none: {},
+    ipx: {
+      sharpOptions: {
+        animated: true
+      },
+      maxAge: 50,
+      fs: { maxAge: 51 },
+      http: { maxAge: 52 }
+    },
     alias: {
       unsplash: 'https://images.unsplash.com', // ipx
       blog: '/remote/nuxt-org/blog' // cloudinary

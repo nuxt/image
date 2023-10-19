@@ -5,7 +5,7 @@ import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
 import type { ProviderSetup } from './types'
 
-type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
+export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
   baseURL: string
 }
 
@@ -16,12 +16,12 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const nitro = useNitro()
   const nuxt = useNuxt()
 
-  const ipxBase = moduleOptions.base /* TODO */ || '/_ipx'
+  const ipxBaseURL = providerOptions.options?.baseURL || '/_ipx'
 
   // Avoid overriding user custom handler
   const hasUserProvidedIPX =
-    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBase)) ||
-    nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBase))
+    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL)) ||
+    nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
   if (hasUserProvidedIPX) {
     return
   }
@@ -30,15 +30,19 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const absoluteDir = resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
-    maxAge: providerOptions.options?.maxAge,
-    sharpOptions: moduleOptions.sharp,
-    alias: moduleOptions.alias,
-    baseURL: ipxBase,
-    fs: {
-      dir: nuxt.options.dev ? absoluteDir : relativeDir
+    ...providerOptions.options,
+    baseURL: ipxBaseURL,
+    alias: {
+      ...moduleOptions.alias,
+      ...providerOptions.options?.alias
     },
-    http: {
-      domains: moduleOptions.domains
+    fs: (providerOptions.options?.fs !== false) && {
+      dir: nuxt.options.dev ? absoluteDir : relativeDir,
+      ...providerOptions.options?.fs
+    },
+    http: (providerOptions.options?.http !== false) && {
+      domains: moduleOptions.domains,
+      ...providerOptions.options?.http
     }
   }
 
@@ -46,7 +50,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   nitro.options.runtimeConfig.ipx = ipxOptions
 
   const ipxHandler = <NitroEventHandler>{
-    route: `${ipxBase}/**`,
+    route: `${ipxBaseURL}/**`,
     middleware: false,
     handler: resolver.resolve('./runtime/ipx')
   }
