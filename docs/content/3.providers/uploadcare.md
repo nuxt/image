@@ -1,6 +1,11 @@
 ---
 title: Uploadcare
 description: Power up file uploading, processing and delivery for your app in one sitting.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/uploadcare.ts
+    size: xs
 ---
 
 Integration between [Uploadcare](https://uploadcare.com/) and the Nuxt Image module.

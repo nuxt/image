@@ -1,6 +1,11 @@
 ---
 title: Twicpics
 description: Nuxt Image internally use Twicpics as static provider.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/twicpics.ts
+    size: xs
 ---
 
 Integration between [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) and the image module.

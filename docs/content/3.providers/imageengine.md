@@ -1,6 +1,11 @@
 ---
 title: ImageEngine
 description: Nuxt Image has first class integration with ImageEngine.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/imageengine.ts
+    size: xs
 ---
 
 Integration between [ImageEngine](https://imageengine.io/) and the image module.

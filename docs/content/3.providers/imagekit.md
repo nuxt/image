@@ -1,6 +1,11 @@
 ---
 title: ImageKit
 description: Nuxt Image has first class integration with ImageKit.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/imagekit.ts
+    size: xs
 ---
 
 Integration between [ImageKit](https://docs.imagekit.io/) and the image module.

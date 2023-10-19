@@ -1,6 +1,11 @@
 ---
 title: Gumlet
 description: Nuxt Image has first class integration with Gumlet.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/gumlet.ts
+    size: xs
 ---
 
 Integration between [Gumlet](https://docs.gumlet.com/) and the image module.

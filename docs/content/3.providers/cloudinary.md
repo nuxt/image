@@ -1,6 +1,11 @@
 ---
 title: Cloudinary
 description: Nuxt Image has first class integration with Cloudinary.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/cloudinary.ts
+    size: xs
 ---
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.

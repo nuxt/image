@@ -1,6 +1,11 @@
 ---
 title: Prismic
 description: Nuxt Image has first class integration with Prismic.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/prismic.ts
+    size: xs
 ---
 
 Integration between [Prismic](https://prismic.io/docs) and the image module.
