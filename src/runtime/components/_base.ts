@@ -30,7 +30,11 @@ export const baseImageProps = {
   usemap: { type: String, default: undefined },
   longdesc: { type: String, default: undefined },
   ismap: { type: Boolean, default: undefined },
-  loading: { type: String, default: undefined },
+  loading: {
+    type: String as () => 'lazy' | 'eager',
+    default: undefined,
+    validator: (val: any) => ['lazy', 'eager'].includes(val)
+  },
   crossorigin: {
     type: [Boolean, String] as unknown as () => 'anonymous' | 'use-credentials' | boolean,
     default: undefined,
@@ -55,7 +59,7 @@ export interface BaseImageAttrs {
   longdesc?: string
   ismap?: boolean
   crossorigin?: '' | 'anonymous' | 'use-credentials'
-  loading?: string
+  loading?: 'lazy' | 'eager'
   decoding?: 'async' | 'auto' | 'sync'
   nonce?: string
 }
