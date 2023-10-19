@@ -1,6 +1,6 @@
-import type { IPXOptions } from 'ipx'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../module'
+import { IPXRuntimeConfig } from '../ipx'
 import type { ImageModifiers } from './image'
 
 // eslint-disable-next-line no-use-before-define
@@ -84,8 +84,8 @@ export interface ImageProviders {
   strapi?: any,
   imageengine?: any,
   uploadcare?: Partial<UploadcareOptions>,
-  ipx?: Partial<IPXOptions>
-  static?: Partial<IPXOptions>
+  ipx?: Partial<IPXRuntimeConfig>
+  static?: Partial<IPXRuntimeConfig>
 }
 
 export interface ImageModuleProvider {
