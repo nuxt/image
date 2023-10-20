@@ -910,5 +910,52 @@ export const providers: Provider[] = [
         modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
       }
     ]
+  },
+  // Sirv
+  {
+    name: 'sirv',
+    samples: [
+      {
+        src: '/test.png',
+        width: 750,
+        quality: 75
+      },
+      {
+        src: '/harris-large.jpg',
+        width: 500,
+        format: 'png'
+      },
+      {
+        src: '/lacoste.jpg',
+        width: 500,
+        quality: 95,
+        modifiers: { crop: 'trim' }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        fit: 'contain'
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { crop: 'face' }
+      },
+      {
+        src: '/QW.pdf',
+        width: 500,
+        modifiers: { pdfPage: 1 }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { text: 'Hello', textAlign: 'center', textPositionGravity: 'south', textBackgroundColor: '#ffff', textSize: 60, textFontFamily: 'Arial', textColor: 'white' }
+      },
+      {
+        src: 't-shirt-man.jpg',
+        height: 500,
+        modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' }
+      }
+    ]
   }
 ]

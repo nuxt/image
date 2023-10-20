@@ -37,7 +37,8 @@ const BuiltInProviders = [
   'unsplash',
   'uploadcare',
   'vercel',
-  'wagtail'
+  'wagtail',
+  'sirv'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

@@ -42,7 +42,7 @@ export interface CloudinaryOptions {
   [key: string]: any
 }
 
-export interface UploadcareModifiers extends ImageModifiers{
+export interface UploadcareModifiers extends ImageModifiers {
   // Image Compression
   format: 'jpeg' | 'png' | 'webp' | 'auto'
   quality: 'smart' | 'smart_retina' | 'normal' | 'better' | 'best' | 'lighter' | 'lightest'
@@ -50,7 +50,7 @@ export interface UploadcareModifiers extends ImageModifiers{
   strip_meta: 'all' | 'none' | 'sensitive'
   // Image Geometry
   preview: `${number}x${number}`
-  resize: `${number}x${number}` | `${number}x`| `x${number}`
+  resize: `${number}x${number}` | `${number}x` | `x${number}`
   smart_resize: `${number}x${number}`
   crop: string | string[]
   scale_crop: string | string[]
@@ -70,6 +70,7 @@ export interface ImageProviders {
   cloudinary?: Partial<CloudinaryOptions>
   contentful?: any
   cloudimage?: any
+  sirv?: any
   fastly?: any
   glide?: any
   gumlet?: any
