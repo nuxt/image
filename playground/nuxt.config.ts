@@ -92,6 +92,9 @@ export default defineNuxtConfig({
     },
     uploadcare: {
     },
+    sirv: {
+      baseURL: 'https://demo.sirv.com'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

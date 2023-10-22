@@ -30,6 +30,7 @@ import * as strapi from '#image/providers/strapi'
 import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
 import * as uploadcare from '#image/providers/uploadcare'
+import * as sirv from '#image/providers/sirv'
 
 const emptyContext = {
   options: {
@@ -407,7 +408,17 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.uploadcare)
     }
   })
+  it('sirv', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.sirv.com'
+    }
 
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = sirv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.sirv)
+    }
+  })
   it('none', () => {
     const providerOptions = {
     }
