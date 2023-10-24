@@ -13,7 +13,7 @@ useSeoMeta({
   ogImage: 'https://image.nuxt.com/social-card.png',
   twitterImage: 'https://image.nuxt.com/social-card.png',
 })
-const source = ref('npm i @nuxt/image@rc')
+const source = ref('npm i @nuxt/image')
 const { copy, copied } = useClipboard({ source })
 
 const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio', 'fastly', 'glide', 'gumlet', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel']
@@ -89,7 +89,7 @@ const providers = ['cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio'
       </UButton>
     </template>
     <div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
-      <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" class="block lg:hover:scale-110 transition">
+      <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" :title="provider" class="block lg:hover:scale-110 transition">
         <!-- <NuxtImg :placeholder="img(`/providers/${provider}.svg`, { h: 10, f: 'png', blur: 2, q: 50 })" :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" /> -->
         <NuxtImg :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" />
       </NuxtLink>

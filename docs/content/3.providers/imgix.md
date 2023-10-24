@@ -1,6 +1,11 @@
 ---
 title: Imgix
 description: Nuxt Image has first class integration with Imgix.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/imgix.ts
+    size: xs
 ---
 
 Integration between [Imgix](https://docs.imgix.com/) and the image module.

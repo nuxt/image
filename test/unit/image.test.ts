@@ -1,7 +1,8 @@
 // @vitest-environment nuxt
 
 import { beforeEach, describe, it, expect, vi } from 'vitest'
-import { ComponentMountingOptions, VueWrapper, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 // @ts-expect-error virtual file
 import { imageOptions } from '#build/image-options'
 import { NuxtImg } from '#components'
@@ -143,6 +144,17 @@ describe('Renders simple image', () => {
       densities: '1x 2x 3x'
     })
     expect(img.html()).toMatchInlineSnapshot('"<img src=\\"/_ipx/s_300x400/image.png\\" width=\\"300\\" height=\\"400\\" data-nuxt-img=\\"\\" srcset=\\"/_ipx/s_300x400/image.png 1x, /_ipx/s_600x800/image.png 2x, /_ipx/s_900x1200/image.png 3x\\">"')
+  })
+
+  it('with nonce', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      nonce: 'stub-nonce'
+    })
+    const domNonce = img.element.getAttribute('nonce')
+    expect(domNonce).toBe('stub-nonce')
   })
 })
 

@@ -2,6 +2,98 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.0.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.3...v1.0.0)
+
+### 🩹 Fixes
+
+- **cloudimage:** Skip cdn when `src` path is provided with protocol ([#1028](https://github.com/nuxt/image/pull/1028))
+- **ipx:** ⚠️  Pass all options ([#1056](https://github.com/nuxt/image/pull/1056))
+- Type-only import of `IPXRuntimeConfig` ([0b6bd83](https://github.com/nuxt/image/commit/0b6bd83))
+- Autocomplete `<NuxtImg>` loading attribute ([#1057](https://github.com/nuxt/image/pull/1057))
+
+### 📖 Documentation
+
+- Upgrade to latest ui-pro ([024c06f](https://github.com/nuxt/image/commit/024c06f))
+- Update env example key ([d4adc26](https://github.com/nuxt/image/commit/d4adc26))
+- Add title to provider links ([#1029](https://github.com/nuxt/image/pull/1029))
+- Add edge channel ([7fe7fff](https://github.com/nuxt/image/commit/7fe7fff))
+- Remove unused keys ([a10323e](https://github.com/nuxt/image/commit/a10323e))
+- Add links to source ([3996403](https://github.com/nuxt/image/commit/3996403))
+- Add source for each provider ([ab05771](https://github.com/nuxt/image/commit/ab05771))
+- Update studio and ui pro ([7826abb](https://github.com/nuxt/image/commit/7826abb))
+
+### 🏡 Chore
+
+- Add rc tagging 🙈 ([9815055](https://github.com/nuxt/image/commit/9815055))
+- Update `nuxt-vitest` ([b13b9cc](https://github.com/nuxt/image/commit/b13b9cc))
+- Use explicit type imports ([06c91ae](https://github.com/nuxt/image/commit/06c91ae))
+- Remove unneeded expect errors ([d68d9b1](https://github.com/nuxt/image/commit/d68d9b1))
+- Update lockfile ([49d6651](https://github.com/nuxt/image/commit/49d6651))
+- Update release script ([5db5198](https://github.com/nuxt/image/commit/5db5198))
+
+#### ⚠️ Breaking Changes
+
+- **ipx:** ⚠️  Pass all options ([#1056](https://github.com/nuxt/image/pull/1056))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Lehoczky Zoltán ([@Lehoczky](http://github.com/Lehoczky))
+- Joffrey ([@joffreyBerrier](http://github.com/joffreyBerrier))
+
+## v1.0.0-rc.3
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.2...v1.0.0-rc.3)
+
+### 🚀 Enhancements
+
+- ⚠️  Migrate to ipx v2 ([#988](https://github.com/nuxt/image/pull/988))
+- Add `nonce` support ([#1012](https://github.com/nuxt/image/pull/1012))
+
+### 🩹 Fixes
+
+- **cloudinary:** Handle blur modifier correctly ([#985](https://github.com/nuxt/image/pull/985))
+
+### 📖 Documentation
+
+- Track anonymous search queries ([dd4451e](https://github.com/nuxt/image/commit/dd4451e))
+- Add query in search event ([92f71da](https://github.com/nuxt/image/commit/92f71da))
+- Update deps ([d39eab1](https://github.com/nuxt/image/commit/d39eab1))
+- Display supported unsplash parameters as a list ([#995](https://github.com/nuxt/image/pull/995))
+- Update to ui pro ([a9cc6bd](https://github.com/nuxt/image/commit/a9cc6bd))
+- Add contribution guide ([fdc0975](https://github.com/nuxt/image/commit/fdc0975))
+- Remove stray code block ([#1016](https://github.com/nuxt/image/pull/1016))
+
+### 🏡 Chore
+
+- Split out docs updates into separate prs ([8cb7c50](https://github.com/nuxt/image/commit/8cb7c50))
+- Expand renovate group to nuxt ui prefix ([adbdff3](https://github.com/nuxt/image/commit/adbdff3))
+- Build before releasing ([db4d4a8](https://github.com/nuxt/image/commit/db4d4a8))
+- Use explicit build command ([e638a0e](https://github.com/nuxt/image/commit/e638a0e))
+
+### 🤖 CI
+
+- Revert codecov update ([7d120ca](https://github.com/nuxt/image/commit/7d120ca))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Migrate to ipx v2 ([#988](https://github.com/nuxt/image/pull/988))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+- Nestor Vera ([@hacknug](http://github.com/hacknug))
+- Patrik 
+- Thomas Rijpstra 
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Joe Winger <github@joewinger.com>
+
 ## v1.0.0-rc.2
 
 [compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.1...v1.0.0-rc.2)

@@ -14,6 +14,7 @@ exports[`browser (ssr: true) > cloudflare should render images 2`] = `
 
 exports[`browser (ssr: true) > cloudimage should render images 1`] = `
 [
+  "https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1?width=400&height=250&force_format=webp&q=65&func=fit",
   "https://demo.cloudimg.io/v7/sample.li/bag.jpg?width=500&height=500&func=fit",
   "https://demo.cloudimg.io/v7/sample.li/boat.jpg?width=800&height=800&q=75&func=crop",
   "https://demo.cloudimg.io/v7/sample.li/img.jpg?width=300&height=300&force_format=webp&func=cover",
@@ -22,6 +23,7 @@ exports[`browser (ssr: true) > cloudimage should render images 1`] = `
 
 exports[`browser (ssr: true) > cloudimage should render images 2`] = `
 [
+  "https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1?width=400&height=250&force_format=webp&q=65&func=fit",
   "https://demo.cloudimg.io/v7/sample.li/bag.jpg?width=500&height=500&func=fit",
   "https://demo.cloudimg.io/v7/sample.li/boat.jpg?width=800&height=800&q=75&func=crop",
   "https://demo.cloudimg.io/v7/sample.li/img.jpg?width=300&height=300&force_format=webp&func=cover",
@@ -303,6 +305,32 @@ exports[`browser (ssr: true) > sanity should render images 2`] = `
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&h=200&fit=crop&auto=format",
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&h=200&fit=fill&auto=format&bg=ffffff",
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&rect=71,4,229,280&fp-x=0.4469178082191783&fp-y=0.32778302629507167&auto=format",
+]
+`;
+
+exports[`browser (ssr: true) > sirv should render images 1`] = `
+[
+  "https://demo.sirv.com/test.png?w=750&q=75",
+  "https://demo.sirv.com/harris-large.jpg?w=500&format=png",
+  "https://demo.sirv.com/lacoste.jpg?crop.type=trim&w=500&q=95",
+  "https://demo.sirv.com/look-big.jpg?h=500&scale.option=fit",
+  "https://demo.sirv.com/look-big.jpg?crop.type=face&h=500",
+  "https://demo.sirv.com/QW.pdf?page=1&w=500",
+  "https://demo.sirv.com/look-big.jpg?text=Hello&text.align=center&text.position.gravity=south&text.background.color=ffff&text.size=60&text.font.family=Arial&text.color=white&h=500",
+  "https://demo.sirv.com/t-shirt-man.jpg?watermark=/watermark-v1.png&watermark.position=center&watermark.scale.width=30%&h=500",
+]
+`;
+
+exports[`browser (ssr: true) > sirv should render images 2`] = `
+[
+  "https://demo.sirv.com/test.png?w=750&q=75",
+  "https://demo.sirv.com/harris-large.jpg?w=500&format=png",
+  "https://demo.sirv.com/lacoste.jpg?crop.type=trim&w=500&q=95",
+  "https://demo.sirv.com/look-big.jpg?h=500&scale.option=fit",
+  "https://demo.sirv.com/look-big.jpg?crop.type=face&h=500",
+  "https://demo.sirv.com/QW.pdf?page=1&w=500",
+  "https://demo.sirv.com/look-big.jpg?text=Hello&text.align=center&text.position.gravity=south&text.background.color=ffff&text.size=60&text.font.family=Arial&text.color=white&h=500",
+  "https://demo.sirv.com/t-shirt-man.jpg?watermark=/watermark-v1.png&watermark.position=center&watermark.scale.width=30%&h=500",
 ]
 `;
 

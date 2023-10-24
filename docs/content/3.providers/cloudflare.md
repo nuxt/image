@@ -1,6 +1,11 @@
 ---
 title: Cloudflare
 description: Nuxt Image has first class integration with Cloudflare.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/cloudflare.ts
+    size: xs
 ---
 
 Integration between [Cloudflare](https://developers.cloudflare.com/images/) and the image module.

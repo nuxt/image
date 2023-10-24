@@ -1,6 +1,11 @@
 ---
 title: Prepr
 description: Nuxt Image integration with Prepr CMS.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/tree/main/src/runtime/providers/prepr
+    size: xs
 ---
 
 Integration between [Prepr](https://prepr.io/) and Nuxt Image.

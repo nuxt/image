@@ -13,10 +13,15 @@ await setup({
     image: {
       inject: false
     },
+    nitro: {
+      prerender: {
+        failOnError: false
+      }
+    },
     hooks: {
       'modules:before' () {
         const nuxt = useNuxt()
-        nuxt.options.nitro.prerender = { routes: ['/provider/ipx'] }
+        nuxt.options.nitro.prerender = { routes: ['/provider/ipx'], failOnError: false }
       }
     }
   }

@@ -137,6 +137,15 @@ export const providers: Provider[] = [
     name: 'cloudimage',
     samples: [
       {
+        src: 'https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1',
+        width: 400,
+        height: 250,
+        densities: 'x1 x2',
+        fit: 'contain',
+        quality: 65,
+        format: 'webp'
+      },
+      {
         src: 'bag.jpg',
         width: 500,
         height: 500,
@@ -899,6 +908,53 @@ export const providers: Provider[] = [
         width: 256,
         format: 'webp',
         modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }
+      }
+    ]
+  },
+  // Sirv
+  {
+    name: 'sirv',
+    samples: [
+      {
+        src: '/test.png',
+        width: 750,
+        quality: 75
+      },
+      {
+        src: '/harris-large.jpg',
+        width: 500,
+        format: 'png'
+      },
+      {
+        src: '/lacoste.jpg',
+        width: 500,
+        quality: 95,
+        modifiers: { crop: 'trim' }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        fit: 'contain'
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { crop: 'face' }
+      },
+      {
+        src: '/QW.pdf',
+        width: 500,
+        modifiers: { pdfPage: 1 }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { text: 'Hello', textAlign: 'center', textPositionGravity: 'south', textBackgroundColor: '#ffff', textSize: 60, textFontFamily: 'Arial', textColor: 'white' }
+      },
+      {
+        src: 't-shirt-man.jpg',
+        height: 500,
+        modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' }
       }
     ]
   }

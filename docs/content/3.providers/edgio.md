@@ -1,6 +1,11 @@
 ---
 title: Edgio
 description: Optimize images with Edgio (formerly Layer0)'s optimization service.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/edgio.ts
+    size: xs
 ---
 
 Edgio provides a simple HTTP service for optimizing images.

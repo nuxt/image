@@ -19,7 +19,7 @@
  *  */
 
 import { joinURL, withTrailingSlash } from 'ufo'
-import { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
