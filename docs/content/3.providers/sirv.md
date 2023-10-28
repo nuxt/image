@@ -108,7 +108,7 @@ Use the `rotate` modifier to rotate your image. You can specify the number of de
 ```
 
 ### Color and light options 
-Sirv has various [color manipulation options]((https://sirv.com/help/articles/dynamic-imaging/color/)) like `grayscale`, `colorize`,`colortone`,`colorLevels`, as well as [light manipulation options](https://sirv.com/help/articles/dynamic-imaging/light/) like `lightness`,
+Sirv has various [color manipulation options](https://sirv.com/help/articles/dynamic-imaging/color/) like `grayscale`, `colorize`,`colortone`,`colorLevels`, as well as [light manipulation options](https://sirv.com/help/articles/dynamic-imaging/light/) like `lightness`,
 `hue`, `saturation`, `highlights`, `shadows`, `brightness`, `exposure`, `contrast`.
 
 Here's how to convert an image to grayscale:
