@@ -25,6 +25,9 @@ export default defineNuxtConfig({
       unsplash: 'https://images.unsplash.com', // ipx
       blog: '/remote/nuxt-org/blog' // cloudinary
     },
+    aliyun: {
+      baseURL: 'https://assets.yanbot.tech'
+    },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
     },

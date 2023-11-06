@@ -79,6 +79,36 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Aliyun
+  {
+    name: 'aliyun',
+    samples: [
+      {
+        src: '/nuxt.png',
+        height: 200
+      },
+      {
+        src: '/nuxt.png',
+        height: 300,
+        width: 300
+      },
+      {
+        src: '/nuxt.png',
+        quality: 50
+      },
+      {
+        src: '/nuxt.png',
+        format: 'webp',
+        quality: 80,
+        modifiers: {
+          resize: {
+            fw: 900,
+            fh: 200
+          }
+        }
+      }
+    ]
+  },
   // Cloudflare
   {
     name: 'cloudflare',
