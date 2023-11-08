@@ -77,10 +77,7 @@ export interface WeservOptions extends ImageOptions {
     weservURL?: string;
 }
 
-export const getImage = (
-  src: Parameters<ProviderGetImage>[0],
-  options: Partial<WeservOptions>
-): ReturnType<ProviderGetImage> => {
+export const getImage: ProviderGetImage = (src, options: Partial<WeservOptions>) => {
   const filename = src.substring(src.lastIndexOf('/') + 1)
 
   if (typeof options.baseURL !== 'string' || options.baseURL.length === 0) {
