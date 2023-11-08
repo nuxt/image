@@ -11,6 +11,7 @@ import { ipxSetup } from './ipx'
 
 // Please add new providers alphabetically to the list below
 const BuiltInProviders = [
+  'aliyun',
   'cloudflare',
   'cloudimage',
   'cloudinary',
