@@ -98,6 +98,9 @@ export default defineNuxtConfig({
     sirv: {
       baseURL: 'https://demo.sirv.com'
     },
+    weserv: {
+      baseURL: '/'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

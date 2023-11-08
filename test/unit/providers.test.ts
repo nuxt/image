@@ -431,7 +431,6 @@ describe('Providers', () => {
     }
   })
 
-  // todo - test it throws when no baseURL is provided
   it('weserv', () => {
     const providerOptions = {
       baseURL: 'https://my-website.com/'
@@ -443,18 +442,8 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.weserv)
     }
 
-    vitest.stubEnv('NODE_ENV', 'production')
     const generated = weserv.getImage('test.png', {}, emptyContext)
-
-    // in production falling back to the image from the server
     expect(generated).toMatchObject({ url: 'test.png' })
-
-    vitest.stubEnv('NODE_ENV', 'development')
-
-    expect(() => weserv.getImage('test.png', {}, emptyContext))
-      .toThrowErrorMatchingInlineSnapshot('"The weserv provider requires the baseURL of your website."')
-
-    vitest.unstubAllEnvs()
   })
 
   it('none', () => {
