@@ -81,7 +81,7 @@ export const getImage: ProviderGetImage = (src, options: Partial<WeservOptions>)
   const filename = src.substring(src.lastIndexOf('/') + 1)
 
   if (typeof options.baseURL !== 'string' || options.baseURL.length === 0) {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.dev) {
       throw createError({
         statusCode: 500,
         statusMessage: 'Internal Server Error',
