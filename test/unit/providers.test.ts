@@ -1,6 +1,6 @@
 // @vitest-environment nuxt
 
-import { describe, it, expect, vitest } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
