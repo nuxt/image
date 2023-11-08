@@ -11,6 +11,7 @@ import { ipxSetup } from './ipx'
 
 // Please add new providers alphabetically to the list below
 const BuiltInProviders = [
+  'aliyun',
   'cloudflare',
   'cloudimage',
   'cloudinary',
@@ -37,7 +38,8 @@ const BuiltInProviders = [
   'unsplash',
   'uploadcare',
   'vercel',
-  'wagtail'
+  'wagtail',
+  'sirv'
 ]
 
 export const providerSetup: Record<string, ProviderSetup> = {

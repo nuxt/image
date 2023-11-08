@@ -1,6 +1,11 @@
 ---
 title: Storyblok
 description: Nuxt Image internally use Storyblok as static provider.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/storyblok.ts
+    size: xs
 ---
 
 Integration between [Storyblok](https://www.storyblok.com/docs/image-service/) and the image module. To use this provider you just need to specify the base url of your service in Storyblok.

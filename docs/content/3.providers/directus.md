@@ -1,6 +1,11 @@
 ---
 title: Directus
 description: Nuxt Image with Directus integration.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/directus.ts
+    size: xs
 ---
 
 Integration between [Directus](https://directus.io/) and the image module.

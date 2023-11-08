@@ -1,6 +1,11 @@
 ---
 title: Cloudimage
 description: Nuxt Image has first class integration with Cloudimage.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/cloudimage.ts
+    size: xs
 ---
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.

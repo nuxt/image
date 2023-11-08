@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`browser (ssr: false) > aliyun should render images 1`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
+exports[`browser (ssr: false) > aliyun should render images 2`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
 exports[`browser (ssr: false) > cloudflare should render images 1`] = `
 [
   "https://that-test.site/cdn-cgi/image/h=300,fit=contain/https://s3.that-test.site/burger.jpeg",
@@ -308,6 +326,45 @@ exports[`browser (ssr: false) > sanity should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: false) > sirv should render images 1`] = `
+[
+  "https://demo.sirv.com/test.png?w=750&q=75",
+  "https://demo.sirv.com/harris-large.jpg?w=500&format=png",
+  "https://demo.sirv.com/lacoste.jpg?crop.type=trim&w=500&q=95",
+  "https://demo.sirv.com/look-big.jpg?h=500&scale.option=fit",
+  "https://demo.sirv.com/look-big.jpg?crop.type=face&h=500",
+  "https://demo.sirv.com/QW.pdf?page=1&w=500",
+  "https://demo.sirv.com/look-big.jpg?text=Hello&text.align=center&text.position.gravity=south&text.background.color=ffff&text.size=60&text.font.family=Arial&text.color=white&h=500",
+  "https://demo.sirv.com/t-shirt-man.jpg?watermark=/watermark-v1.png&watermark.position=center&watermark.scale.width=30%&h=500",
+]
+`;
+
+exports[`browser (ssr: false) > sirv should render images 2`] = `
+[
+  "https://demo.sirv.com/test.png?w=750&q=75",
+  "https://demo.sirv.com/harris-large.jpg?w=500&format=png",
+  "https://demo.sirv.com/lacoste.jpg?crop.type=trim&w=500&q=95",
+  "https://demo.sirv.com/look-big.jpg?h=500&scale.option=fit",
+  "https://demo.sirv.com/look-big.jpg?crop.type=face&h=500",
+  "https://demo.sirv.com/QW.pdf?page=1&w=500",
+  "https://demo.sirv.com/look-big.jpg?text=Hello&text.align=center&text.position.gravity=south&text.background.color=ffff&text.size=60&text.font.family=Arial&text.color=white&h=500",
+  "https://demo.sirv.com/t-shirt-man.jpg?watermark=/watermark-v1.png&watermark.position=center&watermark.scale.width=30%&h=500",
+]
+`;
+
+exports[`browser (ssr: false) > sirv should render images 3`] = `
+[
+  "https://demo.sirv.com/test.png?w=750&q=75",
+  "https://demo.sirv.com/harris-large.jpg?w=500&format=png",
+  "https://demo.sirv.com/lacoste.jpg?crop.type=trim&w=500&q=95",
+  "https://demo.sirv.com/look-big.jpg?h=500&scale.option=fit",
+  "https://demo.sirv.com/look-big.jpg?crop.type=face&h=500",
+  "https://demo.sirv.com/QW.pdf?page=1&w=500",
+  "https://demo.sirv.com/look-big.jpg?text=Hello&text.align=center&text.position.gravity=south&text.background.color=ffff&text.size=60&text.font.family=Arial&text.color=white&h=500",
+  "https://demo.sirv.com/t-shirt-man.jpg?watermark=/watermark-v1.png&watermark.position=center&watermark.scale.width=30%&h=500",
+]
+`;
+
 exports[`browser (ssr: false) > storyblok should render images 1`] = `
 [
   "https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg",
@@ -346,6 +403,16 @@ exports[`browser (ssr: false) > strapi should render images 1`] = `
 `;
 
 exports[`browser (ssr: false) > strapi should render images 2`] = `
+[
+  "http://localhost:1337/uploads/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
+  "http://localhost:1337/uploads/thumbnail_4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
+  "http://localhost:1337/uploads/small_4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
+  "http://localhost:1337/uploads/medium_4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
+  "http://localhost:1337/uploads/large_4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
+]
+`;
+
+exports[`browser (ssr: false) > strapi should render images 3`] = `
 [
   "http://localhost:1337/uploads/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",
   "http://localhost:1337/uploads/thumbnail_4d9z1eiyo2gmf6gd7xhp_823ae510e8.png",

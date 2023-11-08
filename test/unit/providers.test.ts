@@ -8,6 +8,7 @@ import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
 import * as none from '~/src/runtime/providers/none'
 import * as weserv from '~/src/runtime/providers/weserv'
+import * as aliyun from '#image/providers/aliyun'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -31,6 +32,7 @@ import * as strapi from '#image/providers/strapi'
 import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
 import * as uploadcare from '#image/providers/uploadcare'
+import * as sirv from '#image/providers/sirv'
 
 const emptyContext = {
   options: {
@@ -69,7 +71,16 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png'
     })
   })
-
+  it('aliyun', () => {
+    const providerOptions = {
+      baseURL: '/'
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = aliyun.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.aliyun)
+    }
+  })
   it('cloudflare', () => {
     const providerOptions = {
       baseURL: '/'
@@ -406,6 +417,17 @@ describe('Providers', () => {
     for (const image of images) {
       const generated = uploadcare.getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.uploadcare)
+    }
+  })
+
+  it('sirv', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.sirv.com'
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = sirv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.sirv)
     }
   })
 

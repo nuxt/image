@@ -79,6 +79,36 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Aliyun
+  {
+    name: 'aliyun',
+    samples: [
+      {
+        src: '/nuxt.png',
+        height: 200
+      },
+      {
+        src: '/nuxt.png',
+        height: 300,
+        width: 300
+      },
+      {
+        src: '/nuxt.png',
+        quality: 50
+      },
+      {
+        src: '/nuxt.png',
+        format: 'webp',
+        quality: 80,
+        modifiers: {
+          resize: {
+            fw: 900,
+            fh: 200
+          }
+        }
+      }
+    ]
+  },
   // Cloudflare
   {
     name: 'cloudflare',
@@ -911,6 +941,7 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // weserv
   {
     name: 'weserv',
     samples: [
@@ -932,6 +963,53 @@ export const providers: Provider[] = [
         src: 'https://picsum.photos/200',
         format: 'webp',
         modifiers: { mask: 'circle', filter: 'sepia', quality: 80 }
+      }
+    ]
+  },
+  // Sirv
+  {
+    name: 'sirv',
+    samples: [
+      {
+        src: '/test.png',
+        width: 750,
+        quality: 75
+      },
+      {
+        src: '/harris-large.jpg',
+        width: 500,
+        format: 'png'
+      },
+      {
+        src: '/lacoste.jpg',
+        width: 500,
+        quality: 95,
+        modifiers: { crop: 'trim' }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        fit: 'contain'
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { crop: 'face' }
+      },
+      {
+        src: '/QW.pdf',
+        width: 500,
+        modifiers: { pdfPage: 1 }
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { text: 'Hello', textAlign: 'center', textPositionGravity: 'south', textBackgroundColor: '#ffff', textSize: 60, textFontFamily: 'Arial', textColor: 'white' }
+      },
+      {
+        src: 't-shirt-man.jpg',
+        height: 500,
+        modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' }
       }
     ]
   }

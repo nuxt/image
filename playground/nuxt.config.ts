@@ -13,9 +13,20 @@ export default defineNuxtConfig({
       750: 750
     },
     none: {},
+    ipx: {
+      sharpOptions: {
+        animated: true
+      },
+      maxAge: 50,
+      fs: { maxAge: 51 },
+      http: { maxAge: 52 }
+    },
     alias: {
       unsplash: 'https://images.unsplash.com', // ipx
       blog: '/remote/nuxt-org/blog' // cloudinary
+    },
+    aliyun: {
+      baseURL: 'https://assets.yanbot.tech'
     },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
@@ -83,6 +94,9 @@ export default defineNuxtConfig({
       baseURL: 'https://abc123.imgeng.in'
     },
     uploadcare: {
+    },
+    sirv: {
+      baseURL: 'https://demo.sirv.com'
     },
     providers: {
       custom: {

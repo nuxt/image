@@ -1,6 +1,11 @@
 ---
 title: Sanity
 description: Nuxt Image has first class integration with Sanity.
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/sanity.ts
+    size: xs
 ---
 
 Integration between [Sanity](https://www.sanity.io/docs/image-urls) and Nuxt Image.
