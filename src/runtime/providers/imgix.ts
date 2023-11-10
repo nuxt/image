@@ -133,7 +133,8 @@ export const operationsGenerator = createOperationsGenerator({
   },
   valueMap: {
     fit: {
-      fill: 'scale',
+      scale: 'scale',
+      fill: 'fill',
       inside: 'max',
       outside: 'min',
       cover: 'crop',
