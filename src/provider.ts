@@ -74,18 +74,10 @@ export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = 
         },
         imageSettings: {
           sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
-          domains: moduleOptions.domains,
           formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
           minimumCacheTTL: 60 * 5,
-          remotePatterns: moduleOptions.domains.map((domain) => {
-            const url = new URL(domain)
-            return {
-              protocol: url.protocol.replace(':', '') as 'http' | 'https',
-              hostname: url.hostname,
-              port: url.port,
-              pathename: url.pathname
-            }
-          }),
+          domains: moduleOptions.domains,
+          remotePatterns: [], // Provided by domains
           dangerouslyAllowSVG: false // TODO
         }
       }
