@@ -89,7 +89,7 @@ export async function resolveProviders (nuxt: any, options: ModuleOptions): Prom
   const providers: ImageModuleProvider[] = []
 
   for (const key in options) {
-    if (BuiltInProviders.includes(key)) {
+    if (BuiltInProviders.includes(key as ImageProviderName)) {
       providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key] }))
     }
   }
@@ -115,11 +115,11 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
   }
 
   const resolver = createResolver(import.meta.url)
-  input.provider = BuiltInProviders.includes(input.provider)
+  input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
     ? await resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
 
-  const setup = input.setup || providerSetup[input.name]
+  const setup = input.setup || providerSetup[input.name as ImageProviderName]
 
   return <ImageModuleProvider> {
     ...input,
