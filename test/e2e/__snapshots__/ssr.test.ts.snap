@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`browser (ssr: true) > aliyun should render images 1`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
+exports[`browser (ssr: true) > aliyun should render images 2`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
 exports[`browser (ssr: true) > awsAmplify should render images 1`] = `
 [
   "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
@@ -190,6 +208,24 @@ exports[`browser (ssr: true) > imgix should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: true) > ipx should render images 1`] = `
+[
+  "/_ipx/s_300x300/images/colors.jpg",
+  "/_ipx/s_300x300/images/everest.jpg",
+  "/_ipx/s_300x300/images/tacos.svg",
+  "/_ipx/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
+exports[`browser (ssr: true) > ipx should render images 2`] = `
+[
+  "/_ipx/s_300x300/images/colors.jpg",
+  "/_ipx/s_300x300/images/everest.jpg",
+  "/_ipx/s_300x300/images/tacos.svg",
+  "/_ipx/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
 exports[`browser (ssr: true) > layer0 should render images 1`] = `
 [
   "https://opt.moovweb.net/?img=https://i.imgur.com/LFtQeX2.jpeg&height=200",
@@ -217,6 +253,24 @@ exports[`browser (ssr: true) > netlify should render images 2`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 1`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
+]
+`;
+
+exports[`browser (ssr: true) > none should render images 2`] = `
+[
+  "/images/colors.jpg",
+  "/images/everest.jpg",
+  "/images/tacos.svg",
+  "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee",
 ]
 `;
 
@@ -281,24 +335,6 @@ exports[`browser (ssr: true) > sanity should render images 2`] = `
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&h=200&fit=crop&auto=format",
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&h=200&fit=fill&auto=format&bg=ffffff",
   "https://cdn.sanity.io/images/zp7mbokg/production/G3i4emG6B8JnTmGoN0UjgAp8-300x450.jpg?w=200&rect=71,4,229,280&fp-x=0.4469178082191783&fp-y=0.32778302629507167&auto=format",
-]
-`;
-
-exports[`browser (ssr: true) > should emit load and error events 1`] = `
-[
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=200",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=200&fit=crop",
-]
-`;
-
-exports[`browser (ssr: true) > should emit load and error events 2`] = `
-[
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=200",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=200&fit=crop",
 ]
 `;
 
@@ -498,12 +534,6 @@ exports[`browser (ssr: true) > vercel should render images 1`] = `
 `;
 
 exports[`browser (ssr: true) > vercel should render images 2`] = `
-[
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
-]
-`;
-
-exports[`browser (ssr: true) > vercel should render images 3`] = `
 [
   "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
 ]
