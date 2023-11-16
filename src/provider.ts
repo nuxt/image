@@ -4,7 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
-import { provider } from 'std-env'
+import { provider, type ProviderName } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
@@ -12,6 +12,7 @@ import { ipxSetup } from './ipx'
 // Please add new providers alphabetically to the list below
 const BuiltInProviders = [
   'aliyun',
+  'awsAmplify',
   'cloudflare',
   'cloudimage',
   'cloudinary',
@@ -40,9 +41,11 @@ const BuiltInProviders = [
   'vercel',
   'wagtail',
   'sirv'
-]
+] as const
 
-export const providerSetup: Record<string, ProviderSetup> = {
+export type ImageProviderName = typeof BuiltInProviders[number]
+
+export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   // IPX
   ipx: ipxSetup(),
   ipxStatic: ipxSetup({ isStatic: true }),
@@ -59,6 +62,33 @@ export const providerSetup: Record<string, ProviderSetup> = {
           }
         }
       } satisfies NitroConfig['vercel']
+    })
+  },
+
+  awsAmplify (_providerOptions, moduleOptions, nuxt: Nuxt) {
+    nuxt.options.nitro = defu(nuxt.options.nitro, {
+      awsAmplify: {
+        imageOptimization: {
+          path: '/_amplify/image',
+          cacheControl: 'public, max-age=300, immutable'
+        },
+        imageSettings: {
+          sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
+          domains: moduleOptions.domains,
+          formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+          minimumCacheTTL: 60 * 5,
+          remotePatterns: moduleOptions.domains.map((domain) => {
+            const url = new URL(domain)
+            return {
+              protocol: url.protocol.replace(':', '') as 'http' | 'https',
+              hostname: url.hostname,
+              port: url.port,
+              pathename: url.pathname
+            }
+          }),
+          dangerouslyAllowSVG: false // TODO
+        }
+      }
     })
   }
 }
@@ -108,7 +138,12 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
   }
 }
 
-export function detectProvider (userInput?: string) {
+const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> = {
+  vercel: 'vercel',
+  aws_amplify: 'awsAmplify'
+}
+
+export function detectProvider (userInput: string = '') {
   if (process.env.NUXT_IMAGE_PROVIDER) {
     return process.env.NUXT_IMAGE_PROVIDER
   }
@@ -117,7 +152,7 @@ export function detectProvider (userInput?: string) {
     return userInput
   }
 
-  if (provider === 'vercel') {
-    return 'vercel'
+  if (provider in autodetectableProviders) {
+    return autodetectableProviders[provider]
   }
 }
