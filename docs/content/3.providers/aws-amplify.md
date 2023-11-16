@@ -16,7 +16,6 @@ This provider will be enabled by default in AWS Amplify deployments.
 This is an experimental preset and will be available soon! 🚀
 ::
 
-
 ## Domains
 
 To use external URLs (images not in `public/` directory), hostnames should be whitelisted.
