@@ -18,6 +18,18 @@ exports[`browser (ssr: true) > aliyun should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: true) > awsAmplify should render images 1`] = `
+[
+  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+]
+`;
+
+exports[`browser (ssr: true) > awsAmplify should render images 2`] = `
+[
+  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+]
+`;
+
 exports[`browser (ssr: true) > cloudflare should render images 1`] = `
 [
   "https://that-test.site/cdn-cgi/image/h=300,fit=contain/https://s3.that-test.site/burger.jpeg",
@@ -326,24 +338,6 @@ exports[`browser (ssr: true) > sanity should render images 2`] = `
 ]
 `;
 
-exports[`browser (ssr: true) > should emit load and error events 1`] = `
-[
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=200",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=200&fit=crop",
-]
-`;
-
-exports[`browser (ssr: true) > should emit load and error events 2`] = `
-[
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=900",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=200",
-  "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=200&h=200&fit=crop",
-]
-`;
-
 exports[`browser (ssr: true) > sirv should render images 1`] = `
 [
   "https://demo.sirv.com/test.png?w=750&q=75",
@@ -540,12 +534,6 @@ exports[`browser (ssr: true) > vercel should render images 1`] = `
 `;
 
 exports[`browser (ssr: true) > vercel should render images 2`] = `
-[
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
-]
-`;
-
-exports[`browser (ssr: true) > vercel should render images 3`] = `
 [
   "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
 ]
