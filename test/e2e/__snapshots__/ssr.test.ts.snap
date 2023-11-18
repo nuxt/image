@@ -1,5 +1,35 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`browser (ssr: true) > aliyun should render images 1`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
+exports[`browser (ssr: true) > aliyun should render images 2`] = `
+[
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,h_200",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_300,fh_300",
+  "https://assets.yanbot.tech/nuxt.png?image_process=quality,Q_50",
+  "https://assets.yanbot.tech/nuxt.png?image_process=resize,fw_900,fh_200/format,webp/quality,Q_80",
+]
+`;
+
+exports[`browser (ssr: true) > awsAmplify should render images 1`] = `
+[
+  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+]
+`;
+
+exports[`browser (ssr: true) > awsAmplify should render images 2`] = `
+[
+  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+]
+`;
+
 exports[`browser (ssr: true) > cloudflare should render images 1`] = `
 [
   "https://that-test.site/cdn-cgi/image/h=300,fit=contain/https://s3.that-test.site/burger.jpeg",
