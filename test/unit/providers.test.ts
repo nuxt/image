@@ -9,6 +9,7 @@ import * as ipx from '#image/providers/ipx'
 import * as none from '~/src/runtime/providers/none'
 import * as weserv from '~/src/runtime/providers/weserv'
 import * as aliyun from '#image/providers/aliyun'
+import * as awsAmplify from '#image/providers/awsAmplify'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -79,6 +80,16 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = aliyun.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.aliyun)
+    }
+  })
+  it('awsAmplify', () => {
+    const providerOptions = {
+      baseURL: '/'
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = awsAmplify.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.awsAmplify)
     }
   })
   it('cloudflare', () => {

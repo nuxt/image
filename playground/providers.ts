@@ -109,6 +109,16 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // AWS Amplify
+  {
+    name: 'awsAmplify',
+    samples: [
+      {
+        src: '/test.jpg',
+        width: 300
+      }
+    ]
+  },
   // Cloudflare
   {
     name: 'cloudflare',
