@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.1.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.0.0...v1.1.0)
+
+### 🚀 Enhancements
+
+- Add `sirv` provider ([#1066](https://github.com/nuxt/image/pull/1066))
+- Add aliyun provider ([#1091](https://github.com/nuxt/image/pull/1091))
+- Support aws amplify provider ([#1112](https://github.com/nuxt/image/pull/1112))
+
+### 📖 Documentation
+
+- Remove `@rc` version constraint ([866a6aa](https://github.com/nuxt/image/commit/866a6aa))
+- Scale logo for consistency ([#1059](https://github.com/nuxt/image/pull/1059))
+- Add clearer examples of making a custom provider ([#1074](https://github.com/nuxt/image/pull/1074))
+- Add sirv logo ([c435c1d](https://github.com/nuxt/image/commit/c435c1d))
+- Fix sirv link ([8b815ac](https://github.com/nuxt/image/commit/8b815ac))
+- Fix typo ([#1095](https://github.com/nuxt/image/pull/1095))
+- Add `aliyun` logo ([3dff67d](https://github.com/nuxt/image/commit/3dff67d))
+
+### 🏡 Chore
+
+- Add backquote in readme ([7f8d8f2](https://github.com/nuxt/image/commit/7f8d8f2))
+- Add homepage to package.json ([#1097](https://github.com/nuxt/image/pull/1097))
+- Use correct `repository` syntax ([7a89e86](https://github.com/nuxt/image/commit/7a89e86))
+- Ensure amplify types respect upstream nitro types ([5c4cd7c](https://github.com/nuxt/image/commit/5c4cd7c))
+- Add ignore ([13a120f](https://github.com/nuxt/image/commit/13a120f))
+
+### 🤖 CI
+
+- Run tests on node 18 ([9cb1cb8](https://github.com/nuxt/image/commit/9cb1cb8))
+
+### ❤️ Contributors
+
+- Daniel Roe <daniel@roe.dev>
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Maxime Pauvert ([@maximepvrt](http://github.com/maximepvrt))
+- Niuyi 
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Reslear <reslear@gmail.com>
+- Igor Varyvoda <cheguevaraua@gmail.com>
+- Benjamin Canac ([@benjamincanac](http://github.com/benjamincanac))
+
 ## v1.0.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.0.0-rc.3...v1.0.0)

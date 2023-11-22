@@ -74,7 +74,7 @@ export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = 
         },
         imageSettings: {
           sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
-          formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+          formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] satisfies NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats'],
           minimumCacheTTL: 60 * 5,
           domains: moduleOptions.domains,
           remotePatterns: [], // Provided by domains
