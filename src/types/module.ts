@@ -65,6 +65,39 @@ export interface UploadcareOptions {
   [key: string]: any
 }
 
+export interface IPXModifiers extends ImageModifiers {
+  format: 'jpeg' | 'jpg' | 'png' | 'webp' | 'avif' | 'gif' | 'heif' | 'tiff' | 'auto' | string
+  fit: 'contain' | 'cover' | 'fill' | 'inside' | 'outside' | string
+  resize: string
+  quality: number | string
+  background: string
+  position: string
+  enlarge: true | 'true'
+  kernel: 'nearest' | 'cubic' | 'mitchell' | 'lanczos2' | 'lanczos3' | string
+  trim: number | string
+  extend: string
+  extract: string
+  rotate: number | string
+  flip: true | 'true'
+  flop: true | 'true'
+  sharpen: number | string
+  median: number | string
+  blur: number | string
+  flatten: true | 'true'
+  gamma: string
+  negate: true | 'true'
+  normalize: true | 'true'
+  threshold: number | string
+  modulate: string
+  tint: number | string
+  grayscale: true | 'true'
+  animated: true | 'true'
+}
+
+export interface StaticIPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
+  modifiers: Partial<IPXModifiers>
+}
+
 export interface ImageProviders {
   cloudflare?: any
   cloudinary?: Partial<CloudinaryOptions>
@@ -85,8 +118,8 @@ export interface ImageProviders {
   strapi?: any,
   imageengine?: any,
   uploadcare?: Partial<UploadcareOptions>,
-  ipx?: Partial<IPXRuntimeConfig>
-  static?: Partial<IPXRuntimeConfig>
+  ipx?: Partial<StaticIPXOptions>
+  static?: Partial<StaticIPXOptions>
 }
 
 export interface ImageModuleProvider {
