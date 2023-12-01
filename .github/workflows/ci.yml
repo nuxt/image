@@ -42,7 +42,7 @@ jobs:
       - name: Install Playwright
         # does not need to explicitly set chromium after https://github.com/microsoft/playwright/issues/14862 is solved
         run: pnpm playwright-core install chromium
-        
+
       - run: pnpm dev:prepare
       - run: pnpm lint
       - run: pnpm test -- --coverage
@@ -54,7 +54,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: ci
-    if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip-release]')
+    if: github.event_name == 'push' && !startsWith(github.event.head_commit.message, '[skip-release]')
     permissions:
       id-token: write
     steps:
@@ -70,7 +70,7 @@ jobs:
       - name: Release Edge
         if: |
           github.event_name == 'push' &&
-          !contains(github.event.head_commit.message, '[skip-release]')
+          !startsWith(github.event.head_commit.message, '[skip-release]')
         run: ./scripts/release-edge.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
