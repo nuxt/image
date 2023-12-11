@@ -132,7 +132,7 @@ describe('Renders simple image', () => {
         src: '/image.svg'
       }
     })
-    expect(wrapper.html()).toMatchInlineSnapshot(`"<picture><img data-nuxt-pic="" src="/image.svg"></picture>"`)
+    expect(wrapper.html()).toMatchInlineSnapshot('"<picture><img data-nuxt-pic="" src="/image.svg"></picture>"')
   })
 
   it('encodes characters', () => {
@@ -275,7 +275,7 @@ describe('Renders image, applies module config', () => {
         src: 'image.svg'
       }
     })
-    expect(picture.html()).toMatchInlineSnapshot(`"<picture><img width="200" height="200" data-nuxt-pic="" src="image.svg"></picture>"`)
+    expect(picture.html()).toMatchInlineSnapshot('"<picture><img width="200" height="200" data-nuxt-pic="" src="image.svg"></picture>"')
   })
 
   it('Module config .quality applies', () => {
