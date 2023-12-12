@@ -94,7 +94,7 @@ export interface IPXModifiers extends ImageModifiers {
   animated: true | 'true'
 }
 
-export interface StaticIPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
+export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
   modifiers: Partial<IPXModifiers>
 }
 
@@ -118,8 +118,8 @@ export interface ImageProviders {
   strapi?: any,
   imageengine?: any,
   uploadcare?: Partial<UploadcareOptions>,
-  ipx?: Partial<StaticIPXOptions>
-  static?: Partial<StaticIPXOptions>
+  ipx?: Partial<IPXOptions>
+  static?: Partial<IPXOptions>
 }
 
 export interface ImageModuleProvider {
