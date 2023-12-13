@@ -8,4 +8,4 @@ Weserv offers a wide range of image transformation for all JPEG, PNG, and GIF fi
 
 ## Modifiers
 
-In addition to `height` and `width`, the Weserv provider numerous modifiers documentation [here](https://images.weserv.nl/docs/quick-reference.html/).
+In addition to `height` and `width`, the Weserv provider supports numerous modifiers documented [here](https://images.weserv.nl/docs/quick-reference.html).
