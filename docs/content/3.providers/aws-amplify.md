@@ -36,7 +36,7 @@ export default {
 
 Specify any custom `width` property you use in `<NuxtImg>`, `<NuxtPicture>` and `$img`.
 
-If a width is not defined, image will fallback to closest possible width.
+If a width is not defined, image will fallback to the next bigger width.
 
 **Example:**
 
