@@ -65,6 +65,8 @@ export interface UploadcareOptions {
   [key: string]: any
 }
 
+// Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
+// TODO: https://github.com/unjs/ipx/issues/199
 export interface IPXModifiers extends ImageModifiers {
   format: 'jpeg' | 'jpg' | 'png' | 'webp' | 'avif' | 'gif' | 'heif' | 'tiff' | 'auto' | string
   fit: 'contain' | 'cover' | 'fill' | 'inside' | 'outside' | string
