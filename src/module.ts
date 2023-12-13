@@ -12,7 +12,7 @@ export interface ModuleOptions extends ImageProviders {
   domains: string[]
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
-  providers: { [name: string]: InputProvider | any } & ImageProviders
+  providers: { [name: string]: InputProvider | any }
   densities: number[]
   format: CreateImageOptions['format']
   quality?: CreateImageOptions['quality'],
