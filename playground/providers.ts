@@ -997,5 +997,30 @@ export const providers: Provider[] = [
         modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' }
       }
     ]
+  },
+  // Hygraph
+  {
+    name: 'hygraph',
+    samples: [
+      {
+        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        width: 500,
+        height: 500,
+        fit: 'crop'
+      },
+      {
+        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        width: 500,
+        fit: 'max',
+        format: 'auto_image'
+      },
+      {
+        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        width: 300,
+        height: 300,
+        fit: 'clip',
+        format: 'jpg'
+      }
+    ]
   }
 ]
