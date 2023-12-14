@@ -15,7 +15,7 @@ To use this provider you just need to specify the base URL of your project.
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    directus: {
+    hygraph: {
       // If not filled out, the provider will add this as a default.
       baseURL: "https://media.graphassets.com",
     },
