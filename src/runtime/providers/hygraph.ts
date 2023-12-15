@@ -13,7 +13,7 @@ export function getImageFormat (format?: string) {
   let result = 'auto_image'
 
   if (format && format !== 'auto_image') {
-    result = `output=format:${format}`
+    result = `output=format:${format === 'jpeg' ? 'jpg' : format}`
   }
 
   return result

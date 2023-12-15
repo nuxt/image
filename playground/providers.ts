@@ -1006,12 +1006,6 @@ export const providers: Provider[] = [
         src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
         width: 500,
         height: 500,
-        fit: 'crop'
-      },
-      {
-        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
-        width: 500,
-        height: 500,
         fit: 'crop',
         quality: 90
       },
@@ -1026,7 +1020,7 @@ export const providers: Provider[] = [
         width: 300,
         height: 300,
         fit: 'clip',
-        format: 'jpg'
+        format: 'jpeg'
       }
     ]
   }
