@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 
 ## Modifiers
 
-All the default modifiers from [Hygraph's documentation](https://hygraph.com/docs/api-reference/content-api/assets) are available, plus additionally `auto_image` which let's Hygraph decide what image format is best for the user's browser and `quality` 0-100.
+All the default modifiers from [Hygraph's documentation](https://hygraph.com/docs/api-reference/content-api/assets) are available, plus additionally `auto_image` which lets Hygraph decide what image format is best for the user's browser and `quality` 0-100.
 
 ```vue
 <NuxtImg
