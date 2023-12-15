@@ -1,11 +1,12 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '@nuxt/image'
 
 type ImageOptimizations = {
   width?: number
   height?: number
   fit?: string | 'clip' | 'crop' | 'scale' | 'max'
-  format?: string | 'jpg' | 'png' | 'webp' | 'avif' | 'auto_image'
+  format?: string | 'jpg' | 'png' | 'webp' | 'avif' | 'auto_image',
+  quality?: number
 }
 
 export function getImageFormat (format?: string) {
@@ -23,10 +24,11 @@ export function optimizeHygraphImage (baseurl: string, url: string, optimization
   const imageId = url.split(`${baseurl}/`)[1]
   const imageFormat = getImageFormat(optimizations.format)
   const optimBase = 'resize'
+  const quality = optimizations.quality ? `quality=value:${optimizations.quality}/compress/` : ''
 
   const optimList = []
   for (const [key, value] of Object.entries(optimizations)) {
-    if (key !== 'format' && value !== undefined) {
+    if (key !== 'format' && key !== 'quality' && value !== undefined) {
       if (key === 'fit' && value === 'contain') {
         optimList.push('fit:max')
       } else {
@@ -36,7 +38,7 @@ export function optimizeHygraphImage (baseurl: string, url: string, optimization
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`
-  const result = joinURL(baseurl, imageFormat, optim, imageId)
+  const result = joinURL(baseurl, imageFormat, optim, quality, imageId)
 
   return result
 }
@@ -49,7 +51,8 @@ export const getImage: ProviderGetImage = (
     width,
     height,
     fit,
-    format
+    format,
+    quality
   } = modifiers
 
   if (!baseurl) {
@@ -57,6 +60,6 @@ export const getImage: ProviderGetImage = (
   }
 
   return {
-    url: optimizeHygraphImage(baseurl, src, { width, height, fit, format })
+    url: optimizeHygraphImage(baseurl, src, { width, height, fit, format, quality })
   }
 }

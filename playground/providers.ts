@@ -1011,6 +1011,13 @@ export const providers: Provider[] = [
       {
         src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
         width: 500,
+        height: 500,
+        fit: 'crop',
+        quality: 90
+      },
+      {
+        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        width: 500,
         fit: 'max',
         format: 'auto_image'
       },
