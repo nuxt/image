@@ -107,6 +107,8 @@ export default defineNuxtConfig({
     weserv: {
       baseURL: '/'
     },
+    caisy: {
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',
