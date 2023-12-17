@@ -101,6 +101,9 @@ export default defineNuxtConfig({
     sirv: {
       baseURL: 'https://demo.sirv.com'
     },
+    hygraph: {
+      baseURL: 'https://media.graphassets.com'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',
