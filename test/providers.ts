@@ -28,7 +28,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png' }
+    sirv: { url: 'https://demo.sirv.com/test.png' },
+    hygraph: { url: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb' }
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -59,7 +60,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png?w=200' }
+    sirv: { url: 'https://demo.sirv.com/test.png?w=200' },
+    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200/JL6e2yJERUyQtTiZIzPb' }
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -90,7 +92,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?height=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/x200/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&h=200&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png?h=200' }
+    sirv: { url: 'https://demo.sirv.com/test.png?h=200' },
+    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=height:200/JL6e2yJERUyQtTiZIzPb' }
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -121,7 +124,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200' }
+    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200' },
+    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200,height:200/JL6e2yJERUyQtTiZIzPb' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -152,7 +156,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/-/stretch/off/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit' }
+    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit' },
+    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200,height:200,fit:max/JL6e2yJERUyQtTiZIzPb' }
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -183,7 +188,8 @@ export const images = [
     directus: { url: '/assets/1ac73658-8b62-4dea-b6da-529fbc9d01a4?width=200&height=200&fit=contain&format=jpg' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/format/jpeg/-/resize/200x200/-/stretch/off/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&output=jpg&url=https://my-website.com/test.png' },
-    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit&format=jpg' }
+    sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit&format=jpg' },
+    hygraph: { url: 'https://media.graphassets.com/output=format:jpg/resize=width:200,height:200,fit:max/JL6e2yJERUyQtTiZIzPb' }
   }
 ] as const
 

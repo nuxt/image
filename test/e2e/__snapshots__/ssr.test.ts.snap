@@ -164,6 +164,22 @@ exports[`browser (ssr: true) > gumlet should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: true) > hygraph should render images 1`] = `
+[
+  "https://media.graphassets.com/auto_image/resize=width:500,height:500,fit:crop/quality=value:90/compress/JL6e2yJERUyQtTiZIzPb",
+  "https://media.graphassets.com/auto_image/resize=width:500,fit:max/JL6e2yJERUyQtTiZIzPb",
+  "https://media.graphassets.com/output=format:jpg/resize=width:300,height:300,fit:clip/JL6e2yJERUyQtTiZIzPb",
+]
+`;
+
+exports[`browser (ssr: true) > hygraph should render images 2`] = `
+[
+  "https://media.graphassets.com/auto_image/resize=width:500,height:500,fit:crop/quality=value:90/compress/JL6e2yJERUyQtTiZIzPb",
+  "https://media.graphassets.com/auto_image/resize=width:500,fit:max/JL6e2yJERUyQtTiZIzPb",
+  "https://media.graphassets.com/output=format:jpg/resize=width:300,height:300,fit:clip/JL6e2yJERUyQtTiZIzPb",
+]
+`;
+
 exports[`browser (ssr: true) > imageengine should render images 1`] = `
 [
   "https://abc123.imgeng.in/images/image.jpg?imgeng=/meta_true/s_10/w_300/h_300/m_box",
