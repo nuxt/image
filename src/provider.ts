@@ -22,6 +22,7 @@ const BuiltInProviders = [
   'fastly',
   'glide',
   'gumlet',
+  'hygraph',
   'imageengine',
   'imagekit',
   'imgix',
