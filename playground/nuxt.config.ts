@@ -104,6 +104,9 @@ export default defineNuxtConfig({
     hygraph: {
       baseURL: 'https://media.graphassets.com'
     },
+    weserv: {
+      baseURL: '/'
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',

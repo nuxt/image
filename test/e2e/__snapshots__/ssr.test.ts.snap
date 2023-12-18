@@ -578,3 +578,20 @@ exports[`browser (ssr: true) > wagtail should render images 2`] = `
   "https://cms.demo.nypr.digital/images/329944/fill-200x200-c100%7Cformat-webp%7Cwebpquality-70",
 ]
 `;
+
+exports[`browser (ssr: true) > weserv should render images 1`] = `
+[
+  "https://wsrv.nl/?filename=200&we&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
+]
+`;
+
+exports[`browser (ssr: true) > weserv should render images 2`] = `
+[
+  "https://wsrv.nl/?filename=200&we&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
+]
+`;

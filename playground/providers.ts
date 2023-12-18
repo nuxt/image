@@ -951,6 +951,31 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // weserv
+  {
+    name: 'weserv',
+    samples: [
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp'
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle' }
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle', filter: 'sepia' }
+      },
+      {
+        src: 'https://picsum.photos/200',
+        format: 'webp',
+        modifiers: { mask: 'circle', filter: 'sepia', quality: 80 }
+      }
+    ]
+  },
   // Sirv
   {
     name: 'sirv',

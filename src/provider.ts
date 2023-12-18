@@ -41,6 +41,7 @@ const BuiltInProviders = [
   'uploadcare',
   'vercel',
   'wagtail',
+  'weserv',
   'sirv'
 ] as const
 

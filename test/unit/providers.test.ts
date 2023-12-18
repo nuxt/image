@@ -7,6 +7,7 @@ import { images } from '../providers'
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
 import * as none from '~/src/runtime/providers/none'
+import * as weserv from '~/src/runtime/providers/weserv'
 import * as aliyun from '#image/providers/aliyun'
 import * as awsAmplify from '#image/providers/awsAmplify'
 import * as cloudflare from '#image/providers/cloudflare'
@@ -429,17 +430,33 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.uploadcare)
     }
   })
+
   it('sirv', () => {
     const providerOptions = {
       baseURL: 'https://demo.sirv.com'
     }
-
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = sirv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sirv)
     }
   })
+
+  it('weserv', () => {
+    const providerOptions = {
+      baseURL: 'https://my-website.com/'
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = weserv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.weserv)
+    }
+
+    const generated = weserv.getImage('test.png', {}, emptyContext)
+    expect(generated).toMatchObject({ url: 'test.png' })
+  })
+
   it('none', () => {
     const providerOptions = {
     }
