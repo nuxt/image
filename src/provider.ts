@@ -13,6 +13,7 @@ import { ipxSetup } from './ipx'
 const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
+  'caisy',
   'cloudflare',
   'cloudimage',
   'cloudinary',
