@@ -31,6 +31,9 @@ export default defineNuxtConfig({
     awsAmplify: {
       baseURL: 'https://example.amplifyapp.com/_amplify/image'
     },
+    bunny: {
+      baseURL: 'https://bunnyoptimizerdemo.b-cdn.net'
+    },
     twicpics: {
       baseURL: 'https://demo.twic.pics/'
     },
