@@ -1,17 +1,38 @@
 import { relative, resolve } from 'pathe'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
-import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
+import type { HTTPStorageOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
 import type { ProviderSetup } from './types'
+import type { Nuxt } from '@nuxt/schema'
 
-export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
+export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: { dirs: string[] } } & {
   baseURL: string
 }
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
-export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptions) => {
+async function getDevDirs(nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1]) {
+  let fs: { existsSync: (path: string) => boolean }
+  try {
+    // IPX is available in node context only
+    // Therefore it should be safe to require fs
+    fs = await import("node:fs")
+  } catch (err) {
+    // Fall back to previous behavior of resolving only the
+    return [resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)]
+  }
+
+  return nuxt.options._layers.map((layer) => {
+    const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
+    const layerOptions = isRootLayer ? nuxt.options : layer.config
+    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
+
+    return resolve(layerOptions.srcDir, path)
+  }).filter((dir) => fs.existsSync(dir))
+}
+
+export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, moduleOptions) => {
   const resolver = createResolver(import.meta.url)
   const nitro = useNitro()
   const nuxt = useNuxt()
@@ -27,7 +48,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   // Options
-  const absoluteDir = resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)
+  const absoluteDirs = await getDevDirs(nuxt, moduleOptions)
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
@@ -37,7 +58,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
       ...providerOptions.options?.alias
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dir: nuxt.options.dev ? absoluteDir : relativeDir,
+      dirs: nuxt.options.dev ? absoluteDirs : [relativeDir],
       ...providerOptions.options?.fs
     },
     http: (providerOptions.options?.http !== false) && {
@@ -61,7 +82,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
 
   // Prerenderer
   if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dirs: absoluteDirs } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
 }

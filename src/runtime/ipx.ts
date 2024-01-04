@@ -4,15 +4,18 @@ import type { IPXOptions, IPXStorage, IPXStorageMeta } from 'ipx'
 import { lazyEventHandler, useBase } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
-import { createStorage } from 'unstorage'
+import { createStorage, defineDriver } from 'unstorage'
 import fsDriver from 'unstorage/drivers/fs'
 import { useRuntimeConfig } from '#imports'
+import type { IPXRuntimeConfig } from '../ipx'
+
+// Storage and Driver are not exported from unstorage
+type StorageOrDriver = Parameters<typeof originalUnstorageToIPXStorage>[0]
 
 // Copied from ipx source, removed prefix and fixed to work with unstorage keys
 // Ref: https://github.com/unjs/ipx/blob/main/src/storage/unstorage.ts
 export function unstorageToIPXStorage (
-  // Storage and Driver are not exported from unstorage
-  storage: Parameters<typeof originalUnstorageToIPXStorage>[0]
+  storage: StorageOrDriver
 ): IPXStorage {
   const resolveKey = (id: string) => id.replaceAll('/', ':')
 
@@ -37,13 +40,75 @@ export function unstorageToIPXStorage (
   }
 }
 
+function combineUnstorages(storages: StorageOrDriver[]) {
+  if (storages.length === 1) {
+    // Nothing to combine
+    return storages[0]
+  }
+
+  const combineDriver = defineDriver((options) => ({
+    name: 'combine',
+    options,
+    async getMeta(...params) {
+      for (let i = 0; i < storages.length; ++i) {
+        const storage = storages[i]
+        const value = await storage.getMeta?.(...params)!
+
+        if (value?.mtime || i === storages.length - 1) {
+          // We either found the value or this is the last storage
+          return value
+        }
+      }
+
+      // Should never reach here, because we return value from last storage
+      // But typescript is not clever enough to understand that, yet
+      return null
+    },
+    async getItemRaw(...params) {
+      for (let i = 0; i < storages.length; ++i) {
+        const storage = storages[i]
+        const value = await storage.getItemRaw?.(...params)!
+
+        if (value || i === storages.length - 1) {
+          // We either found the value or this is the last storage
+          return value
+        }
+      }
+    },
+    // Stubs to satisfy type, IPX only requires getMeta and getItemRaw
+    hasItem() { return false },
+    getItem() { return null },
+    getKeys() { return [] },
+  }))
+
+  return createStorage({ driver: combineDriver({}) })
+}
+
+function normalizeDir(dir: string) {
+  if (isAbsolute(dir)) {
+    return dir
+  }
+
+  return fileURLToPath(new URL(dir, import.meta.url))
+}
+
+function getFsStorage(opts: IPXRuntimeConfig) {
+  const dirs = opts?.fs?.dirs
+
+  if (!dirs || !dirs.length) {
+    return undefined
+  }
+
+  const normalizedDirs = dirs.map((dir) => normalizeDir(dir))
+  const unstorages = normalizedDirs.map((dir) => createStorage({ driver: fsDriver({ base: dir }) }))
+
+  return unstorageToIPXStorage(combineUnstorages(unstorages))
+}
+
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
-  const fsDir = opts.fs?.dir ? isAbsolute(opts.fs.dir) ? opts.fs.dir : fileURLToPath(new URL(opts.fs.dir, import.meta.url)) : undefined
-  const fsUnstorage = fsDir ? createStorage({ driver: fsDriver({ base: fsDir }) }) : undefined
-  const fsStorage = fsUnstorage ? unstorageToIPXStorage(fsUnstorage) : undefined
-
+  const fsStorage = getFsStorage(opts as IPXRuntimeConfig)
   const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined
 
   if (!fsStorage && !httpStorage) {
