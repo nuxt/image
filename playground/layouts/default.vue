@@ -14,6 +14,9 @@
         <NuxtLink to="/events">
           Events
         </NuxtLink>
+        <NuxtLink to="/ipx-layers">
+          IPX Layers
+        </NuxtLink>
       </li>
       <li>
         <ProviderSelector />
