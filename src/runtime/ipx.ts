@@ -6,8 +6,8 @@ import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 import { createStorage, defineDriver } from 'unstorage'
 import fsDriver from 'unstorage/drivers/fs'
-import { useRuntimeConfig } from '#imports'
 import type { IPXRuntimeConfig } from '../ipx'
+import { useRuntimeConfig } from '#imports'
 
 // Storage and Driver are not exported from unstorage
 type StorageOrDriver = Parameters<typeof originalUnstorageToIPXStorage>[0]
@@ -40,23 +40,23 @@ export function unstorageToIPXStorage (
   }
 }
 
-function combineUnstorages(storages: StorageOrDriver[]) {
+function combineUnstorages (storages: StorageOrDriver[]) {
   if (storages.length === 1) {
     // Nothing to combine
     return storages[0]
   }
 
-  const combineDriver = defineDriver((options) => ({
+  const combineDriver = defineDriver(options => ({
     name: 'combine',
     options,
-    async getMeta(...params) {
+    async getMeta (...params) {
       for (let i = 0; i < storages.length; ++i) {
         const storage = storages[i]
-        const value = await storage.getMeta?.(...params)!
+        const value = await storage.getMeta?.(...params)
 
         if (value?.mtime || i === storages.length - 1) {
           // We either found the value or this is the last storage
-          return value
+          return value ?? null
         }
       }
 
@@ -64,10 +64,10 @@ function combineUnstorages(storages: StorageOrDriver[]) {
       // But typescript is not clever enough to understand that, yet
       return null
     },
-    async getItemRaw(...params) {
+    async getItemRaw (...params) {
       for (let i = 0; i < storages.length; ++i) {
         const storage = storages[i]
-        const value = await storage.getItemRaw?.(...params)!
+        const value = await storage.getItemRaw?.(...params)
 
         if (value || i === storages.length - 1) {
           // We either found the value or this is the last storage
@@ -76,15 +76,15 @@ function combineUnstorages(storages: StorageOrDriver[]) {
       }
     },
     // Stubs to satisfy type, IPX only requires getMeta and getItemRaw
-    hasItem() { return false },
-    getItem() { return null },
-    getKeys() { return [] },
+    hasItem () { return false },
+    getItem () { return null },
+    getKeys () { return [] }
   }))
 
   return createStorage({ driver: combineDriver({}) })
 }
 
-function normalizeDir(dir: string) {
+function normalizeDir (dir: string) {
   if (isAbsolute(dir)) {
     return dir
   }
@@ -92,15 +92,15 @@ function normalizeDir(dir: string) {
   return fileURLToPath(new URL(dir, import.meta.url))
 }
 
-function getFsStorage(opts: IPXRuntimeConfig) {
+function getFsStorage (opts: IPXRuntimeConfig) {
   const dirs = opts?.fs?.dirs
 
   if (!dirs || !dirs.length) {
     return undefined
   }
 
-  const normalizedDirs = dirs.map((dir) => normalizeDir(dir))
-  const unstorages = normalizedDirs.map((dir) => createStorage({ driver: fsDriver({ base: dir }) }))
+  const normalizedDirs = dirs.map(dir => normalizeDir(dir))
+  const unstorages = normalizedDirs.map(dir => createStorage({ driver: fsDriver({ base: dir }) }))
 
   return unstorageToIPXStorage(combineUnstorages(unstorages))
 }

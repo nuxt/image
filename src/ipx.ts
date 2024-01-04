@@ -3,8 +3,8 @@ import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
 import type { HTTPStorageOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
-import type { ProviderSetup } from './types'
 import type { Nuxt } from '@nuxt/schema'
+import type { ProviderSetup } from './types'
 
 export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: { dirs: string[] } } & {
   baseURL: string
@@ -12,12 +12,12 @@ export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { h
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
-async function getDevDirs(nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1]) {
+async function getDevDirs (nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1]) {
   let fs: { existsSync: (path: string) => boolean }
   try {
     // IPX is available in node context only
     // Therefore it should be safe to require fs
-    fs = await import("node:fs")
+    fs = await import('node:fs')
   } catch (err) {
     // Fall back to previous behavior of resolving only the
     return [resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)]
@@ -29,7 +29,7 @@ async function getDevDirs(nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1
     const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
 
     return resolve(layerOptions.srcDir, path)
-  }).filter((dir) => fs.existsSync(dir))
+  }).filter(dir => fs.existsSync(dir))
 }
 
 export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, moduleOptions) => {
