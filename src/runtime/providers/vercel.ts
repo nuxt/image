@@ -4,7 +4,6 @@ import type { ProviderGetImage } from '../../types'
 // https://vercel.com/docs/more/adding-your-framework#images
 
 export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel/image' } = {}, ctx) => {
-  const validWidths = Object.values(ctx.options.screens || {}).sort((a, b) => a - b)
   const largestWidth = validWidths[validWidths.length - 1]
   let width = Number(modifiers?.width || 0)
 
@@ -13,12 +12,6 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line
       console.warn(`A defined width should be provided to use the \`vercel\` provider. Defaulting to \`${largestWidth}\`. Warning originated from \`${src}\`.`)
-    }
-  } else if (!validWidths.includes(width)) {
-    width = validWidths.find(validWidth => validWidth > width) || largestWidth
-    if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line
-      console.warn(`The width being used (\`${modifiers?.width}\`) should be added to \`image.screens\`. Defaulting to \`${width}\`. Warning originated from \`${src}\`.`)
     }
   }
 
