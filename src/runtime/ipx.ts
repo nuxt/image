@@ -5,7 +5,7 @@ import { lazyEventHandler, useBase } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 import { createStorage, defineDriver } from 'unstorage'
-import fsDriver from 'unstorage/drivers/fs'
+import fsLiteDriver from 'unstorage/drivers/fs-lite'
 import type { IPXRuntimeConfig } from '../ipx'
 import { useRuntimeConfig } from '#imports'
 
@@ -100,7 +100,7 @@ function getFsStorage (opts: IPXRuntimeConfig) {
   }
 
   const normalizedDirs = dirs.map(dir => normalizeDir(dir))
-  const unstorages = normalizedDirs.map(dir => createStorage({ driver: fsDriver({ base: dir }) }))
+  const unstorages = normalizedDirs.map(dir => createStorage({ driver: fsLiteDriver({ base: dir }) }))
 
   return unstorageToIPXStorage(combineUnstorages(unstorages))
 }
