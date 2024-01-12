@@ -140,9 +140,9 @@ Specify background color and its opacity for your image using the `bg` modifier.
 > Read more about ImageKit crop, resize, and other common transformations [here](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations).
 
 ## Overlay Transformation Modifiers
-ImageKit's Nuxt Image integration enables you to apply overlays to [images](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md) and [videos](https://docs.imagekit.io/features/video-transformation/overlay.md) using the raw parameter with the concept of [layers](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md#layers). The raw parameter facilitates incorporating transformations directly in the URL. A layer is a distinct type of transformation that allows you to define an asset to serve as an overlay, along with its positioning and additional transformations.
+ImageKit's Nuxt Image integration enables you to apply overlays to [images](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md) using the `raw` parameter with the concept of [layers](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md#layers). The `raw` parameter facilitates incorporating transformations directly in the URL. A layer is a special type of transformation that allows you to apply text and image overlay along with other transformation parameters.
 
-### Overlay Image
+### Overlay Image 
 
 Overlay an image on top of another image (base image). You can use this to create dynamic banners, watermarking, etc.
 
