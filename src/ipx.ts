@@ -74,7 +74,7 @@ async function getDevDirs (nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[
     // Therefore it should be safe to require fs
     fs = await import('node:fs')
   } catch (err) {
-    // Fall back to previous behavior of resolving only the
+    // Fall back to previous behavior of resolving only the root public dir
     return [resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)]
   }
 
