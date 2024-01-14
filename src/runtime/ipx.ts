@@ -6,23 +6,6 @@ import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 import { useRuntimeConfig } from '#imports'
 
-function normalizeDir (dir: string) {
-  if (isAbsolute(dir)) {
-    return dir
-  }
-
-  return fileURLToPath(new URL(dir, import.meta.url))
-}
-
-function getFsStorage (dirs?: string[]) {
-  if (!dirs || !dirs.length) {
-    return undefined
-  }
-
-  const normalizedDirs = dirs.map(dir => normalizeDir(dir))
-  return ipxFSStorage({ dir: normalizedDirs })
-}
-
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
@@ -43,3 +26,20 @@ export default lazyEventHandler(() => {
   const ipxHandler = createIPXH3Handler(ipx)
   return useBase(opts.baseURL, ipxHandler)
 })
+
+function normalizeDir (dir: string) {
+  if (isAbsolute(dir)) {
+    return dir
+  }
+
+  return fileURLToPath(new URL(dir, import.meta.url))
+}
+
+function getFsStorage (dirs?: string[]) {
+  if (!dirs || !dirs.length) {
+    return undefined
+  }
+
+  const normalizedDirs = dirs.map(dir => normalizeDir(dir))
+  return ipxFSStorage({ dir: normalizedDirs })
+}
