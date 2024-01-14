@@ -27,19 +27,11 @@ export default lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler)
 })
 
-function normalizeDir (dir: string) {
-  if (isAbsolute(dir)) {
-    return dir
-  }
-
-  return fileURLToPath(new URL(dir, import.meta.url))
-}
-
 function getFsStorage (dirs?: string[]) {
   if (!dirs || !dirs.length) {
     return undefined
   }
 
-  const normalizedDirs = dirs.map(dir => normalizeDir(dir))
+  const normalizedDirs = dirs.map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url)))
   return ipxFSStorage({ dir: normalizedDirs })
 }
