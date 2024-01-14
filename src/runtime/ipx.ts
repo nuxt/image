@@ -28,7 +28,6 @@ export default lazyEventHandler(() => {
 
   const fsStorage = getFsStorage(opts?.fs?.dirs)
   const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined
-
   if (!fsStorage && !httpStorage) {
     throw new Error('IPX storage is not configured!')
   }
