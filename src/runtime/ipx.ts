@@ -9,8 +9,9 @@ import { useRuntimeConfig } from '#imports'
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
-  const fsDirs = (opts?.fs?.dirs || []).map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url)))
-  const fsStorage = fsDirs.length ? ipxFSStorage({ dir: fsDirs }) : undefined
+  const fsDir = (opts?.fs?.dirs || []).map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url)))
+
+  const fsStorage = fsDir.length ? ipxFSStorage({ dir: fsDir }) : undefined
   const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined
   if (!fsStorage && !httpStorage) {
     throw new Error('IPX storage is not configured!')
@@ -27,12 +28,3 @@ export default lazyEventHandler(() => {
   const ipxHandler = createIPXH3Handler(ipx)
   return useBase(opts.baseURL, ipxHandler)
 })
-
-function getFsStorage (dirs?: string[]) {
-  if (!dirs || !dirs.length) {
-    return undefined
-  }
-
-  const normalizedDirs = dirs.map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url)))
-  return ipxFSStorage({ dir: normalizedDirs })
-}
