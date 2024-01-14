@@ -12,26 +12,6 @@ export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { h
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
-async function getDevDirs (nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1]) {
-  let fs: { existsSync: (path: string) => boolean }
-  try {
-    // IPX is available in node context only
-    // Therefore it should be safe to require fs
-    fs = await import('node:fs')
-  } catch (err) {
-    // Fall back to previous behavior of resolving only the
-    return [resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)]
-  }
-
-  return nuxt.options._layers.map((layer) => {
-    const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
-    const layerOptions = isRootLayer ? nuxt.options : layer.config
-    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
-
-    return resolve(layerOptions.srcDir, path)
-  }).filter(dir => fs.existsSync(dir))
-}
-
 export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, moduleOptions) => {
   const resolver = createResolver(import.meta.url)
   const nitro = useNitro()
@@ -85,6 +65,26 @@ export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, modul
     nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
+}
+
+async function getDevDirs (nuxt: Nuxt, moduleOptions: Parameters<ProviderSetup>[1]) {
+  let fs: { existsSync: (path: string) => boolean }
+  try {
+    // IPX is available in node context only
+    // Therefore it should be safe to require fs
+    fs = await import('node:fs')
+  } catch (err) {
+    // Fall back to previous behavior of resolving only the
+    return [resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)]
+  }
+
+  return nuxt.options._layers.map((layer) => {
+    const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
+    const layerOptions = isRootLayer ? nuxt.options : layer.config
+    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
+
+    return resolve(layerOptions.srcDir, path)
+  }).filter(dir => fs.existsSync(dir))
 }
 
 declare module 'nitropack' {
