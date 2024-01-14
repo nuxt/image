@@ -9,7 +9,8 @@ import { useRuntimeConfig } from '#imports'
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
-  const fsStorage = getFsStorage(opts?.fs?.dirs)
+  const fsDirs = (opts?.fs?.dirs || []).map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url)))
+  const fsStorage = fsDirs.length ? ipxFSStorage({ dir: fsDirs }) : undefined
   const httpStorage = opts.http?.domains ? ipxHttpStorage({ ...opts.http }) : undefined
   if (!fsStorage && !httpStorage) {
     throw new Error('IPX storage is not configured!')
