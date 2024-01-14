@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.2.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.1.0...v1.2.0)
+
+### 🚀 Enhancements
+
+- Add `hygraph` provider ([#1152](https://github.com/nuxt/image/pull/1152))
+- Add `weserv` provider ([#1019](https://github.com/nuxt/image/pull/1019))
+- Add `caisy` provider ([#1154](https://github.com/nuxt/image/pull/1154))
+- Add bunny provider ([#1179](https://github.com/nuxt/image/pull/1179))
+
+### 🩹 Fixes
+
+- Add types to ipx provider options ([#1132](https://github.com/nuxt/image/pull/1132))
+
+### 📖 Documentation
+
+- Explain fall back to larger size on amplify + vercel ([#1124](https://github.com/nuxt/image/pull/1124))
+- Add link back to sizes and mention TailwindCSS ([6e41429](https://github.com/nuxt/image/commit/6e41429))
+- Added deprecated message Netlify Large Media ([#1141](https://github.com/nuxt/image/pull/1141))
+- Add bun installation command ([#1155](https://github.com/nuxt/image/pull/1155))
+
+### 🏡 Chore
+
+- Migrate to `@nuxt/test-utils` for runtime testing ([#1149](https://github.com/nuxt/image/pull/1149))
+- Test bundler module resolution ([#1161](https://github.com/nuxt/image/pull/1161))
+
+### ❤️ Contributors
+
+- Maarten Van Hunsel 
+- Daniel Roe <daniel@roe.dev>
+- Tim Benniks <tbenniks@gmail.com>
+- Jakub Chrobak 
+- Nandi95 
+- Haruaki OTAKE <aaharu@hotmail.com>
+- Martijn Loth 
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Andre Eckardt <aeckardt@outlook.com>
+
 ## v1.1.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.0.0...v1.1.0)

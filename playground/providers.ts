@@ -119,6 +119,35 @@ export const providers: Provider[] = [
       }
     ]
   },
+  // Bunny
+  {
+    name: 'bunny',
+    samples: [
+      {
+        src: '/bunny1.jpg',
+        width: 1000,
+        quality: 80,
+        modifiers: {
+          sharpen: true,
+          aspectRatio: '16:9'
+        }
+      },
+      {
+        src: '/bunny2.jpg',
+        modifiers: {
+          crop: '750,750',
+          crop_gravity: 'north'
+        }
+      },
+      {
+        src: '/bunny3.jpg',
+        modifiers: {
+          flop: true,
+          auto_optimize: 'high'
+        }
+      }
+    ]
+  },
   // Cloudflare
   {
     name: 'cloudflare',
