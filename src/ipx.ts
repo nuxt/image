@@ -1,12 +1,12 @@
 import { relative, resolve } from 'pathe'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
-import type { HTTPStorageOptions, IPXOptions } from 'ipx'
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
 import type { Nuxt } from '@nuxt/schema'
 import type { ProviderSetup } from './types'
 
-export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: { dirs: string[] } } & {
+export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
   baseURL: string
 }
 
@@ -48,7 +48,7 @@ export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, modul
   }
 
   // Options
-  const absoluteDirs = await getDevDirs(nuxt, moduleOptions)
+  const absoluteDir = await getDevDirs(nuxt, moduleOptions)
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
@@ -58,7 +58,7 @@ export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, modul
       ...providerOptions.options?.alias
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dirs: nuxt.options.dev ? absoluteDirs : [relativeDir],
+      dir: nuxt.options.dev ? absoluteDir : relativeDir,
       ...providerOptions.options?.fs
     },
     http: (providerOptions.options?.http !== false) && {
@@ -82,7 +82,7 @@ export const ipxSetup: IPXSetupT = setupOptions => async (providerOptions, modul
 
   // Prerenderer
   if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dirs: absoluteDirs } }, ipxOptions)
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
 }
