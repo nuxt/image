@@ -97,7 +97,7 @@ const operationsGenerator = createOperationsGenerator({
       180: '180',
       270: '270',
       360: '360'
-    },
+    }
   },
   joinWith: ',',
   formatter: (key, value) => `${key}-${value}`
