@@ -32,7 +32,7 @@ jobs:
         run: echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
 
       - name: Cache Playwright's binary
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # Playwright removes unused browsers automatically
           # So does not need to add playwright version to key
