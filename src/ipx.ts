@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { relative, resolve } from 'pathe'
 import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
@@ -27,7 +28,13 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   // Options
-  const absoluteDir = resolve(nuxt.options.srcDir, moduleOptions.dir || nuxt.options.dir.public)
+  const publicDirs = nuxt.options._layers.map((layer) => {
+    const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
+    const layerOptions = isRootLayer ? nuxt.options : layer.config
+    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
+
+    return resolve(layerOptions.srcDir, path)
+  }).filter(dir => existsSync(dir))
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
@@ -37,7 +44,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
       ...providerOptions.options?.alias
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dir: nuxt.options.dev ? absoluteDir : relativeDir,
+      dir: nuxt.options.dev ? publicDirs : relativeDir,
       ...providerOptions.options?.fs
     },
     http: (providerOptions.options?.http !== false) && {
@@ -61,7 +68,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
 
   // Prerenderer
   if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: absoluteDir } }, ipxOptions)
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: publicDirs } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
 }
