@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.3.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.2.0...v1.3.0)
+
+### 🚀 Enhancements
+
+- **imagekit:** Replace obsolete overlay syntax with layers ([#1197](https://github.com/nuxt/image/pull/1197))
+- **ipx:** Support nuxt layers ([#1177](https://github.com/nuxt/image/pull/1177))
+
+### 🏡 Chore
+
+- Deduplicate `vue` versions in workspace ([#1202](https://github.com/nuxt/image/pull/1202))
+
+### ❤️ Contributors
+
+- Arkadiusz Sygulski <aareksio@gmail.com>
+- Ankur Dwivedi 
+- Daniel Roe <daniel@roe.dev>
+
 ## v1.2.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.1.0...v1.2.0)
