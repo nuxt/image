@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/nuxt/image/compare/v0.7.1...v0.7.2) (2024-01-18)
+
+
+### Bug Fixes
+
+* preload responsive images ([#1004](https://github.com/nuxt/image/issues/1004)) ([5549416](https://github.com/nuxt/image/commit/5549416cab67ba9f036e12f2a7fe2659b28bb7ca))
+
 ### [0.7.1](https://github.com/nuxt/image/compare/v0.7.0...v0.7.1) (2022-06-22)
 
 
