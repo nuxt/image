@@ -31,12 +31,12 @@ export default defineComponent({
             rel: 'preload',
             as: 'image',
             ...(!isResponsive
-            ? { href: this.nSrc }
-            : {
-                href: this.nSizes.src,
-                imagesizes: this.nSizes.sizes,
-                imagesrcset: this.nSizes.srcset
-              })
+              ? { href: this.nSrc }
+              : {
+                  href: this.nSizes.src,
+                  imagesizes: this.nSizes.sizes,
+                  imagesrcset: this.nSizes.srcset
+                })
           }
         ]
       }
