@@ -91,3 +91,10 @@ export function parseSize (input: string | number | undefined = '') {
     }
   }
 }
+
+export function parseDensities (input: string | undefined = '') {
+  if (!input.length) {
+    return undefined
+  }
+  return input.split(' ').map(size => parseInt(size.replace('x', ''), 10))
+}

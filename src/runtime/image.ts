@@ -2,7 +2,7 @@ import defu from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, MapToStatic, ImageCTX, $Img } from '../types/image'
 import { imageMeta } from './utils/meta'
-import { parseSize } from './utils'
+import { parseDensities, parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext: any) {
@@ -161,8 +161,10 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
 function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
+  const densities = opts.densities ? parseDensities(opts.densities) : [1, 2]
   const hwRatio = (width && height) ? height / width : 0
-  const variants = []
+  const sizeVariants = []
+  const srcVariants = []
 
   const sizes: Record<string, string> = {}
 
@@ -195,25 +197,45 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions) {
       _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
     }
     const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
-    variants.push({
+    sizeVariants.push({
       width: _cWidth,
       size,
       screenMaxWidth,
       media: `(max-width: ${screenMaxWidth}px)`,
       src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth, height: _cHeight }, opts)
     })
+
+    if (densities) {
+      for (const density of densities) {
+        srcVariants.push({
+          width: _cWidth * density,
+          src: ctx.$img!(input, { ...opts.modifiers, width: _cWidth * density, height: _cHeight ? _cHeight * density : undefined }, opts)
+        })
+      }
+    }
   }
 
-  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+  sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  const defaultVar = variants[variants.length - 1]
-  if (defaultVar) {
-    defaultVar.media = ''
+  // Remove duplicate size variants,
+  let previousSize = ''
+
+  // Loop in reverse order to allow safe deletion
+  for (let i = sizeVariants.length - 1; i >= 0; i--) {
+    const sizeVariant = sizeVariants[i]
+    if (sizeVariant.media === previousSize) {
+      sizeVariants.splice(i, 1)
+    }
+    previousSize = sizeVariant.size
   }
+
+  srcVariants.sort((v1, v2) => v1.width - v2.width)
+
+  const defaultVar = srcVariants[srcVariants.length - 1]
 
   return {
-    sizes: variants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
-    srcset: variants.map(v => `${v.src} ${v.width}w`).join(', '),
+    sizes: sizeVariants.map(v => `${v.media ? v.media + ' ' : ''}${v.size}`).join(', '),
+    srcset: srcVariants.map(v => `${v.src} ${v.width}w`).join(', '),
     src: defaultVar?.src
   }
 }

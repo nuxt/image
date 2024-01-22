@@ -17,12 +17,14 @@
     <nuxt-img
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
+      densities="1x"
       loading="lazy"
     />
     <br>
     <nuxt-picture
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
+      densities="1x"
       loading="lazy"
     />
   </div>
