@@ -1,12 +1,13 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import type { Head } from '@unhead/vue'
 import { prerenderStaticImages } from '../utils/prerender'
-import { useBaseImage, baseImageProps } from './_base'
+import { baseImageProps, useBasePicture } from './_base'
 import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
 
 export const pictureProps = {
   ...baseImageProps,
+  format: { type: [String, Array<string>], default: undefined },
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null }
 }
@@ -17,7 +18,7 @@ export default defineComponent({
   emits: ['load'],
   setup: (props, ctx) => {
     const $img = useImage()
-    const _base = useBaseImage(props)
+    const _base = useBasePicture(props)
 
     const originalFormat = computed(() => getFileExtension(props.src))
     const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
@@ -29,7 +30,7 @@ export default defineComponent({
 
     type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
     const sources = computed<Source[]>(() => {
-      const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
+      const formats = (Array.isArray(props.format) ? props.format : props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))) as string[]
       if (formats[0] === 'svg') {
         return [<Source>{ src: props.src }]
       }
@@ -45,7 +46,6 @@ export default defineComponent({
         const { srcset, sizes, src } = $img.getSizes(props.src!, {
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
-          densities: props.densities,
           modifiers: { ..._base.modifiers.value, format }
         })
 
