@@ -7,7 +7,7 @@
       :sizes="nSources[1].sizes"
     >
     <img
-      v-bind="{...nImgAttrs, ...imgAttrs}"
+      v-bind="{...imgAttrs}"
       :src="nSources[0].src"
       :srcset="nSources[0].srcset"
       :sizes="nSources[0].sizes"
