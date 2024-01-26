@@ -2,6 +2,7 @@ import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
+import { markFeatureUsage } from '../utils/performance'
 import { baseImageProps, useBaseImage } from './_base'
 import { useHead, useNuxtApp } from '#imports'
 
@@ -112,6 +113,8 @@ export default defineComponent({
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
+
+        markFeatureUsage('nuxt-image')
         return
       }
 
