@@ -14,7 +14,7 @@ export function prerenderStaticImages (src = '', srcset = '') {
   }
 
   appendHeader(
-    useRequestEvent(),
+    useRequestEvent()!,
     'x-nitro-prerender',
     paths.map(p => encodeURIComponent(p)).join(', ')
   )
