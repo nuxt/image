@@ -139,16 +139,24 @@ const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> 
   aws_amplify: 'awsAmplify'
 }
 
-export function detectProvider (userInput: string = '') {
+export function detectProvider (userInput: string = ''): undefined | { provider: string; auto: boolean } {
   if (process.env.NUXT_IMAGE_PROVIDER) {
-    return process.env.NUXT_IMAGE_PROVIDER
+    return {
+      provider: process.env.NUXT_IMAGE_PROVIDER,
+      auto: false
+    }
   }
-
   if (userInput && userInput !== 'auto') {
-    return userInput
+    return {
+      provider: userInput,
+      auto: false
+    }
   }
-
-  if (provider in autodetectableProviders) {
-    return autodetectableProviders[provider]
+  const autoDetected = autodetectableProviders[provider]
+  if (autoDetected) {
+    return {
+      provider: autoDetected,
+      auto: true
+    }
   }
 }

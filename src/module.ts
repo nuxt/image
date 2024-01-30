@@ -66,10 +66,11 @@ export default defineNuxtModule<ModuleOptions>({
     // Normalize alias to start with leading slash
     options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
 
-    options.provider = detectProvider(options.provider)!
+    const _detectedProvider = detectProvider(options.provider)!
     if (options.provider) {
       options[options.provider] = options[options.provider] || {}
     }
+    options.provider = _detectedProvider?.provider
     options.densities = options.densities || []
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt'> = pick(options, [
@@ -130,7 +131,7 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
-      if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
+      if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || _detectedProvider.auto) {
         const resolvedProvider = nitro.options.static || options.provider === 'ipxStatic'
           ? 'ipxStatic'
           : nitro.options.node ? 'ipx' : 'none'
