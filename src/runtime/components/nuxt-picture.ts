@@ -1,6 +1,7 @@
 import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import type { Head } from '@unhead/vue'
 import { prerenderStaticImages } from '../utils/prerender'
+import { markFeatureUsage } from '../utils/performance'
 import { useBaseImage, baseImageProps } from './_base'
 import { useImage, useHead, useNuxtApp } from '#imports'
 import { getFileExtension } from '#image'
@@ -95,6 +96,8 @@ export default defineComponent({
       imgEl.value.onload = (event) => {
         ctx.emit('load', event)
       }
+
+      markFeatureUsage('nuxt-picture')
     })
 
     return () =>
