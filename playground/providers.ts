@@ -338,12 +338,28 @@ export const providers: Provider[] = [
     name: 'netlify',
     samples: [
       {
-        src: '/images/apple.jpg',
+        src: '/images/colors.jpg',
+        width: 100,
+        height: 100,
+        fit: 'cover'
+      },
+      {
+        src: '/images/colors.jpg',
+        width: 400,
+        height: 300
+      }
+    ]
+  },
+  {
+    name: 'netlifyLargeMedia',
+    samples: [
+      {
+        src: '/images/colors.jpg',
         width: 101,
         fit: 'contain'
       },
       {
-        src: '/images/apple.jpg',
+        src: '/images/colors.jpg',
         width: 200,
         height: 200,
         fit: 'fill'

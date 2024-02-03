@@ -32,6 +32,8 @@ const BuiltInProviders = [
   'ipxStatic',
   'layer0',
   'netlify',
+  'netlifyLargeMedia',
+  'netlifyImageCdn',
   'prepr',
   'none',
   'prismic',
