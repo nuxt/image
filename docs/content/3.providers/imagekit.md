@@ -76,7 +76,7 @@ Turn your image to a grayscale version using the `effectGray` modifier.
 
 ### `effectShadow`
 
-Turn your image to a grayscale version using the `effectShadow` modifier.
+Add a shadow under solid objects in an input image with a transparent background using the `effectShadow` modifier.
 
 ```html
 <NuxtImg
@@ -89,7 +89,7 @@ Turn your image to a grayscale version using the `effectShadow` modifier.
 
 ### `effectGradient`
 
-Turn your image to a grayscale version using the `effectGradient` modifier.
+Add a gradient overlay over an input image using the `effectGradient` modifier.
 
 ```html
 <NuxtImg
