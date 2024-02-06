@@ -39,6 +39,8 @@ const operationsGenerator = createOperationsGenerator({
     effectUSM: 'e-usm',
     effectContrast: 'e-contrast',
     effectGray: 'e-grayscale',
+    effectShadow: 'e-shadow',
+    effectGradient: 'e-gradient',
     original: 'orig'
   },
   valueMap: {
