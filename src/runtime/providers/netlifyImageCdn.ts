@@ -1,4 +1,3 @@
-import { joinURL } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -37,7 +36,7 @@ export const operationsGenerator = createOperationsGenerator({
   formatter: (key: string, value: string) => `${key}=${value ?? ''}`
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/.netlify/images' } = {}) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
   const mods: Record<string, string> = { ...modifiers }
   mods.url = src
   if (modifiers.width) {
@@ -48,6 +47,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/.n
   }
   const operations = operationsGenerator(mods)
   return {
-    url: `${baseURL}?${operations}`
+    url: `${baseURL || '/.netlify/images'}?${operations}`
   }
 }

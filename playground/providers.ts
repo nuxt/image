@@ -351,6 +351,22 @@ export const providers: Provider[] = [
     ]
   },
   {
+    name: 'netlifyImageCdn',
+    samples: [
+      {
+        src: '/images/colors.jpg',
+        width: 100,
+        height: 100,
+        fit: 'cover'
+      },
+      {
+        src: '/images/colors.jpg',
+        width: 400,
+        height: 300
+      }
+    ]
+  },
+  {
     name: 'netlifyLargeMedia',
     samples: [
       {
