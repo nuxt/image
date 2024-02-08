@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 
 ::callout
 If you manually enable the `netlify` provider and want to test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics Netlify Image CDN.
-:::
+::
 
 ## Remote images
 
