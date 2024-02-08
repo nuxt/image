@@ -333,23 +333,6 @@ export const providers: Provider[] = [
       }
     ]
   },
-  // Netlify
-  {
-    name: 'netlify',
-    samples: [
-      {
-        src: '/images/colors.jpg',
-        width: 100,
-        height: 100,
-        fit: 'cover'
-      },
-      {
-        src: '/images/colors.jpg',
-        width: 400,
-        height: 300
-      }
-    ]
-  },
   {
     name: 'netlifyImageCdn',
     samples: [

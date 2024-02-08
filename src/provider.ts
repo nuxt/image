@@ -120,6 +120,10 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
     input.provider = input.name
   }
 
+  if (input.provider in normalizableProviders) {
+    input.provider = normalizableProviders[input.provider]!()
+  }
+
   const resolver = createResolver(import.meta.url)
   input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
     ? await resolver.resolve('./runtime/providers/' + input.provider)
@@ -138,7 +142,14 @@ export async function resolveProvider (_nuxt: any, key: string, input: InputProv
 
 const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> = {
   vercel: 'vercel',
-  aws_amplify: 'awsAmplify'
+  aws_amplify: 'awsAmplify',
+  netlify: 'netlify'
+}
+
+const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = {
+  netlify: () => {
+    return process.env.NETLIFY_LFS_ORIGIN_URL ? 'netlifyLargeMedia' : 'netlifyImageCdn'
+  }
 }
 
 export function detectProvider (userInput: string = '') {
