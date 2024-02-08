@@ -12,7 +12,9 @@ When deploying your Nuxt applications to [Netlify's composable platform](https:/
 
 This provider is automatically enabled in Netlify deployments.
 
-You can also manually enable this provider for sites deployed on other platforms. To do so, add the following to your Nuxt configuration:
+## Local development 
+
+You can also manually enable this provider for local development. To do so, add the following to your Nuxt configuration:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -22,9 +24,7 @@ export default defineNuxtConfig({
 })
 ```
 
-::callout
-If you manually enable the `netlify` provider and want to test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics Netlify Image CDN.
-::
+Then, to test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics the Netlify production environment, including Netlify Image CDN.
 
 ## Remote images
 
