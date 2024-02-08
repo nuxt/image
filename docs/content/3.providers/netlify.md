@@ -8,9 +8,11 @@ links:
     size: xs
 ---
 
-When deploying your Nuxt applications to [Netlify's composable platform](https://docs.netlify.com/platform/overview/), the image module can use [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview/) to optimize and transform images on demand without impacting build times. Netlify Image CDN also handles content negotiation to use the most efficient image format for the requesting client.
+When deploying your Nuxt applications to [Netlify's composable platform](https://docs.netlify.com/platform/overview/), the image module uses [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview/) to optimize and transform images on demand without impacting build times. Netlify Image CDN also handles content negotiation to use the most efficient image format for the requesting client.
 
-To use Netlify Image CDN by default, add the following to your Nuxt configuration:
+This provider is automatically enabled in Netlify deployments.
+
+You can also manually enable this provider for sites deployed on other platforms. To do so, add the following to your Nuxt configuration:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -19,6 +21,10 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+::callout
+If you manually enable the `netlify` provider and want to test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics Netlify Image CDN.
+:::
 
 ## Remote images
 
@@ -33,20 +39,18 @@ The `remote_images` property accepts an array of regex. If your images are in sp
 
 ## Modifiers
 
-In addition to the [standard properties](https://image.nuxt.com/usage/nuxt-img), all of the [Netlify Image CDN transformation options](https://docs.netlify.com/image-cdn/overview/#transform-images) are available as modifiers for Nuxt Image.
+Beyond the [standard properties](https://image.nuxt.com/usage/nuxt-img), you can use the [Netlify Image CDN `position` parameter](https://docs.netlify.com/image-cdn/overview/#positions) as a modifier for Nuxt Image.
 
 ```vue
 <NuxtImg
   provider="netlify"
   src="owl.jpg"
-  :modifiers="{ 
-    h="400"
-    w="600"
-    fit="cover"
-    position="left"
-    fm="webp"
-    q="80"
-  }"
+  height="400"
+  width="600"
+  fit="cover"
+  format="webp"
+  quality="80"
+  :modifiers="{ position: 'left' }"
 />
 ```
 
