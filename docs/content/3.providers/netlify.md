@@ -39,7 +39,7 @@ The `remote_images` property accepts an array of regex. If your images are in sp
 
 ## Modifiers
 
-Beyond the [standard properties](https://image.nuxt.com/usage/nuxt-img), you can use the [Netlify Image CDN `position` parameter](https://docs.netlify.com/image-cdn/overview/#positions) as a modifier for Nuxt Image.
+Beyond the [standard properties](https://image.nuxt.com/usage/nuxt-img), you can use the [Netlify Image CDN `position` parameter](https://docs.netlify.com/image-cdn/overview/#position) as a modifier for Nuxt Image.
 
 ```vue
 <NuxtImg
