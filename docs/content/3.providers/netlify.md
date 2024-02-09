@@ -10,11 +10,9 @@ links:
 
 When deploying your Nuxt applications to [Netlify's composable platform](https://docs.netlify.com/platform/overview/), the image module uses [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview/) to optimize and transform images on demand without impacting build times. Netlify Image CDN also handles content negotiation to use the most efficient image format for the requesting client.
 
-This provider is automatically enabled in Netlify deployments.
+This provider is automatically enabled in Netlify deployments, and also when running locally using [the Netlify CLI](https://docs.netlify.com/cli/local-development/).
 
-## Local development 
-
-You can also manually enable this provider for local development. To do so, add the following to your Nuxt configuration:
+You can also manually enable this provider. To do so, set the provider to `netlify` or add the following to your Nuxt configuration:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -24,7 +22,9 @@ export default defineNuxtConfig({
 })
 ```
 
-Then, to test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics the Netlify production environment, including Netlify Image CDN.
+## Local development 
+
+To test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics the Netlify production environment, including Netlify Image CDN.
 
 ## Remote images
 
@@ -57,12 +57,12 @@ Beyond the [standard properties](https://image.nuxt.com/usage/nuxt-img), you can
 ## Deprecated Netlify Large Media option
 
 ::callout{color="amber" icon="i-ph-warning-duotone"}
-Netlify’s Large Media service is [deprecated](https://answers.netlify.com/t/large-media-feature-deprecated-but-not-removed/100804). If this feature is already enabled for your site on Netlify and you have already set `provider: 'netlify'` in your Nuxt configuration, then Large Media continues to work on your site as usual. However, new Large Media configuration is not recommended.
+Netlify’s Large Media service is [deprecated](https://answers.netlify.com/t/large-media-feature-deprecated-but-not-removed/100804). If this feature is already enabled for your site on Netlify and you have already set `provider: 'netlify'` in your Nuxt configuration, then this will be detected at build time and Large Media continues to work on your site as usual. You can also explicitly enable it by setting `provider: 'netlifyLargeMedia'`. However, new Large Media configuration is not recommended.
 ::
 
 ### Migrate to Netlify Image CDN
 
-To migrate from the deprecated Netlify Large Media option to the more robust Netlify Image CDN option, change `provider: 'netlify'` to `provider: 'netlifyImageCdn'`.
+To migrate from the deprecated Netlify Large Media option to the more robust Netlify Image CDN option, change `provider: 'netlify'` to `provider: 'netlifyImageCdn'`. This will enable the Netlify Image CDN service, even if large media is enabled on your site.
 
 
 ### Use deprecated Netlify Large Media option
