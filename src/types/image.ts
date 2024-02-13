@@ -66,12 +66,19 @@ export interface ImageSizes {
   src: string
 }
 
+export type BgImageSizes = Map<string, {
+  src: string
+  density?: string
+  type?: string
+}[]>
+
 export interface Img {
   (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
   options: CreateImageOptions
   getImage: (source: string, options?: ImageOptions) => ResolvedImage
   getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
   getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
+  getBgSizes: (source: string, options?: Partial<ImageSizesOptions>) => BgImageSizes
 }
 
 export type $Img = Img & {

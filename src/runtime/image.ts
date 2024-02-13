@@ -1,6 +1,16 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant } from '../types/image'
+import type {
+  ImageOptions,
+  ImageSizesOptions,
+  CreateImageOptions,
+  ResolvedImage,
+  ImageCTX,
+  $Img,
+  ImageSizes,
+  ImageSizesVariant,
+  BgImageSizes
+} from '../types/image'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
@@ -20,6 +30,9 @@ export function createImage (globalOptions: CreateImageOptions) {
 
     return image
   }
+  const getBgSizes: $Img['getBgSizes'] = (input, options = {}) => {
+    return createBgSizes(ctx, input, options)
+  }
 
   const $img = ((input, modifiers = {}, options = {}) => {
     return getImage(input, {
@@ -35,6 +48,7 @@ export function createImage (globalOptions: CreateImageOptions) {
 
   $img.options = globalOptions
   $img.getImage = getImage
+  $img.getBgSizes = getBgSizes
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
   $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
 
@@ -267,4 +281,65 @@ function finaliseSrcsetVariants (srcsetVariants: any[]) {
     }
     previousWidth = sizeVariant.width
   }
+}
+
+export function createBgSizes (
+  ctx: ImageCTX,
+  input: string,
+  opts: Partial<ImageSizesOptions>
+): BgImageSizes {
+  const width = parseSize(opts.modifiers?.width)
+  const height = parseSize(opts.modifiers?.height)
+  const sizes = parseSizes(opts.sizes || {})
+  const hwRatio = width && height ? height / width : 0
+  const variants = Object.entries(sizes)
+    .map(([key, size]) => {
+      return getSizesVariant(key, String(size), height, hwRatio, ctx)
+    })
+    .filter((v) => {
+      return v !== undefined
+    }) as ImageSizesVariant[]
+
+  // sort by screenMaxWidth (ascending)
+  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+
+  const result: BgImageSizes = new Map()
+  const densities = opts.densities?.trim()
+    ? parseDensities(opts.densities.trim())
+    : ctx.options.densities
+  // sort densities ascending
+  densities.sort((a, b) => a - b)
+  checkDensities(densities)
+
+  variants.forEach((variant, i) => {
+    const bpsWidth = String(variants[i + 1]?.screenMaxWidth || 'default')
+    if (result.has(bpsWidth)) {
+      return
+    }
+    result.set(
+      bpsWidth,
+      densities.map((d) => {
+        return {
+          src: getVariantSrc(ctx, input, opts as ImageSizesOptions, variant, d),
+          density: d.toString()
+        }
+      })
+    )
+  })
+  if (result.size === 0) {
+    result.set(
+      'default',
+      densities.map((d) => {
+        return {
+          src: ctx.$img!(input, opts.modifiers, opts),
+          density: d.toString(),
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : ''
+        }
+      })
+    )
+  }
+  // TODO: prerender static images: just add common version of current function
+  // TODO: preload images: no way to ensure the current size of viewport when SSR
+
+  return result
 }
