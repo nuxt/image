@@ -60,14 +60,17 @@ export const useBackgroundImage = (
     })
   }
 
-  useHead({
-    style: [
-      {
-        id: cls,
-        innerHTML: css
-      }
-    ]
-  })
+  // prevent hydration mismatch: because id is generated randomly
+  if (import.meta.client) {
+    useHead({
+      style: [
+        {
+          id: cls,
+          innerHTML: css
+        }
+      ]
+    })
+  }
 
   return cls
 }
