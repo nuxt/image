@@ -1,3 +1,4 @@
+import { encodeQueryItem } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -33,7 +34,7 @@ export const operationsGenerator = createOperationsGenerator({
     }
   },
   joinWith: '&',
-  formatter: (key: string, value: string) => `${key}=${value ?? ''}`
+  formatter: (key, value) => encodeQueryItem(key, value)
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
