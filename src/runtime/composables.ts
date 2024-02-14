@@ -17,11 +17,13 @@ export const useImage = (): $Img => {
   }))
 }
 
-export const useBackgroundImage = (src: string, options: Partial<ImageSizesOptions>) => {
+export const useBackgroundImage = (
+  src: string,
+  options: Partial<ImageSizesOptions> & { preload?: boolean; nonce?: string }
+) => {
   const $img = useImage()
-  const bgSizes = $img.getBgSizes(src, options)
+  const { sizes: bgSizes, imagesizes, imagesrcset } = $img.getBgSizes(src, options)
   const cls = 'nuxt-bg-' + generateRandomString()
-  const defaultBg = bgSizes.get('default')
 
   // TODO: handle Map item type
   const toCSS = (bgs: any[]) => {
@@ -30,19 +32,39 @@ export const useBackgroundImage = (src: string, options: Partial<ImageSizesOptio
       const type = bg.type ? `type("${bg.type}")` : ''
       return `url('${bg.src}') ${density} ${type}`
     })
-    return `background-image: url(${bgs[0].src});background-image: image-set(${imageSets.join(', ')});`
+    return `background-image: url(${
+      bgs[0].src
+    });background-image: image-set(${imageSets.join(', ')});`
   }
-  const defaultBgCSS = defaultBg ? `.${cls}{${toCSS(defaultBg)}}` : ''
-  bgSizes.delete('default')
-  const css = Array.from(bgSizes).reverse().map(([key, value]) => {
-    return `@media (max-width: ${key}px) { .${cls} { ${toCSS(value)} } }`
-  })
+  const css = Array.from(bgSizes)
+    .reverse()
+    .map(([key, value]) => {
+      if (key === 'default') {
+        return value ? `.${cls}{${toCSS(value)}}` : ''
+      } else {
+        return `@media (max-width: ${key}px) { .${cls} { ${toCSS(value)} } }`
+      }
+    }).join(' ')
+
+  if (options.preload) {
+    useHead({
+      link: [
+        {
+          rel: 'preload',
+          as: 'image',
+          nonce: options.nonce,
+          href: bgSizes.get('default')?.[0].src,
+          ...(bgSizes.size > 1 ? { imagesizes, imagesrcset } : {})
+        }
+      ]
+    })
+  }
 
   useHead({
     style: [
       {
         id: cls,
-        innerHTML: defaultBgCSS + css.join(' ')
+        innerHTML: css
       }
     ]
   })

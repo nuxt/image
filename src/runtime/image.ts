@@ -287,7 +287,7 @@ export function createBgSizes (
   ctx: ImageCTX,
   input: string,
   opts: Partial<ImageSizesOptions>
-): BgImageSizes {
+): { imagesrcset: string, imagesizes: string, sizes: BgImageSizes } {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
   const sizes = parseSizes(opts.sizes || {})
@@ -313,11 +313,17 @@ export function createBgSizes (
   const quality = opts.modifiers?.quality ? opts.modifiers.quality : ctx.options.quality
 
   const result: BgImageSizes = new Map()
+  const imagesizesList: string[] = []
 
   variants.forEach((variant, i) => {
     const bpsWidth = String(variants[i + 1]?.screenMaxWidth || 'default')
     if (result.has(bpsWidth)) {
       return
+    }
+    if (bpsWidth === 'default') {
+      imagesizesList.push(`${variant._cWidth}px`)
+    } else {
+      imagesizesList.push(`(max-width: ${bpsWidth}px) ${variant._cWidth}px`)
     }
     result.set(
       bpsWidth,
@@ -331,7 +337,8 @@ export function createBgSizes (
             }
           } as ImageSizesOptions, variant, d),
           density: d.toString(),
-          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : ''
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : '',
+          _cWidth: variant._cWidth * d
         }
       })
     )
@@ -351,13 +358,17 @@ export function createBgSizes (
             },
             opts),
           density: d.toString(),
-          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : ''
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : '',
+          _cWidth: width ? width * d : undefined
         }
       })
     )
   }
   // TODO: prerender static images: just add common version of current function
-  // TODO: preload images: no way to ensure the current size of viewport when SSR
 
-  return result
+  return {
+    imagesizes: imagesizesList.join(', '),
+    imagesrcset: Array.from(result).map(([_, value]) => value.map(v => `${v.src} ${v._cWidth}w`).join(', ')).join(', '),
+    sizes: result
+  }
 }
