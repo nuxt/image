@@ -20,13 +20,13 @@ exports[`browser (ssr: true) > aliyun should render images 2`] = `
 
 exports[`browser (ssr: true) > awsAmplify should render images 1`] = `
 [
-  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+  "https://example.amplifyapp.com/_amplify/image?url=%2Ftest.jpg&w=320&q=100",
 ]
 `;
 
 exports[`browser (ssr: true) > awsAmplify should render images 2`] = `
 [
-  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+  "https://example.amplifyapp.com/_amplify/image?url=%2Ftest.jpg&w=320&q=100",
 ]
 `;
 
@@ -573,13 +573,13 @@ exports[`browser (ssr: true) > uploadcare should render images 2`] = `
 
 exports[`browser (ssr: true) > vercel should render images 1`] = `
 [
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
+  "https://image-component.nextjs.gallery/_next/image?url=%2Fcolors.jpg&w=750&q=75",
 ]
 `;
 
 exports[`browser (ssr: true) > vercel should render images 2`] = `
 [
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
+  "https://image-component.nextjs.gallery/_next/image?url=%2Fcolors.jpg&w=750&q=75",
 ]
 `;
 
