@@ -303,13 +303,16 @@ export function createBgSizes (
   // sort by screenMaxWidth (ascending)
   variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
-  const result: BgImageSizes = new Map()
   const densities = opts.densities?.trim()
     ? parseDensities(opts.densities.trim())
     : ctx.options.densities
   // sort densities ascending
   densities.sort((a, b) => a - b)
   checkDensities(densities)
+
+  const quality = opts.modifiers?.quality ? opts.modifiers.quality : ctx.options.quality
+
+  const result: BgImageSizes = new Map()
 
   variants.forEach((variant, i) => {
     const bpsWidth = String(variants[i + 1]?.screenMaxWidth || 'default')
@@ -320,8 +323,15 @@ export function createBgSizes (
       bpsWidth,
       densities.map((d) => {
         return {
-          src: getVariantSrc(ctx, input, opts as ImageSizesOptions, variant, d),
-          density: d.toString()
+          src: getVariantSrc(ctx, input, {
+            ...opts,
+            modifiers: {
+              ...opts.modifiers,
+              quality
+            }
+          } as ImageSizesOptions, variant, d),
+          density: d.toString(),
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : ''
         }
       })
     )
@@ -331,7 +341,15 @@ export function createBgSizes (
       'default',
       densities.map((d) => {
         return {
-          src: ctx.$img!(input, opts.modifiers, opts),
+          src: ctx.$img!(
+            input,
+            {
+              ...opts.modifiers,
+              quality,
+              width: width ? width * d : undefined,
+              height: height ? height * d : undefined
+            },
+            opts),
           density: d.toString(),
           type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : ''
         }
