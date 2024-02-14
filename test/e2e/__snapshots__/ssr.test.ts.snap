@@ -286,14 +286,28 @@ exports[`browser (ssr: true) > layer0 should render images 2`] = `
 ]
 `;
 
-exports[`browser (ssr: true) > netlify should render images 1`] = `
+exports[`browser (ssr: true) > netlifyImageCdn should render images 1`] = `
+[
+  "https://netlify-photo-gallery.netlify.app?w=100&h=100&fit=cover&url=/images/apple.jpg",
+  "https://netlify-photo-gallery.netlify.app?w=400&h=300&url=/images/apple.jpg",
+]
+`;
+
+exports[`browser (ssr: true) > netlifyImageCdn should render images 2`] = `
+[
+  "https://netlify-photo-gallery.netlify.app/?w=400&h=300&url=/images/apple.jpg",
+  "https://netlify-photo-gallery.netlify.app/?w=100&h=100&fit=cover&url=/images/apple.jpg",
+]
+`;
+
+exports[`browser (ssr: true) > netlifyLargeMedia should render images 1`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
 ]
 `;
 
-exports[`browser (ssr: true) > netlify should render images 2`] = `
+exports[`browser (ssr: true) > netlifyLargeMedia should render images 2`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",

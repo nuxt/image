@@ -337,13 +337,13 @@ export const providers: Provider[] = [
     name: 'netlifyImageCdn',
     samples: [
       {
-        src: '/images/colors.jpg',
+        src: '/images/apple.jpg',
         width: 100,
         height: 100,
         fit: 'cover'
       },
       {
-        src: '/images/colors.jpg',
+        src: '/images/apple.jpg',
         width: 400,
         height: 300
       }
@@ -353,12 +353,12 @@ export const providers: Provider[] = [
     name: 'netlifyLargeMedia',
     samples: [
       {
-        src: '/images/colors.jpg',
+        src: '/images/apple.jpg',
         width: 101,
         fit: 'contain'
       },
       {
-        src: '/images/colors.jpg',
+        src: '/images/apple.jpg',
         width: 200,
         height: 200,
         fit: 'fill'
