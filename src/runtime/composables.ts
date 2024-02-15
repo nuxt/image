@@ -23,8 +23,9 @@ export const useBackgroundImage = (
 ) => {
   const $img = useImage()
   const { sizes: bgSizes, imagesizes, imagesrcset } = $img.getBgSizes(src, options)
-  const cls = 'nuxt-bg-' + generateRandomString()
 
+  // Use this to prevent different class names on client and server
+  const classStates = useState<Record<string, string>>('_nuxt-img-bg', () => ({}))
   // TODO: handle Map item type
   const toCSS = (bgs: any[]) => {
     const imageSets = bgs.map((bg) => {
@@ -36,15 +37,27 @@ export const useBackgroundImage = (
       bgs[0].src
     });background-image: image-set(${imageSets.join(', ')});`
   }
-  const css = Array.from(bgSizes)
+  const placeholder = '[placeholder]'
+
+  let css = Array.from(bgSizes)
     .reverse()
     .map(([key, value]) => {
       if (key === 'default') {
-        return value ? `.${cls}{${toCSS(value)}}` : ''
+        return value ? `.${placeholder}{${toCSS(value)}}` : ''
       } else {
-        return `@media (max-width: ${key}px) { .${cls} { ${toCSS(value)} } }`
+        return `@media (max-width: ${key}px) { .${placeholder} { ${toCSS(value)} } }`
       }
     }).join(' ')
+
+  // use generated css as key
+  let cls = ''
+  if (classStates.value[css]) {
+    cls = classStates.value[css]
+  } else {
+    cls = 'nuxt-bg-' + generateRandomString()
+    classStates.value[css] = cls
+  }
+  css = css.replace(/\[placeholder\]/gm, cls)
 
   if (options.preload) {
     useHead({
@@ -60,17 +73,11 @@ export const useBackgroundImage = (
     })
   }
 
-  // prevent hydration mismatch: because id is generated randomly
-  if (import.meta.client) {
-    useHead({
-      style: [
-        {
-          id: cls,
-          innerHTML: css
-        }
-      ]
-    })
-  }
+  useHead({
+    style: [
+      { key: cls, innerHTML: css }
+    ]
+  })
 
   return cls
 }

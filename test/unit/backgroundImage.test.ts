@@ -23,7 +23,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/_/image.png);background-image: image-set(url('/_ipx/_/image.png') 1x , url('/_ipx/_/image.png') 2x );}`
         }
       ]
@@ -35,7 +35,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/w_900/image.png);background-image: image-set(url('/_ipx/w_900/image.png') 1x , url('/_ipx/w_1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/w_500/image.png);background-image: image-set(url('/_ipx/w_500/image.png') 1x , url('/_ipx/w_1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/w_200/image.png);background-image: image-set(url('/_ipx/w_200/image.png') 1x , url('/_ipx/w_400/image.png') 2x ); } }`
         }
       ]
@@ -51,7 +51,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/w_900/image.png);background-image: image-set(url('/_ipx/w_900/image.png') 1x , url('/_ipx/w_1800/image.png') 2x , url('/_ipx/w_2700/image.png') 3x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/w_500/image.png);background-image: image-set(url('/_ipx/w_500/image.png') 1x , url('/_ipx/w_1000/image.png') 2x , url('/_ipx/w_1500/image.png') 3x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/w_200/image.png);background-image: image-set(url('/_ipx/w_200/image.png') 1x , url('/_ipx/w_400/image.png') 2x , url('/_ipx/w_600/image.png') 3x ); } }`
         }
       ]
@@ -67,7 +67,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/w_900/image.png);background-image: image-set(url('/_ipx/w_900/image.png') 1x , url('/_ipx/w_1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/w_500/image.png);background-image: image-set(url('/_ipx/w_500/image.png') 1x , url('/_ipx/w_1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/w_200/image.png);background-image: image-set(url('/_ipx/w_200/image.png') 1x , url('/_ipx/w_400/image.png') 2x ); } }`
         }
       ]
@@ -83,7 +83,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/w_900/image.png);background-image: image-set(url('/_ipx/w_900/image.png') 1x , url('/_ipx/w_1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/w_500/image.png);background-image: image-set(url('/_ipx/w_500/image.png') 1x , url('/_ipx/w_1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/w_200/image.png);background-image: image-set(url('/_ipx/w_200/image.png') 1x , url('/_ipx/w_400/image.png') 2x ); } }`
         }
       ]
@@ -104,7 +104,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_150x200/image.png);background-image: image-set(url('/_ipx/s_150x200/image.png') 1x , url('/_ipx/s_300x400/image.png') 2x );}`
         }
       ]
@@ -119,7 +119,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_150x200/image.png);background-image: image-set(url('/_ipx/s_150x200/image.png') 1x , url('/_ipx/s_300x400/image.png') 2x );}`
         }
       ]
@@ -135,7 +135,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_800x1200/image.png);background-image: image-set(url('/_ipx/s_800x1200/image.png') 1x , url('/_ipx/s_1600x2400/image.png') 2x );} @media (max-width: 800px) { .${cls} { background-image: url(/_ipx/s_500x750/image.png);background-image: image-set(url('/_ipx/s_500x750/image.png') 1x , url('/_ipx/s_1000x1500/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/s_400x600/image.png);background-image: image-set(url('/_ipx/s_400x600/image.png') 1x , url('/_ipx/s_800x1200/image.png') 2x ); } } @media (max-width: 400px) { .${cls} { background-image: url(/_ipx/s_200x300/image.png);background-image: image-set(url('/_ipx/s_200x300/image.png') 1x , url('/_ipx/s_400x600/image.png') 2x ); } } @media (max-width: 300px) { .${cls} { background-image: url(/_ipx/s_200x300/image.png);background-image: image-set(url('/_ipx/s_200x300/image.png') 1x , url('/_ipx/s_400x600/image.png') 2x ); } }`
         }
       ]
@@ -150,7 +150,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/w_900/%E6%B1%89%E5%AD%97.png);background-image: image-set(url('/_ipx/w_900/%E6%B1%89%E5%AD%97.png') 1x , url('/_ipx/w_1800/%E6%B1%89%E5%AD%97.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/w_500/%E6%B1%89%E5%AD%97.png);background-image: image-set(url('/_ipx/w_500/%E6%B1%89%E5%AD%97.png') 1x , url('/_ipx/w_1000/%E6%B1%89%E5%AD%97.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/w_200/%E6%B1%89%E5%AD%97.png);background-image: image-set(url('/_ipx/w_200/%E6%B1%89%E5%AD%97.png') 1x , url('/_ipx/w_400/%E6%B1%89%E5%AD%97.png') 2x ); } }`
         }
       ]
@@ -169,7 +169,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_350x700/image.png);background-image: image-set(url('/_ipx/s_350x700/image.png') 1x , url('/_ipx/s_700x1400/image.png') 2x );} @media (max-width: 1536px) { .${cls} { background-image: url(/_ipx/s_350x700/image.png);background-image: image-set(url('/_ipx/s_350x700/image.png') 1x , url('/_ipx/s_700x1400/image.png') 2x ); } } @media (max-width: 1280px) { .${cls} { background-image: url(/_ipx/s_350x700/image.png);background-image: image-set(url('/_ipx/s_350x700/image.png') 1x , url('/_ipx/s_700x1400/image.png') 2x ); } } @media (max-width: 1024px) { .${cls} { background-image: url(/_ipx/s_300x600/image.png);background-image: image-set(url('/_ipx/s_300x600/image.png') 1x , url('/_ipx/s_600x1200/image.png') 2x ); } } @media (max-width: 768px) { .${cls} { background-image: url(/_ipx/s_640x1280/image.png);background-image: image-set(url('/_ipx/s_640x1280/image.png') 1x , url('/_ipx/s_1280x2560/image.png') 2x ); } } @media (max-width: 640px) { .${cls} { background-image: url(/_ipx/s_320x640/image.png);background-image: image-set(url('/_ipx/s_320x640/image.png') 1x , url('/_ipx/s_640x1280/image.png') 2x ); } }`
         }
       ]
@@ -184,7 +184,7 @@ describe('Renders simple image', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_300x400/image.png);background-image: image-set(url('/_ipx/s_300x400/image.png') 1x , url('/_ipx/s_600x800/image.png') 2x , url('/_ipx/s_900x1200/image.png') 3x );}`
         }
       ]
@@ -217,7 +217,7 @@ describe('Renders image, applies module config', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/q_75&s_900x900/image.png);background-image: image-set(url('/_ipx/q_75&s_900x900/image.png') 1x , url('/_ipx/q_75&s_1800x1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/q_75&s_500x500/image.png);background-image: image-set(url('/_ipx/q_75&s_500x500/image.png') 1x , url('/_ipx/q_75&s_1000x1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/q_75&s_200x200/image.png);background-image: image-set(url('/_ipx/q_75&s_200x200/image.png') 1x , url('/_ipx/q_75&s_400x400/image.png') 2x ); } }`
         }
       ]
@@ -240,7 +240,7 @@ describe('Renders image, applies module config', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/q_90&s_900x900/image.png);background-image: image-set(url('/_ipx/q_90&s_900x900/image.png') 1x , url('/_ipx/q_90&s_1800x1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/q_90&s_500x500/image.png);background-image: image-set(url('/_ipx/q_90&s_500x500/image.png') 1x , url('/_ipx/q_90&s_1000x1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/q_90&s_200x200/image.png);background-image: image-set(url('/_ipx/q_90&s_200x200/image.png') 1x , url('/_ipx/q_90&s_400x400/image.png') 2x ); } }`
         }
       ]
@@ -262,7 +262,7 @@ describe('Renders image, applies module config', () => {
     expect(useHead).toBeCalledWith({
       style: [
         {
-          id: cls,
+          key: cls,
           innerHTML: `.${cls}{background-image: url(/_ipx/s_900x900/image.png);background-image: image-set(url('/_ipx/s_900x900/image.png') 1x , url('/_ipx/s_1800x1800/image.png') 2x );} @media (max-width: 900px) { .${cls} { background-image: url(/_ipx/s_500x500/image.png);background-image: image-set(url('/_ipx/s_500x500/image.png') 1x , url('/_ipx/s_1000x1000/image.png') 2x ); } } @media (max-width: 500px) { .${cls} { background-image: url(/_ipx/s_200x200/image.png);background-image: image-set(url('/_ipx/s_200x200/image.png') 1x , url('/_ipx/s_400x400/image.png') 2x ); } }`
         }
       ]
