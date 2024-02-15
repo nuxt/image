@@ -59,7 +59,7 @@ export const useBackgroundImage = (
   }
   css = css.replace(/\[placeholder\]/gm, cls)
 
-  if (import.meta.server && options.preload) {
+  if (options.preload) {
     useHead({
       link: [
         {
