@@ -333,9 +333,24 @@ export const providers: Provider[] = [
       }
     ]
   },
-  // Netlify
   {
-    name: 'netlify',
+    name: 'netlifyImageCdn',
+    samples: [
+      {
+        src: '/images/apple.jpg',
+        width: 100,
+        height: 100,
+        fit: 'cover'
+      },
+      {
+        src: '/images/apple.jpg',
+        width: 400,
+        height: 300
+      }
+    ]
+  },
+  {
+    name: 'netlifyLargeMedia',
     samples: [
       {
         src: '/images/apple.jpg',

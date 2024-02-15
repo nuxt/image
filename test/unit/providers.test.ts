@@ -21,7 +21,8 @@ import * as gumlet from '#image/providers/gumlet'
 import * as imageengine from '#image/providers/imageengine'
 import * as unsplash from '#image/providers/unsplash'
 import * as imagekit from '#image/providers/imagekit'
-import * as netlify from '#image/providers/netlify'
+import * as netlifyImageCdn from '#image/providers/netlifyImageCdn'
+import * as netlifyLargeMedia from '#image/providers/netlifyLargeMedia'
 import * as prismic from '#image/providers/prismic'
 import * as sanity from '#image/providers/sanity'
 import * as contentful from '#image/providers/contentful'
@@ -288,15 +289,27 @@ describe('Providers', () => {
     }
   })
 
-  it('netlify', () => {
+  it('netlifyImageCdn', () => {
     const providerOptions = {
       baseURL: ''
     }
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.netlify)
+      const generated = netlifyImageCdn.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.netlifyImageCdn)
+    }
+  })
+
+  it('netlifyLargeMedia', () => {
+    const providerOptions = {
+      baseURL: ''
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = netlifyLargeMedia.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.netlifyLargeMedia)
     }
   })
 

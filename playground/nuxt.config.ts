@@ -74,7 +74,10 @@ export default defineNuxtConfig({
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo'
     },
-    netlify: {
+    netlifyImageCdn: {
+      baseURL: 'https://netlify-photo-gallery.netlify.app/.netlify/images'
+    },
+    netlifyLargeMedia: {
       baseURL: 'https://netlify-photo-gallery.netlify.app'
     },
     layer0: {
