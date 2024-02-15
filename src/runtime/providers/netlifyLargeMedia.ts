@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { encodeQueryItem, joinURL } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -15,7 +15,7 @@ export const operationsGenerator = createOperationsGenerator({
     }
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => encodeQueryItem(key, value)
 })
 
 const isDev = process.env.NODE_ENV === 'development'
