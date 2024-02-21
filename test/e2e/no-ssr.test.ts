@@ -51,6 +51,6 @@ describe('browser (ssr: false)', () => {
     await page.waitForLoadState('networkidle')
 
     expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
-    expect(logs.filter(log => log === 'Error loading image').length).toBe(1)
+    expect(logs.filter(log => log === 'Error loading image').length).toBe(2)
   })
 })

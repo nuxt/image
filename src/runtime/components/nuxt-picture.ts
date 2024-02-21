@@ -15,7 +15,7 @@ export const pictureProps = {
 export default defineComponent({
   name: 'NuxtPicture',
   props: pictureProps,
-  emits: ['load'],
+  emits: ['load', 'error'],
   setup: (props, ctx) => {
     const $img = useImage()
     const _base = useBaseImage(props)
@@ -90,11 +90,18 @@ export default defineComponent({
     onMounted(() => {
       if (!imgEl.value) { return }
 
-      if (imgEl.value.complete && initialLoad && !imgEl.value.getAttribute('data-error')) {
-        ctx.emit('load', new Event('load'))
+      if (imgEl.value.complete && initialLoad) {
+        if (imgEl.value.getAttribute('data-error')) {
+          ctx.emit('error', new Event('error'))
+        } else {
+          ctx.emit('load', new Event('load'))
+        }
       }
       imgEl.value.onload = (event) => {
         ctx.emit('load', event)
+      }
+      imgEl.value.onerror = (event) => {
+        ctx.emit('error', event)
       }
 
       markFeatureUsage('nuxt-picture')
