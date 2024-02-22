@@ -71,11 +71,11 @@ const communityLinks = computed(() => [
     <UPageBody prose class="pb-0">
       <ContentRenderer v-if="page.body" :value="page" />
       <hr v-if="surround?.length" class="my-8">
-      <UDocsSurround :surround="surround" />
+      <UContentSurround :surround="surround" />
     </UPageBody>
 
     <template v-if="page.body?.toc?.links?.length" #right>
-      <UDocsToc :links="page.body.toc.links">
+      <UContentToc :links="page.body.toc.links">
         <template #bottom>
           <div class="hidden lg:block space-y-6 !mt-6">
             <UDivider v-if="page.body?.toc?.links?.length" type="dashed" />
@@ -84,7 +84,7 @@ const communityLinks = computed(() => [
             <AdsCarbon />
           </div>
         </template>
-      </UDocsToc>
+      </UContentToc>
     </template>
   </UPage>
 </template>

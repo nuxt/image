@@ -54,7 +54,7 @@ watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
-      <LazyUDocsSearchButton size="md" class="w-full mb-4" />
+      <LazyUContentSearchButton size="md" class="w-full mb-4" />
       <LazyUNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
     </template>
   </UHeader>
@@ -77,6 +77,6 @@ watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
     </template>
   </UFooter>
   <ClientOnly>
-    <LazyUDocsSearch ref="search" :files="files" :navigation="navigation" :links="links" />
+    <LazyUContentSearch ref="search" :files="files" :navigation="navigation" :links="links" />
   </ClientOnly>
 </template>
