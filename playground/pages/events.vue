@@ -37,6 +37,12 @@
       height="500"
       @error="() => { console.log('Error loading image') }"
     />
+    <nuxt-picture
+      :src="'nonexistent' + src"
+      width="500"
+      height="500"
+      @error="() => { console.log('Error loading image') }"
+    />
   </div>
 </template>
 
