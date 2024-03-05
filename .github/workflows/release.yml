@@ -13,7 +13,6 @@ jobs:
     if: ${{ github.repository_owner == 'nuxt' && github.event_name == 'push' }}
     permissions:
       id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - run: corepack enable
