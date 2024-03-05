@@ -1,5 +1,6 @@
 import { promises as fsp } from 'node:fs'
 import { execSync } from 'node:child_process'
+import { $fetch } from 'ofetch'
 import { resolve } from 'pathe'
 import { execaSync } from 'execa'
 import { determineSemverChange, getGitDiff, loadChangelogConfig, parseCommits } from 'changelogen'
