@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.4.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.3.0...v1.4.0)
+
+### 🚀 Enhancements
+
+- Add performance feature detection markers ([#1221](https://github.com/nuxt/image/pull/1221))
+- Support Netlify Image CDN ([#1234](https://github.com/nuxt/image/pull/1234))
+- Add `@error` event from `<NuxtPicture>` ([#1252](https://github.com/nuxt/image/pull/1252))
+
+### 🩹 Fixes
+
+- **ipx:** Temporarily downgrade ipx/sharp ([#1265](https://github.com/nuxt/image/pull/1265))
+
+### 📖 Documentation
+
+- Fix providers list ([8ad772e](https://github.com/nuxt/image/commit/8ad772e))
+
+### 🏡 Chore
+
+- **docs:** Upgrade versions and add carbon ads ([503b663](https://github.com/nuxt/image/commit/503b663))
+- Use explicit version to bust stackblitz cache ([ae93934](https://github.com/nuxt/image/commit/ae93934))
+- Assert event exists ([8701991](https://github.com/nuxt/image/commit/8701991))
+- Pin `vue` for docs hotfix ([b56c760](https://github.com/nuxt/image/commit/b56c760))
+- Upgrade ipx/sharp separately ([9a711e6](https://github.com/nuxt/image/commit/9a711e6))
+- Release `@nuxt/image-nightly` with changelogen ([074d12e](https://github.com/nuxt/image/commit/074d12e))
+
+### 🤖 CI
+
+- Remove read permission ([f62a9eb](https://github.com/nuxt/image/commit/f62a9eb))
+- Add changelogensets ([25d19ec](https://github.com/nuxt/image/commit/25d19ec))
+- Add missing import ([cfb2e7d](https://github.com/nuxt/image/commit/cfb2e7d))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Arkadiusz Sygulski <arkadiusz@sygulski.pl>
+- Domenik Reitzner 
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Matt Kane <m@mk.gg>
+- Kara
+
 ## v1.3.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.2.0...v1.3.0)
