@@ -18,16 +18,6 @@ export default defineNuxtConfig({
   ui: {
     icons: ['heroicons', 'simple-icons', 'ph'],
   },
-  fontMetrics: {
-    fonts: ['DM Sans'],
-  },
-  googleFonts: {
-    display: 'swap',
-    download: true,
-    families: {
-      'DM+Sans': [400, 500, 600, 700],
-    },
-  },
   nitro: {
     prerender: {
       routes: ['/api/search.json'],
