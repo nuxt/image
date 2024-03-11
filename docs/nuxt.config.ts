@@ -4,11 +4,10 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@nuxt/content',
+    '@nuxt/fonts',
     '@nuxt/ui',
     '@nuxthq/studio',
     '@vueuse/nuxt',
-    '@nuxtjs/fontaine',
-    '@nuxtjs/google-fonts',
     '@nuxtjs/plausible',
     'nuxt-og-image',
   ],
