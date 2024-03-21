@@ -8,7 +8,8 @@ import { useHead, useNuxtApp } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined }
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  imgClass: { type: String, default: undefined }
 }
 
 export default defineComponent({
@@ -20,6 +21,7 @@ export default defineComponent({
     const _base = useBaseImage(props)
 
     const placeholderLoaded = ref(false)
+    const imgEl = ref<HTMLImageElement>()
 
     type AttrsT = typeof _base.attrs.value & {
       sizes?: string
@@ -97,8 +99,6 @@ export default defineComponent({
       prerenderStaticImages(src.value, sizes.value.srcset)
     }
 
-    const imgEl = ref<HTMLImageElement>()
-
     const nuxtApp = useNuxtApp()
     const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
@@ -139,6 +139,7 @@ export default defineComponent({
     return () => h('img', {
       ref: imgEl,
       src: src.value,
+      class: props.imgClass,
       ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
       ...ctx.attrs
