@@ -55,7 +55,9 @@ async function getMeta (ctx: ImageCTX, input: string, options?: ImageOptions) {
 
 function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
   if (typeof input !== 'string' || input === '') {
-    throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
+    return {
+      url: ''
+    }
   }
 
   if (input.startsWith('data:')) {

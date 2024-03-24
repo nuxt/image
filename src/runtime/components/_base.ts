@@ -5,7 +5,7 @@ import { useImage } from '#imports'
 
 export const baseImageProps = {
   // input source
-  src: { type: String, required: true },
+  src: { type: String, default: undefined },
 
   // modifiers
   format: { type: String, default: undefined },
