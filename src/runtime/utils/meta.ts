@@ -24,7 +24,7 @@ export async function imageMeta (_ctx: ImageCTX, url: string): Promise<ImageInfo
 }
 
 async function _imageMeta (url: string): Promise<ImageInfo> {
-  if (process.server) {
+  if (import.meta.server) {
     const imageMeta = await import('image-meta').then(r => r.imageMeta)
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
     const metadata = imageMeta(data)
