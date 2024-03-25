@@ -93,7 +93,7 @@ export default defineComponent({
     }
 
     // Prerender static images
-    if (process.server && process.env.prerender) {
+    if (import.meta.server && process.env.prerender) {
       prerenderStaticImages(src.value, sizes.value.srcset)
     }
 
@@ -139,7 +139,7 @@ export default defineComponent({
     return () => h('img', {
       ref: imgEl,
       src: src.value,
-      ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
       ...ctx.attrs
     })
