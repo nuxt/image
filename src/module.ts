@@ -58,10 +58,9 @@ export default defineNuxtModule<ModuleOptions>({
     options.dir = resolve(nuxt.options.srcDir, options.dir)
 
     // Normalize domains to hostname
-    options.domains = options.domains.map((d) => {
-      if (!d.startsWith('http')) { d = 'http://' + d }
-      return parseURL(d).host
-    }).filter(Boolean) as string[]
+    options.domains = options.domains
+      .map(d => d && (parseURL(d.startsWith('http') ? d : ('http://' + d)).host))
+      .filter(Boolean) as string[]
 
     // Normalize alias to start with leading slash
     options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
