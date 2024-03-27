@@ -24,12 +24,12 @@ describe('browser (ssr: true)', () => {
       const page = await createPage()
 
       const requests: string[] = []
-      page.route('**', (route) => {
+      await page.route('**', (route) => {
         requests.push(route.request().url())
         return route.continue()
       })
 
-      page.goto(url(providerPath))
+      await page.goto(url(providerPath))
 
       await page.waitForSelector('img')
       const images = await page.getByRole('img').all()
@@ -40,6 +40,8 @@ describe('browser (ssr: true)', () => {
       expect(sources).toMatchSnapshot()
 
       expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
+
+      await page.close()
     })
   }
 
@@ -49,12 +51,14 @@ describe('browser (ssr: true)', () => {
 
     page.on('console', (msg) => { logs.push(msg.text()) })
 
-    page.goto(url('/events'))
+    await page.goto(url('/events'))
 
     await page.waitForLoadState('networkidle')
 
     expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
     expect(logs.filter(log => log === 'Error loading image').length).toBe(2)
+
+    await page.close()
   })
 
   it('works with runtime ipx', async () => {
