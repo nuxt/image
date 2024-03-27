@@ -59,7 +59,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Normalize domains to hostname
     options.domains = options.domains
-      .map(d => d && (parseURL(d.startsWith('http') ? d : 'http://' + d).host))
+      .map(d => d && (parseURL(d.startsWith('http') ? d : ('http://' + d)).host))
       .filter(Boolean) as string[]
 
     // Normalize alias to start with leading slash
