@@ -102,6 +102,11 @@ export default defineNuxtModule<ModuleOptions>({
       from: resolver.resolve('runtime/composables')
     })
 
+    addImports({
+      name: 'useBackgroundImage',
+      from: resolver.resolve('runtime/composables')
+    })
+
     // Add components
     addComponent({
       name: 'NuxtImg',
