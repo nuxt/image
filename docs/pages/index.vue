@@ -13,7 +13,7 @@ useSeoMeta({
   ogImage: 'https://image.nuxt.com/social-card.png',
   twitterImage: 'https://image.nuxt.com/social-card.png',
 })
-const source = ref('npm i @nuxt/image')
+const source = ref('npx nuxi@latest module add image
 const { copy, copied } = useClipboard({ source })
 
 const providers = ['caisy', 'bunny', 'cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio', 'fastly', 'glide', 'gumlet', 'hygraph', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel', 'weserv']
