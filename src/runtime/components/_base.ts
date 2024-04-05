@@ -42,7 +42,7 @@ export const baseImageProps = {
   },
   decoding: {
     type: String as () => 'async' | 'auto' | 'sync',
-    default: undefined,
+    default: 'async',
     validator: (val: any) => ['async', 'auto', 'sync'].includes(val)
   },
 
