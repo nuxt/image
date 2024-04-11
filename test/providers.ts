@@ -30,7 +30,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png' },
-    hygraph: { url: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net' }
   },
@@ -65,7 +65,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png?w=200' },
-    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200' }
   },
@@ -100,7 +100,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/x200/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&h=200&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png?h=200' },
-    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=height:200/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=height:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?height=200' }
   },
@@ -135,7 +135,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200' },
-    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200,height:200/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' }
   },
@@ -170,7 +170,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/resize/200x200/-/stretch/off/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit' },
-    hygraph: { url: 'https://media.graphassets.com/auto_image/resize=width:200,height:200,fit:max/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200,fit:max/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' }
   },
@@ -205,7 +205,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/format/jpeg/-/resize/200x200/-/stretch/off/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&output=jpg&url=https://my-website.com/test.png' },
     sirv: { url: 'https://demo.sirv.com/test.png?w=200&h=200&scale.option=fit&format=jpg' },
-    hygraph: { url: 'https://media.graphassets.com/output=format:jpg/resize=width:200,height:200,fit:max/JL6e2yJERUyQtTiZIzPb' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200,fit:max/output=format:jpg/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' }
   }

@@ -1072,20 +1072,20 @@ export const providers: Provider[] = [
     name: 'hygraph',
     samples: [
       {
-        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
         width: 500,
         height: 500,
         fit: 'crop',
         quality: 90
       },
       {
-        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
         width: 500,
         fit: 'max',
         format: 'auto_image'
       },
       {
-        src: 'https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb',
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
         width: 300,
         height: 300,
         fit: 'clip',
