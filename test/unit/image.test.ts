@@ -156,6 +156,15 @@ describe('Renders simple image', () => {
     const domNonce = img.element.getAttribute('nonce')
     expect(domNonce).toBe('stub-nonce')
   })
+
+  it('works with responsive height', () => {
+    const img = mountImage({
+      src: '/image.png',
+      sizes: '100px/20px sm:100px/10px md:10px lg:200px/50px',
+      densities: 'x1 x2'
+    })
+    expect(img.html()).toMatchInlineSnapshot('"<img src="/_ipx/s_400x100/image.png" data-nuxt-img="" sizes="(max-width: 640px) 100px, (max-width: 768px) 100px, (max-width: 1024px) 10px, 200px" srcset="/_ipx/w_10/image.png 10w, /_ipx/w_20/image.png 20w, /_ipx/s_100x10/image.png 100w, /_ipx/s_200x50/image.png 200w, /_ipx/s_400x100/image.png 400w">"')
+  })
 })
 
 const getImageLoad = (cb = () => {}) => {

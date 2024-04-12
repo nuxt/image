@@ -1,6 +1,17 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant } from '../types/image'
+import type {
+  ImageOptions,
+  ImageSizesOptions,
+  CreateImageOptions,
+  ResolvedImage,
+  ImageCTX,
+  $Img,
+  ImageSizes,
+  ImageSizesVariant,
+  WidthAndHeightFromSize,
+  HandleVariantHeightOptions
+} from '../types/image'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
@@ -201,39 +212,86 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   }
 }
 
-function getSizesVariant (key: string, size: string, height: number | undefined, hwRatio: number, ctx: ImageCTX): ImageSizesVariant | undefined {
-  const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
-  const isFluid = size.endsWith('vw')
-  if (!isFluid && /^\d+$/.test(size)) {
-    size = size + 'px'
+function getWidthAndHeightFromSize (size: string): WidthAndHeightFromSize {
+  if (size.includes('/')) {
+    const [widthFromSize, heightFromSize] = size.split('/')
+    return { widthFromSize, heightFromSize }
   }
-  if (!isFluid && !size.endsWith('px')) {
+  return { widthFromSize: size, heightFromSize: null }
+}
+
+function handleVariantHeight ({
+  heightFromSize,
+  hwRatio,
+  _cWidth,
+  height
+}: HandleVariantHeightOptions): number | undefined {
+  if (heightFromSize) {
+    return parseInt(heightFromSize)
+  }
+  if (hwRatio) {
+    return Math.round(_cWidth * hwRatio)
+  }
+  return height
+}
+
+function getSizesVariant (
+  key: string,
+  size: string,
+  height: number | undefined,
+  hwRatio: number,
+  ctx: ImageCTX
+): ImageSizesVariant | undefined {
+  const screenMaxWidth =
+    (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
+
+  // eslint-disable-next-line prefer-const
+  let { widthFromSize, heightFromSize } = getWidthAndHeightFromSize(size)
+  const isFluid = widthFromSize.endsWith('vw')
+  if (!isFluid && /^\d+$/.test(widthFromSize)) {
+    widthFromSize = widthFromSize + 'px'
+  }
+  if (!isFluid && !widthFromSize.endsWith('px')) {
     return undefined
   }
-  let _cWidth = parseInt(size)
+  let _cWidth = parseInt(widthFromSize)
   if (!screenMaxWidth || !_cWidth) {
     return undefined
   }
   if (isFluid) {
     _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
   }
-  const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
+
+  const _cHeight = handleVariantHeight({
+    heightFromSize,
+    hwRatio,
+    _cWidth,
+    height
+  })
   return {
-    size,
+    size: widthFromSize,
     screenMaxWidth,
     _cWidth,
     _cHeight
   }
 }
 
-function getVariantSrc (ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
-  return ctx.$img!(input,
+function getVariantSrc (
+  ctx: ImageCTX,
+  input: string,
+  opts: ImageSizesOptions,
+  variant: ImageSizesVariant,
+  density: number
+) {
+  return ctx.$img!(
+    input,
     {
       ...opts.modifiers,
       width: variant._cWidth ? variant._cWidth * density : undefined,
       height: variant._cHeight ? variant._cHeight * density : undefined
     },
-    opts)
+    opts
+  )
 }
 
 function finaliseSizeVariants (sizeVariants: any[]) {

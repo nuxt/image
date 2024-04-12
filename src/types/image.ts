@@ -116,3 +116,15 @@ export interface ImageSizesVariant {
   _cWidth: number
   _cHeight?: number | undefined
 }
+
+export type WidthAndHeightFromSize = {
+  widthFromSize: string;
+  heightFromSize: string | null;
+};
+
+export type HandleVariantHeightOptions = {
+  heightFromSize:WidthAndHeightFromSize['heightFromSize'];
+  hwRatio:number;
+  _cWidth:number;
+  height?:number;
+}
