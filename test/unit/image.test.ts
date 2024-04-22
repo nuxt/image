@@ -248,6 +248,38 @@ describe('Renders placeholder image', () => {
     expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
     expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
   })
+
+  it('placeholder class can be set', async () => {
+    const { resolve: resolveImage } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          src,
+          placeholder: true,
+          placeholderClass: 'placeholder'
+        },
+        attrs: {
+          class: [{ 'test': true }, 'other'],
+        }
+      })
+    })
+    expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
+      [
+        "placeholder",
+        "test",
+        "other",
+      ]
+    `)
+    expect(wrapper.element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
+    resolveImage()
+    await nextTick()
+    expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
+      [
+        "test",
+        "other",
+      ]
+    `)
+    expect(wrapper.element.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/_/image.png"`)
+  })
 })
 
 describe('Renders image, applies module config', () => {

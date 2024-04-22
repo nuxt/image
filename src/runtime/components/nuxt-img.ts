@@ -9,7 +9,7 @@ import { useHead, useNuxtApp } from '#imports'
 export const imgProps = {
   ...baseImageProps,
   placeholder: { type: [Boolean, String, Number, Array], default: undefined },
-  imgClass: { type: String, default: undefined },
+  placeholderClass: { type: String, default: undefined },
 }
 
 export default defineComponent({
@@ -148,10 +148,10 @@ export default defineComponent({
     return () => h('img', {
       ref: imgEl,
       src: src.value,
-      class: props.imgClass,
       ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
       ...ctx.attrs,
+      class: props.placeholder && !placeholderLoaded.value ? [props.placeholderClass] : undefined,
     })
   },
 })
