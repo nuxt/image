@@ -57,7 +57,7 @@ async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
 function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
   if (typeof input !== 'string' || input === '') {
     return {
-      url: ''
+      url: '',
     }
   }
 
