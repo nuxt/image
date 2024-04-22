@@ -18,7 +18,7 @@
  * - File Groups
  */
 
-import { joinURL, withTrailingSlash } from 'ufo'
+import { joinURL, hasProtocol, withTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
@@ -63,15 +63,7 @@ export const getImage: ProviderGetImage = (
   }
 
   const operations = operationsGenerator(modifiers)
-
-  let url
-
-  if (cdnURL !== false) {
-    url = withTrailingSlash(joinURL(cdnURL || 'https://ucarecdn.com', uuid, operations))
-  }
-  else {
-    url = withTrailingSlash(joinURL(uuid, operations))
-  }
-
+  const base = hasProtocol(uuid) ? '' : (cdnURL || 'https://ucarecdn.com')
+  const url = withTrailingSlash(joinURL(base, uuid, operations))
   return { url }
 }
