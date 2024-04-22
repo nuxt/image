@@ -7,11 +7,16 @@
     "main"
   ],
   "ignoreDeps": [
-    "@nuxt/image",
-    "@vitest/coverage-v8",
-    "vitest"
+    "@nuxt/image"
   ],
   "packageRules": [
+    {
+      "groupName": "ipx",
+      "matchPackageNames": [
+        "ipx",
+        "sharp"
+      ]
+    },
     {
       "groupName": "docs",
       "matchPackageNames": [

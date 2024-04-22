@@ -15,7 +15,7 @@ export const operationsGenerator = createOperationsGenerator({
     screenPercent: 'pc',
     crop: 'cr',
     inline: 'in',
-    metadata: 'meta'
+    metadata: 'meta',
   },
   valueMap: {
     fit: {
@@ -23,15 +23,15 @@ export const operationsGenerator = createOperationsGenerator({
       contain: 'letterbox',
       fill: 'stretch',
       inside: 'box',
-      outside: 'box'
+      outside: 'box',
     },
     format: {
-      jpeg: 'jpg'
+      jpeg: 'jpg',
     },
-    quality (value: string) {
+    quality(value: string) {
       // ImageEngine uses compression, which is the opposite of quality,
       // so quality 90 == compression 10.  Convert using: compression = 100 - quality
-      let compression = (100 - parseInt(value, 10))
+      let compression = (100 - Number.parseInt(value, 10))
 
       // ImageEngine's values are 0-99 (100 values), whereas Nuxt uses 0-100 (101 values)
       // so we clip the upper bound at 99 if 100 was requested.
@@ -39,15 +39,15 @@ export const operationsGenerator = createOperationsGenerator({
         compression = 99
       }
       return compression.toString()
-    }
+    },
   },
   joinWith: '/',
-  formatter: (key, value) => `${key}_${value}`
+  formatter: (key, value) => `${key}_${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : ''))
+    url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : '')),
   }
 }

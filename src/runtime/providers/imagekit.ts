@@ -28,33 +28,6 @@ const operationsGenerator = createOperationsGenerator({
     rotate: 'rt',
     blur: 'bl',
     named: 'n',
-    overlayX: 'ox',
-    overlayY: 'oy',
-    overlayFocus: 'ofo',
-    overlayHeight: 'oh',
-    overlayWidth: 'ow',
-    overlayImage: 'oi',
-    overlayImageTrim: 'oit',
-    overlayImageAspectRatio: 'oiar',
-    overlayImageBackground: 'oibg',
-    overlayImageBorder: 'oib',
-    overlayImageDPR: 'oidpr',
-    overlayImageQuality: 'oiq',
-    overlayImageCropping: 'oic',
-    overlayImageCropMode: 'oicm',
-    overlayText: 'ot',
-    overlayTextFontSize: 'ots',
-    overlayTextFontFamily: 'otf',
-    overlayTextColor: 'otc',
-    overlayTextTransparency: 'oa',
-    overlayTextTypography: 'ott',
-    overlayBackground: 'obg',
-    overlayTextEncoded: 'ote',
-    overlayTextWidth: 'otw',
-    overlayTextBackground: 'otbg',
-    overlayTextPadding: 'otp',
-    overlayTextInnerAlignment: 'otia',
-    overlayRadius: 'or',
     progressive: 'pr',
     lossless: 'lo',
     trim: 't',
@@ -66,7 +39,7 @@ const operationsGenerator = createOperationsGenerator({
     effectUSM: 'e-usm',
     effectContrast: 'e-contrast',
     effectGray: 'e-grayscale',
-    original: 'orig'
+    original: 'orig',
   },
   valueMap: {
     fit: {
@@ -76,9 +49,9 @@ const operationsGenerator = createOperationsGenerator({
       inside: 'at_max',
       outside: 'at_least',
       extract: 'extract',
-      pad_extract: 'pad_extract'
+      pad_extract: 'pad_extract',
     },
-    background (value: string) {
+    background(value: string) {
       if (value.startsWith('#')) {
         return value.replace('#', '')
       }
@@ -88,12 +61,12 @@ const operationsGenerator = createOperationsGenerator({
       maintain_ratio: 'maintain_ratio',
       force: 'force',
       at_max: 'at_max',
-      at_least: 'at_least'
+      at_least: 'at_least',
     },
     cropMode: {
       pad_resize: 'pad_resize',
       pad_extract: 'pad_extract',
-      extract: 'extract'
+      extract: 'extract',
     },
     format: {
       auto: 'auto',
@@ -101,7 +74,7 @@ const operationsGenerator = createOperationsGenerator({
       jpeg: 'jpeg',
       webp: 'webp',
       avif: 'avif',
-      png: 'png'
+      png: 'png',
     },
     focus: {
       left: 'left',
@@ -115,7 +88,7 @@ const operationsGenerator = createOperationsGenerator({
       bottom_left: 'bottom_left',
       bottom_right: 'bottom_right',
       auto: 'auto',
-      face: 'face'
+      face: 'face',
     },
     rotate: {
       auto: 'auto',
@@ -123,45 +96,11 @@ const operationsGenerator = createOperationsGenerator({
       90: '90',
       180: '180',
       270: '270',
-      360: '360'
+      360: '360',
     },
-    overlayFocus: {
-      left: 'left',
-      right: 'right',
-      top: 'top',
-      bottom: 'bottom',
-      custom: 'custom',
-      center: 'center',
-      top_left: 'top_left',
-      top_right: 'top_right',
-      bottom_left: 'bottom_left',
-      bottom_right: 'bottom_right',
-      auto: 'auto',
-      face: 'face'
-    },
-    overlayImageCropping: {
-      maintain_ratio: 'maintain_ratio',
-      force: 'force',
-      at_max: 'at_max',
-      at_least: 'at_least'
-    },
-    overlayImageCropMode: {
-      pad_resize: 'pad_resize',
-      pad_extract: 'pad_extract',
-      extract: 'extract'
-    },
-    overlayTextTypography: {
-      b: 'b',
-      i: 'i'
-    },
-    overlayTextInnerAlignment: {
-      left: 'left',
-      right: 'right',
-      center: 'center'
-    }
   },
   joinWith: ',',
-  formatter: (key, value) => `${key}-${value}`
+  formatter: (key, value) => `${key}-${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
@@ -170,8 +109,9 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   operations = operations.replace('c-pad_resize', 'cm-pad_resize')
   operations = operations.replace('c-pad_extract', 'cm-pad_extract')
   operations = operations.replace('c-extract', 'cm-extract')
+  operations = operations.replace('raw-', '')
 
   return {
-    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src))
+    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src)),
   }
 }

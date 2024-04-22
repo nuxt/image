@@ -17,11 +17,11 @@
  */
 const valueMap = {
   format: {
-    jpeg: 'jpg'
+    jpeg: 'jpg',
   },
   fit: {
-    cover: 'crop' // Prepr.io accepts value `crop` defaulting to value `centre`
-  }
+    cover: 'crop', // Prepr.io accepts value `crop` defaulting to value `centre`
+  },
 } as const
 
 type ValuesMapKey = keyof typeof valueMap

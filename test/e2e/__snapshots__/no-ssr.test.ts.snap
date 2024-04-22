@@ -20,13 +20,41 @@ exports[`browser (ssr: false) > aliyun should render images 2`] = `
 
 exports[`browser (ssr: false) > awsAmplify should render images 1`] = `
 [
-  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+  "https://example.amplifyapp.com/_amplify/image?url=%2Ftest.jpg&w=320&q=100",
 ]
 `;
 
 exports[`browser (ssr: false) > awsAmplify should render images 2`] = `
 [
-  "https://example.amplifyapp.com/_amplify/image?url=/test.jpg&w=320&q=100",
+  "https://example.amplifyapp.com/_amplify/image?url=%2Ftest.jpg&w=320&q=100",
+]
+`;
+
+exports[`browser (ssr: false) > bunny should render images 1`] = `
+[
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny1.jpg?sharpen=true&aspect_ratio=16:9&width=1000&quality=80",
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny2.jpg?crop=750,750&crop_gravity=north",
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny3.jpg?flop=true&auto_optimize=high",
+]
+`;
+
+exports[`browser (ssr: false) > bunny should render images 2`] = `
+[
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny1.jpg?sharpen=true&aspect_ratio=16:9&width=1000&quality=80",
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny2.jpg?crop=750,750&crop_gravity=north",
+  "https://bunnyoptimizerdemo.b-cdn.net/bunny3.jpg?flop=true&auto_optimize=high",
+]
+`;
+
+exports[`browser (ssr: false) > caisy should render images 1`] = `
+[
+  "https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=500&h=500&q=90",
+]
+`;
+
+exports[`browser (ssr: false) > caisy should render images 2`] = `
+[
+  "https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=500&h=500&q=90",
 ]
 `;
 
@@ -164,6 +192,22 @@ exports[`browser (ssr: false) > gumlet should render images 2`] = `
 ]
 `;
 
+exports[`browser (ssr: false) > hygraph should render images 1`] = `
+[
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:500,height:500,fit:crop/quality=value:90/compress=metadata:true/auto_image/cltsrex89477t08unlckqx9ue",
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:500,fit:max/auto_image/cltsrex89477t08unlckqx9ue",
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:300,height:300,fit:clip/output=format:jpeg/cltsrex89477t08unlckqx9ue",
+]
+`;
+
+exports[`browser (ssr: false) > hygraph should render images 2`] = `
+[
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:500,height:500,fit:crop/quality=value:90/compress=metadata:true/auto_image/cltsrex89477t08unlckqx9ue",
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:500,fit:max/auto_image/cltsrex89477t08unlckqx9ue",
+  "https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:300,height:300,fit:clip/output=format:jpeg/cltsrex89477t08unlckqx9ue",
+]
+`;
+
 exports[`browser (ssr: false) > imageengine should render images 1`] = `
 [
   "https://abc123.imgeng.in/images/image.jpg?imgeng=/meta_true/s_10/w_300/h_300/m_box",
@@ -242,14 +286,28 @@ exports[`browser (ssr: false) > layer0 should render images 2`] = `
 ]
 `;
 
-exports[`browser (ssr: false) > netlify should render images 1`] = `
+exports[`browser (ssr: false) > netlifyImageCdn should render images 1`] = `
+[
+  "https://netlify-photo-gallery.netlify.app/.netlify/images?w=100&h=100&fit=cover&url=%2Fimages%2Fapple.jpg",
+  "https://netlify-photo-gallery.netlify.app/.netlify/images?w=400&h=300&url=%2Fimages%2Fapple.jpg",
+]
+`;
+
+exports[`browser (ssr: false) > netlifyImageCdn should render images 2`] = `
+[
+  "https://netlify-photo-gallery.netlify.app/.netlify/images?w=100&h=100&fit=cover&url=%2Fimages%2Fapple.jpg",
+  "https://netlify-photo-gallery.netlify.app/.netlify/images?w=400&h=300&url=%2Fimages%2Fapple.jpg",
+]
+`;
+
+exports[`browser (ssr: false) > netlifyLargeMedia should render images 1`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
 ]
 `;
 
-exports[`browser (ssr: false) > netlify should render images 2`] = `
+exports[`browser (ssr: false) > netlifyLargeMedia should render images 2`] = `
 [
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=101&nf_resize=fit",
   "https://netlify-photo-gallery.netlify.app/images/apple.jpg?w=200&h=200&nf_resize=smartcrop",
@@ -529,13 +587,13 @@ exports[`browser (ssr: false) > uploadcare should render images 2`] = `
 
 exports[`browser (ssr: false) > vercel should render images 1`] = `
 [
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
+  "https://image-component.nextjs.gallery/_next/image?url=%2Fcolors.jpg&w=750&q=75",
 ]
 `;
 
 exports[`browser (ssr: false) > vercel should render images 2`] = `
 [
-  "https://image-component.nextjs.gallery/_next/image?url=/colors.jpg&w=750&q=75",
+  "https://image-component.nextjs.gallery/_next/image?url=%2Fcolors.jpg&w=750&q=75",
 ]
 `;
 
@@ -560,5 +618,22 @@ exports[`browser (ssr: false) > wagtail should render images 2`] = `
   "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0%7Cformat-jpeg%7Cjpegquality-70",
   "https://cms.demo.nypr.digital/images/329944/fill-600x600-c0%7Cformat-jpeg%7Cjpegquality-2",
   "https://cms.demo.nypr.digital/images/329944/fill-200x200-c100%7Cformat-webp%7Cwebpquality-70",
+]
+`;
+
+exports[`browser (ssr: false) > weserv should render images 1`] = `
+[
+  "https://wsrv.nl/?filename=200&we&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
+]
+`;
+
+exports[`browser (ssr: false) > weserv should render images 2`] = `
+[
+  "https://wsrv.nl/?filename=200&we&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&output=webp&url=https://picsum.photos/200",
+  "https://wsrv.nl/?filename=200&we&mask=circle&filt=sepia&output=webp&url=https://picsum.photos/200",
 ]
 `;

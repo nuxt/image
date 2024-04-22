@@ -1,4 +1,4 @@
-import { defineVitestConfig } from 'nuxt-vitest/config'
+import { defineVitestConfig } from '@nuxt/test-utils/config'
 
 export default defineVitestConfig({
   test: {
@@ -7,8 +7,8 @@ export default defineVitestConfig({
         '**/.nuxt',
         'node_modules',
         'playground',
-        'test'
-      ]
-    }
-  }
+        'test',
+      ],
+    },
+  },
 })
