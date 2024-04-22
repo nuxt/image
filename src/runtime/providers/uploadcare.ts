@@ -63,14 +63,15 @@ export const getImage: ProviderGetImage = (
   }
 
   const operations = operationsGenerator(modifiers)
-  
+
   let url
 
-  if(cdnURL !== false){
-    url = withTrailingSlash(joinURL(cdnURL || 'https://ucarecdn.com', uuid, operations)) 
-  }else {
+  if (cdnURL !== false) {
+    url = withTrailingSlash(joinURL(cdnURL || 'https://ucarecdn.com', uuid, operations))
+  }
+  else {
     url = withTrailingSlash(joinURL(uuid, operations))
   }
-  
+
   return { url }
 }
