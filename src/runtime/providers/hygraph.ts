@@ -9,7 +9,7 @@ type ImageOptimizations = {
   quality?: number
 }
 
-export function getImageFormat(format?: string) {
+export function getImageFormat (format?: string) {
   let result = 'auto_image'
 
   if (format && format !== 'auto_image') {
@@ -19,7 +19,7 @@ export function getImageFormat(format?: string) {
   return result
 }
 
-export function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
+export function optimizeHygraphImage (baseURL: string, url: string, optimizations: ImageOptimizations) {
   baseURL = baseURL.replace(/\/+$/, '')
   const imageId = url.split(`${baseURL}/`)[1]
   const imageFormat = getImageFormat(optimizations.format)
