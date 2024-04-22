@@ -37,7 +37,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}:${value}`,
 });
 
-function urlSafeBase64(string) {
+function urlSafeBase64(string: string) {
   return Buffer.from(string, "utf8")
     .toString("base64")
     .replace(/=/g, "")
@@ -65,13 +65,13 @@ const defaultModifiers = {
 };
 
 export const getImage: ProviderGetImage = (src, options) => {
-  const { modifiers, imgProxyUrl, imgProxySalt, imgProxyKey } = options;
+  const { modifiers, url, salt, key } = options;
   const mergeModifiers = { ...defaultModifiers, ...modifiers };
   const encodedUrl = urlSafeBase64(src);
   const path = joinURL("/", operationsGenerator(mergeModifiers), encodedUrl);
-  const signature = sign(imgProxySalt, path, imgProxyKey);
+  const signature = sign(salt, path, key);
 
   return {
-    url: joinURL(imgProxyUrl, signature, path),
+    url: joinURL(url, signature, path),
   };
 };
