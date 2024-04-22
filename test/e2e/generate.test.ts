@@ -11,20 +11,20 @@ await setup({
   build: true,
   nuxtConfig: {
     image: {
-      inject: false
+      inject: false,
     },
     nitro: {
       prerender: {
-        failOnError: false
-      }
+        failOnError: false,
+      },
     },
     hooks: {
-      'modules:before' () {
+      'modules:before'() {
         const nuxt = useNuxt()
         nuxt.options.nitro.prerender = { routes: ['/provider/ipx'], failOnError: false }
-      }
-    }
-  }
+      },
+    },
+  },
 })
 
 describe('ipx provider', () => {

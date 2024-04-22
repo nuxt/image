@@ -39,7 +39,7 @@ const operationsGenerator = createOperationsGenerator({
     effectUSM: 'e-usm',
     effectContrast: 'e-contrast',
     effectGray: 'e-grayscale',
-    original: 'orig'
+    original: 'orig',
   },
   valueMap: {
     fit: {
@@ -49,9 +49,9 @@ const operationsGenerator = createOperationsGenerator({
       inside: 'at_max',
       outside: 'at_least',
       extract: 'extract',
-      pad_extract: 'pad_extract'
+      pad_extract: 'pad_extract',
     },
-    background (value: string) {
+    background(value: string) {
       if (value.startsWith('#')) {
         return value.replace('#', '')
       }
@@ -61,12 +61,12 @@ const operationsGenerator = createOperationsGenerator({
       maintain_ratio: 'maintain_ratio',
       force: 'force',
       at_max: 'at_max',
-      at_least: 'at_least'
+      at_least: 'at_least',
     },
     cropMode: {
       pad_resize: 'pad_resize',
       pad_extract: 'pad_extract',
-      extract: 'extract'
+      extract: 'extract',
     },
     format: {
       auto: 'auto',
@@ -74,7 +74,7 @@ const operationsGenerator = createOperationsGenerator({
       jpeg: 'jpeg',
       webp: 'webp',
       avif: 'avif',
-      png: 'png'
+      png: 'png',
     },
     focus: {
       left: 'left',
@@ -88,7 +88,7 @@ const operationsGenerator = createOperationsGenerator({
       bottom_left: 'bottom_left',
       bottom_right: 'bottom_right',
       auto: 'auto',
-      face: 'face'
+      face: 'face',
     },
     rotate: {
       auto: 'auto',
@@ -96,11 +96,11 @@ const operationsGenerator = createOperationsGenerator({
       90: '90',
       180: '180',
       270: '270',
-      360: '360'
-    }
+      360: '360',
+    },
   },
   joinWith: ',',
-  formatter: (key, value) => `${key}-${value}`
+  formatter: (key, value) => `${key}-${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
@@ -112,6 +112,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   operations = operations.replace('raw-', '')
 
   return {
-    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src))
+    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src)),
   }
 }

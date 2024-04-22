@@ -18,14 +18,13 @@ export interface ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
 
-// eslint-disable-next-line no-use-before-define
 export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCTX) => ResolvedImage
 
 export interface ImageProvider {
   defaults?: any
   getImage: ProviderGetImage
-  validateDomains?: Boolean
-  supportsAlias?: Boolean
+  validateDomains?: boolean
+  supportsAlias?: boolean
 }
 
 export interface CreateImageOptions {
@@ -55,7 +54,7 @@ export interface ImageInfo {
 }
 
 export interface ResolvedImage {
-  url: string,
+  url: string
   format?: string
   getMeta?: () => Promise<ImageInfo>
 }

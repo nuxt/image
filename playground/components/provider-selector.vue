@@ -3,7 +3,11 @@
     <option value="">
       provider demo
     </option>
-    <option v-for="p in providers" :key="p.name" :value="p.name">
+    <option
+      v-for="p in providers"
+      :key="p.name"
+      :value="p.name"
+    >
       {{ p.name }}
     </option>
   </select>
@@ -16,13 +20,13 @@ const route = useRoute()
 const router = useRouter()
 
 const providerName = computed({
-  get () {
+  get() {
     return route.params.provider || ''
   },
-  set (provider) {
+  set(provider) {
     if (provider) {
       router.push(`/provider/${provider}`)
     }
-  }
+  },
 })
 </script>
