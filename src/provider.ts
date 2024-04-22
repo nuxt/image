@@ -28,6 +28,7 @@ const BuiltInProviders = [
   'imageengine',
   'imagekit',
   'imgix',
+  'imgproxy',
   'ipx',
   'ipxStatic',
   'layer0',
