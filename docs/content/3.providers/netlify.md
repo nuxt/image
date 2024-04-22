@@ -28,14 +28,16 @@ To test image transformations locally, use [Netlify Dev](https://docs.netlify.co
 
 ## Remote images
 
-To transform a source image hosted on another domain, you must first configure allowed domains in your `netlify.toml` file.
+To transform a source image hosted on another domain, you must first configure allowed domains: 
 
-```toml [netlify.toml]
-[images]
-  remote_images = ["https://my-images.com/.*", "https://animals.more-images.com/[bcr]at/.*"]
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    provider: 'netlify',
+    domains: ['images.example.com']
+  }
+})
 ```
-
-The `remote_images` property accepts an array of regex. If your images are in specific subdomains or directories, you can use regex to allow just those subdomains or directories.
 
 ## Modifiers
 

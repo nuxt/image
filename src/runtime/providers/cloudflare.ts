@@ -11,7 +11,7 @@ const operationsGenerator = createOperationsGenerator({
     gravity: 'g',
     quality: 'q',
     format: 'f',
-    sharpen: 'sharpen'
+    sharpen: 'sharpen',
   },
   valueMap: {
     fit: {
@@ -19,15 +19,15 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'contain',
       fill: 'scale-down',
       outside: 'crop',
-      inside: 'pad'
+      inside: 'pad',
     },
     gravity: {
       auto: 'auto',
-      side: 'side'
-    }
+      side: 'side',
+    },
   },
   joinWith: ',',
-  formatter: (key, val) => encodeQueryItem(key, val)
+  formatter: (key, val) => encodeQueryItem(key, val),
 })
 
 const defaultModifiers = {}
@@ -35,7 +35,7 @@ const defaultModifiers = {}
 // https://developers.cloudflare.com/images/image-resizing/url-format/
 export const getImage: ProviderGetImage = (src, {
   modifiers = {},
-  baseURL = '/'
+  baseURL = '/',
 } = {}) => {
   const mergeModifiers = { ...defaultModifiers, ...modifiers }
   const operations = operationsGenerator(mergeModifiers as any)
@@ -44,6 +44,6 @@ export const getImage: ProviderGetImage = (src, {
   const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : joinURL(baseURL, src)
 
   return {
-    url
+    url,
   }
 }

@@ -33,21 +33,21 @@ export const baseImageProps = {
   loading: {
     type: String as () => 'lazy' | 'eager',
     default: undefined,
-    validator: (val: any) => ['lazy', 'eager'].includes(val)
+    validator: (val: any) => ['lazy', 'eager'].includes(val),
   },
   crossorigin: {
     type: [Boolean, String] as unknown as () => 'anonymous' | 'use-credentials' | boolean,
     default: undefined,
-    validator: (val: any) => ['anonymous', 'use-credentials', '', true, false].includes(val)
+    validator: (val: any) => ['anonymous', 'use-credentials', '', true, false].includes(val),
   },
   decoding: {
     type: String as () => 'async' | 'auto' | 'sync',
     default: undefined,
-    validator: (val: any) => ['async', 'auto', 'sync'].includes(val)
+    validator: (val: any) => ['async', 'auto', 'sync'].includes(val),
   },
 
   // csp
-  nonce: { type: [String], default: undefined }
+  nonce: { type: [String], default: undefined },
 }
 
 export interface BaseImageAttrs {
@@ -78,7 +78,7 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
   const options = computed(() => {
     return {
       provider: props.provider,
-      preset: props.preset
+      preset: props.preset,
     }
   })
 
@@ -94,7 +94,7 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
       crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
       loading: props.loading,
       decoding: props.decoding,
-      nonce: props.nonce
+      nonce: props.nonce,
     }
   })
 
@@ -108,13 +108,13 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
       format: props.format,
       quality: props.quality || $img.options.quality,
       background: props.background,
-      fit: props.fit
+      fit: props.fit,
     }
   })
 
   return {
     options,
     attrs,
-    modifiers
+    modifiers,
   }
 }

@@ -129,7 +129,7 @@ export const operationsGenerator = createOperationsGenerator({
     watermarkWidth: 'mark-w',
     watermarkXPosition: 'mark-x',
     watermarkYPosition: 'mark-y',
-    watermarkImageURL: 'mark'
+    watermarkImageURL: 'mark',
   },
   valueMap: {
     fit: {
@@ -141,7 +141,7 @@ export const operationsGenerator = createOperationsGenerator({
       clamp: 'clamp',
       clip: 'clip',
       facearea: 'facearea',
-      fillMax: 'fillmax'
+      fillMax: 'fillmax',
     },
     // https://docs.imgix.com/apis/rendering/format/fm
     format: {
@@ -157,16 +157,16 @@ export const operationsGenerator = createOperationsGenerator({
       png32: 'png32',
       webm: 'webm',
       webp: 'webp',
-      blurhash: 'blurhash'
-    }
+      blurhash: 'blurhash',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
+    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
   }
 }

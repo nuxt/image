@@ -8,12 +8,12 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = 'http://l
 
   if (!breakpoint) {
     return {
-      url: withBase(src, baseURL)
+      url: withBase(src, baseURL),
     }
   }
 
   return {
-    url: withBase(`${breakpoint}_${withoutLeadingSlash(src)}`, baseURL)
+    url: withBase(`${breakpoint}_${withoutLeadingSlash(src)}`, baseURL),
   }
 }
 

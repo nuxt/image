@@ -5,16 +5,16 @@ import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
 
-export function createImage (globalOptions: CreateImageOptions) {
+export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
-    options: globalOptions
+    options: globalOptions,
   }
 
   const getImage: $Img['getImage'] = (input: string, options = {}) => {
     const image = resolveImage(ctx, input, options)
 
     // Prerender static images
-    if (process.server && process.env.prerender) {
+    if (import.meta.server && process.env.prerender) {
       prerenderStaticImages(image.url)
     }
 
@@ -24,7 +24,7 @@ export function createImage (globalOptions: CreateImageOptions) {
   const $img = ((input, modifiers = {}, options = {}) => {
     return getImage(input, {
       ...options,
-      modifiers: defu(modifiers, options.modifiers || {})
+      modifiers: defu(modifiers, options.modifiers || {}),
     }).url
   }) as $Img
 
@@ -43,17 +43,18 @@ export function createImage (globalOptions: CreateImageOptions) {
   return $img
 }
 
-async function getMeta (ctx: ImageCTX, input: string, options?: ImageOptions) {
+async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
   const image = resolveImage(ctx, input, { ...options })
 
   if (typeof image.getMeta === 'function') {
     return await image.getMeta()
-  } else {
+  }
+  else {
     return await imageMeta(ctx, image.url)
   }
 }
 
-function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
+function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
   if (typeof input !== 'string' || input === '') {
     return {
       url: ''
@@ -62,7 +63,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
 
   if (input.startsWith('data:')) {
     return {
-      url: input
+      url: input,
     }
   }
 
@@ -87,7 +88,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
     // Domains are normalized to hostname in module
     if (!ctx.options.domains.find(d => d === inputHost)) {
       return {
-        url: input
+        url: input,
       }
     }
   }
@@ -110,7 +111,7 @@ function resolveImage (ctx: ImageCTX, input: string, options: ImageOptions): Res
   return image
 }
 
-function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
+function getProvider(ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
   const provider = ctx.options.providers[name]
   if (!provider) {
     throw new Error('Unknown provider: ' + name)
@@ -118,7 +119,7 @@ function getProvider (ctx: ImageCTX, name: string): ImageCTX['options']['provide
   return provider
 }
 
-function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
+function getPreset(ctx: ImageCTX, name?: string): ImageOptions {
   if (!name) {
     return {}
   }
@@ -128,7 +129,7 @@ function getPreset (ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
+function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
   const width = parseSize(opts.modifiers?.width)
   const height = parseSize(opts.modifiers?.height)
   const sizes = parseSizes(opts.sizes)
@@ -151,20 +152,21 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
       sizeVariants.push({
         size: variant.size,
         screenMaxWidth: variant.screenMaxWidth,
-        media: `(max-width: ${variant.screenMaxWidth}px)`
+        media: `(max-width: ${variant.screenMaxWidth}px)`,
       })
 
       // add srcset variants for all densities (for current 'size' processed)
       for (const density of densities) {
         srcsetVariants.push({
           width: variant._cWidth * density,
-          src: getVariantSrc(ctx, input, opts, variant, density)
+          src: getVariantSrc(ctx, input, opts, variant, density),
         })
       }
     }
 
     finaliseSizeVariants(sizeVariants)
-  } else {
+  }
+  else {
     // 'densities path'
     for (const density of densities) {
       const key = Object.keys(sizes)[0]
@@ -176,13 +178,13 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
           size: '',
           screenMaxWidth: 0,
           _cWidth: opts.modifiers?.width as number,
-          _cHeight: opts.modifiers?.height as number
+          _cHeight: opts.modifiers?.height as number,
         }
       }
 
       srcsetVariants.push({
         width: density,
-        src: getVariantSrc(ctx, input, opts, variant, density)
+        src: getVariantSrc(ctx, input, opts, variant, density),
       })
     }
   }
@@ -199,12 +201,12 @@ function getSizes (ctx: ImageCTX, input: string, opts: ImageSizesOptions): Image
   return {
     sizes: sizesVal,
     srcset: srcsetVal,
-    src: defaultVariant?.src
+    src: defaultVariant?.src,
   }
 }
 
-function getSizesVariant (key: string, size: string, height: number | undefined, hwRatio: number, ctx: ImageCTX): ImageSizesVariant | undefined {
-  const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || parseInt(key)
+function getSizesVariant(key: string, size: string, height: number | undefined, hwRatio: number, ctx: ImageCTX): ImageSizesVariant | undefined {
+  const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || Number.parseInt(key)
   const isFluid = size.endsWith('vw')
   if (!isFluid && /^\d+$/.test(size)) {
     size = size + 'px'
@@ -212,7 +214,7 @@ function getSizesVariant (key: string, size: string, height: number | undefined,
   if (!isFluid && !size.endsWith('px')) {
     return undefined
   }
-  let _cWidth = parseInt(size)
+  let _cWidth = Number.parseInt(size)
   if (!screenMaxWidth || !_cWidth) {
     return undefined
   }
@@ -224,21 +226,21 @@ function getSizesVariant (key: string, size: string, height: number | undefined,
     size,
     screenMaxWidth,
     _cWidth,
-    _cHeight
+    _cHeight,
   }
 }
 
-function getVariantSrc (ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
+function getVariantSrc(ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
   return ctx.$img!(input,
     {
       ...opts.modifiers,
       width: variant._cWidth ? variant._cWidth * density : undefined,
-      height: variant._cHeight ? variant._cHeight * density : undefined
+      height: variant._cHeight ? variant._cHeight * density : undefined,
     },
     opts)
 }
 
-function finaliseSizeVariants (sizeVariants: any[]) {
+function finaliseSizeVariants(sizeVariants: any[]) {
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
   // de-duplicate size variants (by key `media`)
@@ -256,7 +258,7 @@ function finaliseSizeVariants (sizeVariants: any[]) {
   }
 }
 
-function finaliseSrcsetVariants (srcsetVariants: any[]) {
+function finaliseSrcsetVariants(srcsetVariants: any[]) {
   // sort by width
   srcsetVariants.sort((v1, v2) => v1.width - v2.width)
 

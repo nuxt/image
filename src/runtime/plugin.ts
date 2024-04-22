@@ -5,7 +5,7 @@ import { defineNuxtPlugin, useImage } from '#imports'
 export default defineNuxtPlugin(() => {
   return {
     provide: {
-      img: useImage()
-    }
+      img: useImage(),
+    },
   }
 }) as Plugin<{ img: $Img }>

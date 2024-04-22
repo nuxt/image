@@ -16,8 +16,7 @@ To use this provider you just need to specify the base URL of your project.
 export default defineNuxtConfig({
   image: {
     hygraph: {
-      // If not filled out, the provider will add this as a default.
-      baseURL: "https://media.graphassets.com",
+      baseURL: "",
     },
   },
 });
@@ -30,7 +29,7 @@ All the default modifiers from [Hygraph's documentation](https://hygraph.com/doc
 ```vue
 <NuxtImg
   provider="hygraph"
-  src="https://media.graphassets.com/JL6e2yJERUyQtTiZIzPb"
+  src="https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue"
   height="512"
   width="512"
   fit="max"

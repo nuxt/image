@@ -24,57 +24,57 @@ const operationsGenerator = createOperationsGenerator({
     rotate: 'rot',
     mask: 'mask',
     maskTrim: 'mtrim',
-    maskBackground: 'mbg'
+    maskBackground: 'mbg',
   },
   valueMap: {
     format: {
       jpeg: 'jpg',
       jpg: 'jpg',
       png: 'png',
-      webp: 'webp'
+      webp: 'webp',
     },
     fit: {
       cover: 'cover',
       contain: 'contain',
       fill: 'fill',
       inside: 'inside',
-      outside: 'outside'
+      outside: 'outside',
     },
     filter: {
       greyscale: 'greyscale',
       sepia: 'sepia',
       negative: 'negate',
-      duotone: 'duotone'
+      duotone: 'duotone',
     },
     mask: {
-      circle: 'circle',
-      ellipse: 'ellipse',
-      triangle: 'triangle',
+      'circle': 'circle',
+      'ellipse': 'ellipse',
+      'triangle': 'triangle',
       'triangle-180': 'triangle-180',
-      pentagon: 'pentagon',
+      'pentagon': 'pentagon',
       'pentagon-180': 'pentagon-180',
-      hexagon: 'hexagon',
-      square: 'square',
-      star: 'star',
-      heart: 'heart'
-    }
+      'hexagon': 'hexagon',
+      'square': 'square',
+      'star': 'star',
+      'heart': 'heart',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 } as OperationGeneratorConfig)
 
 export interface WeservOptions extends ImageOptions {
-    /**
-     * The url of your site that is exposed to the internet.
-     */
-    baseURL: string;
+  /**
+   * The url of your site that is exposed to the internet.
+   */
+  baseURL: string
 
-    /**
-     * The url of the weserv service.
-     *
-     * @default https://wsrv.nl
-     */
-    weservURL?: string;
+  /**
+   * The url of the weserv service.
+   *
+   * @default https://wsrv.nl
+   */
+  weservURL?: string
 }
 
 export const getImage: ProviderGetImage = (src, options: Partial<WeservOptions>) => {
@@ -89,12 +89,13 @@ export const getImage: ProviderGetImage = (src, options: Partial<WeservOptions>)
         data: {
           provider: 'weserv',
           src,
-          modifiers: options.modifiers
+          modifiers: options.modifiers,
         },
         fatal: true,
-        name: 'NuxtImageError'
+        name: 'NuxtImageError',
       })
-    } else {
+    }
+    else {
       // fall back to the original image in production
       return { url: src }
     }
@@ -105,14 +106,14 @@ export const getImage: ProviderGetImage = (src, options: Partial<WeservOptions>)
     filename,
     we: 'true',
     ...options.modifiers as Record<string, string>,
-    url: withBase(src, options.baseURL)
+    url: withBase(src, options.baseURL),
   })
     .replace('=true', '')
 
   return {
     url: withBase(
       operations.length ? '?' + operations : '',
-      options.weservURL ?? 'https://wsrv.nl'
-    )
+      options.weservURL ?? 'https://wsrv.nl',
+    ),
   }
 }

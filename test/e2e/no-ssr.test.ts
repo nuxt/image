@@ -12,9 +12,9 @@ await setup({
     ssr: false,
     image: {
       inject: false,
-      provider: 'ipx'
-    }
-  }
+      provider: 'ipx',
+    },
+  },
 })
 
 describe('browser (ssr: false)', () => {
@@ -24,11 +24,11 @@ describe('browser (ssr: false)', () => {
 
       const requests: string[] = []
       const page = await createPage()
-      page.route('**', (route) => {
+      await page.route('**', (route) => {
         requests.push(route.request().url())
         return route.continue()
       })
-      page.goto(url(providerPath))
+      await page.goto(url(providerPath))
 
       await page.waitForSelector('img')
       const images = await page.getByRole('img').all()
@@ -39,6 +39,8 @@ describe('browser (ssr: false)', () => {
       expect(sources).toMatchSnapshot()
 
       expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
+
+      await page.close()
     })
   }
 
@@ -46,11 +48,15 @@ describe('browser (ssr: false)', () => {
     const page = await createPage('/events')
     const logs: string[] = []
 
-    page.on('console', (msg) => { logs.push(msg.text()) })
+    page.on('console', (msg) => {
+      logs.push(msg.text())
+    })
 
     await page.waitForLoadState('networkidle')
 
     expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
     expect(logs.filter(log => log === 'Error loading image').length).toBe(2)
+
+    await page.close()
   })
 })

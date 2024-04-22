@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.5.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.4.0...v1.5.0)
+
+### 🚀 Enhancements
+
+- **netlify:** Support `domains` option with Netlify Image CDN ([#1287](https://github.com/nuxt/image/pull/1287))
+
+### 🩹 Fixes
+
+- Opt in to `import.meta.*` properties ([#1301](https://github.com/nuxt/image/pull/1301))
+- Don't attempt to parse falsy values in `options.domains` ([#1305](https://github.com/nuxt/image/pull/1305))
+
+### 📖 Documentation
+
+- Move to @nuxt/fonts ([812da3b](https://github.com/nuxt/image/commit/812da3b))
+- Remove conf for old modules ([1490f0e](https://github.com/nuxt/image/commit/1490f0e))
+
+### 🏡 Chore
+
+- Update changelog ([c1fd9b8](https://github.com/nuxt/image/commit/c1fd9b8))
+
+### ✅ Tests
+
+- Close out playwright `page` after each test ([2b4bac9](https://github.com/nuxt/image/commit/2b4bac9))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Matt Kane <matt.kane@netlify.com>
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+
 ## v1.4.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.3.0...v1.4.0)

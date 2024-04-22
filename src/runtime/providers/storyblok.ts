@@ -12,7 +12,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
     height = '0',
     filters = {},
     format,
-    quality
+    quality,
   } = modifiers
 
   const isSVG = src.endsWith('.svg')
@@ -34,7 +34,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
     fit ? `fit-${fit}` : '',
     doResize ? `${width}x${height}` : '',
     smart ? 'smart' : '',
-    _filters ? ('filters:' + _filters) : ''
+    _filters ? ('filters:' + _filters) : '',
   )
 
   const { pathname } = parseURL(src)
@@ -44,6 +44,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = stor
   const url = withBase(joinURL(pathname, modifier, options), baseURL)
 
   return {
-    url
+    url,
   }
 }
