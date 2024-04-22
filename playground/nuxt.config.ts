@@ -73,8 +73,8 @@ export default defineNuxtConfig({
     },
     imgproxy: {
       imgProxyUrl: 'https://localhost:8080',
-      imgProxySalt: 'salt',
-      imgProxyKey: 'key',
+      imgProxySalt: '73616c74',
+      imgProxyKey: '6b6579',
     },
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo',
