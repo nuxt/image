@@ -6,7 +6,7 @@ const operationsGenerator = createOperationsGenerator({
   keyMap: {
     fit: 'func',
     quality: 'q',
-    format: 'force_format'
+    format: 'force_format',
   },
   valueMap: {
     fit: {
@@ -14,11 +14,11 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'fit',
       fill: 'cover',
       inside: 'bound',
-      outside: 'boundmin'
-    }
+      outside: 'boundmin',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 // https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction
@@ -27,12 +27,12 @@ export const getImage: ProviderGetImage = (src, {
   baseURL = '',
   token = '',
   apiVersion = '',
-  cdnURL = ''
+  cdnURL = '',
 } = {}) => {
   const operations = operationsGenerator(modifiers)
   const query = (operations ? ('?' + operations) : '')
 
-  if (process.dev) {
+  if (import.meta.dev) {
     const warning = []
 
     if (!baseURL) {
@@ -44,10 +44,9 @@ export const getImage: ProviderGetImage = (src, {
     }
 
     if (warning.length > 0) {
-      // eslint-disable-next-line no-console
       console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
       return {
-        url: joinURL('<token>', '<baseURL>', src) + query
+        url: joinURL('<token>', '<baseURL>', src) + query,
       }
     }
   }
@@ -58,11 +57,11 @@ export const getImage: ProviderGetImage = (src, {
 
   if (hasProtocol(src)) {
     return {
-      url: joinURL(src) + query
+      url: joinURL(src) + query,
     }
   }
 
   return {
-    url: joinURL(cdnURL, baseURL, src) + query
+    url: joinURL(cdnURL, baseURL, src) + query,
   }
 }

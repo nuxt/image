@@ -10,31 +10,31 @@ export const operationsGenerator = createOperationsGenerator({
     format: 'fm',
     quality: 'q',
     position: 'position',
-    fit: 'fit'
+    fit: 'fit',
   },
   valueMap: {
     fit: {
       fill: 'fill',
       cover: 'cover',
-      contain: 'contain'
+      contain: 'contain',
     },
     format: {
       avif: 'avif',
       gif: 'gif',
       jpg: 'jpg',
       png: 'png',
-      webp: 'webp'
+      webp: 'webp',
     },
     position: {
       top: 'top',
       right: 'right',
       bottom: 'bottom',
       left: 'left',
-      center: 'center'
-    }
+      center: 'center',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => encodeQueryItem(key, value)
+  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
@@ -48,6 +48,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   }
   const operations = operationsGenerator(mods)
   return {
-    url: `${baseURL || '/.netlify/images'}?${operations}`
+    url: `${baseURL || '/.netlify/images'}?${operations}`,
   }
 }

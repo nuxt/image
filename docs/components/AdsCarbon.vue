@@ -13,7 +13,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="carbonads" class="carbon" />
+  <div
+    ref="carbonads"
+    class="carbon"
+  />
 </template>
 
 <style lang="postcss">

@@ -9,7 +9,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
     height = '0',
     focusZoom = '0',
     format = 'webp',
-    quality = '70'
+    quality = '70',
   } = modifiers
 
   const doFill = width !== '0' && height !== '0'
@@ -22,11 +22,11 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
     doFill ? `fill-${width}x${height}-c${focusZoom}${formatting}` : '',
     doWidth ? `width-${width}${formatting}` : '',
     doHeight ? `height-${height}${formatting}` : '',
-    doOriginal ? `original${formatting}` : ''
+    doOriginal ? `original${formatting}` : '',
   )
 
   const url = withBase(joinURL(src, options), baseURL)
   return {
-    url
+    url,
   }
 }

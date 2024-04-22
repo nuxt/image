@@ -22,7 +22,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "pnpm nuxt dev docs",
-    "lint": "eslint --ext .ts --ext .vue .",
+    "lint": "eslint .",
     "prepack": "pnpm build",
     "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
     "test": "nuxi prepare playground && pnpm vitest run",
@@ -44,12 +44,11 @@
     "@nuxt/image": "link:",
     "@nuxt/module-builder": "0.5.5",
     "@nuxt/test-utils": "^3.12.1",
-    "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@types/node": "^20.12.3",
     "@vitest/coverage-v8": "^1.4.0",
     "@vue/test-utils": "^2.4.5",
     "changelogen": "^0.5.5",
-    "eslint": "8.57.0",
+    "eslint": "9.1.0",
     "execa": "^8.0.1",
     "globby": "^14.0.1",
     "happy-dom": "^14.3.10",
@@ -63,7 +62,8 @@
     "vitest": "^1.4.0",
     "vitest-environment-nuxt": "^1.0.0",
     "vue": "3.4.21",
-    "vue-tsc": "^2.0.7"
+    "vue-tsc": "^2.0.7",
+    "@nuxt/eslint-config": "0.3.8"
   },
   "optionalDependencies": {
     "ipx": "^2.1.0"

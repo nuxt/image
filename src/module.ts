@@ -15,7 +15,7 @@ export interface ModuleOptions extends ImageProviders {
   providers: { [name: string]: InputProvider | any }
   densities: number[]
   format: CreateImageOptions['format']
-  quality?: CreateImageOptions['quality'],
+  quality?: CreateImageOptions['quality']
   [key: string]: any
 }
 
@@ -32,26 +32,26 @@ export default defineNuxtModule<ModuleOptions>({
     format: ['webp'],
     // https://tailwindcss.com/docs/breakpoints
     screens: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      xxl: 1536,
-      '2xl': 1536
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536,
     },
     providers: {},
     alias: {},
-    densities: [1, 2]
+    densities: [1, 2],
   }),
   meta: {
     name: '@nuxt/image',
     configKey: 'image',
     compatibility: {
-      nuxt: '^3.1.0'
-    }
+      nuxt: '^3.1.0',
+    },
   },
-  async setup (options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     // fully resolve directory
@@ -82,7 +82,7 @@ export default defineNuxtModule<ModuleOptions>({
       'alias',
       'densities',
       'format',
-      'quality'
+      'quality',
     ])
 
     const providers = await resolveProviders(nuxt, options)
@@ -101,24 +101,24 @@ export default defineNuxtModule<ModuleOptions>({
 
     addImports({
       name: 'useImage',
-      from: resolver.resolve('runtime/composables')
+      from: resolver.resolve('runtime/composables'),
     })
 
     // Add components
     addComponent({
       name: 'NuxtImg',
-      filePath: resolver.resolve('./runtime/components/nuxt-img')
+      filePath: resolver.resolve('./runtime/components/nuxt-img'),
     })
 
     addComponent({
       name: 'NuxtPicture',
-      filePath: resolver.resolve('./runtime/components/nuxt-picture')
+      filePath: resolver.resolve('./runtime/components/nuxt-picture'),
     })
 
     // Add runtime options
     addTemplate({
       filename: 'image-options.mjs',
-      getContents () {
+      getContents() {
         return `
 ${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
 
@@ -128,7 +128,7 @@ imageOptions.providers = {
 ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
 }
         `
-      }
+      },
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
@@ -141,7 +141,7 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
         options[resolvedProvider] = options[resolvedProvider] || {}
 
         const p = await resolveProvider(nuxt, resolvedProvider, {
-          options: options[resolvedProvider]
+          options: options[resolvedProvider],
         })
         if (!providers.some(p => p.name === resolvedProvider)) {
           providers.push(p)
@@ -158,10 +158,10 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
-  }
+  },
 })
 
-function pick<O extends Record<any, any>, K extends keyof O> (obj: O, keys: K[]): Pick<O, K> {
+function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]): Pick<O, K> {
   const newobj = {} as Pick<O, K>
   for (const key of keys) {
     newobj[key] = obj[key]
