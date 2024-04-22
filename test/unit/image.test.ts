@@ -255,11 +255,11 @@ describe('Renders placeholder image', () => {
         propsData: {
           src,
           placeholder: true,
-          placeholderClass: 'placeholder'
+          placeholderClass: 'placeholder',
         },
         attrs: {
-          class: [{ 'test': true }, 'other'],
-        }
+          class: [{ test: true }, 'other'],
+        },
       })
     })
     expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
