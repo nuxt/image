@@ -11,9 +11,9 @@ await setup({
   nuxtConfig: {
     image: {
       inject: false,
-      provider: 'ipx'
-    }
-  }
+      provider: 'ipx',
+    },
+  },
 })
 
 describe('browser (ssr: true)', () => {
@@ -49,7 +49,9 @@ describe('browser (ssr: true)', () => {
     const page = await createPage()
     const logs: string[] = []
 
-    page.on('console', (msg) => { logs.push(msg.text()) })
+    page.on('console', (msg) => {
+      logs.push(msg.text())
+    })
 
     await page.goto(url('/events'))
 

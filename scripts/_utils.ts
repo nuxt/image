@@ -6,24 +6,27 @@ import { execaSync } from 'execa'
 import { determineSemverChange, getGitDiff, loadChangelogConfig, parseCommits } from 'changelogen'
 
 export interface Dep {
-  name: string,
-  range: string,
+  name: string
+  range: string
   type: string
 }
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
 export type Package = ThenArg<ReturnType<typeof loadPackage>>
 
-export async function loadPackage (dir: string) {
+export async function loadPackage(dir: string) {
   const pkgPath = resolve(dir, 'package.json')
   const data = JSON.parse(await fsp.readFile(pkgPath, 'utf-8').catch(() => '{}'))
   const save = () => fsp.writeFile(pkgPath, JSON.stringify(data, null, 2) + '\n')
 
   const updateDeps = (reviver: (dep: Dep) => Dep | void) => {
     for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
-      if (!data[type]) { continue }
+      if (!data[type]) {
+        continue
+      }
       for (const e of Object.entries(data[type])) {
         const dep: Dep = { name: e[0], range: e[1] as string, type }
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete data[type][dep.name]
         const updated = reviver(dep) || dep
         data[updated.type] = data[updated.type] || {}
@@ -36,11 +39,11 @@ export async function loadPackage (dir: string) {
     dir,
     data,
     save,
-    updateDeps
+    updateDeps,
   }
 }
 
-export async function loadWorkspace (dir: string) {
+export async function loadWorkspace(dir: string) {
   const workspacePkg = await loadPackage(dir)
 
   const packages = [await loadPackage(process.cwd())]
@@ -67,7 +70,9 @@ export async function loadWorkspace (dir: string) {
 
   const setVersion = (name: string, newVersion: string, opts: { updateDeps?: boolean } = {}) => {
     find(name).data.version = newVersion
-    if (!opts.updateDeps) { return }
+    if (!opts.updateDeps) {
+      return
+    }
 
     for (const pkg of packages) {
       pkg.updateDeps((dep) => {
@@ -87,11 +92,11 @@ export async function loadWorkspace (dir: string) {
     save,
     find,
     rename,
-    setVersion
+    setVersion,
   }
 }
 
-export async function determineBumpType () {
+export async function determineBumpType() {
   const config = await loadChangelogConfig(process.cwd())
   const commits = await getLatestCommits()
 
@@ -100,26 +105,28 @@ export async function determineBumpType () {
   return bumpType === 'major' ? 'minor' : bumpType
 }
 
-export async function getLatestCommits () {
+export async function getLatestCommits() {
   const config = await loadChangelogConfig(process.cwd())
   const latestTag = execaSync('git', ['describe', '--tags', '--abbrev=0']).stdout
 
   return parseCommits(await getGitDiff(latestTag), config)
 }
 
-export async function getContributors () {
+export async function getContributors() {
   const contributors = [] as Array<{ name: string, username: string }>
   const emails = new Set<string>()
   const latestTag = execSync('git describe --tags --abbrev=0').toString().trim()
   const rawCommits = await getGitDiff(latestTag)
   for (const commit of rawCommits) {
-    if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') { continue }
+    if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') {
+      continue
+    }
     const { author } = await $fetch<{ author: { login: string, email: string } }>(`https://api.github.com/repos/nuxt/image/commits/${commit.shortHash}`, {
       headers: {
         'User-Agent': 'nuxt/image',
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: `token ${process.env.GITHUB_TOKEN}`
-      }
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+      },
     })
     if (!contributors.some(c => c.username === author.login)) {
       contributors.push({ name: commit.author.name, username: author.login })

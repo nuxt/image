@@ -7,8 +7,8 @@ export default defineVitestConfig({
         '**/.nuxt',
         'node_modules',
         'playground',
-        'test'
-      ]
-    }
-  }
+        'test',
+      ],
+    },
+  },
 })

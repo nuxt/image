@@ -8,7 +8,7 @@ const fits = createMapper({
   outside: 'contain',
   cover: 'cover',
   contain: 'inside',
-  missingValue: 'cover'
+  missingValue: 'cover',
 })
 
 const operationsGenerator = createOperationsGenerator({
@@ -17,16 +17,16 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'quality',
     background: 'background',
     focus: 'focus',
-    zoom: 'zoom'
+    zoom: 'zoom',
   },
   valueMap: {
-    format (value: string) {
+    format(value: string) {
       if (value === 'jpg') {
         return 'jpeg'
       }
       return value
     },
-    background (value: string) {
+    background(value: string) {
       if (value.startsWith('#')) {
         return value.replace('#', '')
       }
@@ -43,11 +43,11 @@ const operationsGenerator = createOperationsGenerator({
       south: '50px100p',
       southEast: '0px100p',
       east: '100px50p',
-      center: '50px50p'
-    }
+      center: '50px50p',
+    },
   },
   joinWith: '/',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
@@ -67,6 +67,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
 
   const operations = operationsGenerator(providerModifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : ''))
+    url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : '')),
   }
 }

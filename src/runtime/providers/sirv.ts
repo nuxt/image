@@ -1,6 +1,7 @@
 import { joinURL } from 'ufo'
 import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
+
 const deleteHash = (value: string) => value.startsWith('#') ? value.replace('#', '') : value
 const generateColorKeys = () => {
   const keysNeedingHashDeletion = [
@@ -11,11 +12,11 @@ const generateColorKeys = () => {
     'colortoneColor',
     'textColor',
     'textoutlineColor',
-    'textBackgroundColor'
+    'textBackgroundColor',
   ]
 
   return Object.fromEntries(
-    keysNeedingHashDeletion.map(key => [key, (value: string) => deleteHash(value)])
+    keysNeedingHashDeletion.map(key => [key, (value: string) => deleteHash(value)]),
   )
 }
 export const operationsGenerator = createOperationsGenerator({
@@ -77,7 +78,7 @@ export const operationsGenerator = createOperationsGenerator({
     frameWidth: 'frame.width',
     frameRimColor: 'frame.rim.color',
     frameRimWidth: 'frame.rim.width',
-    pdfPage: 'page'
+    pdfPage: 'page',
   },
   valueMap: {
     fit: {
@@ -85,25 +86,25 @@ export const operationsGenerator = createOperationsGenerator({
       fill: 'ignore',
       outside: 'fill',
       inside: 'fill',
-      noUpscaling: 'noup'
+      noUpscaling: 'noup',
     },
     crop: {
       face: 'face',
       poi: 'poi',
-      trim: 'trim'
+      trim: 'trim',
     },
     format: {
       jpeg: 'jpg',
-      original: 'original'
+      original: 'original',
     },
-    ...generateColorKeys()
+    ...generateColorKeys(),
   },
   joinWith: '&',
-  formatter: (key: any, value: any) => `${key}=${value}`
+  formatter: (key: any, value: any) => `${key}=${value}`,
 })
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
+    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
   }
 }

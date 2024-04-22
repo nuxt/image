@@ -8,7 +8,7 @@ import { useHead, useNuxtApp } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined }
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
 }
 
 export default defineComponent({
@@ -22,8 +22,8 @@ export default defineComponent({
     const placeholderLoaded = ref(false)
 
     type AttrsT = typeof _base.attrs.value & {
-      sizes?: string
-      srcset?: string
+      'sizes'?: string
+      'srcset'?: string
       'data-nuxt-img'?: string
     }
 
@@ -34,8 +34,8 @@ export default defineComponent({
       modifiers: {
         ..._base.modifiers.value,
         width: parseSize(props.width),
-        height: parseSize(props.height)
-      }
+        height: parseSize(props.height),
+      },
     }))
 
     const attrs = computed(() => {
@@ -49,9 +49,15 @@ export default defineComponent({
 
     const placeholder = computed(() => {
       let placeholder = props.placeholder
-      if (placeholder === '') { placeholder = true }
-      if (!placeholder || placeholderLoaded.value) { return false }
-      if (typeof placeholder === 'string') { return placeholder }
+      if (placeholder === '') {
+        placeholder = true
+      }
+      if (!placeholder || placeholderLoaded.value) {
+        return false
+      }
+      if (typeof placeholder === 'string') {
+        return placeholder
+      }
 
       const size = (Array.isArray(placeholder)
         ? placeholder
@@ -62,14 +68,14 @@ export default defineComponent({
         width: size[0],
         height: size[1],
         quality: size[2] || 50,
-        blur: size[3] || 3
+        blur: size[3] || 3,
       }, _base.options.value)
     })
 
     const mainSrc = computed(() =>
       props.sizes
         ? sizes.value.src
-        : $img(props.src!, _base.modifiers.value, _base.options.value)
+        : $img(props.src!, _base.modifiers.value, _base.options.value),
     )
 
     const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
@@ -86,9 +92,9 @@ export default defineComponent({
             : {
                 href: sizes.value.src,
                 imagesizes: sizes.value.sizes,
-                imagesrcset: sizes.value.srcset
-              })
-        }]
+                imagesrcset: sizes.value.srcset,
+              }),
+        }],
       })
     }
 
@@ -118,12 +124,15 @@ export default defineComponent({
         return
       }
 
-      if (!imgEl.value) { return }
+      if (!imgEl.value) {
+        return
+      }
 
       if (imgEl.value.complete && initialLoad) {
         if (imgEl.value.getAttribute('data-error')) {
           ctx.emit('error', new Event('error'))
-        } else {
+        }
+        else {
           ctx.emit('load', new Event('load'))
         }
       }
@@ -141,7 +150,7 @@ export default defineComponent({
       src: src.value,
       ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
-      ...ctx.attrs
+      ...ctx.attrs,
     })
-  }
+  },
 })

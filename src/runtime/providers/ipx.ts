@@ -10,10 +10,10 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     resize: 's',
     quality: 'q',
-    background: 'b'
+    background: 'b',
   },
   joinWith: '&',
-  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val)
+  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val),
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {
@@ -30,7 +30,7 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   }
 
   return {
-    url: joinURL(baseURL, params, encodePath(src))
+    url: joinURL(baseURL, params, encodePath(src)),
   }
 }
 

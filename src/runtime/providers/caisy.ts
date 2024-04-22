@@ -6,15 +6,15 @@ export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
-    quality: 'q'
+    quality: 'q',
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {} } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(src + (operations ? ('?' + operations) : ''))
+    url: joinURL(src + (operations ? ('?' + operations) : '')),
   }
 }
