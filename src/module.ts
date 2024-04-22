@@ -57,8 +57,11 @@ export default defineNuxtModule<ModuleOptions>({
     // fully resolve directory
     options.dir = resolve(nuxt.options.srcDir, options.dir)
 
+    // Domains from environment variable
+    const domainsFromENV: string[] = process.env?.NUXT_IMAGE_DOMAINS.replace(/\s/g, "").split(",") || [];
+    
     // Normalize domains to hostname
-    options.domains = options.domains
+    options.domains = [...new Set([...options.domains, ...domainsFromENV])]
       .map(d => d && (parseURL(d.startsWith('http') ? d : ('http://' + d)).host))
       .filter(Boolean) as string[]
 
