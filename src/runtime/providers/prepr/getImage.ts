@@ -18,7 +18,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter,
   joinWith: ',',
   keyMap,
-  valueMap
+  valueMap,
 })
 
 const getImage: PreprProviderGetImage = (src, options, _ctx) => {
@@ -35,7 +35,7 @@ const getImage: PreprProviderGetImage = (src, options, _ctx) => {
   const projectUrl = `https://${projectName.trim()}.${fileBucket}.prepr.io`
 
   return {
-    url: joinURL(projectUrl, filePath)
+    url: joinURL(projectUrl, filePath),
   }
 }
 

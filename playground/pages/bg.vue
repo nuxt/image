@@ -11,7 +11,7 @@ const bg = computed(() => {
   const imgUrl = $img('/images/colors.jpg', {
     width: 300,
     height: 300,
-    quality: 80
+    quality: 80,
   })
 
   return `url('${imgUrl}')`

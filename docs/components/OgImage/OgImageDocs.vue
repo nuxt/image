@@ -28,13 +28,17 @@ defineProps({
     <div>
       <h1 class="text-8xl mb-4 text-white flex items-center">
         <span>{{ title }}</span>
-        <img v-if="image" :src="image" class="h-20 w-20 rounded ml-8">
+        <img
+          v-if="image"
+          :src="image"
+          class="h-20 w-20 rounded ml-8"
+        >
       </h1>
       <p class="text-5xl text-gray-200 leading-tight pr-10">
         {{ description }}
       </p>
     </div>
-    <Logo class="w-[349px] h-[60px] text-white" />
+    <TheLogo class="w-[349px] h-[60px] text-white" />
   </div>
 </template>
 

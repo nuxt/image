@@ -6,40 +6,40 @@ const sanityCDN = 'https://cdn.sanity.io/images'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
-    format: 'fm',
-    height: 'h',
-    quality: 'q',
-    width: 'w',
+    'format': 'fm',
+    'height': 'h',
+    'quality': 'q',
+    'width': 'w',
     // Convenience modifiers
-    background: 'bg',
-    download: 'dl',
-    dpr: 'dpr',
-    sharpen: 'sharp',
-    orientation: 'or',
+    'background': 'bg',
+    'download': 'dl',
+    'dpr': 'dpr',
+    'sharpen': 'sharp',
+    'orientation': 'or',
     'min-height': 'min-h',
     'max-height': 'max-h',
     'min-width': 'min-w',
     'max-width': 'max-w',
-    minHeight: 'min-h',
-    maxHeight: 'max-h',
-    minWidth: 'min-w',
-    maxWidth: 'max-w',
-    saturation: 'sat'
+    'minHeight': 'min-h',
+    'maxHeight': 'max-h',
+    'minWidth': 'min-w',
+    'maxWidth': 'max-w',
+    'saturation': 'sat',
   },
   valueMap: {
     format: {
-      jpeg: 'jpg'
+      jpeg: 'jpg',
     },
     fit: {
       cover: 'crop',
       contain: 'fill',
       fill: 'scale',
       inside: 'min',
-      outside: 'max'
-    }
+      outside: 'max',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`
+  formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
 })
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -49,7 +49,6 @@ const getMetadata = (id: string) => {
   if (!result || !result.groups) {
     // Invalid Sanity image asset ID
     if (isDev) {
-      // eslint-disable-next-line
       console.warn(`An invalid image asset ID was passed in: ${id}`)
     }
     return { width: undefined, height: undefined, format: undefined }
@@ -61,7 +60,7 @@ const getMetadata = (id: string) => {
   return {
     width,
     height,
-    format: result.groups.format
+    format: result.groups.format,
   }
 }
 
@@ -97,6 +96,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, projectId, dat
   const filenameAndQueries = parts.join('-') + '.' + format + (operations ? ('?' + operations) : '')
 
   return {
-    url: joinURL(sanityCDN, projectId, dataset, filenameAndQueries)
+    url: joinURL(sanityCDN, projectId, dataset, filenameAndQueries),
   }
 }

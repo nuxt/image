@@ -5,61 +5,62 @@ type ImageOptimizations = {
   width?: number
   height?: number
   fit?: string | 'clip' | 'crop' | 'scale' | 'max'
-  format?: string | 'jpg' | 'png' | 'webp' | 'avif' | 'auto_image',
+  format?: string | 'jpg' | 'png' | 'webp' | 'avif' | 'auto_image'
   quality?: number
 }
 
-export function getImageFormat (format?: string) {
+export function getImageFormat(format?: string) {
   let result = 'auto_image'
 
   if (format && format !== 'auto_image') {
-    result = `output=format:${format === 'jpeg' ? 'jpg' : format}`
+    result = `output=format:${format}`
   }
 
   return result
 }
 
-export function optimizeHygraphImage (baseurl: string, url: string, optimizations: ImageOptimizations) {
-  baseurl = baseurl.replace(/\/+$/, '')
-  const imageId = url.split(`${baseurl}/`)[1]
+export function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
+  baseURL = baseURL.replace(/\/+$/, '')
+  const imageId = url.split(`${baseURL}/`)[1]
   const imageFormat = getImageFormat(optimizations.format)
   const optimBase = 'resize'
-  const quality = optimizations.quality ? `quality=value:${optimizations.quality}/compress/` : ''
+  const quality = optimizations.quality ? `quality=value:${optimizations.quality}/compress=metadata:true/` : ''
 
   const optimList = []
   for (const [key, value] of Object.entries(optimizations)) {
     if (key !== 'format' && key !== 'quality' && value !== undefined) {
       if (key === 'fit' && value === 'contain') {
         optimList.push('fit:max')
-      } else {
+      }
+      else {
         optimList.push(`${key}:${value}`)
       }
     }
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`
-  const result = joinURL(baseurl, imageFormat, optim, quality, imageId)
+  const result = joinURL(baseURL, optim, quality, imageFormat, imageId)
 
   return result
 }
 
 export const getImage: ProviderGetImage = (
   src,
-  { modifiers = {}, baseurl } = {}
+  { modifiers = {}, baseURL } = {},
 ) => {
   const {
     width,
     height,
     fit,
     format,
-    quality
+    quality,
   } = modifiers
 
-  if (!baseurl) {
-    baseurl = 'https://media.graphassets.com'
+  if (!baseURL) {
+    throw new Error('No Hygraph image base URL provided.')
   }
 
   return {
-    url: optimizeHygraphImage(baseurl, src, { width, height, fit, format, quality })
+    url: optimizeHygraphImage(baseURL, src, { width, height, fit, format, quality }),
   }
 }

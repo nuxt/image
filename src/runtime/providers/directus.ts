@@ -3,7 +3,7 @@ import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({
-  joinWith: '&'
+  joinWith: '&',
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
@@ -17,6 +17,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   }
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : ''))
+    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
   }
 }
