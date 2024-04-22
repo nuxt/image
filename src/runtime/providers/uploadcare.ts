@@ -16,7 +16,7 @@
  * Other stuff to think about later:
  * - Signed URLs
  * - File Groups
- *  */
+ */
 
 import { joinURL, withTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '../../types'
@@ -24,12 +24,12 @@ import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   joinWith: '',
-  formatter: (key:string, value:string | string[]) => `-/${key}/${Array.isArray(value) ? value.join('/') : value}/`
+  formatter: (key: string, value: string | string[]) => `-/${key}/${Array.isArray(value) ? value.join('/') : value}/`,
 })
 
 export const getImage: ProviderGetImage = (
   uuid,
-  { modifiers, cdnURL = '' } = {}
+  { modifiers, cdnURL = '' } = {},
 ) => {
   // If width or height is specified, use resize instead
   if (modifiers?.width || modifiers?.height) {

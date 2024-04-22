@@ -31,7 +31,7 @@ const operationsGenerator = createOperationsGenerator({
     background: 'bg',
     border: 'border',
     quality: 'q',
-    format: 'fm'
+    format: 'fm',
   },
   valueMap: {
     fit: {
@@ -39,17 +39,17 @@ const operationsGenerator = createOperationsGenerator({
       inside: 'max',
       outside: 'stretch',
       cover: 'crop',
-      contain: 'contain'
-    }
+      contain: 'contain',
+    },
   },
   joinWith: '&',
-  formatter: (key, val) => encodeQueryItem(key, val)
+  formatter: (key, val) => encodeQueryItem(key, val),
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const params = operationsGenerator(modifiers)
 
   return {
-    url: withBase(joinURL(encodePath(src) + (params ? '?' + params : '')), baseURL)
+    url: withBase(joinURL(encodePath(src) + (params ? '?' + params : '')), baseURL),
   }
 }

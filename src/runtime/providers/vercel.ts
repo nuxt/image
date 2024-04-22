@@ -11,13 +11,12 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel
   if (!width) {
     width = largestWidth
     if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line
       console.warn(`A defined width should be provided to use the \`vercel\` provider. Defaulting to \`${largestWidth}\`. Warning originated from \`${src}\`.`)
     }
-  } else if (!validWidths.includes(width)) {
+  }
+  else if (!validWidths.includes(width)) {
     width = validWidths.find(validWidth => validWidth > width) || largestWidth
     if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line
       console.warn(`The width being used (\`${modifiers?.width}\`) should be added to \`image.screens\`. Defaulting to \`${width}\`. Warning originated from \`${src}\`.`)
     }
   }
@@ -30,8 +29,8 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel
     url: baseURL + '?' + stringifyQuery({
       url: src,
       w: String(width),
-      q: String(modifiers?.quality || '100')
-    })
+      q: String(modifiers?.quality || '100'),
+    }),
   }
 }
 
