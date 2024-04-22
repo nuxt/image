@@ -296,6 +296,15 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // imgproxy
+  {
+    name: "imgproxy",
+    samples: [
+      {
+        src: "https://images.prismic.io/200629-sms-hoy/f596a543-d593-4296-9abd-3d3ac15f1e39_ray-hennessy-mpw37yXc_WQ-unsplash.jpg?auto=compress,format&w=600&h=900",
+      },
+    ],
+  },
   // imgix
   {
     name: 'imgix',
