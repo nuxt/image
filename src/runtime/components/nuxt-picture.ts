@@ -24,7 +24,9 @@ export default defineComponent({
     const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
     const legacyFormat = computed(() => {
-      if (props.legacyFormat) { return props.legacyFormat }
+      if (props.legacyFormat) {
+        return props.legacyFormat
+      }
       return isTransparent.value ? 'png' : 'jpeg'
     })
 
@@ -32,7 +34,7 @@ export default defineComponent({
     const sources = computed<Source[]>(() => {
       const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
       if (formats[0] === 'svg') {
-        return [<Source>{ src: props.src }]
+        return [<Source> { src: props.src }]
       }
 
       if (!formats.includes(legacyFormat.value)) {
@@ -51,7 +53,7 @@ export default defineComponent({
           modifiers: { ..._base.modifiers.value, format },
         })
 
-        return <Source>{ src, type: `image/${format}`, sizes, srcset }
+        return <Source> { src, type: `image/${format}`, sizes, srcset }
       })
     })
     const lastSourceIndex = computed(() => sources.value.length - 1)
@@ -64,7 +66,9 @@ export default defineComponent({
         nonce: props.nonce,
       }
 
-      if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
+      if (sources.value?.[0]?.sizes) {
+        link.imagesizes = sources.value[0].sizes
+      }
 
       useHead({ link: [link] })
     }
@@ -89,7 +93,9 @@ export default defineComponent({
     const nuxtApp = useNuxtApp()
     const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
-      if (!imgEl.value) { return }
+      if (!imgEl.value) {
+        return
+      }
 
       if (imgEl.value.complete && initialLoad) {
         if (imgEl.value.getAttribute('data-error')) {

@@ -49,9 +49,15 @@ export default defineComponent({
 
     const placeholder = computed(() => {
       let placeholder = props.placeholder
-      if (placeholder === '') { placeholder = true }
-      if (!placeholder || placeholderLoaded.value) { return false }
-      if (typeof placeholder === 'string') { return placeholder }
+      if (placeholder === '') {
+        placeholder = true
+      }
+      if (!placeholder || placeholderLoaded.value) {
+        return false
+      }
+      if (typeof placeholder === 'string') {
+        return placeholder
+      }
 
       const size = (Array.isArray(placeholder)
         ? placeholder
@@ -118,7 +124,9 @@ export default defineComponent({
         return
       }
 
-      if (!imgEl.value) { return }
+      if (!imgEl.value) {
+        return
+      }
 
       if (imgEl.value.complete && initialLoad) {
         if (imgEl.value.getAttribute('data-error')) {

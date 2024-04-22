@@ -21,9 +21,12 @@ export async function loadPackage(dir: string) {
 
   const updateDeps = (reviver: (dep: Dep) => Dep | void) => {
     for (const type of ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']) {
-      if (!data[type]) { continue }
+      if (!data[type]) {
+        continue
+      }
       for (const e of Object.entries(data[type])) {
         const dep: Dep = { name: e[0], range: e[1] as string, type }
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete data[type][dep.name]
         const updated = reviver(dep) || dep
         data[updated.type] = data[updated.type] || {}
@@ -67,7 +70,9 @@ export async function loadWorkspace(dir: string) {
 
   const setVersion = (name: string, newVersion: string, opts: { updateDeps?: boolean } = {}) => {
     find(name).data.version = newVersion
-    if (!opts.updateDeps) { return }
+    if (!opts.updateDeps) {
+      return
+    }
 
     for (const pkg of packages) {
       pkg.updateDeps((dep) => {
@@ -113,7 +118,9 @@ export async function getContributors() {
   const latestTag = execSync('git describe --tags --abbrev=0').toString().trim()
   const rawCommits = await getGitDiff(latestTag)
   for (const commit of rawCommits) {
-    if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') { continue }
+    if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') {
+      continue
+    }
     const { author } = await $fetch<{ author: { login: string, email: string } }>(`https://api.github.com/repos/nuxt/image/commits/${commit.shortHash}`, {
       headers: {
         'User-Agent': 'nuxt/image',

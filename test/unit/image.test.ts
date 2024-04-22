@@ -167,7 +167,7 @@ const getImageLoad = (cb = () => {}) => {
       onload: () => {},
     } as unknown as HTMLImageElement
     image = _image
-    // @ts-expect-error
+    // @ts-expect-error not valid argument for onload
     resolve = () => _image.onload?.(loadEvent)
 
     return _image

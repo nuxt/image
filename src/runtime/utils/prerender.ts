@@ -2,7 +2,9 @@ import { appendHeader } from 'h3'
 import { useRequestEvent } from '#imports'
 
 export function prerenderStaticImages(src = '', srcset = '') {
-  if (!import.meta.server || !process.env.prerender) { return }
+  if (!import.meta.server || !process.env.prerender) {
+    return
+  }
 
   const paths = [
     src,

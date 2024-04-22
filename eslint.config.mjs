@@ -10,6 +10,18 @@ export default createConfigForNuxt({
     src: [
       './playground',
       './docs',
+      './example',
     ],
+  },
+}).append({
+  files: ['test/**'],
+  rules: {
+    '@typescript-eslint/no-explicit-any': 'off',
+  },
+}, {
+  rules: {
+    '@typescript-eslint/no-invalid-void-type': 'off',
+    // TODO: remove this rule
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 })

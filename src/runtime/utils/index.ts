@@ -100,7 +100,9 @@ export function parseDensities(input: string | undefined = ''): number[] {
   const densities = new Set<number>()
   for (const density of input.split(' ')) {
     const d = Number.parseInt(density.replace('x', ''))
-    if (d) { densities.add(d) }
+    if (d) {
+      densities.add(d)
+    }
   }
 
   return Array.from(densities)
