@@ -190,7 +190,7 @@ export const images = [
     imageengine: { url: '/test.png?imgeng=/w_200/h_200/m_letterbox/f_jpg' },
     unsplash: { url: '/test.png?w=200&h=200&fit=fill&fm=jpeg' },
     imagekit: { url: '/test.png?tr=w-200,h-200,cm-pad_resize,f-jpeg' },
-    netlifyImageCdn: { url: '/.netlify/images?w=200&h=200&fit=contain&fm=jpeg&url=%2Ftest.png' },
+    netlifyImageCdn: { url: '/.netlify/images?w=200&h=200&fit=contain&fm=jpg&url=%2Ftest.png' },
     netlifyLargeMedia: { url: '/test.png?w=200&h=200&nf_resize=fit' },
     prismic: { url: '/test.png?auto=compress,format&rect=0,0,200,200&w=200&h=200&fit=fill&fm=jpeg' },
     sanity: { url: 'https://cdn.sanity.io/images/projectid/production/test-300x450.png?w=200&h=200&fit=fill&fm=jpg&bg=ffffff' },

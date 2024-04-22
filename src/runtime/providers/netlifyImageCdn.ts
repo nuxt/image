@@ -22,6 +22,7 @@ export const operationsGenerator = createOperationsGenerator({
       avif: 'avif',
       gif: 'gif',
       jpg: 'jpg',
+      jpeg: 'jpg',
       png: 'png',
       webp: 'webp',
     },
