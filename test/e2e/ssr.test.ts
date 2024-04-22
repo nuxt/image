@@ -42,7 +42,7 @@ describe('browser (ssr: true)', () => {
         sources,
         requests: requests
           .map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))
-          .sort()
+          .sort(),
       }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
 
       await page.close()
