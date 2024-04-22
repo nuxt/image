@@ -1,3 +1,5 @@
+import process from 'node:process'
+
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolve } from 'pathe'
@@ -58,7 +60,7 @@ export default defineNuxtModule<ModuleOptions>({
     options.dir = resolve(nuxt.options.srcDir, options.dir)
 
     // Domains from environment variable
-    const domainsFromENV: string[] = process.env?.NUXT_IMAGE_DOMAINS.replace(/\s/g, '').split(',') || []
+    const domainsFromENV: string[] = process.env.NUXT_IMAGE_DOMAINS?.replace(/\s/g, '').split(',') || []
 
     // Normalize domains to hostname
     options.domains = [...new Set([...options.domains, ...domainsFromENV])]
