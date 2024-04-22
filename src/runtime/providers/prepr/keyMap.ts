@@ -8,11 +8,11 @@ const keyMap = {
   format: 'format',
   height: 'h',
   quality: 'q',
-  width: 'w'
+  width: 'w',
 } as const
 
 type KeyMapKey = keyof typeof keyMap
-type KeyMapValue= typeof keyMap[KeyMapKey]
+type KeyMapValue = typeof keyMap[KeyMapKey]
 
 export { keyMap }
 export type { KeyMapKey, KeyMapValue }

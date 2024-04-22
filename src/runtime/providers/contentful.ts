@@ -13,21 +13,21 @@ export const operationsGenerator = createOperationsGenerator({
     focus: 'f',
     radius: 'r',
     quality: 'q',
-    background: 'bg'
+    background: 'bg',
   },
   valueMap: {
     format: {
-      jpeg: 'jpg'
+      jpeg: 'jpg',
     },
     fit: {
       cover: 'crop',
       contain: 'fill',
       fill: 'scale',
-      thumbnail: 'thumb'
-    }
+      thumbnail: 'thumb',
+    },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = contentfulCDN } = {}) => {
@@ -38,6 +38,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = cont
   const url = withBase(path, baseURL)
 
   return {
-    url
+    url,
   }
 }

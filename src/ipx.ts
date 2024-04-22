@@ -20,9 +20,9 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxBaseURL = providerOptions.options?.baseURL || '/_ipx'
 
   // Avoid overriding user custom handler
-  const hasUserProvidedIPX =
-    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL)) ||
-    nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+  const hasUserProvidedIPX
+    = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+    || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
   if (hasUserProvidedIPX) {
     return
   }
@@ -41,16 +41,16 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
     baseURL: ipxBaseURL,
     alias: {
       ...moduleOptions.alias,
-      ...providerOptions.options?.alias
+      ...providerOptions.options?.alias,
     },
     fs: (providerOptions.options?.fs !== false) && {
       dir: nuxt.options.dev ? publicDirs : relativeDir,
-      ...providerOptions.options?.fs
+      ...providerOptions.options?.fs,
     },
     http: (providerOptions.options?.http !== false) && {
       domains: moduleOptions.domains,
-      ...providerOptions.options?.http
-    }
+      ...providerOptions.options?.http,
+    },
   }
 
   nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
@@ -59,7 +59,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxHandler = <NitroEventHandler>{
     route: `${ipxBaseURL}/**`,
     middleware: false,
-    handler: resolver.resolve('./runtime/ipx')
+    handler: resolver.resolve('./runtime/ipx'),
   }
 
   if (!setupOptions?.isStatic) {

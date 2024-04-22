@@ -1,6 +1,7 @@
 // @vitest-environment nuxt
 
-import { VueWrapper, mount } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
@@ -14,7 +15,7 @@ describe('Renders simple image', () => {
 
   const observer = {
     wasAdded: false,
-    wasDestroyed: false
+    wasDestroyed: false,
   }
 
   beforeEach(() => {
@@ -24,15 +25,15 @@ describe('Renders simple image', () => {
       thresholds: any
       takeRecords: any
 
-      observe (_target: Element) {
+      observe(_target: Element) {
         observer.wasAdded = true
       }
 
-      disconnect () {
+      disconnect() {
         observer.wasDestroyed = true
       }
 
-      unobserve () {
+      unobserve() {
         observer.wasDestroyed = true
       }
     }
@@ -42,8 +43,8 @@ describe('Renders simple image', () => {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src
-      }
+        src,
+      },
     })
   })
 
@@ -74,8 +75,8 @@ describe('Renders simple image', () => {
         width: 200,
         height: 200,
         format: 'avif',
-        src
-      }
+        src,
+      },
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
     expect(img.find('img').exists()).toBe(true)
@@ -87,8 +88,8 @@ describe('Renders simple image', () => {
         width: 200,
         height: 200,
         format: 'avif,webp',
-        src
-      }
+        src,
+      },
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
     expect(img.find('source[type="image/webp"]').exists()).toBe(true)
@@ -101,8 +102,8 @@ describe('Renders simple image', () => {
         width: 200,
         height: 200,
         format: 'avif,gif',
-        src
-      }
+        src,
+      },
     })
     expect(img.find('source[type="image/avif"]').exists()).toBe(true)
     expect(img.find('source[type="image/gif"]').exists()).toBe(true)
@@ -129,8 +130,8 @@ describe('Renders simple image', () => {
   it('renders src when svg is passed', () => {
     const wrapper = mount(NuxtPicture, {
       propsData: {
-        src: '/image.svg'
-      }
+        src: '/image.svg',
+      },
     })
     expect(wrapper.html()).toMatchInlineSnapshot('"<picture><img data-nuxt-pic="" src="/image.svg"></picture>"')
   })
@@ -142,8 +143,8 @@ describe('Renders simple image', () => {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src: '/汉字.png'
-      }
+        src: '/汉字.png',
+      },
     })
     expect(img.html()).toMatchInlineSnapshot(`
       "<picture>
@@ -156,8 +157,8 @@ describe('Renders simple image', () => {
     const img = mount(NuxtPicture, {
       propsData: {
         format: 'avif',
-        src: '/test.png'
-      }
+        src: '/test.png',
+      },
     })
     expect(img.find('img').exists()).toBe(true)
   })
@@ -178,8 +179,8 @@ describe('Renders image, applies module config', () => {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src
-      }
+        src,
+      },
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
@@ -192,17 +193,17 @@ describe('Renders image, applies module config', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
-        baseURL: config.app.baseURL
+        baseURL: config.app.baseURL,
       },
-      format: ['avif']
+      format: ['avif'],
     })
     const picture = mount(NuxtPicture, {
       propsData: {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src
-      }
+        src,
+      },
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
@@ -215,17 +216,17 @@ describe('Renders image, applies module config', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
-        baseURL: config.app.baseURL
+        baseURL: config.app.baseURL,
       },
-      format: ['avif', 'webp']
+      format: ['avif', 'webp'],
     })
     const picture = mount(NuxtPicture, {
       propsData: {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src
-      }
+        src,
+      },
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
@@ -239,9 +240,9 @@ describe('Renders image, applies module config', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
-        baseURL: config.app.baseURL
+        baseURL: config.app.baseURL,
       },
-      format: ['avif', 'webp']
+      format: ['avif', 'webp'],
     })
     const picture = mount(NuxtPicture, {
       propsData: {
@@ -249,8 +250,8 @@ describe('Renders image, applies module config', () => {
         height: 200,
         sizes: '200,500:500,900:900',
         format: 'avif',
-        src
-      }
+        src,
+      },
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
@@ -263,17 +264,17 @@ describe('Renders image, applies module config', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
-        baseURL: config.app.baseURL
+        baseURL: config.app.baseURL,
       },
-      format: ['avif', 'webp']
+      format: ['avif', 'webp'],
     })
     const picture = mount(NuxtPicture, {
       propsData: {
         width: 200,
         height: 200,
         sizes: '200,500:500,900:900',
-        src: 'image.svg'
-      }
+        src: 'image.svg',
+      },
     })
     expect(picture.html()).toMatchInlineSnapshot('"<picture><img width="200" height="200" data-nuxt-pic="" src="image.svg"></picture>"')
   })
@@ -282,17 +283,17 @@ describe('Renders image, applies module config', () => {
     nuxtApp._img = createImage({
       ...imageOptions,
       nuxt: {
-        baseURL: config.app.baseURL
+        baseURL: config.app.baseURL,
       },
-      quality: 75
+      quality: 75,
     })
     const picture = mount(NuxtPicture, {
       propsData: {
         src,
         width: 200,
         height: 200,
-        sizes: '200,500:500,900:900'
-      }
+        sizes: '200,500:500,900:900',
+      },
     })
 
     expect(picture.html()).toMatchInlineSnapshot(`

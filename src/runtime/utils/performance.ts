@@ -6,10 +6,10 @@
  *  around the User Timing API. See more detail here:
  * https://www.w3.org/TR/user-timing/#dfn-mark_feature_usage
  */
-export function markFeatureUsage (featureName: string) {
+export function markFeatureUsage(featureName: string) {
   performance?.mark?.('mark_feature_usage', {
     detail: {
-      feature: featureName
-    }
+      feature: featureName,
+    },
   })
 }

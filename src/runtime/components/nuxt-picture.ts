@@ -9,7 +9,7 @@ import { getFileExtension } from '#image'
 export const pictureProps = {
   ...baseImageProps,
   legacyFormat: { type: String, default: null },
-  imgAttrs: { type: Object, default: null }
+  imgAttrs: { type: Object, default: null },
 }
 
 export default defineComponent({
@@ -37,7 +37,8 @@ export default defineComponent({
 
       if (!formats.includes(legacyFormat.value)) {
         formats.push(legacyFormat.value)
-      } else {
+      }
+      else {
         formats.splice(formats.indexOf(legacyFormat.value), 1)
         formats.push(legacyFormat.value)
       }
@@ -47,7 +48,7 @@ export default defineComponent({
           ..._base.options.value,
           sizes: props.sizes || $img.options.screens,
           densities: props.densities,
-          modifiers: { ..._base.modifiers.value, format }
+          modifiers: { ..._base.modifiers.value, format },
         })
 
         return <Source>{ src, type: `image/${format}`, sizes, srcset }
@@ -60,7 +61,7 @@ export default defineComponent({
         rel: 'preload',
         as: 'image',
         imagesrcset: sources.value[0].srcset,
-        nonce: props.nonce
+        nonce: props.nonce,
       }
 
       if (sources.value?.[0]?.sizes) { link.imagesizes = sources.value[0].sizes }
@@ -93,7 +94,8 @@ export default defineComponent({
       if (imgEl.value.complete && initialLoad) {
         if (imgEl.value.getAttribute('data-error')) {
           ctx.emit('error', new Event('error'))
-        } else {
+        }
+        else {
           ctx.emit('load', new Event('load'))
         }
       }
@@ -113,18 +115,18 @@ export default defineComponent({
           return h('source', {
             type: source.type,
             sizes: source.sizes,
-            srcset: source.srcset
+            srcset: source.srcset,
           })
         }),
         h('img', {
           ref: imgEl,
           ..._base.attrs.value,
-          ...(import.meta.server ? { onerror: "this.setAttribute('data-error', 1)" } : {}),
+          ...(import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
           ...imgAttrs,
           src: sources.value[lastSourceIndex.value].src,
           sizes: sources.value[lastSourceIndex.value].sizes,
-          srcset: sources.value[lastSourceIndex.value].srcset
-        })
+          srcset: sources.value[lastSourceIndex.value].srcset,
+        }),
       ])
-  }
+  },
 })

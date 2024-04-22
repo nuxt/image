@@ -3,9 +3,8 @@ import type { ModuleOptions } from '../module'
 import type { IPXRuntimeConfig } from '../ipx'
 import type { ImageModifiers } from './image'
 
-// eslint-disable-next-line no-use-before-define
 export type ProviderSetup = (providerOptions: ImageModuleProvider, moduleOptions: ModuleOptions, nuxt: Nuxt)
-  => void | Promise<void>
+=> void | Promise<void>
 
 export interface InputProvider<T = any> {
   name?: string
@@ -115,11 +114,11 @@ export interface ImageProviders {
   edgio?: any
   prismic?: any
   twicpics?: any
-  storyblok?: any,
-  wagtail?: any,
-  strapi?: any,
-  imageengine?: any,
-  uploadcare?: Partial<UploadcareOptions>,
+  storyblok?: any
+  wagtail?: any
+  strapi?: any
+  imageengine?: any
+  uploadcare?: Partial<UploadcareOptions>
   ipx?: Partial<IPXOptions>
   static?: Partial<IPXOptions>
 }

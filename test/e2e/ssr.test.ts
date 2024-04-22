@@ -11,9 +11,9 @@ await setup({
   nuxtConfig: {
     image: {
       inject: false,
-      provider: 'ipx'
-    }
-  }
+      provider: 'ipx',
+    },
+  },
 })
 
 describe('browser (ssr: true)', () => {

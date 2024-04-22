@@ -10,7 +10,7 @@ useServerSeoMeta({
 useHead({
   htmlAttrs: {
     lang: 'en',
-  }
+  },
 })
 const links = [{
   label: 'Documentation',
@@ -48,14 +48,42 @@ watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <UButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" color="gray" variant="ghost" />
-      <UButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" color="gray" variant="ghost" />
-      <UButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" color="gray" variant="ghost" />
+      <UButton
+        aria-label="Nuxt Website"
+        icon="i-simple-icons-nuxtdotjs"
+        to="https://nuxt.com"
+        color="gray"
+        variant="ghost"
+      />
+      <UButton
+        aria-label="Nuxt on X"
+        icon="i-simple-icons-x"
+        to="https://x.com/nuxt_js"
+        color="gray"
+        variant="ghost"
+      />
+      <UButton
+        aria-label="Nuxt Image on GitHub"
+        icon="i-simple-icons-github"
+        to="https://github.com/nuxt/image"
+        color="gray"
+        variant="ghost"
+      />
     </template>
     <!-- Mobile panel -->
-    <template v-if="$route.path !== '/'" #panel>
-      <LazyUContentSearchButton size="md" class="w-full mb-4" />
-      <LazyUNavigationTree :links="mapContentNavigation(navigation)" default-open :multiple="false" />
+    <template
+      v-if="$route.path !== '/'"
+      #panel
+    >
+      <LazyUContentSearchButton
+        size="md"
+        class="w-full mb-4"
+      />
+      <LazyUNavigationTree
+        :links="mapContentNavigation(navigation)"
+        default-open
+        :multiple="false"
+      />
     </template>
   </UHeader>
   <NuxtLayout>
@@ -64,19 +92,46 @@ watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
   <UFooter :links="links">
     <template #left>
       <span class="text-sm">
-        Published under <NuxtLink to="https://github.com/nuxt/image" target="_blank" class="underline">
+        Published under <NuxtLink
+          to="https://github.com/nuxt/image"
+          target="_blank"
+          class="underline"
+        >
           MIT License
         </NuxtLink>
       </span>
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <UButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" color="gray" variant="ghost" />
-      <UButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" color="gray" variant="ghost" />
-      <UButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" color="gray" variant="ghost" />
+      <UButton
+        aria-label="Nuxt Website"
+        icon="i-simple-icons-nuxtdotjs"
+        to="https://nuxt.com"
+        color="gray"
+        variant="ghost"
+      />
+      <UButton
+        aria-label="Nuxt on X"
+        icon="i-simple-icons-x"
+        to="https://x.com/nuxt_js"
+        color="gray"
+        variant="ghost"
+      />
+      <UButton
+        aria-label="Nuxt Image on GitHub"
+        icon="i-simple-icons-github"
+        to="https://github.com/nuxt/image"
+        color="gray"
+        variant="ghost"
+      />
     </template>
   </UFooter>
   <ClientOnly>
-    <LazyUContentSearch ref="search" :files="files" :navigation="navigation" :links="links" />
+    <LazyUContentSearch
+      ref="search"
+      :files="files"
+      :navigation="navigation"
+      :links="links"
+    />
   </ClientOnly>
 </template>

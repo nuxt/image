@@ -12,9 +12,9 @@ await setup({
     ssr: false,
     image: {
       inject: false,
-      provider: 'ipx'
-    }
-  }
+      provider: 'ipx',
+    },
+  },
 })
 
 describe('browser (ssr: false)', () => {

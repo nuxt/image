@@ -19,7 +19,7 @@ useSeoMeta({
   title: page.value.title,
   ogTitle: `${page.value.title} - ${isProvider ? 'Nuxt Image Providers' : 'Nuxt Image'}`,
   description: page.value.description,
-  ogDescription: page.value.description
+  ogDescription: page.value.description,
 })
 
 defineOgImage({
@@ -66,20 +66,43 @@ const communityLinks = computed(() => [
 
 <template>
   <UPage>
-    <UPageHeader :title="page.title" :description="page.description" :links="page.links" :headline="headline" />
+    <UPageHeader
+      :title="page.title"
+      :description="page.description"
+      :links="page.links"
+      :headline="headline"
+    />
 
-    <UPageBody prose class="pb-0">
-      <ContentRenderer v-if="page.body" :value="page" />
-      <hr v-if="surround?.length" class="my-8">
+    <UPageBody
+      prose
+      class="pb-0"
+    >
+      <ContentRenderer
+        v-if="page.body"
+        :value="page"
+      />
+      <hr
+        v-if="surround?.length"
+        class="my-8"
+      >
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template v-if="page.body?.toc?.links?.length" #right>
+    <template
+      v-if="page.body?.toc?.links?.length"
+      #right
+    >
       <UContentToc :links="page.body.toc.links">
         <template #bottom>
           <div class="hidden lg:block space-y-6 !mt-6">
-            <UDivider v-if="page.body?.toc?.links?.length" type="dashed" />
-            <UPageLinks title="Community" :links="communityLinks" />
+            <UDivider
+              v-if="page.body?.toc?.links?.length"
+              type="dashed"
+            />
+            <UPageLinks
+              title="Community"
+              :links="communityLinks"
+            />
             <UDivider type="dashed" />
             <AdsCarbon />
           </div>

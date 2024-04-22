@@ -1,6 +1,12 @@
 <template>
   <div>
-    <nuxt-picture src="/images/colors.jpg" format="avif,webp" width="500" height="500" @load="isLoaded = true" />
+    <nuxt-picture
+      src="/images/colors.jpg"
+      format="avif,webp"
+      width="500"
+      height="500"
+      @load="isLoaded = true"
+    />
     <p>Received onLoad event: {{ isLoaded }}</p>
   </div>
 </template>

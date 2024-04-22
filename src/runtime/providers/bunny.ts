@@ -19,15 +19,15 @@ export const operationsGenerator = createOperationsGenerator({
     hue: 'hue',
     contrast: 'contrast',
     autoOptimize: 'auto_optimize',
-    sepia: 'sepia'
+    sepia: 'sepia',
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
+  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
   const operations = operationsGenerator(modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? '?' + operations : ''))
+    url: joinURL(baseURL, src + (operations ? '?' + operations : '')),
   }
 }
