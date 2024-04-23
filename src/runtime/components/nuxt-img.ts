@@ -147,11 +147,11 @@ export default defineComponent({
 
     return () => h('img', {
       ref: imgEl,
-      src: src.value,
       ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
       ...ctx.attrs,
       class: props.placeholder && !placeholderLoaded.value ? [props.placeholderClass] : undefined,
+      src: src.value,
     })
   },
 })
