@@ -11,6 +11,7 @@
           <nuxt-img
             :provider="provider.name"
             v-bind="sample"
+            :preload="{ fetchPriority: 'auto' }"
           />
           <pre>{{ sample }}</pre>
         </div>

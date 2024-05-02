@@ -64,6 +64,9 @@ export default defineComponent({
         as: 'image',
         imagesrcset: sources.value[0].srcset,
         nonce: props.nonce,
+        ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
+          ? { fetchpriority: props.preload.fetchPriority }
+          : {}),
       }
 
       if (sources.value?.[0]?.sizes) {

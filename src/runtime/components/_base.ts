@@ -20,7 +20,12 @@ export const baseImageProps = {
 
   sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
   densities: { type: String, default: undefined },
-  preload: { type: Boolean, default: undefined },
+  preload: {
+    type: [Boolean, Object] as unknown as () => boolean | {
+      fetchPriority: 'auto' | 'high' | 'low'
+    },
+    default: undefined,
+  },
 
   // <img> attributes
   width: { type: [String, Number], default: undefined },
