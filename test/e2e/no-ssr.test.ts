@@ -22,13 +22,15 @@ describe('browser (ssr: false)', () => {
     it(`${provider.name} should render images`, async () => {
       const providerPath = `/provider/${provider.name}`
 
-      const requests: string[] = []
       const page = await createPage()
+
+      const requests: string[] = []
       await page.route('**', (route) => {
         requests.push(route.request().url())
         return route.continue()
       })
-      await page.goto(url(providerPath))
+
+      await page.goto(url(providerPath), { waitUntil: 'networkidle' })
 
       await page.waitForSelector('img')
       const images = await page.getByRole('img').all()
@@ -36,23 +38,27 @@ describe('browser (ssr: false)', () => {
       expect(images).toHaveLength(provider.samples.length)
 
       const sources = await Promise.all(images.map(el => el.evaluate(e => e.getAttribute('src'))))
-      expect(sources).toMatchSnapshot()
 
-      expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
+      expect({
+        sources,
+        requests: requests
+          .map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))
+          .sort(),
+      }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
 
       await page.close()
-    })
+    }, { timeout: 20000 })
   }
 
   it('should emit load and error events', async () => {
-    const page = await createPage('/events')
+    const page = await createPage()
     const logs: string[] = []
 
     page.on('console', (msg) => {
       logs.push(msg.text())
     })
 
-    await page.waitForLoadState('networkidle')
+    await page.goto(url('/events'), { waitUntil: 'networkidle' })
 
     expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
     expect(logs.filter(log => log === 'Error loading image').length).toBe(2)

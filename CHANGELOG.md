@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.6.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.5.0...v1.6.0)
+
+### 🚀 Enhancements
+
+- Configure `domains` with `NUXT_IMAGE_DOMAINS` ([#1332](https://github.com/nuxt/image/pull/1332))
+- **nuxt-img:** Add `placeholderClass` prop ([#1111](https://github.com/nuxt/image/pull/1111))
+
+### 🩹 Fixes
+
+- **hygraph:** Support new hygraph asset system ([#1321](https://github.com/nuxt/image/pull/1321))
+- **uploadcare:** Omit base when resolved URL is returned ([#1254](https://github.com/nuxt/image/pull/1254))
+- Handle `undefined` or empty image source values ([#1300](https://github.com/nuxt/image/pull/1300))
+- Reduce warnings about `density` values > 2 ([dad493a](https://github.com/nuxt/image/commit/dad493a))
+- **netlify:** Normalise `jpeg` format to `jpg` ([a59e57c](https://github.com/nuxt/image/commit/a59e57c))
+
+### 📖 Documentation
+
+- Use new `nuxi module add` command in installation ([#1310](https://github.com/nuxt/image/pull/1310))
+- Warn `<NuxtPicture>` doesn't support different sources ([#1326](https://github.com/nuxt/image/pull/1326))
+
+### 🏡 Chore
+
+- Migrate to eslint v9 ([#1333](https://github.com/nuxt/image/pull/1333))
+- Slight reformatting ([3baadb5](https://github.com/nuxt/image/commit/3baadb5))
+- Lint test files ([e8db947](https://github.com/nuxt/image/commit/e8db947))
+- Bump `devDependencies` ([74605cb](https://github.com/nuxt/image/commit/74605cb))
+
+### ✅ Tests
+
+- Improve test stability ([42646f4](https://github.com/nuxt/image/commit/42646f4))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Thimo ([@ThimoDEV](http://github.com/ThimoDEV))
+- Nathan Chase ([@nathanchase](http://github.com/nathanchase))
+- Aaron Lejeune ([@aaronLejeune](http://github.com/aaronLejeune))
+- Lehoczky Zoltán ([@Lehoczky](http://github.com/Lehoczky))
+- Scott Kennedy ([@scottyzen](http://github.com/scottyzen))
+- Tim Benniks <tbenniks@gmail.com>
+
 ## v1.5.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.4.0...v1.5.0)
