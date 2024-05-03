@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.7.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.6.0...v1.7.0)
+
+### 🚀 Enhancements
+
+- Allow specifying `fetchpriority` when preloading images ([#989](https://github.com/nuxt/image/pull/989))
+
+### 🩹 Fixes
+
+- Ensure `src` comes after `loading` when rendering image ([#1338](https://github.com/nuxt/image/pull/1338))
+
+### 📖 Documentation
+
+- Fix typo in get-started/installation ([#1344](https://github.com/nuxt/image/pull/1344))
+
+### 🤖 CI
+
+- Add codecov token ([#1342](https://github.com/nuxt/image/pull/1342))
+
+### ❤️ Contributors
+
+- Jonas Thelemann <e-mail+github@jonas-thelemann.de>
+- Tom Tang ([@qwerzl](http://github.com/qwerzl))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Ragura ([@Ragura](http://github.com/Ragura))
+
 ## v1.6.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.5.0...v1.6.0)
