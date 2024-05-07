@@ -37,7 +37,7 @@ const operationsGenerator = createOperationsGenerator({
       fill: 'fill',
       inside: 'pad',
       outside: 'lpad',
-      cover: 'fit',
+      cover: 'lfill',
       contain: 'scale',
       minCover: 'mfit',
       minInside: 'mpad',
