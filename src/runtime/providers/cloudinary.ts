@@ -86,6 +86,13 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
   const mergeModifiers = defu(modifiers, defaultModifiers)
   const operations = operationsGenerator(mergeModifiers as any)
 
+  // Check if the src is a Cloudinary URL
+  const srcMapping = src.match(/\/image\/upload\/(.*)/);
+  if (srcMapping && srcMapping?.length >= 1) {
+    baseURL = src.replace(srcMapping[1], '');
+    src = srcMapping[1];
+  }
+
   const remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
   // Handle delivery remote media file URLs
   // see: https://cloudinary.com/documentation/fetch_remote_images
