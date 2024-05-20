@@ -4,8 +4,15 @@
       <h1>{{ provider.name }}</h1>
       <br>
       <div class="providerShowcase">
-        <div v-for="sample of provider.samples" :key="sample.src">
-          <nuxt-img :provider="provider.name" v-bind="sample" />
+        <div
+          v-for="sample of provider.samples"
+          :key="sample.src"
+        >
+          <nuxt-img
+            :provider="provider.name"
+            v-bind="sample"
+            :preload="{ fetchPriority: 'auto' }"
+          />
           <pre>{{ sample }}</pre>
         </div>
       </div>
@@ -17,9 +24,9 @@
 import { providers } from '../../providers'
 
 definePageMeta({
-  validate ({ params }) {
+  validate({ params }) {
     return Boolean(providers.find(p => p.name === params.provider))
-  }
+  },
 })
 
 const route = useRoute()

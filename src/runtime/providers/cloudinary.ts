@@ -30,28 +30,28 @@ const operationsGenerator = createOperationsGenerator({
     customFunc: 'fn',
     density: 'dn',
     aspectRatio: 'ar',
-    blur: 'e_blur'
+    blur: 'e_blur',
   },
   valueMap: {
     fit: {
       fill: 'fill',
       inside: 'pad',
       outside: 'lpad',
-      cover: 'fit',
+      cover: 'lfill',
       contain: 'scale',
       minCover: 'mfit',
       minInside: 'mpad',
       thumbnail: 'thumb',
       cropping: 'crop',
-      coverLimit: 'limit'
+      coverLimit: 'limit',
     },
     format: {
-      jpeg: 'jpg'
+      jpeg: 'jpg',
     },
-    background (value: string) {
+    background(value: string) {
       return convertHexToRgbFormat(value)
     },
-    color (value: string) {
+    color(value: string) {
       return convertHexToRgbFormat(value)
     },
     gravity: {
@@ -70,16 +70,16 @@ const operationsGenerator = createOperationsGenerator({
       south: 'south',
       southEast: 'south_east',
       east: 'east',
-      center: 'center'
-    }
+      center: 'center',
+    },
   },
   joinWith: ',',
-  formatter: (key, value) => key.includes('_') ? `${key}:${value}` : `${key}_${value}`
+  formatter: (key, value) => key.includes('_') ? `${key}:${value}` : `${key}_${value}`,
 })
 
 const defaultModifiers = {
   format: 'auto',
-  quality: 'auto'
+  quality: 'auto',
 }
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
@@ -96,17 +96,19 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' 
     const baseURLWithoutRemoteFolder = baseURL.replace(remoteFolder, '')
 
     return {
-      url: joinURL(baseURLWithoutRemoteFolder, operations, remoteFolder, src)
+      url: joinURL(baseURLWithoutRemoteFolder, operations, remoteFolder, src),
     }
-  } else if (/\/image\/fetch\/?/.test(baseURL)) {
+  }
+  else if (/\/image\/fetch\/?/.test(baseURL)) {
     // need to encode the src as a path in case it contains special characters
     src = encodePath(src)
-  } else {
+  }
+  else {
     // If the src is not a remote media file then we need to remove the extension (if it exists)
     src = removePathExtension(src)
   }
 
   return {
-    url: joinURL(baseURL, operations, src)
+    url: joinURL(baseURL, operations, src),
   }
 }

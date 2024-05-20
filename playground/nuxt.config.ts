@@ -2,122 +2,140 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   modules: ['@nuxt/image'],
+  extends: ['./layers/example'],
   image: {
     inject: true,
     domains: [
       'https://nuxtjs.org',
       'https://images.unsplash.com',
-      'https://upload.wikimedia.org'
+      'https://upload.wikimedia.org',
     ],
     screens: {
-      750: 750
+      750: 750,
     },
     none: {},
     ipx: {
       sharpOptions: {
-        animated: true
+        animated: true,
       },
       maxAge: 50,
       fs: { maxAge: 51 },
-      http: { maxAge: 52 }
+      http: { maxAge: 52 },
     },
     alias: {
       unsplash: 'https://images.unsplash.com', // ipx
-      blog: '/remote/nuxt-org/blog' // cloudinary
+      blog: '/remote/nuxt-org/blog', // cloudinary
     },
     aliyun: {
-      baseURL: 'https://assets.yanbot.tech'
+      baseURL: 'https://assets.yanbot.tech',
+    },
+    awsAmplify: {
+      baseURL: 'https://example.amplifyapp.com/_amplify/image',
+    },
+    bunny: {
+      baseURL: 'https://bunnyoptimizerdemo.b-cdn.net',
     },
     twicpics: {
-      baseURL: 'https://demo.twic.pics/'
+      baseURL: 'https://demo.twic.pics/',
     },
     storyblok: {
-      baseURL: 'https://a.storyblok.com/'
+      baseURL: 'https://a.storyblok.com/',
     },
     wagtail: {
-      baseURL: 'https://cms.demo.nypr.digital/images/'
+      baseURL: 'https://cms.demo.nypr.digital/images/',
     },
     cloudflare: {
-      baseURL: 'https://that-test.site'
+      baseURL: 'https://that-test.site',
     },
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/'
+      baseURL: 'https://res.cloudinary.com/nuxt/image/upload/',
     },
     contentful: {},
     cloudimage: {
       token: 'demo',
       baseURL: 'sample.li',
-      apiVersion: 'v7'
+      apiVersion: 'v7',
     },
     directus: {
-      baseURL: 'http://localhost:8055/assets/'
+      baseURL: 'http://localhost:8055/assets/',
     },
     fastly: {
-      baseURL: 'https://www.fastly.io'
+      baseURL: 'https://www.fastly.io',
     },
     glide: {
-      baseURL: 'https://glide.herokuapp.com/1.0/'
+      baseURL: 'https://glide.herokuapp.com/1.0/',
     },
     gumlet: {
-      baseURL: 'https://demo.gumlet.io'
+      baseURL: 'https://demo.gumlet.io',
     },
     imgix: {
-      baseURL: 'https://assets.imgix.net'
+      baseURL: 'https://assets.imgix.net',
     },
     imagekit: {
-      baseURL: 'https://ik.imagekit.io/demo'
+      baseURL: 'https://ik.imagekit.io/demo',
     },
-    netlify: {
-      baseURL: 'https://netlify-photo-gallery.netlify.app'
+    netlifyImageCdn: {
+      baseURL: 'https://netlify-photo-gallery.netlify.app/.netlify/images',
+    },
+    netlifyLargeMedia: {
+      baseURL: 'https://netlify-photo-gallery.netlify.app',
     },
     layer0: {
-      baseURL: 'https://opt.moovweb.net'
+      baseURL: 'https://opt.moovweb.net',
     },
     edgio: {
-      baseURL: 'https://opt.moovweb.net'
+      baseURL: 'https://opt.moovweb.net',
     },
     prismic: {},
     prepr: {
-      projectName: 'nuxt-prepr-demo'
+      projectName: 'nuxt-prepr-demo',
     },
     sanity: {
-      projectId: 'zp7mbokg'
+      projectId: 'zp7mbokg',
     },
     strapi: {
-      baseURL: 'http://localhost:1337/uploads/'
+      baseURL: 'http://localhost:1337/uploads/',
     },
     unsplash: {},
     vercel: {
-      baseURL: 'https://image-component.nextjs.gallery/_next/image'
+      baseURL: 'https://image-component.nextjs.gallery/_next/image',
     },
     imageengine: {
-      baseURL: 'https://abc123.imgeng.in'
+      baseURL: 'https://abc123.imgeng.in',
     },
     uploadcare: {
     },
     sirv: {
-      baseURL: 'https://demo.sirv.com'
+      baseURL: 'https://demo.sirv.com',
+    },
+    hygraph: {
+      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
+    },
+    weserv: {
+      baseURL: '/',
+    },
+    caisy: {
     },
     providers: {
       custom: {
         provider: '~/providers/custom',
         options: {
-          baseURL: 'https://site.my'
-        }
-      }
+          baseURL: 'https://site.my',
+        },
+      },
     },
     presets: {
       s50: {
         modifiers: {
           width: 50,
-          height: 50
-        }
-      }
-    }
+          height: 50,
+        },
+      },
+    },
   },
   nitro: {
     prerender: {
-      failOnError: false
-    }
-  }
+      failOnError: false,
+    },
+  },
 })

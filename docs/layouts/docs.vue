@@ -11,7 +11,7 @@ const navigation = inject('navigation')
           <template #left>
             <UAside>
               <template #top>
-                <UDocsSearchButton size="md" />
+                <UContentSearchButton size="md" />
               </template>
               <UNavigationTree :links="mapContentNavigation(navigation)" />
             </UAside>

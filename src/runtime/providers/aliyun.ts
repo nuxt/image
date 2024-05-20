@@ -9,12 +9,12 @@ const operationsGenerator = createOperationsGenerator({
       return `${key},${Object.entries(value).map(([k, v]) => `${k}_${v}`).join(',')}`
     }
     return `${key},${value}`
-  }
+  },
 })
 
 export const getImage: ProviderGetImage = (
   src,
-  { modifiers = {}, baseURL } = {}
+  { modifiers = {}, baseURL } = {},
 ) => {
   if (!baseURL) {
     // also support runtime config
@@ -26,9 +26,11 @@ export const getImage: ProviderGetImage = (
   let resizeValue = {}
   if (width && height) {
     resizeValue = { fw: width, fh: height }
-  } else if (width) {
+  }
+  else if (width) {
     resizeValue = { w: width }
-  } else if (height) {
+  }
+  else if (height) {
     resizeValue = { h: height }
   }
   if (!resize && Object.keys(resizeValue).length) {
@@ -43,6 +45,6 @@ export const getImage: ProviderGetImage = (
 
   const operations = operationsGenerator(_modifiers)
   return {
-    url: joinURL(baseURL, src + (operations ? '?image_process=' + operations : ''))
+    url: joinURL(baseURL, src + (operations ? '?image_process=' + operations : '')),
   }
 }

@@ -10,6 +10,6 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = unsp
   const operations = operationsGenerator(modifiers)
   // withQuery requires query parameters as an object, so I parse the modifiers into an object with getQuery
   return {
-    url: withQuery(withBase(src, baseURL), getQuery('?' + operations))
+    url: withQuery(withBase(src, baseURL), getQuery('?' + operations)),
   }
 }

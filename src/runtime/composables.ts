@@ -12,7 +12,7 @@ export const useImage = (): $Img => {
   return nuxtApp.$img as $Img || nuxtApp._img || (nuxtApp._img = createImage({
     ...imageOptions,
     nuxt: {
-      baseURL: config.app.baseURL
-    }
+      baseURL: config.app.baseURL,
+    },
   }))
 }

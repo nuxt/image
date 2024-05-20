@@ -1,16 +1,16 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Nuxt Image Example'
-    }
+      title: 'Nuxt Image Example',
+    },
   },
   modules: [
-    '@nuxt/image'
+    '@nuxt/image',
   ],
   image: {
     domains: [
       'https://images.unsplash.com',
-      'https://source.unsplash.com'
-    ]
-  }
+      'https://source.unsplash.com',
+    ],
+  },
 })

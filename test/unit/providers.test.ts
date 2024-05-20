@@ -7,7 +7,9 @@ import { images } from '../providers'
 import { cleanDoubleSlashes } from '#image/utils'
 import * as ipx from '#image/providers/ipx'
 import * as none from '~/src/runtime/providers/none'
+import * as weserv from '~/src/runtime/providers/weserv'
 import * as aliyun from '#image/providers/aliyun'
+import * as awsAmplify from '#image/providers/awsAmplify'
 import * as cloudflare from '#image/providers/cloudflare'
 import * as cloudinary from '#image/providers/cloudinary'
 import * as twicpics from '#image/providers/twicpics'
@@ -19,7 +21,8 @@ import * as gumlet from '#image/providers/gumlet'
 import * as imageengine from '#image/providers/imageengine'
 import * as unsplash from '#image/providers/unsplash'
 import * as imagekit from '#image/providers/imagekit'
-import * as netlify from '#image/providers/netlify'
+import * as netlifyImageCdn from '#image/providers/netlifyImageCdn'
+import * as netlifyLargeMedia from '#image/providers/netlifyLargeMedia'
 import * as prismic from '#image/providers/prismic'
 import * as sanity from '#image/providers/sanity'
 import * as contentful from '#image/providers/contentful'
@@ -36,16 +39,16 @@ import * as sirv from '#image/providers/sirv'
 const emptyContext = {
   options: {
     screens: {
-      xs: 320,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      xxl: 1536,
-      '2xl': 1536
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536,
     },
-    nuxt: useNuxtApp()
-  }
+    nuxt: useNuxtApp(),
+  },
 } as any
 
 describe('Providers', () => {
@@ -67,12 +70,12 @@ describe('Providers', () => {
     const generated = ipx.getImage(src, { modifiers: {} }, context)
     generated.url = cleanDoubleSlashes(generated.url)
     expect(generated).toMatchObject({
-      url: '/_ipx/_/images/test.png'
+      url: '/_ipx/_/images/test.png',
     })
   })
   it('aliyun', () => {
     const providerOptions = {
-      baseURL: '/'
+      baseURL: '/',
     }
     for (const image of images) {
       const [src, modifiers] = image.args
@@ -80,9 +83,19 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.aliyun)
     }
   })
+  it('awsAmplify', () => {
+    const providerOptions = {
+      baseURL: '/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = awsAmplify.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.awsAmplify)
+    }
+  })
   it('cloudflare', () => {
     const providerOptions = {
-      baseURL: '/'
+      baseURL: '/',
     }
     for (const image of images) {
       const [src, modifiers] = image.args
@@ -93,7 +106,7 @@ describe('Providers', () => {
 
   it('cloudinary', () => {
     const providerOptions = {
-      baseURL: '/'
+      baseURL: '/',
     }
 
     for (const image of images) {
@@ -105,7 +118,7 @@ describe('Providers', () => {
 
   it('cloudinary fetch', () => {
     const providerOptions = {
-      baseURL: 'https://res.cloudinary.com/demo/image/fetch/'
+      baseURL: 'https://res.cloudinary.com/demo/image/fetch/',
     }
     // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
     const remoteUrl = 'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
@@ -114,19 +127,19 @@ describe('Providers', () => {
       {
         modifiers: {
           width: 300,
-          height: 300
+          height: 300,
         },
-        ...providerOptions
-      }, emptyContext
+        ...providerOptions,
+      }, emptyContext,
     )
     expect(generated).toMatchObject({
-      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,w_300,h_300/${remoteUrl}`
+      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,w_300,h_300/${remoteUrl}`,
     })
   })
 
   it('cloudinary blur param', () => {
     const providerOptions = {
-      baseURL: 'https://res.cloudinary.com/demo/image/fetch/'
+      baseURL: 'https://res.cloudinary.com/demo/image/fetch/',
     }
     // see: https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url
     const remoteUrl = 'https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png'
@@ -134,38 +147,38 @@ describe('Providers', () => {
       remoteUrl,
       {
         modifiers: {
-          blur: 100
+          blur: 100,
         },
-        ...providerOptions
-      }, emptyContext
+        ...providerOptions,
+      }, emptyContext,
     )
     expect(generated).toMatchObject({
-      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,e_blur:100/${remoteUrl}`
+      url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,e_blur:100/${remoteUrl}`,
     })
   })
 
   it('cloudinary upload', () => {
     const providerOptions = {
-      baseURL: 'https://res.cloudinary.com/demo/image/upload/remote'
+      baseURL: 'https://res.cloudinary.com/demo/image/upload/remote',
     }
     const generated = cloudinary.getImage(
       '/1/13/Benedict_Cumberbatch_2011.png',
       {
         modifiers: {
           width: 300,
-          height: 300
+          height: 300,
         },
-        ...providerOptions
-      }, emptyContext
+        ...providerOptions,
+      }, emptyContext,
     )
     expect(generated).toMatchObject({
-      url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png'
+      url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png',
     })
   })
 
   it('twicpics', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -177,7 +190,7 @@ describe('Providers', () => {
 
   it('glide', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
     for (const image of images) {
       const [src, modifiers] = image.args
@@ -188,7 +201,7 @@ describe('Providers', () => {
 
   it('fastly', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
     for (const image of images) {
       const [src, modifiers] = image.args
@@ -199,7 +212,7 @@ describe('Providers', () => {
 
   it('gumlet', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -211,7 +224,7 @@ describe('Providers', () => {
 
   it('imgix', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -223,7 +236,7 @@ describe('Providers', () => {
 
   it('imageengine', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -235,26 +248,26 @@ describe('Providers', () => {
 
   it('imageengine compression', () => {
     const providerOptions = {
-      baseURL: 'https://foo.bar.com'
+      baseURL: 'https://foo.bar.com',
     }
     const generated = imageengine.getImage(
       '/test.jpg',
       {
         modifiers: {
           width: 150,
-          quality: 0
+          quality: 0,
         },
-        ...providerOptions
-      }, emptyContext
+        ...providerOptions,
+      }, emptyContext,
     )
     expect(generated).toMatchObject({
-      url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99'
+      url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99',
     })
   })
 
   it('unsplash', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -266,7 +279,7 @@ describe('Providers', () => {
 
   it('imagekit', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -276,25 +289,37 @@ describe('Providers', () => {
     }
   })
 
-  it('netlify', () => {
+  it('netlifyImageCdn', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlify.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.netlify)
+      const generated = netlifyImageCdn.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.netlifyImageCdn)
+    }
+  })
+
+  it('netlifyLargeMedia', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = netlifyLargeMedia.getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.netlifyLargeMedia)
     }
   })
 
   it('prismic', () => {
     const providerOptions = {
-      baseURL: '' // Use empty base URL for the sake of simplicity
+      baseURL: '', // Use empty base URL for the sake of simplicity
     }
 
-    const EXISTING_QUERY_PARAMETERS =
-      '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+    const EXISTING_QUERY_PARAMETERS
+      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
 
     for (const image of images) {
       const [src, modifiers] = image.args
@@ -306,7 +331,7 @@ describe('Providers', () => {
   it('sanity', () => {
     const providerOptions = {
       baseURL: '',
-      projectId: 'projectid'
+      projectId: 'projectid',
     }
 
     for (const image of images) {
@@ -318,7 +343,7 @@ describe('Providers', () => {
 
   it('prepr', () => {
     const providerOptions = {
-      projectName: 'projectName'
+      projectName: 'projectName',
     }
 
     for (const image of images) {
@@ -329,7 +354,7 @@ describe('Providers', () => {
   })
   it('contentful', () => {
     const providerOptions = {
-      baseURL: ''
+      baseURL: '',
     }
 
     for (const image of images) {
@@ -342,7 +367,7 @@ describe('Providers', () => {
   it('cloudimage', () => {
     const providerOptions = {
       token: 'demo',
-      apiVersion: 'v7'
+      apiVersion: 'v7',
     }
 
     for (const image of images) {
@@ -379,7 +404,7 @@ describe('Providers', () => {
   it('strapi', () => {
     const test = {
       '': 'http://localhost:1337/uploads/test.png',
-      break: 'http://localhost:1337/uploads/break_test.png'
+      'break': 'http://localhost:1337/uploads/break_test.png',
     }
 
     for (const [breakpoint, expected] of Object.entries(test)) {
@@ -403,7 +428,6 @@ describe('Providers', () => {
     const providerOptions = {}
     const testImageId = '329944'
     for (const image of images) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_src, modifiers] = image.args
       const generated = wagtail.getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.wagtail)
@@ -418,17 +442,33 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.uploadcare)
     }
   })
+
   it('sirv', () => {
     const providerOptions = {
-      baseURL: 'https://demo.sirv.com'
+      baseURL: 'https://demo.sirv.com',
     }
-
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = sirv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sirv)
     }
   })
+
+  it('weserv', () => {
+    const providerOptions = {
+      baseURL: 'https://my-website.com/',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = weserv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.weserv)
+    }
+
+    const generated = weserv.getImage('test.png', {}, emptyContext)
+    expect(generated).toMatchObject({ url: 'test.png' })
+  })
+
   it('none', () => {
     const providerOptions = {
     }

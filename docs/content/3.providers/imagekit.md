@@ -140,11 +140,11 @@ Specify background color and its opacity for your image using the `bg` modifier.
 > Read more about ImageKit crop, resize, and other common transformations [here](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations).
 
 ## Overlay Transformation Modifiers
-Using ImageKit's Nuxt Image integration, you can overlay images or text over other images for watermarking or creating a dynamic banner using custom text!
+ImageKit's Nuxt Image integration enables you to apply overlays to [images](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md) using the `raw` parameter with the concept of [layers](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md#layers). The `raw` parameter facilitates incorporating transformations directly in the URL. A layer is a special type of transformation that allows you to apply text and image overlay along with other transformation parameters.
 
-### `overlayImage`
+### Overlay Image 
 
-Overlay an image on top of another image (base image) using the `overlayImage` modifier. You can use this to create dynamic banners, watermarking, etc.
+Overlay an image on top of another image (base image). You can use this to create dynamic banners, watermarking, etc.
 
 ```html
 <NuxtImg
@@ -158,11 +158,7 @@ Overlay an image on top of another image (base image) using the `overlayImage` m
     data() {
       return {
         modifiers: {
-          overlayImage: 'default-image.jpg',
-          overlaywidth: 300,
-          overlayHeight: 200,
-          overlayFocus: 'top_left',
-          overlayImageBorder: '5_FFFFFF',
+          raw: 'l-image,i-default-image.jpg,w-300,h-200,b-5_FFFFFF,fo-top_left,l-end'
         }
       }
     }
@@ -186,12 +182,7 @@ You can overlay text on an image and apply various transformations to it as per 
     data() {
       return {
         modifiers: {
-          overlayText: 'overlay made easy',
-          overlayRadius: 30,
-          overlayTextBackground: 'FFFFFF80',
-          overlayTextFontSize: '45',
-          overlayTextColor: '000000',
-          overlayTextPadding: '40'
+          raw: 'l-text,i-overlay made easy,fs-45,co-000000,bg-FFFFFF80,r-30,pa-40,l-end'
         }
       }
     }
@@ -199,7 +190,7 @@ You can overlay text on an image and apply various transformations to it as per 
 </script>
 ```
 
-Read more about ImageKit's overlay transformation parameters [here](https://docs.imagekit.io/features/image-transformations/overlay).
+Read more about ImageKit's overlay using layers [here](https://docs.imagekit.io/features/image-transformations/overlay-using-layers).
 
 ## Image Enhancement Modifiers
 
@@ -250,33 +241,6 @@ ImageKit's Nuxt Image integration provides an easy-to-remember name for each tra
 | rotate | rt |
 | blur | bl |
 | named | n |
-| overlayX | ox |
-| overlayY | oy |
-| overlayFocus | ofo |
-| overlayHeight | oh |
-| overlayWidth | ow |
-| overlayImage | oi |
-| overlayImageTrim | oit |
-| overlayImageAspectRatio | oiar |
-| overlayImageBackground | oibg |
-| overlayImageBorder | oib |
-| overlayImageDPR | oidpr |
-| overlayImageQuality | oiq |
-| overlayImageCropping | oic |
-| overlayImageCropMode | oicm |
-| overlayText | ot |
-| overlayTextFontSize | ots |
-| overlayTextFontFamily | otf |
-| overlayTextColor | otc |
-| overlayTextTransparency | oa |
-| overlayTextTypography | ott |
-| overlayBackground | obg |
-| overlayTextEncoded | ote |
-| overlayTextWidth | otw |
-| overlayTextBackground | otbg |
-| overlayTextPadding | otp |
-| overlayTextInnerAlignment | otia |
-| overlayRadius | or |
 | progressive | pr |
 | lossless | lo |
 | trim | t |

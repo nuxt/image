@@ -2,12 +2,14 @@ import { h, defineComponent, ref, computed, onMounted } from 'vue'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
+import { markFeatureUsage } from '../utils/performance'
 import { baseImageProps, useBaseImage } from './_base'
 import { useHead, useNuxtApp } from '#imports'
 
 export const imgProps = {
   ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined }
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  placeholderClass: { type: String, default: undefined },
 }
 
 export default defineComponent({
@@ -19,10 +21,11 @@ export default defineComponent({
     const _base = useBaseImage(props)
 
     const placeholderLoaded = ref(false)
+    const imgEl = ref<HTMLImageElement>()
 
     type AttrsT = typeof _base.attrs.value & {
-      sizes?: string
-      srcset?: string
+      'sizes'?: string
+      'srcset'?: string
       'data-nuxt-img'?: string
     }
 
@@ -33,8 +36,8 @@ export default defineComponent({
       modifiers: {
         ..._base.modifiers.value,
         width: parseSize(props.width),
-        height: parseSize(props.height)
-      }
+        height: parseSize(props.height),
+      },
     }))
 
     const attrs = computed(() => {
@@ -48,9 +51,15 @@ export default defineComponent({
 
     const placeholder = computed(() => {
       let placeholder = props.placeholder
-      if (placeholder === '') { placeholder = true }
-      if (!placeholder || placeholderLoaded.value) { return false }
-      if (typeof placeholder === 'string') { return placeholder }
+      if (placeholder === '') {
+        placeholder = true
+      }
+      if (!placeholder || placeholderLoaded.value) {
+        return false
+      }
+      if (typeof placeholder === 'string') {
+        return placeholder
+      }
 
       const size = (Array.isArray(placeholder)
         ? placeholder
@@ -61,14 +70,14 @@ export default defineComponent({
         width: size[0],
         height: size[1],
         quality: size[2] || 50,
-        blur: size[3] || 3
+        blur: size[3] || 3,
       }, _base.options.value)
     })
 
     const mainSrc = computed(() =>
       props.sizes
         ? sizes.value.src
-        : $img(props.src!, _base.modifiers.value, _base.options.value)
+        : $img(props.src!, _base.modifiers.value, _base.options.value),
     )
 
     const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
@@ -85,18 +94,19 @@ export default defineComponent({
             : {
                 href: sizes.value.src,
                 imagesizes: sizes.value.sizes,
-                imagesrcset: sizes.value.srcset
-              })
-        }]
+                imagesrcset: sizes.value.srcset,
+              }),
+          ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
+            ? { fetchpriority: props.preload.fetchPriority }
+            : {}),
+        }],
       })
     }
 
     // Prerender static images
-    if (process.server && process.env.prerender) {
+    if (import.meta.server && process.env.prerender) {
       prerenderStaticImages(src.value, sizes.value.srcset)
     }
-
-    const imgEl = ref<HTMLImageElement>()
 
     const nuxtApp = useNuxtApp()
     const initialLoad = nuxtApp.isHydrating
@@ -112,15 +122,20 @@ export default defineComponent({
           placeholderLoaded.value = true
           ctx.emit('load', event)
         }
+
+        markFeatureUsage('nuxt-image')
         return
       }
 
-      if (!imgEl.value) { return }
+      if (!imgEl.value) {
+        return
+      }
 
       if (imgEl.value.complete && initialLoad) {
         if (imgEl.value.getAttribute('data-error')) {
           ctx.emit('error', new Event('error'))
-        } else {
+        }
+        else {
           ctx.emit('load', new Event('load'))
         }
       }
@@ -135,10 +150,11 @@ export default defineComponent({
 
     return () => h('img', {
       ref: imgEl,
-      src: src.value,
-      ...process.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...attrs.value,
-      ...ctx.attrs
+      ...ctx.attrs,
+      class: props.placeholder && !placeholderLoaded.value ? [props.placeholderClass] : undefined,
+      src: src.value,
     })
-  }
+  },
 })
