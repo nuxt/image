@@ -9,6 +9,7 @@ const BuiltInProviders = [
   'cloudinary',
   'contentful',
   'cloudimage',
+  'directus',
   'fastly',
   'glide',
   'imagekit',
