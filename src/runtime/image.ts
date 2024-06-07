@@ -1,6 +1,16 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant } from '../types/image'
+import type {
+  ImageOptions,
+  ImageSizesOptions,
+  CreateImageOptions,
+  ResolvedImage,
+  ImageCTX,
+  $Img,
+  ImageSizes,
+  ImageSizesVariant,
+  BgImageSizes
+} from '../types/image'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
@@ -20,6 +30,9 @@ export function createImage(globalOptions: CreateImageOptions) {
 
     return image
   }
+  const getBgSizes: $Img['getBgSizes'] = (input, options = {}) => {
+    return createBgSizes(ctx, input, options)
+  }
 
   const $img = ((input, modifiers = {}, options = {}) => {
     return getImage(input, {
@@ -35,6 +48,7 @@ export function createImage(globalOptions: CreateImageOptions) {
 
   $img.options = globalOptions
   $img.getImage = getImage
+  $img.getBgSizes = getBgSizes
   $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
   $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
 
@@ -268,5 +282,95 @@ function finaliseSrcsetVariants(srcsetVariants: any[]) {
       srcsetVariants.splice(i, 1)
     }
     previousWidth = sizeVariant.width
+  }
+}
+
+export function createBgSizes (
+  ctx: ImageCTX,
+  input: string,
+  opts: Partial<ImageSizesOptions>
+): { imagesrcset: string, imagesizes: string, sizes: BgImageSizes } {
+  const width = parseSize(opts.modifiers?.width)
+  const height = parseSize(opts.modifiers?.height)
+  const sizes = parseSizes(opts.sizes || {})
+  const hwRatio = width && height ? height / width : 0
+  const variants = Object.entries(sizes)
+    .map(([key, size]) => {
+      return getSizesVariant(key, String(size), height, hwRatio, ctx)
+    })
+    .filter((v) => {
+      return v !== undefined
+    }) as ImageSizesVariant[]
+
+  // sort by screenMaxWidth (ascending)
+  variants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
+
+  const densities = opts.densities?.trim()
+    ? parseDensities(opts.densities.trim())
+    : ctx.options.densities
+  // sort densities ascending
+  densities.sort((a, b) => a - b)
+  checkDensities(densities)
+
+  const quality = opts.modifiers?.quality ? opts.modifiers.quality : ctx.options.quality
+
+  const result: BgImageSizes = new Map()
+  const imagesizesList: string[] = []
+
+  variants.forEach((variant, i) => {
+    const bpsWidth = String(variants[i + 1]?.screenMaxWidth || 'default')
+    if (result.has(bpsWidth)) {
+      return
+    }
+    if (bpsWidth === 'default') {
+      imagesizesList.push(`${variant._cWidth}px`)
+    } else {
+      imagesizesList.push(`(max-width: ${bpsWidth}px) ${variant._cWidth}px`)
+    }
+    result.set(
+      bpsWidth,
+      densities.map((d) => {
+        return {
+          src: getVariantSrc(ctx, input, {
+            ...opts,
+            modifiers: {
+              ...opts.modifiers,
+              quality
+            }
+          } as ImageSizesOptions, variant, d),
+          density: d.toString(),
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : '',
+          _cWidth: variant._cWidth * d
+        }
+      })
+    )
+  })
+  if (result.size === 0) {
+    result.set(
+      'default',
+      densities.map((d) => {
+        return {
+          src: ctx.$img!(
+            input,
+            {
+              ...opts.modifiers,
+              quality,
+              width: width ? width * d : undefined,
+              height: height ? height * d : undefined
+            },
+            opts),
+          density: d.toString(),
+          type: opts.modifiers?.format ? `image/${opts.modifiers.format}` : '',
+          _cWidth: width ? width * d : undefined
+        }
+      })
+    )
+  }
+  // TODO: prerender static images: just add common version of current function
+
+  return {
+    imagesizes: imagesizesList.join(', '),
+    imagesrcset: Array.from(result).map(([_, value]) => value.map(v => `${v.src} ${v._cWidth}w`).join(', ')).join(', '),
+    sizes: result
   }
 }
