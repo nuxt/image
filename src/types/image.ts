@@ -9,6 +9,7 @@ export interface ImageModifiers {
 export interface ImageOptions {
   provider?: string,
   preset?: string,
+  densities?: string,
   modifiers?: Partial<ImageModifiers>
   [key: string]: any
 }
