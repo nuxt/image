@@ -137,8 +137,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0(focus-trap@7.5.4)(nuxt@3.12.1(@parcel/watcher@2.4.1)(@types/node@20.12.12)(@unocss/reset@0.58.5)(encoding@0.1.13)(eslint@9.2.0)(floating-vue@5.2.2(@nuxt/kit@3.12.1(rollup@4.14.3))(vue@3.4.27(typescript@5.4.5)))(fuse.js@6.6.2)(ioredis@5.3.2)(optionator@0.9.3)(rollup@4.14.3)(terser@5.31.0)(typescript@5.4.5)(unocss@0.58.5(@unocss/webpack@0.58.5(rollup@4.14.3)(webpack@5.90.3))(postcss@8.4.38)(rollup@4.14.3)(vite@5.3.1(@types/node@20.12.12)(terser@5.31.0)))(vite@5.3.1(@types/node@20.12.12)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.4.5)))(rollup@4.14.3)(vite@5.3.1(@types/node@20.12.12)(terser@5.31.0))(vue@3.4.27(typescript@5.4.5))
       '@nuxthq/studio':
-        specifier: ^1.1.2
-        version: 1.1.2(rollup@4.14.3)
+        specifier: ^2.0.0
+        version: 2.0.0(rollup@4.14.3)
       '@nuxtjs/plausible':
         specifier: ^1.0.0
         version: 1.0.0(rollup@4.14.3)
@@ -1324,8 +1324,8 @@ packages:
     peerDependencies:
       vue: 3.4.27
 
-  '@nuxthq/studio@1.1.2':
-    resolution: {integrity: sha512-YVEiIuU+5cLZ0qdLsRAYuFE395XoYf87UTR5xwxxpw9++uhlyLiQyO7JIXTTWIOdEiMHt8frrrLJBBPd5tHAeQ==}
+  '@nuxthq/studio@2.0.0':
+    resolution: {integrity: sha512-ZbzobFPul9KIxF+Obyu4mZCmVsoLqksCbKzTrYgQFGUTgQOvMfCJNGYOw6mzlKXaozPt56Yhd2GphcPvGE15Rw==}
 
   '@nuxtjs/color-mode@3.3.3':
     resolution: {integrity: sha512-t6QM/tj1d/53xQ9JznNVIaqIfQWhjHRzNt5VqTxNeAJWG0HCdiHVezkUTMahPUgUbEJnBrtCoquUYwpyFhNF+Q==}
@@ -7051,7 +7051,7 @@ snapshots:
 
   '@babel/generator@7.23.6':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
@@ -7065,7 +7065,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.22.5':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-annotate-as-pure@7.24.7':
     dependencies:
@@ -7100,6 +7100,19 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.22.6
       semver: 6.3.1
 
+  '@babel/helper-create-class-features-plugin@7.23.10(@babel/core@7.24.7)':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@babel/helper-annotate-as-pure': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
+      '@babel/helper-function-name': 7.23.0
+      '@babel/helper-member-expression-to-functions': 7.23.0
+      '@babel/helper-optimise-call-expression': 7.22.5
+      '@babel/helper-replace-supers': 7.22.20(@babel/core@7.24.7)
+      '@babel/helper-skip-transparent-expression-wrappers': 7.22.5
+      '@babel/helper-split-export-declaration': 7.22.6
+      semver: 6.3.1
+
   '@babel/helper-create-class-features-plugin@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
@@ -7123,8 +7136,8 @@ snapshots:
 
   '@babel/helper-function-name@7.23.0':
     dependencies:
-      '@babel/template': 7.23.9
-      '@babel/types': 7.24.0
+      '@babel/template': 7.24.7
+      '@babel/types': 7.24.7
 
   '@babel/helper-function-name@7.24.7':
     dependencies:
@@ -7133,7 +7146,7 @@ snapshots:
 
   '@babel/helper-hoist-variables@7.22.5':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-hoist-variables@7.24.7':
     dependencies:
@@ -7141,7 +7154,7 @@ snapshots:
 
   '@babel/helper-member-expression-to-functions@7.23.0':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-member-expression-to-functions@7.24.7':
     dependencies:
@@ -7152,7 +7165,7 @@ snapshots:
 
   '@babel/helper-module-imports@7.22.15':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-module-imports@7.24.7':
     dependencies:
@@ -7183,7 +7196,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.22.5':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-optimise-call-expression@7.24.7':
     dependencies:
@@ -7200,6 +7213,13 @@ snapshots:
       '@babel/helper-member-expression-to-functions': 7.23.0
       '@babel/helper-optimise-call-expression': 7.22.5
 
+  '@babel/helper-replace-supers@7.22.20(@babel/core@7.24.7)':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@babel/helper-environment-visitor': 7.24.7
+      '@babel/helper-member-expression-to-functions': 7.23.0
+      '@babel/helper-optimise-call-expression': 7.22.5
+
   '@babel/helper-replace-supers@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
@@ -7211,7 +7231,7 @@ snapshots:
 
   '@babel/helper-simple-access@7.22.5':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-simple-access@7.24.7':
     dependencies:
@@ -7222,7 +7242,7 @@ snapshots:
 
   '@babel/helper-skip-transparent-expression-wrappers@7.22.5':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-skip-transparent-expression-wrappers@7.24.7':
     dependencies:
@@ -7233,7 +7253,7 @@ snapshots:
 
   '@babel/helper-split-export-declaration@7.22.6':
     dependencies:
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/helper-split-export-declaration@7.24.7':
     dependencies:
@@ -7255,7 +7275,7 @@ snapshots:
     dependencies:
       '@babel/template': 7.23.9
       '@babel/traverse': 7.23.9
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
     transitivePeerDependencies:
       - supports-color
 
@@ -7266,7 +7286,7 @@ snapshots:
 
   '@babel/highlight@7.23.4':
     dependencies:
-      '@babel/helper-validator-identifier': 7.22.20
+      '@babel/helper-validator-identifier': 7.24.7
       chalk: 2.4.2
       js-tokens: 4.0.0
 
@@ -7322,17 +7342,24 @@ snapshots:
       '@babel/core': 7.23.9
       '@babel/helper-plugin-utils': 7.22.5
 
+  '@babel/plugin-syntax-typescript@7.23.3(@babel/core@7.24.7)':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-typescript@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
 
-  '@babel/plugin-transform-modules-commonjs@7.23.3(@babel/core@7.23.9)':
+  '@babel/plugin-transform-modules-commonjs@7.23.3(@babel/core@7.24.7)':
     dependencies:
-      '@babel/core': 7.23.9
-      '@babel/helper-module-transforms': 7.23.3(@babel/core@7.23.9)
+      '@babel/core': 7.24.7
+      '@babel/helper-module-transforms': 7.24.7(@babel/core@7.24.7)
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/helper-simple-access': 7.22.5
+      '@babel/helper-simple-access': 7.24.7
+    transitivePeerDependencies:
+      - supports-color
 
   '@babel/plugin-transform-typescript@7.23.6(@babel/core@7.23.9)':
     dependencies:
@@ -7341,6 +7368,14 @@ snapshots:
       '@babel/helper-create-class-features-plugin': 7.23.10(@babel/core@7.23.9)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.23.9)
+
+  '@babel/plugin-transform-typescript@7.23.6(@babel/core@7.24.7)':
+    dependencies:
+      '@babel/core': 7.24.7
+      '@babel/helper-annotate-as-pure': 7.22.5
+      '@babel/helper-create-class-features-plugin': 7.23.10(@babel/core@7.24.7)
+      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.24.7)
 
   '@babel/plugin-transform-typescript@7.24.7(@babel/core@7.24.7)':
     dependencies:
@@ -7352,14 +7387,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/preset-typescript@7.23.3(@babel/core@7.23.9)':
+  '@babel/preset-typescript@7.23.3(@babel/core@7.24.7)':
     dependencies:
-      '@babel/core': 7.23.9
+      '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/helper-validator-option': 7.23.5
-      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.9)
-      '@babel/plugin-transform-modules-commonjs': 7.23.3(@babel/core@7.23.9)
-      '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.23.9)
+      '@babel/helper-validator-option': 7.24.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.24.7)
+      '@babel/plugin-transform-modules-commonjs': 7.23.3(@babel/core@7.24.7)
+      '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.24.7)
+    transitivePeerDependencies:
+      - supports-color
 
   '@babel/runtime@7.24.1':
     dependencies:
@@ -7371,7 +7408,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.23.5
       '@babel/parser': 7.24.4
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
 
   '@babel/template@7.24.7':
     dependencies:
@@ -7388,7 +7425,7 @@ snapshots:
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.24.4
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
       debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
@@ -8806,7 +8843,7 @@ snapshots:
       - vti
       - vue-tsc
 
-  '@nuxthq/studio@1.1.2(rollup@4.14.3)':
+  '@nuxthq/studio@2.0.0(rollup@4.14.3)':
     dependencies:
       '@nuxt/kit': 3.12.1(rollup@4.14.3)
       defu: 6.1.4
@@ -9715,9 +9752,9 @@ snapshots:
 
   '@unocss/transformer-attributify-jsx-babel@0.58.5':
     dependencies:
-      '@babel/core': 7.23.9
-      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.23.9)
-      '@babel/preset-typescript': 7.23.3(@babel/core@7.23.9)
+      '@babel/core': 7.24.7
+      '@babel/plugin-syntax-jsx': 7.23.3(@babel/core@7.24.7)
+      '@babel/preset-typescript': 7.23.3(@babel/core@7.24.7)
       '@unocss/core': 0.58.5
     transitivePeerDependencies:
       - supports-color
@@ -9973,11 +10010,11 @@ snapshots:
 
   '@vue/babel-plugin-resolve-type@1.2.2(@babel/core@7.24.7)':
     dependencies:
-      '@babel/code-frame': 7.23.5
+      '@babel/code-frame': 7.24.7
       '@babel/core': 7.24.7
       '@babel/helper-module-imports': 7.22.15
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/parser': 7.24.4
+      '@babel/parser': 7.24.7
       '@vue/compiler-sfc': 3.4.27
 
   '@vue/compiler-core@3.4.23':
@@ -14156,7 +14193,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.23.5
+      '@babel/code-frame': 7.24.7
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
