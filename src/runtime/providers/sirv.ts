@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '@nuxt/image'
+import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
 const deleteHash = (value: string) => value.startsWith('#') ? value.replace('#', '') : value

@@ -1,4 +1,4 @@
-import type { $Img } from '@nuxt/image'
+import type { $Img } from '../types'
 
 import { createImage } from './image'
 // @ts-expect-error virtual file

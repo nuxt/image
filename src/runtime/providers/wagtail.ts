@@ -1,5 +1,5 @@
 import { withBase, joinURL } from 'ufo'
-import type { ProviderGetImage } from '@nuxt/image'
+import type { ProviderGetImage } from '../../types'
 
 // https://docs.wagtail.org/en/v4.2.1/topics/images.html
 

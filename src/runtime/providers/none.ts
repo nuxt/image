@@ -1,3 +1,3 @@
-import type { ProviderGetImage } from '@nuxt/image'
+import type { ProviderGetImage } from '../../types'
 
 export const getImage: ProviderGetImage = url => ({ url })

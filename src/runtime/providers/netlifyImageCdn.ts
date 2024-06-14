@@ -1,5 +1,5 @@
 import { encodeQueryItem } from 'ufo'
-import type { ProviderGetImage } from '@nuxt/image'
+import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
 // https://docs.netlify.com/image-cdn/overview/

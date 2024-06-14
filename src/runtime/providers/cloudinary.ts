@@ -1,6 +1,6 @@
 import { joinURL, encodePath } from 'ufo'
 import { defu } from 'defu'
-import type { ProviderGetImage } from '@nuxt/image'
+import type { ProviderGetImage } from '../../types'
 import { createOperationsGenerator } from '#image'
 
 const convertHexToRgbFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
