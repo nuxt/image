@@ -1,4 +1,4 @@
-import type { $Img } from '../types'
+import type { $Img } from '../module'
 
 import { createImage } from './image'
 // @ts-expect-error virtual file

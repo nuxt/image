@@ -1,5 +1,5 @@
 import { withBase, parseURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
 // https://www.contentful.com/developers/docs/references/images-api/

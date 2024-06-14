@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({

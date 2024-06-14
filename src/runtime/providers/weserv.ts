@@ -1,5 +1,5 @@
 import { withBase } from 'ufo'
-import type { OperationGeneratorConfig, ProviderGetImage, ImageOptions } from '../../types'
+import type { OperationGeneratorConfig, ProviderGetImage, ImageOptions } from '../../module'
 import { createOperationsGenerator } from '#image'
 import { createError } from '#imports'
 

@@ -1,3 +1,3 @@
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../module'
 
 export const getImage: ProviderGetImage = url => ({ url })
