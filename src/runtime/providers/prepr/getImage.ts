@@ -1,6 +1,6 @@
 import { joinURL } from 'ufo'
 
-import type { ImageOptions, ResolvedImage, ImageCTX } from '../../../types'
+import type { ImageOptions, ResolvedImage, ImageCTX } from '@nuxt/image'
 
 import { formatter } from './formatter'
 import { keyMap } from './keyMap'

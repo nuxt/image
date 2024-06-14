@@ -1,5 +1,5 @@
 import { stringifyQuery } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '@nuxt/image'
 
 export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_amplify/image' } = {}, ctx) => {
   const validWidths = Object.values(ctx.options.screens || {}).sort((a, b) => a - b)

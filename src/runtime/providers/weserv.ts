@@ -1,5 +1,5 @@
 import { withBase } from 'ufo'
-import type { OperationGeneratorConfig, ProviderGetImage, ImageOptions } from '../../types'
+import type { OperationGeneratorConfig, ProviderGetImage, ImageOptions } from '@nuxt/image'
 import { createOperationsGenerator } from '#image'
 import { createError } from '#imports'
 

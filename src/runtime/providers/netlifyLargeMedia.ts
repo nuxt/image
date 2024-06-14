@@ -1,5 +1,5 @@
 import { encodeQueryItem, joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '@nuxt/image'
 import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({
