@@ -9,6 +9,14 @@
   "homepage": "https://image.nuxt.com",
   "license": "MIT",
   "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
   "main": "./dist/module.mjs",
   "types": "./dist/module.d.ts",
   "files": [
