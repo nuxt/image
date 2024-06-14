@@ -33,4 +33,4 @@ Default: `/`
 
 Your deployment's domain (zone).
 
-**Note:** `/cdn-cgi/image/` will be automatically appended for generating URLs.
+**Note:** `/cdn-cgi/imagedelivery/` will be automatically appended for generating URLs.
