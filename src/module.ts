@@ -50,7 +50,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@nuxt/image',
     configKey: 'image',
     compatibility: {
-      nuxt: '^3.1.0',
+      nuxt: '>=3.1.0',
     },
   },
   async setup(options, nuxt) {
