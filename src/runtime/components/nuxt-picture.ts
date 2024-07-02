@@ -10,6 +10,8 @@ export const pictureProps = {
   ...baseImageProps,
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null },
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  placeholderClass: { type: String, default: undefined },
 }
 
 export default defineComponent({
@@ -22,6 +24,7 @@ export default defineComponent({
 
     const originalFormat = computed(() => getFileExtension(props.src))
     const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
+    const placeholderLoaded = ref(false)
 
     const legacyFormat = computed(() => {
       if (props.legacyFormat) {
@@ -58,6 +61,8 @@ export default defineComponent({
     })
     const lastSourceIndex = computed(() => sources.value.length - 1)
 
+    const mainSrc = computed(() => sources.value[lastSourceIndex.value])
+
     if (props.preload) {
       const link: NonNullable<Head['link']>[number] = {
         rel: 'preload',
@@ -84,6 +89,31 @@ export default defineComponent({
       }
     }
 
+    const placeholder = computed(() => {
+      let placeholder = props.placeholder
+      if (placeholder === '') {
+        placeholder = true
+      }
+      if (!placeholder || placeholderLoaded.value) {
+        return false
+      }
+      if (typeof placeholder === 'string') {
+        return placeholder
+      }
+
+      const size = (Array.isArray(placeholder)
+        ? placeholder
+        : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
+
+      return $img(props.src!, {
+        ..._base.modifiers.value,
+        width: size[0],
+        height: size[1],
+        quality: size[2] || 50,
+        blur: size[3] || 3,
+      }, _base.options.value)
+    })
+
     const imgEl = ref<HTMLImageElement>()
 
     // Prerender static images
@@ -96,6 +126,22 @@ export default defineComponent({
     const nuxtApp = useNuxtApp()
     const initialLoad = nuxtApp.isHydrating
     onMounted(() => {
+      if (placeholder.value) {
+        const img = new Image()
+
+        if (mainSrc.value.src) img.src = mainSrc.value.src
+        if (mainSrc.value.sizes) img.sizes = mainSrc.value.sizes
+        if (mainSrc.value.srcset) img.srcset = mainSrc.value.srcset
+
+        img.onload = (event) => {
+          placeholderLoaded.value = true
+          ctx.emit('load', event)
+        }
+
+        markFeatureUsage('nuxt-picture')
+        return
+      }
+
       if (!imgEl.value) {
         return
       }
@@ -122,7 +168,7 @@ export default defineComponent({
       h('picture', null, [
         ...sources.value.slice(0, -1).map((source) => {
           return h('source', {
-            type: source.type,
+            type: placeholder.value ? 'display/never' : source.type,
             sizes: source.sizes,
             srcset: source.srcset,
           })
@@ -132,9 +178,9 @@ export default defineComponent({
           ..._base.attrs.value,
           ...(import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
           ...imgAttrs,
-          src: sources.value[lastSourceIndex.value].src,
-          sizes: sources.value[lastSourceIndex.value].sizes,
-          srcset: sources.value[lastSourceIndex.value].srcset,
+          src: placeholder.value ? placeholder.value : sources.value[lastSourceIndex.value].src,
+          sizes: placeholder.value ? undefined : sources.value[lastSourceIndex.value].sizes,
+          srcset: placeholder.value ? undefined : sources.value[lastSourceIndex.value].srcset,
         }),
       ])
   },
