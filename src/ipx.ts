@@ -35,7 +35,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
 
     return resolve(layerOptions.srcDir, path)
   }).filter(dir => existsSync(dir))
-  const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
+
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
     baseURL: ipxBaseURL,
@@ -44,7 +44,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
       ...providerOptions.options?.alias,
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dir: nuxt.options.dev ? publicDirs : relativeDir,
+      dir: publicDirs,
       ...providerOptions.options?.fs,
     },
     http: (providerOptions.options?.http !== false) && {
