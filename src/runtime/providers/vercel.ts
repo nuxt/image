@@ -1,5 +1,5 @@
 import { stringifyQuery } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../module'
 
 // https://vercel.com/docs/more/adding-your-framework#images
 

@@ -1,5 +1,5 @@
 import { withBase, withoutLeadingSlash } from 'ufo'
-import type { ProviderGetImage } from '../../types'
+import type { ProviderGetImage } from '../../module'
 
 // https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#upload
 

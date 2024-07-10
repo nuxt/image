@@ -1,5 +1,5 @@
 import type { Plugin } from 'nuxt/app'
-import type { $Img } from '../types'
+import type { $Img } from '../module'
 import { defineNuxtPlugin, useImage } from '#imports'
 
 export default defineNuxtPlugin(() => {
