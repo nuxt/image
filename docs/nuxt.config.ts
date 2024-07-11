@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   extends: '@nuxt/ui-pro',
+
   modules: [
     '@nuxt/image',
     '@nuxt/content',
@@ -11,19 +12,24 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
     'nuxt-og-image',
   ],
+
   devtools: { enabled: true },
+
   colorMode: {
     preference: 'dark',
   },
+
   ui: {
     icons: ['heroicons', 'simple-icons', 'ph'],
   },
+
   nitro: {
     prerender: {
       routes: ['/', '/api/search.json'],
       autoSubfolderIndex: false,
     },
   },
+
   routeRules: {
     '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
     '/configuration': { redirect: { to: '/get-started/configuration', statusCode: 301 } },
@@ -32,6 +38,7 @@ export default defineNuxtConfig({
     '/components/nuxt-picture': { redirect: { to: '/usage/nuxt-picture', statusCode: 301 } },
     '/api/use-image': { redirect: { to: '/usage/use-image', statusCode: 301 } },
   },
+
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558
     // Adding all global components to the main entry
@@ -47,4 +54,6 @@ export default defineNuxtConfig({
       }
     },
   },
+
+  compatibilityDate: '2024-07-11',
 })
