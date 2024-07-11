@@ -27,7 +27,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:generate": "nuxi generate playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare docs",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "pnpm nuxt dev docs",
     "lint": "eslint .",
