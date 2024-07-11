@@ -5,7 +5,8 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@iconify-json/ph": "^1.1.13",
@@ -19,7 +20,7 @@
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "nuxt": "^3.12.3",
-    "nuxt-og-image": "^2.2.4",
+    "nuxt-og-image": "^3.0.0-rc.59",
     "perfect-debounce": "^1.0.0"
   },
   "devDependencies": {
