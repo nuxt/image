@@ -27,7 +27,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:generate": "nuxi generate playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare docs",
     "docs:build": "cd docs && nuxt generate",
     "docs:dev": "pnpm nuxt dev docs",
     "lint": "eslint .",
@@ -37,7 +37,7 @@
     "test:types": "vue-tsc --noEmit && nuxi typecheck playground && nuxi typecheck example"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.12.3",
+    "@nuxt/kit": "^3.12.4",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
     "h3": "^1.11.1",
@@ -63,7 +63,7 @@
     "happy-dom": "^14.12.0",
     "ipx": "^2.1.0",
     "jiti": "1.21.6",
-    "nuxt": "^3.12.3",
+    "nuxt": "^3.12.4",
     "ofetch": "^1.3.4",
     "playwright-core": "^1.44.1",
     "semver": "^7.6.2",
@@ -79,7 +79,7 @@
   "packageManager": "pnpm@9.3.0",
   "resolutions": {
     "@nuxt/image": "link:.",
-    "@nuxt/schema": "3.12.3",
+    "@nuxt/schema": "3.12.4",
     "@nuxt/ui": "2.17.0",
     "vue": "3.4.28"
   },
