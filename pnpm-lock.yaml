@@ -134,8 +134,8 @@ importers:
         specifier: link:..
         version: link:..
       '@nuxt/ui-pro':
-        specifier: ^1.4.0
-        version: 1.4.0(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.0)(vite@5.3.4(@types/node@20.14.2)(terser@5.31.0))(vue@3.4.28(typescript@5.4.5))
+        specifier: ^1.4.1
+        version: 1.4.1(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.0)(vite@5.3.4(@types/node@20.14.2)(terser@5.31.0))(vue@3.4.28(typescript@5.4.5))
       '@nuxthq/studio':
         specifier: ^2.0.3
         version: 2.0.3(magicast@0.3.4)(rollup@4.18.0)
@@ -1077,14 +1077,14 @@ packages:
   '@iconify-json/tabler@1.1.105':
     resolution: {integrity: sha512-USJbNfa0fAHBLilxTKn70wkvFnopmfcomfpqD0ul/69uyZnonztHhyrbM8MI9Ua4eYXaPymoB7tuZ+Ionx6xfg==}
 
+  '@iconify-json/vscode-icons@1.1.37':
+    resolution: {integrity: sha512-02+dR2/LdIZTqGfyQerla5snhdN4edwYgpDuFZpI2lK9w8OVm26WYbg8RR8TxXQrlCRs726NQYxl5W+7V1YM/Q==}
+
   '@iconify/collections@1.0.446':
     resolution: {integrity: sha512-d+ZcVz9MWiFgdTyf2W+Jn2r5fXFddIQQp87eiQuzokyNwSmJb455EsZWl9USXkmKuwctp9yAHITCVGV/6rU0cw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
-
-  '@iconify/utils@2.1.23':
-    resolution: {integrity: sha512-YGNbHKM5tyDvdWZ92y2mIkrfvm5Fvhe6WJSkWu7vvOFhMtYDP0casZpoRz0XEHZCrYsR4stdGT3cZ52yp5qZdQ==}
 
   '@iconify/utils@2.1.30':
     resolution: {integrity: sha512-bY0IO5xLOlbzJBnjWLxknp6Sss3yla03sVY9VeUz9nT6dbc+EGKlLfCt+6uytJnWm5CUvTF/BNotsLWF7kI61A==}
@@ -1344,8 +1344,8 @@ packages:
       vitest:
         optional: true
 
-  '@nuxt/ui-pro@1.4.0':
-    resolution: {integrity: sha512-xo6fbFhAocVgyvDbQK21P+0zQuy9XMNeW65O+czRvJDwlsf9QEqcCF5iGkYIB/5OXk9VYFgYMiHN4fNAyz36ZA==}
+  '@nuxt/ui-pro@1.4.1':
+    resolution: {integrity: sha512-ab+SNjyWHQTH23/WJD0gDE2p6FoF5zEshij4HFAhkco7x5w1HeGMtyLDUlzDb95zIaxAC+Mj5EP+ytBH/McJrg==}
 
   '@nuxt/ui@2.18.4':
     resolution: {integrity: sha512-NzFUzh5Izd7mduhYhFBlIOcqE8aY+9mbSQ0n8sIASpASv162VJ46OsR5Jm5sbfhKDrgv7UsBk6VKXJXiEI7ThQ==}
@@ -8037,23 +8037,15 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/vscode-icons@1.1.37':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/collections@1.0.446':
     dependencies:
       '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
-
-  '@iconify/utils@2.1.23':
-    dependencies:
-      '@antfu/install-pkg': 0.1.1
-      '@antfu/utils': 0.7.10
-      '@iconify/types': 2.0.0
-      debug: 4.3.5
-      kolorist: 1.8.0
-      local-pkg: 0.5.0
-      mlly: 1.7.1
-    transitivePeerDependencies:
-      - supports-color
 
   '@iconify/utils@2.1.30':
     dependencies:
@@ -8892,8 +8884,9 @@ snapshots:
       - rollup
       - supports-color
 
-  '@nuxt/ui-pro@1.4.0(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.0)(vite@5.3.4(@types/node@20.14.2)(terser@5.31.0))(vue@3.4.28(typescript@5.4.5))':
+  '@nuxt/ui-pro@1.4.1(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.0)(vite@5.3.4(@types/node@20.14.2)(terser@5.31.0))(vue@3.4.28(typescript@5.4.5))':
     dependencies:
+      '@iconify-json/vscode-icons': 1.1.37
       '@nuxt/ui': 2.18.4(focus-trap@7.5.4)(magicast@0.3.4)(rollup@4.18.0)(vite@5.3.4(@types/node@20.14.2)(terser@5.31.0))(vue@3.4.28(typescript@5.4.5))
       '@vueuse/core': 10.11.0(vue@3.4.28(typescript@5.4.5))
       defu: 6.1.4
@@ -10123,7 +10116,7 @@ snapshots:
 
   '@unocss/preset-icons@0.58.5':
     dependencies:
-      '@iconify/utils': 2.1.23
+      '@iconify/utils': 2.1.30
       '@unocss/core': 0.58.5
       ofetch: 1.3.4
     transitivePeerDependencies:
