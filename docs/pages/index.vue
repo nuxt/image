@@ -134,7 +134,7 @@ const providers = ['caisy', 'bunny', 'cloudflare', 'cloudimage', 'cloudinary', '
         </ULandingCard>
         <ULandingCard
           to="/providers/ipx"
-          title="Built-in resizer"
+          title="Built-in Resizer"
           icon="i-ph-crop"
           description="Unlock the power of our built-in image resizer and transformer with IPX."
         />
