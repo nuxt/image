@@ -76,7 +76,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
     options.densities = options.densities || []
 
-    const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt'> = pick(options, [
+    const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'> = pick(options, [
       'screens',
       'presets',
       'provider',

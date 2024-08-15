@@ -14,5 +14,6 @@ export const useImage = (): $Img => {
     nuxt: {
       baseURL: config.app.baseURL,
     },
+    runtimeConfig: config,
   }))
 }

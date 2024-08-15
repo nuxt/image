@@ -1,3 +1,5 @@
+import type { RuntimeConfig } from '@nuxt/schema'
+
 export interface ImageModifiers {
   width: number
   height: number
@@ -45,6 +47,7 @@ export interface CreateImageOptions {
   densities: number[]
   format: string[]
   quality?: number
+  runtimeConfig: RuntimeConfig
 }
 
 export interface ImageInfo {
