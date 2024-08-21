@@ -1,8 +1,8 @@
 <template>
   <picture>
     <source
-      v-for="(source, sourceIndex) in sources.slice(0, -1)"
-      :key="sourceIndex"
+      v-for="source in sources.slice(0, -1)"
+      :key="source.src"
       :type="source.type"
       :sizes="source.sizes"
       :srcset="source.srcset"
@@ -56,16 +56,17 @@ const legacyFormat = computed(() => {
   if (props.legacyFormat) {
     return props.legacyFormat
   }
+
   return isTransparent.value ? 'png' : 'jpeg'
 })
 
-type Source = { srcset?: string, src?: string, type?: string, sizes?: string }
+type Source = { src: string, srcset?: string, type?: string, sizes?: string }
 
 const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
 
   if (formats[0] === 'svg') {
-    return [{ src: props.src }]
+    return [{ src: props.src! }]
   }
 
   if (!formats.includes(legacyFormat.value)) {
@@ -121,7 +122,7 @@ const imgEl = ref<HTMLImageElement>()
 
 // Prerender static images
 if (import.meta.server && process.env.prerender) {
-  for (const src of sources.value as Source[]) {
+  for (const src of sources.value) {
     prerenderStaticImages(src.src, src.srcset)
   }
 }
