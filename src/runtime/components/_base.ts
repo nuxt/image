@@ -1,4 +1,5 @@
 import { computed } from 'vue'
+import type { ImgHTMLAttributes } from '@vue/runtime-dom'
 import type { ExtractPropTypes } from 'vue'
 import { parseSize } from '../utils'
 import { useImage } from '#imports'
@@ -31,7 +32,7 @@ export const baseImageProps = {
   width: { type: [String, Number], default: undefined },
   height: { type: [String, Number], default: undefined },
   alt: { type: String, default: undefined },
-  referrerpolicy: { type: String, default: undefined },
+  referrerpolicy: { type: String as unknown as () => ImgHTMLAttributes['referrerpolicy'], default: undefined },
   usemap: { type: String, default: undefined },
   longdesc: { type: String, default: undefined },
   ismap: { type: Boolean, default: undefined },
@@ -59,7 +60,7 @@ export interface BaseImageAttrs {
   width?: number
   height?: number
   alt?: string
-  referrerpolicy?: string
+  referrerpolicy?: ImgHTMLAttributes['referrerpolicy']
   usemap?: string
   longdesc?: string
   ismap?: boolean
