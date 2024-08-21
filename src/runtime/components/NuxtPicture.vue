@@ -26,8 +26,8 @@
 import type { Head } from '@unhead/vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
+import { getFileExtension } from '../utils'
 import { useBaseImage, baseImageProps } from './_base'
-import { getFileExtension } from '#image'
 
 const props = defineProps({
   ...baseImageProps,
