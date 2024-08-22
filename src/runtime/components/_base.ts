@@ -1,6 +1,5 @@
 import { computed } from 'vue'
-import type { ImgHTMLAttributes } from '@vue/runtime-dom'
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, ImgHTMLAttributes } from 'vue'
 import { parseSize } from '../utils'
 import { useImage } from '#imports'
 
