@@ -14,20 +14,24 @@
         ..._base.attrs.value,
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
+        src: sources[lastSourceIndex].src,
+        sizes: sources[lastSourceIndex].sizes,
+        srcset: sources[lastSourceIndex].srcset,
       }"
-      :src="sources[lastSourceIndex].src"
-      :sizes="sources[lastSourceIndex].sizes"
-      :srcset="sources[lastSourceIndex].srcset"
     >
   </picture>
 </template>
 
 <script setup lang="ts">
 import type { Head } from '@unhead/vue'
+import { useHead } from '@unhead/vue'
+import { computed, onMounted, ref, useAttrs } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
+import { useImage } from '../composables'
 import { useBaseImage, baseImageProps } from './_base'
+import { useNuxtApp } from '#app'
 
 const props = defineProps({
   ...baseImageProps,
