@@ -87,7 +87,7 @@ export default defineComponent({
     const imgEl = ref<HTMLImageElement>()
 
     // Prerender static images
-    if (import.meta.server && import.meta.env.prerender) {
+    if (import.meta.server && import.meta.prerender) {
       for (const src of sources.value as Source[]) {
         prerenderStaticImages(src.src, src.srcset)
       }
