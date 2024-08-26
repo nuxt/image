@@ -160,13 +160,13 @@ const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> 
 
 const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = {
   netlify: () => {
-    return process.env.NETLIFY_LFS_ORIGIN_URL ? 'netlifyLargeMedia' : 'netlifyImageCdn'
+    return import.meta.env.NETLIFY_LFS_ORIGIN_URL ? 'netlifyLargeMedia' : 'netlifyImageCdn'
   },
 }
 
 export function detectProvider(userInput: string = '') {
-  if (process.env.NUXT_IMAGE_PROVIDER) {
-    return process.env.NUXT_IMAGE_PROVIDER
+  if (typeof import.meta.env.NUXT_IMAGE_PROVIDER === 'string') {
+    return import.meta.env.NUXT_IMAGE_PROVIDER
   }
 
   if (userInput && userInput !== 'auto') {

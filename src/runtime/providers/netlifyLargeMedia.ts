@@ -18,7 +18,7 @@ export const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => encodeQueryItem(key, value),
 })
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = import.meta.env.NODE_ENV === 'development'
 
 // https://docs.netlify.com/large-media/transform-images/
 

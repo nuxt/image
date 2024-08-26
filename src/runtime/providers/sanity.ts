@@ -42,7 +42,7 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
 })
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = import.meta.env.NODE_ENV === 'development'
 
 const getMetadata = (id: string) => {
   const result = id.match(/-(?<width>\d*)x(?<height>\d*)-(?<format>.*)$/)

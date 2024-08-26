@@ -104,7 +104,7 @@ export default defineComponent({
     }
 
     // Prerender static images
-    if (import.meta.server && process.env.prerender) {
+    if (import.meta.server && import.meta.env.prerender) {
       prerenderStaticImages(src.value, sizes.value.srcset)
     }
 
