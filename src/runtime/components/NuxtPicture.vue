@@ -30,14 +30,10 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
-import { useBaseImage, baseImageProps } from './_base'
+import { useBaseImage, pictureProps, imgProps } from './_base'
 import { useNuxtApp } from '#app'
 
-const props = defineProps({
-  ...baseImageProps,
-  legacyFormat: { type: String, default: null },
-  imgAttrs: { type: Object, default: null },
-})
+const props = defineProps(pictureProps)
 
 const attrs = useAttrs()
 
@@ -117,7 +113,7 @@ if (props.preload) {
 const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
 
 for (const key in attrs) {
-  if (key in baseImageProps && !(key in imgAttrs)) {
+  if (key in imgProps && !(key in imgAttrs)) {
     imgAttrs[key] = attrs[key]
   }
 }
@@ -158,4 +154,8 @@ onMounted(() => {
 
   markFeatureUsage('nuxt-picture')
 })
+</script>
+
+<script lang="ts">
+export { pictureProps } from './_base'
 </script>

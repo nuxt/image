@@ -123,3 +123,9 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
     modifiers,
   }
 }
+
+export const pictureProps = {
+  ...baseImageProps,
+  legacyFormat: { type: String, default: null },
+  imgAttrs: { type: Object, default: null },
+}
