@@ -11,13 +11,13 @@
     <img
       ref="imgEl"
       v-bind="{
-        ..._base.attrs.value,
+        ...baseAttrs,
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
-        src: sources[lastSourceIndex].src,
-        sizes: sources[lastSourceIndex].sizes,
-        srcset: sources[lastSourceIndex].srcset,
       }"
+      :src="sources[lastSourceIndex].src"
+      :sizes="sources[lastSourceIndex].sizes"
+      :srcset="sources[lastSourceIndex].srcset"
     >
   </picture>
 </template>
@@ -30,7 +30,7 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
-import { useBaseImage, pictureProps, imgProps } from './_base'
+import { useBaseImage, pictureProps, baseImageProps } from './_base'
 import { useNuxtApp } from '#app'
 
 const props = defineProps(pictureProps)
@@ -46,7 +46,7 @@ const isServer = import.meta.server
 
 const $img = useImage()
 
-const _base = useBaseImage(props)
+const { attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
 
 const originalFormat = computed(() => getFileExtension(props.src))
 
@@ -79,10 +79,10 @@ const sources = computed<Source[]>(() => {
 
   return formats.map((format) => {
     const { srcset, sizes, src } = $img.getSizes(props.src!, {
-      ..._base.options.value,
+      ...baseOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,
-      modifiers: { ..._base.modifiers.value, format },
+      modifiers: { ...baseModifiers.value, format },
     })
 
     return { src, type: `image/${format}`, sizes, srcset }
@@ -113,7 +113,7 @@ if (props.preload) {
 const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
 
 for (const key in attrs) {
-  if (key in imgProps && !(key in imgAttrs)) {
+  if (key in baseImageProps && !(key in imgAttrs)) {
     imgAttrs[key] = attrs[key]
   }
 }
