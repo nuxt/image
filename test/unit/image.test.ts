@@ -1,8 +1,9 @@
 // @vitest-environment nuxt
 
-import { beforeEach, describe, it, expect, vi } from 'vitest'
+import { beforeEach, describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
+import { getImageLoad } from './helpers'
 // @ts-expect-error virtual file
 import { imageOptions } from '#build/image-options'
 import { NuxtImg } from '#components'
@@ -157,32 +158,6 @@ describe('Renders simple image', () => {
     expect(domNonce).toBe('stub-nonce')
   })
 })
-
-const getImageLoad = (cb = () => {}) => {
-  let resolve = () => {}
-  let image = {} as HTMLImageElement
-  const loadEvent = Symbol('loadEvent')
-  const ImageMock = vi.fn(() => {
-    const _image = {
-      onload: () => {},
-    } as unknown as HTMLImageElement
-    image = _image
-    // @ts-expect-error not valid argument for onload
-    resolve = () => _image.onload?.(loadEvent)
-
-    return _image
-  })
-
-  vi.stubGlobal('Image', ImageMock)
-  cb()
-  vi.unstubAllGlobals()
-
-  return {
-    resolve,
-    image,
-    loadEvent,
-  }
-}
 
 describe('Renders placeholder image', () => {
   let wrapper: VueWrapper<any>

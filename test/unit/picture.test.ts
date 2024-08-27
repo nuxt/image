@@ -3,6 +3,7 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { getImageLoad } from './helpers'
 import { NuxtPicture } from '#components'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 // @ts-expect-error virtual file
@@ -161,6 +162,105 @@ describe('Renders simple image', () => {
       },
     })
     expect(img.find('img').exists()).toBe(true)
+  })
+})
+
+describe('Renders placeholder image', () => {
+  let wrapper: VueWrapper<any>
+  const src = '/image.png'
+
+  it('props.placeholder with src', async () => {
+    const {
+      resolve: resolveImage,
+      image: placeholderImage,
+      loadEvent,
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtPicture, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          placeholder: true,
+        },
+      })
+    })
+
+    let sourceType = wrapper.find('source').element.getAttribute('type')
+
+    // no sources displaying + img should be placeholder image
+    expect(sourceType).toMatchInlineSnapshot(`"display/never"`)
+    expect(placeholderImage.src).toMatchInlineSnapshot(`"/_ipx/f_png&s_3072x3072/image.png"`)
+    expect(placeholderImage.srcset).toMatchInlineSnapshot(`"/_ipx/f_png&s_320x320/image.png 320w, /_ipx/f_png&s_640x640/image.png 640w, /_ipx/f_png&s_768x768/image.png 768w, /_ipx/f_png&s_1024x1024/image.png 1024w, /_ipx/f_png&s_1280x1280/image.png 1280w, /_ipx/f_png&s_1536x1536/image.png 1536w, /_ipx/f_png&s_2048x2048/image.png 2048w, /_ipx/f_png&s_2560x2560/image.png 2560w, /_ipx/f_png&s_3072x3072/image.png 3072w"`)
+    expect(placeholderImage.sizes).toMatchInlineSnapshot(`"(max-width: 640px) 320px, (max-width: 768px) 640px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, (max-width: 1536px) 1280px, 1536px"`)
+
+    resolveImage()
+    await nextTick()
+
+    sourceType = wrapper.find('source').element.getAttribute('type')
+
+    expect(sourceType).toMatchInlineSnapshot(`"image/webp"`)
+    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
+  })
+
+  it('props.placeholder with sizes', async () => {
+    const {
+      resolve: resolveImage,
+      image: placeholderImage,
+      loadEvent,
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtPicture, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          sizes: '200,500:500,900:900',
+          placeholder: true,
+        },
+      })
+    })
+
+    let sizes = wrapper.find('img').element.getAttribute('sizes')
+
+    expect(sizes).toMatchInlineSnapshot('null')
+    expect(placeholderImage.sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
+
+    resolveImage()
+    await nextTick()
+
+    sizes = wrapper.find('img').element.getAttribute('sizes')
+
+    expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
+    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
+  })
+
+  it('placeholder class can be set', async () => {
+    const { resolve: resolveImage } = getImageLoad(() => {
+      wrapper = mount(NuxtPicture, {
+        propsData: {
+          src,
+          placeholder: true,
+          placeholderClass: 'placeholder',
+        },
+        attrs: {
+          class: [{ test: true }, 'other'],
+        },
+      })
+    })
+    expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
+      [
+        "placeholder",
+        "test",
+        "other",
+      ]
+    `)
+    resolveImage()
+    await nextTick()
+    expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
+      [
+        "test",
+        "other",
+      ]
+    `)
   })
 })
 
