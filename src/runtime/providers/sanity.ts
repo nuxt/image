@@ -42,13 +42,11 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
 })
 
-const isDev = import.meta.env.NODE_ENV === 'development'
-
 const getMetadata = (id: string) => {
   const result = id.match(/-(?<width>\d*)x(?<height>\d*)-(?<format>.*)$/)
   if (!result || !result.groups) {
     // Invalid Sanity image asset ID
-    if (isDev) {
+    if (import.meta.dev) {
       console.warn(`An invalid image asset ID was passed in: ${id}`)
     }
     return { width: undefined, height: undefined, format: undefined }
