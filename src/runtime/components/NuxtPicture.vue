@@ -1,9 +1,9 @@
 <template>
-  <picture>
+  <picture v-bind="(placeholderClass && placeholder) ? { class: placeholderClass } : {}">
     <source
       v-for="source in sources.slice(0, -1)"
       :key="source.src"
-      :type="source.type"
+      :type="placeholder ? 'display/never' : source.type"
       :sizes="source.sizes"
       :srcset="source.srcset"
     >
@@ -15,9 +15,9 @@
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
       }"
-      :src="sources[lastSourceIndex].src"
-      :sizes="sources[lastSourceIndex].sizes"
-      :srcset="sources[lastSourceIndex].srcset"
+      :src="placeholder ? placeholder : sources[lastSourceIndex]?.src"
+      :sizes="placeholder ? undefined : sources[lastSourceIndex]?.sizes"
+      :srcset="placeholder ? undefined : sources[lastSourceIndex]?.srcset"
     >
   </picture>
 </template>
@@ -46,7 +46,7 @@ const isServer = import.meta.server
 
 const $img = useImage()
 
-const { attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
+const { placeholder, placeholderLoaded, attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
 
 const originalFormat = computed(() => getFileExtension(props.src))
 
@@ -90,6 +90,7 @@ const sources = computed<Source[]>(() => {
 })
 
 const lastSourceIndex = computed(() => sources.value.length - 1)
+const mainSrc = computed(() => sources.value[lastSourceIndex.value])
 
 if (import.meta.server && props.preload) {
   const link: NonNullable<Head['link']>[number] = {
@@ -131,6 +132,22 @@ const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 onMounted(() => {
+  if (placeholder.value) {
+    const img = new Image()
+
+    if (mainSrc.value.sizes) img.sizes = mainSrc.value.sizes
+    if (mainSrc.value.srcset) img.srcset = mainSrc.value.srcset
+    if (mainSrc.value.src) img.src = mainSrc.value.src
+
+    img.onload = (event) => {
+      placeholderLoaded.value = true
+      emit('load', event)
+    }
+
+    markFeatureUsage('nuxt-picture')
+    return
+  }
+
   if (!imgEl.value) {
     return
   }

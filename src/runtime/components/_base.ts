@@ -53,6 +53,10 @@ export const baseImageProps = {
 
   // csp
   nonce: { type: [String], default: undefined },
+
+  // placeholders
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  placeholderClass: { type: String, default: undefined },
 }
 
 export interface BaseImageAttrs {
@@ -117,7 +121,39 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
     }
   })
 
+  const placeholderLoaded = ref(false)
+
+  const placeholder = computed(() => {
+    let placeholder = props.placeholder
+
+    if (placeholder === '') {
+      placeholder = true
+    }
+
+    if (!placeholder || placeholderLoaded.value) {
+      return false
+    }
+
+    if (typeof placeholder === 'string') {
+      return placeholder
+    }
+
+    const size = (Array.isArray(placeholder)
+      ? placeholder
+      : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
+
+    return $img(props.src!, {
+      ...modifiers.value,
+      width: size[0],
+      height: size[1],
+      quality: size[2] || 50,
+      blur: size[3] || 3,
+    }, options.value)
+  })
+
   return {
+    placeholder,
+    placeholderLoaded,
     options,
     attrs,
     modifiers,
@@ -130,8 +166,4 @@ export const pictureProps = {
   imgAttrs: { type: Object, default: null },
 }
 
-export const imgProps = {
-  ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
-  placeholderClass: { type: String, default: undefined },
-}
+export const imgProps = baseImageProps
