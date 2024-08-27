@@ -4,7 +4,7 @@
     :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-      ..._attrs,
+      ...imgAttrs,
       ...attrs,
     }"
     :src="src"
@@ -56,7 +56,7 @@ const sizes = computed(() => $img.getSizes(props.src!, {
   },
 }))
 
-const _attrs = computed(() => {
+const imgAttrs = computed(() => {
   const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
 
   if (!props.placeholder || placeholderLoaded.value) {
