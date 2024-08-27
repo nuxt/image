@@ -114,7 +114,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: 'NuxtPicture',
-      filePath: resolver.resolve('./runtime/components/nuxt-picture'),
+      filePath: resolver.resolve('./runtime/components/NuxtPicture.vue'),
     })
 
     // Add runtime options
