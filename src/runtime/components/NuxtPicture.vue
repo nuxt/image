@@ -121,7 +121,7 @@ for (const key in attrs) {
 const imgEl = ref<HTMLImageElement>()
 
 // Prerender static images
-if (import.meta.server && process.env.prerender) {
+if (import.meta.server && import.meta.prerender) {
   for (const src of sources.value) {
     prerenderStaticImages(src.src, src.srcset)
   }

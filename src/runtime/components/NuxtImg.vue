@@ -126,7 +126,7 @@ if (import.meta.server && props.preload) {
 }
 
 // Prerender static images
-if (import.meta.server && process.env.prerender) {
+if (import.meta.server && import.meta.prerender) {
   prerenderStaticImages(src.value, sizes.value.srcset)
 }
 
