@@ -79,7 +79,7 @@ export const getImage: ProviderGetImage = (
   } = modifiers
 
   if (!baseURL) {
-    throw ('No Hygraph image base URL provided.')
+    throw new Error('No Hygraph image base URL provided.')
   }
 
   return {
