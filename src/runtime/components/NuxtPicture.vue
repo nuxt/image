@@ -1,5 +1,5 @@
 <template>
-  <picture v-bind="(placeholderClass && placeholder && !placeholderLoaded) ? { class: placeholderClass } : {}">
+  <picture v-bind="(placeholderClass && placeholder) ? { class: placeholderClass } : {}">
     <source
       v-for="source in sources.slice(0, -1)"
       :key="source.src"
@@ -15,9 +15,9 @@
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
       }"
-      :src="placeholder && !placeholderLoaded ? placeholder : sources[lastSourceIndex]?.src"
-      :sizes="placeholder && !placeholderLoaded ? undefined : sources[lastSourceIndex]?.sizes"
-      :srcset="placeholder && !placeholderLoaded ? undefined : sources[lastSourceIndex]?.srcset"
+      :src="placeholder ? placeholder : sources[lastSourceIndex]?.src"
+      :sizes="placeholder ? undefined : sources[lastSourceIndex]?.sizes"
+      :srcset="placeholder ? undefined : sources[lastSourceIndex]?.srcset"
     >
   </picture>
 </template>

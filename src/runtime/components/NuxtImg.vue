@@ -5,7 +5,7 @@
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ..._attrs,
       ...attrs,
-      ...(placeholderClass && placeholder && !placeholderLoaded) ? { class: placeholderClass } : {},
+      ...(placeholderClass && placeholder) ? { class: placeholderClass } : {},
     }"
     :src="src"
   >
