@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
+  compatibilityDate: '2024-08-27',
   modules: ['@nuxt/image'],
   extends: ['./layers/example'],
   image: {

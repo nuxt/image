@@ -21,7 +21,7 @@ const operationsGenerator = createOperationsGenerator({
     contrast: 'con',
     blur: 'blur',
     mirror: 'flop',
-    rotate: 'rot',
+    rotate: 'ro',
     mask: 'mask',
     maskTrim: 'mtrim',
     maskBackground: 'mbg',
