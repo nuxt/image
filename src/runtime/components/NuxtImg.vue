@@ -103,7 +103,7 @@ const mainSrc = computed(() =>
 
 const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
 
-if (props.preload) {
+if (import.meta.server && props.preload) {
   const isResponsive = Object.values(sizes.value).every(v => v)
 
   useHead({

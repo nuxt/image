@@ -91,7 +91,7 @@ const sources = computed<Source[]>(() => {
 
 const lastSourceIndex = computed(() => sources.value.length - 1)
 
-if (props.preload) {
+if (import.meta.server && props.preload) {
   const link: NonNullable<Head['link']>[number] = {
     rel: 'preload',
     as: 'image',
