@@ -129,3 +129,9 @@ export const pictureProps = {
   legacyFormat: { type: String, default: null },
   imgAttrs: { type: Object, default: null },
 }
+
+export const imgProps = {
+  ...baseImageProps,
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  placeholderClass: { type: String, default: undefined },
+}
