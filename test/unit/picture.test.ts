@@ -185,20 +185,17 @@ describe('Renders placeholder image', () => {
       })
     })
 
-    let sourceType = wrapper.find('source').element.getAttribute('type')
+    let domSrc = wrapper.find('img').element.getAttribute('src')
 
-    // no sources displaying + img should be placeholder image
-    expect(sourceType).toMatchInlineSnapshot(`"display/never"`)
-    expect(placeholderImage.src).toMatchInlineSnapshot(`"/_ipx/f_png&s_3072x3072/image.png"`)
-    expect(placeholderImage.srcset).toMatchInlineSnapshot(`"/_ipx/f_png&s_320x320/image.png 320w, /_ipx/f_png&s_640x640/image.png 640w, /_ipx/f_png&s_768x768/image.png 768w, /_ipx/f_png&s_1024x1024/image.png 1024w, /_ipx/f_png&s_1280x1280/image.png 1280w, /_ipx/f_png&s_1536x1536/image.png 1536w, /_ipx/f_png&s_2048x2048/image.png 2048w, /_ipx/f_png&s_2560x2560/image.png 2560w, /_ipx/f_png&s_3072x3072/image.png 3072w"`)
-    expect(placeholderImage.sizes).toMatchInlineSnapshot(`"(max-width: 640px) 320px, (max-width: 768px) 640px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, (max-width: 1536px) 1280px, 1536px"`)
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
+    expect(placeholderImage.src).toMatchInlineSnapshot('"/_ipx/f_png&s_3072x3072/image.png"')
 
     resolveImage()
     await nextTick()
 
-    sourceType = wrapper.find('source').element.getAttribute('type')
+    domSrc = wrapper.find('img').element.getAttribute('src')
 
-    expect(sourceType).toMatchInlineSnapshot(`"image/webp"`)
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/f_png&s_3072x3072/image.png"')
     expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
   })
 
@@ -253,6 +250,7 @@ describe('Renders placeholder image', () => {
         "other",
       ]
     `)
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
     resolveImage()
     await nextTick()
     expect([...wrapper.element.classList]).toMatchInlineSnapshot(`
@@ -261,6 +259,7 @@ describe('Renders placeholder image', () => {
         "other",
       ]
     `)
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/w_3072&f_png/image.png"`)
   })
 })
 
