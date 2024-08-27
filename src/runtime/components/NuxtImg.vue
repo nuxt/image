@@ -18,14 +18,10 @@ import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { baseImageProps, useBaseImage } from './_base'
+import { imgProps, useBaseImage } from './_base'
 import { useNuxtApp } from '#app'
 
-const props = defineProps({
-  ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
-  placeholderClass: { type: String, default: undefined },
-})
+const props = defineProps(imgProps)
 
 const attrs = useAttrs()
 
@@ -180,4 +176,8 @@ onMounted(() => {
     emit('error', event)
   }
 })
+</script>
+
+<script lang="ts">
+export { imgProps } from './_base'
 </script>

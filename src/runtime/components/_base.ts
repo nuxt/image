@@ -123,3 +123,9 @@ export const useBaseImage = (props: ExtractPropTypes<typeof baseImageProps>) => 
     modifiers,
   }
 }
+
+export const imgProps = {
+  ...baseImageProps,
+  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
+  placeholderClass: { type: String, default: undefined },
+}
