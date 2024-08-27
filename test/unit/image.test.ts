@@ -307,7 +307,7 @@ describe('Renders image, applies module config', () => {
         sizes: '200,500:500,900:900',
       },
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_75&s_200x200/image.png 200w, /_ipx/q_75&s_400x400/image.png 400w, /_ipx/q_75&s_500x500/image.png 500w, /_ipx/q_75&s_900x900/image.png 900w, /_ipx/q_75&s_1000x1000/image.png 1000w, /_ipx/q_75&s_1800x1800/image.png 1800w" src="/_ipx/q_75&s_1800x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_75&amp;s_200x200/image.png 200w, /_ipx/q_75&amp;s_400x400/image.png 400w, /_ipx/q_75&amp;s_500x500/image.png 500w, /_ipx/q_75&amp;s_900x900/image.png 900w, /_ipx/q_75&amp;s_1000x1000/image.png 1000w, /_ipx/q_75&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_75&amp;s_1800x1800/image.png">"`)
   })
 
   it('Module config .quality + props.quality => props.quality applies', () => {
@@ -327,7 +327,7 @@ describe('Renders image, applies module config', () => {
         quality: 90,
       },
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_90&s_200x200/image.png 200w, /_ipx/q_90&s_400x400/image.png 400w, /_ipx/q_90&s_500x500/image.png 500w, /_ipx/q_90&s_900x900/image.png 900w, /_ipx/q_90&s_1000x1000/image.png 1000w, /_ipx/q_90&s_1800x1800/image.png 1800w" src="/_ipx/q_90&s_1800x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_90&amp;s_200x200/image.png 200w, /_ipx/q_90&amp;s_400x400/image.png 400w, /_ipx/q_90&amp;s_500x500/image.png 500w, /_ipx/q_90&amp;s_900x900/image.png 900w, /_ipx/q_90&amp;s_1000x1000/image.png 1000w, /_ipx/q_90&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_90&amp;s_1800x1800/image.png">"`)
   })
 
   it('Without quality config => default image', () => {

@@ -19,7 +19,7 @@ await setup({
 
 describe('browser (ssr: false)', () => {
   for (const provider of providers) {
-    it(`${provider.name} should render images`, async () => {
+    it(`${provider.name} should render images`, { timeout: 20000 }, async () => {
       const providerPath = `/provider/${provider.name}`
 
       const page = await createPage()
@@ -47,7 +47,7 @@ describe('browser (ssr: false)', () => {
       }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
 
       await page.close()
-    }, { timeout: 20000 })
+    })
   }
 
   it('should emit load and error events', async () => {
