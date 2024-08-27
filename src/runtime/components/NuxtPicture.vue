@@ -15,9 +15,9 @@
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
       }"
-      :src="placeholder ? placeholder : sources[lastSourceIndex].src"
-      :sizes="placeholder ? undefined : sources[lastSourceIndex].sizes"
-      :srcset="placeholder ? undefined : sources[lastSourceIndex].srcset"
+      :src="placeholder ? placeholder : sources[lastSourceIndex]?.src"
+      :sizes="placeholder ? undefined : sources[lastSourceIndex]?.sizes"
+      :srcset="placeholder ? undefined : sources[lastSourceIndex]?.srcset"
     >
   </picture>
 </template>
