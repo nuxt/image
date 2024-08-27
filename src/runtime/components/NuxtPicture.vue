@@ -46,12 +46,11 @@ const isServer = import.meta.server
 
 const $img = useImage()
 
-const { attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
+const { placeholder, placeholderLoaded, attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
 
 const originalFormat = computed(() => getFileExtension(props.src))
 
 const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
-const placeholderLoaded = ref(false)
 
 const legacyFormat = computed(() => {
   if (props.legacyFormat) {
@@ -119,31 +118,6 @@ for (const key in attrs) {
     imgAttrs[key] = attrs[key]
   }
 }
-
-const placeholder = computed(() => {
-  let placeholder = props.placeholder
-  if (placeholder === '') {
-    placeholder = true
-  }
-  if (!placeholder || placeholderLoaded.value) {
-    return false
-  }
-  if (typeof placeholder === 'string') {
-    return placeholder
-  }
-
-  const size = (Array.isArray(placeholder)
-    ? placeholder
-    : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
-
-  return $img(props.src!, {
-    ...baseModifiers.value,
-    width: size[0],
-    height: size[1],
-    quality: size[2] || 50,
-    blur: size[3] || 3,
-  }, baseOptions.value)
-})
 
 const imgEl = ref<HTMLImageElement>()
 

@@ -34,30 +34,29 @@ const isServer = import.meta.server
 
 const $img = useImage()
 
-const _base = useBaseImage(props)
+const { placeholder, placeholderLoaded, options: baseOptions, modifiers: baseModifiers, attrs: baseAttrs } = useBaseImage(props)
 
-const placeholderLoaded = ref(false)
 const imgEl = ref<HTMLImageElement>()
 
-type AttrsT = typeof _base.attrs.value & {
+type AttrsT = typeof baseAttrs.value & {
   'sizes'?: string
   'srcset'?: string
   'data-nuxt-img'?: string
 }
 
 const sizes = computed(() => $img.getSizes(props.src!, {
-  ..._base.options.value,
+  ...baseOptions.value,
   sizes: props.sizes,
   densities: props.densities,
   modifiers: {
-    ..._base.modifiers.value,
+    ...baseModifiers.value,
     width: parseSize(props.width),
     height: parseSize(props.height),
   },
 }))
 
 const _attrs = computed(() => {
-  const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
+  const attrs: AttrsT = { ...baseAttrs.value, 'data-nuxt-img': '' }
 
   if (!props.placeholder || placeholderLoaded.value) {
     attrs.sizes = sizes.value.sizes
@@ -67,38 +66,10 @@ const _attrs = computed(() => {
   return attrs
 })
 
-const placeholder = computed(() => {
-  let placeholder = props.placeholder
-
-  if (placeholder === '') {
-    placeholder = true
-  }
-
-  if (!placeholder || placeholderLoaded.value) {
-    return false
-  }
-
-  if (typeof placeholder === 'string') {
-    return placeholder
-  }
-
-  const size = (Array.isArray(placeholder)
-    ? placeholder
-    : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
-
-  return $img(props.src!, {
-    ..._base.modifiers.value,
-    width: size[0],
-    height: size[1],
-    quality: size[2] || 50,
-    blur: size[3] || 3,
-  }, _base.options.value)
-})
-
 const mainSrc = computed(() =>
   props.sizes
     ? sizes.value.src
-    : $img(props.src!, _base.modifiers.value, _base.options.value),
+    : $img(props.src!, baseModifiers.value, baseOptions.value),
 )
 
 const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
