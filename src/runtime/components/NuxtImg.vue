@@ -1,12 +1,12 @@
 <template>
   <img
     ref="imgEl"
+    :src="src"
+    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ..._attrs,
       ...attrs,
-      class: props.placeholder && !placeholderLoaded ? [props.placeholderClass] : undefined,
-      src,
     }"
   >
 </template>
