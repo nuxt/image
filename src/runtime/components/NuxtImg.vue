@@ -1,11 +1,11 @@
 <template>
   <img
     ref="imgEl"
-    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ..._attrs,
       ...attrs,
+      ...(placeholderClass && placeholder && !placeholderLoaded) ? { class: placeholderClass } : {},
     }"
     :src="src"
   >
@@ -109,12 +109,12 @@ onMounted(() => {
   if (placeholder.value) {
     const img = new Image()
 
-    img.src = mainSrc.value
-
     if (props.sizes) {
       img.sizes = sizes.value.sizes || ''
       img.srcset = sizes.value.srcset
     }
+
+    img.src = mainSrc.value
 
     img.onload = (event) => {
       placeholderLoaded.value = true
