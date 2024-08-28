@@ -138,7 +138,9 @@ onMounted(() => {
   if (placeholder.value) {
     const img = new Image()
 
-    img.src = mainSrc.value
+    if (mainSrc.value) {
+      img.src = mainSrc.value
+    }
 
     if (props.sizes) {
       img.sizes = sizes.value.sizes || ''

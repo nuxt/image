@@ -62,7 +62,7 @@ export interface ResolvedImage {
 export interface ImageSizes {
   srcset: string
   sizes: string | undefined
-  src: string
+  src?: string
 }
 
 export interface Img {

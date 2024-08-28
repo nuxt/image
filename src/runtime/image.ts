@@ -75,7 +75,10 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
   if (!provider.supportsAlias) {
     for (const base in ctx.options.alias) {
       if (input.startsWith(base)) {
-        input = joinURL(ctx.options.alias[base], input.substr(base.length))
+        const alias = ctx.options.alias[base]
+        if (alias) {
+          input = joinURL(alias, input.slice(base.length))
+        }
       }
     }
   }
@@ -168,6 +171,10 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
     // 'densities path'
     for (const density of densities) {
       const key = Object.keys(sizes)[0]
+      if (!key) {
+        continue
+      }
+
       let variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
 
       // unable to resolve variant, fallback to default modifiers

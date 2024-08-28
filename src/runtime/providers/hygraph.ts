@@ -9,7 +9,7 @@ type ImageOptimizations = {
   quality?: number
 }
 
-export function getImageFormat(format?: string) {
+function getImageFormat(format?: string) {
   let result = 'auto_image'
 
   if (format && format !== 'auto_image') {
@@ -19,28 +19,22 @@ export function getImageFormat(format?: string) {
   return result
 }
 
-export function splitUpURL(url: string, baseURL: string) {
-  // Starting Image URL: https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+function splitUpURL(url: string, baseURL: string) {
+  /**
+   * https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+   *  - baseId: cltsj3mii0pvd07vwb5cyh1ig
+   *  - imageId: cltsrex89477t08unlckqx9ue
+   */
+  const { groups } = url.match(new RegExp(`^${baseURL}/(?<baseId>[^/]+)/(?<imageId>[^/]+)`)) || {}
 
-  // get Both IDs split off of the baseURL
-  // -> cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
-  const bothIds = url.split(`${baseURL}/`)[1]
-
-  // get baseId
-  // -> cltsj3mii0pvd07vwb5cyh1ig
-  const baseId = bothIds.split('/')[0]
-
-  // get imageId
-  // -> cltsrex89477t08unlckqx9ue
-  const imageId = url.split(`/`)[url.split(`/`).length - 1]
-
-  return {
-    baseId,
-    imageId,
+  if (!groups) {
+    throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
   }
+
+  return groups as { baseId: string, imageId: string }
 }
 
-export function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
+function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
   baseURL = baseURL.replace(/\/+$/, '')
 
   const { baseId, imageId } = splitUpURL(url, baseURL)

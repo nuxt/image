@@ -61,7 +61,7 @@ const legacyFormat = computed(() => {
   return isTransparent.value ? 'png' : 'jpeg'
 })
 
-type Source = { src: string, srcset?: string, type?: string, sizes?: string }
+type Source = { src?: string, srcset?: string, type?: string, sizes?: string }
 
 const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))

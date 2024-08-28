@@ -215,7 +215,7 @@ describe('Renders placeholder image', () => {
     domSrc = wrapper.find('img').element.getAttribute('src')
 
     expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
-    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
+    expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
 
   it('props.placeholder with sizes', async () => {
@@ -246,7 +246,7 @@ describe('Renders placeholder image', () => {
     sizes = wrapper.find('img').element.getAttribute('sizes')
 
     expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
-    expect(wrapper.emitted().load[0]).toStrictEqual([loadEvent])
+    expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
 
   it('placeholder class can be set', async () => {
