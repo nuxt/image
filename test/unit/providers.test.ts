@@ -35,6 +35,7 @@ import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
 import * as uploadcare from '#image/providers/uploadcare'
 import * as sirv from '#image/providers/sirv'
+import * as hygraph from '#image/providers/hygraph'
 
 const emptyContext = {
   options: {
@@ -451,6 +452,17 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = sirv.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sirv)
+    }
+  })
+
+  it('hygraph', () => {
+    const providerOptions = {
+      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
+    }
+    for (const image of images) {
+      const [_src, modifiers] = image.args
+      const generated = hygraph.getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.hygraph)
     }
   })
 

@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, parseURL, withTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '@nuxt/image'
 
 type ImageOptimizations = {
@@ -9,7 +9,7 @@ type ImageOptimizations = {
   quality?: number
 }
 
-export function getImageFormat(format?: string) {
+function getImageFormat(format?: string) {
   let result = 'auto_image'
 
   if (format && format !== 'auto_image') {
@@ -19,32 +19,40 @@ export function getImageFormat(format?: string) {
   return result
 }
 
-export function splitUpURL(url: string, baseURL: string) {
-  // Starting Image URL: https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+const ID_RE = /([^/]+)\/?$/
+const COMBINED_ID_RE = /^\/(?<baseId>[^/]+)(?:\/.*)?\/(?<imageId>[^/]+)$/
 
-  // get Both IDs split off of the baseURL
-  // -> cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
-  const bothIds = url.split(`${baseURL}/`)[1]
+function splitUpURL(baseURL: string, url: string) {
+  /**
+   * https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+   *  - baseId: cltsj3mii0pvd07vwb5cyh1ig
+   *  - imageId: cltsrex89477t08unlckqx9ue
+   */
+  const baseId = parseURL(baseURL).pathname.match(ID_RE)?.[1]
 
-  // get baseId
-  // -> cltsj3mii0pvd07vwb5cyh1ig
-  // @ts-expect-error fixing in separate PR
-  const baseId = bothIds.split('/')[0]
+  if (!baseId) {
+    // extract baseId from url instead
+    url = url.replace(withTrailingSlash(baseURL), '/')
 
-  // get imageId
-  // -> cltsrex89477t08unlckqx9ue
-  const imageId = url.split(`/`)[url.split(`/`).length - 1]
-
-  return {
-    baseId,
-    imageId,
+    const groups = url.match(COMBINED_ID_RE)?.groups
+    if (!groups) {
+      throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
+    }
+    return groups as { baseId: string, imageId: string }
   }
+
+  const imageId = url.match(ID_RE)?.[0]
+
+  if (!imageId) {
+    throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
+  }
+
+  // it's already in baseURL so we can omit it here
+  return { baseId: '', imageId }
 }
 
-export function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
-  baseURL = baseURL.replace(/\/+$/, '')
-
-  const { baseId, imageId } = splitUpURL(url, baseURL)
+function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
+  const { baseId, imageId } = splitUpURL(baseURL, url)
   const imageFormat = getImageFormat(optimizations.format)
   const optimBase = 'resize'
   const quality = optimizations.quality && imageFormat !== 'auto_image' ? `quality=value:${optimizations.quality}/` : ''
@@ -62,23 +70,13 @@ export function optimizeHygraphImage(baseURL: string, url: string, optimizations
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`
-  // @ts-expect-error fixing in separate PR
   const result = joinURL(baseURL, baseId, optim, quality, imageFormat, imageId)
 
   return result
 }
 
-export const getImage: ProviderGetImage = (
-  src,
-  { modifiers = {}, baseURL } = {},
-) => {
-  const {
-    width,
-    height,
-    fit,
-    format,
-    quality,
-  } = modifiers
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
+  const { width, height, fit, format, quality } = modifiers
 
   if (!baseURL) {
     throw new Error('No Hygraph image base URL provided.')
