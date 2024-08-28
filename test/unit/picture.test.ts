@@ -60,7 +60,7 @@ describe('Renders simple image', () => {
 
   it('props.src is picked up by getImage()', () => {
     [['source', 'srcset', '/_ipx/f_webp&s_500x500/image.png'], ['img', 'src']].forEach(([element, attribute, customSrc]) => {
-      const domSrc = wrapper.find(element).element.getAttribute(attribute)
+      const domSrc = wrapper.find(element!).element.getAttribute(attribute!)
       expect(domSrc).toContain(customSrc || src)
     })
   })
@@ -117,7 +117,7 @@ describe('Renders simple image', () => {
     await nextTick()
 
     ;[['source', 'srcset', '/_ipx/f_webp&s_500x500/image.jpeg'], ['img', 'src']].forEach(([element, attribute, src]) => {
-      const domSrc = wrapper.find(element).element.getAttribute(attribute)
+      const domSrc = wrapper.find(element!).element.getAttribute(attribute!)
       expect(domSrc).toContain(src || newSource)
     })
   })

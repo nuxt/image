@@ -28,6 +28,7 @@ export function splitUpURL(url: string, baseURL: string) {
 
   // get baseId
   // -> cltsj3mii0pvd07vwb5cyh1ig
+  // @ts-expect-error fixing in separate PR
   const baseId = bothIds.split('/')[0]
 
   // get imageId
@@ -61,6 +62,7 @@ export function optimizeHygraphImage(baseURL: string, url: string, optimizations
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`
+  // @ts-expect-error fixing in separate PR
   const result = joinURL(baseURL, baseId, optim, quality, imageFormat, imageId)
 
   return result
