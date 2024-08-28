@@ -110,7 +110,7 @@ export default defineNuxtConfig({
       baseURL: 'https://demo.sirv.com',
     },
     hygraph: {
-      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/',
+      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
     },
     weserv: {
       baseURL: '/',

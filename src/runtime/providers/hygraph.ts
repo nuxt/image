@@ -1,4 +1,4 @@
-import { joinURL, withTrailingSlash } from 'ufo'
+import { joinURL, parseURL, withTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '@nuxt/image'
 
 type ImageOptimizations = {
@@ -19,7 +19,8 @@ function getImageFormat(format?: string) {
   return result
 }
 
-const HYGRAPH_ID_RE = /^\/(?<baseId>[^/]+)(?:\/.*)?\/(?<imageId>[^/]+)$/
+const ID_RE = /([^/]+)\/?$/
+const COMBINED_ID_RE = /^\/(?<baseId>[^/]+)(?:\/.*)?\/(?<imageId>[^/]+)$/
 
 function splitUpURL(baseURL: string, url: string) {
   /**
@@ -27,13 +28,27 @@ function splitUpURL(baseURL: string, url: string) {
    *  - baseId: cltsj3mii0pvd07vwb5cyh1ig
    *  - imageId: cltsrex89477t08unlckqx9ue
    */
-  const { groups } = url.replace(withTrailingSlash(baseURL), '/').match(HYGRAPH_ID_RE) || {}
+  const baseId = parseURL(baseURL).pathname.match(ID_RE)?.[1]
 
-  if (!groups) {
+  if (!baseId) {
+    // extract baseId from url instead
+    url = url.replace(withTrailingSlash(baseURL), '/')
+
+    const groups = url.match(COMBINED_ID_RE)?.groups
+    if (!groups) {
+      throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
+    }
+    return groups as { baseId: string, imageId: string }
+  }
+
+  const imageId = url.match(ID_RE)?.[0]
+
+  if (!imageId) {
     throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
   }
 
-  return groups as { baseId: string, imageId: string }
+  // it's already in baseURL so we can omit it here
+  return { baseId: '', imageId }
 }
 
 function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {

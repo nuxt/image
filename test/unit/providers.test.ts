@@ -457,7 +457,7 @@ describe('Providers', () => {
 
   it('hygraph', () => {
     const providerOptions = {
-      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com',
+      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
     }
     for (const image of images) {
       const [_src, modifiers] = image.args
