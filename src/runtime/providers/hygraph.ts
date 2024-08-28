@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, withoutTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '@nuxt/image'
 
 type ImageOptimizations = {
@@ -19,13 +19,14 @@ function getImageFormat(format?: string) {
   return result
 }
 
-function splitUpURL(url: string, baseURL: string) {
+function splitUpURL(baseURL: string, url: string) {
   /**
    * https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
    *  - baseId: cltsj3mii0pvd07vwb5cyh1ig
    *  - imageId: cltsrex89477t08unlckqx9ue
    */
-  const { groups } = url.match(new RegExp(`^${baseURL}/(?<baseId>[^/]+)/(?<imageId>[^/]+)`)) || {}
+  const escapedBaseURL = withoutTrailingSlash(baseURL).replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
+  const { groups } = url.match(new RegExp(`^(?:${escapedBaseURL}/)?(?<baseId>[^/]+)/(?<imageId>[^/]+)`)) || {}
 
   if (!groups) {
     throw new TypeError('[nuxt] [image] [hygraph] Invalid image URL')
@@ -35,9 +36,7 @@ function splitUpURL(url: string, baseURL: string) {
 }
 
 function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
-  baseURL = baseURL.replace(/\/+$/, '')
-
-  const { baseId, imageId } = splitUpURL(url, baseURL)
+  const { baseId, imageId } = splitUpURL(baseURL, url)
   const imageFormat = getImageFormat(optimizations.format)
   const optimBase = 'resize'
   const quality = optimizations.quality && imageFormat !== 'auto_image' ? `quality=value:${optimizations.quality}/` : ''
@@ -60,17 +59,8 @@ function optimizeHygraphImage(baseURL: string, url: string, optimizations: Image
   return result
 }
 
-export const getImage: ProviderGetImage = (
-  src,
-  { modifiers = {}, baseURL } = {},
-) => {
-  const {
-    width,
-    height,
-    fit,
-    format,
-    quality,
-  } = modifiers
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
+  const { width, height, fit, format, quality } = modifiers
 
   if (!baseURL) {
     throw new Error('No Hygraph image base URL provided.')
