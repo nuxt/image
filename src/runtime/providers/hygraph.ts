@@ -1,6 +1,5 @@
-import { joinURL } from 'ufo'
+import { joinURL, withTrailingSlash } from 'ufo'
 import type { ProviderGetImage } from '@nuxt/image'
-import { withTrailingSlash } from 'ufo'
 
 type ImageOptimizations = {
   width?: number
