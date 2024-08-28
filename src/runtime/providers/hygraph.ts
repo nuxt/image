@@ -19,14 +19,36 @@ export function getImageFormat(format?: string) {
   return result
 }
 
+export function splitUpURL(url: string, baseURL: string) {
+  // Starting Image URL: https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+
+  // get Both IDs split off of the baseURL
+  // -> cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue
+  const bothIds = url.split(`${baseURL}/`)[1]
+
+  // get baseId
+  // -> cltsj3mii0pvd07vwb5cyh1ig
+  const baseId = bothIds.split('/')[0]
+
+  // get imageId
+  // -> cltsrex89477t08unlckqx9ue
+  const imageId = url.split(`/`)[url.split(`/`).length - 1]
+
+  return {
+    baseId,
+    imageId,
+  }
+}
+
 export function optimizeHygraphImage(baseURL: string, url: string, optimizations: ImageOptimizations) {
   baseURL = baseURL.replace(/\/+$/, '')
-  const imageId = url.split(`${baseURL}/`)[1]
+
+  const { baseId, imageId } = splitUpURL(url, baseURL)
   const imageFormat = getImageFormat(optimizations.format)
   const optimBase = 'resize'
-  const quality = optimizations.quality ? `quality=value:${optimizations.quality}/compress=metadata:true/` : ''
+  const quality = optimizations.quality && imageFormat !== 'auto_image' ? `quality=value:${optimizations.quality}/` : ''
 
-  const optimList = []
+  const optimList: [string?] = []
   for (const [key, value] of Object.entries(optimizations)) {
     if (key !== 'format' && key !== 'quality' && value !== undefined) {
       if (key === 'fit' && value === 'contain') {
@@ -39,7 +61,7 @@ export function optimizeHygraphImage(baseURL: string, url: string, optimizations
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`
-  const result = joinURL(baseURL, optim, quality, imageFormat, imageId)
+  const result = joinURL(baseURL, baseId, optim, quality, imageFormat, imageId)
 
   return result
 }

@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.7.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.7.0...v1.7.1)
+
+### 🩹 Fixes
+
+- **cloudinary:** Map `cover` to `lfill` mode ([#1355](https://github.com/nuxt/image/pull/1355))
+- Import runtime types from module entrypoint ([#1384](https://github.com/nuxt/image/pull/1384))
+- Update to latest `@nuxt/module-builder` ([#1439](https://github.com/nuxt/image/pull/1439))
+- Only add preload links on server ([510e719](https://github.com/nuxt/image/commit/510e719))
+- **weserv:** Map rotate operation to `ro` ([#1441](https://github.com/nuxt/image/pull/1441))
+
+### 💅 Refactors
+
+- Convert `<NuxtImg>` to SFC ([#1435](https://github.com/nuxt/image/pull/1435))
+- Convert `<NuxtPicture>` to SFC ([#1432](https://github.com/nuxt/image/pull/1432))
+- Use more `import.meta.*` properties ([#1440](https://github.com/nuxt/image/pull/1440))
+
+### 📖 Documentation
+
+- Update deps ([86b7d9b](https://github.com/nuxt/image/commit/86b7d9b))
+- Add resolution for nuxt ui ([3a98a68](https://github.com/nuxt/image/commit/3a98a68))
+- Prerender index ([59813cf](https://github.com/nuxt/image/commit/59813cf))
+- Prepare before build ([#1405](https://github.com/nuxt/image/pull/1405))
+- Fix inconsistent spelling ([#1421](https://github.com/nuxt/image/pull/1421))
+- Capitalize title ([#1393](https://github.com/nuxt/image/pull/1393))
+
+### 🏡 Chore
+
+- Refresh lockfile ([5524ae6](https://github.com/nuxt/image/commit/5524ae6))
+- Add subpath exports and set `type: module` ([04cd4cc](https://github.com/nuxt/image/commit/04cd4cc))
+- Remove unneeded lazy from regexp ([16b20b4](https://github.com/nuxt/image/commit/16b20b4))
+- Indicate compatibility with new v4 major ([#1385](https://github.com/nuxt/image/pull/1385))
+- Add @danielroe to code owners ([47f8b2c](https://github.com/nuxt/image/commit/47f8b2c))
+- Add `compatibilityDate` ([8e2a01a](https://github.com/nuxt/image/commit/8e2a01a))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- @beer ([@iiio2](http://github.com/iiio2))
+- Gangan ([@shinGangan](http://github.com/shinGangan))
+- Benjamin Canac ([@benjamincanac](http://github.com/benjamincanac))
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+- Ptdev <gomes.roberto@gmail.com>
+
 ## v1.7.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.6.0...v1.7.0)
