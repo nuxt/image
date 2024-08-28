@@ -5,54 +5,54 @@ import { useImage } from '#imports'
 
 export const baseImageProps = {
   // input source
-  src: { type: String, default: undefined },
+  src: { type: String, required: false },
 
   // modifiers
-  format: { type: String, default: undefined },
-  quality: { type: [Number, String], default: undefined },
-  background: { type: String, default: undefined },
-  fit: { type: String, default: undefined },
-  modifiers: { type: Object as () => Record<string, any>, default: undefined },
+  format: { type: String, required: false },
+  quality: { type: [Number, String], required: false },
+  background: { type: String, required: false },
+  fit: { type: String, required: false },
+  modifiers: { type: Object as () => Record<string, any>, required: false },
 
   // options
-  preset: { type: String, default: undefined },
-  provider: { type: String, default: undefined },
+  preset: { type: String, required: false },
+  provider: { type: String, required: false },
 
-  sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, default: undefined },
-  densities: { type: String, default: undefined },
+  sizes: { type: [Object, String] as unknown as () => string | Record<string, any>, required: false },
+  densities: { type: String, required: false },
   preload: {
     type: [Boolean, Object] as unknown as () => boolean | {
       fetchPriority: 'auto' | 'high' | 'low'
     },
-    default: undefined,
+    required: false,
   },
 
   // <img> attributes
-  width: { type: [String, Number], default: undefined },
-  height: { type: [String, Number], default: undefined },
-  alt: { type: String, default: undefined },
-  referrerpolicy: { type: String as unknown as () => ImgHTMLAttributes['referrerpolicy'], default: undefined },
-  usemap: { type: String, default: undefined },
-  longdesc: { type: String, default: undefined },
-  ismap: { type: Boolean, default: undefined },
+  width: { type: [String, Number], required: false },
+  height: { type: [String, Number], required: false },
+  alt: { type: String, required: false },
+  referrerpolicy: { type: String as unknown as () => ImgHTMLAttributes['referrerpolicy'], required: false },
+  usemap: { type: String, required: false },
+  longdesc: { type: String, required: false },
+  ismap: { type: Boolean, required: false },
   loading: {
     type: String as () => 'lazy' | 'eager',
-    default: undefined,
+    required: false,
     validator: (val: any) => ['lazy', 'eager'].includes(val),
   },
   crossorigin: {
     type: [Boolean, String] as unknown as () => 'anonymous' | 'use-credentials' | boolean,
-    default: undefined,
+    required: false,
     validator: (val: any) => ['anonymous', 'use-credentials', '', true, false].includes(val),
   },
   decoding: {
     type: String as () => 'async' | 'auto' | 'sync',
-    default: undefined,
+    required: false,
     validator: (val: any) => ['async', 'auto', 'sync'].includes(val),
   },
 
   // csp
-  nonce: { type: [String], default: undefined },
+  nonce: { type: [String], required: false },
 }
 
 export interface BaseImageAttrs {
@@ -132,6 +132,6 @@ export const pictureProps = {
 
 export const imgProps = {
   ...baseImageProps,
-  placeholder: { type: [Boolean, String, Number, Array], default: undefined },
-  placeholderClass: { type: String, default: undefined },
+  placeholder: { type: [Boolean, String, Number, Array], required: false },
+  placeholderClass: { type: String, required: false },
 }
