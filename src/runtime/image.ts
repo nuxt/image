@@ -171,11 +171,8 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
     // 'densities path'
     for (const density of densities) {
       const key = Object.keys(sizes)[0]
-      if (!key) {
-        continue
-      }
 
-      let variant = getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx)
+      let variant = key ? getSizesVariant(key, String(sizes[key]), height, hwRatio, ctx) : undefined
 
       // unable to resolve variant, fallback to default modifiers
       if (variant === undefined) {
