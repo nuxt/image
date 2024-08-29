@@ -9,15 +9,16 @@
     >
 
     <img
+      v-if="lastSource"
       ref="imgEl"
       v-bind="{
         ...baseAttrs,
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
         ...imgAttrs,
       }"
-      :src="sources[lastSourceIndex].src"
-      :sizes="sources[lastSourceIndex].sizes"
-      :srcset="sources[lastSourceIndex].srcset"
+      :src="lastSource.src"
+      :sizes="lastSource.sizes"
+      :srcset="lastSource.srcset"
     >
   </picture>
 </template>
@@ -60,7 +61,7 @@ const legacyFormat = computed(() => {
   return isTransparent.value ? 'png' : 'jpeg'
 })
 
-type Source = { src: string, srcset?: string, type?: string, sizes?: string }
+type Source = { src?: string, srcset?: string, type?: string, sizes?: string }
 
 const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
@@ -89,24 +90,30 @@ const sources = computed<Source[]>(() => {
   })
 })
 
-const lastSourceIndex = computed(() => sources.value.length - 1)
+const lastSource = computed(() => sources.value[sources.value.length - 1])
 
 if (import.meta.server && props.preload) {
-  const link: NonNullable<Head['link']>[number] = {
-    rel: 'preload',
-    as: 'image',
-    imagesrcset: sources.value[0].srcset,
-    nonce: props.nonce,
-    ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
-      ? { fetchpriority: props.preload.fetchPriority }
-      : {}),
-  }
+  useHead({ link: () => {
+    const firstSource = sources.value[0]
+    if (!firstSource) {
+      return []
+    }
 
-  if (sources.value?.[0]?.sizes) {
-    link.imagesizes = sources.value[0].sizes
-  }
+    const link: NonNullable<Head['link']>[number] = {
+      rel: 'preload',
+      as: 'image',
+      imagesrcset: firstSource.srcset,
+      nonce: props.nonce,
+      ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
+        ? { fetchpriority: props.preload.fetchPriority }
+        : {}),
+    }
 
-  useHead({ link: [link] })
+    if (sources.value?.[0]?.sizes) {
+      link.imagesizes = sources.value[0].sizes
+    }
+    return [link]
+  } })
 }
 
 // Only passdown supported <image> attributes

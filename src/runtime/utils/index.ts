@@ -49,7 +49,7 @@ export function createOperationsGenerator({ formatter, keyMap, joinWith = '/', v
       .map(([key, value]) => {
         const mapper = map[key]
         if (typeof mapper === 'function') {
-          value = mapper(modifiers[key])
+          value = mapper(modifiers[key]!)
         }
 
         key = typeof keyMap === 'function' ? keyMap(key) : key
@@ -128,10 +128,10 @@ export function parseSizes(input: Record<string, string | number> | string): Rec
     for (const entry of input.split(/[\s,]+/).filter(e => e)) {
       const s = entry.split(':')
       if (s.length !== 2) {
-        sizes['1px'] = s[0].trim()
+        sizes['1px'] = s[0]!.trim()
       }
       else {
-        sizes[s[0].trim()] = s[1].trim()
+        sizes[s[0]!.trim()] = s[1]!.trim()
       }
     }
   }
