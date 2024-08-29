@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.8.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.7.1...v1.8.0)
+
+### 🚀 Enhancements
+
+- **cloudinary:** Support reading project from absolute url ([#1361](https://github.com/nuxt/image/pull/1361))
+- Provide runtimeConfig to `getImage` ([#1428](https://github.com/nuxt/image/pull/1428))
+
+### 🩹 Fixes
+
+- **hygraph:** New asset management support ([#1415](https://github.com/nuxt/image/pull/1415))
+- Prevent hydration mismatch in `<NuxtImg>` ([#1445](https://github.com/nuxt/image/pull/1445))
+- **nuxt-picture:** Check before accessing index ([917242a](https://github.com/nuxt/image/commit/917242a))
+- Mark props as not required rather than `default: undefined` ([#1450](https://github.com/nuxt/image/pull/1450))
+- Handle undefined indices more accurately ([#1451](https://github.com/nuxt/image/pull/1451))
+- **hygraph:** Add back tests and refactor splitter ([#1452](https://github.com/nuxt/image/pull/1452))
+
+### ❤️ Contributors
+
+- Connor Pearson <cjp822@gmail.com>
+- Mark Brouch ([@markbrouch](http://github.com/markbrouch))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- Tim Benniks <tbenniks@gmail.com>
+
 ## v1.7.1
 
 [compare changes](https://github.com/nuxt/image/compare/v1.7.0...v1.7.1)
