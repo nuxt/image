@@ -82,18 +82,20 @@ const defaultModifiers = {
   quality: 'auto',
 }
 
+const REMOTE_MAPPING_RE = /\/image\/upload\/(.*)$/
+
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const mergeModifiers = defu(modifiers, defaultModifiers)
   const operations = operationsGenerator(mergeModifiers as any)
 
   // Check if the src is a Cloudinary URL
-  const srcMapping = src.match(/\/image\/upload\/(.*)/)
-  if (srcMapping && srcMapping?.length >= 1) {
-    baseURL = src.replace(srcMapping[1], '')
-    src = srcMapping[1]
+  const srcMapping = src.match(REMOTE_MAPPING_RE)?.[1]
+  if (srcMapping) {
+    baseURL = src.replace(srcMapping, '')
+    src = srcMapping
   }
 
-  const remoteFolderMapping = baseURL.match(/\/image\/upload\/(.*)/)
+  const remoteFolderMapping = baseURL.match(REMOTE_MAPPING_RE)
   // Handle delivery remote media file URLs
   // see: https://cloudinary.com/documentation/fetch_remote_images
   // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory
