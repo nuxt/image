@@ -117,15 +117,8 @@ describe('Providers', () => {
   })
 
   it('cloudinary absolute url', () => {
-    const absoluteUrl
-      = 'https://res.cloudinary.com/example/image/upload/test.png'
-    const generated = cloudinary.getImage(
-      absoluteUrl,
-      {
-        modifiers: { width: 300, height: 300 },
-      },
-      emptyContext,
-    )
+    const absoluteUrl = 'https://res.cloudinary.com/example/image/upload/test.png'
+    const generated = cloudinary.getImage(absoluteUrl, { modifiers: { width: 300, height: 300 } }, emptyContext)
     expect(generated).toMatchObject({
       url: 'https://res.cloudinary.com/example/image/upload/f_auto,q_auto,w_300,h_300/test.png',
     })
