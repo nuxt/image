@@ -1,10 +1,10 @@
 import process from 'node:process'
 
 import { parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider } from './provider'
-import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
+import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider } from './types'
 
 export interface ModuleOptions extends ImageProviders {
   inject: boolean
@@ -121,17 +121,16 @@ export default defineNuxtModule<ModuleOptions>({
     addTemplate({
       filename: 'image-options.mjs',
       getContents() {
-        return `
-${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
-
-export const imageOptions = ${JSON.stringify(imageOptions, null, 2)}
-
-imageOptions.providers = {
-${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
-}
-        `
+        return generateImageOptions(providers, imageOptions)
       },
     })
+
+    addServerImports([
+      {
+        name: 'useImage',
+        from: resolver.resolve('runtime/server/utils/image'),
+      },
+    ])
 
     nuxt.hook('nitro:init', async (nitro) => {
       if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
@@ -152,6 +151,8 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
           await p.setup(p, options, nuxt)
         }
       }
+      // runtime options to use in nitro environment
+      nitro.options.virtual['#image-options'] = generateImageOptions(providers, imageOptions)
     })
 
     if (options.inject) {
@@ -169,4 +170,16 @@ function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]):
     newobj[key] = obj[key]
   }
   return newobj
+}
+
+function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'>): string {
+  return `
+  ${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
+  
+  export const imageOptions = ${JSON.stringify(imageOptions, null, 2)}
+  
+  imageOptions.providers = {
+  ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
+  }
+          `
 }

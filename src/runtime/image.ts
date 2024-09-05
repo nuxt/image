@@ -5,16 +5,15 @@ import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
 
-export function createImage(globalOptions: CreateImageOptions) {
+export function createImage(globalOptions: CreateImageOptions, isCalledInNitro: boolean = false) {
   const ctx: ImageCTX = {
     options: globalOptions,
   }
 
   const getImage: $Img['getImage'] = (input: string, options = {}) => {
     const image = resolveImage(ctx, input, options)
-
     // Prerender static images
-    if (import.meta.server && import.meta.prerender) {
+    if (import.meta.server && import.meta.prerender && !isCalledInNitro) {
       prerenderStaticImages(image.url)
     }
 
