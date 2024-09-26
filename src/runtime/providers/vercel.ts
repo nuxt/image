@@ -1,7 +1,7 @@
 import { stringifyQuery } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 
-// https://vercel.com/docs/more/adding-your-framework#images
+// https://vercel.com/docs/build-output-api/v3/configuration#images
 
 export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_vercel/image' } = {}, ctx) => {
   const validWidths = Object.values(ctx.options.screens || {}).sort((a, b) => a - b)
