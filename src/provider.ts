@@ -65,6 +65,7 @@ export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = 
             domains: moduleOptions.domains,
             minimumCacheTTL: 60 * 5,
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
+            formats: ['image/webp', 'image/avif'],
           },
         },
       } satisfies NitroConfig['vercel'],
