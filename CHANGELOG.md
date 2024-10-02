@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.8.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.8.0...v1.8.1)
+
+### 🩹 Fixes
+
+- Suffix export of runtime utils with `/index` ([#1467](https://github.com/nuxt/image/pull/1467))
+- **vercel:** Added missing `formats` config & improved documentation ([#1514](https://github.com/nuxt/image/pull/1514))
+
+### 📖 Documentation
+
+- Update link to downloads count badge ([102d474](https://github.com/nuxt/image/commit/102d474))
+
+### 🏡 Chore
+
+- Use `tinyexec` internally ([3b9a4ea](https://github.com/nuxt/image/commit/3b9a4ea))
+
+### ❤️ Contributors
+
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+- Arnaud Gissinger ([@mathix420](http://github.com/mathix420))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+
 ## v1.8.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.7.1...v1.8.0)
