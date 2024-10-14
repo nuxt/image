@@ -33,7 +33,7 @@
     "lint": "eslint .",
     "prepack": "pnpm build",
     "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
-    "test": "nuxi prepare playground && pnpm vitest run",
+    "test": "nuxi prepare playground && pnpm vitest run --coverage",
     "test:types": "vue-tsc --noEmit && nuxi typecheck playground && nuxi typecheck example"
   },
   "dependencies": {
