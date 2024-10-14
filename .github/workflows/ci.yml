@@ -53,5 +53,6 @@ jobs:
       - run: pnpm test:types
       - run: pnpm dev:build
       - uses: codecov/codecov-action@v4
+        if: matrix.os != 'windows-latest'
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
