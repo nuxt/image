@@ -1,9 +1,14 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-08-27',
-  modules: ['@nuxt/image'],
   extends: ['./layers/example'],
+  modules: ['@nuxt/image'],
+  compatibilityDate: '2024-08-27',
+  nitro: {
+    prerender: {
+      failOnError: false,
+    },
+  },
   image: {
     inject: true,
     domains: [
@@ -132,11 +137,6 @@ export default defineNuxtConfig({
           height: 50,
         },
       },
-    },
-  },
-  nitro: {
-    prerender: {
-      failOnError: false,
     },
   },
 })
