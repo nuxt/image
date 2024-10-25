@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import { computed, onMounted, ref, useAttrs, ExtractPropTypes } from 'vue'
 import { useHead } from '@unhead/vue'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
