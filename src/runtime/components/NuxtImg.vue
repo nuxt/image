@@ -21,7 +21,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
 import { useNuxtApp } from '#app'
 
-const props = defineProps(imgProps)
+const props = defineProps<ExtractPropTypes<typeof imgProps>>(imgProps)
 
 const attrs = useAttrs()
 
