@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { Head } from '@unhead/vue'
 import { useHead } from '@unhead/vue'
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import { computed, onMounted, ref, useAttrs, ExtractPropTypes } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
@@ -34,7 +34,7 @@ import { useImage } from '../composables'
 import { useBaseImage, pictureProps, baseImageProps } from './_base'
 import { useNuxtApp } from '#app'
 
-const props = defineProps(pictureProps)
+const props = defineProps<ExtractPropTypes<typeof pictureProps>>(pictureProps)
 
 const attrs = useAttrs()
 

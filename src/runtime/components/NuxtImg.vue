@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import { computed, onMounted, ref, useAttrs, ExtractPropTypes } from 'vue'
 import { useHead } from '@unhead/vue'
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
@@ -21,7 +21,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
 import { useNuxtApp } from '#app'
 
-const props = defineProps(imgProps)
+const props = defineProps<ExtractPropTypes<typeof imgProps>>(imgProps)
 
 const attrs = useAttrs()
 
