@@ -137,8 +137,8 @@ importers:
         specifier: link:..
         version: link:..
       '@nuxt/ui-pro':
-        specifier: ^1.4.4
-        version: 1.4.4(focus-trap@7.5.4)(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.5(@types/node@22.9.0)(terser@5.31.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
+        specifier: ^1.5.0
+        version: 1.5.0(focus-trap@7.5.4)(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.5(@types/node@22.9.0)(terser@5.31.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
       '@nuxthq/studio':
         specifier: ^2.2.1
         version: 2.2.1(magicast@0.3.5)(rollup@4.24.4)(webpack-sources@3.2.3)
@@ -1348,8 +1348,8 @@ packages:
       vitest:
         optional: true
 
-  '@nuxt/ui-pro@1.4.4':
-    resolution: {integrity: sha512-sQbaXcUaMWxTYf0UewkncvRc5U3CeamTuDP3bDYi0uni//9BqVSby7avKgKGRZZwq4z2U+cmlMkWgxk1DFM0hQ==}
+  '@nuxt/ui-pro@1.5.0':
+    resolution: {integrity: sha512-RYYX8JCSjVVat7kdR675uQgIHB2JJSYesP/0XAaBKesVYKMMjLAA0h57OdnIbGarwkZEs7MqoRXcaoGfh14AkA==}
 
   '@nuxt/ui@2.19.2':
     resolution: {integrity: sha512-ceRsupolD/Hdm502Htx8kOQPFw1T9cwu5TkdAqtsqJqX2y4CeEEu8d6QIV+8jh2e2HAEEWhfGykkXxS+wBjonw==}
@@ -5880,9 +5880,6 @@ packages:
     peerDependencies:
       tailwindcss: 1 || 2 || 2.0.1-compat || 3
 
-  tailwind-merge@2.5.3:
-    resolution: {integrity: sha512-d9ZolCAIzom1nf/5p4LdD5zvjmgSxY0BGgdSvmXIoMYAiPdAW/dSpP7joCDYFY7r/HkEa2qmPtkgsu0xjQeQtw==}
-
   tailwind-merge@2.5.4:
     resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
 
@@ -8307,7 +8304,7 @@ snapshots:
       - supports-color
       - webpack-sources
 
-  '@nuxt/ui-pro@1.4.4(focus-trap@7.5.4)(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.5(@types/node@22.9.0)(terser@5.31.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)':
+  '@nuxt/ui-pro@1.5.0(focus-trap@7.5.4)(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.5(@types/node@22.9.0)(terser@5.31.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)':
     dependencies:
       '@iconify-json/vscode-icons': 1.2.2
       '@nuxt/ui': 2.19.2(focus-trap@7.5.4)(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.5(@types/node@22.9.0)(terser@5.31.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
@@ -8318,7 +8315,7 @@ snapshots:
       parse-git-config: 3.0.0
       pathe: 1.1.2
       pkg-types: 1.2.1
-      tailwind-merge: 2.5.3
+      tailwind-merge: 2.5.4
       vue3-smooth-dnd: 0.0.6(vue@3.5.12(typescript@5.6.3))
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -14528,8 +14525,6 @@ snapshots:
       tailwindcss: 3.4.14
     transitivePeerDependencies:
       - supports-color
-
-  tailwind-merge@2.5.3: {}
 
   tailwind-merge@2.5.4: {}
 
