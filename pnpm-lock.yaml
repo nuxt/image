@@ -146,11 +146,11 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(magicast@0.3.5)(rollup@4.24.4)
       '@vueuse/core':
-        specifier: ^11.3.0
-        version: 11.3.0(vue@3.5.13(typescript@5.6.3))
+        specifier: ^12.0.0
+        version: 12.0.0(typescript@5.6.3)
       '@vueuse/nuxt':
-        specifier: ^11.3.0
-        version: 11.3.0(magicast@0.3.5)(nuxt@3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3))(rollup@4.24.4)(vue@3.5.13(typescript@5.6.3))
+        specifier: ^12.0.0
+        version: 12.0.0(magicast@0.3.5)(nuxt@3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3))(rollup@4.24.4)(typescript@5.6.3)
       nuxt:
         specifier: ^3.14.1592
         version: 3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3)
@@ -2249,6 +2249,9 @@ packages:
   '@vueuse/core@11.3.0':
     resolution: {integrity: sha512-7OC4Rl1f9G8IT6rUfi9JrKiXy4bfmHhZ5x2Ceojy0jnd3mHNEvV4JaRygH362ror6/NZ+Nl+n13LPzGiPN8cKA==}
 
+  '@vueuse/core@12.0.0':
+    resolution: {integrity: sha512-C12RukhXiJCbx4MGhjmd/gH52TjJsc3G0E0kQj/kb19H3Nt6n1CA4DRWuTdWWcaFRdlTe0npWDS942mvacvNBw==}
+
   '@vueuse/head@2.0.0':
     resolution: {integrity: sha512-ykdOxTGs95xjD4WXE4na/umxZea2Itl0GWBILas+O4oqS7eXIods38INvk3XkJKjqMdWPcpCyLX/DioLQxU1KA==}
     peerDependencies:
@@ -2348,6 +2351,9 @@ packages:
   '@vueuse/metadata@11.3.0':
     resolution: {integrity: sha512-pwDnDspTqtTo2HwfLw4Rp6yywuuBdYnPYDq+mO38ZYKGebCUQC/nVj/PXSiK9HX5otxLz8Fn7ECPbjiRz2CC3g==}
 
+  '@vueuse/metadata@12.0.0':
+    resolution: {integrity: sha512-Yzimd1D3sjxTDOlF05HekU5aSGdKjxhuhRFHA7gDWLn57PRbBIh+SF5NmjhJ0WRgF3my7T8LBucyxdFJjIfRJQ==}
+
   '@vueuse/nuxt@10.11.0':
     resolution: {integrity: sha512-PV15CU28qzr/+4IleyahobwU9kfTwfbsl8f+wkv6TWjboFVdt4WLMP2TNfPj7QgssyDdCRdl3gLZ4DC884wnDw==}
     peerDependencies:
@@ -2355,6 +2361,11 @@ packages:
 
   '@vueuse/nuxt@11.3.0':
     resolution: {integrity: sha512-FxtRTgFmsoASamR3lOftv/r11o1BojF9zir8obbTnKamVZdlQ5rgJ0hHgVbrgA6dlMuEx/PzwqAmiKNFdU4oCQ==}
+    peerDependencies:
+      nuxt: ^3.0.0
+
+  '@vueuse/nuxt@12.0.0':
+    resolution: {integrity: sha512-ZSxphoQAX5/EzIUKADcqmoKOpIya7Qi/Lma2iGuLv0YdEAdIcyhTvJ3HwboSuVCPzzovyitY1Ozo+6b0nZ5j5Q==}
     peerDependencies:
       nuxt: ^3.0.0
 
@@ -2366,6 +2377,9 @@ packages:
 
   '@vueuse/shared@11.3.0':
     resolution: {integrity: sha512-P8gSSWQeucH5821ek2mn/ciCk+MS/zoRKqdQIM3bHq6p7GXDAJLmnRRKmF5F65sAVJIfzQlwR3aDzwCn10s8hA==}
+
+  '@vueuse/shared@12.0.0':
+    resolution: {integrity: sha512-3i6qtcq2PIio5i/vVYidkkcgvmTjCqrf26u+Fd4LhnbBmIT6FN8y6q/GJERp8lfcB9zVEfjdV0Br0443qZuJpw==}
 
   '@webassemblyjs/ast@1.12.1':
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
@@ -7308,7 +7322,7 @@ snapshots:
       '@iconify/types': 2.0.0
       debug: 4.3.7(supports-color@9.4.0)
       kolorist: 1.8.0
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       mlly: 1.7.3
     transitivePeerDependencies:
       - supports-color
@@ -7875,7 +7889,7 @@ snapshots:
       '@nuxt/devtools-kit': 1.6.0(magicast@0.3.5)(rollup@4.24.4)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))
       '@nuxt/kit': 3.14.1592(magicast@0.3.5)(rollup@4.24.4)
       consola: 3.2.3
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       mlly: 1.7.3
       ohash: 1.1.4
       pathe: 1.1.2
@@ -9365,7 +9379,7 @@ snapshots:
       '@rollup/pluginutils': 5.1.3(rollup@3.29.4)
       '@vue/compiler-sfc': 3.5.13
       ast-kit: 1.1.0
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       magic-string-ast: 0.6.2
     optionalDependencies:
       vue: 3.5.13(typescript@5.6.3)
@@ -9378,7 +9392,7 @@ snapshots:
       '@rollup/pluginutils': 5.1.3(rollup@4.24.4)
       '@vue/compiler-sfc': 3.5.13
       ast-kit: 1.1.0
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       magic-string-ast: 0.6.2
     optionalDependencies:
       vue: 3.5.13(typescript@5.6.3)
@@ -9603,6 +9617,15 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
+  '@vueuse/core@12.0.0(typescript@5.6.3)':
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 12.0.0
+      '@vueuse/shared': 12.0.0(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
+
   '@vueuse/head@2.0.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       '@unhead/dom': 1.11.11
@@ -9649,12 +9672,14 @@ snapshots:
 
   '@vueuse/metadata@11.3.0': {}
 
+  '@vueuse/metadata@12.0.0': {}
+
   '@vueuse/nuxt@10.11.0(magicast@0.3.5)(nuxt@3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3))(rollup@4.24.4)(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       '@nuxt/kit': 3.14.1592(magicast@0.3.5)(rollup@4.24.4)
       '@vueuse/core': 10.11.0(vue@3.5.13(typescript@5.6.3))
       '@vueuse/metadata': 10.11.0
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       nuxt: 3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3)
       vue-demi: 0.14.10(vue@3.5.13(typescript@5.6.3))
     transitivePeerDependencies:
@@ -9679,6 +9704,20 @@ snapshots:
       - supports-color
       - vue
 
+  '@vueuse/nuxt@12.0.0(magicast@0.3.5)(nuxt@3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3))(rollup@4.24.4)(typescript@5.6.3)':
+    dependencies:
+      '@nuxt/kit': 3.14.1592(magicast@0.3.5)(rollup@4.24.4)
+      '@vueuse/core': 12.0.0(typescript@5.6.3)
+      '@vueuse/metadata': 12.0.0
+      local-pkg: 0.5.1
+      nuxt: 3.14.1592(@parcel/watcher@2.4.1)(@types/node@22.9.1)(encoding@0.1.13)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.3)(vite@5.4.10(@types/node@22.9.1)(terser@5.31.0))(vue-tsc@2.1.10(typescript@5.6.3))(webpack-sources@3.2.3)
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
+      - typescript
+
   '@vueuse/shared@10.11.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       vue-demi: 0.14.10(vue@3.5.13(typescript@5.6.3))
@@ -9699,6 +9738,12 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@vueuse/shared@12.0.0(typescript@5.6.3)':
+    dependencies:
+      vue: 3.5.13(typescript@5.6.3)
+    transitivePeerDependencies:
+      - typescript
 
   '@webassemblyjs/ast@1.12.1':
     dependencies:
@@ -14550,7 +14595,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
       fast-glob: 3.3.2
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       magic-string: 0.30.12
       mlly: 1.7.2
       pathe: 1.1.2
@@ -14569,7 +14614,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
       fast-glob: 3.3.2
-      local-pkg: 0.5.0
+      local-pkg: 0.5.1
       magic-string: 0.30.12
       mlly: 1.7.2
       pathe: 1.1.2
