@@ -4,7 +4,7 @@ import { getQuery, withBase, withQuery } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 import { operationsGenerator } from './imgix'
 
-const unsplashCDN = 'https://images.unsplash.com/'
+export const unsplashCDN = 'https://images.unsplash.com/'
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = unsplashCDN } = {}) => {
   const operations = operationsGenerator(modifiers)
