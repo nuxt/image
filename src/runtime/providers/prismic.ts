@@ -1,24 +1,19 @@
-import { joinURL, parseQuery, parseURL, stringifyQuery } from 'ufo'
+import { getQuery, withBase, withQuery } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 import { operationsGenerator } from './imgix'
+import { getImage as getUnsplashImage, unsplashCDN } from './unsplash'
 
-const PRISMIC_IMGIX_BUCKET = 'https://images.prismic.io'
+export const prismicCDN = 'https://images.prismic.io/'
 
-// Prismic image bucket is left configurable in order to test on other environments
-export const getImage: ProviderGetImage = (
-  src,
-  { modifiers = {}, baseURL = PRISMIC_IMGIX_BUCKET } = {},
-) => {
+export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = prismicCDN } = {}, ctx) => {
+  // Some images served by Prismic are from unsplash, so we use the unsplash provider for those
+  if (src.startsWith(unsplashCDN)) {
+    return getUnsplashImage(src, { modifiers }, ctx)
+  }
+
   const operations = operationsGenerator(modifiers)
-
-  const parsedURL = parseURL(src)
-
+  // withQuery requires query parameters as an object, so I parse the modifiers into an object with getQuery
   return {
-    url: joinURL(
-      baseURL,
-      parsedURL.pathname + '?'
-      // Remove duplicated keys, prioritizing override from developers
-      + stringifyQuery(Object.assign(parseQuery(parsedURL.search), parseQuery(operations))),
-    ),
+    url: withQuery(withBase(src, baseURL), getQuery('?' + operations)),
   }
 }
