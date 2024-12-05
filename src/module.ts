@@ -139,7 +139,7 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
           ? 'ipxStatic'
           : nitro.options.node ? 'ipx' : 'none'
 
-        imageOptions.provider = options.provider || resolvedProvider
+        imageOptions.provider = options.provider ||= resolvedProvider
         options[resolvedProvider] = options[resolvedProvider] || {}
 
         const p = await resolveProvider(nuxt, resolvedProvider, {
