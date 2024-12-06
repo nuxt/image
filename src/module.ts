@@ -141,12 +141,15 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
 
         if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
           imageOptions.provider = options.provider = resolvedProvider
-          options[resolvedProvider] = options[resolvedProvider] || {}
         }
 
-        // handle the case of `ipx: {}` existing in options, but deploying a static site
-        if (resolvedProvider === 'ipxStatic' && options.provider !== resolvedProvider) {
-          options.ipxStatic ||= options.ipx
+        // initialise provider options
+        if (resolvedProvider === 'ipxStatic') {
+          // handle the case of `ipx: {}` existing in options, but deploying a static site
+          options.ipxStatic ||= options.ipx || {}
+        }
+        else {
+          options[resolvedProvider] = options[resolvedProvider] || {}
         }
 
         const p = await resolveProvider(nuxt, resolvedProvider, {
