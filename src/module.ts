@@ -134,13 +134,23 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
-      if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
+      if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx) {
         const resolvedProvider = nitro.options.static || options.provider === 'ipxStatic'
           ? 'ipxStatic'
           : nitro.options.node ? 'ipx' : 'none'
 
-        imageOptions.provider = options.provider = resolvedProvider
-        options[resolvedProvider] = options[resolvedProvider] || {}
+        if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
+          imageOptions.provider = options.provider = resolvedProvider
+        }
+
+        // initialise provider options
+        if (resolvedProvider === 'ipxStatic') {
+          // handle the case of `ipx: {}` existing in options, but deploying a static site
+          options.ipxStatic ||= options.ipx || {}
+        }
+        else {
+          options[resolvedProvider] = options[resolvedProvider] || {}
+        }
 
         const p = await resolveProvider(nuxt, resolvedProvider, {
           options: options[resolvedProvider],
