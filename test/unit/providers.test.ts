@@ -31,6 +31,7 @@ import * as edgio from '#image/providers/edgio'
 import * as layer0 from '#image/providers/layer0'
 import * as storyblok from '#image/providers/storyblok'
 import * as strapi from '#image/providers/strapi'
+import * as strapi5 from '#image/providers/strapi5'
 import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
 import * as uploadcare from '#image/providers/uploadcare'
@@ -433,6 +434,118 @@ describe('Providers', () => {
 
     for (const [breakpoint, expected] of Object.entries(test)) {
       const generated = strapi.getImage('/test.png', { modifiers: { breakpoint } }, emptyContext)
+      expect(generated.url).toBe(expected)
+    }
+  })
+
+  it('strapi5', () => {
+    const tests = [
+      {
+        modifiers: {
+          breakpoint: 'large',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/large_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'medium',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/medium_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'large',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/small_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'large',
+        },
+        expected: 'http://localhost:1337/uploads/test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'custom',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            custom: {
+              url: '/uploads/custom_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+          breakpoints: ['large', 'medium', 'custom', 'small', 'thumbnail'],
+        },
+        expected: 'http://localhost:1337/uploads/custom_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'medium',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            custom: {
+              url: '/uploads/custom_test.png',
+            },
+          },
+          breakpoints: ['large', 'medium', 'custom', 'small', 'thumbnail'],
+        },
+        expected: 'http://localhost:1337/uploads/custom_test.png',
+      },
+    ]
+
+    for (const { modifiers, expected } of tests) {
+      const generated = strapi5.getImage('/test.png', { modifiers }, emptyContext)
       expect(generated.url).toBe(expected)
     }
   })
