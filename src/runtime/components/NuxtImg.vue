@@ -12,7 +12,7 @@
   >
 
   <slot
-    v-if="!isImageLoaded && $slots.placeholder"
+    v-if="!isImageLoaded"
     name="placeholder"
   />
 </template>
