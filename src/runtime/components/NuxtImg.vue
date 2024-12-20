@@ -152,6 +152,10 @@ onMounted(() => {
       emit('load', event)
     }
 
+    img.onerror = (event) => {
+      emit('error', event)
+    }
+
     markFeatureUsage('nuxt-image')
 
     return
