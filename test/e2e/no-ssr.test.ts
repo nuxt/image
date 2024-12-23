@@ -39,7 +39,7 @@ describe('browser (ssr: false)', () => {
 
       const sources = await Promise.all(images.map(el => el.evaluate(e => e.getAttribute('src'))))
 
-      expect({
+      await expect({
         sources,
         requests: requests
           .map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))
