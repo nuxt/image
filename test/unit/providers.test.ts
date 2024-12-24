@@ -337,6 +337,21 @@ describe('Providers', () => {
     }
   })
 
+  it('prismic (unsplash)', () => {
+    const providerOptions = {
+      baseURL: '', // Use empty base URL for the sake of simplicity
+    }
+
+    const EXISTING_QUERY_PARAMETERS
+      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = prismic.getImage(`${image.prismicUnsplash.url.split('?').shift()}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.prismicUnsplash)
+    }
+  })
+
   it('sanity', () => {
     const providerOptions = {
       baseURL: '',

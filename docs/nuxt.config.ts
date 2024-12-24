@@ -23,13 +23,6 @@ export default defineNuxtConfig({
     icons: ['heroicons', 'simple-icons', 'ph'],
   },
 
-  nitro: {
-    prerender: {
-      routes: ['/', '/api/search.json'],
-      autoSubfolderIndex: false,
-    },
-  },
-
   routeRules: {
     '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
     '/configuration': { redirect: { to: '/get-started/configuration', statusCode: 301 } },
@@ -37,6 +30,15 @@ export default defineNuxtConfig({
     '/components/nuxt-img': { redirect: { to: '/usage/nuxt-img', statusCode: 301 } },
     '/components/nuxt-picture': { redirect: { to: '/usage/nuxt-picture', statusCode: 301 } },
     '/api/use-image': { redirect: { to: '/usage/use-image', statusCode: 301 } },
+  },
+
+  compatibilityDate: '2024-07-11',
+
+  nitro: {
+    prerender: {
+      routes: ['/', '/api/search.json'],
+      autoSubfolderIndex: false,
+    },
   },
 
   hooks: {
@@ -54,6 +56,4 @@ export default defineNuxtConfig({
       }
     },
   },
-
-  compatibilityDate: '2024-07-11',
 })

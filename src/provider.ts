@@ -56,7 +56,7 @@ export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = 
   ipx: ipxSetup(),
   ipxStatic: ipxSetup({ isStatic: true }),
 
-  // https://vercel.com/docs/more/adding-your-framework#images
+  // https://vercel.com/docs/build-output-api/v3/configuration#images
   vercel(_providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       vercel: {
@@ -65,6 +65,7 @@ export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = 
             domains: moduleOptions.domains,
             minimumCacheTTL: 60 * 5,
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
+            formats: ['image/webp', 'image/avif'],
           },
         },
       } satisfies NitroConfig['vercel'],
