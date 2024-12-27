@@ -192,15 +192,20 @@ describe('Renders simple image', () => {
 
 const getImageLoad = (cb = () => {}) => {
   let resolve = () => {}
+  let reject = () => {}
   let image = {} as HTMLImageElement
   const loadEvent = Symbol('loadEvent')
+  const errorEvent = Symbol('errorEvent')
   const ImageMock = vi.fn(() => {
     const _image = {
       onload: () => {},
+      onerror: () => {},
     } as unknown as HTMLImageElement
     image = _image
     // @ts-expect-error not valid argument for onload
     resolve = () => _image.onload?.(loadEvent)
+    // @ts-expect-error not valid argument for onload
+    reject = () => _image.onerror?.(errorEvent)
 
     return _image
   })
@@ -211,8 +216,10 @@ const getImageLoad = (cb = () => {}) => {
 
   return {
     resolve,
+    reject,
     image,
     loadEvent,
+    errorEvent,
   }
 }
 
@@ -313,6 +320,26 @@ describe('Renders placeholder image', () => {
       ]
     `)
     expect(imageWrapper.element.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/_/image.png"`)
+  })
+
+  it('props.placeholder with source loaded error event triggers', async () => {
+    const {
+      reject: rejectImage,
+      errorEvent,
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          placeholder: true,
+        },
+      })
+    })
+    rejectImage()
+    await nextTick()
+
+    expect(wrapper.emitted().error![0]).toStrictEqual([errorEvent])
   })
 })
 
