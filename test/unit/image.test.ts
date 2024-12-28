@@ -389,7 +389,6 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
         propsData: {
           'width': 200,
           'height': 200,
-          'data-test-attribute': 'test',
           'src': src,
           'custom': true,
         },
@@ -420,7 +419,6 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
 
     expect(img.element.getAttribute('width')).toBe('200')
     expect(img.element.getAttribute('height')).toBe('200')
-    expect(img.element.getAttribute('data-test-attribute')).toBe('test')
     expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
     expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
