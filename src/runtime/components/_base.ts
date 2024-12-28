@@ -134,4 +134,5 @@ export const imgProps = {
   ...baseImageProps,
   placeholder: { type: [Boolean, String, Number, Array], required: false },
   placeholderClass: { type: String, required: false },
+  custom: { type: Boolean, required: false },
 }

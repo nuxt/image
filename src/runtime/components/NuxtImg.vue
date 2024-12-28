@@ -1,7 +1,8 @@
 <template>
   <img
+    v-if="!custom"
     ref="imgEl"
-    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
+    :class="props.placeholder && !isImageLoaded ? props.placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...imgAttrs,
@@ -9,6 +10,19 @@
     }"
     :src="src"
   >
+
+  <slot
+    v-else
+    v-bind="{
+      ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      imgAttrs: {
+        ...imgAttrs,
+        ...attrs,
+      },
+      isLoaded: isImageLoaded,
+      src: src,
+    }"
+  />
 </template>
 
 <script setup lang="ts">
@@ -36,7 +50,7 @@ const $img = useImage()
 
 const _base = useBaseImage(props)
 
-const placeholderLoaded = ref(false)
+const isImageLoaded = ref(false)
 const imgEl = ref<HTMLImageElement>()
 
 type AttrsT = typeof _base.attrs.value & {
@@ -59,7 +73,7 @@ const sizes = computed(() => $img.getSizes(props.src!, {
 const imgAttrs = computed(() => {
   const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
 
-  if (!props.placeholder || placeholderLoaded.value) {
+  if (!props.placeholder || isImageLoaded.value) {
     attrs.sizes = sizes.value.sizes
     attrs.srcset = sizes.value.srcset
   }
@@ -74,7 +88,7 @@ const placeholder = computed(() => {
     placeholder = true
   }
 
-  if (!placeholder || placeholderLoaded.value) {
+  if (!placeholder || isImageLoaded.value) {
     return false
   }
 
@@ -135,7 +149,7 @@ const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 onMounted(() => {
-  if (placeholder.value) {
+  if (placeholder.value || props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {
@@ -148,7 +162,7 @@ onMounted(() => {
     }
 
     img.onload = (event) => {
-      placeholderLoaded.value = true
+      isImageLoaded.value = true
       emit('load', event)
     }
 
@@ -170,11 +184,13 @@ onMounted(() => {
       emit('error', new Event('error'))
     }
     else {
+      isImageLoaded.value = true
       emit('load', new Event('load'))
     }
   }
 
   imgEl.value.onload = (event) => {
+    isImageLoaded.value = true
     emit('load', event)
   }
 
