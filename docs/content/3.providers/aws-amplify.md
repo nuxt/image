@@ -50,3 +50,17 @@ export default {
   }
 }
 ```
+
+## Modifiers
+
+All the default modifiers from [AWS's documentation](https://docs.aws.amazon.com/amplify/latest/userguide/integrate-image-optimization-framework.html#uri-request-parameters) are available.
+
+```vue
+<NuxtImg
+  src="https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg"
+  height="512"
+  width="512"
+  flip="true"
+  :quality="90"
+/>
+```
