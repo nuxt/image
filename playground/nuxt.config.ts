@@ -102,6 +102,9 @@ export default defineNuxtConfig({
     strapi: {
       baseURL: 'http://localhost:1337/uploads/',
     },
+    strapi5: {
+      baseURL: 'http://localhost:1337/uploads/',
+    },
     unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image',

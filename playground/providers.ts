@@ -757,6 +757,36 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Strapi5
+  {
+    name: 'strapi5',
+    samples: [
+      {
+        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Image 1',
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Thumbnail image',
+        modifiers: { breakpoint: 'thumbnail' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Small image',
+        modifiers: { breakpoint: 'small' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Medium image',
+        modifiers: { breakpoint: 'medium' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Large image',
+        modifiers: { breakpoint: 'large' },
+      },
+    ],
+  },
   // Storyblok
   {
     name: 'storyblok',
