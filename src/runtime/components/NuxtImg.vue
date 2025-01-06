@@ -2,7 +2,7 @@
   <img
     v-if="!custom"
     ref="imgEl"
-    :class="props.placeholder && !isImageLoaded ? props.placeholderClass : undefined"
+    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...imgAttrs,
@@ -10,7 +10,6 @@
     }"
     :src="src"
   >
-
   <slot
     v-else
     v-bind="{
@@ -19,8 +18,8 @@
         ...imgAttrs,
         ...attrs,
       },
-      isLoaded: isImageLoaded,
-      src: src,
+      isLoaded: placeholderLoaded,
+      src,
     }"
   />
 </template>
@@ -50,7 +49,7 @@ const $img = useImage()
 
 const _base = useBaseImage(props)
 
-const isImageLoaded = ref(false)
+const placeholderLoaded = ref(false)
 const imgEl = ref<HTMLImageElement>()
 
 type AttrsT = typeof _base.attrs.value & {
@@ -73,7 +72,7 @@ const sizes = computed(() => $img.getSizes(props.src!, {
 const imgAttrs = computed(() => {
   const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
 
-  if (!props.placeholder || isImageLoaded.value) {
+  if (!props.placeholder || placeholderLoaded.value) {
     attrs.sizes = sizes.value.sizes
     attrs.srcset = sizes.value.srcset
   }
@@ -88,7 +87,7 @@ const placeholder = computed(() => {
     placeholder = true
   }
 
-  if (!placeholder || isImageLoaded.value) {
+  if (!placeholder || placeholderLoaded.value) {
     return false
   }
 
@@ -162,7 +161,7 @@ onMounted(() => {
     }
 
     img.onload = (event) => {
-      isImageLoaded.value = true
+      placeholderLoaded.value = true
       emit('load', event)
     }
 
@@ -184,13 +183,11 @@ onMounted(() => {
       emit('error', new Event('error'))
     }
     else {
-      isImageLoaded.value = true
       emit('load', new Event('load'))
     }
   }
 
   imgEl.value.onload = (event) => {
-    isImageLoaded.value = true
     emit('load', event)
   }
 
