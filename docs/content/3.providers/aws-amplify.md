@@ -50,3 +50,17 @@ export default {
   }
 }
 ```
+
+## Modifiers
+
+All the default modifiers from [AWS's documentation](https://docs.aws.amazon.com/amplify/latest/userguide/integrate-image-optimization-framework.html#uri-request-parameters) are available.
+
+```vue
+<NuxtImg
+  src="/test.jpg"
+  height="512"
+  width="512"
+  :modifiers="{ flip: true }"
+  :quality="90"
+/>
+```
