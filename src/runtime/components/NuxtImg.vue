@@ -1,5 +1,6 @@
 <template>
   <img
+    v-if="!custom"
     ref="imgEl"
     :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
     v-bind="{
@@ -9,6 +10,18 @@
     }"
     :src="src"
   >
+  <slot
+    v-else
+    v-bind="{
+      ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      imgAttrs: {
+        ...imgAttrs,
+        ...attrs,
+      },
+      isLoaded: placeholderLoaded,
+      src,
+    }"
+  />
 </template>
 
 <script setup lang="ts">
@@ -135,7 +148,7 @@ const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 onMounted(() => {
-  if (placeholder.value) {
+  if (placeholder.value || props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {

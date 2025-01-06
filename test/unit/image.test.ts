@@ -376,4 +376,52 @@ describe('Renders image, applies module config', () => {
   })
 })
 
+describe('Renders NuxtImg with the custom prop and default slot', () => {
+  let wrapper: VueWrapper<any>
+  const src = '/image.png'
+
+  it('renders custom placeholder when image is not loaded', async () => {
+    const {
+      resolve: resolveImage,
+      loadEvent,
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src: src,
+          custom: true,
+        },
+        slots: {
+          default: ({ imgAttrs, src, isLoaded }) => {
+            const img = h('img', { ...imgAttrs, src })
+            const placeholder = h('p', {}, 'placeholder')
+
+            return isLoaded
+              ? img
+              : placeholder
+          },
+        },
+      })
+    })
+
+    const placeholderText = wrapper.find('p').element.getHTML()
+    let img = wrapper.find('img')
+
+    expect(placeholderText).toMatchInlineSnapshot('"placeholder"')
+    expect(img.exists()).toBeFalsy()
+
+    resolveImage()
+    await nextTick()
+
+    img = wrapper.find('img')
+    const domSrc = img.element.getAttribute('src')
+
+    expect(img.element.getAttribute('width')).toBe('200')
+    expect(img.element.getAttribute('height')).toBe('200')
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
+  })
+})
+
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
