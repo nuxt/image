@@ -387,13 +387,13 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
     } = getImageLoad(() => {
       wrapper = mount(NuxtImg, {
         propsData: {
-          'width': 200,
-          'height': 200,
-          'src': src,
-          'custom': true,
+          width: 200,
+          height: 200,
+          src: src,
+          custom: true,
         },
         slots: {
-          default: ({ imgAttrs, src, isLoaded }: { imgAttrs: any, src: string, isLoaded: boolean }) => {
+          default: ({ imgAttrs, src, isLoaded }) => {
             const img = h('img', { ...imgAttrs, src })
             const placeholder = h('p', {}, 'placeholder')
 
