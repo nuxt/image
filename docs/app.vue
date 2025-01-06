@@ -44,7 +44,7 @@ watch(() => search.value?.commandPaletteRef?.query, debounce((query) => {
 <template>
   <UHeader :links="links">
     <template #logo>
-      <TheLogo />
+      <TheLogo class="scale-[1.20]" />
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />

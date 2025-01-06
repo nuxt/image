@@ -31,6 +31,8 @@ defineProps({
         <img
           v-if="image"
           :src="image"
+          height="80px"
+          width="80px"
           class="h-20 w-20 rounded ml-8"
         >
       </h1>
@@ -41,9 +43,3 @@ defineProps({
     <TheLogo class="w-[349px] h-[60px] text-white" />
   </div>
 </template>
-
-<style scoped>
-._gradient {
-
-}
-</style>

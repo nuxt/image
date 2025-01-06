@@ -6,8 +6,7 @@ useSeoMeta({
   ogTitle: `Nuxt Image Playground`,
   description,
 })
-defineOgImage({
-  component: 'Docs',
+defineOgImageComponent('Docs', {
   title,
   description,
 })
