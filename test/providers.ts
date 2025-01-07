@@ -216,5 +216,3 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
   },
 ] as const
-
-export const modifierFixtures = images.map(image => image.args[1])

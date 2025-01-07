@@ -49,9 +49,9 @@ const BuiltInProviders = [
   'sirv',
 ] as const
 
-export type ImageProviderName = typeof BuiltInProviders[number]
+type ImageProviderName = typeof BuiltInProviders[number]
 
-export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
+const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   // IPX
   ipx: ipxSetup(),
   ipxStatic: ipxSetup({ isStatic: true }),

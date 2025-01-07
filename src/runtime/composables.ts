@@ -1,8 +1,7 @@
 import type { $Img } from '../module'
 
 import { createImage } from './image'
-// @ts-expect-error virtual file
-import { imageOptions } from '#build/image-options'
+import { imageOptions } from '#build/image-options.mjs'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export const useImage = (): $Img => {

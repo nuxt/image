@@ -3,8 +3,7 @@
 import { beforeEach, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
-// @ts-expect-error virtual file
-import { imageOptions } from '#build/image-options'
+import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
 import { createImage } from '#image'
 

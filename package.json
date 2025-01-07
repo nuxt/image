@@ -49,25 +49,30 @@
   },
   "devDependencies": {
     "@nuxt/eslint-config": "0.7.4",
-    "@nuxt/image": "link:",
     "@nuxt/module-builder": "0.8.4",
+    "@nuxt/schema": "3.15.1",
     "@nuxt/test-utils": "^3.15.1",
     "@types/node": "^22.10.5",
     "@types/semver": "^7.5.8",
+    "@unhead/vue": "^1.11.14",
     "@vitest/coverage-v8": "^2.1.8",
     "@vue/test-utils": "^2.4.6",
     "changelogen": "^0.5.7",
     "eslint": "9.17.0",
     "globby": "^14.0.2",
     "happy-dom": "^16.3.0",
+    "installed-check": "^9.3.0",
     "ipx": "^2.1.0",
     "jiti": "2.4.2",
+    "knip": "^5.41.1",
+    "nitropack": "^2.10.4",
     "nuxt": "^3.15.1",
     "ofetch": "^1.4.1",
     "playwright-core": "^1.49.1",
     "semver": "^7.6.3",
     "tinyexec": "^0.3.2",
     "typescript": "5.6.3",
+    "unbuild": "^3.2.0",
     "vitest": "^2.1.8",
     "vitest-environment-nuxt": "^1.0.1",
     "vue": "3.5.13",
@@ -78,12 +83,12 @@
   },
   "packageManager": "pnpm@9.15.3",
   "resolutions": {
-    "@nuxt/image": "link:.",
+    "@nuxt/image": "workspace:*",
     "@nuxt/schema": "3.15.1",
     "@nuxt/ui": "2.20.0",
     "vue": "3.5.13"
   },
   "engines": {
-    "node": "^14.16.0 || >=16.11.0"
+    "node": ">=18.20.5"
   }
 }
