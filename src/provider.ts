@@ -40,6 +40,7 @@ const BuiltInProviders = [
   'sanity',
   'storyblok',
   'strapi',
+  'strapi5',
   'twicpics',
   'unsplash',
   'uploadcare',
