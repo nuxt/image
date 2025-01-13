@@ -2,7 +2,7 @@
   <img
     v-if="!custom"
     ref="imgEl"
-    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
+    :class="placeholder && !placeholderLoaded ? placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...imgAttrs,
