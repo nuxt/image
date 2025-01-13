@@ -11,14 +11,10 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/module.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
-    }
+    ".": "./dist/module.mjs"
   },
   "main": "./dist/module.mjs",
-  "types": "./dist/module.d.ts",
+  "types": "./dist/module.d.mts",
   "files": [
     "dist"
   ],
@@ -49,7 +45,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint-config": "0.7.4",
-    "@nuxt/module-builder": "0.8.4",
+    "@nuxt/module-builder": "1.0.0-alpha.1",
     "@nuxt/schema": "3.15.1",
     "@nuxt/test-utils": "^3.15.1",
     "@types/node": "^22.10.5",
@@ -71,7 +67,7 @@
     "playwright-core": "^1.49.1",
     "semver": "^7.6.3",
     "tinyexec": "^0.3.2",
-    "typescript": "5.6.3",
+    "typescript": "5.7.3",
     "unbuild": "^3.2.0",
     "vitest": "^2.1.8",
     "vitest-environment-nuxt": "^1.0.1",
