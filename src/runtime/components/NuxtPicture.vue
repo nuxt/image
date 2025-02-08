@@ -120,13 +120,15 @@ if (import.meta.server && props.preload) {
 }
 
 // Only passdown supported <image> attributes
-const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
-
-for (const key in attrs) {
-  if (key in baseImageProps && !(key in imgAttrs)) {
-    imgAttrs[key] = attrs[key]
+const imgAttrs = computed(() => {
+  const result: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
+  for (const key in attrs) {
+    if (key in baseImageProps && !(key in result)) {
+      result[key] = attrs[key]
+    }
   }
-}
+  return result
+})
 
 const imgEl = ref<HTMLImageElement>()
 
