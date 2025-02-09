@@ -1,6 +1,5 @@
 <template>
   <svg
-    class="mb-[-5px] ml-[14px] h-6 w-auto scale-[1.20] text-black dark:text-white"
     width="466"
     height="80"
     viewBox="0 0 466 80"

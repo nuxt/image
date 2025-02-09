@@ -31,6 +31,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-11',
 
   nitro: {
+    // only for prerendering
+    serveStatic: true,
     prerender: {
       routes: ['/', '/api/search.json'],
       autoSubfolderIndex: false,
