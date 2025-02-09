@@ -19,10 +19,6 @@ export default defineNuxtConfig({
     preference: 'dark',
   },
 
-  ui: {
-    icons: ['heroicons', 'simple-icons', 'ph'],
-  },
-
   routeRules: {
     '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
     '/configuration': { redirect: { to: '/get-started/configuration', statusCode: 301 } },

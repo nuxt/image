@@ -1,5 +1,54 @@
-import { stringifyQuery } from 'ufo'
+import { encodeQueryItem, joinURL } from 'ufo'
 import type { ProviderGetImage } from '../../module'
+import { createOperationsGenerator } from '#image'
+
+export const operationsGenerator = createOperationsGenerator({
+  keyMap: {
+    width: 'w',
+    height: 'h',
+    quality: 'q',
+    trim: 'trim',
+    extend: 'extend',
+    extract: 'extract',
+    rotate: 'rotate',
+    flip: 'flip',
+    flop: 'flop',
+    sharpen: 'sharpen',
+    median: 'median',
+    blur: 'blur',
+    gamma: 'gamma',
+    negate: 'negate',
+    normalize: 'normalize',
+    threshold: 'threshold',
+    tint: 'tint',
+    grayscale: 'grayscale',
+  },
+  valueMap: {
+    format: {
+      jpg: 'jpeg',
+      jpeg: 'jpeg',
+      webp: 'webp',
+      avif: 'avif',
+      png: 'png',
+    },
+    fit: {
+      cover: 'cover',
+      contain: 'contain',
+      fill: 'fill',
+      inside: 'inside',
+      outside: 'outside',
+    },
+    position: {
+      center: 'center',
+      top: 'top',
+      right: 'right',
+      bottom: 'bottom',
+      left: 'left',
+    },
+  },
+  joinWith: '&',
+  formatter: (key, value) => `${key}=${value}`,
+})
 
 export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_amplify/image' } = {}, ctx) => {
   const validWidths = Object.values(ctx.options.screens || {}).sort((a, b) => a - b)
@@ -23,12 +72,14 @@ export const getImage: ProviderGetImage = (src, { modifiers, baseURL = '/_amplif
     return { url: src }
   }
 
+  const operations = operationsGenerator({
+    ...modifiers,
+    width: String(width),
+    quality: String(modifiers?.quality || '100'),
+  } as any)
+
   return {
-    url: baseURL + '?' + stringifyQuery({
-      url: src,
-      w: String(width),
-      q: String(modifiers?.quality || '100'),
-    }),
+    url: joinURL(baseURL + `?${encodeQueryItem('url', src)}` + (operations ? `&${operations}` : '')),
   }
 }
 

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "build.config.ts",
+        "src/module.ts",
+        "src/runtime/**",
+        "scripts/*"
+      ],
+      "ignoreDependencies": [
+        "vitest-environment-nuxt"
+      ]
+    },
+    "docs": {
+      "entry": [
+        "{components,layouts,pages,plugins,server}/**",
+        "{app,error}.vue",
+        "*.ts"
+      ],
+      "ignoreDependencies": [
+        "@iconify-json/ph",
+        "@iconify-json/simple-icons",
+        "@nuxt/content",
+        "@nuxt/fonts",
+        "@nuxt/image",
+        "@nuxt/ui-pro",
+        "@nuxthq/studio",
+        "@nuxtjs/plausible",
+        "@vueuse/core",
+        "@vueuse/nuxt",
+        "nuxt-og-image",
+        "perfect-debounce"
+      ]
+    },
+    "example": {
+      "ignoreDependencies": [
+        "@nuxt/image"
+      ]
+    },
+    "playground": {
+      "entry": [
+        "providers/custom/index.ts",
+        "{components,layouts,pages,plugins,server}/**",
+        "{app,error}.vue",
+        "layers/**",
+        "*.ts"
+      ],
+      "ignoreDependencies": [
+        "@nuxt/image"
+      ]
+    }
+  }
+}

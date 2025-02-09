@@ -76,7 +76,7 @@ export const images = [
     none: { url: '/test.png' },
     ipx: { url: '/_ipx/h_200/test.png' },
     aliyun: { url: '/test.png?image_process=resize,h_200' },
-    awsAmplify: { url: '/?url=%2Ftest.png&w=1536&q=100' },
+    awsAmplify: { url: '/?url=%2Ftest.png&h=200&w=1536&q=100' },
     cloudflare: { url: '/cdn-cgi/image/h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=-x200' },
@@ -112,7 +112,7 @@ export const images = [
     none: { url: '/test.png' },
     ipx: { url: '/_ipx/s_200x200/test.png' },
     aliyun: { url: '/test.png?image_process=resize,fw_200,fh_200' },
-    awsAmplify: { url: '/?url=%2Ftest.png&w=320&q=100' },
+    awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200/test' },
     twicpics: { url: '/test.png?twic=v1/cover=200x200' },
@@ -148,7 +148,7 @@ export const images = [
     none: { url: '/test.png' },
     ipx: { url: '/_ipx/fit_contain&s_200x200/test.png' },
     aliyun: { url: '/test.png?image_process=fit,contain/resize,fw_200,fh_200' },
-    awsAmplify: { url: '/?url=%2Ftest.png&w=320&q=100' },
+    awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&fit=contain&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain/test.png' },
     cloudinary: { url: '/f_auto,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/inside=200x200' },
@@ -184,7 +184,7 @@ export const images = [
     none: { url: '/test.png' },
     ipx: { url: '/_ipx/fit_contain&f_jpeg&s_200x200/test.png' },
     aliyun: { url: '/test.png?image_process=fit,contain/format,jpeg/resize,fw_200,fh_200' },
-    awsAmplify: { url: '/?url=%2Ftest.png&w=320&q=100' },
+    awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&fit=contain&format=jpeg&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain,f=jpeg/test.png' },
     cloudinary: { url: '/f_jpg,q_auto,w_200,h_200,c_scale/test' },
     twicpics: { url: '/test.png?twic=v1/output=jpeg/inside=200x200' },
@@ -216,5 +216,3 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
   },
 ] as const
-
-export const modifierFixtures = images.map(image => image.args[1])
