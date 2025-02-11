@@ -279,7 +279,7 @@ describe('Providers', () => {
     const providerOptions = {
       baseURL: 'https://foo.bar.com',
     }
-    
+
     const testCases = [
       {
         input: {
@@ -287,11 +287,11 @@ describe('Providers', () => {
           modifiers: {
             width: 150,
             quality: 0,
-          }
+          },
         },
         expected: {
           url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99',
-        }
+        },
       },
       {
         input: {
@@ -299,37 +299,37 @@ describe('Providers', () => {
           modifiers: {
             width: 500,
             height: 500,
-            fit: 'productletterbox_bg_ffffff_a_80_tol_25'
-          }
+            fit: 'productletterbox_bg_ffffff_a_80_tol_25',
+          },
         },
         expected: {
-          url: 'https://foo.bar.com/product.jpg?imgeng=/w_500/h_500/m_productletterbox_bg_ffffff_a_80_tol_25'
-        }
+          url: 'https://foo.bar.com/product.jpg?imgeng=/w_500/h_500/m_productletterbox_bg_ffffff_a_80_tol_25',
+        },
       },
       {
         input: {
           src: '/image.jpg',
           modifiers: {
             width: 300,
-            maxDpr: 2
-          }
+            maxDpr: 2,
+          },
         },
         expected: {
-          url: 'https://foo.bar.com/image.jpg?imgeng=/w_300/maxdpr_2'
-        }
+          url: 'https://foo.bar.com/image.jpg?imgeng=/maxdpr_2/w_300',
+        },
       },
       {
         input: {
           src: '/download.jpg',
           modifiers: {
             download: true,
-            width: 800
-          }
+            width: 800,
+          },
         },
         expected: {
-          url: 'https://foo.bar.com/download.jpg?imgeng=/dl_true/w_800'
-        }
-      }
+          url: 'https://foo.bar.com/download.jpg?imgeng=/dl_true/w_800',
+        },
+      },
     ]
 
     for (const { input, expected } of testCases) {
@@ -339,7 +339,7 @@ describe('Providers', () => {
           modifiers: input.modifiers,
           ...providerOptions,
         },
-        emptyContext
+        emptyContext,
       )
       expect(generated).toMatchObject(expected)
     }
