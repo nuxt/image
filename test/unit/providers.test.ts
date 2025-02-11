@@ -315,7 +315,7 @@ describe('Providers', () => {
           },
         },
         expected: {
-          url: 'https://foo.bar.com/image.jpg?imgeng=/maxdpr_2/w_300',
+          url: 'https://foo.bar.com/image.jpg?imgeng=/w_300/maxdpr_2',
         },
       },
       {
