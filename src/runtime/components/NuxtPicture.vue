@@ -39,7 +39,7 @@ import { useNuxtApp } from '#app/nuxt'
 
 const props = defineProps(pictureProps)
 
-const attrs = useAttrs()
+const attrs: Record<string, unknown> = useAttrs()
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
