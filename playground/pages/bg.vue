@@ -2,7 +2,7 @@
   <div class="preview" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useImage, computed } from '#imports'
 
 const $img = useImage()

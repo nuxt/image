@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-Integration between [Storyblok](https://www.storyblok.com/docs/image-service/) and the image module. To use this provider you just need to specify the base url of your service in Storyblok.
+Integration between [Storyblok](https://www.storyblok.com/docs/image-service) and the image module. To use this provider you just need to specify the base URL of your service in Storyblok.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -20,9 +20,9 @@ export default defineNuxtConfig({
 })
 ```
 
-## Storyblok modifiers
+## Storyblok Modifiers
 
-I am following all modifiers present on [Storyblok image service](https://www.storyblok.com/docs/image-service/)
+Check out available [Storyblok image service](https://www.storyblok.com/docs/api/image-service/operations) modifiers.
 
 ### Resizing
 
@@ -35,33 +35,33 @@ the logic is:
 
 Example:
 
-```html
-<div>Original</div>
+```vue
+<!-- Original -->
 <NuxtImg
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 
-<div>Resized static</div>
+<!-- Resized static -->
 <NuxtImg
+  provider="storyblok"
+  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
   width="500"
   height="500"
-  provider="storyblok"
-  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 
-<div>Proportional to Width</div>
+<!-- Proportional to width -->
 <NuxtImg
+  provider="storyblok"
+  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
   width="500"
-  provider="storyblok"
-  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 
-<div>Proportional to Height</div>
+<!-- Proportional to height -->
 <NuxtImg
-  height="500"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+  height="500"
 />
 ```
 
@@ -69,21 +69,20 @@ Example:
 
 Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#fit-in) if you want to know more.
 
-If you want to use it just add a props `fit="in"`. Take care that storyblok only support `fit-in`.
+If you want to use it just add a props `fit="in"`. Take care that Storyblok only support `fit-in`.
 
 You can also use the fill filters to fill your fit-in with a specific background. If you not defining value it will be transparent.
 
 Example:
 
-```html
-<div>Fit in with background CCCCCC</div>
+```vue
 <NuxtImg
+  provider="storyblok"
+  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
   width="200"
   height="200"
   fit="in"
   :modifiers="{ filters: { fill: 'CCCCCC' } }"
-  provider="storyblok"
-  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
 ```
 
@@ -95,13 +94,12 @@ You can modify your image format. Supported format are `webp`, `jpeg` and `png`.
 
 Example:
 
-```html
-<h3>Format</h3>
+```vue
 <NuxtImg
-  width="200"
-  format="webp"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
+  width="200"
+  format="webp"
 />
 ```
 
@@ -113,16 +111,13 @@ You can update your image quality by defining the quality filters.
 
 Example:
 
-```html
- <div class="flex">
-<div>Resized and 10% Quality</div>
+```vue
 <NuxtImg
   provider="storyblok"
+  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
   width="200"
   quality="10"
-  src="https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg"
 />
-</div>
 ```
 
 ### Facial detection
@@ -133,24 +128,13 @@ To have a smart crop just define a smart property inside modifier.
 
 Example:
 
-```html
-<h3>Facial detection</h3>
-
-<div>Resized without Smart Crop</div>
+```vue
 <NuxtImg
-  width="600"
-  height="130"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
-/>
-
-<div>Resized with Smart Crop</div>
-<NuxtImg
   width="600"
   height="130"
   :modifiers="{ smart: true }"
-  provider="storyblok"
-  src="https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg"
 />
 ```
 
@@ -158,26 +142,26 @@ Example:
 
 Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#custom-focal-point) if you want to know more.
 
-Storyblok offer you the focalize on a specific part of your image. Just use `focal` filters.
+Storyblok allows you to focalize on a specific part of your image. Just use `focal` filters.
 
 Example:
 
-```html
-<div>Focus on the bottom of the image</div>
+```vue
+<!-- Focus on the top of the image -->
 <NuxtImg
-  width="600"
-  height="130"
-  :modifiers="{ filters: { focal: '450x500:550x600' } }"
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
-/>
-
-<div>Focus on the top of the image</div>
-<NuxtImg
   width="600"
   height="130"
   :modifiers="{ filters: { focal: '450x0:550x100' } }"
+/>
+
+<!-- Focus on the bottom of the image -->
+<NuxtImg
   provider="storyblok"
   src="https://a.storyblok.com/f/39898/1000x600/d962430746/demo-image-human.jpeg"
+  width="600"
+  height="130"
+  :modifiers="{ filters: { focal: '450x500:550x600' } }"
 />
 ```
