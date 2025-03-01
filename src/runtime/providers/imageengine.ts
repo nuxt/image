@@ -16,6 +16,8 @@ export const operationsGenerator = createOperationsGenerator({
     crop: 'cr',
     inline: 'in',
     metadata: 'meta',
+    maxDpr: 'maxdpr',
+    download: 'dl',
   },
   valueMap: {
     fit: {
@@ -24,6 +26,7 @@ export const operationsGenerator = createOperationsGenerator({
       fill: 'stretch',
       inside: 'box',
       outside: 'box',
+      productletterbox: 'productletterbox',
     },
     format: {
       jpeg: 'jpg',
