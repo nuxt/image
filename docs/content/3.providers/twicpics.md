@@ -14,7 +14,8 @@ Integration between [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_med
 
 [Twicpics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) is a Responsive Image Service Solution (SaaS) that enables on-demand responsive image generation.
 
-Using the TwicPics Provider you can, out of the box, benefit from at least :
+Using the TwicPics Provider you can, out of the box, benefit from at least:
+
 - performance of our network: global CDN, optimized protocols and competitive caching
 - ideal compression: modern technology and Next-Gen formats (TwicPics delivers [`WebP`](https://en.wikipedia.org/wiki/WebP) natively for accounting browsers and can also delivers [`avif`](https://en.wikipedia.org/wiki/AVIF))
 
@@ -33,9 +34,9 @@ You just need to configure the `TwicPics` provider with the `baseURL` set to you
 export default defineNuxtConfig({
   image: {
     twicpics: {
-      baseURL: 'https://<your-twicpics-domain>/'
+      baseURL: 'https://<your-twicpics-domain>',
       // Feel free to use our demo domain to try the following examples.
-      // baseUrl: 'https://demo.twic.pics/'
+      // baseUrl: 'https://demo.twic.pics'
     }
   }
 })
@@ -49,56 +50,61 @@ TwicPics Provider complies with the documentation of [nuxt-img](/usage/nuxt-img)
 
 `fit` determines how the image is resized in relation to the parameters `height` and `width`.
 
-TwicPics Provider supports all the [the standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture.
+TwicPics Provider supports all the the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture.
 
 Syntax: `fit='__cover__'` (default value)
 
 This will return a variant of your master image cropped to 300x300 while preserving aspect ratio.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
-  height=300
-  width=300
+  height="300"
+  width="300"
 />
 ```
 
 This will return a variant of your master image resized to 300x300 with distortion.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
   fit="resize"
-  height=300
-  width=300
+  height="300"
+  width="300"
 />
 ```
 
 This will bring your image back to a 300x600 area with respect to the ratio (1:1) using letterboxing.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
   fit="contain"
-  height=600
-  width=300
+  height="600"
+  width="300"
 />
 ```
 
 The letterboxing strips are transparent areas. Feel free to select the color of your choice by using the [background](#background) property.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
   fit="contain"
-  height=600
-  width=300
-  background: "red"
+  height="600"
+  width="300"
+  background="red"
 />
 ```
+
 ### format
 
-Specifies the output format. It can be an image format or a preview format. By default, [TwicPics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) will "guess" the best output format for the requesting browser, but you can use `format` to change this behavior.
+Specifies the output format. It can be an image format or a preview format. By default, [TwicPics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) will 'guess' the best output format for the requesting browser, but you can use `format` to change this behavior.
 
 Syntax: `format='avif'|'heif'|'jpeg'|'png'|__'webp'__`
 
@@ -107,7 +113,8 @@ Syntax: `format='avif'|'heif'|'jpeg'|'png'|__'webp'__`
 Examples:
 
 This will return a variant of your image in `avif` format.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
@@ -116,7 +123,8 @@ This will return a variant of your image in `avif` format.
 ```
 
 This will return a blurry preview of your image in `svg` format.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
@@ -134,17 +142,17 @@ Syntax: `quality=`[`number`](https://www.twicpics.com/docs/api/manipulations/?ut
 
 [TwicPics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) considers `quality`=70 as default value.
 
-__NB__: TwicPics automatically manages the returned quality according to the network performance for an optimized display speed even in difficult conditions.
+**NB**: TwicPics automatically manages the returned quality according to the network performance for an optimized display speed even in difficult conditions.
 
-__NB__ : when Data Saver is activated (android mobile only), default `quality`=10.
+**NB** : when Data Saver is activated (android mobile only), default `quality`=10.
 
 Example:
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
-  quality=1
+  quality="1"
 />
 ```
 
@@ -158,7 +166,7 @@ Syntax: `background=`[`color`](https://www.twicpics.com/docs/api/manipulations/?
 
 Example:
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/icon-500.png"
@@ -166,14 +174,14 @@ Example:
 />
 ```
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
   fit="contain"
-  height=600
-  width=300
-  background: 'red'
+  height="600"
+  width="300"
+  background="red"
 />
 ```
 
@@ -183,14 +191,15 @@ More informations [about background here](https://www.twicpics.com/docs/api/tran
 
 In addition to the standard parameters, the specific features of the TwicPics API are accessible via the `modifiers` prop of `nuxt-img` or `nuxt-picture`.
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/path-to-nuxt-demo.jpg"
-  ...
-  standard props
-  ...
-  :modifiers="{key_1: value_1, ..., key_n: value_n}"
+  :modifiers="{
+    key_1: value_1,
+    ...,
+    key_n: value_n
+  }"
 />
 ```
 
@@ -202,21 +211,26 @@ In addition to the standard parameters, the specific features of the TwicPics AP
 
 Syntax: `{ crop: `[`size`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-size)[`@coordinates`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#coordinates)` }`
 
-```html
+```vue
+<!-- no coordinates given -->
 <NuxtImg
   provider="twicpics"
   src="/cat.jpg"
-  :modifiers="{crop:'500x100'}" <!-- no coordinates given -->
+  :modifiers="{ crop: '500x100' }"
 />
+
+<!-- passing coordinates -->
 <NuxtImg
   provider="twicpics"
   src="/cat.jpg"
-  :modifiers="{crop:'500x100@700x400'}" <!-- passing coordinates -->
+  :modifiers="{ crop: '500x100@700x400' }"
 />
+
+<!-- using focus auto -->
 <NuxtImg
   provider="twicpics"
   src="/cat.jpg"
-  :modifiers="{focus:'auto', crop:'500x100'}" <!-- using focus auto -->
+  :modifiers="{ focus: 'auto', crop: '500x100' }"
 />
 ```
 
@@ -228,21 +242,26 @@ More informations [about `crop` here](https://www.twicpics.com/docs/api/transfor
 
 Syntax: `{ flip: 'both' | 'x' | 'y' }`
 
-```html
+```vue
+<!-- horizontal and vertical -->
 <NuxtImg
   provider="twicpics"
   src="/puppy.jpg"
-  :modifiers="{flip:'both'}" <!-- horizontal and vertical -->
+  :modifiers="{ flip: 'both' }"
 />
+
+<!-- horizontal -->
 <NuxtImg
   provider="twicpics"
   src="/puppy.jpg"
-  :modifiers="{flip:'x'}" <!-- horizontal -->
+  :modifiers="{ flip: 'x' }"
 />
+
+<!-- vertical -->
 <NuxtImg
   provider="twicpics"
   src="/puppy.jpg"
-  :modifiers="{flip:'y'}" <!-- vertical -->
+  :modifiers="{ flip: 'y' }"
 />
 ```
 
@@ -256,23 +275,26 @@ If `auto` is used in place of actual coordinates, the focus point will be chosen
 
 Syntax: `{ focus: `[`coordinates`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-coordinates)`|'auto' }`
 
-```html
+```vue
+<!-- using crop with focus auto -->
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
-  :modifiers="{focus:'auto', crop:'500x500'}" <!-- using crop with focus auto -->
+  :modifiers="{ focus: 'auto', crop: '500x500' }"
 />
 
+<!-- changing ratio with focus auto -->
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
-  :modifiers="{focus:'auto', cover:'1:1'}" <!-- changing ratio with focus auto -->
+  :modifiers="{ focus: 'auto', cover: '1:1' }"
 />
 
+<!-- changing ratio with selected focus -->
 <NuxtImg
   provider="twicpics"
   src="/path-to-nuxt-demo.jpg"
-  :modifiers="{focus:'200x200', cover:'1:1'}" <!-- changing ratio with selected focus -->
+  :modifiers="{ focus: '200x200', cover: '1:1' }"
 />
 ```
 
@@ -290,19 +312,21 @@ Quantization occurs whenever the output format is `png`.
 
 Use truecolor if you want to distribute substantially larger but more accurate images with translucency to users on browsers with no `WebP` support or when `png` is required as output format.
 
-```html
+```vue
+<!-- disallowes color quantization -->
 <NuxtImg
   provider="twicpics"
   src="/peacock.jpg"
   format="png"
-  :modifiers="{truecolor:true}" <!-- disallowes color quantization -->
+  :modifiers="{ truecolor: true }"
 />
 
+<!-- allowes color quantization (default value) -->
 <NuxtImg
   provider="twicpics"
   src="/peacock.jpg"
   format="png"
-  :modifiers="{truecolor:false}" <!-- allowes color quantization (default value) -->
+  :modifiers="{ truecolor: false }"
 />
 ```
 
@@ -314,17 +338,19 @@ More informations [about `truecolor` here](https://www.twicpics.com/docs/api/tra
 
 Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` | 'flip' | 'left' | 'right' }`
 
-```html
+```vue
+<!-- turns image at -90° -->
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
-  :modifiers="{turn:'left'}" <!-- turns image at -90° -->
+  :modifiers="{ turn: 'left' }"
 />
 
+<!-- turns image at 180° -->
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
-  :modifiers="{turn:180}" <!-- turns image at 180° -->
+  :modifiers="{ turn: 180 }"
 />
 ```
 
@@ -336,29 +362,33 @@ Zooms into the image by a factor equal or superior to 1 towards the focus point 
 
 Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` }`
 
-```html
+```vue
+<!-- zooms into image by a factor 1.5 -->
 <NuxtImg
   provider="twicpics"
   src="/cherry-3.jpg"
-  :modifiers="{zoom:1.5}" <!-- zooms into image by a factor 1.5 -->
+  :modifiers="{ zoom: 1.5 }"
 />
 
+<!-- zooms into image by a factor 3 -->
 <NuxtImg
   provider="twicpics"
   src="/cherry-3.jpg"
- :modifiers="{zoom:3}" <!-- zooms into image by a factor 3 -->
+ :modifiers="{ zoom: 3 }"
 />
 
+<!-- zooms into image by a factor 3 in direction of the focus-->
 <NuxtImg
   provider="twicpics"
   src="/cherry-3.jpg"
- :modifiers="{focus:'auto', zoom:3}" <!-- zooms into image by a factor 3 in direction of the focus-->
+ :modifiers="{ focus: 'auto', zoom: 3 }"
 />
 
+<!-- zooms into image by a factor 3 in direction of the focus-->
 <NuxtImg
   provider="twicpics"
   src="/cherry-3.jpg"
- :modifiers="{focus:'200x200', zoom:3}" <!-- zooms into image by a factor 3 in direction of the focus-->
+ :modifiers="{ focus: '200x200', zoom: 3 }"
 />
 
 ```
@@ -374,31 +404,35 @@ Be aware that the order of the parameters can be significant.
 Example:
 
 This will return a variant of image for which we have, in order:
+
 1. cropped the image from the center to 16:9 aspect ratio
 2. then placed the focus on the center of interest of the cropped image
 3. then rotate the image 90° to the left
 
 The result is a 9:16 (not 16:9) image with a possibly false area of interest.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
-  :modifiers="{cover:'16:9', focus:'auto', turn:'left'}"
+  :modifiers="{ cover: '16:9', focus: 'auto', turn: 'left' }"
 />
 ```
 
 This will return a variant of your image for which we have, in order:
+
 1. placed the focus on the center of interest of the original image
 2. then cropped the image to 16:9 from the center of interest
 3. then rotated the image 90° to the left
 
 The result is a cropped image with the area of interest retained and displayed in 16:9 format.
-```html
+
+```vue
 <NuxtImg
   provider="twicpics"
   src="/football.jpg"
   fit="fill"
-  :modifiers="{focus:'auto', turn:'left', cover:'16:9'}"
+  :modifiers="{ focus: 'auto', turn: 'left', cover: '16:9' }"
 />
 ```
 
@@ -406,25 +440,25 @@ The result is a cropped image with the area of interest retained and displayed i
 
 Let's say you want to display an image in 4:3 aspect ratio with a width of 300px.
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
-  width=300
+  width="300"
   fit="fill"
-  :modifiers="{cover:'4:3'}"
+  :modifiers="{ cover: '4:3' }"
 />
 ```
 
 Or, with `focus`='auto'
 
-```html
+```vue
 <NuxtImg
   provider="twicpics"
   src="/cat_1x1.jpg"
-  width=300
+  width="300"
   fit="fill"
-  :modifiers="{focus:'auto', cover:'4:3'}"
+  :modifiers="{ focus: 'auto', cover: '4:3' }"
 />
 ```
 

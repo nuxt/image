@@ -8,25 +8,25 @@ links:
     size: xs
 ---
 
-When deploying your Nuxt applications to [Netlify's composable platform](https://docs.netlify.com/platform/overview/), the image module uses [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview/) to optimize and transform images on demand without impacting build times. Netlify Image CDN also handles content negotiation to use the most efficient image format for the requesting client.
+When deploying your Nuxt applications to [Netlify's composable platform](https://docs.netlify.com/platform/overview), the image module uses [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview) to optimize and transform images on demand without impacting build times. Netlify Image CDN also handles content negotiation to use the most efficient image format for the requesting client.
 
-This provider is automatically enabled in Netlify deployments, and also when running locally using [the Netlify CLI](https://docs.netlify.com/cli/local-development/).
+This provider is automatically enabled in Netlify deployments, and also when running locally using the [Netlify CLI](https://docs.netlify.com/cli/local-development).
 
 You can also manually enable this provider. To do so, set the provider to `netlify` or add the following to your Nuxt configuration:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    provider: 'netlify',
+    provider: 'netlify'
   }
 })
 ```
 
-## Local development 
+## Local Development 
 
-To test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development/). This feature of the Netlify CLI runs a local development server that mimics the Netlify production environment, including Netlify Image CDN.
+To test image transformations locally, use [Netlify Dev](https://docs.netlify.com/cli/local-development). This feature of the Netlify CLI runs a local development server that mimics the Netlify production environment, including Netlify Image CDN.
 
-## Remote images
+## Remote Images
 
 To transform a source image hosted on another domain, you must first configure allowed domains: 
 
@@ -69,7 +69,7 @@ To migrate from the deprecated Netlify Large Media option to the more robust Net
 
 ### Use deprecated Netlify Large Media option
 
-If you're not ready to migrate to the more robust Netlify Image CDN option, Netlify continues to support dynamic image transformation for all JPEG, PNG, and GIF files you have set to be tracked with [Netlify Large Media](https://docs.netlify.com/large-media/overview/). 
+If you're not ready to migrate to the more robust Netlify Image CDN option, Netlify continues to support dynamic image transformation for all JPEG, PNG, and GIF files you have set to be tracked with [Netlify Large Media](https://docs.netlify.com/large-media/overview). 
 
 #### Large Media Modifiers
 

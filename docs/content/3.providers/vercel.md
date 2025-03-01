@@ -8,9 +8,9 @@ links:
     size: xs
 ---
 
-When deploying your nuxt applications to [Vercel](https://vercel.com/) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
+When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
 
-This provider will be enabled by default in vercel deployments.
+This provider will be enabled by default in Vercel deployments.
 
 ::callout{icon="i-heroicons-exclamation-triangle" color="amber"}
 Vercel requires you to explicitly list all the widths used in your app. [See example below.](#sizes)
@@ -22,19 +22,17 @@ To use external URLs (images not in `public/` directory), hostnames should be wh
 
 **Example:**
 
-```ts [nuxt.config]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
-    domains: [
-      'avatars0.githubusercontent.com'
-    ]
+    domains: ['avatars0.githubusercontent.com']
   }
-}
+})
 ```
 
 ## Sizes
 
-You need to specify **every custom width** used in `<NuxtImg>`, `<NuxtPicture>` or `$img` for vercel to resize them properly. [Source.](https://vercel.com/docs/build-output-api/v3/configuration#api)
+You need to specify **every custom width** used in `<NuxtImg>`, `<NuxtPicture>` or `$img` for Vercel to resize them properly ([source](https://vercel.com/docs/build-output-api/v3/configuration#api)).
 
 If a width is not defined, image will fallback to the next bigger width.
 
@@ -46,21 +44,26 @@ Don't forget to also take into account [`densities`](/get-started/configuration#
 
 ::code-group
 
-  ```html [index.vue]
-  <template>
-    <NuxtImg height="40" width="40" preset="cover" src="/nuxt-icon.png" />
-  </template>
-  ```
+```vue [index.vue]
+<template>
+  <NuxtImg
+    height="40"
+    width="40"
+    preset="cover"
+    src="/nuxt-icon.png"
+  />
+</template>
+```
 
-  ```ts [nuxt.config]
-  export default {
-    image: {
-      screens: {
-        icon: 40,
-        icon2x: 80
-      }
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    screens: {
+      icon: 40,
+      icon2x: 80
     }
   }
-  ```
+})
+```
 
 ::

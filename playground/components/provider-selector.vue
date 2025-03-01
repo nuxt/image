@@ -3,6 +3,7 @@
     <option value="">
       provider demo
     </option>
+
     <option
       v-for="p in providers"
       :key="p.name"
@@ -13,7 +14,7 @@
   </select>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { providers } from '../providers'
 
 const route = useRoute()

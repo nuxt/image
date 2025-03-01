@@ -8,13 +8,13 @@ links:
     size: xs
 ---
 
-Integration between [Cloudflare](https://developers.cloudflare.com/images/) and the image module.
+Integration between [Cloudflare](https://developers.cloudflare.com/images) and the image module.
 
 ::callout{icon="i-heroicons-exclamation-triangle" color="amber"}
-Before using this provider, make sure to enable **Image Transformations** for your domain in the Cloudflare dashboard at `Images > Transformations`. If you plan to use images from external domains, also enable "Resize Image from Any Origin".
+Before using this provider, make sure to enable **Image Transformations** for your domain in the Cloudflare dashboard at `Images > Transformations`. If you plan to use images from external domains, also enable 'Resize Image from Any Origin'.
 ::
 
-To use this provider you just need to specify the base url (zone) of your service:
+To use this provider you just need to specify the base URL (zone) of your service:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -29,7 +29,12 @@ export default defineNuxtConfig({
 **Example:**
 
 ```vue
-<NuxtImg provider="cloudflare" src="/burger.jpeg" height="300" :modifiers="{ fit: 'contain' }" />
+<NuxtImg
+  provider="cloudflare"
+  src="/burger.jpeg"
+  height="300"
+  :modifiers="{ fit: 'contain' }"
+/>
 ```
 
 ## Options
