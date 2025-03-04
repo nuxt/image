@@ -45,10 +45,6 @@ importers:
       ufo:
         specifier: ^1.5.4
         version: 1.5.4
-    optionalDependencies:
-      ipx:
-        specifier: ^2.1.0
-        version: 2.1.0(bare-buffer@3.0.1)(db0@0.2.1)(ioredis@5.4.2)
     devDependencies:
       '@nuxt/eslint-config':
         specifier: 1.0.1
@@ -134,6 +130,10 @@ importers:
       vue-tsc:
         specifier: ^2.2.0
         version: 2.2.0(typescript@5.6.3)
+    optionalDependencies:
+      ipx:
+        specifier: ^2.1.0
+        version: 2.1.0(bare-buffer@3.0.1)(db0@0.2.1)(ioredis@5.4.2)
 
   docs:
     dependencies:
