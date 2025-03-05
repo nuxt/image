@@ -8,16 +8,16 @@ links:
     size: xs
 ---
 
-Integration between [Caisy](https://caisy.io/) and the image module.
+Integration between [Caisy](https://caisy.io) and the image module.
 
 To use this provider you just need to specify the base URL of your project.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    caisy: {},
-  },
-});
+    caisy: {}
+  }
+})
 ```
 
 ## Modifiers

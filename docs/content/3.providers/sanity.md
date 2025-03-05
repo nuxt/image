@@ -26,7 +26,7 @@ export default defineNuxtConfig({
 
 ## Modifiers
 
-The Sanity provider supports a number of additional modifiers. For a full list, check out [the Sanity documentation](https://www.sanity.io/docs/image-urls). All of the modifiers mentioned in the Sanity docs are supported, with the following notes.
+The Sanity provider supports a number of additional modifiers. For a full list, check out the [Sanity documentation](https://www.sanity.io/docs/image-urls). All of the modifiers mentioned in the Sanity docs are supported, with the following notes.
 
 ### Extra convenience modifiers
 
@@ -62,4 +62,4 @@ You can specify any of the formats suppored by Sanity. If this is omitted, the S
 
 ### `crop` and `hotspot`
 
-You can pass your Sanity crop and hotspot image data as modifiers and Nuxt Image will correctly generate the `rect`, `fp-x` and `fp-y` parameters for you.
+You can pass your Sanity crop and hotspot image data as modifiers and Nuxt Image will correctly generate the `rect`, `fp-x`, and `fp-y` parameters for you.
