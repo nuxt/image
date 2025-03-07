@@ -22,7 +22,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   // Avoid overriding user custom handler
   const hasUserProvidedIPX
     = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
-    || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+      || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
   if (hasUserProvidedIPX) {
     return
   }

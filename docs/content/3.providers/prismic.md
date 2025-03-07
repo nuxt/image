@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 
 You can also pass it directly to your component when you need it, for example:
 
-```html[*.vue]
+```vue
 <NuxtImg provider="prismic" src="..." />
 ```
 

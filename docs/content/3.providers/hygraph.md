@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-Integration between [Hygraph](https://hygraph.com/) and the image module.
+Integration between [Hygraph](https://hygraph.com) and the image module.
 
 To use this provider you just need to specify the base URL of your project.
 
@@ -16,10 +16,10 @@ To use this provider you just need to specify the base URL of your project.
 export default defineNuxtConfig({
   image: {
     hygraph: {
-      baseURL: "https://<subdomain>.graphassets.com/<baseid>",
-    },
-  },
-});
+      baseURL: 'https://<subdomain>.graphassets.com/<baseid>'
+    }
+  }
+})
 ```
 
 ## Modifiers

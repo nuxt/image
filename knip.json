@@ -8,6 +8,9 @@
         "src/runtime/**",
         "scripts/*"
       ],
+      "ignoreUnresolved": [
+        "#app/nuxt"
+      ],
       "ignoreDependencies": [
         "vitest-environment-nuxt"
       ]
@@ -18,7 +21,11 @@
         "{app,error}.vue",
         "*.ts"
       ],
+      "ignoreUnresolved": [
+        "#content/server"
+      ],
       "ignoreDependencies": [
+        "@css-inline/css-inline",
         "@iconify-json/ph",
         "@iconify-json/simple-icons",
         "@nuxt/content",
@@ -27,6 +34,7 @@
         "@nuxt/ui-pro",
         "@nuxthq/studio",
         "@nuxtjs/plausible",
+        "ohash",
         "@vueuse/core",
         "@vueuse/nuxt",
         "nuxt-og-image",

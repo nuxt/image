@@ -4,6 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
+import { genSafeVariableName } from 'knitwork'
 import { provider, type ProviderName } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
@@ -150,7 +151,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
     ...input,
     setup,
     runtime: normalize(input.provider!),
-    importName: `${key}Runtime$${hash(input.provider)}`,
+    importName: `${key}Runtime$${genSafeVariableName(hash(input.provider))}`,
     runtimeOptions: input.options,
   }
 }
