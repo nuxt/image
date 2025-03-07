@@ -275,6 +275,76 @@ describe('Providers', () => {
     })
   })
 
+  it('imageengine modifiers', () => {
+    const providerOptions = {
+      baseURL: 'https://foo.bar.com',
+    }
+
+    const testCases = [
+      {
+        input: {
+          src: '/test.jpg',
+          modifiers: {
+            width: 150,
+            quality: 0,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99',
+        },
+      },
+      {
+        input: {
+          src: '/product.jpg',
+          modifiers: {
+            width: 500,
+            height: 500,
+            fit: 'productletterbox_bg_ffffff_a_80_tol_25',
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/product.jpg?imgeng=/w_500/h_500/m_productletterbox_bg_ffffff_a_80_tol_25',
+        },
+      },
+      {
+        input: {
+          src: '/image.jpg',
+          modifiers: {
+            width: 300,
+            maxDpr: 2,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/image.jpg?imgeng=/w_300/maxdpr_2',
+        },
+      },
+      {
+        input: {
+          src: '/download.jpg',
+          modifiers: {
+            download: true,
+            width: 800,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/download.jpg?imgeng=/dl_true/w_800',
+        },
+      },
+    ]
+
+    for (const { input, expected } of testCases) {
+      const generated = imageengine.getImage(
+        input.src,
+        {
+          modifiers: input.modifiers,
+          ...providerOptions,
+        },
+        emptyContext,
+      )
+      expect(generated).toMatchObject(expected)
+    }
+  })
+
   it('unsplash', () => {
     const providerOptions = {
       baseURL: '',
