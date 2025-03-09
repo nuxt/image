@@ -68,6 +68,9 @@ export default defineNuxtConfig({
     fastly: {
       baseURL: 'https://www.fastly.io',
     },
+    filerobot: {
+      baseURL: 'https://fesrinkeb.filerobot.com/',
+    },
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/',
     },
