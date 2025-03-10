@@ -150,7 +150,7 @@ const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 onMounted(() => {
-  if (placeholder.value || props.custom) {
+  if (props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {
@@ -185,11 +185,14 @@ onMounted(() => {
       emit('error', new Event('error'))
     }
     else {
+      placeholderLoaded.value = true
       emit('load', new Event('load'))
     }
+    return
   }
 
   imgEl.value.onload = (event) => {
+    placeholderLoaded.value = true
     emit('load', event)
   }
 
