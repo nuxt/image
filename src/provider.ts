@@ -23,6 +23,7 @@ const BuiltInProviders = [
   'directus',
   'edgio',
   'fastly',
+  'filerobot',
   'glide',
   'gumlet',
   'hygraph',
