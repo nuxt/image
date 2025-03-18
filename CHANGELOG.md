@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.10.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.9.0...v1.10.0)
+
+### 🚀 Enhancements
+
+- **imageengine:** Add new modifiers ([#1701](https://github.com/nuxt/image/pull/1701))
+- **filerobot:** Add new provider ([#1680](https://github.com/nuxt/image/pull/1680))
+
+### 🩹 Fixes
+
+- **NuxtImg:** Do not access `props` in template ([e2e61fa](https://github.com/nuxt/image/commit/e2e61fa))
+- **NuxtPicture:** Make `img-attrs` and `attrs` responsive ([#1696](https://github.com/nuxt/image/pull/1696))
+
+### 📖 Documentation
+
+- Overhaul documentation ([#1710](https://github.com/nuxt/image/pull/1710))
+- Add `filerobot` page ([ac056cc](https://github.com/nuxt/image/commit/ac056cc))
+
+### 📦 Build
+
+- Update to latest `nuxt/module-builder` ([#1668](https://github.com/nuxt/image/pull/1668))
+
+### 🏡 Chore
+
+- Skip missing commit in generating changelog ([a658787](https://github.com/nuxt/image/commit/a658787))
+- Revert to previous module builder ([54dc469](https://github.com/nuxt/image/commit/54dc469))
+- Remove unneeded `.nuxtrc` config ([#1708](https://github.com/nuxt/image/pull/1708))
+- Temporarily ignore typescript upgrade ([473f8f1](https://github.com/nuxt/image/commit/473f8f1))
+- Bump `@nuxtjs/tailwindcss` ([25379fb](https://github.com/nuxt/image/commit/25379fb))
+- Bump `@nuxtjs/tailwindcss` version ([36fb95e](https://github.com/nuxt/image/commit/36fb95e))
+
+### 🤖 CI
+
+- Force latest corepack ([090c31b](https://github.com/nuxt/image/commit/090c31b))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](https://github.com/danielroe))
+- Nicolas Payot ([@nicolaspayot](https://github.com/nicolaspayot))
+- AdityaKantipudi1 ([@AdityaKantipudi1](https://github.com/AdityaKantipudi1))
+- Damian Głowala ([@DamianGlowala](https://github.com/DamianGlowala))
+- Codeflorist ([@codeflorist](https://github.com/codeflorist))
+
 ## v1.8.1
 
 [compare changes](https://github.com/nuxt/image/compare/v1.8.0...v1.8.1)
