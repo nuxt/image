@@ -244,6 +244,41 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' },
     ],
   },
+  // Filerobot
+  {
+    name: 'filerobot',
+    samples: [
+      {
+        src: 'https://fesrinkeb.filerobot.com/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 400,
+        height: 250,
+        densities: 'x1 x2',
+        fit: 'contain',
+        quality: 65,
+        format: 'webp',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 500,
+        height: 500,
+        fit: 'contain',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 800,
+        height: 800,
+        quality: 75,
+        fit: 'cover',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        fit: 'fill',
+      },
+    ],
+  },
   // ImageKit
   {
     name: 'imagekit',
