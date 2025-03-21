@@ -400,24 +400,6 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Layer0
-  {
-    name: 'layer0',
-    samples: [
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 },
-    ],
-  },
-  // Edgio
-  {
-    name: 'edgio',
-    samples: [
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 },
-    ],
-  },
   // Prepr
   {
     name: 'prepr',
