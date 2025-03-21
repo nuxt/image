@@ -69,4 +69,8 @@ describe('browser (ssr: true)', () => {
     const res = await fetch(url('/_ipx/s_300x300/images/colors.jpg'))
     expect(res.headers.get('content-type')).toBe('image/jpeg')
   })
+
+  it('works with server-side useImage', async () => {
+    expect(await $fetch('/api/image')).toMatchInlineSnapshot()
+  })
 })
