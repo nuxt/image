@@ -27,8 +27,6 @@ import * as prismic from '#image/providers/prismic'
 import * as sanity from '#image/providers/sanity'
 import * as contentful from '#image/providers/contentful'
 import * as cloudimage from '#image/providers/cloudimage'
-import * as edgio from '#image/providers/edgio'
-import * as layer0 from '#image/providers/layer0'
 import * as storyblok from '#image/providers/storyblok'
 import * as strapi from '#image/providers/strapi'
 import * as strapi5 from '#image/providers/strapi5'
@@ -470,20 +468,6 @@ describe('Providers', () => {
       const generated = cloudimage.getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudimage)
     }
-  })
-
-  it('edgio', () => {
-    const providerOptions = {}
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = edgio.getImage(src, { modifiers, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.edgio)
-    }
-  })
-
-  it('layer0', () => {
-    expect(layer0.getImage).toBe(edgio.getImage)
   })
 
   it('storyblok', () => {

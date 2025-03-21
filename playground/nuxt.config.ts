@@ -89,12 +89,6 @@ export default defineNuxtConfig({
     netlifyLargeMedia: {
       baseURL: 'https://netlify-photo-gallery.netlify.app',
     },
-    layer0: {
-      baseURL: 'https://opt.moovweb.net',
-    },
-    edgio: {
-      baseURL: 'https://opt.moovweb.net',
-    },
     prismic: {},
     prepr: {
       projectName: 'nuxt-prepr-demo',
