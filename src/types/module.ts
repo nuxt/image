@@ -110,6 +110,8 @@ export interface ImageProviders {
   gumlet?: any
   imagekit?: any
   imgix?: any
+  layer0?: any
+  edgio?: any
   prismic?: any
   twicpics?: any
   storyblok?: any
