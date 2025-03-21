@@ -3,8 +3,7 @@
 import { beforeEach, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
-// @ts-expect-error virtual file
-import { imageOptions } from '#build/image-options'
+import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
 import { createImage } from '#image'
 
@@ -373,6 +372,54 @@ describe('Renders image, applies module config', () => {
       },
     })
     expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w" src="/_ipx/s_1800x1800/image.png">"`)
+  })
+})
+
+describe('Renders NuxtImg with the custom prop and default slot', () => {
+  let wrapper: VueWrapper<any>
+  const src = '/image.png'
+
+  it('renders custom placeholder when image is not loaded', async () => {
+    const {
+      resolve: resolveImage,
+      loadEvent,
+    } = getImageLoad(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src: src,
+          custom: true,
+        },
+        slots: {
+          default: ({ imgAttrs, src, isLoaded }) => {
+            const img = h('img', { ...imgAttrs, src })
+            const placeholder = h('p', {}, 'placeholder')
+
+            return isLoaded
+              ? img
+              : placeholder
+          },
+        },
+      })
+    })
+
+    const placeholderText = wrapper.find('p').element.getHTML()
+    let img = wrapper.find('img')
+
+    expect(placeholderText).toMatchInlineSnapshot('"placeholder"')
+    expect(img.exists()).toBeFalsy()
+
+    resolveImage()
+    await nextTick()
+
+    img = wrapper.find('img')
+    const domSrc = img.element.getAttribute('src')
+
+    expect(img.element.getAttribute('width')).toBe('200')
+    expect(img.element.getAttribute('height')).toBe('200')
+    expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
 })
 

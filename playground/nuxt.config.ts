@@ -68,6 +68,9 @@ export default defineNuxtConfig({
     fastly: {
       baseURL: 'https://www.fastly.io',
     },
+    filerobot: {
+      baseURL: 'https://fesrinkeb.filerobot.com/',
+    },
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/',
     },
@@ -86,12 +89,6 @@ export default defineNuxtConfig({
     netlifyLargeMedia: {
       baseURL: 'https://netlify-photo-gallery.netlify.app',
     },
-    layer0: {
-      baseURL: 'https://opt.moovweb.net',
-    },
-    edgio: {
-      baseURL: 'https://opt.moovweb.net',
-    },
     prismic: {},
     prepr: {
       projectName: 'nuxt-prepr-demo',
@@ -100,6 +97,9 @@ export default defineNuxtConfig({
       projectId: 'zp7mbokg',
     },
     strapi: {
+      baseURL: 'http://localhost:1337/uploads/',
+    },
+    strapi5: {
       baseURL: 'http://localhost:1337/uploads/',
     },
     unsplash: {},

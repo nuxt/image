@@ -22,8 +22,7 @@ useSeoMeta({
   ogDescription: page.value.description,
 })
 
-defineOgImage({
-  component: 'Docs',
+defineOgImageComponent('Docs', {
   title: page.value.title,
   description: page.value.description,
   image: isProvider ? `${page.value._path}.svg` : '',

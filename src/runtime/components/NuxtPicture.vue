@@ -25,14 +25,17 @@
 
 <script setup lang="ts">
 import type { Head } from '@unhead/vue'
-import { useHead } from '@unhead/vue'
+
 import { computed, onMounted, ref, useAttrs } from 'vue'
+
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
 import { useBaseImage, pictureProps, baseImageProps } from './_base'
-import { useNuxtApp } from '#app'
+
+import { useHead } from '#imports'
+import { useNuxtApp } from '#app/nuxt'
 
 const props = defineProps(pictureProps)
 
@@ -117,13 +120,15 @@ if (import.meta.server && props.preload) {
 }
 
 // Only passdown supported <image> attributes
-const imgAttrs: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
-
-for (const key in attrs) {
-  if (key in baseImageProps && !(key in imgAttrs)) {
-    imgAttrs[key] = attrs[key]
+const imgAttrs = computed(() => {
+  const result: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
+  for (const key in attrs) {
+    if (key in baseImageProps && !(key in result)) {
+      result[key] = attrs[key]
+    }
   }
-}
+  return result
+})
 
 const imgEl = ref<HTMLImageElement>()
 

@@ -27,10 +27,9 @@ import * as prismic from '#image/providers/prismic'
 import * as sanity from '#image/providers/sanity'
 import * as contentful from '#image/providers/contentful'
 import * as cloudimage from '#image/providers/cloudimage'
-import * as edgio from '#image/providers/edgio'
-import * as layer0 from '#image/providers/layer0'
 import * as storyblok from '#image/providers/storyblok'
 import * as strapi from '#image/providers/strapi'
+import * as strapi5 from '#image/providers/strapi5'
 import * as vercel from '#image/providers/vercel'
 import * as wagtail from '#image/providers/wagtail'
 import * as uploadcare from '#image/providers/uploadcare'
@@ -274,6 +273,76 @@ describe('Providers', () => {
     })
   })
 
+  it('imageengine modifiers', () => {
+    const providerOptions = {
+      baseURL: 'https://foo.bar.com',
+    }
+
+    const testCases = [
+      {
+        input: {
+          src: '/test.jpg',
+          modifiers: {
+            width: 150,
+            quality: 0,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99',
+        },
+      },
+      {
+        input: {
+          src: '/product.jpg',
+          modifiers: {
+            width: 500,
+            height: 500,
+            fit: 'productletterbox_bg_ffffff_a_80_tol_25',
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/product.jpg?imgeng=/w_500/h_500/m_productletterbox_bg_ffffff_a_80_tol_25',
+        },
+      },
+      {
+        input: {
+          src: '/image.jpg',
+          modifiers: {
+            width: 300,
+            maxDpr: 2,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/image.jpg?imgeng=/w_300/maxdpr_2',
+        },
+      },
+      {
+        input: {
+          src: '/download.jpg',
+          modifiers: {
+            download: true,
+            width: 800,
+          },
+        },
+        expected: {
+          url: 'https://foo.bar.com/download.jpg?imgeng=/dl_true/w_800',
+        },
+      },
+    ]
+
+    for (const { input, expected } of testCases) {
+      const generated = imageengine.getImage(
+        input.src,
+        {
+          modifiers: input.modifiers,
+          ...providerOptions,
+        },
+        emptyContext,
+      )
+      expect(generated).toMatchObject(expected)
+    }
+  })
+
   it('unsplash', () => {
     const providerOptions = {
       baseURL: '',
@@ -401,20 +470,6 @@ describe('Providers', () => {
     }
   })
 
-  it('edgio', () => {
-    const providerOptions = {}
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = edgio.getImage(src, { modifiers, ...providerOptions }, emptyContext)
-      expect(generated).toMatchObject(image.edgio)
-    }
-  })
-
-  it('layer0', () => {
-    expect(layer0.getImage).toBe(edgio.getImage)
-  })
-
   it('storyblok', () => {
     const providerOptions = {}
 
@@ -433,6 +488,118 @@ describe('Providers', () => {
 
     for (const [breakpoint, expected] of Object.entries(test)) {
       const generated = strapi.getImage('/test.png', { modifiers: { breakpoint } }, emptyContext)
+      expect(generated.url).toBe(expected)
+    }
+  })
+
+  it('strapi5', () => {
+    const tests = [
+      {
+        modifiers: {
+          breakpoint: 'large',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/large_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'medium',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/medium_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'large',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+          },
+        },
+        expected: 'http://localhost:1337/uploads/small_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'large',
+        },
+        expected: 'http://localhost:1337/uploads/test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'custom',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            custom: {
+              url: '/uploads/custom_test.png',
+            },
+            medium: {
+              url: '/uploads/medium_test.png',
+            },
+            large: {
+              url: '/uploads/large_test.png',
+            },
+          },
+          breakpoints: ['large', 'medium', 'custom', 'small', 'thumbnail'],
+        },
+        expected: 'http://localhost:1337/uploads/custom_test.png',
+      },
+      {
+        modifiers: {
+          breakpoint: 'medium',
+          formats: {
+            thumbnail: {
+              url: '/uploads/thumbnail_test.png',
+            },
+            small: {
+              url: '/uploads/small_test.png',
+            },
+            custom: {
+              url: '/uploads/custom_test.png',
+            },
+          },
+          breakpoints: ['large', 'medium', 'custom', 'small', 'thumbnail'],
+        },
+        expected: 'http://localhost:1337/uploads/custom_test.png',
+      },
+    ]
+
+    for (const { modifiers, expected } of tests) {
+      const generated = strapi5.getImage('/test.png', { modifiers }, emptyContext)
       expect(generated.url).toBe(expected)
     }
   })

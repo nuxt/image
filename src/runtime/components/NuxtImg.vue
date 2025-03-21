@@ -1,7 +1,8 @@
 <template>
   <img
+    v-if="!custom"
     ref="imgEl"
-    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
+    :class="placeholder && !placeholderLoaded ? placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...imgAttrs,
@@ -9,17 +10,31 @@
     }"
     :src="src"
   >
+  <slot
+    v-else
+    v-bind="{
+      ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      imgAttrs: {
+        ...imgAttrs,
+        ...attrs,
+      },
+      isLoaded: placeholderLoaded,
+      src,
+    }"
+  />
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useAttrs } from 'vue'
-import { useHead } from '@unhead/vue'
+
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
-import { useNuxtApp } from '#app'
+
+import { useHead } from '#imports'
+import { useNuxtApp } from '#app/nuxt'
 
 const props = defineProps(imgProps)
 
@@ -135,7 +150,7 @@ const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 onMounted(() => {
-  if (placeholder.value) {
+  if (placeholder.value || props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {

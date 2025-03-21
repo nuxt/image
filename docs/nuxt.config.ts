@@ -19,10 +19,6 @@ export default defineNuxtConfig({
     preference: 'dark',
   },
 
-  ui: {
-    icons: ['heroicons', 'simple-icons', 'ph'],
-  },
-
   routeRules: {
     '/get-started': { redirect: { to: '/get-started/installation', statusCode: 301 } },
     '/configuration': { redirect: { to: '/get-started/configuration', statusCode: 301 } },
@@ -35,6 +31,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-11',
 
   nitro: {
+    // only for prerendering
+    serveStatic: true,
     prerender: {
       routes: ['/', '/api/search.json'],
       autoSubfolderIndex: false,

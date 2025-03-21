@@ -244,6 +244,41 @@ export const providers: Provider[] = [
       { src: '/plant.jpeg' },
     ],
   },
+  // Filerobot
+  {
+    name: 'filerobot',
+    samples: [
+      {
+        src: 'https://fesrinkeb.filerobot.com/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 400,
+        height: 250,
+        densities: 'x1 x2',
+        fit: 'contain',
+        quality: 65,
+        format: 'webp',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 500,
+        height: 500,
+        fit: 'contain',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 800,
+        height: 800,
+        quality: 75,
+        fit: 'cover',
+      },
+      {
+        src: '/monitoring3/boat-2023-03-06T15%3A03%3A12.6382894Z?vh=b3583b',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        fit: 'fill',
+      },
+    ],
+  },
   // ImageKit
   {
     name: 'imagekit',
@@ -363,24 +398,6 @@ export const providers: Provider[] = [
         height: 200,
         fit: 'fill',
       },
-    ],
-  },
-  // Layer0
-  {
-    name: 'layer0',
-    samples: [
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 },
-    ],
-  },
-  // Edgio
-  {
-    name: 'edgio',
-    samples: [
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', height: 200 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', width: 50 },
-      { src: 'https://i.imgur.com/LFtQeX2.jpeg', quality: 10 },
     ],
   },
   // Prepr
@@ -730,6 +747,36 @@ export const providers: Provider[] = [
   // Strapi
   {
     name: 'strapi',
+    samples: [
+      {
+        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Image 1',
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Thumbnail image',
+        modifiers: { breakpoint: 'thumbnail' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Small image',
+        modifiers: { breakpoint: 'small' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Medium image',
+        modifiers: { breakpoint: 'medium' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Large image',
+        modifiers: { breakpoint: 'large' },
+      },
+    ],
+  },
+  // Strapi5
+  {
+    name: 'strapi5',
     samples: [
       {
         src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',

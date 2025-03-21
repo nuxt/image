@@ -7,7 +7,7 @@ import { providers as playgroundProviders } from '../../playground/providers'
 const missingProviderTests = [
   'ipxStatic', // build-time-only alias for ipx
   'strapi', // covered in a unique test
-  'layer0', // backwards-compatible alias for edgio
+  'strapi5', // covered in a unique test
 ]
 
 describe('Provider coverage', async () => {

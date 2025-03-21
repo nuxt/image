@@ -121,6 +121,9 @@ export async function getContributors() {
     if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') {
       continue
     }
+    if (!commit?.shortHash) {
+      continue
+    }
     const { author } = await $fetch<{ author: { login: string, email: string } }>(`https://api.github.com/repos/nuxt/image/commits/${commit.shortHash}`, {
       headers: {
         'User-Agent': 'nuxt/image',

@@ -11,6 +11,30 @@ on:
 permissions: {}
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm i -g --force corepack && corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: 📦 Install dependencies
+        run: pnpm install
+        
+      - run: pnpm dev:prepare
+
+      - name: 🔠 Lint project
+        run: pnpm lint
+
+      - name: ✂️ Knip project
+        run: pnpm knip --workspace .
+
+      - name: ⚙️ Check package engines
+        run: pnpm installed-check -d --no-workspaces
+
   ci:
     strategy:
       matrix:
@@ -18,41 +42,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - run: npm i -g --force corepack && corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: "pnpm"
-      - run: pnpm install
 
-      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
-      # Install playwright's binary under custom directory to cache
-      - name: Set Playwright path (non-windows)
-        if: runner.os != 'Windows'
-        run: echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
-      - name: Set Playwright path (windows)
-        if: runner.os == 'Windows'
-        run: echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
-
-      - name: Cache Playwright's binary
-        uses: actions/cache@v4
-        with:
-          # Playwright removes unused browsers automatically
-          # So does not need to add playwright version to key
-          key: ${{ runner.os }}-playwright-bin-v1
-          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+      - name: 📦 Install dependencies
+        run: pnpm install
 
       - name: Install Playwright
         # does not need to explicitly set chromium after https://github.com/microsoft/playwright/issues/14862 is solved
         run: pnpm playwright-core install chromium
         
       - run: pnpm dev:prepare
-      - run: pnpm lint
-      - run: pnpm test
-      - run: pnpm build
-      - run: pnpm test:types
+
+      - name: 🧪 Test project
+        run: pnpm test
+
+      - name: 🛠 Build project
+        run: pnpm build
+
+      - name: 💪 Type check
+        run: pnpm test:types
+        
       - run: pnpm dev:build
-      - uses: codecov/codecov-action@v5
+
+
+      - name: 🟩 Coverage
+        uses: codecov/codecov-action@v5
         if: matrix.os != 'windows-latest'
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

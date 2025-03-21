@@ -4,6 +4,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
+import { genSafeVariableName } from 'knitwork'
 import { provider, type ProviderName } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
 import type { ModuleOptions } from './module'
@@ -22,6 +23,7 @@ const BuiltInProviders = [
   'directus',
   'edgio',
   'fastly',
+  'filerobot',
   'glide',
   'gumlet',
   'hygraph',
@@ -40,6 +42,7 @@ const BuiltInProviders = [
   'sanity',
   'storyblok',
   'strapi',
+  'strapi5',
   'twicpics',
   'unsplash',
   'uploadcare',
@@ -49,9 +52,9 @@ const BuiltInProviders = [
   'sirv',
 ] as const
 
-export type ImageProviderName = typeof BuiltInProviders[number]
+type ImageProviderName = typeof BuiltInProviders[number]
 
-export const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
+const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   // IPX
   ipx: ipxSetup(),
   ipxStatic: ipxSetup({ isStatic: true }),
@@ -148,7 +151,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
     ...input,
     setup,
     runtime: normalize(input.provider!),
-    importName: `${key}Runtime$${hash(input.provider)}`,
+    importName: `${key}Runtime$${genSafeVariableName(hash(input.provider))}`,
     runtimeOptions: input.options,
   }
 }
