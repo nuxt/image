@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 import { parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider } from './types'
@@ -132,6 +132,13 @@ export default defineNuxtModule<ModuleOptions>({
       },
     ])
 
+    addServerTemplate({
+      filename: '#image-options',
+      getContents() {
+        return generateImageOptions(providers, imageOptions)
+      },
+    })
+
     nuxt.hook('nitro:init', async (nitro) => {
       if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx) {
         const resolvedProvider = nitro.options.static || options.provider === 'ipxStatic'
@@ -161,8 +168,6 @@ export default defineNuxtModule<ModuleOptions>({
           await p.setup(p, options, nuxt)
         }
       }
-      // runtime options to use in nitro environment
-      nitro.options.virtual['#image-options'] = generateImageOptions(providers, imageOptions)
     })
 
     if (options.inject) {

@@ -11,6 +11,7 @@ export const useImage = (_event?: H3Event): $Img => {
 
   return nuxtApp.$img as $Img || nuxtApp._img || (nuxtApp._img = createImage({
     ...imageOptions,
+    event: nuxtApp.ssrContext?.event,
     nuxt: {
       baseURL: config.app.baseURL,
     },
