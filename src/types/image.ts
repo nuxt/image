@@ -1,4 +1,5 @@
 import type { RuntimeConfig } from '@nuxt/schema'
+import type { H3Event } from 'h3'
 
 export interface ImageModifiers {
   width: number
@@ -39,6 +40,7 @@ export interface CreateImageOptions {
   nuxt: {
     baseURL: string
   }
+  event?: H3Event
   presets: { [name: string]: ImageOptions }
   provider: string
   screens: Record<string, number>

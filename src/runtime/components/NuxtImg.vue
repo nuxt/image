@@ -33,7 +33,7 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
 
-import { useHead } from '#imports'
+import { useHead, useRequestEvent } from '#imports'
 import { useNuxtApp } from '#app/nuxt'
 
 const props = defineProps(imgProps)
@@ -142,7 +142,7 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
-  prerenderStaticImages(src.value, sizes.value.srcset)
+  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent())
 }
 
 const nuxtApp = useNuxtApp()
