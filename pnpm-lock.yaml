@@ -64,8 +64,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       '@unhead/vue':
-        specifier: ^2.0.0-rc.13
-        version: 2.0.0-rc.13(vue@3.5.13(typescript@5.6.3))
+        specifier: ^2.0.0
+        version: 2.0.0(vue@3.5.13(typescript@5.6.3))
       '@vitest/coverage-v8':
         specifier: ^3.0.9
         version: 3.0.9(vitest@3.0.9(@types/debug@4.1.12)(@types/node@22.13.11)(happy-dom@17.4.4)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
@@ -174,7 +174,7 @@ importers:
         version: 3.16.1(@parcel/watcher@2.5.0)(@types/node@22.13.11)(db0@0.3.1)(eslint@9.23.0(jiti@2.4.2))(ioredis@5.6.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.36.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.6.3)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue-tsc@2.2.8(typescript@5.6.3))(yaml@2.7.0)
       nuxt-og-image:
         specifier: ^5.0.5
-        version: 5.0.5(@unhead/vue@2.0.0-rc.13(vue@3.5.13(typescript@5.6.3)))(magicast@0.3.5)(unstorage@1.15.0(db0@0.3.1)(ioredis@5.6.0))(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3))
+        version: 5.0.5(@unhead/vue@2.0.0(vue@3.5.13(typescript@5.6.3)))(magicast@0.3.5)(unstorage@1.15.0(db0@0.3.1)(ioredis@5.6.0))(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3))
       ohash:
         specifier: ^1.1.6
         version: 1.1.6
@@ -2376,6 +2376,11 @@ packages:
 
   '@unhead/vue@1.11.20':
     resolution: {integrity: sha512-sqQaLbwqY9TvLEGeq8Fd7+F2TIuV3nZ5ihVISHjWpAM3y7DwNWRU7NmT9+yYT+2/jw1Vjwdkv5/HvDnvCLrgmg==}
+    peerDependencies:
+      vue: 3.5.13
+
+  '@unhead/vue@2.0.0':
+    resolution: {integrity: sha512-QkgWNZ9ZWXhhTYZL2JJs33YwmJP7Ix8l28hofV0qM2txlIVhp747bdxdD/eMysMusbvvtHtMgvPEQE6kByqUTw==}
     peerDependencies:
       vue: 3.5.13
 
@@ -6229,6 +6234,9 @@ packages:
   unhead@1.11.20:
     resolution: {integrity: sha512-3AsNQC0pjwlLqEYHLjtichGWankK8yqmocReITecmpB1H0aOabeESueyy+8X1gyJx4ftZVwo9hqQ4O3fPWffCA==}
 
+  unhead@2.0.0:
+    resolution: {integrity: sha512-3H+CpXTMq1FPWc6tWj4VjG+NfWrIXswfpNWC29Ux8Dq0RyWcU1pF00Qx/KjaXprkXH53pE/lTT+1+D8BJ430ew==}
+
   unhead@2.0.0-rc.13:
     resolution: {integrity: sha512-cuG4Uu6kS9/zF2+XL/5od6S1J4GJqm3xB/I6PVoXgqEVCKryziGdLo+uaqewgOWnv5y5kDRiSuRQz/7fh0nUfw==}
 
@@ -9382,6 +9390,12 @@ snapshots:
       '@unhead/shared': 1.11.20
       hookable: 5.5.3
       unhead: 1.11.20
+      vue: 3.5.13(typescript@5.6.3)
+
+  '@unhead/vue@2.0.0(vue@3.5.13(typescript@5.6.3))':
+    dependencies:
+      hookable: 5.5.3
+      unhead: 2.0.0
       vue: 3.5.13(typescript@5.6.3)
 
   '@unhead/vue@2.0.0-rc.13(vue@3.5.13(typescript@5.6.3))':
@@ -12791,13 +12805,13 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  nuxt-og-image@5.0.5(@unhead/vue@2.0.0-rc.13(vue@3.5.13(typescript@5.6.3)))(magicast@0.3.5)(unstorage@1.15.0(db0@0.3.1)(ioredis@5.6.0))(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3)):
+  nuxt-og-image@5.0.5(@unhead/vue@2.0.0(vue@3.5.13(typescript@5.6.3)))(magicast@0.3.5)(unstorage@1.15.0(db0@0.3.1)(ioredis@5.6.0))(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3)):
     dependencies:
       '@nuxt/devtools-kit': 2.3.0(magicast@0.3.5)(vite@6.2.2(@types/node@22.13.11)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
       '@nuxt/kit': 3.16.1(magicast@0.3.5)
       '@resvg/resvg-js': 2.6.2
       '@resvg/resvg-wasm': 2.6.2
-      '@unhead/vue': 2.0.0-rc.13(vue@3.5.13(typescript@5.6.3))
+      '@unhead/vue': 2.0.0(vue@3.5.13(typescript@5.6.3))
       '@unocss/core': 66.0.0
       '@unocss/preset-wind3': 66.0.0
       chrome-launcher: 1.1.2
@@ -14737,6 +14751,10 @@ snapshots:
       '@unhead/dom': 1.11.20
       '@unhead/schema': 1.11.20
       '@unhead/shared': 1.11.20
+      hookable: 5.5.3
+
+  unhead@2.0.0:
+    dependencies:
       hookable: 5.5.3
 
   unhead@2.0.0-rc.13:
