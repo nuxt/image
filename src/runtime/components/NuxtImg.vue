@@ -33,8 +33,8 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
 
-import { useHead } from '#imports'
-import { useNuxtApp } from '#app/nuxt'
+import { useHead, useNuxtApp } from '#imports'
+
 
 const props = defineProps(imgProps)
 
