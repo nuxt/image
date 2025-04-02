@@ -149,8 +149,8 @@ importers:
         specifier: ^2.13.4
         version: 2.13.4(db0@0.3.1)(ioredis@5.6.0)(magicast@0.3.5)(nuxt@3.16.2(@parcel/watcher@2.5.0)(@types/node@22.13.17)(db0@0.3.1)(eslint@9.23.0(jiti@2.4.2))(ioredis@5.6.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.36.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.6.3)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue-tsc@2.2.8(typescript@5.6.3))(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3))
       '@nuxt/fonts':
-        specifier: ^0.11.0
-        version: 0.11.0(db0@0.3.1)(ioredis@5.6.0)(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
+        specifier: ^0.11.1
+        version: 0.11.1(db0@0.3.1)(ioredis@5.6.0)(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
       '@nuxt/image':
         specifier: workspace:*
         version: link:..
@@ -1593,11 +1593,6 @@ packages:
     peerDependencies:
       vite: '*'
 
-  '@nuxt/devtools-kit@2.3.0':
-    resolution: {integrity: sha512-XKf5czeVLVDi1v602+NliVg80Ma9FyxXc9UmRz2mll/WsXTHZrPzCg94HXJPECv3S5vexTHmmBTyIrMIsqKFmw==}
-    peerDependencies:
-      vite: '>=6.0'
-
   '@nuxt/devtools-kit@2.3.2':
     resolution: {integrity: sha512-K0citnz9bSecPCLl4jGfE5I5St+E9XtDmOvYqq3ranGZGZ2Mvs5RwgUkaOrn4rulvUmBGBl7Exwh5YX9PONrEQ==}
     peerDependencies:
@@ -1627,8 +1622,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0
 
-  '@nuxt/fonts@0.11.0':
-    resolution: {integrity: sha512-YdQqJDm+B9A6hyhralFcUXMCLdQZTKuqHPpAeD6Gb3uYLxfVYVyKKxc5Ch0n656u1mp9CaPaeK4CkDAQDgxAbQ==}
+  '@nuxt/fonts@0.11.1':
+    resolution: {integrity: sha512-WRrJp0n+Hk9wF2W7aPGfYLxvQYn4Yxnf1+LtG0lORMrwM7smo9OSdc1+2WyDGZzP3ySnqjvN98OBZrGAQrmnIg==}
 
   '@nuxt/icon@1.10.3':
     resolution: {integrity: sha512-ESIiSIpETLLcn5p4U8S0F3AQ5Mox0MoHAVKczamY4STh3Dwrc8labLhtN6lunwpQEv6UGuiutdvfkJ88zu44Ew==}
@@ -8230,15 +8225,6 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/devtools-kit@2.3.0(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))':
-    dependencies:
-      '@nuxt/kit': 3.16.2(magicast@0.3.5)
-      '@nuxt/schema': 3.16.2
-      execa: 9.5.2
-      vite: 6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0)
-    transitivePeerDependencies:
-      - magicast
-
   '@nuxt/devtools-kit@2.3.2(magicast@0.3.5)(vite@6.2.2(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
       '@nuxt/kit': 3.16.2(magicast@0.3.5)
@@ -8428,14 +8414,14 @@ snapshots:
       - supports-color
       - typescript
 
-  '@nuxt/fonts@0.11.0(db0@0.3.1)(ioredis@5.6.0)(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))':
+  '@nuxt/fonts@0.11.1(db0@0.3.1)(ioredis@5.6.0)(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))':
     dependencies:
-      '@nuxt/devtools-kit': 2.3.0(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
+      '@nuxt/devtools-kit': 2.3.2(magicast@0.3.5)(vite@6.2.4(@types/node@22.13.17)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))
       '@nuxt/kit': 3.16.2(magicast@0.3.5)
       consola: 3.4.2
       css-tree: 3.1.0
       defu: 6.1.4
-      esbuild: 0.25.0
+      esbuild: 0.25.2
       fontaine: 0.5.0
       h3: 1.15.1
       jiti: 2.4.2
@@ -8448,7 +8434,7 @@ snapshots:
       tinyglobby: 0.2.12
       ufo: 1.5.4
       unifont: 0.1.7
-      unplugin: 2.2.0
+      unplugin: 2.2.2
       unstorage: 1.15.0(db0@0.3.1)(ioredis@5.6.0)
     transitivePeerDependencies:
       - '@azure/app-configuration'
