@@ -41,7 +41,7 @@ export const getImage: ProviderGetImage = (src, {
   const operations = operationsGenerator(mergeModifiers as any)
 
   // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
-  const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : joinURL(baseURL, src)
+  const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : src
 
   return {
     url,
