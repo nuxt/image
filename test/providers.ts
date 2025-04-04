@@ -38,7 +38,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200 }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/w_200/test.png' },
+    ipx: { url: '/_ipx/~/test.png@@w_200.png' },
     aliyun: { url: '/test.png?image_process=resize,w_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=320&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200/test.png' },
@@ -74,7 +74,7 @@ export const images = [
   {
     args: ['/test.png', { height: 200 }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/h_200/test.png' },
+    ipx: { url: '/_ipx/~/test.png@@h_200.png' },
     aliyun: { url: '/test.png?image_process=resize,h_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&h=200&w=1536&q=100' },
     cloudflare: { url: '/cdn-cgi/image/h=200/test.png' },
@@ -110,7 +110,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200 }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/s_200x200/test.png' },
+    ipx: { url: '/_ipx/~/test.png@@s_200x200.png' },
     aliyun: { url: '/test.png?image_process=resize,fw_200,fh_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200/test.png' },
@@ -146,7 +146,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/fit_contain&s_200x200/test.png' },
+    ipx: { url: '/_ipx/~/test.png@@fit_contain&s_200x200.png' },
     aliyun: { url: '/test.png?image_process=fit,contain/resize,fw_200,fh_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&fit=contain&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain/test.png' },
@@ -182,7 +182,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/fit_contain&f_jpeg&s_200x200/test.png' },
+    ipx: { url: '/_ipx/~/test.png@@fit_contain&s_200x200.jpeg' },
     aliyun: { url: '/test.png?image_process=fit,contain/format,jpeg/resize,fw_200,fh_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=320&h=200&fit=contain&format=jpeg&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain,f=jpeg/test.png' },

@@ -35,14 +35,15 @@ describe('ipx provider', () => {
     expect(files.sort().map(f => f.replace(outputDir, '/_ipx'))).toMatchInlineSnapshot(`
       [
         "/_ipx/_/images/nuxt.png",
-        "/_ipx/s_300x300/images/colors.jpg",
-        "/_ipx/s_300x300/images/everest.jpg",
-        "/_ipx/s_300x300/images/tacos.svg",
-        "/_ipx/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
-        "/_ipx/s_600x600/images/colors.jpg",
-        "/_ipx/s_600x600/images/everest.jpg",
-        "/_ipx/s_600x600/images/tacos.svg",
-        "/_ipx/s_600x600/unsplash/photo-1606112219348-204d7d8b94ee",
+        "/_ipx/~/images/colors.jpg@@s_300x300.jpeg",
+        "/_ipx/~/images/colors.jpg@@s_300x300.webp",
+        "/_ipx/~/images/colors.jpg@@s_600x600.jpeg",
+        "/_ipx/~/images/everest.jpg@@s_300x300.jpeg",
+        "/_ipx/~/images/everest.jpg@@s_600x600.jpeg",
+        "/_ipx/~/images/tacos.svg@@s_300x300.svg",
+        "/_ipx/~/images/tacos.svg@@s_600x600.svg",
+        "/_ipx/~/unsplash/photo-1606112219348-204d7d8b94ee@@s_300x300.jpeg",
+        "/_ipx/~/unsplash/photo-1606112219348-204d7d8b94ee@@s_600x600.jpeg",
       ]
     `)
   })
