@@ -133,7 +133,7 @@ export default defineNuxtModule<ModuleOptions>({
     ])
 
     addServerTemplate({
-      filename: '#image-options',
+      filename: '#internal/nuxt-image',
       getContents() {
         return generateImageOptions(providers, imageOptions)
       },
