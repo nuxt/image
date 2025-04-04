@@ -28,7 +28,7 @@
 import { computed, onMounted, ref, useAttrs } from 'vue'
 
 import { useImage } from '../composables'
-import { parseSize } from '../utils'
+import { chooseDefaultFormat, getFileExtension, parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { imgProps, useBaseImage } from './_base'
@@ -51,6 +51,9 @@ const $img = useImage()
 
 const _base = useBaseImage(props)
 
+const provider = props.provider || $img.options.provider
+const isIPX = provider === 'ipx' || provider === 'ipxStatic'
+
 const placeholderLoaded = ref(false)
 const imgEl = ref<HTMLImageElement>()
 
@@ -68,6 +71,7 @@ const sizes = computed(() => $img.getSizes(props.src!, {
     ..._base.modifiers.value,
     width: parseSize(props.width),
     height: parseSize(props.height),
+    ...(isIPX ? { format: chooseDefaultFormat(getFileExtension(props.src)) } : undefined),
   },
 }))
 

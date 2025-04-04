@@ -50,7 +50,7 @@ describe('Renders simple image', () => {
   it('Matches snapshot', () => {
     expect(wrapper.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_webp&amp;s_200x200/image.png 200w, /_ipx/f_webp&amp;s_400x400/image.png 400w, /_ipx/f_webp&amp;s_500x500/image.png 500w, /_ipx/f_webp&amp;s_900x900/image.png 900w, /_ipx/f_webp&amp;s_1000x1000/image.png 1000w, /_ipx/f_webp&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" loading="lazy" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;s_1800x1800/image.png 1800w">
+        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.webp 200w, /_ipx/~/image.png@@s_400x400.webp 400w, /_ipx/~/image.png@@s_500x500.webp 500w, /_ipx/~/image.png@@s_900x900.webp 900w, /_ipx/~/image.png@@s_1000x1000.webp 1000w, /_ipx/~/image.png@@s_1800x1800.webp 1800w"><img width="200" height="200" loading="lazy" data-nuxt-pic="" src="/_ipx/~/image.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.png 200w, /_ipx/~/image.png@@s_400x400.png 400w, /_ipx/~/image.png@@s_500x500.png 500w, /_ipx/~/image.png@@s_900x900.png 900w, /_ipx/~/image.png@@s_1000x1000.png 1000w, /_ipx/~/image.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -58,7 +58,7 @@ describe('Renders simple image', () => {
   it.todo('alt attribute is generated')
 
   it('props.src is picked up by getImage()', () => {
-    [['source', 'srcset', '/_ipx/f_webp&s_500x500/image.png'], ['img', 'src']].forEach(([element, attribute, customSrc]) => {
+    [['source', 'srcset', '/_ipx/~/image.png@@s_500x500.webp'], ['img', 'src']].forEach(([element, attribute, customSrc]) => {
       const domSrc = wrapper.find(element!).element.getAttribute(attribute!)
       expect(domSrc).toContain(customSrc || src)
     })
@@ -115,7 +115,7 @@ describe('Renders simple image', () => {
 
     await nextTick()
 
-    ;[['source', 'srcset', '/_ipx/f_webp&s_500x500/image.jpeg'], ['img', 'src']].forEach(([element, attribute, src]) => {
+    ;[['source', 'srcset', '/_ipx/~/image.jpeg@@s_500x500.webp'], ['img', 'src']].forEach(([element, attribute, src]) => {
       const domSrc = wrapper.find(element!).element.getAttribute(attribute!)
       expect(domSrc).toContain(src || newSource)
     })
@@ -147,7 +147,7 @@ describe('Renders simple image', () => {
     })
     expect(img.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_webp&amp;s_200x200/%E6%B1%89%E5%AD%97.png 200w, /_ipx/f_webp&amp;s_400x400/%E6%B1%89%E5%AD%97.png 400w, /_ipx/f_webp&amp;s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_webp&amp;s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/f_webp&amp;s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/f_webp&amp;s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w"><img width="200" height="200" loading="lazy" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/%E6%B1%89%E5%AD%97.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/%E6%B1%89%E5%AD%97.png 200w, /_ipx/f_png&amp;s_400x400/%E6%B1%89%E5%AD%97.png 400w, /_ipx/f_png&amp;s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/f_png&amp;s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/f_png&amp;s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/f_png&amp;s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w">
+        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/%E6%B1%89%E5%AD%97.png@@s_200x200.webp 200w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_400x400.webp 400w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_500x500.webp 500w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_900x900.webp 900w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_1000x1000.webp 1000w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_1800x1800.webp 1800w"><img width="200" height="200" loading="lazy" data-nuxt-pic="" src="/_ipx/~/%E6%B1%89%E5%AD%97.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/%E6%B1%89%E5%AD%97.png@@s_200x200.png 200w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_400x400.png 400w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_500x500.png 500w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_900x900.png 900w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_1000x1000.png 1000w, /_ipx/~/%E6%B1%89%E5%AD%97.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -183,7 +183,7 @@ describe('Renders image, applies module config', () => {
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_webp&amp;s_200x200/image.png 200w, /_ipx/f_webp&amp;s_400x400/image.png 400w, /_ipx/f_webp&amp;s_500x500/image.png 500w, /_ipx/f_webp&amp;s_900x900/image.png 900w, /_ipx/f_webp&amp;s_1000x1000/image.png 1000w, /_ipx/f_webp&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;s_1800x1800/image.png 1800w">
+        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.webp 200w, /_ipx/~/image.png@@s_400x400.webp 400w, /_ipx/~/image.png@@s_500x500.webp 500w, /_ipx/~/image.png@@s_900x900.webp 900w, /_ipx/~/image.png@@s_1000x1000.webp 1000w, /_ipx/~/image.png@@s_1800x1800.webp 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/~/image.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.png 200w, /_ipx/~/image.png@@s_400x400.png 400w, /_ipx/~/image.png@@s_500x500.png 500w, /_ipx/~/image.png@@s_900x900.png 900w, /_ipx/~/image.png@@s_1000x1000.png 1000w, /_ipx/~/image.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -206,7 +206,7 @@ describe('Renders image, applies module config', () => {
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_avif&amp;s_200x200/image.png 200w, /_ipx/f_avif&amp;s_400x400/image.png 400w, /_ipx/f_avif&amp;s_500x500/image.png 500w, /_ipx/f_avif&amp;s_900x900/image.png 900w, /_ipx/f_avif&amp;s_1000x1000/image.png 1000w, /_ipx/f_avif&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;s_1800x1800/image.png 1800w">
+        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.avif 200w, /_ipx/~/image.png@@s_400x400.avif 400w, /_ipx/~/image.png@@s_500x500.avif 500w, /_ipx/~/image.png@@s_900x900.avif 900w, /_ipx/~/image.png@@s_1000x1000.avif 1000w, /_ipx/~/image.png@@s_1800x1800.avif 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/~/image.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.png 200w, /_ipx/~/image.png@@s_400x400.png 400w, /_ipx/~/image.png@@s_500x500.png 500w, /_ipx/~/image.png@@s_900x900.png 900w, /_ipx/~/image.png@@s_1000x1000.png 1000w, /_ipx/~/image.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -229,8 +229,8 @@ describe('Renders image, applies module config', () => {
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_avif&amp;s_200x200/image.png 200w, /_ipx/f_avif&amp;s_400x400/image.png 400w, /_ipx/f_avif&amp;s_500x500/image.png 500w, /_ipx/f_avif&amp;s_900x900/image.png 900w, /_ipx/f_avif&amp;s_1000x1000/image.png 1000w, /_ipx/f_avif&amp;s_1800x1800/image.png 1800w">
-        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_webp&amp;s_200x200/image.png 200w, /_ipx/f_webp&amp;s_400x400/image.png 400w, /_ipx/f_webp&amp;s_500x500/image.png 500w, /_ipx/f_webp&amp;s_900x900/image.png 900w, /_ipx/f_webp&amp;s_1000x1000/image.png 1000w, /_ipx/f_webp&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;s_1800x1800/image.png 1800w">
+        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.avif 200w, /_ipx/~/image.png@@s_400x400.avif 400w, /_ipx/~/image.png@@s_500x500.avif 500w, /_ipx/~/image.png@@s_900x900.avif 900w, /_ipx/~/image.png@@s_1000x1000.avif 1000w, /_ipx/~/image.png@@s_1800x1800.avif 1800w">
+        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.webp 200w, /_ipx/~/image.png@@s_400x400.webp 400w, /_ipx/~/image.png@@s_500x500.webp 500w, /_ipx/~/image.png@@s_900x900.webp 900w, /_ipx/~/image.png@@s_1000x1000.webp 1000w, /_ipx/~/image.png@@s_1800x1800.webp 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/~/image.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.png 200w, /_ipx/~/image.png@@s_400x400.png 400w, /_ipx/~/image.png@@s_500x500.png 500w, /_ipx/~/image.png@@s_900x900.png 900w, /_ipx/~/image.png@@s_1000x1000.png 1000w, /_ipx/~/image.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -254,7 +254,7 @@ describe('Renders image, applies module config', () => {
     })
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_avif&amp;s_200x200/image.png 200w, /_ipx/f_avif&amp;s_400x400/image.png 400w, /_ipx/f_avif&amp;s_500x500/image.png 500w, /_ipx/f_avif&amp;s_900x900/image.png 900w, /_ipx/f_avif&amp;s_1000x1000/image.png 1000w, /_ipx/f_avif&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;s_1800x1800/image.png 1800w">
+        <source type="image/avif" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.avif 200w, /_ipx/~/image.png@@s_400x400.avif 400w, /_ipx/~/image.png@@s_500x500.avif 500w, /_ipx/~/image.png@@s_900x900.avif 900w, /_ipx/~/image.png@@s_1000x1000.avif 1000w, /_ipx/~/image.png@@s_1800x1800.avif 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/~/image.png@@s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@s_200x200.png 200w, /_ipx/~/image.png@@s_400x400.png 400w, /_ipx/~/image.png@@s_500x500.png 500w, /_ipx/~/image.png@@s_900x900.png 900w, /_ipx/~/image.png@@s_1000x1000.png 1000w, /_ipx/~/image.png@@s_1800x1800.png 1800w">
       </picture>"
     `)
   })
@@ -297,7 +297,7 @@ describe('Renders image, applies module config', () => {
 
     expect(picture.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_webp&amp;q_75&amp;s_200x200/image.png 200w, /_ipx/f_webp&amp;q_75&amp;s_400x400/image.png 400w, /_ipx/f_webp&amp;q_75&amp;s_500x500/image.png 500w, /_ipx/f_webp&amp;q_75&amp;s_900x900/image.png 900w, /_ipx/f_webp&amp;q_75&amp;s_1000x1000/image.png 1000w, /_ipx/f_webp&amp;q_75&amp;s_1800x1800/image.png 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;q_75&amp;s_1800x1800/image.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/f_png&amp;q_75&amp;s_200x200/image.png 200w, /_ipx/f_png&amp;q_75&amp;s_400x400/image.png 400w, /_ipx/f_png&amp;q_75&amp;s_500x500/image.png 500w, /_ipx/f_png&amp;q_75&amp;s_900x900/image.png 900w, /_ipx/f_png&amp;q_75&amp;s_1000x1000/image.png 1000w, /_ipx/f_png&amp;q_75&amp;s_1800x1800/image.png 1800w">
+        <source type="image/webp" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@q_75&amp;s_200x200.webp 200w, /_ipx/~/image.png@@q_75&amp;s_400x400.webp 400w, /_ipx/~/image.png@@q_75&amp;s_500x500.webp 500w, /_ipx/~/image.png@@q_75&amp;s_900x900.webp 900w, /_ipx/~/image.png@@q_75&amp;s_1000x1000.webp 1000w, /_ipx/~/image.png@@q_75&amp;s_1800x1800.webp 1800w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/~/image.png@@q_75&amp;s_1800x1800.png" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/~/image.png@@q_75&amp;s_200x200.png 200w, /_ipx/~/image.png@@q_75&amp;s_400x400.png 400w, /_ipx/~/image.png@@q_75&amp;s_500x500.png 500w, /_ipx/~/image.png@@q_75&amp;s_900x900.png 900w, /_ipx/~/image.png@@q_75&amp;s_1000x1000.png 1000w, /_ipx/~/image.png@@q_75&amp;s_1800x1800.png 1800w">
       </picture>"
     `)
   })

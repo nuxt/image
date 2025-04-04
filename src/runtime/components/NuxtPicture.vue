@@ -30,7 +30,7 @@ import { computed, onMounted, ref, useAttrs } from 'vue'
 
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { getFileExtension } from '../utils'
+import { chooseDefaultFormat, getFileExtension } from '../utils'
 import { useImage } from '../composables'
 import { useBaseImage, pictureProps, baseImageProps } from './_base'
 
@@ -54,14 +54,12 @@ const { attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = use
 
 const originalFormat = computed(() => getFileExtension(props.src))
 
-const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
-
 const legacyFormat = computed(() => {
   if (props.legacyFormat) {
     return props.legacyFormat
   }
 
-  return isTransparent.value ? 'png' : 'jpeg'
+  return chooseDefaultFormat(originalFormat.value)
 })
 
 type Source = { src?: string, srcset?: string, type?: string, sizes?: string }

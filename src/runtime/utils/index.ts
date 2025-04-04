@@ -19,6 +19,19 @@ export function getFileExtension(url = '') {
   return extension
 }
 
+/**
+ * Returns a suitable default format to use based on the image's original format.
+ */
+export function chooseDefaultFormat(originalFormat: string) {
+  if (originalFormat === 'svg') {
+    return 'svg'
+  }
+
+  const isTransparent = ['png', 'webp', 'gif'].includes(originalFormat)
+
+  return isTransparent ? 'png' : 'jpeg'
+}
+
 export function cleanDoubleSlashes(path = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
