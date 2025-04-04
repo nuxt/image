@@ -191,10 +191,11 @@ function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Om
   return `
   ${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
   
-  export const imageOptions = ${JSON.stringify(imageOptions, null, 2)}
-  
-  imageOptions.providers = {
-  ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
+  export const imageOptions = {
+    ...${JSON.stringify(imageOptions, null, 2)},
+    providers: {
+      ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
+    }
   }
-          `
+`
 }
