@@ -34,8 +34,8 @@ import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
 import { useBaseImage, pictureProps, baseImageProps } from './_base'
 
-import { useHead } from '#imports'
-import { useNuxtApp } from '#app/nuxt'
+import { useHead, useNuxtApp } from '#imports'
+
 
 const props = defineProps(pictureProps)
 
