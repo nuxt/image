@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
 import { describe, it, expect } from 'vitest'
-import { setup, createPage, url, fetch } from '@nuxt/test-utils'
+import { $fetch, setup, createPage, url, fetch } from '@nuxt/test-utils'
 
 import { providers } from '../../playground/providers'
 
@@ -68,5 +68,14 @@ describe('browser (ssr: true)', () => {
   it('works with runtime ipx', async () => {
     const res = await fetch(url('/_ipx/s_300x300/images/colors.jpg'))
     expect(res.headers.get('content-type')).toBe('image/jpeg')
+  })
+
+  it('works with server-side useImage', async () => {
+    expect(await $fetch('/api/image')).toMatchInlineSnapshot(`
+      {
+        "format": "webp",
+        "url": "/_ipx/f_webp&q_75/image.jpg",
+      }
+    `)
   })
 })

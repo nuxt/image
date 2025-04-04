@@ -34,7 +34,7 @@ import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
 import { useBaseImage, pictureProps, baseImageProps } from './_base'
 
-import { useHead } from '#imports'
+import { useHead, useRequestEvent } from '#imports'
 import { useNuxtApp } from '#app/nuxt'
 
 const props = defineProps(pictureProps)
@@ -135,7 +135,7 @@ const imgEl = ref<HTMLImageElement>()
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
   for (const src of sources.value) {
-    prerenderStaticImages(src.src, src.srcset)
+    prerenderStaticImages(src.src, src.srcset, useRequestEvent())
   }
 }
 
