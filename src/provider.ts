@@ -6,12 +6,12 @@ import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'
 import { provider, type ProviderName } from 'std-env'
-import type { InputProvider, ImageModuleProvider, ProviderSetup, ImageProviders } from './types'
+import type { InputProvider, ImageModuleProvider, ProviderSetup, ConfiguredImageProviders } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
 // Please add new providers alphabetically to the list below
-const BuiltInProviders = [
+export const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
   'bunny',
@@ -112,7 +112,7 @@ export async function resolveProviders(nuxt: any, options: ModuleOptions): Promi
 
   for (const key in options) {
     if (BuiltInProviders.includes(key as ImageProviderName)) {
-      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key as keyof ImageProviders] }))
+      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key as keyof ConfiguredImageProviders] }))
     }
   }
 
@@ -170,14 +170,14 @@ const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = 
 
 export function detectProvider(userInput: string = '') {
   if (process.env.NUXT_IMAGE_PROVIDER) {
-    return process.env.NUXT_IMAGE_PROVIDER as keyof ImageProviders
+    return process.env.NUXT_IMAGE_PROVIDER as keyof ConfiguredImageProviders
   }
 
   if (userInput && userInput !== 'auto') {
-    return userInput as keyof ImageProviders
+    return userInput as keyof ConfiguredImageProviders
   }
 
   if (provider in autodetectableProviders) {
-    return autodetectableProviders[provider] as keyof ImageProviders
+    return autodetectableProviders[provider] as keyof ConfiguredImageProviders
   }
 }

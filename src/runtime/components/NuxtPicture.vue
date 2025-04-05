@@ -24,13 +24,13 @@
   </picture>
 </template>
 
-<script setup lang="ts" generic="Provider extends keyof ImageProviders = ProviderDefaults['provider']">
+<script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import type { SerializableHead } from '@unhead/vue/types'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
-import type { ImageProviders, ProviderDefaults } from '@nuxt/image'
+import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
@@ -40,7 +40,7 @@ import type { BaseImageProps } from './_base'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-export interface PictureProps<Provider extends keyof ImageProviders> extends BaseImageProps<Provider> {
+export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
   legacyFormat?: string
   imgAttrs?: ImgHTMLAttributes
 }

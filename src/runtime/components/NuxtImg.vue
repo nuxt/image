@@ -24,10 +24,10 @@
   />
 </template>
 
-<script setup lang="ts" generic="Provider extends keyof ImageProviders = ProviderDefaults['provider']">
+<script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
-import type { ImageProviders, ProviderDefaults } from '@nuxt/image'
+import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
@@ -38,7 +38,7 @@ import type { BaseImageProps } from './_base'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-export interface ImageProps<Provider extends keyof ImageProviders> extends BaseImageProps<Provider> {
+export interface ImageProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
   custom?: boolean
   placeholder?: boolean | string | number | [w: number, h: number, q?: number, b?: number]
   placeholderClass?: string

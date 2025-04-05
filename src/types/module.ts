@@ -15,6 +15,9 @@ export interface InputProvider<T = any> {
 export interface ProviderDefaults {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ConfiguredImageProviders {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ImageProviders {}
 
 export interface ImageModuleProvider {

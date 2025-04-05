@@ -1,6 +1,6 @@
 import type { RuntimeConfig } from '@nuxt/schema'
 import type { H3Event } from 'h3'
-import type { ImageProviders } from './module'
+import type { ConfiguredImageProviders } from './module'
 
 export interface ImageModifiers {
   width: number
@@ -37,7 +37,7 @@ export interface ImageProvider<T> extends ImageModifierOptions {
 }
 
 export interface CreateImageOptions {
-  providers: Record<keyof ImageProviders, {
+  providers: Record<keyof ConfiguredImageProviders, {
     defaults: unknown
     setup: () => ImageProvider<Record<string, unknown>>
   }>

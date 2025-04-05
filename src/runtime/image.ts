@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ImageProviders } from '@nuxt/image'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
@@ -65,7 +65,7 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const { setup, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
+  const { setup, defaults } = getProvider(ctx, options.provider as keyof ConfiguredImageProviders || ctx.options.provider)
   const provider = setup()
   const preset = getPreset(ctx, options.preset)
 
@@ -116,8 +116,8 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
   return image
 }
 
-function getProvider(ctx: ImageCTX, name: string) {
-  const provider = ctx.options.providers[name as keyof ImageProviders]
+function getProvider(ctx: ImageCTX, name: keyof ConfiguredImageProviders) {
+  const provider = ctx.options.providers[name]
   if (!provider) {
     throw new Error('Unknown provider: ' + name)
   }
