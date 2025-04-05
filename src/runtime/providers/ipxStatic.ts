@@ -1,20 +1,6 @@
-import { joinURL, encodePath, encodeParam } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
-
-const operationsGenerator = createOperationsGenerator({
-  keyMap: {
-    format: 'f',
-    fit: 'fit',
-    width: 'w',
-    height: 'h',
-    resize: 's',
-    quality: 'q',
-    background: 'b',
-  },
-  joinWith: '&',
-  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val),
-})
+import { operationsGenerator } from './ipx'
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {
   if (modifiers.width && modifiers.height) {
@@ -34,5 +20,4 @@ export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}
   }
 }
 
-export const validateDomains = true
-export const supportsAlias = true
+export { validateDomains, supportsAlias } from './ipx'

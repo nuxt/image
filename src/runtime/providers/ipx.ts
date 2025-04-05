@@ -2,7 +2,7 @@ import { joinURL, encodePath, encodeParam } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
-const operationsGenerator = createOperationsGenerator({
+export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'f',
     fit: 'fit',
