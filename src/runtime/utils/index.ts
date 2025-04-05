@@ -23,43 +23,52 @@ export function cleanDoubleSlashes(path = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
 
-export function createMapper(map: any) {
-  return (key?: string) => {
-    return key ? map[key] || key : map.missingValue
-  }
+export interface Mapper<Key, Value> {
+  (key: Key): Value | Key
+  (): undefined
 }
 
-export function createOperationsGenerator({ formatter, keyMap, joinWith = '/', valueMap }: OperationGeneratorConfig = {}) {
-  if (!formatter) {
-    formatter = (key, value) => `${key}=${value}`
+export function createMapper<Key extends string, Value>(map: Partial<Record<Key, Value>> & { missingValue?: Value }): Mapper<Key, Value> {
+  return (key => key !== undefined ? map[key as Extract<Key, string>] || key : map.missingValue) as Mapper<Key, Value>
+}
+
+type Formatter<Key, Value> = (key: Key, value: Value) => string
+
+const defaultFormatter = (key: string, value: string | number) => `${key}=${value}`
+
+export function createOperationsGenerator<ModifierKey extends string, ModifierValue = string | number, FinalKey = ModifierKey, FinalValue = ModifierValue>(config: OperationGeneratorConfig<ModifierKey, ModifierValue, FinalKey, FinalValue>) {
+  const formatter = config.formatter || (defaultFormatter as Formatter<FinalKey, FinalValue>)
+
+  const keyMap = config.keyMap && typeof config.keyMap !== 'function' ? createMapper<ModifierKey, FinalKey>(config.keyMap) : config.keyMap
+
+  const map: Record<string, Mapper<ModifierValue, FinalValue>> = {}
+  for (const key in config.valueMap) {
+    const valueKey = key as ModifierKey
+    const value = config.valueMap[valueKey]!
+    map[valueKey] = typeof value === 'object'
+      ? createMapper<Extract<ModifierValue, string>, FinalValue>(value as Exclude<typeof value, (...args: never) => unknown>) as Mapper<ModifierValue, FinalValue>
+      : value as Mapper<ModifierValue, FinalValue>
   }
-  if (keyMap && typeof keyMap !== 'function') {
-    keyMap = createMapper(keyMap)
-  }
-  const map = valueMap || {}
-  Object.keys(map).forEach((valueKey) => {
-    if (typeof map[valueKey] !== 'function') {
-      map[valueKey] = createMapper(map[valueKey])
+
+  return (modifiers: Partial<Record<Extract<ModifierKey | FinalKey, string>, ModifierValue | FinalValue>>): string => {
+    const operations: string[] = []
+    for (const _key in modifiers) {
+      const key = _key as keyof typeof modifiers
+      if (typeof modifiers[key] === 'undefined') {
+        continue
+      }
+      const value = typeof map[key] === 'function'
+        ? map[key](modifiers[key] as ModifierValue)
+        : modifiers[key]
+
+      operations.push(formatter(((keyMap ? keyMap(key as ModifierKey) : key) as FinalKey), value as FinalValue))
     }
-  })
 
-  return (modifiers: { [key: string]: string } = {}) => {
-    const operations = Object.entries(modifiers)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        const mapper = map[key]
-        if (typeof mapper === 'function') {
-          value = mapper(modifiers[key]!)
-        }
-
-        key = typeof keyMap === 'function' ? keyMap(key) : key
-
-        return formatter!(key, value)
-      })
-
-    return operations.join(joinWith)
+    return operations.join(config.joinWith || '/')
   }
 }
+
+export type InferModifiers<T extends (modifiers: any) => string> = T extends (modifiers: infer Modifiers) => string ? Modifiers : Record<string, unknown>
 
 type Attrs = { [key: string]: string | number }
 

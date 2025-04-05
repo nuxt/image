@@ -1,7 +1,37 @@
 import { joinURL, encodePath } from 'ufo'
 import { defu } from 'defu'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
+import type { ImageModifiers } from '../../types'
 import { createOperationsGenerator } from '#image'
+
+export interface CloudinaryModifiers extends ImageModifiers {
+  format: string
+  quality: string
+  background: string
+  rotate: 'auto_right' | 'auto_left' | 'ignore' | 'vflip' | 'hflip' | number
+  roundCorner: string
+  gravity: string
+  effect: string
+  color: string
+  flags: string
+  dpr: string
+  opacity: number
+  overlay: string
+  underlay: string
+  transformation: string
+  zoom: number
+  colorSpace: string
+  customFunc: string
+  density: number
+  aspectRatio: string
+  blur: number
+}
+
+export interface CloudinaryOptions {
+  baseURL?: string
+  modifiers?: Partial<CloudinaryModifiers>
+  [key: string]: any
+}
 
 const convertHexToRgbFormat = (value: string) => value.startsWith('#') ? value.replace('#', 'rgb_') : value
 const removePathExtension = (value: string) => value.replace(/\.[^/.]+$/, '')
@@ -84,40 +114,42 @@ const defaultModifiers = {
 
 const REMOTE_MAPPING_RE = /\/image\/upload\/(.*)$/
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const mergeModifiers = defu(modifiers, defaultModifiers)
-  const operations = operationsGenerator(mergeModifiers as any)
+export default defineProvider<CloudinaryOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const mergeModifiers = defu(modifiers, defaultModifiers)
+    const operations = operationsGenerator(mergeModifiers as any)
 
-  // Check if the src is a Cloudinary URL
-  const srcMapping = src.match(REMOTE_MAPPING_RE)?.[1]
-  if (srcMapping) {
-    baseURL = src.replace(srcMapping, '')
-    src = srcMapping
-  }
+    // Check if the src is a Cloudinary URL
+    const srcMapping = src.match(REMOTE_MAPPING_RE)?.[1]
+    if (srcMapping) {
+      baseURL = src.replace(srcMapping, '')
+      src = srcMapping
+    }
 
-  const remoteFolderMapping = baseURL.match(REMOTE_MAPPING_RE)
-  // Handle delivery remote media file URLs
-  // see: https://cloudinary.com/documentation/fetch_remote_images
-  // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory
-  if (remoteFolderMapping?.length >= 1) {
+    const remoteFolderMapping = baseURL.match(REMOTE_MAPPING_RE)
+    // Handle delivery remote media file URLs
+    // see: https://cloudinary.com/documentation/fetch_remote_images
+    // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory
+    if (remoteFolderMapping && remoteFolderMapping?.length >= 1) {
     // need to do some weird logic to get the remote folder after image/upload after the operations and before the src
-    const remoteFolder = remoteFolderMapping[1]
-    const baseURLWithoutRemoteFolder = baseURL.replace(remoteFolder, '')
+      const remoteFolder = remoteFolderMapping[1]
+      const baseURLWithoutRemoteFolder = baseURL.replace(remoteFolder, '')
+
+      return {
+        url: joinURL(baseURLWithoutRemoteFolder, operations, remoteFolder, src),
+      }
+    }
+    else if (/\/image\/fetch\/?/.test(baseURL)) {
+    // need to encode the src as a path in case it contains special characters
+      src = encodePath(src)
+    }
+    else {
+    // If the src is not a remote media file then we need to remove the extension (if it exists)
+      src = removePathExtension(src)
+    }
 
     return {
-      url: joinURL(baseURLWithoutRemoteFolder, operations, remoteFolder, src),
+      url: joinURL(baseURL, operations, src),
     }
-  }
-  else if (/\/image\/fetch\/?/.test(baseURL)) {
-    // need to encode the src as a path in case it contains special characters
-    src = encodePath(src)
-  }
-  else {
-    // If the src is not a remote media file then we need to remove the extension (if it exists)
-    src = removePathExtension(src)
-  }
-
-  return {
-    url: joinURL(baseURL, operations, src),
-  }
-}
+  },
+})

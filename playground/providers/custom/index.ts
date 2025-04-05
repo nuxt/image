@@ -1,9 +1,11 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../../src/types' // '@nuxt/image'
+import { defineProvider } from '#image/provider'
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operationsString = `w_${modifiers.width}&h_${modifiers.height}`
-  return {
-    url: joinURL(baseURL, operationsString, src),
-  }
-}
+export default defineProvider<{ baseURL?: string }>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operationsString = `w_${modifiers.width}&h_${modifiers.height}`
+    return {
+      url: joinURL(baseURL, operationsString, src),
+    }
+  },
+})

@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -16,9 +16,15 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
-  }
+interface FastlyOptions {
+  baseURL?: string
 }
+
+export default defineProvider<FastlyOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
+    }
+  },
+})

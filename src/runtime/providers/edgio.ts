@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -12,13 +12,19 @@ const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, {
-  modifiers = {},
-  baseURL = 'https://opt.moovweb.net',
-} = {}) => {
-  const operations = operationsGenerator(modifiers)
-
-  return {
-    url: joinURL(baseURL, '?img=' + src + (operations ? ('&' + operations) : '')),
-  }
+interface EdgioOptions {
+  baseURL?: string
 }
+
+export default defineProvider<EdgioOptions>({
+  getImage: (src, {
+    modifiers,
+    baseURL = 'https://opt.moovweb.net',
+  }) => {
+    const operations = operationsGenerator(modifiers)
+
+    return {
+      url: joinURL(baseURL, '?img=' + src + (operations ? ('&' + operations) : '')),
+    }
+  },
+})

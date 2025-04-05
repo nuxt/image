@@ -1,1 +1,1 @@
-export * from './ipx'
+export { default } from './ipx'

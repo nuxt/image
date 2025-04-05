@@ -1,9 +1,9 @@
 import { encodeQueryItem } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
 // https://docs.netlify.com/image-cdn/overview/
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
@@ -38,17 +38,15 @@ export const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => encodeQueryItem(key, value),
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
-  const mods: Record<string, string> = { ...modifiers }
-  mods.url = src
-  if (modifiers.width) {
-    mods.width = modifiers.width.toString()
-  }
-  if (modifiers.height) {
-    mods.height = modifiers.height.toString()
-  }
-  const operations = operationsGenerator(mods)
-  return {
-    url: `${baseURL || '/.netlify/images'}?${operations}`,
-  }
+interface NetlifyImageCDNOptions {
+  baseURL: string
 }
+
+export default defineProvider<NetlifyImageCDNOptions>({
+  getImage: (src, { modifiers, baseURL }) => {
+    const operations = operationsGenerator({ ...modifiers, url: src })
+    return {
+      url: `${baseURL || '/.netlify/images'}?${operations}`,
+    }
+  },
+})

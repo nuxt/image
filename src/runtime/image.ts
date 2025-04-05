@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant } from '../module'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ImageProviders } from '../module'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
@@ -65,7 +65,8 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
+  const { setup, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
+  const provider = setup()
   const preset = getPreset(ctx, options.preset)
 
   // Normalize input with leading slash
@@ -94,26 +95,29 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const _options: ImageOptions = defu(options, preset, defaults)
-  _options.modifiers = { ..._options.modifiers }
-  const expectedFormat = _options.modifiers.format
-
-  if (_options.modifiers?.width) {
-    _options.modifiers.width = parseSize(_options.modifiers.width)
-  }
-  if (_options.modifiers?.height) {
-    _options.modifiers.height = parseSize(_options.modifiers.height)
+  const _options = defu(options, preset, defaults as Partial<ImageOptions>)
+  const resolvedOptions = {
+    ..._options,
+    modifiers: { ..._options.modifiers },
   }
 
-  const image = provider.getImage(input, _options, ctx)
+  const expectedFormat = resolvedOptions.modifiers.format
+  if (resolvedOptions.modifiers?.width) {
+    resolvedOptions.modifiers.width = parseSize(resolvedOptions.modifiers.width)
+  }
+  if (resolvedOptions.modifiers?.height) {
+    resolvedOptions.modifiers.height = parseSize(resolvedOptions.modifiers.height)
+  }
+
+  const image = provider.getImage(input, resolvedOptions, ctx)
 
   image.format = image.format || expectedFormat || ''
 
   return image
 }
 
-function getProvider(ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
-  const provider = ctx.options.providers[name]
+function getProvider(ctx: ImageCTX, name: string) {
+  const provider = ctx.options.providers[name as keyof ImageProviders]
   if (!provider) {
     throw new Error('Unknown provider: ' + name)
   }

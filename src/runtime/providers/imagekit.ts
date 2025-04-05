@@ -1,5 +1,5 @@
 import { joinURL, withQuery } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -100,18 +100,24 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: ',',
-  formatter: (key, value) => `${key}-${value}`,
+  formatter: (key, value: string | number) => `${key}-${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  let operations = operationsGenerator(modifiers)
-
-  operations = operations.replace('c-pad_resize', 'cm-pad_resize')
-  operations = operations.replace('c-pad_extract', 'cm-pad_extract')
-  operations = operations.replace('c-extract', 'cm-extract')
-  operations = operations.replace('raw-', '')
-
-  return {
-    url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src)),
-  }
+interface ImagekitOptions {
+  baseURL?: string
 }
+
+export default defineProvider<ImagekitOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    let operations = operationsGenerator(modifiers)
+
+    operations = operations.replace('c-pad_resize', 'cm-pad_resize')
+    operations = operations.replace('c-pad_extract', 'cm-pad_extract')
+    operations = operations.replace('c-extract', 'cm-extract')
+    operations = operations.replace('raw-', '')
+
+    return {
+      url: joinURL(baseURL, (operations ? withQuery(src, { tr: operations }) : src)),
+    }
+  },
+})

@@ -6,7 +6,7 @@ import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'
 import { provider, type ProviderName } from 'std-env'
-import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import type { InputProvider, ImageModuleProvider, ProviderSetup, ImageProviders } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
@@ -112,7 +112,7 @@ export async function resolveProviders(nuxt: any, options: ModuleOptions): Promi
 
   for (const key in options) {
     if (BuiltInProviders.includes(key as ImageProviderName)) {
-      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key] }))
+      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key as keyof ImageProviders] }))
     }
   }
 
@@ -142,7 +142,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 
   const resolver = createResolver(import.meta.url)
   input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
-    ? await resolver.resolve('./runtime/providers/' + input.provider)
+    ? resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
 
   const setup = input.setup || providerSetup[input.name as ImageProviderName]
@@ -170,14 +170,14 @@ const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = 
 
 export function detectProvider(userInput: string = '') {
   if (process.env.NUXT_IMAGE_PROVIDER) {
-    return process.env.NUXT_IMAGE_PROVIDER
+    return process.env.NUXT_IMAGE_PROVIDER as keyof ImageProviders
   }
 
   if (userInput && userInput !== 'auto') {
-    return userInput
+    return userInput as keyof ImageProviders
   }
 
   if (provider in autodetectableProviders) {
-    return autodetectableProviders[provider]
+    return autodetectableProviders[provider] as keyof ImageProviders
   }
 }

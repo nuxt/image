@@ -1,8 +1,8 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
@@ -12,9 +12,11 @@ export const operationsGenerator = createOperationsGenerator({
   formatter: (key, value) => `${key}=${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {} } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(src + (operations ? ('?' + operations) : '')),
-  }
-}
+export default defineProvider({
+  getImage: (src, { modifiers }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(src + (operations ? ('?' + operations) : '')),
+    }
+  },
+})

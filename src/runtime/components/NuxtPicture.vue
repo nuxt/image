@@ -1,5 +1,5 @@
 <template>
-  <picture>
+  <picture v-bind="attrs.picture">
     <source
       v-for="source in sources.slice(0, -1)"
       :key="source.src"
@@ -14,7 +14,8 @@
       v-bind="{
         ...baseAttrs,
         ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
-        ...imgAttrs,
+        ...attrs.img,
+        'data-nuxt-pic': '',
       }"
       :src="lastSource.src"
       :sizes="lastSource.sizes"
@@ -23,23 +24,30 @@
   </picture>
 </template>
 
-<script setup lang="ts">
-import type { Head } from '@unhead/vue'
+<script setup lang="ts" generic="Provider extends keyof ImageProviders = ProviderDefaults['provider']">
+import type { SerializableHead } from '@unhead/vue/types'
 
-import { computed, onMounted, ref, useAttrs } from 'vue'
+import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
+import type { ImgHTMLAttributes } from 'vue'
 
+import type { ImageProviders, ProviderDefaults } from '@nuxt/image'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
-import { useBaseImage, pictureProps, baseImageProps } from './_base'
+import { useImageModifiers, useNormalisedAttrs, useProviderOptions } from './_base'
+import type { BaseImageProps } from './_base'
 
-import { useHead, useRequestEvent } from '#imports'
-import { useNuxtApp } from '#app/nuxt'
+import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-const props = defineProps(pictureProps)
+export interface PictureProps<Provider extends keyof ImageProviders> extends BaseImageProps<Provider> {
+  legacyFormat?: string
+  imgAttrs?: ImgHTMLAttributes
+}
 
-const attrs = useAttrs()
+defineOptions({ inheritAttrs: false })
+
+const props = defineProps<PictureProps<Provider>>()
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
@@ -48,12 +56,30 @@ const emit = defineEmits<{
 
 const isServer = import.meta.server
 
-const $img = useImage()
+const baseAttrs = useNormalisedAttrs(props)
 
-const { attrs: baseAttrs, options: baseOptions, modifiers: baseModifiers } = useBaseImage(props)
+// Only pass down supported <image> attributes
+const _attrs = useAttrs()
+const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding', 'nonce'])
+const attrs = computed(() => {
+  const attrs: Record<string, Record<string, unknown>> = {
+    img: { ...props.imgAttrs },
+    picture: {},
+  }
+  for (const key in _attrs) {
+    if (imageAttrNames.has(key)) {
+      if (!(key in attrs.img)) {
+        attrs.img[key] = _attrs[key]
+      }
+    }
+    else {
+      attrs.picture[key] = _attrs[key]
+    }
+  }
+  return attrs
+})
 
 const originalFormat = computed(() => getFileExtension(props.src))
-
 const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
 const legacyFormat = computed(() => {
@@ -65,6 +91,10 @@ const legacyFormat = computed(() => {
 })
 
 type Source = { src?: string, srcset?: string, type?: string, sizes?: string }
+
+const $img = useImage()
+const providerOptions = useProviderOptions(props)
+const modifiers = useImageModifiers(props)
 
 const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
@@ -83,10 +113,10 @@ const sources = computed<Source[]>(() => {
 
   return formats.map((format) => {
     const { srcset, sizes, src } = $img.getSizes(props.src!, {
-      ...baseOptions.value,
+      ...providerOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,
-      modifiers: { ...baseModifiers.value, format },
+      modifiers: { ...modifiers.value, format },
     })
 
     return { src, type: `image/${format}`, sizes, srcset }
@@ -102,7 +132,7 @@ if (import.meta.server && props.preload) {
       return []
     }
 
-    const link: NonNullable<Head['link']>[number] = {
+    const link: NonNullable<SerializableHead['link']>[number] = {
       rel: 'preload',
       as: 'image',
       imagesrcset: firstSource.srcset,
@@ -119,19 +149,6 @@ if (import.meta.server && props.preload) {
   } })
 }
 
-// Only passdown supported <image> attributes
-const imgAttrs = computed(() => {
-  const result: Record<string, string | unknown> = { ...props.imgAttrs, 'data-nuxt-pic': '' }
-  for (const key in attrs) {
-    if (key in baseImageProps && !(key in result)) {
-      result[key] = attrs[key]
-    }
-  }
-  return result
-})
-
-const imgEl = ref<HTMLImageElement>()
-
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
   for (const src of sources.value) {
@@ -142,6 +159,7 @@ if (import.meta.server && import.meta.prerender) {
 const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
+const imgEl = useTemplateRef('imgEl')
 onMounted(() => {
   if (!imgEl.value) {
     return
@@ -166,8 +184,4 @@ onMounted(() => {
 
   markFeatureUsage('nuxt-picture')
 })
-</script>
-
-<script lang="ts">
-export { pictureProps } from './_base'
 </script>

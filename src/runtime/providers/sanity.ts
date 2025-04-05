@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '../provider'
 import { createOperationsGenerator } from '#image'
 
 const sanityCDN = 'https://cdn.sanity.io/images'
@@ -39,7 +39,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '&',
-  formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
+  formatter: (key, value: string | true | number | Record<string, unknown>) => String(value) === 'true' ? key : `${key}=${value}`,
 })
 
 const getMetadata = (id: string) => {
@@ -62,38 +62,54 @@ const getMetadata = (id: string) => {
   }
 }
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, projectId, dataset = 'production' } = {}) => {
-  const { height: sourceHeight, width: sourceWidth } = getMetadata(src)
-  if (modifiers.crop && typeof modifiers.crop !== 'string' && sourceWidth && sourceHeight) {
-    const left = modifiers.crop.left * sourceWidth
-    const top = modifiers.crop.top * sourceHeight
-    const right = sourceWidth - modifiers.crop.right * sourceWidth
-    const bottom = sourceHeight - modifiers.crop.bottom * sourceHeight
-    modifiers.rect = [left, top, right - left, bottom - top].map(i => i.toFixed(0)).join(',')
-    delete modifiers.crop
-  }
-  if (modifiers.hotspot && typeof modifiers.hotspot !== 'string') {
-    modifiers['fp-x'] = modifiers.hotspot.x
-    modifiers['fp-y'] = modifiers.hotspot.y
-    delete modifiers.hotspot
-  }
-  if (!modifiers.format || modifiers.format === 'auto') {
-    if (modifiers.format === 'auto') {
-      delete modifiers.format
-    }
-    modifiers.auto = 'format'
-  }
-  if (modifiers.fit === 'contain' && !modifiers.bg) {
-    modifiers.bg = 'ffffff'
-  }
-  const operations = operationsGenerator(modifiers)
-
-  const parts = src.split('-').slice(1)
-  const format = parts.pop()
-
-  const filenameAndQueries = parts.join('-') + '.' + format + (operations ? ('?' + operations) : '')
-
-  return {
-    url: joinURL(sanityCDN, projectId, dataset, filenameAndQueries),
+interface SanityOptions {
+  projectId: string
+  dataset?: string
+  modifiers?: {
+    'crop'?: string | { left: number, top: number, right: number, bottom: number }
+    'rect'?: `${number},${number},${number},${number}`
+    'hotspot'?: string | { x: number, y: number }
+    'fp-x'?: number
+    'fp-y'?: number
+    'auto'?: string
+    'bg'?: string
   }
 }
+
+export default defineProvider<SanityOptions>({
+  getImage: (src, { modifiers, projectId, dataset = 'production' }) => {
+    const { height: sourceHeight, width: sourceWidth } = getMetadata(src)
+    if (modifiers.crop && typeof modifiers.crop !== 'string' && sourceWidth && sourceHeight) {
+      const left = modifiers.crop.left * sourceWidth
+      const top = modifiers.crop.top * sourceHeight
+      const right = sourceWidth - modifiers.crop.right * sourceWidth
+      const bottom = sourceHeight - modifiers.crop.bottom * sourceHeight
+      modifiers.rect = [left, top, right - left, bottom - top].map(i => i.toFixed(0)).join(',') as `${number},${number},${number},${number}`
+      delete modifiers.crop
+    }
+    if (modifiers.hotspot && typeof modifiers.hotspot !== 'string') {
+      modifiers['fp-x'] = modifiers.hotspot.x
+      modifiers['fp-y'] = modifiers.hotspot.y
+      delete modifiers.hotspot
+    }
+    if (!modifiers.format || modifiers.format === 'auto') {
+      if (modifiers.format === 'auto') {
+        delete modifiers.format
+      }
+      modifiers.auto = 'format'
+    }
+    if (modifiers.fit === 'contain' && !modifiers.bg) {
+      modifiers.bg = 'ffffff'
+    }
+    const operations = operationsGenerator(modifiers)
+
+    const parts = src.split('-').slice(1)
+    const format = parts.pop()
+
+    const filenameAndQueries = parts.join('-') + '.' + format + (operations ? ('?' + operations) : '')
+
+    return {
+      url: joinURL(sanityCDN, projectId, dataset, filenameAndQueries),
+    }
+  },
+})
