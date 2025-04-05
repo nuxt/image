@@ -2,7 +2,7 @@ import process from 'node:process'
 
 import { parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
-import { resolve } from 'pathe'
+import { join, relative, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
 
@@ -90,6 +90,7 @@ export default defineNuxtModule<ModuleOptions>({
     addTypeTemplate({
       filename: 'image/providers.d.ts',
       getContents() {
+        const file = join(nuxt.options.buildDir, 'image')
         return `
         import { ImageProvider } from '@nuxt/image'
         declare module '@nuxt/image' {
@@ -97,10 +98,10 @@ export default defineNuxtModule<ModuleOptions>({
             provider: ${JSON.stringify(options.provider)}
           }
           interface ConfiguredImageProviders {
-${providers.map(p => `            ${JSON.stringify(p.name)}: ReturnType<typeof import('${p.runtime}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
+${providers.map(p => `            ${JSON.stringify(p.name)}: ${BuiltInProviders.includes(p.name as 'ipx') ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
           }
           interface ImageProviders {
-${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${resolver.resolve('./runtime/providers/' + p)}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
+${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
           }
         }
         export {}
