@@ -1,7 +1,7 @@
 import { getQuery, withBase, withQuery } from 'ufo'
-import { defineProvider } from '../provider'
 import { operationsGenerator } from './imgix'
 import unsplashProvider, { unsplashCDN } from './unsplash'
+import { defineProvider } from '#image'
 
 const prismicCDN = 'https://images.prismic.io/'
 

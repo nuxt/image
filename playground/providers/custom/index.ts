@@ -1,5 +1,5 @@
 import { joinURL } from 'ufo'
-import { defineProvider } from '#image/provider'
+import { defineProvider } from '#image'
 
 export default defineProvider<{ baseURL?: string }>({
   getImage: (src, { modifiers, baseURL = '/' }) => {

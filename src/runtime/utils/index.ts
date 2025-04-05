@@ -1,4 +1,4 @@
-import type { OperationGeneratorConfig } from '../../module'
+import type { OperationGeneratorConfig } from '@nuxt/image'
 
 export default function imageFetch(url: string) {
   return fetch(cleanDoubleSlashes(url))

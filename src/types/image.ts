@@ -1,6 +1,6 @@
-import type { ImageProviders } from '@nuxt/image'
 import type { RuntimeConfig } from '@nuxt/schema'
 import type { H3Event } from 'h3'
+import type { ImageProviders } from './module'
 
 export interface ImageModifiers {
   width: number

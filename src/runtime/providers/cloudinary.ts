@@ -1,8 +1,7 @@
 import { joinURL, encodePath } from 'ufo'
 import { defu } from 'defu'
-import { defineProvider } from '../provider'
-import type { ImageModifiers } from '../../types'
-import { createOperationsGenerator } from '#image'
+import type { ImageModifiers } from '@nuxt/image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 export interface CloudinaryModifiers extends ImageModifiers {
   format: string

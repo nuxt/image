@@ -1,5 +1,5 @@
 import { withBase, joinURL } from 'ufo'
-import { defineProvider } from '../provider'
+import { defineProvider } from '#image'
 
 // https://docs.wagtail.org/en/v4.2.1/topics/images.html
 

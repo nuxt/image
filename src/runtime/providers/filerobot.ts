@@ -1,6 +1,5 @@
 import { joinURL, hasProtocol } from 'ufo'
-import { defineProvider } from '../provider'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

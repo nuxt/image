@@ -1,6 +1,5 @@
 import { withBase } from 'ufo'
-import { defineProvider } from '../provider'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 import { createError } from '#imports'
 
 const operationsGenerator = createOperationsGenerator({

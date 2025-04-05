@@ -1,5 +1,5 @@
 import { withBase } from 'ufo'
-import { defineProvider } from '../provider'
+import { defineProvider } from '#image'
 
 interface StrapiOptions {
   baseURL?: string

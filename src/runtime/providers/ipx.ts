@@ -1,8 +1,7 @@
 import { joinURL, encodePath, encodeParam } from 'ufo'
-import { defineProvider } from '../provider'
+import type { ImageModifiers } from '@nuxt/image'
 import type { IPXRuntimeConfig } from '../../ipx'
-import type { ImageModifiers } from '../../types'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 // Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
 // TODO: https://github.com/unjs/ipx/issues/199

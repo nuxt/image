@@ -1,6 +1,5 @@
 import { joinURL } from 'ufo'
-import { defineProvider } from '../provider'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 const deleteHash = (value: string) => value.startsWith('#') ? value.replace('#', '') : value
 const generateColorKeys = () => {

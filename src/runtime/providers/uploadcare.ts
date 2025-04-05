@@ -19,10 +19,8 @@
  */
 
 import { joinURL, hasProtocol, withTrailingSlash } from 'ufo'
-import { defineProvider } from '../provider'
-
-import type { ImageModifiers } from '../../types'
-import { createOperationsGenerator } from '#image'
+import type { ImageModifiers } from '@nuxt/image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 export interface UploadcareModifiers extends ImageModifiers {
   // Image Compression

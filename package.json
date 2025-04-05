@@ -11,10 +11,16 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./dist/module.mjs"
+    ".": "./dist/module.js"
   },
-  "main": "./dist/module.mjs",
-  "types": "./dist/module.d.mts",
+  "main": "./dist/module.js",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/module.d.ts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
