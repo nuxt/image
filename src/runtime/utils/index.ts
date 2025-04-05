@@ -64,7 +64,7 @@ export function createOperationsGenerator<ModifierKey extends string, ModifierVa
       operations.push(formatter(((keyMap ? keyMap(key as ModifierKey) : key) as FinalKey), value as FinalValue))
     }
 
-    return operations.join(config.joinWith || '/')
+    return operations.join(config.joinWith ?? '/')
   }
 }
 
