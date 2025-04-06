@@ -1,6 +1,6 @@
 import process from 'node:process'
 
-import { parseURL, withLeadingSlash } from 'ufo'
+import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider } from './provider'
@@ -141,9 +141,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.hook('nitro:init', async (nitro) => {
       if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx) {
-        const resolvedProvider = nitro.options.static || options.provider === 'ipxStatic'
-          ? 'ipxStatic'
-          : nitro.options.node ? 'ipx' : 'none'
+        const hasExternalIPX = (options.ipx?.baseURL && hasProtocol(options.ipx.baseURL, { acceptRelative: true }))
+        const resolvedProvider = hasExternalIPX
+          ? 'ipx'
+          : nitro.options.static || options.provider === 'ipxStatic'
+            ? 'ipxStatic'
+            : nitro.options.node ? 'ipx' : 'none'
 
         if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
           imageOptions.provider = options.provider = resolvedProvider
