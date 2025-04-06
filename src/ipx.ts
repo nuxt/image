@@ -4,6 +4,7 @@ import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
 import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
+import { hasProtocol } from 'ufo'
 import type { ProviderSetup } from './types'
 
 export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
@@ -20,9 +21,10 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxBaseURL = providerOptions.options?.baseURL || '/_ipx'
 
   // Avoid overriding user custom handler
-  const hasUserProvidedIPX
-    = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
-      || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+  const hasUserProvidedIPX = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+    || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
+    || hasProtocol(ipxBaseURL, { acceptRelative: true })
+
   if (hasUserProvidedIPX) {
     return
   }
