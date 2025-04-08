@@ -30,10 +30,9 @@ export function createMapper(map: any) {
   }
 }
 
-export function createOperationsGenerator({ formatter, keyMap, joinWith = '/', valueMap }: OperationGeneratorConfig = {}) {
-  if (!formatter) {
-    formatter = (key, value) => encodePath(`${key}=${value}`)
-  }
+const defaultFormatter = (key: string, value: string) => encodePath(`${key}=${value}`)
+
+export function createOperationsGenerator({ formatter, keyMap, joinWith, valueMap }: OperationGeneratorConfig = {}) {
   if (keyMap && typeof keyMap !== 'function') {
     keyMap = createMapper(keyMap)
   }
@@ -44,21 +43,29 @@ export function createOperationsGenerator({ formatter, keyMap, joinWith = '/', v
     }
   })
 
+  if (joinWith !== undefined) {
+    formatter ??= defaultFormatter
+  }
+
   return (modifiers: { [key: string]: string } = {}) => {
-    const operations = Object.entries(modifiers)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        const mapper = map[key]
-        if (typeof mapper === 'function') {
-          value = mapper(modifiers[key]!)
-        }
+    const operations: [key: string, value: string][] = []
+    for (const _key in modifiers) {
+      const _value = modifiers[_key]
+      if (_value === undefined) {
+        continue
+      }
 
-        key = typeof keyMap === 'function' ? keyMap(key) : key
+      const valueMap = map[_key]
+      const value = typeof valueMap === 'function' ? valueMap(_value) : _value
+      const key = typeof keyMap === 'function' ? keyMap(_key) : _key
+      operations.push([key, value])
+    }
 
-        return formatter!(key, value)
-      })
+    if (formatter) {
+      return operations.map(entry => formatter(...entry)).join(joinWith ?? '/')
+    }
 
-    return operations.join(joinWith)
+    return new URLSearchParams(operations).toString()
   }
 }
 
