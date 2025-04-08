@@ -1,6 +1,5 @@
 import { joinURL, hasProtocol } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -22,26 +21,32 @@ const operationsGenerator = createOperationsGenerator({
   joinWith: '&',
 })
 
-export const getImage: ProviderGetImage = (src, {
-  modifiers = {},
-  baseURL = '',
-} = {}) => {
-  const operations = operationsGenerator(modifiers)
-  const query = (operations ? ('?' + operations) : '')
-
-  if (import.meta.dev) {
-    if (!baseURL) {
-      console.warn(`[fielrobot] <baseURL> is required to build image URL`)
-    }
-  }
-
-  if (hasProtocol(src)) {
-    return {
-      url: joinURL(src) + query,
-    }
-  }
-
-  return {
-    url: joinURL(baseURL, src) + query,
-  }
+interface FilerobotOptions {
+  baseURL: string
 }
+
+export default defineProvider<FilerobotOptions>({
+  getImage: (src, {
+    modifiers,
+    baseURL = '',
+  }) => {
+    const operations = operationsGenerator(modifiers)
+    const query = (operations ? ('?' + operations) : '')
+
+    if (import.meta.dev) {
+      if (!baseURL) {
+        console.warn(`[fielrobot] <baseURL> is required to build image URL`)
+      }
+    }
+
+    if (hasProtocol(src)) {
+      return {
+        url: joinURL(src) + query,
+      }
+    }
+
+    return {
+      url: joinURL(baseURL, src) + query,
+    }
+  },
+})

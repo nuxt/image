@@ -1,5 +1,5 @@
 import { encodePath } from 'ufo'
-import type { OperationGeneratorConfig } from '../../module'
+import type { OperationGeneratorConfig } from '@nuxt/image'
 
 export default function imageFetch(url: string) {
   return fetch(cleanDoubleSlashes(url))
@@ -24,50 +24,56 @@ export function cleanDoubleSlashes(path = '') {
   return path.replace(/(https?:\/\/)|(\/)+/g, '$1$2')
 }
 
-export function createMapper(map: any) {
-  return (key?: string) => {
-    return key ? map[key] || key : map.missingValue
-  }
+export interface Mapper<Key, Value> {
+  (key: Key): Value | Key
+  (): undefined
 }
+
+export function createMapper<Key extends string, Value>(map: Partial<Record<Key, Value>> & { missingValue?: Value }): Mapper<Key, Value> {
+  return (key => key !== undefined ? map[key as Extract<Key, string>] || key : map.missingValue) as Mapper<Key, Value>
+}
+
+type Formatter<Key, Value> = (key: Key, value: Value) => string
 
 const defaultFormatter = (key: string, value: string) => encodePath(`${key}=${value}`)
 
-export function createOperationsGenerator({ formatter, keyMap, joinWith, valueMap }: OperationGeneratorConfig = {}) {
-  if (keyMap && typeof keyMap !== 'function') {
-    keyMap = createMapper(keyMap)
-  }
-  const map = valueMap || {}
-  Object.keys(map).forEach((valueKey) => {
-    if (typeof map[valueKey] !== 'function') {
-      map[valueKey] = createMapper(map[valueKey])
-    }
-  })
+export function createOperationsGenerator<ModifierKey extends string, ModifierValue = string | number, FinalKey = ModifierKey, FinalValue = ModifierValue>(config: OperationGeneratorConfig<ModifierKey, ModifierValue, FinalKey, FinalValue>) {
+  const formatter = config.formatter || (config.joinWith !== undefined ? defaultFormatter as Formatter<FinalKey, FinalValue> : undefined)
 
-  if (joinWith !== undefined) {
-    formatter ??= defaultFormatter
+  const keyMap = config.keyMap && typeof config.keyMap !== 'function' ? createMapper<ModifierKey, FinalKey>(config.keyMap) : config.keyMap
+
+  const map: Record<string, Mapper<ModifierValue, FinalValue>> = {}
+  for (const key in config.valueMap) {
+    const valueKey = key as ModifierKey
+    const value = config.valueMap[valueKey]!
+    map[valueKey] = typeof value === 'object'
+      ? createMapper<Extract<ModifierValue, string>, FinalValue>(value as Exclude<typeof value, (...args: never) => unknown>) as Mapper<ModifierValue, FinalValue>
+      : value as Mapper<ModifierValue, FinalValue>
   }
 
-  return (modifiers: { [key: string]: string } = {}) => {
-    const operations: [key: string, value: string][] = []
+  return (modifiers: Partial<Record<Extract<ModifierKey | FinalKey, string>, ModifierValue | FinalValue>>): string => {
+    const operations: [key: FinalKey, value: FinalValue][] = []
     for (const _key in modifiers) {
-      const _value = modifiers[_key]
-      if (_value === undefined) {
+      const key = _key as keyof typeof modifiers
+      if (typeof modifiers[key] === 'undefined') {
         continue
       }
+      const value = typeof map[key] === 'function'
+        ? map[key](modifiers[key] as ModifierValue)
+        : modifiers[key]
 
-      const valueMap = map[_key]
-      const value = typeof valueMap === 'function' ? valueMap(_value) : _value
-      const key = typeof keyMap === 'function' ? keyMap(_key) : _key
-      operations.push([key, value])
+      operations.push([(keyMap ? keyMap(key as ModifierKey) : key) as FinalKey, value as FinalValue])
     }
 
     if (formatter) {
-      return operations.map(entry => formatter(...entry)).join(joinWith ?? '/')
+      return operations.map(entry => formatter(...entry)).join(config.joinWith ?? '/')
     }
 
-    return new URLSearchParams(operations).toString()
+    return new URLSearchParams(operations as [string, string][]).toString()
   }
 }
+
+export type InferModifiers<T extends (modifiers: any) => string> = T extends (modifiers: infer Modifiers) => string ? Modifiers : Record<string, unknown>
 
 type Attrs = { [key: string]: string | number }
 

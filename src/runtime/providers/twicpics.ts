@@ -1,6 +1,6 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createMapper, createOperationsGenerator } from '#image'
+import { defineProvider } from '#image'
+import { createMapper, createOperationsGenerator, type InferModifiers } from '#image'
 
 const fits = createMapper({
   fill: 'resize',
@@ -9,7 +9,7 @@ const fits = createMapper({
   cover: 'cover',
   contain: 'inside',
   missingValue: 'cover',
-})
+} as const)
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -49,23 +49,33 @@ const operationsGenerator = createOperationsGenerator({
   joinWith: '/',
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const { width, height, fit, ...providerModifiers } = modifiers
-
-  let w = width
-  let h = height
-
-  if (width || height) {
-    if (fit && fit === 'outside') {
-      // fit = outside is equivalent to twicPics contain ( max( width, height ) x max( width, height ) )
-      w = Math.max(width || 0, height || 0)
-      h = Math.max(width || 0, height || 0)
-    }
-    providerModifiers[fits(fit)] = `${w || '-'}x${h || '-'}`
-  }
-
-  const operations = operationsGenerator(providerModifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : '')),
-  }
+interface TwicpicsOptions {
+  baseURL?: string
+  modifiers?: InferModifiers<typeof operationsGenerator>
+    & { fit?: 'fill' | 'inside' | 'outside' | 'cover' | 'contain' }
+    & Partial<Record<typeof fits extends (fit: string) => infer Fit ? NonNullable<Fit> : string, string>>
 }
+
+export default defineProvider<TwicpicsOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const { width, height, fit, ...providerModifiers } = modifiers
+
+    let w = width
+    let h = height
+
+    if (width || height) {
+      if (fit && fit === 'outside') {
+      // fit = outside is equivalent to twicPics contain ( max( width, height ) x max( width, height ) )
+        w = Math.max(width || 0, height || 0)
+        h = Math.max(width || 0, height || 0)
+      }
+      providerModifiers[fits(fit as keyof typeof fits)] = `${w || '-'}x${h || '-'}`
+    }
+
+    const operations = operationsGenerator(providerModifiers)
+
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : '')),
+    }
+  },
+})

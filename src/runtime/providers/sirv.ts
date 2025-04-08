@@ -1,6 +1,5 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 const deleteHash = (value: string) => value.startsWith('#') ? value.replace('#', '') : value
 const generateColorKeys = () => {
@@ -19,7 +18,7 @@ const generateColorKeys = () => {
     keysNeedingHashDeletion.map(key => [key, (value: string) => deleteHash(value)]),
   )
 }
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
@@ -101,9 +100,16 @@ export const operationsGenerator = createOperationsGenerator({
   },
   joinWith: '&',
 })
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
-  }
+
+interface SirvOptions {
+  baseURL?: string
 }
+
+export default defineProvider<SirvOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
+    }
+  },
+})

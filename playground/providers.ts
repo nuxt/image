@@ -1,5 +1,7 @@
+import type { ImageProviders } from '@nuxt/image'
+
 export interface Provider {
-  name: string
+  name: keyof ImageProviders
   samples: {
     src: string
     from?: string

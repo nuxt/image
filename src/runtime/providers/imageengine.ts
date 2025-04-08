@@ -1,8 +1,7 @@
 import { joinURL, encodePath } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
@@ -45,12 +44,18 @@ export const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
-  formatter: (key, value) => encodePath(`${key}_${value}`),
+  formatter: (key, value: string | number) => encodePath(`${key}_${value}`),
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : '')),
-  }
+interface ImageEngineOptions {
+  baseURL?: string
 }
+
+export default defineProvider<ImageEngineOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : '')),
+    }
+  },
+})
