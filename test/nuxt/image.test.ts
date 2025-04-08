@@ -1,5 +1,3 @@
-// @vitest-environment nuxt
-
 import { beforeEach, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'

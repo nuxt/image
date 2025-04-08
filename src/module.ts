@@ -1,10 +1,10 @@
 import process from 'node:process'
 
 import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate } from '@nuxt/kit'
-import { resolve } from 'pathe'
-import { resolveProviders, detectProvider, resolveProvider } from './provider'
-import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider } from './types'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
+import { join, relative, resolve } from 'pathe'
+import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
+import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
 
 export interface ModuleOptions extends ImageProviders {
   inject: boolean
@@ -18,7 +18,6 @@ export interface ModuleOptions extends ImageProviders {
   densities: number[]
   format: CreateImageOptions['format']
   quality?: CreateImageOptions['quality']
-  [key: string]: any
 }
 
 export * from './types'
@@ -72,7 +71,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     options.provider = detectProvider(options.provider)!
     if (options.provider) {
-      options[options.provider] = options[options.provider] || {}
+      options[options.provider as keyof ImageProviders] = options[options.provider as keyof ImageProviders] || {}
     }
     options.densities = options.densities || []
 
@@ -88,6 +87,27 @@ export default defineNuxtModule<ModuleOptions>({
     ])
 
     const providers = await resolveProviders(nuxt, options)
+    addTypeTemplate({
+      filename: 'image/providers.d.ts',
+      getContents() {
+        const file = join(nuxt.options.buildDir, 'image')
+        return `
+        import { ImageProvider } from '@nuxt/image'
+        declare module '@nuxt/image' {
+          interface ProviderDefaults {
+            provider: ${JSON.stringify(options.provider)}
+          }
+          interface ConfiguredImageProviders {
+${providers.map(p => `            ${JSON.stringify(p.name)}: ${BuiltInProviders.includes(p.name as 'ipx') ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
+          }
+          interface ImageProviders {
+${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
+          }
+        }
+        export {}
+        `
+      },
+    }, { nitro: true, nuxt: true })
 
     // Run setup
     for (const p of providers) {
@@ -192,12 +212,12 @@ function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]):
 
 function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'>): string {
   return `
-  ${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
+  ${providers.map(p => `import ${p.importName} from '${p.runtime}'`).join('\n')}
   
   export const imageOptions = {
     ...${JSON.stringify(imageOptions, null, 2)},
     providers: {
-      ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
+      ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
     }
   }
 `

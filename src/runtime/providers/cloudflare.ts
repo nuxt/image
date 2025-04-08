@@ -1,6 +1,5 @@
 import { joinURL, encodeQueryItem } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -32,18 +31,24 @@ const operationsGenerator = createOperationsGenerator({
 
 const defaultModifiers = {}
 
-// https://developers.cloudflare.com/images/image-resizing/url-format/
-export const getImage: ProviderGetImage = (src, {
-  modifiers = {},
-  baseURL = '/',
-} = {}) => {
-  const mergeModifiers = { ...defaultModifiers, ...modifiers }
-  const operations = operationsGenerator(mergeModifiers as any)
-
-  // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
-  const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : src
-
-  return {
-    url,
-  }
+interface CloudflareOptions {
+  baseURL?: string
 }
+
+// https://developers.cloudflare.com/images/image-resizing/url-format/
+export default defineProvider<CloudflareOptions>({
+  getImage: (src, {
+    modifiers,
+    baseURL = '/',
+  }) => {
+    const mergeModifiers = { ...defaultModifiers, ...modifiers }
+    const operations = operationsGenerator(mergeModifiers as any)
+
+    // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
+    const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : src
+
+    return {
+      url,
+    }
+  },
+})

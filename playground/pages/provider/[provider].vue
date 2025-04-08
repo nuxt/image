@@ -9,7 +9,7 @@
           :key="sample.src"
         >
           <nuxt-img
-            :provider="provider.name"
+            :provider="provider.name as any"
             v-bind="sample"
             :preload="{ fetchPriority: 'auto' }"
           />
