@@ -1,6 +1,8 @@
+import { arch, platform } from 'node:os'
+import { readdir } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { relative, resolve } from 'pathe'
-import { useNuxt, createResolver, useNitro } from '@nuxt/kit'
+import { join, relative, resolve } from 'pathe'
+import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
 import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
@@ -72,6 +74,16 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   if (!nitro.options.dev) {
     nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: publicDirs } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
+  }
+
+  if (!nuxt.options.dev && !setupOptions?.isStatic) {
+    nuxt.hooks.hook('close', async () => {
+      const logger = useLogger('@nuxt/image')
+      const target = `${platform}-${arch}`
+      logger.info(`\`sharp\` binaries have been included in your build for \`${target}\`. Make sure you deploy to the same architecture.`)
+      const tracedFiles = await readdir(join(nitro.options.output.serverDir, 'node_modules/@img')).catch(() => [])
+      logger.debug(` - dependencies traced: ${tracedFiles.map(f => `@img/${f}`).join(', ')}`)
+    })
   }
 }
 
