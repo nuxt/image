@@ -8,8 +8,6 @@ const missingProviderTests = [
   'ipxStatic', // build-time-only alias for ipx
   'strapi', // covered in a unique test
   'strapi5', // covered in a unique test
-  'edgio', // now defunct
-  'layer0', // now defunct
 ]
 
 describe('Provider coverage', async () => {
