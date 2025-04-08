@@ -1,8 +1,10 @@
 import process from 'node:process'
+import { arch, platform } from 'node:os'
+import { readdir } from 'node:fs/promises'
 
 import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate } from '@nuxt/kit'
-import { resolve } from 'pathe'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, useLogger } from '@nuxt/kit'
+import { join, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider } from './provider'
 import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider } from './types'
 
@@ -147,6 +149,16 @@ export default defineNuxtModule<ModuleOptions>({
           : nitro.options.static || options.provider === 'ipxStatic'
             ? 'ipxStatic'
             : nitro.options.node ? 'ipx' : 'none'
+
+        if (!nuxt.options.dev && (options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx)) {
+          nuxt.hooks.hook('close', async () => {
+            const logger = useLogger('@nuxt/image')
+            const target = `${platform}-${arch}`
+            logger.info(`\`sharp\` binaries have been included in your build for \`${target}\`. Make sure you deploy to the same architecture.`)
+            const tracedFiles = await readdir(join(nitro.options.output.serverDir, 'node_modules/@img')).catch(() => [])
+            logger.debug(` - dependencies traced: ${tracedFiles.map(f => `@img/${f}`).join(', ')}`)
+          })
+        }
 
         if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
           imageOptions.provider = options.provider = resolvedProvider
