@@ -77,12 +77,17 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   if (!nuxt.options.dev && !setupOptions?.isStatic) {
-    nuxt.hooks.hook('close', async () => {
+    nitro.hooks.hook('compiled', async () => {
       const logger = useLogger('@nuxt/image')
       const target = `${platform}-${arch}`
-      logger.info(`\`sharp\` binaries have been included in your build for \`${target}\`. Make sure you deploy to the same architecture.`)
       const tracedFiles = await readdir(join(nitro.options.output.serverDir, 'node_modules/@img')).catch(() => [])
-      logger.debug(` - dependencies traced: ${tracedFiles.map(f => `@img/${f}`).join(', ')}`)
+      if (!tracedFiles.length) {
+        logger.warn(`\`sharp\` binaries for \`${target}\` cannot be found. Please report this as a bug with a reproduction at \`https://github.com/nuxt/image\`.`)
+      }
+      else {
+        logger.info(`\`sharp\` binaries have been included in your build for \`${target}\`. Make sure you deploy to the same architecture.`)
+        logger.debug(` - dependencies traced: ${tracedFiles.map(f => `@img/${f}`).join(', ')}`)
+      }
     })
   }
 }
