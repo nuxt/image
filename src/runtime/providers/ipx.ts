@@ -38,7 +38,7 @@ export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
   modifiers: Partial<IPXModifiers>
 }
 
-const operationsGenerator = createOperationsGenerator({
+export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'f',
     fit: 'fit',
