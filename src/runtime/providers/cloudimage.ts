@@ -18,7 +18,6 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 // https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction

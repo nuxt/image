@@ -9,7 +9,6 @@ export const operationsGenerator = createOperationsGenerator({
     quality: 'q',
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {} } = {}) => {

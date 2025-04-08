@@ -46,6 +46,12 @@ describe('browser (ssr: false)', () => {
           .sort(),
       }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
 
+      for (const source of sources) {
+        if (source) {
+          expect(() => decodeURIComponent(source)).not.toThrow()
+        }
+      }
+
       await page.close()
     })
   }

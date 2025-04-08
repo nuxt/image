@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import type { ProviderGetImage } from '@nuxt/image'
 import { createOperationsGenerator } from '#image'
 
@@ -6,9 +6,9 @@ const operationsGenerator = createOperationsGenerator({
   joinWith: '/',
   formatter: (key: any, value: any) => {
     if (typeof value === 'object') {
-      return `${key},${Object.entries(value).map(([k, v]) => `${k}_${v}`).join(',')}`
+      return `${key},${encodePath(Object.entries(value).map(([k, v]) => `${k}_${v}`).join(','))}`
     }
-    return `${key},${value}`
+    return `${key},${encodePath(value)}`
   },
 })
 

@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
@@ -39,7 +39,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '&',
-  formatter: (key, value) => String(value) === 'true' ? key : `${key}=${value}`,
+  formatter: (key, value) => String(value) === 'true' ? key : `${key}=${encodePath(value)}`,
 })
 
 const getMetadata = (id: string) => {

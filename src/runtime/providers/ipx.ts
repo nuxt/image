@@ -1,4 +1,4 @@
-import { joinURL, encodePath, encodeParam } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
@@ -13,7 +13,7 @@ export const operationsGenerator = createOperationsGenerator({
     background: 'b',
   },
   joinWith: '&',
-  formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val),
+  formatter: (key, val) => encodePath(key) + '_' + encodePath(val),
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}, ctx) => {

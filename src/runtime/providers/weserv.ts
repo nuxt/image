@@ -60,7 +60,6 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 } as OperationGeneratorConfig)
 
 export interface WeservOptions extends ImageOptions {

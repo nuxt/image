@@ -3,6 +3,8 @@ import type { ProviderGetImage } from '../../module'
 import { createOperationsGenerator } from '#image'
 
 export const operationsGenerator = createOperationsGenerator({
+  // TODO: refactor in https://github.com/nuxt/image/pull/1802
+  formatter: (key, value) => `${key}=${value}`,
   joinWith: '&',
 })
 

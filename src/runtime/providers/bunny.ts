@@ -22,7 +22,6 @@ export const operationsGenerator = createOperationsGenerator({
     sepia: 'sepia',
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {

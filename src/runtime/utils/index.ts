@@ -1,3 +1,4 @@
+import { encodePath } from 'ufo'
 import type { OperationGeneratorConfig } from '../../module'
 
 export default function imageFetch(url: string) {
@@ -31,7 +32,7 @@ export function createMapper(map: any) {
 
 export function createOperationsGenerator({ formatter, keyMap, joinWith = '/', valueMap }: OperationGeneratorConfig = {}) {
   if (!formatter) {
-    formatter = (key, value) => `${key}=${value}`
+    formatter = (key, value) => encodePath(`${key}=${value}`)
   }
   if (keyMap && typeof keyMap !== 'function') {
     keyMap = createMapper(keyMap)

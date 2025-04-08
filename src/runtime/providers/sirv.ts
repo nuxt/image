@@ -100,7 +100,6 @@ export const operationsGenerator = createOperationsGenerator({
     ...generateColorKeys(),
   },
   joinWith: '&',
-  formatter: (key: any, value: any) => `${key}=${value}`,
 })
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
   const operations = operationsGenerator(modifiers)

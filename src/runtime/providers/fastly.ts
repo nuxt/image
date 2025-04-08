@@ -13,7 +13,6 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
