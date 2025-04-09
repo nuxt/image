@@ -18,7 +18,6 @@ const operationsGenerator = createOperationsGenerator({
       outside: 'boundmin',
     },
   },
-  joinWith: '&',
 })
 
 interface FilerobotOptions {

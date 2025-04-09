@@ -66,7 +66,7 @@ export function createOperationsGenerator<ModifierKey extends string, ModifierVa
     }
 
     if (formatter) {
-      return operations.map(entry => formatter(...entry)).join(config.joinWith ?? '/')
+      return operations.map(entry => formatter(...entry)).join(config.joinWith ?? '&')
     }
 
     return new URLSearchParams(operations as [string, string][]).toString()

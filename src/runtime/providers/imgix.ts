@@ -159,7 +159,6 @@ export const operationsGenerator = createOperationsGenerator({
       blurhash: 'blurhash',
     },
   },
-  joinWith: '&',
 })
 
 interface ImgixOptions {

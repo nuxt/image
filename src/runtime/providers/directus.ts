@@ -1,11 +1,7 @@
 import { joinURL } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
-const operationsGenerator = createOperationsGenerator({
-  // TODO: refactor
-  formatter: (key, value) => `${key}=${value}`,
-  joinWith: '&',
-})
+const operationsGenerator = createOperationsGenerator({})
 
 interface DirectusOptions {
   baseURL: string
@@ -18,9 +14,7 @@ export default defineProvider<DirectusOptions>({
   getImage: (src, { modifiers, baseURL }) => {
     // Separating the transforms from the rest of the modifiers
     const transforms = modifiers.transforms && Array.isArray(modifiers.transforms) && modifiers.transforms.length > 0
-      ? new URLSearchParams(
-          JSON.stringify(Array.from(new Set(modifiers.transforms.map(obj => JSON.stringify(obj)))).map(value => JSON.parse(value))),
-        ).toString().replace(/=+$/, '')
+      ? JSON.stringify(Array.from(new Set(modifiers.transforms.map(obj => JSON.stringify(obj)))).map(value => JSON.parse(value)))
       : undefined
 
     const operations = operationsGenerator({
@@ -28,7 +22,7 @@ export default defineProvider<DirectusOptions>({
       transforms,
     })
     return {
-      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
+      url: joinURL(baseURL, src + (operations ? ('?' + operations.replace(/=+$/, '')) : '')),
     }
   },
 })

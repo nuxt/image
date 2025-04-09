@@ -98,7 +98,6 @@ const operationsGenerator = createOperationsGenerator({
     },
     ...generateColorKeys(),
   },
-  joinWith: '&',
 })
 
 interface SirvOptions {

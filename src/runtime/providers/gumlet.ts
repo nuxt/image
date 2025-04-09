@@ -65,8 +65,6 @@ const operationsGenerator = createOperationsGenerator({
       auto: 'auto',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${encodePath(value)}`,
 })
 
 interface GumletOptions {

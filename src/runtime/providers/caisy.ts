@@ -7,7 +7,6 @@ const operationsGenerator = createOperationsGenerator({
     height: 'h',
     quality: 'q',
   },
-  joinWith: '&',
 })
 
 export default defineProvider({

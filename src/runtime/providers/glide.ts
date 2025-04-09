@@ -41,8 +41,6 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'contain',
     },
   },
-  joinWith: '&',
-  formatter: (key, val) => encodeQueryItem(key, val),
 })
 
 interface GlideOptions {

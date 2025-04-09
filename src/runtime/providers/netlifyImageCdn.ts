@@ -33,8 +33,6 @@ const operationsGenerator = createOperationsGenerator({
       center: 'center',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 interface NetlifyImageCDNOptions {

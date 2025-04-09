@@ -11,7 +11,6 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'bounds',
     },
   },
-  joinWith: '&',
 })
 
 interface FastlyOptions {

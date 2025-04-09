@@ -58,7 +58,6 @@ const operationsGenerator = createOperationsGenerator({
       'heart': 'heart',
     },
   },
-  joinWith: '&',
 })
 
 export interface WeservOptions {

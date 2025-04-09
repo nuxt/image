@@ -13,8 +13,6 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'fit',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 interface NetlifyLargeMediaOptions {

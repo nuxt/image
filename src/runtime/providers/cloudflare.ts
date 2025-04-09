@@ -26,7 +26,6 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: ',',
-  formatter: (key, val) => encodeQueryItem(key, val),
 })
 
 const defaultModifiers = {}

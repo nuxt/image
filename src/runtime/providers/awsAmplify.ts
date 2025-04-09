@@ -45,7 +45,6 @@ const operationsGenerator = createOperationsGenerator({
       left: 'left',
     },
   },
-  joinWith: '&',
 })
 
 interface AmplifyOptions {
