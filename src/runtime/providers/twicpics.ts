@@ -47,12 +47,13 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
-})
+} as const)
 
 interface TwicpicsOptions {
   baseURL?: string
   modifiers?: InferModifiers<typeof operationsGenerator>
     & { fit?: 'fill' | 'inside' | 'outside' | 'cover' | 'contain' }
+    & Partial<Record<'resize' | 'fill' | 'contain' | 'inside' | 'outside' | 'cover' | 'missingValue', string>>
     & Partial<Record<typeof fits extends (fit: string) => infer Fit ? NonNullable<Fit> : string, string>>
 }
 
