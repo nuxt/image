@@ -1,4 +1,4 @@
-import { joinURL, encodePath } from 'ufo'
+import { joinURL } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({

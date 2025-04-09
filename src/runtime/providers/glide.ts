@@ -1,6 +1,6 @@
 // https://glide.thephpleague.com/2.0/api/quick-reference/
 
-import { joinURL, encodeQueryItem, encodePath, withBase } from 'ufo'
+import { joinURL, encodePath, withBase } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({

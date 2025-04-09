@@ -1,4 +1,3 @@
-import { encodeQueryItem } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 // https://docs.netlify.com/image-cdn/overview/
