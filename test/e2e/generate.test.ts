@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest'
 import { setup, useTestContext } from '@nuxt/test-utils'
 import { useNuxt } from '@nuxt/kit'
 import { resolve } from 'pathe'
-import { globby } from 'globby'
+import { glob } from 'tinyglobby'
 
 await setup({
   rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
@@ -31,7 +31,7 @@ describe('ipx provider', () => {
   it('generates static files', async () => {
     const ctx = useTestContext()
     const outputDir = resolve(ctx.nuxt!.options.nitro.output?.dir || '', 'public/_ipx')
-    const files = await globby(outputDir)
+    const files = await glob(outputDir)
     expect(files.sort().map(f => f.replace(outputDir, '/_ipx'))).toMatchInlineSnapshot(`
       [
         "/_ipx/_/images/nuxt.png",
