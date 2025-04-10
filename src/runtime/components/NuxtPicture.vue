@@ -33,7 +33,6 @@ import type { ImgHTMLAttributes } from 'vue'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
 import { useImageModifiers, useNormalisedAttrs, useProviderOptions } from './_base'
 import type { BaseImageProps } from './_base'
@@ -79,7 +78,7 @@ const attrs = computed(() => {
   return attrs
 })
 
-const originalFormat = computed(() => getFileExtension(props.src))
+const originalFormat = computed(() => props.src.split(/[?#]/).shift()!.split('/').pop()!.split('.').pop()!)
 const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
 const legacyFormat = computed(() => {
