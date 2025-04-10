@@ -95,7 +95,7 @@ export type OperationMapper<From, To> = Record<string | Extract<From, string | n
 
 export type OperationGeneratorConfig<Key extends string, Value, FinalKey, FinalValue> = {
   keyMap?: Partial<Record<Key, FinalKey>>
-  valueMap?: Partial<Record<Key, Record<Extract<Value, string>, FinalValue> | ((key: Value) => Value | FinalValue)>>
+  valueMap?: Partial<Record<Key, Partial<Record<Extract<Value, string>, FinalValue>> | ((key: Value) => Value | FinalValue)>>
 } & ({
   formatter?: (key: FinalKey, value: FinalValue) => string
   joinWith?: undefined

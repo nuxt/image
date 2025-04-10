@@ -47,7 +47,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
-  formatter: (key, value) => encodeQueryItem(key, value)
+  formatter: (key: 'output' | 'format' | 'fit' | 'quality' | 'background' | 'focus' | 'zoom', value) => encodeQueryItem(key, value),
 } as const)
 
 interface TwicpicsOptions {

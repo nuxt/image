@@ -1,7 +1,7 @@
 import { joinURL } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
-const operationsGenerator = createOperationsGenerator({})
+const operationsGenerator = createOperationsGenerator()
 
 interface DirectusOptions {
   baseURL: string
