@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
-import { cleanDoubleSlashes } from '#image/utils'
 import ipx from '#image/providers/ipx'
 import none from '#image/providers/none'
 import weserv from '#image/providers/weserv'
@@ -63,7 +62,6 @@ describe('Providers', () => {
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = ipx().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
-      generated.url = cleanDoubleSlashes(generated.url)
       expect(generated).toMatchObject(image.ipx)
     }
   })
@@ -73,7 +71,6 @@ describe('Providers', () => {
 
     const src = '/images/test.png'
     const generated = ipx().getImage(src, { modifiers: {} }, context)
-    generated.url = cleanDoubleSlashes(generated.url)
     expect(generated).toMatchObject({
       url: '/_ipx/_/images/test.png',
     })

@@ -63,7 +63,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxHandler = <NitroEventHandler>{
     route: `${ipxBaseURL}/**`,
     middleware: false,
-    handler: resolver.resolve('./runtime/ipx'),
+    handler: resolver.resolve('./runtime/server/routes/_ipx'),
   }
 
   if (!setupOptions?.isStatic) {

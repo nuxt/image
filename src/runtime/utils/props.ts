@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
-import { parseSize } from '../utils'
+import { parseSize } from '.'
 import { useImage } from '#imports'
 
 export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders> {
@@ -32,34 +32,32 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   nonce?: string
 }
 
-export const useProviderOptions = <Provider extends keyof ConfiguredImageProviders>(props: Pick<BaseImageProps<Provider>, 'provider' | 'preset'>) => computed(() => {
-  return {
+export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(props: BaseImageProps<Provider>) => {
+  const $img = useImage()
+
+  const providerOptions = computed(() => ({
     provider: props.provider,
     preset: props.preset,
-  }
-})
+  }))
 
-export const useNormalisedAttrs = (props: Pick<BaseImageProps<any>, 'width' | 'height' | 'crossorigin' | 'nonce'>) => computed(() => {
-  return {
+  const normalizedAttrs = computed(() => ({
     width: parseSize(props.width),
     height: parseSize(props.height),
     crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
     nonce: props.nonce,
-  }
-})
+  }))
 
-export const useImageModifiers = (props: Pick<BaseImageProps<any>, 'width' | 'height' | 'modifiers' | 'format' | 'quality' | 'fit' | 'background'>) => {
-  const $img = useImage()
-
-  return computed(() => {
+  const imageModifiers = computed(() => {
     return {
       ...props.modifiers,
-      width: parseSize(props.width),
-      height: parseSize(props.height),
+      width: props.width,
+      height: props.height,
       format: props.format,
       quality: props.quality || $img.options.quality,
       background: props.background,
       fit: props.fit,
-    }
+    } satisfies Partial<ImageModifiers>
   })
+
+  return { providerOptions, normalizedAttrs, imageModifiers }
 }

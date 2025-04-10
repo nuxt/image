@@ -3,12 +3,18 @@ import type { H3Event } from 'h3'
 import type { ConfiguredImageProviders } from './module'
 
 export interface ImageModifiers {
-  width: number
-  height: number
+  width: number | string
+  height: number | string
   fit: string
   format: string
   quality: string | number
   background: string
+  blur: number
+}
+
+export interface ResolvedImageModifiers extends ImageModifiers {
+  width: number
+  height: number
 }
 
 export interface ImageOptions {
@@ -23,7 +29,7 @@ export interface ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
 
-export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: ImageOptions & { modifiers: NonNullable<ImageOptions['modifiers']> } & T, ctx: ImageCTX) => ResolvedImage
+export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: ImageOptions & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
 
 interface ImageModifierOptions {
   modifiers?: Record<string, unknown>

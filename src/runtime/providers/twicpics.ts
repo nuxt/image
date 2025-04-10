@@ -1,6 +1,6 @@
 import { encodeQueryItem, joinURL } from 'ufo'
-import { defineProvider } from '#image'
-import { createMapper, createOperationsGenerator, type InferModifiers } from '#image'
+import { defineProvider, createMapper, createOperationsGenerator } from '#image'
+import type { InferModifiers } from '#image/utils/index'
 
 const fits = createMapper({
   fill: 'resize',
