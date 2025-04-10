@@ -46,17 +46,6 @@ export function createOperationsGenerator<ModifierKey extends string, ModifierVa
 
 export type InferModifiers<T extends (modifiers: any) => string> = T extends (modifiers: infer Modifiers) => string ? Modifiers : Record<string, unknown>
 
-export function parseSize(input: string | number | undefined = '') {
-  if (typeof input === 'number') {
-    return input
-  }
-  if (typeof input === 'string') {
-    if (input.replace('px', '').match(/^\d+$/g)) {
-      return Number.parseInt(input, 10)
-    }
-  }
-}
-
 export function parseDensities(input: string | undefined = ''): number[] {
   if (input === undefined || !input.length) {
     return []
@@ -83,6 +72,17 @@ export function checkDensities(densities: number[]) {
       console.warn('[nuxt] [image] Density values above `2` are not recommended. See https://observablehq.com/@eeeps/visual-acuity-and-device-pixel-ratio.')
     }
     _densities._warned = true
+  }
+}
+
+export function parseSize(input: string | number | undefined = '') {
+  if (typeof input === 'number') {
+    return input
+  }
+  if (typeof input === 'string') {
+    if (input.replace('px', '').match(/^\d+$/g)) {
+      return Number.parseInt(input, 10)
+    }
   }
 }
 
