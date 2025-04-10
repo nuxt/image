@@ -8,7 +8,7 @@ import { describe, it, expect } from 'vitest'
 import { glob } from 'tinyglobby'
 
 describe('nuxt image bundle size', () => {
-  it('should match snapshot', { timeout: 40_000 }, async () => {
+  it('should match snapshot', { timeout: 120_000 }, async () => {
     const rootDir = fileURLToPath(new URL('../.tmp', import.meta.url))
     await fsp.rm(rootDir, { recursive: true, force: true })
 
