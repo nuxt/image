@@ -1,5 +1,5 @@
 import { withBase, withoutLeadingSlash } from 'ufo'
-import { defineProvider } from '../provider'
+import { defineProvider } from '../utils/provider'
 
 // https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#upload
 

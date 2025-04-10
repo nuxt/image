@@ -195,7 +195,7 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
 
     if (options.inject) {
       // Add runtime plugin
-      addPlugin({ src: resolver.resolve('./runtime/plugin') })
+      addPlugin({ src: resolver.resolve('./runtime/plugins/image') })
     }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
