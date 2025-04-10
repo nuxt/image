@@ -16,8 +16,6 @@ const operationsGenerator = createOperationsGenerator({
       outside: 'boundmin',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 interface CloudimageOptions {

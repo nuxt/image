@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const sanityCDN = 'https://cdn.sanity.io/images'
@@ -37,8 +37,7 @@ const operationsGenerator = createOperationsGenerator({
       outside: 'max',
     },
   },
-  joinWith: '&',
-  formatter: (key, value: string | true | number | Record<string, unknown>) => String(value) === 'true' ? key : `${key}=${value}`,
+  formatter: (key, value: string | true | number | Record<string, unknown>) => String(value) === 'true' ? key : encodePath(`${key}=${value}`),
 })
 
 const getMetadata = (id: string) => {

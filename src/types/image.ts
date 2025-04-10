@@ -93,12 +93,16 @@ export interface ImageCTX {
 
 export type OperationMapper<From, To> = Record<string | Extract<From, string | number>, To> | ((key?: From) => To | From | undefined)
 
-export interface OperationGeneratorConfig<Key extends string, Value, FinalKey, FinalValue> {
+export type OperationGeneratorConfig<Key extends string, Value, FinalKey, FinalValue> = {
   keyMap?: Partial<Record<Key, FinalKey>>
+  valueMap?: Partial<Record<Key, Partial<Record<Extract<Value, string>, FinalValue>> | ((key: Value) => Value | FinalValue)>>
+} & ({
   formatter?: (key: FinalKey, value: FinalValue) => string
-  joinWith?: string
-  valueMap?: Partial<Record<Key, Record<Extract<Value, string>, FinalValue> | ((key: Value) => Value | FinalValue)>>
-}
+  joinWith?: undefined
+} | {
+  formatter: (key: FinalKey, value: FinalValue) => string
+  joinWith: string
+})
 
 export interface ImageSizesVariant {
   size?: string

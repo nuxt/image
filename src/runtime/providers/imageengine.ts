@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -44,7 +44,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
-  formatter: (key, value: string | number) => `${key}_${value}`,
+  formatter: (key, value: string | number) => encodePath(`${key}_${value}`),
 })
 
 interface ImageEngineOptions {

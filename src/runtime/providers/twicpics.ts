@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { encodeQueryItem, joinURL } from 'ufo'
 import { defineProvider } from '#image'
 import { createMapper, createOperationsGenerator, type InferModifiers } from '#image'
 
@@ -47,13 +47,14 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
-  formatter: (key, value: string | number) => `${key}=${value}`,
-})
+  formatter: (key: 'output' | 'format' | 'fit' | 'quality' | 'background' | 'focus' | 'zoom', value) => encodeQueryItem(key, value),
+} as const)
 
 interface TwicpicsOptions {
   baseURL?: string
   modifiers?: InferModifiers<typeof operationsGenerator>
     & { fit?: 'fill' | 'inside' | 'outside' | 'cover' | 'contain' }
+    & Partial<Record<'resize' | 'fill' | 'contain' | 'inside' | 'outside' | 'cover' | 'missingValue', string>>
     & Partial<Record<typeof fits extends (fit: string) => infer Fit ? NonNullable<Fit> : string, string>>
 }
 

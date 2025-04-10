@@ -25,8 +25,6 @@ const operationsGenerator = createOperationsGenerator({
       thumbnail: 'thumb',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 interface ContentfulOptions {

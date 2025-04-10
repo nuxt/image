@@ -50,6 +50,13 @@ const emptyContext = {
 } as any
 
 describe('Providers', () => {
+  it('validate returned urls', async () => {
+    for (const image of images) {
+      for (const entry of Object.values(image)) {
+        expect(() => decodeURIComponent(entry)).not.toThrow()
+      }
+    }
+  })
   it('ipx', () => {
     const providerOptions = {}
 

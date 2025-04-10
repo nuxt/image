@@ -1,13 +1,13 @@
-import { joinURL } from 'ufo'
+import { joinURL, encodePath } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
   joinWith: '/',
   formatter: (key: string | number, value: string | number | ReturnType<typeof getResizeValue>) => {
     if (typeof value === 'object') {
-      return `${key},${Object.entries(value).map(([k, v]) => `${k}_${v}`).join(',')}`
+      return `${key},${encodePath(Object.entries(value).map(([k, v]) => `${k}_${v}`).join(','))}`
     }
-    return `${key},${value}`
+    return encodePath(`${key},${value}`)
   },
 })
 

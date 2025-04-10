@@ -21,7 +21,6 @@ describe('operations generator', () => {
         return `woohoo-${key}`
       },
     },
-    joinWith: '&',
     formatter: (key, val) => encodeParam(key) + '_' + encodeParam(val),
   })
 

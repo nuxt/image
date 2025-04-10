@@ -1,4 +1,4 @@
-import { encodeQueryItem, joinURL } from 'ufo'
+import { joinURL } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -13,8 +13,6 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'fit',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 interface NetlifyLargeMediaOptions {

@@ -58,8 +58,6 @@ const operationsGenerator = createOperationsGenerator({
       'heart': 'heart',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 export interface WeservOptions {

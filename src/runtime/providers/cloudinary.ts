@@ -103,7 +103,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: ',',
-  formatter: (key, value) => key.includes('_') ? `${key}:${value}` : `${key}_${value}`,
+  formatter: (key, value) => encodePath(key.includes('_') ? `${key}:${value}` : `${key}_${value}`),
 })
 
 const defaultModifiers = {

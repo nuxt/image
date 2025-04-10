@@ -32,13 +32,8 @@ export function createMapper<Key extends string, Value>(map: Partial<Record<Key,
   return (key => key !== undefined ? map[key as Extract<Key, string>] || key : map.missingValue) as Mapper<Key, Value>
 }
 
-type Formatter<Key, Value> = (key: Key, value: Value) => string
-
-const defaultFormatter = (key: string, value: string | number) => `${key}=${value}`
-
-export function createOperationsGenerator<ModifierKey extends string, ModifierValue = string | number, FinalKey = ModifierKey, FinalValue = ModifierValue>(config: OperationGeneratorConfig<ModifierKey, ModifierValue, FinalKey, FinalValue>) {
-  const formatter = config.formatter || (defaultFormatter as Formatter<FinalKey, FinalValue>)
-
+export function createOperationsGenerator<ModifierKey extends string, ModifierValue = string | number, FinalKey = ModifierKey, FinalValue = ModifierValue>(config: OperationGeneratorConfig<ModifierKey, ModifierValue, FinalKey, FinalValue> = {}) {
+  const formatter = config.formatter
   const keyMap = config.keyMap && typeof config.keyMap !== 'function' ? createMapper<ModifierKey, FinalKey>(config.keyMap) : config.keyMap
 
   const map: Record<string, Mapper<ModifierValue, FinalValue>> = {}
@@ -51,7 +46,7 @@ export function createOperationsGenerator<ModifierKey extends string, ModifierVa
   }
 
   return (modifiers: Partial<Record<Extract<ModifierKey | FinalKey, string>, ModifierValue | FinalValue>>): string => {
-    const operations: string[] = []
+    const operations: [key: FinalKey, value: FinalValue][] = []
     for (const _key in modifiers) {
       const key = _key as keyof typeof modifiers
       if (typeof modifiers[key] === 'undefined') {
@@ -61,10 +56,14 @@ export function createOperationsGenerator<ModifierKey extends string, ModifierVa
         ? map[key](modifiers[key] as ModifierValue)
         : modifiers[key]
 
-      operations.push(formatter(((keyMap ? keyMap(key as ModifierKey) : key) as FinalKey), value as FinalValue))
+      operations.push([(keyMap ? keyMap(key as ModifierKey) : key) as FinalKey, value as FinalValue])
     }
 
-    return operations.join(config.joinWith ?? '/')
+    if (formatter) {
+      return operations.map(entry => formatter(...entry)).join(config.joinWith ?? '&')
+    }
+
+    return new URLSearchParams(operations as [string, string][]).toString()
   }
 }
 

@@ -98,8 +98,6 @@ const operationsGenerator = createOperationsGenerator({
     },
     ...generateColorKeys(),
   },
-  joinWith: '&',
-  formatter: (key: any, value: any) => `${key}=${value}`,
 })
 
 interface SirvOptions {

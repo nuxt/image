@@ -20,8 +20,6 @@ const operationsGenerator = createOperationsGenerator({
     autoOptimize: 'auto_optimize',
     sepia: 'sepia',
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
 interface BunnyOptions {

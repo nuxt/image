@@ -48,7 +48,6 @@ export const operationsGenerator = createOperationsGenerator({
     quality: 'q',
     background: 'b',
   },
-  joinWith: '&',
   formatter: (key, val: string | number | boolean) => encodeParam(key) + '_' + encodeParam(val.toString()),
 })
 
