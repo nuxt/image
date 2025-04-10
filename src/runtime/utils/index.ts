@@ -1,4 +1,3 @@
-import { encodePath } from 'ufo'
 import type { OperationGeneratorConfig } from '@nuxt/image'
 
 export default function imageFetch(url: string) {
@@ -33,13 +32,8 @@ export function createMapper<Key extends string, Value>(map: Partial<Record<Key,
   return (key => key !== undefined ? map[key as Extract<Key, string>] || key : map.missingValue) as Mapper<Key, Value>
 }
 
-type Formatter<Key, Value> = (key: Key, value: Value) => string
-
-const defaultFormatter = (key: string, value: string) => encodePath(`${key}=${value}`)
-
 export function createOperationsGenerator<ModifierKey extends string, ModifierValue = string | number, FinalKey = ModifierKey, FinalValue = ModifierValue>(config: OperationGeneratorConfig<ModifierKey, ModifierValue, FinalKey, FinalValue>) {
-  const formatter = config.formatter || (config.joinWith !== undefined ? defaultFormatter as Formatter<FinalKey, FinalValue> : undefined)
-
+  const formatter = config.formatter
   const keyMap = config.keyMap && typeof config.keyMap !== 'function' ? createMapper<ModifierKey, FinalKey>(config.keyMap) : config.keyMap
 
   const map: Record<string, Mapper<ModifierValue, FinalValue>> = {}

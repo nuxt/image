@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { encodeQueryItem, joinURL } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
 
 const operationsGenerator = createOperationsGenerator({
@@ -26,6 +26,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: ',',
+  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 const defaultModifiers = {}

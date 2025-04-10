@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { encodeQueryItem, joinURL } from 'ufo'
 import { defineProvider } from '#image'
 import { createMapper, createOperationsGenerator, type InferModifiers } from '#image'
 
@@ -47,6 +47,7 @@ const operationsGenerator = createOperationsGenerator({
     },
   },
   joinWith: '/',
+  formatter: (key, value) => encodeQueryItem(key, value)
 } as const)
 
 interface TwicpicsOptions {
