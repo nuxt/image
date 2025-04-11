@@ -79,14 +79,8 @@ const attrs = computed(() => {
   return attrs
 })
 
-interface DefaultSlotProps {
-  imgAttrs: Record<string, unknown>
-  isLoaded: boolean
-  src?: string
-}
-
 defineSlots<{
-  default: (props: DefaultSlotProps) => any
+  default(props: DefaultSlotProps): any
 }>()
 
 const originalFormat = computed(() => getFileExtension(props.src))
@@ -194,4 +188,12 @@ onMounted(() => {
 
   markFeatureUsage('nuxt-picture')
 })
+</script>
+
+<script lang="ts">
+export interface DefaultSlotProps {
+  imgAttrs: Record<string, unknown>
+  isLoaded: boolean
+  src?: string
+}
 </script>
