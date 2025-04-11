@@ -154,12 +154,13 @@ const initialLoad = nuxtApp.isHydrating
 
 const imgEl = useTemplateRef('imgEl')
 onMounted(() => {
-  if (!imgEl.value) {
+  const el = Array.isArray(imgEl.value) ? imgEl.value[0] as HTMLImageElement | undefined : imgEl.value
+  if (!el) {
     return
   }
 
-  if (imgEl.value.complete && initialLoad) {
-    if (imgEl.value.getAttribute('data-error')) {
+  if (el.complete && initialLoad) {
+    if (el.getAttribute('data-error')) {
       emit('error', new Event('error'))
     }
     else {
@@ -167,11 +168,11 @@ onMounted(() => {
     }
   }
 
-  imgEl.value.onload = (event) => {
+  el.onload = (event) => {
     emit('load', event)
   }
 
-  imgEl.value.onerror = (event) => {
+  el.onerror = (event) => {
     emit('error', event)
   }
 

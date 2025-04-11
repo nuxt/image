@@ -20,7 +20,7 @@ describe('nuxt image bundle size', () => {
       }),
     ])
 
-    expect(roundToKilobytes(withImage.totalBytes - withoutImage.totalBytes)).toMatchInlineSnapshot(`"12.3k"`)
+    expect(roundToKilobytes(withImage.totalBytes - withoutImage.totalBytes)).toMatchInlineSnapshot(`"12.4k"`)
   })
 })
 
