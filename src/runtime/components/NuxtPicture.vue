@@ -79,6 +79,16 @@ const attrs = computed(() => {
   return attrs
 })
 
+interface DefaultSlotProps {
+  imgAttrs: Record<string, unknown>
+  isLoaded: boolean
+  src?: string
+}
+
+defineSlots<{
+  default: (props: DefaultSlotProps) => any
+}>()
+
 const originalFormat = computed(() => getFileExtension(props.src))
 const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
 
