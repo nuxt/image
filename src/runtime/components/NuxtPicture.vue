@@ -76,6 +76,10 @@ const attrs = computed(() => {
   return attrs
 })
 
+defineSlots<{
+  default(props: DefaultSlotProps): any
+}>()
+
 const originalFormat = computed(() => props.src?.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1])
 
 const legacyFormat = computed(() => {
@@ -178,4 +182,12 @@ onMounted(() => {
 
   markFeatureUsage('nuxt-picture')
 })
+</script>
+
+<script lang="ts">
+export interface DefaultSlotProps {
+  imgAttrs: Record<string, unknown>
+  isLoaded: boolean
+  src?: string
+}
 </script>

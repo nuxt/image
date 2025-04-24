@@ -1,4 +1,5 @@
 import { join } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { promises as fsp } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
@@ -7,7 +8,7 @@ import type { NuxtConfig } from '@nuxt/schema'
 import { describe, it, expect } from 'vitest'
 import { glob } from 'tinyglobby'
 
-describe('nuxt image bundle size', () => {
+describe.skipIf(process.env.ECOSYSTEM_CI)('nuxt image bundle size', () => {
   it('should match snapshot', { timeout: 120_000 }, async () => {
     const rootDir = fileURLToPath(new URL('../.tmp', import.meta.url))
     await fsp.rm(rootDir, { recursive: true, force: true })

@@ -42,6 +42,14 @@ const emit = defineEmits<{
   (event: 'error', payload: string | Event): unknown
 }>()
 
+defineSlots<{
+  default(props: {
+    imgAttrs: ImgHTMLAttributes
+    isLoaded: boolean
+    src?: string
+  }): any
+}>()
+
 const $img = useImage()
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
 
