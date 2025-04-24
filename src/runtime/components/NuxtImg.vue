@@ -42,13 +42,7 @@ const emit = defineEmits<{
   (event: 'error', payload: string | Event): unknown
 }>()
 
-defineSlots<{
-  default(props: {
-    imgAttrs: ImgHTMLAttributes
-    isLoaded: boolean
-    src?: string
-  }): any
-}>()
+defineSlots<{ default(props: DefaultSlotProps): any }>()
 
 const $img = useImage()
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
@@ -186,4 +180,12 @@ onMounted(() => {
     emit('error', event)
   }
 })
+</script>
+
+<script lang="ts">
+export interface DefaultSlotProps {
+  imgAttrs: ImgHTMLAttributes
+  isLoaded: boolean
+  src?: string
+}
 </script>

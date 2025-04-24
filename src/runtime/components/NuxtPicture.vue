@@ -42,6 +42,7 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 }
 
 defineOptions({ inheritAttrs: false })
+defineSlots<{ default(props: DefaultSlotProps): any }>()
 
 const props = defineProps<PictureProps<Provider>>()
 
@@ -75,10 +76,6 @@ const attrs = computed(() => {
   }
   return attrs
 })
-
-defineSlots<{
-  default(props: DefaultSlotProps): any
-}>()
 
 const originalFormat = computed(() => props.src?.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1])
 
@@ -186,7 +183,7 @@ onMounted(() => {
 
 <script lang="ts">
 export interface DefaultSlotProps {
-  imgAttrs: Record<string, unknown>
+  imgAttrs: ImgHTMLAttributes
   isLoaded: boolean
   src?: string
 }
