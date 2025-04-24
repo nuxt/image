@@ -7,8 +7,9 @@ import { buildNuxt, loadNuxt } from '@nuxt/kit'
 import type { NuxtConfig } from '@nuxt/schema'
 import { describe, it, expect } from 'vitest'
 import { glob } from 'tinyglobby'
+import { isWindows } from 'std-env'
 
-describe.skipIf(process.env.ECOSYSTEM_CI)('nuxt image bundle size', () => {
+describe.skipIf(process.env.ECOSYSTEM_CI || isWindows)('nuxt image bundle size', () => {
   it('should match snapshot', { timeout: 120_000 }, async () => {
     const rootDir = fileURLToPath(new URL('../.tmp', import.meta.url))
     await fsp.rm(rootDir, { recursive: true, force: true })
