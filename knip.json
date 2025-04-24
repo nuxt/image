@@ -5,11 +5,15 @@
       "entry": [
         "build.config.ts",
         "src/module.ts",
-        "src/runtime/**",
+        "src/runtime/index.ts",
+        "src/runtime/components/**",
+        "src/runtime/composables/**",
+        "src/runtime/plugins/**",
+        "src/runtime/providers/**",
+        "src/runtime/server/**",
         "scripts/*"
       ],
       "ignoreUnresolved": [
-        "#app/nuxt",
         "#internal/nuxt-image"
       ],
       "ignoreDependencies": [
@@ -38,8 +42,7 @@
         "ohash",
         "@vueuse/core",
         "@vueuse/nuxt",
-        "nuxt-og-image",
-        "perfect-debounce"
+        "nuxt-og-image"
       ]
     },
     "example": {
@@ -54,9 +57,6 @@
         "{app,error}.vue",
         "layers/**",
         "*.ts"
-      ],
-      "ignoreDependencies": [
-        "@nuxt/image"
       ]
     }
   }

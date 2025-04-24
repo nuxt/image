@@ -21,12 +21,7 @@ export function createImage(globalOptions: CreateImageOptions) {
     return image
   }
 
-  const $img = ((input, modifiers = {}, options = {}) => {
-    return getImage(input, {
-      ...options,
-      modifiers: defu(modifiers, options.modifiers || {}),
-    }).url
-  }) as $Img
+  const $img = ((input, modifiers, options) => getImage(input, defu({ modifiers }, options)).url) as $Img
 
   for (const presetName in globalOptions.presets) {
     $img[presetName] = ((source, modifiers, options) =>
@@ -98,20 +93,15 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
   const _options = defu(options, preset, defaults as Partial<ImageOptions>)
   const resolvedOptions = {
     ..._options,
-    modifiers: { ..._options.modifiers },
-  }
-
-  const expectedFormat = resolvedOptions.modifiers.format
-  if (resolvedOptions.modifiers?.width) {
-    resolvedOptions.modifiers.width = parseSize(resolvedOptions.modifiers.width)
-  }
-  if (resolvedOptions.modifiers?.height) {
-    resolvedOptions.modifiers.height = parseSize(resolvedOptions.modifiers.height)
+    modifiers: {
+      ..._options.modifiers,
+      width: _options.modifiers?.width ? parseSize(_options.modifiers.width) : undefined,
+      height: _options.modifiers?.height ? parseSize(_options.modifiers.height) : undefined,
+    },
   }
 
   const image = provider.getImage(input, resolvedOptions, ctx)
-
-  image.format = image.format || expectedFormat || ''
+  image.format ||= resolvedOptions.modifiers.format || ''
 
   return image
 }

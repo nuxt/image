@@ -1,42 +1,38 @@
 <template>
   <picture v-bind="attrs.picture">
-    <source
-      v-for="source in sources.slice(0, -1)"
-      :key="source.src"
-      :type="source.type"
-      :sizes="source.sizes"
-      :srcset="source.srcset"
-    >
-
-    <img
-      v-if="lastSource"
-      ref="imgEl"
-      v-bind="{
-        ...baseAttrs,
-        ...(isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
-        ...attrs.img,
-        'data-nuxt-pic': '',
-      }"
-      :src="lastSource.src"
-      :sizes="lastSource.sizes"
-      :srcset="lastSource.srcset"
-    >
+    <template v-for="(source, index) of sources">
+      <source
+        v-if="index + 1 < sources.length"
+        :key="source.src"
+        :type="source.type"
+        :sizes="source.sizes"
+        :srcset="source.srcset"
+      >
+      <img
+        v-else
+        ref="imgEl"
+        :key="'last' + source.src"
+        v-bind="attrs.img"
+        :src="source.src"
+        :sizes="source.sizes"
+        :srcset="source.srcset"
+      >
+    </template>
   </picture>
 </template>
 
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import type { SerializableHead } from '@unhead/vue/types'
+import type { ImgHTMLAttributes } from 'vue'
+import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
-import type { ImgHTMLAttributes } from 'vue'
 
-import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { getFileExtension } from '../utils'
 import { useImage } from '../composables'
-import { useImageModifiers, useNormalisedAttrs, useProviderOptions } from './_base'
-import type { BaseImageProps } from './_base'
+import { useImageProps } from '../utils/props'
+import type { BaseImageProps } from '../utils/props'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
@@ -46,6 +42,7 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 }
 
 defineOptions({ inheritAttrs: false })
+defineSlots<{ default(props: DefaultSlotProps): any }>()
 
 const props = defineProps<PictureProps<Provider>>()
 
@@ -54,18 +51,19 @@ const emit = defineEmits<{
   (event: 'error', payload: string | Event): unknown
 }>()
 
-const isServer = import.meta.server
-
-const baseAttrs = useNormalisedAttrs(props)
-
-// Only pass down supported <image> attributes
 const _attrs = useAttrs()
 const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding', 'nonce'])
 const attrs = computed(() => {
   const attrs: Record<string, Record<string, unknown>> = {
-    img: { ...props.imgAttrs },
+    img: {
+      ...normalizedAttrs.value,
+      ...props.imgAttrs,
+      ...(import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {}),
+      'data-nuxt-pic': '',
+    },
     picture: {},
   }
+  // Only pass down supported <image> attributes
   for (const key in _attrs) {
     if (imageAttrNames.has(key)) {
       if (!(key in attrs.img)) {
@@ -79,27 +77,21 @@ const attrs = computed(() => {
   return attrs
 })
 
-defineSlots<{
-  default(props: DefaultSlotProps): any
-}>()
-
-const originalFormat = computed(() => getFileExtension(props.src))
-const isTransparent = computed(() => ['png', 'webp', 'gif', 'svg'].includes(originalFormat.value))
+const originalFormat = computed(() => props.src?.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1])
 
 const legacyFormat = computed(() => {
   if (props.legacyFormat) {
     return props.legacyFormat
   }
 
-  return isTransparent.value ? 'png' : 'jpeg'
+  const isNotTransparent = !originalFormat.value || !['png', 'webp', 'gif', 'svg'].includes(originalFormat.value)
+  return isNotTransparent ? 'jpeg' : 'png'
 })
 
-type Source = { src?: string, srcset?: string, type?: string, sizes?: string }
-
 const $img = useImage()
-const providerOptions = useProviderOptions(props)
-const modifiers = useImageModifiers(props)
+const { providerOptions, imageModifiers, normalizedAttrs } = useImageProps(props)
 
+type Source = { src?: string, srcset?: string, type?: string, sizes?: string }
 const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
 
@@ -120,14 +112,12 @@ const sources = computed<Source[]>(() => {
       ...providerOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,
-      modifiers: { ...modifiers.value, format },
+      modifiers: { ...imageModifiers.value, format },
     })
 
     return { src, type: `image/${format}`, sizes, srcset }
   })
 })
-
-const lastSource = computed(() => sources.value[sources.value.length - 1])
 
 if (import.meta.server && props.preload) {
   useHead({ link: () => {
@@ -165,12 +155,13 @@ const initialLoad = nuxtApp.isHydrating
 
 const imgEl = useTemplateRef('imgEl')
 onMounted(() => {
-  if (!imgEl.value) {
+  const el = Array.isArray(imgEl.value) ? imgEl.value[0] as HTMLImageElement | undefined : imgEl.value
+  if (!el) {
     return
   }
 
-  if (imgEl.value.complete && initialLoad) {
-    if (imgEl.value.getAttribute('data-error')) {
+  if (el.complete && initialLoad) {
+    if (el.getAttribute('data-error')) {
       emit('error', new Event('error'))
     }
     else {
@@ -178,11 +169,11 @@ onMounted(() => {
     }
   }
 
-  imgEl.value.onload = (event) => {
+  el.onload = (event) => {
     emit('load', event)
   }
 
-  imgEl.value.onerror = (event) => {
+  el.onerror = (event) => {
     emit('error', event)
   }
 
@@ -192,7 +183,7 @@ onMounted(() => {
 
 <script lang="ts">
 export interface DefaultSlotProps {
-  imgAttrs: Record<string, unknown>
+  imgAttrs: ImgHTMLAttributes
   isLoaded: boolean
   src?: string
 }
