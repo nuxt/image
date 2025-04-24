@@ -1,12 +1,9 @@
-// @vitest-environment nuxt
-
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
-// @ts-expect-error virtual file
-import { imageOptions } from '#build/image-options'
+import { imageOptions } from '#build/image-options.mjs'
 import { createImage } from '#image'
 
 describe('Renders simple image', () => {

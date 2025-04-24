@@ -1,3 +1,5 @@
-import type { ProviderGetImage } from '../../module'
+import { defineProvider } from '#image'
 
-export const getImage: ProviderGetImage = url => ({ url })
+export default defineProvider({
+  getImage: url => ({ url }),
+})

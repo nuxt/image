@@ -1,7 +1,8 @@
 <template>
   <img
+    v-if="!custom"
     ref="imgEl"
-    :class="props.placeholder && !placeholderLoaded ? props.placeholderClass : undefined"
+    :class="placeholder && !placeholderLoaded ? placeholderClass : undefined"
     v-bind="{
       ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
       ...imgAttrs,
@@ -9,63 +10,84 @@
     }"
     :src="src"
   >
+  <slot
+    v-else
+    v-bind="{
+      ...isServer ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+      imgAttrs: {
+        ...imgAttrs,
+        ...attrs,
+      },
+      isLoaded: placeholderLoaded,
+      src,
+    }"
+  />
 </template>
 
-<script setup lang="ts">
-import { computed, onMounted, ref, useAttrs } from 'vue'
-import { useHead } from '@unhead/vue'
+<script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
+import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
+import type { ImgHTMLAttributes } from 'vue'
+import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
+
 import { useImage } from '../composables'
 import { parseSize } from '../utils'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { imgProps, useBaseImage } from './_base'
-import { useNuxtApp } from '#app'
+import { useImageModifiers, useNormalisedAttrs, useProviderOptions } from './_base'
+import type { BaseImageProps } from './_base'
 
-const props = defineProps(imgProps)
+import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-const attrs = useAttrs()
+export interface ImageProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
+  custom?: boolean
+  placeholder?: boolean | string | number | [w: number, h: number, q?: number, b?: number]
+  placeholderClass?: string
+}
+
+const attrs = useAttrs() as ImgHTMLAttributes
+const props = defineProps<ImageProps<Provider>>()
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
   (event: 'error', payload: string | Event): unknown
 }>()
 
+defineSlots<{
+  default(props: {
+    imgAttrs: ImgHTMLAttributes
+    isLoaded: boolean
+    src?: string
+  }): any
+}>()
+
 const isServer = import.meta.server
 
+const modifiers = useImageModifiers(props)
+
 const $img = useImage()
-
-const _base = useBaseImage(props)
-
-const placeholderLoaded = ref(false)
-const imgEl = ref<HTMLImageElement>()
-
-type AttrsT = typeof _base.attrs.value & {
-  'sizes'?: string
-  'srcset'?: string
-  'data-nuxt-img'?: string
-}
+const providerOptions = useProviderOptions(props)
 
 const sizes = computed(() => $img.getSizes(props.src!, {
-  ..._base.options.value,
+  ...providerOptions.value,
   sizes: props.sizes,
   densities: props.densities,
   modifiers: {
-    ..._base.modifiers.value,
+    ...modifiers.value,
     width: parseSize(props.width),
     height: parseSize(props.height),
   },
 }))
 
-const imgAttrs = computed(() => {
-  const attrs: AttrsT = { ..._base.attrs.value, 'data-nuxt-img': '' }
+const placeholderLoaded = ref(false)
+const baseAttrs = useNormalisedAttrs(props)
 
-  if (!props.placeholder || placeholderLoaded.value) {
-    attrs.sizes = sizes.value.sizes
-    attrs.srcset = sizes.value.srcset
-  }
-
-  return attrs
-})
+const imgAttrs = computed(() => ({
+  ...baseAttrs.value,
+  'data-nuxt-img': '',
+  ...(!props.placeholder || placeholderLoaded.value)
+    ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
+    : {},
+}))
 
 const placeholder = computed(() => {
   let placeholder = props.placeholder
@@ -87,18 +109,18 @@ const placeholder = computed(() => {
     : (typeof placeholder === 'number' ? [placeholder, placeholder] : [10, 10])) as [w: number, h: number, q: number, b: number]
 
   return $img(props.src!, {
-    ..._base.modifiers.value,
+    ...modifiers.value,
     width: size[0],
     height: size[1],
     quality: size[2] || 50,
     blur: size[3] || 3,
-  }, _base.options.value)
+  }, providerOptions.value)
 })
 
 const mainSrc = computed(() =>
   props.sizes
     ? sizes.value.src
-    : $img(props.src!, _base.modifiers.value, _base.options.value),
+    : $img(props.src!, modifiers.value, providerOptions.value),
 )
 
 const src = computed(() => placeholder.value ? placeholder.value : mainSrc.value)
@@ -127,15 +149,13 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
-  prerenderStaticImages(src.value, sizes.value.srcset)
+  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent())
 }
 
-const nuxtApp = useNuxtApp()
-
-const initialLoad = nuxtApp.isHydrating
-
+const initialLoad = useNuxtApp().isHydrating
+const imgEl = useTemplateRef('imgEl')
 onMounted(() => {
-  if (placeholder.value) {
+  if (placeholder.value || props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {
@@ -182,8 +202,4 @@ onMounted(() => {
     emit('error', event)
   }
 })
-</script>
-
-<script lang="ts">
-export { imgProps } from './_base'
 </script>

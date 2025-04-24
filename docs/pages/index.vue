@@ -16,7 +16,7 @@ useSeoMeta({
 const source = ref('npx nuxi@latest module add image')
 const { copy, copied } = useClipboard({ source })
 
-const providers = ['caisy', 'bunny', 'cloudflare', 'cloudimage', 'cloudinary', 'directus', 'edgio', 'fastly', 'glide', 'gumlet', 'hygraph', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel', 'weserv']
+const providers = ['caisy', 'bunny', 'cloudflare', 'cloudimage', 'cloudinary', 'directus', 'fastly', 'filerobot', 'glide', 'gumlet', 'hygraph', 'imageengine', 'imagekit', 'imgix', 'ipx', 'netlify', 'prepr', 'prismic', 'sanity', 'storyblok', 'strapi', 'twicpics', 'unsplash', 'uploadcare', 'vercel', 'weserv']
 // Disabling because svg to png does not work now with SSG
 // Related issue: https://github.com/unjs/ipx/issues/160
 // const img = useImage()

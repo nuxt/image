@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-Integration between [AWS Amplify Hosting](https://aws.amazon.com/amplify/) and the image module.
+Integration between [AWS Amplify Hosting](https://aws.amazon.com/amplify) and the image module.
 
 This provider will be enabled by default in AWS Amplify deployments.
 
@@ -22,14 +22,12 @@ To use external URLs (images not in `public/` directory), hostnames should be wh
 
 **Example:**
 
-```ts [nuxt.config]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
-    domains: [
-      'avatars0.githubusercontent.com'
-    ]
+    domains: ['avatars0.githubusercontent.com']
   }
-}
+})
 ```
 
 ## Sizes
@@ -40,13 +38,27 @@ If a width is not defined, image will fallback to the next bigger width.
 
 **Example:**
 
-```ts [nuxt.config]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     screens: {
       icon: 40,
       avatar: 24
     }
   }
-}
+})
+```
+
+## Modifiers
+
+All the default modifiers from [AWS's documentation](https://docs.aws.amazon.com/amplify/latest/userguide/integrate-image-optimization-framework.html#uri-request-parameters) are available.
+
+```vue
+<NuxtImg
+  src="/test.jpg"
+  height="512"
+  width="512"
+  :modifiers="{ flip: true }"
+  :quality="90"
+/>
 ```

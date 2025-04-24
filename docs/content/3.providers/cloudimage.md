@@ -99,25 +99,25 @@ Replaces the dynamically built URL
 export default defineNuxtConfig({
   image: {
     cloudimage: {
-      cdnURL: 'https://demo.cloudimg.io/v7',
+      cdnURL: 'https://demo.cloudimg.io/v7'
     }
   }
 })
 ```
 
-## Cloudimage modifiers
+## Cloudimage Modifiers
 
 Beside the [standard modifiers](/usage/nuxt-img#modifiers), also you can pass Cloudimage-specific [Cloudimage-specific transformation](https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction) params to `modifiers` prop.
 
-## Cloudimage `fit` values
+## Cloudimage `fit` Values
 
-Beside [the standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudimage offers the following for extra resizing params:
+Beside the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudimage offers the following for extra resizing params:
 
 * `crop` - Crops the image to specified dimensions (width and height) and keeps proportions.
 
 * `face` - Crops the image automatically keeping the most prominent face.
 
-* `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid colour) to keep proportions.
+* `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid color) to keep proportions.
 
 * `cropfit` - Sets crop or fit resize mode depending on the origin and the desired dimensions.
 

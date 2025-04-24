@@ -102,7 +102,7 @@ export async function determineBumpType() {
 
   const bumpType = determineSemverChange(commits, config)
 
-  return bumpType === 'major' ? 'minor' : bumpType
+  return bumpType
 }
 
 export async function getLatestCommits() {
@@ -119,6 +119,9 @@ export async function getContributors() {
   const rawCommits = await getGitDiff(latestTag)
   for (const commit of rawCommits) {
     if (emails.has(commit.author.email) || commit.author.name === 'renovate[bot]') {
+      continue
+    }
+    if (!commit?.shortHash) {
       continue
     }
     const { author } = await $fetch<{ author: { login: string, email: string } }>(`https://api.github.com/repos/nuxt/image/commits/${commit.shortHash}`, {

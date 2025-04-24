@@ -1,8 +1,7 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { defineProvider, createOperationsGenerator } from '#image'
 
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'width',
     height: 'height',
@@ -21,13 +20,18 @@ export const operationsGenerator = createOperationsGenerator({
     autoOptimize: 'auto_optimize',
     sepia: 'sepia',
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? '?' + operations : '')),
-  }
+interface BunnyOptions {
+  baseURL: string
+  // TODO: more modifiers
 }
+
+export default defineProvider<BunnyOptions>({
+  getImage: (src, { modifiers, baseURL }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? '?' + operations : '')),
+    }
+  },
+})
