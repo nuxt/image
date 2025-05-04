@@ -34,10 +34,10 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   // Options
   const publicDirs = nuxt.options._layers.map((layer) => {
     const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
-    const layerOptions = isRootLayer ? nuxt.options : layer.config
-    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
+    const srcDir = isRootLayer ? nuxt.options.srcDir : layer.config.srcDir
+    const path = isRootLayer ? moduleOptions.dir : layer.config.dir?.public || 'public'
 
-    return resolve(layerOptions.srcDir, path)
+    return resolve(srcDir, path)
   }).filter(dir => existsSync(dir))
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
