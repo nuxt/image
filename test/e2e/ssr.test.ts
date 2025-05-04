@@ -77,7 +77,7 @@ describe('browser (ssr: true)', () => {
   })
 
   it('works with server-side useImage', async () => {
-    expect(await $fetch('/api/image')).toMatchInlineSnapshot(`
+    expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
       {
         "format": "webp",
         "url": "/_ipx/f_webp&q_75/image.jpg",
