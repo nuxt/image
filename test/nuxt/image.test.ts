@@ -153,6 +153,17 @@ describe('Renders simple image', () => {
     const domNonce = img.element.getAttribute('nonce')
     expect(domNonce).toBe('stub-nonce')
   })
+
+  it.only('can access imgEl underlying img HTMLImageElement', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      nonce: 'stub-nonce',
+    })
+    expect(img.getCurrentComponent().exposed?.imgEl).toBeDefined()
+    expect(img.getCurrentComponent().exposed?.imgEl.value).toBeInstanceOf(HTMLImageElement)
+  })
 })
 
 const getImageLoad = (cb = () => {}) => {
