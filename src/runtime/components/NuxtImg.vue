@@ -111,6 +111,7 @@ if (import.meta.server && props.preload) {
       rel: 'preload',
       as: 'image',
       nonce: props.nonce,
+      crossorigin: normalizedAttrs.value.crossorigin,
       ...(!isResponsive
         ? { href: src.value }
         : {
@@ -121,7 +122,6 @@ if (import.meta.server && props.preload) {
       ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }
         : {}),
-      crossorigin: normalizedAttrs.value.crossorigin,
     }],
   })
 }
