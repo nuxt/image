@@ -154,7 +154,7 @@ describe('Renders simple image', () => {
     expect(domNonce).toBe('stub-nonce')
   })
 
-  it.only('can access imgEl underlying img HTMLImageElement', () => {
+  it('can access imgEl underlying img HTMLImageElement', () => {
     const img = mountImage({
       src: '/image.png',
       width: 300,
