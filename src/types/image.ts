@@ -10,6 +10,7 @@ export interface ImageModifiers {
   quality: string | number
   background: string
   blur: number
+  [key: string]: string | number | undefined // Support for any custom provider modifiers
 }
 
 export interface ResolvedImageModifiers extends ImageModifiers {
