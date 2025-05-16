@@ -43,7 +43,7 @@ export interface ImageProvider<T> extends ImageModifierOptions {
   supportsAlias?: boolean
 }
 
-export interface CreateImageOptions {
+export interface CreateImageOptions<Provider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders> {
   providers: Record<keyof ConfiguredImageProviders, {
     defaults: unknown
     setup: () => ImageProvider<Record<string, unknown>>
@@ -53,7 +53,7 @@ export interface CreateImageOptions {
   }
   event?: H3Event
   presets: { [name: string]: ImageOptions }
-  provider: string
+  provider: Provider
   screens: Record<string, number>
   alias: Record<string, string>
   domains: string[]
@@ -81,21 +81,21 @@ export interface ImageSizes {
   src?: string
 }
 
-export interface Img {
+export interface Img<Provider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders> {
   (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
-  options: CreateImageOptions
+  options: CreateImageOptions<Provider>
   getImage: (source: string, options?: ImageOptions) => ResolvedImage
   getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
   getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
 }
 
-export type $Img = Img & {
-  [preset: string]: $Img
+export type $Img<Provider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders> = Img<Provider> & {
+  [preset: string]: $Img<Provider>
 }
 
-export interface ImageCTX {
-  options: CreateImageOptions
-  $img?: $Img
+export interface ImageCTX<Provider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders> {
+  options: CreateImageOptions<Provider>
+  $img?: $Img<Provider>
 }
 
 export type OperationMapper<From, To> = Record<string | Extract<From, string | number>, To> | ((key?: From) => To | From | undefined)

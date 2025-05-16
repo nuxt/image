@@ -1,13 +1,13 @@
 import type { H3Event } from 'h3'
 
-import type { Img } from '@nuxt/image'
+import type { Img, ConfiguredImageProviders } from '@nuxt/image'
 import { createImage } from '../../image'
 
 // @ts-expect-error virtual file
 import { imageOptions } from '#internal/nuxt-image'
 import { useRuntimeConfig } from '#imports'
 
-export const useImage = (event?: H3Event): Img => {
+export const useImage = <Provider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders>(event?: H3Event): Img<Provider> => {
   const config = useRuntimeConfig()
 
   return createImage({
@@ -17,5 +17,5 @@ export const useImage = (event?: H3Event): Img => {
     },
     event,
     runtimeConfig: config,
-  })
+  }) as Img<Provider>
 }

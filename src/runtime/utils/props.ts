@@ -33,7 +33,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
 }
 
 export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(props: BaseImageProps<Provider>) => {
-  const $img = useImage()
+  const $img = useImage<Provider>()
 
   const providerOptions = computed(() => ({
     provider: props.provider,
