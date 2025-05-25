@@ -104,7 +104,7 @@ const mainSrc = computed(() =>
 const src = computed(() => placeholder.value || mainSrc.value)
 
 if (import.meta.server && props.preload) {
-  const hasMultipleDensities = sizes.value.srcset.includes("x, ")
+  const hasMultipleDensities = sizes.value.srcset.includes('x, ')
 
   useHead({
     link: [{
