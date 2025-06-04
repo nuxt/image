@@ -25,51 +25,6 @@ const providers = ['caisy', 'bunny', 'cloudflare', 'cloudimage', 'cloudinary', '
 <template>
   <div>
     <span class="gradient" />
-    <ULandingHero
-      orientation="horizontal"
-      :ui="{ container: 'flex lg:gap-12' }"
-    >
-      <TheIllustration class="hidden lg:block h-64" />
-      <template #title>
-        Optimized Images for your <span class="text-primary-400">Nuxt Apps</span>
-      </template>
-      <template #description>
-        Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or
-        your favorite images CDN.
-      </template>
-      <template #links>
-        <UButton
-          to="/get-started/installation"
-          icon="i-ph-rocket-launch-duotone"
-          size="xl"
-        >
-          Get started
-        </UButton>
-        <UInput
-          aria-label="Copy code to get started"
-          :model-value="source"
-          name="get-started"
-          disabled
-          autocomplete="off"
-          size="xl"
-          :ui="{ base: 'disabled:cursor-default', icon: { trailing: { pointer: '' } } }"
-        >
-          <template #leading>
-            <UIcon name="i-ph-terminal" />
-          </template>
-          <template #trailing>
-            <UButton
-              aria-label="Copy Code"
-              :color="copied ? 'green' : 'gray'"
-              variant="ghost"
-              :padded="false"
-              :icon="copied ? 'i-ph-check-square-duotone' : 'i-ph-copy-duotone'"
-              @click="copy(source)"
-            />
-          </template>
-        </UInput>
-      </template>
-    </ULandingHero>
     <UContainer>
       <p class="text-center text-sm md:text-base font-semibold text-white">
         Trusted by the best frontend teams
