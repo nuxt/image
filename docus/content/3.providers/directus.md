@@ -40,6 +40,7 @@ export default defineNuxtConfig({
 ```
 
 ## Modifiers
+
 All the default modifiers from [Directus documentation](https://docs.directus.io/reference/files.html#requesting-a-thumbnail) are available.
 
 ```vue

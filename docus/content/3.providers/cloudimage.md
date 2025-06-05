@@ -113,14 +113,9 @@ Beside the [standard modifiers](/usage/nuxt-img#modifiers), also you can pass Cl
 
 Beside the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudimage offers the following for extra resizing params:
 
-* `crop` - Crops the image to specified dimensions (width and height) and keeps proportions.
-
-* `face` - Crops the image automatically keeping the most prominent face.
-
-* `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid color) to keep proportions.
-
-* `cropfit` - Sets crop or fit resize mode depending on the origin and the desired dimensions.
-
-* `bound` - Resizes to a given width and height box and keeps proportions. Similar to fit but without adding padding.
-
-* `boundmin` - Resizes an image while bounding the smaller dimension to the desired width or height while keeping proportions.
+- `crop` - Crops the image to specified dimensions (width and height) and keeps proportions.
+- `face` - Crops the image automatically keeping the most prominent face.
+- `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid color) to keep proportions.
+- `cropfit` - Sets crop or fit resize mode depending on the origin and the desired dimensions.
+- `bound` - Resizes to a given width and height box and keeps proportions. Similar to fit but without adding padding.
+- `boundmin` - Resizes an image while bounding the smaller dimension to the desired width or height while keeping proportions.

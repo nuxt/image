@@ -58,7 +58,7 @@ following options from the [default `fit` behavior](/usage/nuxt-img#fit)
 are supported:
 
 - `cover` - this will behave like the Prepr modifier `crop`, when passed without
-a value (defaults to `centre`)
+  a value (defaults to `centre`)
 
 ::note
 For the time being, other `fit` options are not supported by this provider.
