@@ -1,6 +1,6 @@
 ---
 seo:
-  title: "Nuxt Image: Optimized Images for your Nuxt Apps"
+  title: "Optimized Images for your Nuxt Apps"
   description: Plug-and-play image optimization for Nuxt apps. Resize and
     transform your images using built-in optimizer or your favorite images CDN.
   ogImage: https://image.nuxt.com/social-card.png
