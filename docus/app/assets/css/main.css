@@ -3,7 +3,11 @@
 
 @source "../../../content/**/*";
 @source "../../../node_modules/@larbish/docus/app/**/*";
+@import "tailwindcss";
+@import "@nuxt/ui-pro";
 
+@source "../../../content/**/*";
+@source "../../../node_modules/@larbish/docus/app/**/*";
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 }
