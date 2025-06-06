@@ -4,7 +4,7 @@ export default defineNuxtConfig({
       titleTemplate: '%s - Nuxt Image',
     },
   },
-  css: ['./app/assets/css/main.css'],
+  css: ['../app/assets/css/main.css'],
   site: {
     name: 'Nuxt Image',
   },
