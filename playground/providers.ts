@@ -53,6 +53,7 @@ export const providers: Provider[] = [
     samples: [
       {
         src: '/images/colors.jpg',
+        placeholder: [30],
         from: 'Jeremy Thomas',
         width: 300,
         height: 300,
