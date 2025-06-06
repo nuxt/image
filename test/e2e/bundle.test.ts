@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import process from 'node:process'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { promises as fsp } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { buildNuxt, loadNuxt } from '@nuxt/kit'
@@ -11,7 +11,7 @@ import { isWindows } from 'std-env'
 
 describe.skipIf(process.env.ECOSYSTEM_CI || isWindows)('nuxt image bundle size', () => {
   it('should match snapshot', { timeout: 120_000 }, async () => {
-    const rootDir = fileURLToPath(new URL('../.tmp', import.meta.url))
+    const rootDir = fileURLToPath(pathToFileURL(new URL('../.tmp', import.meta.url).toString()))
     await fsp.rm(rootDir, { recursive: true, force: true })
 
     const [withoutImage, withImage] = await Promise.all([
@@ -34,6 +34,8 @@ async function build(rootDir: string, config: NuxtConfig = {}) {
     ready: true,
     overrides: {
       ssr: false,
+      devtools: { enabled: false },
+      telemetry: false,
       ...config,
     },
   })

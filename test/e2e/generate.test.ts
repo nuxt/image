@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url'
-
 import { describe, it, expect } from 'vitest'
 import { setup, useTestContext } from '@nuxt/test-utils'
 import { useNuxt } from '@nuxt/kit'
@@ -7,7 +5,7 @@ import { resolve } from 'pathe'
 import { glob } from 'tinyglobby'
 
 await setup({
-  rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
+  rootDir: './playground',
   build: true,
   nuxtConfig: {
     image: {
@@ -24,6 +22,8 @@ await setup({
         nuxt.options.nitro.prerender = { routes: ['/provider/ipx'], failOnError: false }
       },
     },
+    devtools: { enabled: false },
+    telemetry: false,
   },
 })
 

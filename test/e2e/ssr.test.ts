@@ -1,14 +1,16 @@
-import { fileURLToPath } from 'node:url'
-
 import { describe, it, expect } from 'vitest'
 import { $fetch, setup, createPage, url, fetch } from '@nuxt/test-utils'
 
 import { providers } from '../../playground/providers'
 
 await setup({
-  rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
+  rootDir: './playground',
   browser: true,
   nuxtConfig: {
+    devtools: {
+      enabled: false,
+    },
+    telemetry: false,
     image: {
       inject: false,
       provider: 'ipx',
@@ -77,7 +79,7 @@ describe('browser (ssr: true)', () => {
   })
 
   it('works with server-side useImage', async () => {
-    expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
+    expect(await $fetch<unknown>('/api/image')).toMatchInlineSnapshot(`
       {
         "format": "webp",
         "url": "/_ipx/f_webp&q_75/image.jpg",

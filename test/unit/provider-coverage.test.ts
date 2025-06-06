@@ -1,5 +1,5 @@
 import { readdir } from 'node:fs/promises'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
 import { providers as playgroundProviders } from '../../playground/providers'
@@ -11,7 +11,7 @@ const missingProviderTests = [
 ]
 
 describe('Provider coverage', async () => {
-  const providers = await readdir(fileURLToPath(new URL('../../src/runtime/providers', import.meta.url)))
+  const providers = await readdir(resolve(__dirname, '../../src/runtime/providers'))
   it.each(providers)('should have tests for %s', (file) => {
     const provider = file.replace(/\.ts$/, '')
     // TODO: remove this once all providers have tests
