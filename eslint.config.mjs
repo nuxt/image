@@ -21,6 +21,12 @@ export default createConfigForNuxt({
     },
   },
   {
+    files: ['docs/**'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/no-invalid-void-type': 'off',
       // TODO: remove this rule

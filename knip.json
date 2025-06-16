@@ -22,27 +22,18 @@
     },
     "docs": {
       "entry": [
-        "{components,layouts,pages,plugins,server}/**",
-        "{app,error}.vue",
-        "*.ts"
+        "app/{components,layouts,pages,plugins,server}/**",
+        "app/{app,error}.vue",
+        "app/*.ts"
       ],
       "ignoreUnresolved": [
         "#content/server"
       ],
       "ignoreDependencies": [
-        "@css-inline/css-inline",
-        "@iconify-json/ph",
-        "@iconify-json/simple-icons",
         "@nuxt/content",
-        "@nuxt/fonts",
-        "@nuxt/image",
         "@nuxt/ui-pro",
-        "@nuxthq/studio",
-        "@nuxtjs/plausible",
-        "ohash",
-        "@vueuse/core",
-        "@vueuse/nuxt",
-        "nuxt-og-image"
+        "@nuxt/image",
+        "tailwindcss"
       ]
     },
     "example": {

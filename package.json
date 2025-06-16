@@ -30,8 +30,8 @@
     "dev:build": "nuxt build playground",
     "dev:generate": "nuxt generate playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare docs",
-    "docs:build": "cd docs && nuxt generate",
-    "docs:dev": "pnpm nuxt dev docs",
+    "docs:build": "pnpm run --filter docs build",
+    "docs:dev": "pnpm run --filter docs dev",
     "lint": "eslint .",
     "prepack": "pnpm build",
     "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
@@ -89,7 +89,7 @@
   "resolutions": {
     "@nuxt/image": "workspace:*",
     "@nuxt/schema": "3.17.5",
-    "@nuxt/ui": "2.22.0",
+    "@types/node": "^22.15.32",
     "vue": "3.5.16"
   },
   "engines": {
