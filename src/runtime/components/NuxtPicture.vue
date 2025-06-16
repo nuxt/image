@@ -24,7 +24,6 @@
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import type { SerializableHead } from '@unhead/vue/types'
 import type { ImgHTMLAttributes } from 'vue'
-import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
@@ -33,6 +32,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 

@@ -1,6 +1,6 @@
 import { computed } from 'vue'
-import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
 import { parseSize } from '.'
+import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
 import { useImage } from '#imports'
 
 export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders> {
