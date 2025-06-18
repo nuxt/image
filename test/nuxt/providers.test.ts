@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
+import { useNuxtApp } from '#imports'
 import ipx from '#image/providers/ipx'
 import none from '#image/providers/none'
 import weserv from '#image/providers/weserv'

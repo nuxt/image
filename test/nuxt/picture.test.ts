@@ -2,7 +2,7 @@ import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
-import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
 import { imageOptions } from '#build/image-options.mjs'
 import { createImage } from '#image'
 
@@ -188,6 +188,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .format, single entry, no prop.format => module config applies', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -211,6 +212,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .format, multiple entries, no prop.format => module config applies', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -235,6 +237,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .format, multiple entries, prop.format override => prop is used (takes precedence)', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -259,6 +262,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .format, multiple entries, no prop.format, svg image => renders src with svg only', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -278,6 +282,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .quality applies', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
