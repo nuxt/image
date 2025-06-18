@@ -1,5 +1,6 @@
 import { joinURL, encodePath } from 'ufo'
 import { defineProvider, createOperationsGenerator } from '#image'
+import { useRuntimeConfig } from '#imports'
 
 const operationsGenerator = createOperationsGenerator({
   joinWith: '/',
