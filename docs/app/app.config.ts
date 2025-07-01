@@ -16,6 +16,9 @@ export default defineAppConfig({
       },
     },
   },
+  github: {
+    rootDir: 'docs',
+  },
   socials: {
     nuxt: 'https://nuxt.com',
     x: 'https://x.com/nuxt_js',
