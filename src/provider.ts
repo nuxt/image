@@ -38,6 +38,7 @@ export const BuiltInProviders = [
   'none',
   'prismic',
   'sanity',
+  'shopify',
   'storyblok',
   'strapi',
   'strapi5',
