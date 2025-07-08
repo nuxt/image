@@ -746,6 +746,90 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Shopify
+  {
+    name: 'shopify',
+    samples: [
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 300,
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          padColor: 'ff0000',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          crop: 'center',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'top',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'bottom',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'left',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'right',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        modifiers: {
+          crop: 'region',
+          cropLeft: 100,
+          cropTop: 100,
+          cropWidth: 450,
+          cropHeight: 300,
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        format: 'png',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        quality: 1,
+      },
+    ],
+  },
   // Strapi
   {
     name: 'strapi',
