@@ -1,14 +1,29 @@
-import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { defineVitestProject } from '@nuxt/test-utils/config'
+import { defaultExclude, defineConfig } from 'vitest/config'
 
-export default defineVitestConfig({
+export default defineConfig({
   test: {
-    environmentOptions: {
-      nuxt: {
-        overrides: {
-          modules: ['@nuxt/image'],
+    projects: [
+      {
+        test: {
+          name: 'unit',
+          exclude: ['test/nuxt/**', ...defaultExclude],
         },
       },
-    },
+      defineVitestProject({
+        test: {
+          name: 'nuxt',
+          include: ['test/nuxt/**'],
+          environmentOptions: {
+            nuxt: {
+              overrides: {
+                modules: ['@nuxt/image'],
+              },
+            },
+          },
+        },
+      }),
+    ],
     coverage: {
       exclude: [
         '**virtual**',

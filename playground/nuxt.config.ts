@@ -96,6 +96,9 @@ export default defineNuxtConfig({
     sanity: {
       projectId: 'zp7mbokg',
     },
+    shopify: {
+      baseURL: 'https://cdn.shopify.com/',
+    },
     strapi: {
       baseURL: 'http://localhost:1337/uploads/',
     },

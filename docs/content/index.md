@@ -156,6 +156,7 @@ orientation: horizontal
     - prepr
     - prismic
     - sanity
+    - shopify
     - storyblok
     - strapi
     - twicpics

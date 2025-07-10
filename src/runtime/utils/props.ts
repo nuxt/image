@@ -1,6 +1,7 @@
 import { computed } from 'vue'
-import { parseSize } from '.'
+
 import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
+import { parseSize } from '.'
 import { useImage } from '#imports'
 
 export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders> {
@@ -12,8 +13,8 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   quality?: string | number
   background?: string
   fit?: string
-  modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>> &
-    ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
+  modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
+    & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
 
   // options
   preset?: string

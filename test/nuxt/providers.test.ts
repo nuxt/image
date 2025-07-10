@@ -23,6 +23,7 @@ import netlifyImageCdn from '#image/providers/netlifyImageCdn'
 import netlifyLargeMedia from '#image/providers/netlifyLargeMedia'
 import prismic from '#image/providers/prismic'
 import sanity from '#image/providers/sanity'
+import shopify from '#image/providers/shopify'
 import contentful from '#image/providers/contentful'
 import cloudimage from '#image/providers/cloudimage'
 import storyblok from '#image/providers/storyblok'
@@ -434,6 +435,20 @@ describe('Providers', () => {
       const [, modifiers] = image.args
       const generated = sanity().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.sanity)
+    }
+  })
+
+  it('shopify', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = shopify().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.shopify)
     }
   })
 
