@@ -54,7 +54,7 @@ const emit = defineEmits<{
 const _attrs = useAttrs()
 const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding', 'nonce'])
 const attrs = computed(() => {
-  const attrs: Record<string, Record<string, unknown>> = {
+  const attrs: Record<'img' | 'picture', Record<string, unknown>> = {
     img: {
       ...normalizedAttrs.value,
       ...props.imgAttrs,
