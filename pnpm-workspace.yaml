@@ -2,9 +2,14 @@ packages:
   - docs
   - example
   - playground
-onlyBuiltDependencies:
-  - sharp
+
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
+  - unrs-resolver
   - vue-demi
+
+onlyBuiltDependencies:
+  - oxc-resolver
+  - better-sqlite3
+  - sharp
