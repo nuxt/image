@@ -131,7 +131,7 @@ export default defineProvider<CloudinaryOptions>({
     // Note: Non-remote images will pass into this function if the baseURL is not using a sub directory
     if (remoteFolderMapping && remoteFolderMapping?.length >= 1) {
     // need to do some weird logic to get the remote folder after image/upload after the operations and before the src
-      const remoteFolder = remoteFolderMapping[1]
+      const remoteFolder = remoteFolderMapping[1]!
       const baseURLWithoutRemoteFolder = baseURL.replace(remoteFolder, '')
 
       return {
