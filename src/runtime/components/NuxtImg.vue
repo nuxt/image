@@ -132,6 +132,9 @@ if (import.meta.server && import.meta.prerender) {
 
 const initialLoad = useNuxtApp().isHydrating
 const imgEl = useTemplateRef('imgEl')
+
+defineExpose({ imgEl })
+
 onMounted(() => {
   if (placeholder.value || props.custom) {
     const img = new Image()
