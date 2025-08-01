@@ -107,7 +107,7 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
         export {}
         `
       },
-    }, { nitro: true, nuxt: true })
+    }, { nitro: true, nuxt: true, node: true, shared: true })
 
     // Run setup
     for (const p of providers) {
