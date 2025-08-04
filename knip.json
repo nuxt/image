@@ -44,9 +44,9 @@
     },
     "playground": {
       "entry": [
-        "providers/custom/index.ts",
-        "{components,layouts,pages,plugins,server}/**",
-        "{app,error}.vue",
+        "app/providers/custom/index.ts",
+        "app/{components,layouts,pages,plugins,server}/**",
+        "app/{app,error}.vue",
         "layers/**",
         "*.ts"
       ]

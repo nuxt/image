@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
 import { useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
 import { imageOptions } from '#build/image-options.mjs'
-import { createImage } from '#image'
+import { createImage } from '@nuxt/image/runtime'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
