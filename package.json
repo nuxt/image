@@ -12,7 +12,8 @@
   "type": "module",
   "exports": {
     ".": "./dist/module.js",
-    "./runtime": "./dist/runtime/index.js"
+    "./runtime": "./dist/runtime/index.js",
+    "./runtime/providers/*": "./dist/runtime/providers/*.js"
   },
   "main": "./dist/module.js",
   "typesVersions": {
