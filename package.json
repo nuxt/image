@@ -11,13 +11,17 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./dist/module.js"
+    ".": "./dist/module.js",
+    "./runtime": "./dist/runtime/index.js"
   },
   "main": "./dist/module.js",
   "typesVersions": {
     "*": {
       ".": [
         "./dist/module.d.ts"
+      ],
+      "./runtime": [
+        "./dist/runtime/index.d.ts"
       ]
     }
   },

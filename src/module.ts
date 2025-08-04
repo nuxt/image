@@ -116,11 +116,6 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
       }
     }
 
-    // Transpile and alias runtime
-    const runtimeDir = resolver.resolve('./runtime')
-    nuxt.options.alias['#image'] = runtimeDir
-    nuxt.options.build.transpile.push(runtimeDir)
-
     addImports({
       name: 'useImage',
       from: resolver.resolve('runtime/composables'),

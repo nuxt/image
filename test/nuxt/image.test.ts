@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
-import { createImage } from '#image'
+import { createImage } from '@nuxt/image/runtime'
 import { h, nextTick, useNuxtApp, useRuntimeConfig } from '#imports'
 
 describe('Renders simple image', () => {
