@@ -1,5 +1,5 @@
 import { joinURL, parseURL, withTrailingSlash } from 'ufo'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 type ImageOptimizations = {
   width?: number

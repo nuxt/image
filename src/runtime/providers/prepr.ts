@@ -1,6 +1,7 @@
 import { joinURL } from 'ufo'
 
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 interface PreprImageOptions {
   projectName: string

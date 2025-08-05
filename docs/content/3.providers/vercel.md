@@ -12,7 +12,7 @@ When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, 
 
 This provider will be enabled by default in Vercel deployments.
 
-::callout{icon="i-heroicons-exclamation-triangle" color="amber"}
+::warning
 Vercel requires you to explicitly list all the widths used in your app. [See example below.](#sizes)
 ::
 
@@ -36,7 +36,7 @@ You need to specify **every custom width** used in `<NuxtImg>`, `<NuxtPicture>` 
 
 If a width is not defined, image will fallback to the next bigger width.
 
-::callout{icon="i-heroicons-light-bulb"}
+::tip
 Don't forget to also take into account [`densities`](/get-started/configuration#densities).
 ::
 

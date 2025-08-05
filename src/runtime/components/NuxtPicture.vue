@@ -24,7 +24,6 @@
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import type { SerializableHead } from '@unhead/vue/types'
 import type { ImgHTMLAttributes } from 'vue'
-import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
@@ -33,6 +32,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
@@ -54,7 +54,7 @@ const emit = defineEmits<{
 const _attrs = useAttrs()
 const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding', 'nonce'])
 const attrs = computed(() => {
-  const attrs: Record<string, Record<string, unknown>> = {
+  const attrs: Record<'img' | 'picture', Record<string, unknown>> = {
     img: {
       ...normalizedAttrs.value,
       ...props.imgAttrs,

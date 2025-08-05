@@ -22,7 +22,7 @@ export default defineNuxtConfig({
 })
 ```
 
-> You can get [URL-endpoint](https://docs.imagekit.io/integration/url-endpoints#default-url-endpoint) from your ImageKit dashboard - [https://imagekit.io/dashboard#url-endpoints](https://imagekit.io/dashboard#url-endpoints).
+> You can get [URL-endpoint](https://docs.imagekit.io/integration/url-endpoints#default-url-endpoint) from your ImageKit dashboard - <https://imagekit.io/dashboard#url-endpoints>.
 
 ## ImageKit `fit` Parameters
 

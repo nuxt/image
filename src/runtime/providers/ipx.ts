@@ -1,7 +1,8 @@
 import { joinURL, encodePath, encodeParam } from 'ufo'
-import type { ImageModifiers } from '@nuxt/image'
 import type { IPXRuntimeConfig } from '../../ipx'
-import { defineProvider, createOperationsGenerator } from '#image'
+import type { ImageModifiers } from '@nuxt/image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 // Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
 // TODO: https://github.com/unjs/ipx/issues/199
@@ -17,6 +18,7 @@ export interface IPXModifiers extends Omit<ImageModifiers, 'fit' | 'format' | 'b
   trim: number | string
   extend: string
   extract: string
+  crop: string
   rotate: number | string
   flip: true | 'true'
   flop: true | 'true'
@@ -41,12 +43,12 @@ export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'f',
-    fit: 'fit',
     width: 'w',
     height: 'h',
     resize: 's',
     quality: 'q',
     background: 'b',
+    position: 'pos',
   },
   formatter: (key, val: string | number | boolean) => encodeParam(key) + '_' + encodeParam(val.toString()),
 })
