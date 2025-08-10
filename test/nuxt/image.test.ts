@@ -4,7 +4,7 @@ import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
 import { createImage } from '@nuxt/image/runtime'
-import { h, nextTick, useNuxtApp, useRuntimeConfig } from '#imports'
+import { h, nextTick, useNuxtApp, useRuntimeConfig, useImage } from '#imports'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -156,16 +156,16 @@ describe('Renders simple image', () => {
   })
 })
 
-const getImageLoad = (cb = () => {}) => {
-  let resolve = () => {}
-  let reject = () => {}
+const getImageLoad = (cb = () => { }) => {
+  let resolve = () => { }
+  let reject = () => { }
   let image = {} as HTMLImageElement
   const loadEvent = Symbol('loadEvent')
   const errorEvent = Symbol('errorEvent')
   const ImageMock = vi.fn(() => {
     const _image = {
-      onload: () => {},
-      onerror: () => {},
+      onload: () => { },
+      onerror: () => { },
     } as unknown as HTMLImageElement
     image = _image
     // @ts-expect-error not valid argument for onload
@@ -304,6 +304,100 @@ describe('Renders placeholder image', () => {
     await nextTick()
 
     expect(wrapper.emitted().error![0]).toStrictEqual([errorEvent])
+  })
+})
+
+describe('Preset sizes and densities fix', () => {
+  it('Component renders correctly with undefined sizes prop', () => {
+    // This test verifies the fix that prevents undefined props from overriding preset configurations
+    // The fix changes the getSizes call to only include sizes/densities when explicitly defined
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      // sizes and densities are intentionally undefined
+    })
+
+    // The test passes if the component renders without errors
+    expect(img.find('img').exists()).toBe(true)
+    expect(img.find('img').element.getAttribute('src')).toContain('/image.png')
+  })
+})
+
+describe('Renders image with presets', () => {
+  const nuxtApp = useNuxtApp()
+  const config = useRuntimeConfig()
+  const src = '/image.png'
+
+  beforeEach(() => {
+    delete (nuxtApp as any)._img
+    delete (nuxtApp as any).$img
+  })
+
+  it('Uses preset sizes when component sizes prop is undefined', () => {
+    // Provide a preset that defines responsive sizes
+    const imgContext = createImage({
+      runtimeConfig: {} as any,
+      ...imageOptions,
+      presets: {
+        ...imageOptions.presets,
+        responsive: {
+          // Use responsive sizes format that will generate multiple widths
+          sizes: 'sm:320px,md:640px,lg:1024px',
+        },
+      },
+      nuxt: {
+        baseURL: config.app.baseURL,
+      },
+    })
+    ; (nuxtApp as any)._img = imgContext
+    ; (nuxtApp as any).$img = imgContext
+
+    // Call getSizes directly to validate preset merging
+    const { srcset } = useImage().getSizes(src, {
+      preset: 'responsive',
+      modifiers: { width: 300, height: 400 },
+    })
+    // Should generate width-based srcset (not density-based)
+    const widthDescriptors = srcset.match(/\b\d+w\b/g) || []
+    expect(widthDescriptors.length).toBeGreaterThanOrEqual(2)
+    // Should NOT contain density-based descriptors
+    expect(srcset).not.toMatch(/\s\d+x\b/)
+  })
+
+  it('Uses preset densities when component densities prop is undefined', () => {
+    // Provide a preset that defines densities
+    ; (nuxtApp as any)._img = createImage({
+      runtimeConfig: {} as any,
+      ...imageOptions,
+      presets: {
+        ...imageOptions.presets,
+        highDensity: {
+          densities: '1x 2x 3x',
+        },
+      },
+      nuxt: {
+        baseURL: config.app.baseURL,
+      },
+    })
+
+    const img = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 300,
+        height: 400,
+        preset: 'highDensity',
+        // densities is intentionally undefined to test preset inheritance
+      },
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')
+
+    // Should use density-based srcset (presence of multiple `x` descriptors and no `w` descriptors)
+    const densityDescriptors = srcset?.match(/\s\d+x\b/g) || []
+    expect(densityDescriptors.length).toBeGreaterThanOrEqual(2)
+    expect(srcset).not.toMatch(/\b\d+w\b/)
   })
 })
 

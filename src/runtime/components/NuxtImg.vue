@@ -49,8 +49,8 @@ const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props
 
 const sizes = computed(() => $img.getSizes(props.src!, {
   ...providerOptions.value,
-  sizes: props.sizes,
-  densities: props.densities,
+  ...(props.sizes !== undefined ? { sizes: props.sizes } : {}),
+  ...(props.densities !== undefined ? { densities: props.densities } : {}),
   modifiers: imageModifiers.value,
 }))
 
