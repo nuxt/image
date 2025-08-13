@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { useImage } from '#imports'
 
 describe('image helper', () => {
   it.skip('Generate placeholder', async () => {

@@ -107,7 +107,7 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
         export {}
         `
       },
-    }, { nitro: true, nuxt: true })
+    }, { nitro: true, nuxt: true, node: true, shared: true })
 
     // Run setup
     for (const p of providers) {
@@ -115,11 +115,6 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
         await p.setup(p, options, nuxt)
       }
     }
-
-    // Transpile and alias runtime
-    const runtimeDir = resolver.resolve('./runtime')
-    nuxt.options.alias['#image'] = runtimeDir
-    nuxt.options.build.transpile.push(runtimeDir)
 
     addImports({
       name: 'useImage',

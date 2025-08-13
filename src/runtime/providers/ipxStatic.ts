@@ -1,7 +1,7 @@
 import { joinURL, encodePath } from 'ufo'
 import { operationsGenerator } from './ipx'
 import type { IPXOptions } from './ipx'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 export default defineProvider<Partial<IPXOptions>>({
   validateDomains: true,

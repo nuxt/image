@@ -19,13 +19,13 @@
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
-import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useImage } from '../composables'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 

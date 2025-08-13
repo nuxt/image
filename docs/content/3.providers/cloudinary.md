@@ -10,7 +10,7 @@ links:
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.
 
-::callout
+::tip
 If you are looking for more advanced Cloudinary usage or prebuilt components like VideoPlayer, OgImage or ProductGallery, check out Cloudinary module for Nuxt by visiting module [documentation](https://cloudinary.nuxtjs.org) or GitHub [repository](https://github.com/nuxt-modules/cloudinary)
 ::
 
@@ -82,11 +82,11 @@ Note: You will need to configure your 'Auto upload mapping' to do the above.
 
 Beside the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
 
-* `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
-* `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
-* `coverLimit` - Same as the `cover` mode but only if the original image is **larger** than the given limit (width and height)
-* `thumbnail`- Generate a thumbnail using face detection.
-* `cropping` - Used to extract a given width & height out of the original image. The original proportions are retained.
+- `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
+- `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
+- `coverLimit` - Same as the `cover` mode but only if the original image is **larger** than the given limit (width and height)
+- `thumbnail`- Generate a thumbnail using face detection.
+- `cropping` - Used to extract a given width & height out of the original image. The original proportions are retained.
 
 Check out [Cloudinary resize mode Documentation](https://cloudinary.com/documentation/image_transformation_reference#crop_parameter) for more details.
 
@@ -94,7 +94,7 @@ Check out [Cloudinary resize mode Documentation](https://cloudinary.com/document
 
 Beside the [standard modifiers](/usage/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
 
-::callout
+::note
 The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
 ::
 
@@ -102,8 +102,8 @@ The Cloudinary provider automatically enables [automatic format selection](https
 
 Accepted values:
 
-* Any degree number, or
-* `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
+- Any degree number, or
+- `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
 
 To rotate or flip a given asset by certain degrees, or automatically based on orientation.
 
@@ -111,9 +111,9 @@ To rotate or flip a given asset by certain degrees, or automatically based on or
 
 Round the specified corners of the desired image. If pass only a number or `max` (all corners will be applied). The syntax for other use cases is as below:
 
-* Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
-* Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
-* Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
+- Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
+- Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
+- Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
 
 ```vue
 <NuxtImg
@@ -273,6 +273,6 @@ To define the density number when converting a vector file to image format.
 
 To crop or resize the asset to a new aspect ratio, for use with a crop/resize mode that determines how the asset is adjusted to the new dimensions.
 
-::callout
+::tip
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
 ::

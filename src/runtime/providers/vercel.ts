@@ -1,5 +1,5 @@
 import { stringifyQuery } from 'ufo'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 // https://vercel.com/docs/build-output-api/v3/configuration#images
 

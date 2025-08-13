@@ -52,7 +52,7 @@ In addition to the values specified in the Sanity docs, which are respected, the
 - `outside` - this will behave like the Sanity modifier `max`
 - `fill` - this will behave like the Sanity modifier `scale`
 
-::callout
+::tip
 For compatibility with other providers, `fit: fill` is equivalent to the Sanity parameter `?fit=scale`. If you need the Sanity `?fit=fill` behavior, use `fit: contain` instead.
 ::
 

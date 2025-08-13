@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
+import { createImage } from './image'
 import type { $Img } from '@nuxt/image'
 
-import { createImage } from './image'
 import { imageOptions } from '#build/image-options.mjs'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 

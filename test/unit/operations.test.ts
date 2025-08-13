@@ -1,6 +1,6 @@
 import { encodeParam } from 'ufo'
 import { describe, expect, it } from 'vitest'
-import { createOperationsGenerator } from '~/src/runtime'
+import { createOperationsGenerator } from '../../src/runtime'
 
 describe('operations generator', () => {
   const operationsGenerator = createOperationsGenerator({
