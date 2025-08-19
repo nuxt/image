@@ -104,20 +104,17 @@ const mainSrc = computed(() =>
 const src = computed(() => placeholder.value || mainSrc.value)
 
 if (import.meta.server && props.preload) {
-  const isResponsive = Object.values(sizes.value).every(v => v)
+  const hasMultipleDensities = sizes.value.srcset.includes('x, ')
+  const isResponsive = hasMultipleDensities || !!sizes.value.sizes
 
   useHead({
     link: [{
       rel: 'preload',
       as: 'image',
       nonce: props.nonce,
-      ...(!isResponsive
-        ? { href: src.value }
-        : {
-            href: sizes.value.src,
-            imagesizes: sizes.value.sizes,
-            imagesrcset: sizes.value.srcset,
-          }),
+      href: isResponsive ? sizes.value.src : src.value,
+      ...(sizes.value.sizes && { imagesizes: sizes.value.sizes }),
+      ...(hasMultipleDensities && { imagesrcset: sizes.value.srcset }),
       ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }
         : {}),
