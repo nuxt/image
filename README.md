@@ -23,6 +23,14 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 - Optimize using modern formats such as webp and avif
 - [... and more](https://image.nuxtjs.org)
 
+### Installation
+
+Install `@nuxt/image` dependency to your project:
+
+```sh
+npx nuxi@latest module add image
+```
+
 ## Nuxt 2
 
 **Note:** This branch is for **Nuxt 3** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
