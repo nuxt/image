@@ -28,7 +28,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 Install `@nuxt/image` dependency to your project:
 
 ```sh
-npx nuxi@latest module add image
+npx nuxt module add image
 ```
 
 ## Nuxt 2
