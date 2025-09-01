@@ -35,7 +35,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const publicDirs = nuxt.options._layers.map((layer) => {
     const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
     const srcDir = isRootLayer ? nuxt.options.srcDir : layer.config.srcDir
-    const path = isRootLayer ? moduleOptions.dir : layer.config.dir?.public || 'public'
+    const path = layer?.config.image?.dir || layer.config.dir?.public || 'public'
 
     return resolve(srcDir, path)
   }).filter(dir => existsSync(dir))
