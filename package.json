@@ -11,7 +11,9 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./dist/module.mjs"
+    ".": "./dist/module.mjs",
+    "./runtime": "./dist/runtime/index.js",
+    "./runtime/providers/*": "./dist/runtime/providers/*.js"
   },
   "main": "./dist/module.mjs",
   "typesVersions": {
