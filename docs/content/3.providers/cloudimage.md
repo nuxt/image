@@ -10,14 +10,14 @@ links:
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.
 
-To use this provider you need to specify your Cloudimage `token` and the `baseURL` of your image storage.
+To use this provider you need to specify either your Cloudimage `token` (with optional `apiVersion`) or a full `cdnURL`. The `baseURL` of your image storage is optional and is only used when the passed `src` is not an absolute URL.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudimage: {
       token: 'your_cloudimage_token',
-      baseURL: 'origin_image_url' // or alias
+      baseURL: 'origin_image_url' // or alias (optional)
     }
   }
 })
@@ -33,9 +33,9 @@ Your Cloudimage customer token. [Register](https://www.cloudimage.io/en/register
 
 ### `baseURL`
 
-- Type: **String** (required)
+- Type: **String** (optional)
 
-Your origin image URL or storage alias that allows to shorten your origin image URLs.
+Your origin image URL or storage alias that allows to shorten your origin image URLs. If not provided, the `src` will be joined directly with the computed `cdnURL`.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -93,7 +93,7 @@ export default defineNuxtConfig({
 - Type: **String**
 - Default: `https://{token}.cloudimg.io/{apiVersion}`
 
-Replaces the dynamically built URL
+Replaces the dynamically built URL. Useful when you prefer not to provide a `token` or need a custom CDN hostname.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -104,6 +104,8 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+When only `cdnURL` is provided and `baseURL` is omitted, relative sources are resolved directly against the CDN URL, for example `src: '/test.png'` becomes `https://demo.cloudimg.io/v7/test.png`.
 
 ## Cloudimage Modifiers
 

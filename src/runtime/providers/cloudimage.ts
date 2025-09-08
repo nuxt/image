@@ -20,9 +20,9 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 interface CloudimageOptions {
-  baseURL: string
   token: string
   apiVersion?: string
+  baseURL?: string
   cdnURL?: string
 }
 
@@ -41,10 +41,6 @@ export default defineProvider<CloudimageOptions>({
     if (import.meta.dev) {
       const warning = []
 
-      if (!baseURL) {
-        warning.push('<baseURL>')
-      }
-
       if (!token && !cdnURL) {
         warning.push('<token> or <cdnURL>')
       }
@@ -61,9 +57,9 @@ export default defineProvider<CloudimageOptions>({
       cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
     }
 
-    if (hasProtocol(src)) {
+    if (hasProtocol(src) || !baseURL) {
       return {
-        url: joinURL(src) + query,
+        url: joinURL(cdnURL, src) + query,
       }
     }
 
