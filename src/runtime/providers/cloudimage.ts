@@ -34,7 +34,7 @@ export default defineProvider<CloudimageOptions>({
     token = '',
     apiVersion = '',
     cdnURL = '',
-  }) => {
+  }, ctx) => {
     const operations = operationsGenerator(modifiers)
     const query = (operations ? ('?' + operations) : '')
 
@@ -57,10 +57,14 @@ export default defineProvider<CloudimageOptions>({
       cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
     }
 
-    if (hasProtocol(src) || !baseURL) {
+    if (hasProtocol(src)) {
       return {
         url: joinURL(cdnURL, src) + query,
       }
+    }
+
+    if (!baseURL) {
+      baseURL = ctx.options.nuxt.baseURL
     }
 
     return {

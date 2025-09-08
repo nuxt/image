@@ -10,7 +10,7 @@ links:
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.
 
-To use this provider you need to specify either your Cloudimage `token` (with optional `apiVersion`) or a full `cdnURL`. The `baseURL` of your image storage is optional and is only used when the passed `src` is not an absolute URL.
+To use this provider you need to specify either your Cloudimage `token` (with optional `apiVersion`) or a full `cdnURL`. The `baseURL` of your image storage is optional and is only used when the passed `src` is not an absolute URL. When using absolute URLs, the provider will use the `cdnURL` directly without prepending the `baseURL`.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -35,7 +35,7 @@ Your Cloudimage customer token. [Register](https://www.cloudimage.io/en/register
 
 - Type: **String** (optional)
 
-Your origin image URL or storage alias that allows to shorten your origin image URLs. If not provided, the `src` will be joined directly with the computed `cdnURL`.
+Your origin image URL or storage alias that allows to shorten your origin image URLs. If not provided, the provider will fall back to base App URL for relative URLs, or use the `cdnURL` directly for absolute URLs.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -105,7 +105,40 @@ export default defineNuxtConfig({
 })
 ```
 
-When only `cdnURL` is provided and `baseURL` is omitted, relative sources are resolved directly against the CDN URL, for example `src: '/test.png'` becomes `https://demo.cloudimg.io/v7/test.png`.
+When only `cdnURL` is provided and `baseURL` is omitted, relative sources will fallback to the website's base URL, for example `src: '/test.png'` becomes `https://demo.cloudimg.io/v7/{website-base-url}/test.png`. When using absolute URLs with `cdnURL`, the provider will use the CDN URL directly without prepending any base URL.
+
+### Examples
+
+**Using absolute URLs with cdnURL:**
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      cdnURL: 'https://demo.cloudimg.io/v7'
+    }
+  }
+})
+```
+
+With this configuration:
+
+- `src: 'https://example.com/image.jpg'` becomes `https://demo.cloudimg.io/v7/https://example.com/image.jpg`
+- `src: '/local/image.jpg'` becomes `https://demo.cloudimg.io/v7/{website-base-url}/local/image.jpg`
+
+**Using token with automatic baseURL fallback:**
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      token: 'demo',
+      apiVersion: 'v7'
+      // baseURL will automatically fall back to the website's base URL
+    }
+  }
+})
+```
 
 ## Cloudimage Modifiers
 
