@@ -59,6 +59,20 @@ export const providers: Provider[] = [
         link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
       },
       {
+        src: '/images/colors-layer.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
+      },
+      {
+        src: '/images/colors-layer-config.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
+      },
+      {
         src: '/images/everest.jpg',
         from: 'Mount Everest Wikipedia page (alias)',
         width: 300,
