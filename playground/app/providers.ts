@@ -221,6 +221,7 @@ export const providers: Provider[] = [
         width: 500,
         height: 500,
         fit: 'contain',
+        placeholder: true,
       },
       {
         src: 'boat.jpg',
