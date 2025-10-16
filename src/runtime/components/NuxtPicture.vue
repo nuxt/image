@@ -110,8 +110,8 @@ const sources = computed<Source[]>(() => {
   return formats.map((format) => {
     const { srcset, sizes, src } = $img.getSizes(props.src!, {
       ...providerOptions.value,
-      sizes: props.sizes || $img.options.screens,
-      densities: props.densities,
+      ...(props.sizes !== undefined ? { sizes: props.sizes } : {}),
+      ...(props.densities !== undefined ? { densities: props.densities } : {}),
       modifiers: { ...imageModifiers.value, format },
     })
 
@@ -120,27 +120,29 @@ const sources = computed<Source[]>(() => {
 })
 
 if (import.meta.server && props.preload) {
-  useHead({ link: () => {
-    const firstSource = sources.value[0]
-    if (!firstSource) {
-      return []
-    }
+  useHead({
+    link: () => {
+      const firstSource = sources.value[0]
+      if (!firstSource) {
+        return []
+      }
 
-    const link: NonNullable<SerializableHead['link']>[number] = {
-      rel: 'preload',
-      as: 'image',
-      imagesrcset: firstSource.srcset,
-      nonce: props.nonce,
-      ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
-        ? { fetchpriority: props.preload.fetchPriority }
-        : {}),
-    }
+      const link: NonNullable<SerializableHead['link']>[number] = {
+        rel: 'preload',
+        as: 'image',
+        imagesrcset: firstSource.srcset,
+        nonce: props.nonce,
+        ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
+          ? { fetchpriority: props.preload.fetchPriority }
+          : {}),
+      }
 
-    if (sources.value?.[0]?.sizes) {
-      link.imagesizes = sources.value[0].sizes
-    }
-    return [link]
-  } })
+      if (sources.value?.[0]?.sizes) {
+        link.imagesizes = sources.value[0].sizes
+      }
+      return [link]
+    },
+  })
 }
 
 // Prerender static images
@@ -153,7 +155,7 @@ if (import.meta.server && import.meta.prerender) {
 const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
-const imgEl = useTemplateRef('imgEl')
+const imgEl = useTemplateRef<HTMLImageElement>('imgEl')
 onMounted(() => {
   const el = Array.isArray(imgEl.value) ? imgEl.value[0] as HTMLImageElement | undefined : imgEl.value
   if (!el) {
