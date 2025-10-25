@@ -321,6 +321,24 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // GitHub
+  {
+    name: 'github',
+    samples: [
+      {
+        src: 'npm',
+        width: 50,
+        height: 50,
+      },
+      {
+        src: 'nuxt',
+        width: 50,
+        height: 100,
+      }, {
+        src: 'unjs',
+      },
+    ],
+  },
   // gumlet
   {
     name: 'gumlet',
