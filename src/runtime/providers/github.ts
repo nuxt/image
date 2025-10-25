@@ -8,7 +8,7 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 interface GitHubOptions {
-  baseURL: string
+  baseURL?: string
 }
 
 export default defineProvider<GitHubOptions>({
