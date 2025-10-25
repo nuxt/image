@@ -334,7 +334,8 @@ export const providers: Provider[] = [
         src: 'nuxt',
         width: 50,
         height: 100,
-      }, {
+      }, 
+      {
         src: 'unjs',
       },
     ],
