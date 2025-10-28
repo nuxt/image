@@ -3,7 +3,8 @@ import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
-import { createImage } from '#image'
+import { createImage } from '@nuxt/image/runtime'
+import { h, nextTick, useNuxtApp, useRuntimeConfig } from '#imports'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -152,6 +153,17 @@ describe('Renders simple image', () => {
     })
     const domNonce = img.element.getAttribute('nonce')
     expect(domNonce).toBe('stub-nonce')
+  })
+
+  it('can access imgEl underlying img HTMLImageElement', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      nonce: 'stub-nonce',
+    })
+    expect(img.getCurrentComponent().exposed?.imgEl).toBeDefined()
+    expect(img.getCurrentComponent().exposed?.imgEl.value).toBeInstanceOf(HTMLImageElement)
   })
 })
 
@@ -317,6 +329,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .quality applies', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -336,6 +349,7 @@ describe('Renders image, applies module config', () => {
 
   it('Module config .quality + props.quality => props.quality applies', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
@@ -356,6 +370,7 @@ describe('Renders image, applies module config', () => {
 
   it('Without quality config => default image', () => {
     nuxtApp._img = createImage({
+      runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,

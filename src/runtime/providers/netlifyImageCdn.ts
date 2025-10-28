@@ -1,4 +1,5 @@
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 // https://docs.netlify.com/image-cdn/overview/
 const operationsGenerator = createOperationsGenerator({

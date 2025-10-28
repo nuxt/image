@@ -1,5 +1,6 @@
 import { encodeQueryItem, joinURL } from 'ufo'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

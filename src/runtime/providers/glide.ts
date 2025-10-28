@@ -1,7 +1,8 @@
 // https://glide.thephpleague.com/2.0/api/quick-reference/
 
 import { joinURL, encodePath, withBase } from 'ufo'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {

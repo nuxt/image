@@ -5,7 +5,8 @@ import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'
-import { provider, type ProviderName } from 'std-env'
+import { provider } from 'std-env'
+import type { ProviderName } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup, ConfiguredImageProviders } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
@@ -23,6 +24,7 @@ export const BuiltInProviders = [
   'directus',
   'fastly',
   'filerobot',
+  'github',
   'glide',
   'gumlet',
   'hygraph',
@@ -38,6 +40,7 @@ export const BuiltInProviders = [
   'none',
   'prismic',
   'sanity',
+  'shopify',
   'storyblok',
   'strapi',
   'strapi5',

@@ -1,6 +1,6 @@
 import type { ImageProviders } from '@nuxt/image'
 
-export interface Provider {
+interface Provider {
   name: keyof ImageProviders
   samples: {
     src: string
@@ -318,6 +318,25 @@ export const providers: Provider[] = [
           focus: 'face',
           radius: 'max',
         },
+      },
+    ],
+  },
+  // GitHub
+  {
+    name: 'github',
+    samples: [
+      {
+        src: 'npm',
+        width: 50,
+        height: 50,
+      },
+      {
+        src: 'nuxt',
+        width: 50,
+        height: 100,
+      },
+      {
+        src: 'unjs',
       },
     ],
   },
@@ -743,6 +762,90 @@ export const providers: Provider[] = [
             y: 0.32778302629507167,
           },
         },
+      },
+    ],
+  },
+  // Shopify
+  {
+    name: 'shopify',
+    samples: [
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 300,
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          padColor: 'ff0000',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          crop: 'center',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'top',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'bottom',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'left',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'right',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        modifiers: {
+          crop: 'region',
+          cropLeft: 100,
+          cropTop: 100,
+          cropWidth: 450,
+          cropHeight: 300,
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        format: 'png',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        quality: 1,
       },
     ],
   },

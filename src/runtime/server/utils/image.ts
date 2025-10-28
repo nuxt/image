@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
 
-import type { Img, ConfiguredImageProviders } from '@nuxt/image'
 import { createImage } from '../../image'
+import type { Img, ConfiguredImageProviders } from '@nuxt/image'
 
 // @ts-expect-error virtual file
 import { imageOptions } from '#internal/nuxt-image'

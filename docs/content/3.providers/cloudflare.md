@@ -10,7 +10,7 @@ links:
 
 Integration between [Cloudflare](https://developers.cloudflare.com/images) and the image module.
 
-::callout{icon="i-heroicons-exclamation-triangle" color="amber"}
+::warning
 Before using this provider, make sure to enable **Image Transformations** for your domain in the Cloudflare dashboard at `Images > Transformations`. If you plan to use images from external domains, also enable 'Resize Image from Any Origin'.
 ::
 
