@@ -17,6 +17,15 @@
       @load="isLoadedLayer = true"
     />
     <p>Received onLoad event: {{ isLoadedLayer }}</p>
+
+    <h1>Layer with dir config</h1>
+    <nuxt-img
+      src="/images/colors-layer-config.jpg"
+      width="500"
+      height="500"
+      @load="isLoadedLayerWithConfig = true"
+    />
+    <p>Received onLoad event: {{ isLoadedLayerWithConfig }}</p>
   </div>
 </template>
 
@@ -25,4 +34,5 @@ import { ref } from '#imports'
 
 const isLoadedRoot = ref(false)
 const isLoadedLayer = ref(false)
+const isLoadedLayerWithConfig = ref(false)
 </script>
