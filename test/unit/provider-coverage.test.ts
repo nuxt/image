@@ -2,7 +2,7 @@ import { readdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
-import { providers as playgroundProviders } from '../../playground/providers'
+import { providers as playgroundProviders } from '../../playground/app/providers'
 
 const missingProviderTests = [
   'ipxStatic', // build-time-only alias for ipx

@@ -1,5 +1,6 @@
 import { joinURL, hasProtocol } from 'ufo'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -19,9 +20,9 @@ const operationsGenerator = createOperationsGenerator({
 })
 
 interface CloudimageOptions {
-  baseURL: string
   token: string
   apiVersion?: string
+  baseURL?: string
   cdnURL?: string
 }
 
@@ -33,16 +34,12 @@ export default defineProvider<CloudimageOptions>({
     token = '',
     apiVersion = '',
     cdnURL = '',
-  }) => {
+  }, ctx) => {
     const operations = operationsGenerator(modifiers)
     const query = (operations ? ('?' + operations) : '')
 
     if (import.meta.dev) {
       const warning = []
-
-      if (!baseURL) {
-        warning.push('<baseURL>')
-      }
 
       if (!token && !cdnURL) {
         warning.push('<token> or <cdnURL>')
@@ -62,8 +59,12 @@ export default defineProvider<CloudimageOptions>({
 
     if (hasProtocol(src)) {
       return {
-        url: joinURL(src) + query,
+        url: joinURL(cdnURL, src) + query,
       }
+    }
+
+    if (!baseURL) {
+      baseURL = ctx.options.nuxt.baseURL
     }
 
     return {

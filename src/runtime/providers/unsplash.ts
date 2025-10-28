@@ -2,7 +2,7 @@
 
 import { getQuery, withBase, withQuery } from 'ufo'
 import { operationsGenerator } from './imgix'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 export const unsplashCDN = 'https://images.unsplash.com/'
 

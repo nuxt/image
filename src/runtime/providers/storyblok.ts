@@ -1,5 +1,5 @@
 import { withBase, joinURL, parseURL } from 'ufo'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 // https://www.storyblok.com/docs/image-service
 const storyblockCDN = 'https://a.storyblok.com'

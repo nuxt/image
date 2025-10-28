@@ -20,7 +20,8 @@
 
 import { joinURL, hasProtocol, withTrailingSlash } from 'ufo'
 import type { ImageModifiers } from '@nuxt/image'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 export interface UploadcareModifiers extends ImageModifiers {
   // Image Compression
