@@ -24,6 +24,7 @@ export const BuiltInProviders = [
   'directus',
   'fastly',
   'filerobot',
+  'github',
   'glide',
   'gumlet',
   'hygraph',

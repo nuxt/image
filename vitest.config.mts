@@ -7,7 +7,7 @@ export default defineConfig({
       {
         test: {
           name: 'unit',
-          exclude: ['test/nuxt/**', ...defaultExclude],
+          exclude: ['test/nuxt/**', 'test/e2e/**', ...defaultExclude],
         },
       },
       defineVitestProject({
@@ -23,6 +23,13 @@ export default defineConfig({
           },
         },
       }),
+      {
+        test: {
+          name: 'e2e',
+          include: ['test/e2e/**/*.test.ts'],
+          retry: 3,
+        },
+      },
     ],
     coverage: {
       exclude: [
