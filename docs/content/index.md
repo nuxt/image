@@ -32,7 +32,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
   Get started
   :::
 
-  :::copy-code-input{source="npx nuxi@latest module add image"}
+  :::copy-code-input{source="npx nuxt module add image"}
   :::
 ::
 

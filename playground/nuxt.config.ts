@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     filerobot: {
       baseURL: 'https://fesrinkeb.filerobot.com/',
     },
+    github: {},
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/',
     },

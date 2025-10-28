@@ -7,8 +7,6 @@ export default defineAppConfig({
       primary: 'green',
       neutral: 'slate',
     },
-  },
-  uiPro: {
     pageHero: {
       slots: {
         container: 'lg:!grid-cols-3',

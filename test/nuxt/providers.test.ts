@@ -487,6 +487,14 @@ describe('Providers', () => {
       const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudimage)
     }
+
+    const nonBaseURLProviderOptions = {
+      token: 'demo',
+      apiVersion: 'v7',
+    }
+    const src = 'https://localhost' + images[0].args[0]
+    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, emptyContext)
+    expect(generated).toMatchObject({ url: 'https://demo.cloudimg.io/v7/https://localhost/test.png' })
   })
 
   it('storyblok', () => {
