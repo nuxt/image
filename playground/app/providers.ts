@@ -59,6 +59,20 @@ export const providers: Provider[] = [
         link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
       },
       {
+        src: '/images/colors-layer.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
+      },
+      {
+        src: '/images/colors-layer-config.jpg',
+        from: 'Jeremy Thomas',
+        width: 300,
+        height: 300,
+        link: 'https://unsplash.com/@jeremythomasphoto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
+      },
+      {
         src: '/images/everest.jpg',
         from: 'Mount Everest Wikipedia page (alias)',
         width: 300,
@@ -318,6 +332,25 @@ export const providers: Provider[] = [
           focus: 'face',
           radius: 'max',
         },
+      },
+    ],
+  },
+  // GitHub
+  {
+    name: 'github',
+    samples: [
+      {
+        src: 'npm',
+        width: 50,
+        height: 50,
+      },
+      {
+        src: 'nuxt',
+        width: 50,
+        height: 100,
+      },
+      {
+        src: 'unjs',
       },
     ],
   },
