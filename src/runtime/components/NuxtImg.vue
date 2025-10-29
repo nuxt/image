@@ -112,6 +112,7 @@ if (import.meta.server && props.preload) {
       rel: 'preload',
       as: 'image',
       nonce: props.nonce,
+      crossorigin: normalizedAttrs.value.crossorigin,
       href: isResponsive ? sizes.value.src : src.value,
       ...(sizes.value.sizes && { imagesizes: sizes.value.sizes }),
       ...(hasMultipleDensities && { imagesrcset: sizes.value.srcset }),

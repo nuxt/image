@@ -5,12 +5,14 @@ import { defineNuxtModule, addTemplate, addImports, addServerImports, createReso
 import { join, relative, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
+import { existsSync } from 'node:fs'
 
 export interface ModuleOptions extends ImageProviders {
   inject: boolean
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
+  dirs: string[]
   domains: string[]
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
@@ -27,18 +29,17 @@ export default defineNuxtModule<ModuleOptions>({
     inject: false,
     provider: 'auto',
     dir: nuxt.options.dir.public,
+    dirs: [],
     presets: {},
     domains: [] as string[],
     sharp: {},
     format: ['webp'],
     // https://tailwindcss.com/docs/breakpoints
     screens: {
-      'xs': 320,
       'sm': 640,
       'md': 768,
       'lg': 1024,
       'xl': 1280,
-      'xxl': 1536,
       '2xl': 1536,
     },
     providers: {},
@@ -57,6 +58,29 @@ export default defineNuxtModule<ModuleOptions>({
 
     // fully resolve directory
     options.dir = resolve(nuxt.options.srcDir, options.dir)
+
+    const publicDirs = new Set(options.dirs)
+    for (const layer of nuxt.options._layers) {
+      const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
+      const srcDir = isRootLayer ? nuxt.options.srcDir : layer.config.srcDir
+      const path = layer?.config.image?.dir || layer.config.dir?.public || 'public'
+
+      publicDirs.add(resolve(srcDir, path))
+    }
+
+    options.dirs = [...publicDirs].filter(dir => existsSync(dir))
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      for (const dir of options.dirs) {
+        if (!existsSync(dir)) {
+          continue
+        }
+        nitroConfig.publicAssets ||= []
+        if (!nitroConfig.publicAssets.some(asset => asset && asset.dir === dir)) {
+          nitroConfig.publicAssets.push({ dir, maxAge: 1 })
+        }
+      }
+    })
 
     // Domains from environment variable
     const domainsFromENV = process.env.NUXT_IMAGE_DOMAINS?.replace(/\s/g, '').split(',') || []
