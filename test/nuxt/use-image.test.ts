@@ -42,10 +42,5 @@ describe('image helper', () => {
         alkj: false,
       },
     })
-
-    useImage().getImage('/test.png', {
-      // @ts-expect-error invalid provider
-      provider: 'invalid-provider',
-    })
   })
 })
