@@ -111,7 +111,6 @@ if (import.meta.server && props.preload) {
     link: [{
       rel: 'preload',
       as: 'image',
-      nonce: props.nonce,
       crossorigin: normalizedAttrs.value.crossorigin,
       href: isResponsive ? sizes.value.src : src.value,
       ...(sizes.value.sizes && { imagesizes: sizes.value.sizes }),
