@@ -127,12 +127,12 @@ function getPreset(ctx: ImageCTX, name?: string): ImageOptions {
 function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
   // Merge preset options so preset-provided sizes/densities are respected
   const preset = getPreset(ctx, opts.preset)
-  const merged = defu({} as ImageSizesOptions, opts, preset)
+  const merged = defu(opts, preset)
 
   const width = parseSize(merged.modifiers?.width)
   const height = parseSize(merged.modifiers?.height)
 
-  const sizes = merged.sizes ? parseSizes(merged.sizes) : (merged.densities ? {} : ctx.$img?.options.screens || {})
+  const sizes = merged.sizes ? parseSizes(merged.sizes) : {}
   const densities = merged.densities?.trim() ? parseDensities(merged.densities.trim()) : ctx.options.densities
   checkDensities(densities)
 
