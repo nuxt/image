@@ -5,16 +5,11 @@ import type { IPXOptions } from 'ipx'
 import { lazyEventHandler, useBase } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
-import { defu } from 'defu'
 
 import { useRuntimeConfig } from '#imports'
 
 export default lazyEventHandler(() => {
-  let opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
-  const publicOpts = useRuntimeConfig().public.ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
-
-  // use NUXT_PUBLIC_IPX_* environment variables for updating options in runtime
-  opts = defu(publicOpts, opts)
+  const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
   // TODO: Migrate to unstorage layer
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url))) : undefined
