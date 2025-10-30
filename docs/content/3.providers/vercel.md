@@ -67,3 +67,22 @@ export default defineNuxtConfig({
 ```
 
 ::
+
+## Options
+
+### `formats`
+
+- Type: **String[]** (optional)
+
+Specify the image format allow list for optimization.
+By default, the provider set the following formats: `['image/webp', 'image/avif']`.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    vercel: {
+      formats: ['image/webp']
+    }
+  }
+})
+```

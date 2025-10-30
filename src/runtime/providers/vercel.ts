@@ -1,10 +1,12 @@
 import { stringifyQuery } from 'ufo'
+import type { NitroConfig } from 'nitropack'
 import { defineProvider } from '../utils/provider'
 
 // https://vercel.com/docs/build-output-api/v3/configuration#images
 
 interface VercelOptions {
   baseURL?: string
+  formats?: NonNullable<NonNullable<NonNullable<NitroConfig['vercel']>['config']>['images']>['formats']
   modifiers?: {
     quality?: string | number
   }
