@@ -76,7 +76,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
     })
   },
 
-  awsAmplify(_providerOptions, moduleOptions, nuxt: Nuxt) {
+  awsAmplify(providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       awsAmplify: {
         imageOptimization: {
@@ -85,13 +85,13 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
         },
         imageSettings: {
           sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
-          formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] satisfies NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats'],
+          formats: providerOptions.options?.formats ?? ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
           minimumCacheTTL: 60 * 5,
           domains: moduleOptions.domains,
           remotePatterns: [], // Provided by domains
           dangerouslyAllowSVG: false, // TODO
         },
-      },
+      } satisfies NitroConfig['awsAmplify'],
     })
   },
   // https://docs.netlify.com/image-cdn/create-integration/

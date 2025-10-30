@@ -1,4 +1,5 @@
 import { encodeQueryItem, joinURL } from 'ufo'
+import type { NitroConfig } from 'nitropack'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -50,6 +51,7 @@ const operationsGenerator = createOperationsGenerator({
 
 interface AmplifyOptions {
   baseURL?: string
+  formats?: NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats']
   modifiers?: {
     quality?: string | number
     // TODO: more modifiers
