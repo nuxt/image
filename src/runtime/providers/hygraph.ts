@@ -73,7 +73,7 @@ function optimizeHygraphImage(baseURL: string, url: string, optimizations: Image
     return joinURL(baseURL, baseId, quality, imageFormat, imageId)
   }
 
-  const optim = `${optimBase}=${optimList.join(',')}`;
+  const optim = `${optimBase}=${optimList.join(',')}`
   const result = joinURL(baseURL, baseId, optim, quality, imageFormat, imageId)
 
   return result
