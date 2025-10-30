@@ -62,3 +62,22 @@ All the default modifiers from [AWS's documentation](https://docs.aws.amazon.com
   :quality="90"
 />
 ```
+
+## Options
+
+### `formats`
+
+- Type: **String[]** (optional)
+
+Specify the image format allow list for optimization.
+By default, the provider set the following formats: `['image/jpeg', 'image/png', 'image/webp', 'image/avif']`.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    awsAmplify: {
+      formats: ['image/jpeg', 'image/png', 'image/webp']
+    }
+  }
+})
+```
