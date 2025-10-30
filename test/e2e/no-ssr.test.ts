@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { setup, createPage, url } from '@nuxt/test-utils'
 
-import { providers } from '../../playground/providers'
+import { providers } from '../../playground/app/providers'
 
 await setup({
   rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
@@ -45,6 +45,12 @@ describe('browser (ssr: false)', () => {
           .map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))
           .sort(),
       }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
+
+      for (const source of sources) {
+        if (source) {
+          expect(() => decodeURIComponent(source)).not.toThrow()
+        }
+      }
 
       await page.close()
     })

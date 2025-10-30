@@ -1,16 +1,18 @@
 import process from 'node:process'
 
-import { parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, createResolver, addComponent, addPlugin } from '@nuxt/kit'
-import { resolve } from 'pathe'
-import { resolveProviders, detectProvider, resolveProvider } from './provider'
-import type { ImageProviders, ImageOptions, InputProvider, CreateImageOptions } from './types'
+import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
+import { join, relative, resolve } from 'pathe'
+import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
+import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
+import { existsSync } from 'node:fs'
 
 export interface ModuleOptions extends ImageProviders {
   inject: boolean
   provider: CreateImageOptions['provider']
   presets: { [name: string]: ImageOptions }
   dir: string
+  dirs: string[]
   domains: string[]
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
@@ -18,7 +20,6 @@ export interface ModuleOptions extends ImageProviders {
   densities: number[]
   format: CreateImageOptions['format']
   quality?: CreateImageOptions['quality']
-  [key: string]: any
 }
 
 export * from './types'
@@ -28,18 +29,17 @@ export default defineNuxtModule<ModuleOptions>({
     inject: false,
     provider: 'auto',
     dir: nuxt.options.dir.public,
+    dirs: [],
     presets: {},
     domains: [] as string[],
     sharp: {},
     format: ['webp'],
     // https://tailwindcss.com/docs/breakpoints
     screens: {
-      'xs': 320,
       'sm': 640,
       'md': 768,
       'lg': 1024,
       'xl': 1280,
-      'xxl': 1536,
       '2xl': 1536,
     },
     providers: {},
@@ -59,6 +59,29 @@ export default defineNuxtModule<ModuleOptions>({
     // fully resolve directory
     options.dir = resolve(nuxt.options.srcDir, options.dir)
 
+    const publicDirs = new Set(options.dirs)
+    for (const layer of nuxt.options._layers) {
+      const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
+      const srcDir = isRootLayer ? nuxt.options.srcDir : layer.config.srcDir
+      const path = layer?.config.image?.dir || layer.config.dir?.public || 'public'
+
+      publicDirs.add(resolve(srcDir, path))
+    }
+
+    options.dirs = [...publicDirs].filter(dir => existsSync(dir))
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      for (const dir of options.dirs) {
+        if (!existsSync(dir)) {
+          continue
+        }
+        nitroConfig.publicAssets ||= []
+        if (!nitroConfig.publicAssets.some(asset => asset && asset.dir === dir)) {
+          nitroConfig.publicAssets.push({ dir, maxAge: 1 })
+        }
+      }
+    })
+
     // Domains from environment variable
     const domainsFromENV = process.env.NUXT_IMAGE_DOMAINS?.replace(/\s/g, '').split(',') || []
 
@@ -72,7 +95,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     options.provider = detectProvider(options.provider)!
     if (options.provider) {
-      options[options.provider] = options[options.provider] || {}
+      options[options.provider as keyof ImageProviders] = options[options.provider as keyof ImageProviders] || {}
     }
     options.densities = options.densities || []
 
@@ -88,6 +111,27 @@ export default defineNuxtModule<ModuleOptions>({
     ])
 
     const providers = await resolveProviders(nuxt, options)
+    addTypeTemplate({
+      filename: 'image/providers.d.ts',
+      getContents() {
+        const file = join(nuxt.options.buildDir, 'image')
+        return `
+        import { ImageProvider } from '@nuxt/image'
+        declare module '@nuxt/image' {
+          interface ProviderDefaults {
+            provider: ${JSON.stringify(options.provider)}
+          }
+          interface ConfiguredImageProviders {
+${providers.map(p => `            ${JSON.stringify(p.name)}: ${BuiltInProviders.includes(p.name as 'ipx') ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
+          }
+          interface ImageProviders {
+${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
+          }
+        }
+        export {}
+        `
+      },
+    }, { nitro: true, nuxt: true, node: true, shared: true })
 
     // Run setup
     for (const p of providers) {
@@ -95,11 +139,6 @@ export default defineNuxtModule<ModuleOptions>({
         await p.setup(p, options, nuxt)
       }
     }
-
-    // Transpile and alias runtime
-    const runtimeDir = resolver.resolve('./runtime')
-    nuxt.options.alias['#image'] = runtimeDir
-    nuxt.options.build.transpile.push(runtimeDir)
 
     addImports({
       name: 'useImage',
@@ -121,23 +160,32 @@ export default defineNuxtModule<ModuleOptions>({
     addTemplate({
       filename: 'image-options.mjs',
       getContents() {
-        return `
-${providers.map(p => `import * as ${p.importName} from '${p.runtime}'`).join('\n')}
+        return generateImageOptions(providers, imageOptions)
+      },
+    })
 
-export const imageOptions = ${JSON.stringify(imageOptions, null, 2)}
+    addServerImports([
+      {
+        name: 'useImage',
+        from: resolver.resolve('runtime/server/utils/image'),
+      },
+    ])
 
-imageOptions.providers = {
-${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
-}
-        `
+    addServerTemplate({
+      filename: '#internal/nuxt-image',
+      getContents() {
+        return generateImageOptions(providers, imageOptions)
       },
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
       if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx) {
-        const resolvedProvider = nitro.options.static || options.provider === 'ipxStatic'
-          ? 'ipxStatic'
-          : nitro.options.node ? 'ipx' : 'none'
+        const hasExternalIPX = (options.ipx?.baseURL && hasProtocol(options.ipx.baseURL, { acceptRelative: true }))
+        const resolvedProvider = hasExternalIPX
+          ? 'ipx'
+          : nitro.options.static || options.provider === 'ipxStatic'
+            ? 'ipxStatic'
+            : nitro.options.node ? 'ipx' : 'none'
 
         if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
           imageOptions.provider = options.provider = resolvedProvider
@@ -166,7 +214,7 @@ ${providers.map(p => `  ['${p.name}']: { provider: ${p.importName}, defaults: ${
 
     if (options.inject) {
       // Add runtime plugin
-      addPlugin({ src: resolver.resolve('./runtime/plugin') })
+      addPlugin({ src: resolver.resolve('./runtime/plugins/image') })
     }
 
     // TODO: Transform asset urls that pass to `src` attribute on image components
@@ -179,4 +227,17 @@ function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]):
     newobj[key] = obj[key]
   }
   return newobj
+}
+
+function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'>): string {
+  return `
+  ${providers.map(p => `import ${p.importName} from '${p.runtime}'`).join('\n')}
+  
+  export const imageOptions = {
+    ...${JSON.stringify(imageOptions, null, 2)},
+    providers: {
+      ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
+    }
+  }
+`
 }

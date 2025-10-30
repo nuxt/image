@@ -4,13 +4,15 @@ import type { Nuxt } from '@nuxt/schema'
 import type { NitroConfig } from 'nitropack'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
-import { provider, type ProviderName } from 'std-env'
-import type { InputProvider, ImageModuleProvider, ProviderSetup } from './types'
+import { genSafeVariableName } from 'knitwork'
+import { provider } from 'std-env'
+import type { ProviderName } from 'std-env'
+import type { InputProvider, ImageModuleProvider, ProviderSetup, ConfiguredImageProviders } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
 
 // Please add new providers alphabetically to the list below
-const BuiltInProviders = [
+export const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
   'bunny',
@@ -20,8 +22,9 @@ const BuiltInProviders = [
   'cloudinary',
   'contentful',
   'directus',
-  'edgio',
   'fastly',
+  'filerobot',
+  'github',
   'glide',
   'gumlet',
   'hygraph',
@@ -30,7 +33,6 @@ const BuiltInProviders = [
   'imgix',
   'ipx',
   'ipxStatic',
-  'layer0',
   'netlify',
   'netlifyLargeMedia',
   'netlifyImageCdn',
@@ -38,6 +40,7 @@ const BuiltInProviders = [
   'none',
   'prismic',
   'sanity',
+  'shopify',
   'storyblok',
   'strapi',
   'strapi5',
@@ -58,7 +61,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   ipxStatic: ipxSetup({ isStatic: true }),
 
   // https://vercel.com/docs/build-output-api/v3/configuration#images
-  vercel(_providerOptions, moduleOptions, nuxt: Nuxt) {
+  vercel(providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       vercel: {
         config: {
@@ -66,14 +69,14 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
             domains: moduleOptions.domains,
             minimumCacheTTL: 60 * 5,
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
-            formats: ['image/webp', 'image/avif'],
+            formats: providerOptions.options?.formats ?? ['image/webp', 'image/avif'],
           },
         },
       } satisfies NitroConfig['vercel'],
     })
   },
 
-  awsAmplify(_providerOptions, moduleOptions, nuxt: Nuxt) {
+  awsAmplify(providerOptions, moduleOptions, nuxt: Nuxt) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       awsAmplify: {
         imageOptimization: {
@@ -82,13 +85,13 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
         },
         imageSettings: {
           sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
-          formats: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] satisfies NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats'],
+          formats: providerOptions.options?.formats ?? ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
           minimumCacheTTL: 60 * 5,
           domains: moduleOptions.domains,
           remotePatterns: [], // Provided by domains
           dangerouslyAllowSVG: false, // TODO
         },
-      },
+      } satisfies NitroConfig['awsAmplify'],
     })
   },
   // https://docs.netlify.com/image-cdn/create-integration/
@@ -110,7 +113,7 @@ export async function resolveProviders(nuxt: any, options: ModuleOptions): Promi
 
   for (const key in options) {
     if (BuiltInProviders.includes(key as ImageProviderName)) {
-      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key] }))
+      providers.push(await resolveProvider(nuxt, key, { provider: key, options: options[key as keyof ConfiguredImageProviders] }))
     }
   }
 
@@ -140,7 +143,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 
   const resolver = createResolver(import.meta.url)
   input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
-    ? await resolver.resolve('./runtime/providers/' + input.provider)
+    ? resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
 
   const setup = input.setup || providerSetup[input.name as ImageProviderName]
@@ -149,7 +152,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
     ...input,
     setup,
     runtime: normalize(input.provider!),
-    importName: `${key}Runtime$${hash(input.provider)}`,
+    importName: `${key}Runtime$${genSafeVariableName(hash(input.provider))}`,
     runtimeOptions: input.options,
   }
 }
@@ -168,14 +171,14 @@ const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = 
 
 export function detectProvider(userInput: string = '') {
   if (process.env.NUXT_IMAGE_PROVIDER) {
-    return process.env.NUXT_IMAGE_PROVIDER
+    return process.env.NUXT_IMAGE_PROVIDER as keyof ConfiguredImageProviders
   }
 
   if (userInput && userInput !== 'auto') {
-    return userInput
+    return userInput as keyof ConfiguredImageProviders
   }
 
   if (provider in autodetectableProviders) {
-    return autodetectableProviders[provider]
+    return autodetectableProviders[provider] as keyof ConfiguredImageProviders
   }
 }

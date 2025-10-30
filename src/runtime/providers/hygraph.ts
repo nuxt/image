@@ -1,12 +1,12 @@
 import { joinURL, parseURL, withTrailingSlash } from 'ufo'
-import type { ProviderGetImage } from '@nuxt/image'
+import { defineProvider } from '../utils/provider'
 
 type ImageOptimizations = {
   width?: number
   height?: number
   fit?: string | 'clip' | 'crop' | 'scale' | 'max'
   format?: string | 'jpg' | 'png' | 'webp' | 'avif' | 'auto_image'
-  quality?: number
+  quality?: number | string
 }
 
 function getImageFormat(format?: string) {
@@ -69,20 +69,30 @@ function optimizeHygraphImage(baseURL: string, url: string, optimizations: Image
     }
   }
 
+  if (optimList.length === 0) {
+    return joinURL(baseURL, baseId, quality, imageFormat, imageId)
+  }
+
   const optim = `${optimBase}=${optimList.join(',')}`
   const result = joinURL(baseURL, baseId, optim, quality, imageFormat, imageId)
 
   return result
 }
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL } = {}) => {
-  const { width, height, fit, format, quality } = modifiers
-
-  if (!baseURL) {
-    throw new Error('No Hygraph image base URL provided.')
-  }
-
-  return {
-    url: optimizeHygraphImage(baseURL, src, { width, height, fit, format, quality }),
-  }
+interface HygraphOptions {
+  baseURL: string
 }
+
+export default defineProvider<HygraphOptions>({
+  getImage: (src, { modifiers, baseURL }) => {
+    const { width, height, fit, format, quality } = modifiers
+
+    if (!baseURL) {
+      throw new Error('No Hygraph image base URL provided.')
+    }
+
+    return {
+      url: optimizeHygraphImage(baseURL, src, { width, height, fit, format, quality }),
+    }
+  },
+})

@@ -1,11 +1,20 @@
 import type { RuntimeConfig } from '@nuxt/schema'
+import type { H3Event } from 'h3'
+import type { ConfiguredImageProviders } from './module'
 
 export interface ImageModifiers {
-  width: number
-  height: number
+  width: number | string
+  height: number | string
   fit: string
   format: string
-  [key: string]: any
+  quality: string | number
+  background: string
+  blur: number
+}
+
+export interface ResolvedImageModifiers extends ImageModifiers {
+  width: number
+  height: number
 }
 
 export interface ImageOptions {
@@ -13,32 +22,35 @@ export interface ImageOptions {
   preset?: string
   densities?: string
   modifiers?: Partial<ImageModifiers>
-  [key: string]: any
+  sizes?: string | Record<string, any>
 }
 
 export interface ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
 
-export type ProviderGetImage = (src: string, options: ImageOptions, ctx: ImageCTX) => ResolvedImage
+export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: ImageOptions & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
 
-export interface ImageProvider {
-  defaults?: any
-  getImage: ProviderGetImage
+interface ImageModifierOptions {
+  modifiers?: Record<string, unknown>
+}
+
+export interface ImageProvider<T> extends ImageModifierOptions {
+  defaults?: T
+  getImage: ProviderGetImage<T>
   validateDomains?: boolean
   supportsAlias?: boolean
 }
 
 export interface CreateImageOptions {
-  providers: {
-    [name: string]: {
-      defaults: any
-      provider: ImageProvider
-    }
-  }
+  providers: Record<keyof ConfiguredImageProviders, {
+    defaults: unknown
+    setup: () => ImageProvider<Record<string, unknown>>
+  }>
   nuxt: {
     baseURL: string
   }
+  event?: H3Event
   presets: { [name: string]: ImageOptions }
   provider: string
   screens: Record<string, number>
@@ -85,32 +97,18 @@ export interface ImageCTX {
   $img?: $Img
 }
 
-export interface ImageSize {
-  width: number
-  media: string
-  breakpoint: number
-  format: string
-  url: string
-}
+export type OperationMapper<From, To> = Record<string | Extract<From, string | number>, To> | ((key?: From) => To | From | undefined)
 
-export interface RuntimePlaceholder extends ImageInfo {
-  url: string
-}
-
-export type OperationFormatter = (key: string, value: string) => string
-
-export type OperationMapper = { [key: string]: string | false } | ((key: string) => string)
-
-export interface OperationGeneratorConfig {
-  keyMap?: OperationMapper
-  formatter?: OperationFormatter
-  joinWith?: string
-  valueMap?: {
-    [key: string]: OperationMapper
-  }
-}
-
-export type MapToStatic = (image: ResolvedImage, input: string) => string
+export type OperationGeneratorConfig<Key extends string, Value, FinalKey, FinalValue> = {
+  keyMap?: Partial<Record<Key, FinalKey>>
+  valueMap?: Partial<Record<Key, Partial<Record<Extract<Value, string>, FinalValue>> | ((key: Value) => Value | FinalValue)>>
+} & ({
+  formatter?: (key: FinalKey, value: FinalValue) => string
+  joinWith?: undefined
+} | {
+  formatter: (key: FinalKey, value: FinalValue) => string
+  joinWith: string
+})
 
 export interface ImageSizesVariant {
   size?: string

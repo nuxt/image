@@ -1,6 +1,6 @@
 import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -160,13 +160,17 @@ export const operationsGenerator = createOperationsGenerator({
       blurhash: 'blurhash',
     },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`,
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
-  }
+interface ImgixOptions {
+  baseURL?: string
 }
+
+export default defineProvider<ImgixOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
+    }
+  },
+})

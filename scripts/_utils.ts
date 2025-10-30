@@ -102,7 +102,7 @@ export async function determineBumpType() {
 
   const bumpType = determineSemverChange(commits, config)
 
-  return bumpType === 'major' ? 'minor' : bumpType
+  return bumpType
 }
 
 export async function getLatestCommits() {

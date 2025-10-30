@@ -1,8 +1,8 @@
 // https://glide.thephpleague.com/2.0/api/quick-reference/
 
-import { joinURL, encodeQueryItem, encodePath, withBase } from 'ufo'
-import type { ProviderGetImage } from '../../module'
-import { createOperationsGenerator } from '#image'
+import { joinURL, encodePath, withBase } from 'ufo'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -42,14 +42,18 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'contain',
     },
   },
-  joinWith: '&',
-  formatter: (key, val) => encodeQueryItem(key, val),
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const params = operationsGenerator(modifiers)
-
-  return {
-    url: withBase(joinURL(encodePath(src) + (params ? '?' + params : '')), baseURL),
-  }
+interface GlideOptions {
+  baseURL?: string
 }
+
+export default defineProvider<GlideOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const params = operationsGenerator(modifiers)
+
+    return {
+      url: withBase(joinURL(encodePath(src) + (params ? '?' + params : '')), baseURL),
+    }
+  },
+})
