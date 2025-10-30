@@ -110,8 +110,8 @@ const sources = computed<Source[]>(() => {
   return formats.map((format) => {
     const { srcset, sizes, src } = $img.getSizes(props.src!, {
       ...providerOptions.value,
-      ...(props.sizes !== undefined ? { sizes: props.sizes } : {}),
-      ...(props.densities !== undefined ? { densities: props.densities } : {}),
+      sizes: props.sizes,
+      densities: props.densities,
       modifiers: { ...imageModifiers.value, format },
     })
 
