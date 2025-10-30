@@ -33,7 +33,7 @@ export const images = [
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&url=https%3A%2F%2Fmy-website.com%2Ftest.png' },
     sirv: { url: 'https://demo.sirv.com/test.png' },
-    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=/auto_image/cltsrex89477t08unlckqx9ue' },
+    hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net' },
   },
