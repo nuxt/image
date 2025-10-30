@@ -133,7 +133,8 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
   const height = parseSize(merged.modifiers?.height)
 
   const sizes = merged.sizes ? parseSizes(merged.sizes) : {}
-  const densities = merged.densities?.trim() ? parseDensities(merged.densities.trim()) : ctx.options.densities
+  const _densities = merged.densities?.trim()
+  const densities = _densities ? parseDensities(_densities) : ctx.options.densities
   checkDensities(densities)
 
   const hwRatio = (width && height) ? height / width : 0
