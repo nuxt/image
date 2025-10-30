@@ -65,6 +65,6 @@ Define breakpoint modifier:
 />
 ```
 
-::callout
+::note
 Only one breakpoint can be modified per image.
 ::

@@ -40,6 +40,7 @@ export default defineNuxtConfig({
 ```
 
 ## Modifiers
+
 All the default modifiers from [Directus documentation](https://docs.directus.io/reference/files.html#requesting-a-thumbnail) are available.
 
 ```vue
@@ -67,6 +68,6 @@ Since Directus exposes the full [sharp API](https://sharp.pixelplumbing.com/api-
 />
 ```
 
-::callout
+::note
 Note that the `transforms` parameter, as stated in the [Directus documentation](https://docs.directus.io/reference/files.html#advanced-transformations), is basically a list of lists. This is to facilitate the use of those sharp functions, like [`normalise`](https://sharp.pixelplumbing.com/api-operation#normalise), that would need multiple values in input: `transforms: [['normalise', 1, 99], ['blur', 4], ['negate']]`.
 ::

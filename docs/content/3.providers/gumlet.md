@@ -47,4 +47,4 @@ Some common best practices when using Gumlet, would be to include our `format=au
 />
 ```
 
-This will return a 300 x 500 image, which has been compressed, will display next-gen formats for a browser, and has been cropped intelligently to the face of the [woman in the hat](https://demo.gumlet.io/sea.jpeg?format=auto&w=300&h=500&compress=true).
+This will return a 300 x 500 image, which has been compressed, will display next-gen formats for a browser, and has been cropped intelligently to the face of the [woman in the hat](https://demo.gumlet.io/sea.jpeg?format=auto\&w=300\&h=500\&compress=true).

@@ -34,7 +34,7 @@ For the time being you might find the following links useful:
 - [Assets Resizing via REST API](https://docs.prepr.io/reference/rest/v1/assets-resizing)
 - [Understanding your marketing and design team workflows](https://docs.prepr.io/managing-content/images)
 
-::callout
+::note
 prepr.io does not provide a way to restrict what domains can
 request assets to your project's CDN, nor limit the maximum size in `pixels` or
 `bytes` of images that are served from the CDN.
@@ -58,8 +58,8 @@ following options from the [default `fit` behavior](/usage/nuxt-img#fit)
 are supported:
 
 - `cover` - this will behave like the Prepr modifier `crop`, when passed without
-a value (defaults to `centre`)
+  a value (defaults to `centre`)
 
-::callout
+::note
 For the time being, other `fit` options are not supported by this provider.
 ::

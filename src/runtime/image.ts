@@ -1,9 +1,9 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant } from '../module'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 
 export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
@@ -14,19 +14,14 @@ export function createImage(globalOptions: CreateImageOptions) {
     const image = resolveImage(ctx, input, options)
 
     // Prerender static images
-    if (import.meta.server && import.meta.prerender) {
-      prerenderStaticImages(image.url)
+    if (import.meta.server && import.meta.prerender && globalOptions.event) {
+      prerenderStaticImages(image.url, undefined, globalOptions.event)
     }
 
     return image
   }
 
-  const $img = ((input, modifiers = {}, options = {}) => {
-    return getImage(input, {
-      ...options,
-      modifiers: defu(modifiers, options.modifiers || {}),
-    }).url
-  }) as $Img
+  const $img = ((input, modifiers, options) => getImage(input, defu({ modifiers }, options)).url) as $Img
 
   for (const presetName in globalOptions.presets) {
     $img[presetName] = ((source, modifiers, options) =>
@@ -65,7 +60,8 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const { provider, defaults } = getProvider(ctx, options.provider || ctx.options.provider)
+  const { setup, defaults } = getProvider(ctx, options.provider as keyof ConfiguredImageProviders || ctx.options.provider)
+  const provider = setup()
   const preset = getPreset(ctx, options.preset)
 
   // Normalize input with leading slash
@@ -94,25 +90,23 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const _options: ImageOptions = defu(options, preset, defaults)
-  _options.modifiers = { ..._options.modifiers }
-  const expectedFormat = _options.modifiers.format
-
-  if (_options.modifiers?.width) {
-    _options.modifiers.width = parseSize(_options.modifiers.width)
+  const _options = defu(options, preset, defaults as Partial<ImageOptions>)
+  const resolvedOptions = {
+    ..._options,
+    modifiers: {
+      ..._options.modifiers,
+      width: _options.modifiers?.width ? parseSize(_options.modifiers.width) : undefined,
+      height: _options.modifiers?.height ? parseSize(_options.modifiers.height) : undefined,
+    },
   }
-  if (_options.modifiers?.height) {
-    _options.modifiers.height = parseSize(_options.modifiers.height)
-  }
 
-  const image = provider.getImage(input, _options, ctx)
-
-  image.format = image.format || expectedFormat || ''
+  const image = provider.getImage(input, resolvedOptions, ctx)
+  image.format ||= resolvedOptions.modifiers.format || ''
 
   return image
 }
 
-function getProvider(ctx: ImageCTX, name: string): ImageCTX['options']['providers'][0] {
+function getProvider(ctx: ImageCTX, name: keyof ConfiguredImageProviders) {
   const provider = ctx.options.providers[name]
   if (!provider) {
     throw new Error('Unknown provider: ' + name)
