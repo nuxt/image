@@ -167,16 +167,16 @@ describe('Renders simple image', () => {
   })
 })
 
-const getImageLoad = (cb = () => { }) => {
-  let resolve = () => { }
-  let reject = () => { }
+const getImageLoad = (cb = () => {}) => {
+  let resolve = () => {}
+  let reject = () => {}
   let image = {} as HTMLImageElement
   const loadEvent = Symbol('loadEvent')
   const errorEvent = Symbol('errorEvent')
   const ImageMock = vi.fn(() => {
     const _image = {
-      onload: () => { },
-      onerror: () => { },
+      onload: () => {},
+      onerror: () => {},
     } as unknown as HTMLImageElement
     image = _image
     // @ts-expect-error not valid argument for onload
