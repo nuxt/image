@@ -140,7 +140,7 @@ describe('Renders simple image', () => {
       width: 300,
       height: 400,
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="300" height="400" data-nuxt-img="" srcset="/_ipx/s_300x400/image.png 1x, /_ipx/s_600x800/image.png 2x" src="/_ipx/s_300x400/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="300" height="400" data-nuxt-img="" sizes="(max-width: 768px) 640px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, (max-width: 1536px) 1280px, 1536px" srcset="/_ipx/s_640x853/image.png 640w, /_ipx/s_768x1024/image.png 768w, /_ipx/s_1024x1365/image.png 1024w, /_ipx/s_1280x1707/image.png 1280w, /_ipx/s_1536x2048/image.png 1536w, /_ipx/s_2048x2730/image.png 2048w, /_ipx/s_2560x3414/image.png 2560w, /_ipx/s_3072x4096/image.png 3072w" src="/_ipx/s_300x400/image.png">"`)
   })
 
   it('without sizes, but densities', () => {
