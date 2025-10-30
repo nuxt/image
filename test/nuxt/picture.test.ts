@@ -65,7 +65,7 @@ describe('Renders simple image', () => {
     })
     expect(img.html()).toMatchInlineSnapshot(`
       "<picture>
-        <source type="image/webp" sizes="(max-width: 768px) 640px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, (max-width: 1536px) 1280px, 1536px" srcset="/_ipx/f_webp&amp;s_640x640/image.png 640w, /_ipx/f_webp&amp;s_768x768/image.png 768w, /_ipx/f_webp&amp;s_1024x1024/image.png 1024w, /_ipx/f_webp&amp;s_1280x1280/image.png 1280w, /_ipx/f_webp&amp;s_1536x1536/image.png 1536w, /_ipx/f_webp&amp;s_2048x2048/image.png 2048w, /_ipx/f_webp&amp;s_2560x2560/image.png 2560w, /_ipx/f_webp&amp;s_3072x3072/image.png 3072w"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_3072x3072/image.png" sizes="(max-width: 768px) 640px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, (max-width: 1536px) 1280px, 1536px" srcset="/_ipx/f_png&amp;s_640x640/image.png 640w, /_ipx/f_png&amp;s_768x768/image.png 768w, /_ipx/f_png&amp;s_1024x1024/image.png 1024w, /_ipx/f_png&amp;s_1280x1280/image.png 1280w, /_ipx/f_png&amp;s_1536x1536/image.png 1536w, /_ipx/f_png&amp;s_2048x2048/image.png 2048w, /_ipx/f_png&amp;s_2560x2560/image.png 2560w, /_ipx/f_png&amp;s_3072x3072/image.png 3072w">
+        <source type="image/webp" srcset="/_ipx/f_webp&amp;s_200x200/image.png 1x, /_ipx/f_webp&amp;s_400x400/image.png 2x"><img width="200" height="200" data-nuxt-pic="" src="/_ipx/f_png&amp;s_400x400/image.png" srcset="/_ipx/f_png&amp;s_200x200/image.png 1x, /_ipx/f_png&amp;s_400x400/image.png 2x">
       </picture>"
     `)
   })
