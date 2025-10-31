@@ -1,6 +1,6 @@
 import type { RuntimeConfig } from '@nuxt/schema'
 import type { H3Event } from 'h3'
-import type { ConfiguredImageProviders } from './module'
+import type { ConfiguredImageProviders, ProviderDefaults } from './module'
 
 export interface ImageModifiers {
   width: number | string
@@ -17,11 +17,12 @@ export interface ResolvedImageModifiers extends ImageModifiers {
   height: number
 }
 
-export interface ImageOptions {
-  provider?: string
+export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']> {
+  provider?: Provider
   preset?: string
   densities?: string
-  modifiers?: Partial<ImageModifiers>
+  modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
+    & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
   sizes?: string | Record<string, any>
 }
 
@@ -29,7 +30,7 @@ export interface ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
 
-export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: ImageOptions & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
+export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: Omit<ImageOptions, 'modifiers'> & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
 
 interface ImageModifierOptions {
   modifiers?: Record<string, unknown>
