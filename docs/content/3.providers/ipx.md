@@ -22,3 +22,23 @@ You can use [additional modifiers](https://github.com/unjs/ipx/#modifiers) suppo
   :modifiers="{ grayscale: true, tint: '#00DC82' }"
 />
 ```
+
+## Runtime Configuration
+
+You can update the options for `ipx` at runtime by passing the appropriate environment variable. For example:
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  runtimeConfig: {
+    ipx: {
+      baseURL: process.env.NUXT_IPX_BASE_URL || '/_ipx',
+      alias: {
+        someAlias: process.env.NUXT_IPX_ALIAS_SOME_ALIAS || ''
+      },
+      http: {
+        domains: process.env.NUXT_IPX_HTTP_DOMAINS,
+      },
+    },
+  },
+})
+```
