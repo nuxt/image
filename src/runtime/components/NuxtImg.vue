@@ -24,6 +24,7 @@ import { useImage } from '../composables'
 import { prerenderStaticImages } from '../utils/prerender'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import { markFeatureUsage } from '../utils/performance'
 import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
@@ -160,6 +161,8 @@ if (import.meta.server && import.meta.prerender) {
 const initialLoad = useNuxtApp().isHydrating
 const imgEl = useTemplateRef('imgEl')
 onMounted(() => {
+  markFeatureUsage('nuxt-img')
+
   if (!imgEl.value) {
     return
   }
