@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'node:url'
 
 import { describe, it, expect } from 'vitest'
-import { setup, createPage, url, fetch } from '@nuxt/test-utils'
+import { $fetch, setup, createPage, url, fetch } from '@nuxt/test-utils'
 
-import { providers } from '../../playground/providers'
+import { providers } from '../../playground/app/providers'
 
 await setup({
   rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
@@ -11,25 +11,25 @@ await setup({
   nuxtConfig: {
     image: {
       inject: false,
-      provider: 'ipx'
-    }
-  }
+      provider: 'ipx',
+    },
+  },
 })
 
 describe('browser (ssr: true)', () => {
   for (const provider of providers) {
-    it(`${provider.name} should render images`, async () => {
+    it(`${provider.name} should render images`, { timeout: 20000 }, async () => {
       const providerPath = `/provider/${provider.name}`
 
       const page = await createPage()
 
       const requests: string[] = []
-      page.route('**', (route) => {
+      await page.route('**', (route) => {
         requests.push(route.request().url())
         return route.continue()
       })
 
-      page.goto(url(providerPath))
+      await page.goto(url(providerPath), { waitUntil: 'networkidle' })
 
       await page.waitForSelector('img')
       const images = await page.getByRole('img').all()
@@ -37,9 +37,21 @@ describe('browser (ssr: true)', () => {
       expect(images).toHaveLength(provider.samples.length)
 
       const sources = await Promise.all(images.map(el => el.evaluate(e => e.getAttribute('src'))))
-      expect(sources).toMatchSnapshot()
 
-      expect(requests.map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))).toMatchSnapshot()
+      await expect({
+        sources,
+        requests: requests
+          .map(r => r.replace(url('/'), '/')).filter(r => r !== providerPath && !r.match(/\.(js|css)/))
+          .sort(),
+      }).toMatchFileSnapshot(`./__snapshots__/${provider.name}.json5`)
+
+      for (const source of sources) {
+        if (source) {
+          expect(() => decodeURIComponent(source)).not.toThrow()
+        }
+      }
+
+      await page.close()
     })
   }
 
@@ -47,18 +59,29 @@ describe('browser (ssr: true)', () => {
     const page = await createPage()
     const logs: string[] = []
 
-    page.on('console', (msg) => { logs.push(msg.text()) })
+    page.on('console', (msg) => {
+      logs.push(msg.text())
+    })
 
-    page.goto(url('/events'))
-
-    await page.waitForLoadState('networkidle')
+    await page.goto(url('/events'), { waitUntil: 'networkidle' })
 
     expect(logs.filter(log => log === 'Image was loaded').length).toBe(4)
     expect(logs.filter(log => log === 'Error loading image').length).toBe(2)
+
+    await page.close()
   })
 
   it('works with runtime ipx', async () => {
     const res = await fetch(url('/_ipx/s_300x300/images/colors.jpg'))
     expect(res.headers.get('content-type')).toBe('image/jpeg')
+  })
+
+  it('works with server-side useImage', async () => {
+    expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
+      {
+        "format": "webp",
+        "url": "/_ipx/f_webp&q_75/image.jpg",
+      }
+    `)
   })
 })

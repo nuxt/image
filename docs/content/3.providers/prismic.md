@@ -22,10 +22,10 @@ export default defineNuxtConfig({
 
 You can also pass it directly to your component when you need it, for example:
 
-```html[*.vue]
+```vue
 <NuxtImg provider="prismic" src="..." />
 ```
 
-::callout
+::note
 Prismic allows content writer to manipulate images through its UI (cropping, rezising, etc.). To preserve that behavior this provider does not strip query parameters coming from Prismic. Instead it only overrides them when needed, keeping developers in control.
 ::

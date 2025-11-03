@@ -1,6 +1,7 @@
-import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
-import { createMapper, createOperationsGenerator } from '#image'
+import { encodeQueryItem, joinURL } from 'ufo'
+import { defineProvider } from '../utils/provider'
+import { createMapper, createOperationsGenerator } from '../utils/index'
+import type { InferModifiers } from '../utils/index'
 
 const fits = createMapper({
   fill: 'resize',
@@ -8,8 +9,8 @@ const fits = createMapper({
   outside: 'contain',
   cover: 'cover',
   contain: 'inside',
-  missingValue: 'cover'
-})
+  missingValue: 'cover',
+} as const)
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -17,16 +18,16 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'quality',
     background: 'background',
     focus: 'focus',
-    zoom: 'zoom'
+    zoom: 'zoom',
   },
   valueMap: {
-    format (value: string) {
+    format(value: string) {
       if (value === 'jpg') {
         return 'jpeg'
       }
       return value
     },
-    background (value: string) {
+    background(value: string) {
       if (value.startsWith('#')) {
         return value.replace('#', '')
       }
@@ -43,30 +44,41 @@ const operationsGenerator = createOperationsGenerator({
       south: '50px100p',
       southEast: '0px100p',
       east: '100px50p',
-      center: '50px50p'
-    }
+      center: '50px50p',
+    },
   },
   joinWith: '/',
-  formatter: (key, value) => `${key}=${value}`
-})
+  formatter: (key: 'output' | 'format' | 'fit' | 'quality' | 'background' | 'focus' | 'zoom', value) => encodeQueryItem(key, value),
+} as const)
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const { width, height, fit, ...providerModifiers } = modifiers
-
-  let w = width
-  let h = height
-
-  if (width || height) {
-    if (fit && fit === 'outside') {
-      // fit = outside is equivalent to twicPics contain ( max( width, height ) x max( width, height ) )
-      w = Math.max(width || 0, height || 0)
-      h = Math.max(width || 0, height || 0)
-    }
-    providerModifiers[fits(fit)] = `${w || '-'}x${h || '-'}`
-  }
-
-  const operations = operationsGenerator(providerModifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : ''))
-  }
+interface TwicpicsOptions {
+  baseURL?: string
+  modifiers?: InferModifiers<typeof operationsGenerator>
+    & { fit?: 'fill' | 'inside' | 'outside' | 'cover' | 'contain' }
+    & Partial<Record<'resize' | 'fill' | 'contain' | 'inside' | 'outside' | 'cover' | 'missingValue', string>>
+    & Partial<Record<typeof fits extends (fit: string) => infer Fit ? NonNullable<Fit> : string, string>>
 }
+
+export default defineProvider<TwicpicsOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const { width, height, fit, ...providerModifiers } = modifiers
+
+    let w = width
+    let h = height
+
+    if (width || height) {
+      if (fit && fit === 'outside') {
+      // fit = outside is equivalent to twicPics contain ( max( width, height ) x max( width, height ) )
+        w = Math.max(width || 0, height || 0)
+        h = Math.max(width || 0, height || 0)
+      }
+      providerModifiers[fits(fit as keyof typeof fits)] = `${w || '-'}x${h || '-'}`
+    }
+
+    const operations = operationsGenerator(providerModifiers)
+
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?twic=v1/' + operations) : '')),
+    }
+  },
+})

@@ -10,14 +10,14 @@ links:
 
 Integration between [Cloudimage](https://www.cloudimage.io/en/home) and the image module.
 
-To use this provider you need to specify your Cloudimage `token` and the `baseURL` of your image storage.
+To use this provider you need to specify either your Cloudimage `token` (with optional `apiVersion`) or a full `cdnURL`. The `baseURL` of your image storage is optional and is only used when the passed `src` is not an absolute URL. When using absolute URLs, the provider will use the `cdnURL` directly without prepending the `baseURL`.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudimage: {
       token: 'your_cloudimage_token',
-      baseURL: 'origin_image_url' // or alias
+      baseURL: 'origin_image_url' // or alias (optional)
     }
   }
 })
@@ -33,9 +33,9 @@ Your Cloudimage customer token. [Register](https://www.cloudimage.io/en/register
 
 ### `baseURL`
 
-- Type: **String** (required)
+- Type: **String** (optional)
 
-Your origin image URL or storage alias that allows to shorten your origin image URLs.
+Your origin image URL or storage alias that allows to shorten your origin image URLs. If not provided, the provider will fall back to base App URL for relative URLs, or use the `cdnURL` directly for absolute URLs.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -70,7 +70,7 @@ export default defineNuxtConfig({
 
 Allow using a specific version of the API.
 
-::callout
+::note
 For tokens created before **20.10.2021**, `apiVersion` needs to be set to `v7`.
 ::
 
@@ -93,34 +93,64 @@ export default defineNuxtConfig({
 - Type: **String**
 - Default: `https://{token}.cloudimg.io/{apiVersion}`
 
-Replaces the dynamically built URL
+Replaces the dynamically built URL. Useful when you prefer not to provide a `token` or need a custom CDN hostname.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudimage: {
-      cdnURL: 'https://demo.cloudimg.io/v7',
+      cdnURL: 'https://demo.cloudimg.io/v7'
     }
   }
 })
 ```
 
-## Cloudimage modifiers
+When only `cdnURL` is provided and `baseURL` is omitted, relative sources will fallback to the website's base URL, for example `src: '/test.png'` becomes `https://demo.cloudimg.io/v7/{website-base-url}/test.png`. When using absolute URLs with `cdnURL`, the provider will use the CDN URL directly without prepending any base URL.
+
+### Examples
+
+**Using absolute URLs with cdnURL:**
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      cdnURL: 'https://demo.cloudimg.io/v7'
+    }
+  }
+})
+```
+
+With this configuration:
+
+- `src: 'https://example.com/image.jpg'` becomes `https://demo.cloudimg.io/v7/https://example.com/image.jpg`
+- `src: '/local/image.jpg'` becomes `https://demo.cloudimg.io/v7/{website-base-url}/local/image.jpg`
+
+**Using token with automatic baseURL fallback:**
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    cloudimage: {
+      token: 'demo',
+      apiVersion: 'v7'
+      // baseURL will automatically fall back to the website's base URL
+    }
+  }
+})
+```
+
+## Cloudimage Modifiers
 
 Beside the [standard modifiers](/usage/nuxt-img#modifiers), also you can pass Cloudimage-specific [Cloudimage-specific transformation](https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction) params to `modifiers` prop.
 
-## Cloudimage `fit` values
+## Cloudimage `fit` Values
 
-Beside [the standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudimage offers the following for extra resizing params:
+Beside the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudimage offers the following for extra resizing params:
 
-* `crop` - Crops the image to specified dimensions (width and height) and keeps proportions.
-
-* `face` - Crops the image automatically keeping the most prominent face.
-
-* `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid colour) to keep proportions.
-
-* `cropfit` - Sets crop or fit resize mode depending on the origin and the desired dimensions.
-
-* `bound` - Resizes to a given width and height box and keeps proportions. Similar to fit but without adding padding.
-
-* `boundmin` - Resizes an image while bounding the smaller dimension to the desired width or height while keeping proportions.
+- `crop` - Crops the image to specified dimensions (width and height) and keeps proportions.
+- `face` - Crops the image automatically keeping the most prominent face.
+- `fit` - Resizes the image to fit into a specified width and height box, adds padding (image or solid color) to keep proportions.
+- `cropfit` - Sets crop or fit resize mode depending on the origin and the desired dimensions.
+- `bound` - Resizes to a given width and height box and keeps proportions. Similar to fit but without adding padding.
+- `boundmin` - Resizes an image while bounding the smaller dimension to the desired width or height while keeping proportions.

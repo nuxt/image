@@ -1,6 +1,6 @@
-import { joinURL, encodeQueryItem } from 'ufo'
-import type { ProviderGetImage } from '../../types'
-import { createOperationsGenerator } from '#image'
+import { encodeQueryItem, joinURL } from 'ufo'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -11,7 +11,7 @@ const operationsGenerator = createOperationsGenerator({
     gravity: 'g',
     quality: 'q',
     format: 'f',
-    sharpen: 'sharpen'
+    sharpen: 'sharpen',
   },
   valueMap: {
     fit: {
@@ -19,31 +19,37 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'contain',
       fill: 'scale-down',
       outside: 'crop',
-      inside: 'pad'
+      inside: 'pad',
     },
     gravity: {
       auto: 'auto',
-      side: 'side'
-    }
+      side: 'side',
+    },
   },
   joinWith: ',',
-  formatter: (key, val) => encodeQueryItem(key, val)
+  formatter: (key, value) => encodeQueryItem(key, value),
 })
 
 const defaultModifiers = {}
 
-// https://developers.cloudflare.com/images/image-resizing/url-format/
-export const getImage: ProviderGetImage = (src, {
-  modifiers = {},
-  baseURL = '/'
-} = {}) => {
-  const mergeModifiers = { ...defaultModifiers, ...modifiers }
-  const operations = operationsGenerator(mergeModifiers as any)
-
-  // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
-  const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : joinURL(baseURL, src)
-
-  return {
-    url
-  }
+interface CloudflareOptions {
+  baseURL?: string
 }
+
+// https://developers.cloudflare.com/images/image-resizing/url-format/
+export default defineProvider<CloudflareOptions>({
+  getImage: (src, {
+    modifiers,
+    baseURL = '/',
+  }) => {
+    const mergeModifiers = { ...defaultModifiers, ...modifiers }
+    const operations = operationsGenerator(mergeModifiers as any)
+
+    // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
+    const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : src
+
+    return {
+      url,
+    }
+  },
+})

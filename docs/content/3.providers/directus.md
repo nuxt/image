@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-Integration between [Directus](https://directus.io/) and the image module.
+Integration between [Directus](https://directus.io) and the image module.
 
 To use this provider you just need to specify the base URL of your project.
 
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   image: {
     directus: {
       // This URL needs to include the final `assets/` directory
-      baseURL: 'http://localhost:8055/assets/',
+      baseURL: 'http://localhost:8055/assets'
     }
   }
 })
@@ -29,7 +29,7 @@ You can easily override default options:
 export default defineNuxtConfig({
   image: {
     directus: {
-      baseURL: 'http://mydirectus-domain.com/assets/',
+      baseURL: 'http://mydirectus-domain.com/assets',
       modifiers: {
         withoutEnlargement: 'true',
         transforms: [['blur', 4], ['negate']]
@@ -40,6 +40,7 @@ export default defineNuxtConfig({
 ```
 
 ## Modifiers
+
 All the default modifiers from [Directus documentation](https://docs.directus.io/reference/files.html#requesting-a-thumbnail) are available.
 
 ```vue
@@ -53,16 +54,20 @@ All the default modifiers from [Directus documentation](https://docs.directus.io
 />
 ```
 
-Since Directus exposes [the full sharp API](https://sharp.pixelplumbing.com/api-operation) through the `transforms` parameter, we can use it inside our `modifiers` prop:
+Since Directus exposes the full [sharp API](https://sharp.pixelplumbing.com/api-operation) through the `transforms` parameter, we can use it inside our `modifiers` prop:
 
 ```vue
 <NuxtImg
   provider="directus"
   src="ad514db1-eb90-4523-8183-46781437e7ee"
-  :modifiers="{ height: '512', withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] }"
+  :modifiers="{
+    height: '512',
+    withoutEnlargement: 'true',
+    transforms: [['blur', 4], ['negate']]
+  }"
 />
 ```
 
-::callout
+::note
 Note that the `transforms` parameter, as stated in the [Directus documentation](https://docs.directus.io/reference/files.html#advanced-transformations), is basically a list of lists. This is to facilitate the use of those sharp functions, like [`normalise`](https://sharp.pixelplumbing.com/api-operation#normalise), that would need multiple values in input: `transforms: [['normalise', 1, 99], ['blur', 4], ['negate']]`.
 ::

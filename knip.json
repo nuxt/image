@@ -1,0 +1,57 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [
+        "build.config.ts",
+        "src/module.ts",
+        "src/runtime/index.ts",
+        "src/runtime/components/**",
+        "src/runtime/composables/**",
+        "src/runtime/plugins/**",
+        "src/runtime/providers/**",
+        "src/runtime/server/**",
+        "scripts/*"
+      ],
+      "ignoreUnresolved": [
+        "#internal/nuxt-image"
+      ],
+      "ignoreDependencies": [
+        "vitest-environment-nuxt"
+      ]
+    },
+    "docs": {
+      "entry": [
+        "app/{components,layouts,pages,plugins,server}/**",
+        "app/{app,error}.vue",
+        "app/*.ts"
+      ],
+      "ignoreUnresolved": [
+        "#content/server"
+      ],
+      "ignoreDependencies": [
+        "@nuxt/content",
+        "@nuxt/ui",
+        "@nuxt/image",
+        "@nuxtjs/plausible",
+        "better-sqlite3",
+        "docus",
+        "tailwindcss"
+      ]
+    },
+    "example": {
+      "ignoreDependencies": [
+        "@nuxt/image"
+      ]
+    },
+    "playground": {
+      "entry": [
+        "app/providers/custom/index.ts",
+        "app/{components,layouts,pages,plugins,server}/**",
+        "app/{app,error}.vue",
+        "layers/**",
+        "*.ts"
+      ]
+    }
+  }
+}

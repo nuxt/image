@@ -8,16 +8,16 @@ links:
     size: xs
 ---
 
-Integration between [Glide](https://glide.thephpleague.com/) and the image module.
+Integration between [Glide](https://glide.thephpleague.com) and the image module.
 
-To use this provider you just need to specify the base url of your service in glide.
+To use this provider you just need to specify the base URL of your service in Glide.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     glide: {
-      // baseURL of your laravel application
-      baseURL: 'https://glide.herokuapp.com/1.0/'
+      // baseURL of your Laravel application
+      baseURL: 'https://glide.herokuapp.com/1.0'
     }
   }
 })

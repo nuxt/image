@@ -1,6 +1,6 @@
-import type { ImageInfo, ImageCTX } from '../../types/image'
+import type { ImageInfo, ImageCTX } from '@nuxt/image'
 
-export async function imageMeta (_ctx: ImageCTX, url: string): Promise<ImageInfo> {
+export async function imageMeta(_ctx: ImageCTX, url: string): Promise<ImageInfo> {
   // TODO: Reimplement cache using storage
   // const cache = getCache<ImageInfo>(ctx)
 
@@ -10,12 +10,11 @@ export async function imageMeta (_ctx: ImageCTX, url: string): Promise<ImageInfo
   // }
 
   const meta = await _imageMeta(url).catch((err) => {
-    // eslint-disable-next-line no-console
     console.error('Failed to get image meta for ' + url, err + '')
     return {
       width: 0,
       height: 0,
-      ratio: 0
+      ratio: 0,
     }
   })
 
@@ -23,8 +22,8 @@ export async function imageMeta (_ctx: ImageCTX, url: string): Promise<ImageInfo
   return meta
 }
 
-async function _imageMeta (url: string): Promise<ImageInfo> {
-  if (process.server) {
+async function _imageMeta(url: string): Promise<ImageInfo> {
+  if (import.meta.server) {
     const imageMeta = await import('image-meta').then(r => r.imageMeta)
     const data: Buffer = await fetch(url).then((res: any) => res.buffer())
     const metadata = imageMeta(data)
@@ -35,7 +34,7 @@ async function _imageMeta (url: string): Promise<ImageInfo> {
     const meta = {
       width: width!,
       height: height!,
-      ratio: width && height ? width / height : undefined
+      ratio: width && height ? width / height : undefined,
     }
 
     return meta
@@ -50,7 +49,7 @@ async function _imageMeta (url: string): Promise<ImageInfo> {
       const meta = {
         width: img.width,
         height: img.height,
-        ratio: img.width / img.height
+        ratio: img.width / img.height,
       }
       resolve(meta)
     }

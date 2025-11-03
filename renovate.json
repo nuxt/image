@@ -3,21 +3,23 @@
   "extends": [
     "github>nuxt/renovate-config-nuxt"
   ],
-  "baseBranches": [
+  "baseBranchPatterns": [
     "main"
-  ],
-  "ignoreDeps": [
-    "@nuxt/image"
   ],
   "packageRules": [
     {
+      "groupName": "ipx",
+      "matchPackageNames": [
+        "ipx",
+        "sharp"
+      ]
+    },
+    {
       "groupName": "docs",
       "matchPackageNames": [
-        "@nuxt/content"
-      ],
-      "matchPackagePatterns": [
-        "^@nuxthq/",
-        "^@nuxt/ui"
+        "@nuxt/content",
+        "/^@nuxthq//",
+        "/^@nuxt/ui/"
       ]
     }
   ]
