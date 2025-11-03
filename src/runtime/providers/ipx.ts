@@ -1,8 +1,15 @@
 import { joinURL, encodePath, encodeParam } from 'ufo'
-import type { IPXRuntimeConfig } from '../../ipx'
 import type { ImageModifiers } from '@nuxt/image'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
+
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions as CoreIPXOptions } from 'ipx'
+
+export interface IPXRuntimeConfig extends Omit<CoreIPXOptions, 'storage' | 'httpStorage'> {
+  http: HTTPStorageOptions
+  fs: NodeFSSOptions
+  baseURL: string
+}
 
 // Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
 // TODO: https://github.com/unjs/ipx/issues/199

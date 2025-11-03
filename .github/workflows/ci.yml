@@ -57,14 +57,17 @@ jobs:
         
       - run: pnpm dev:prepare
 
+      - name: 💪 Type check
+        run: pnpm test:types
+
       - name: 🛠 Build project
         run: pnpm build
 
       - name: 🧪 Test project
         run: pnpm test
 
-      - name: 💪 Type check
-        run: pnpm test:types
+      - name: 💪 Type check (built)
+        run: pnpm test:built:types
         
       - run: pnpm dev:build
 

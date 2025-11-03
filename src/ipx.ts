@@ -3,14 +3,10 @@ import { readdir } from 'node:fs/promises'
 import { join, relative } from 'pathe'
 import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
-import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
 import { hasProtocol } from 'ufo'
 import type { ProviderSetup } from './types'
-
-export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
-  baseURL: string
-}
+import type { IPXRuntimeConfig } from './runtime/providers/ipx'
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 

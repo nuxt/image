@@ -17,7 +17,9 @@ export interface ResolvedImageModifiers extends ImageModifiers {
   height: number
 }
 
-export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']> {
+type DefaultProvider = ProviderDefaults extends Record<'provider', unknown> ? ProviderDefaults['provider'] : never
+
+export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = DefaultProvider> {
   provider?: Provider
   preset?: string
   densities?: string

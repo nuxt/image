@@ -235,6 +235,8 @@ function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Om
   
   export const imageOptions = {
     ...${JSON.stringify(imageOptions, null, 2)},
+    /** @type {${JSON.stringify(imageOptions.provider)}} */
+    provider: ${JSON.stringify(imageOptions.provider)},
     providers: {
       ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
     }
