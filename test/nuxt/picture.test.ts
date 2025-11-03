@@ -19,6 +19,7 @@ describe('Renders simple image', () => {
     window.IntersectionObserver = class IntersectionObserver {
       root: any
       rootMargin: any
+      scrollMargin: any
       thresholds: any
       takeRecords: any
 

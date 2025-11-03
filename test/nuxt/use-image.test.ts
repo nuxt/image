@@ -14,10 +14,33 @@ describe('image helper', () => {
   })
 
   it('Deny undefined provider', () => {
-    expect(() => useImage().getImage('/test.png', { provider: 'invalid' })).toThrow(Error)
+    expect(() => useImage().getImage('/test.png', {
+      // @ts-expect-error invalid provider
+      provider: 'invalid',
+    })).toThrow(Error)
   })
 
   it('Deny undefined preset', () => {
     expect(() => useImage().getImage('/test.png', { preset: 'invalid' })).toThrow(Error)
+  })
+
+  it('is correctly typed for provider options', () => {
+    useImage().getImage('/test.png', {
+      provider: 'ipx',
+      modifiers: {
+        sharpen: 0.75,
+        // @ts-expect-error this is not a valid modifier for ipx
+        alkj: false,
+      },
+    })
+
+    // defaults to ipx as default provider
+    useImage().getImage('/test.png', {
+      modifiers: {
+        sharpen: 0.75,
+        // @ts-expect-error this is not a valid modifier for ipx
+        alkj: false,
+      },
+    })
   })
 })
