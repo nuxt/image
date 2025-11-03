@@ -57,6 +57,7 @@ export const operationsGenerator = createOperationsGenerator({
     background: 'b',
     position: 'pos',
   },
+  joinWith: encodeURIComponent('&'),
   formatter: (key, val: string | number | boolean) => encodeParam(key) + '_' + encodeParam(val.toString()),
 })
 
@@ -70,7 +71,7 @@ export default defineProvider<Partial<IPXOptions>>({
       delete modifiers.height
     }
 
-    const params = encodeURIComponent(operationsGenerator(modifiers) || '_')
+    const params = operationsGenerator(modifiers) || '_'
 
     if (!baseURL) {
       baseURL = joinURL(ctx.options.nuxt.baseURL, '/_ipx')
