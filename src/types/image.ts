@@ -1,6 +1,6 @@
 import type { RuntimeConfig } from '@nuxt/schema'
 import type { H3Event } from 'h3'
-import type { ConfiguredImageProviders, ProviderDefaults } from './module'
+import type { ConfiguredImageProviders, ImageProviders, ProviderDefaults } from './module'
 
 export interface ImageModifiers {
   width: number | string
@@ -55,7 +55,7 @@ export interface CreateImageOptions {
   }
   event?: H3Event
   presets: { [name: string]: ImageOptions }
-  provider: string
+  provider: (string & {}) | keyof ImageProviders
   screens: Record<string, number>
   alias: Record<string, string>
   domains: string[]
