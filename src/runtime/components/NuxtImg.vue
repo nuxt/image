@@ -146,13 +146,28 @@ onMounted(() => {
       img.srcset = sizes.value.srcset
     }
 
-    img.onload = (event) => {
-      placeholderLoaded.value = true
-      emit('load', event)
+    // img.decode() can avoid jank and flash
+    // see https://www.tunetheweb.com/blog/what-does-the-image-decoding-attribute-actually-do/
+    if (img.decode) {
+      img.decode()
+        .then(() => {
+          placeholderLoaded.value = true
+          emit('load', new Event('load'))
+        })
+        .catch((error) => {
+          emit('error', error)
+        })
     }
+    else {
+      // fallback for browsers that don't support decode() API
+      img.onload = (event) => {
+        placeholderLoaded.value = true
+        emit('load', event)
+      }
 
-    img.onerror = (event) => {
-      emit('error', event)
+      img.onerror = (event) => {
+        emit('error', event)
+      }
     }
 
     markFeatureUsage('nuxt-image')
