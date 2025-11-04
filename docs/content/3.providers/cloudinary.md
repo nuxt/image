@@ -10,17 +10,17 @@ links:
 
 Integration between [Cloudinary](https://cloudinary.com) and the image module.
 
-::callout
-If you are looking for more advanced Cloudinary usage or prebuilt components like VideoPlayer, OgImage or ProductGallery, check out Cloudinary module for Nuxt by visiting module [documentation](https://cloudinary.nuxtjs.org/) or GitHub [repository](https://github.com/nuxt-modules/cloudinary)
+::tip
+If you are looking for more advanced Cloudinary usage or prebuilt components like VideoPlayer, OgImage or ProductGallery, check out Cloudinary module for Nuxt by visiting module [documentation](https://cloudinary.nuxtjs.org) or GitHub [repository](https://github.com/nuxt-modules/cloudinary)
 ::
 
-To use this provider you just need to specify the base url of your project in cloudinary.
+To use this provider you just need to specify the base URL of your project in Cloudinary.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload/'
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/upload'
     }
   }
 })
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 
 To handle remote image data, you can either use [fetch](https://cloudinary.com/documentation/fetch_remote_images#remote_image_fetch_url) or [upload](https://cloudinary.com/documentation/fetch_remote_images#auto_upload_remote_resources).
 
-Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload) for the difference between the two.
+Consult the [Cloudinary documentation](https://cloudinary.com/documentation/fetch_remote_images#comparing_fetch_to_auto_upload) for the difference between the two.
 
 ### Fetch
 
@@ -38,17 +38,22 @@ Consult the cloudinary [documentation](https://cloudinary.com/documentation/fetc
 export default defineNuxtConfig({
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch/'
+      baseURL: 'https://res.cloudinary.com/<your-cloud-name>/image/fetch'
     }
   }
 })
 ```
 
 ```vue
-<NuxtImg provider="cloudinary" src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+<NuxtImg
+  provider="cloudinary"
+  src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"
+  width="300"
+  height="200"
+/>
 ```
 
-Note: You will need to configure your "Allowed fetch domains" to do the above.
+Note: You will need to configure your 'Allowed fetch domains' to do the above.
 
 ### Upload
 
@@ -63,28 +68,33 @@ export default defineNuxtConfig({
 ```
 
 ```vue
-<NuxtImg provider="cloudinary" src="/commons/a/ae/Olympic_flag.jpg" width="300" height="200" />
+<NuxtImg
+  provider="cloudinary"
+  src="/commons/a/ae/Olympic_flag.jpg"
+  width="300"
+  height="200"
+/>
 ```
 
-Note: You will need to configure your "Auto upload mapping" to do the above.
+Note: You will need to configure your 'Auto upload mapping' to do the above.
 
 ## Cloudinary `fit` values
 
-Beside [the standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
+Beside the [standard values for `fit` property](/usage/nuxt-img#fit) of Nuxt image and Nuxt picture, Cloudinary offers the following for extra resizing experience:
 
-* `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
-* `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
-* `coverLimit` - Same as the `cover` mode but only if the original image is **larger** than the given limit (width and height)
-* `thumbnail`- Generate a thumbnail using face detection.
-* `cropping` - Used to extract a given width & height out of the original image. The original proportions are retained.
+- `minCover` - Same like `cover` but only resizing if the original image is **smaller** than the given minimum (width and height).
+- `minInside` - Same as the `inside` mode but only if the original image is **smaller** than the given minimum (width and height).
+- `coverLimit` - Same as the `cover` mode but only if the original image is **larger** than the given limit (width and height)
+- `thumbnail`- Generate a thumbnail using face detection.
+- `cropping` - Used to extract a given width & height out of the original image. The original proportions are retained.
 
 Check out [Cloudinary resize mode Documentation](https://cloudinary.com/documentation/image_transformation_reference#crop_parameter) for more details.
 
-## Cloudinary modifiers
+## Cloudinary Modifiers
 
 Beside the [standard modifiers](/usage/nuxt-img#modifiers), you can also pass the following Cloudinary-specific transformation params to `modifiers` prop.
 
-::callout
+::note
 The Cloudinary provider automatically enables [automatic format selection](https://cloudinary.com/documentation/image_transformations#f_auto) and [automatic quality selection](https://cloudinary.com/documentation/image_optimization#automatic_quality_selection_q_auto) for best performance.
 ::
 
@@ -92,8 +102,8 @@ The Cloudinary provider automatically enables [automatic format selection](https
 
 Accepted values:
 
-* Any degree number, or
-* `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
+- Any degree number, or
+- `auto_right` | `auto_left` | `ignore` | `vflip` | `hflip`
 
 To rotate or flip a given asset by certain degrees, or automatically based on orientation.
 
@@ -101,11 +111,11 @@ To rotate or flip a given asset by certain degrees, or automatically based on or
 
 Round the specified corners of the desired image. If pass only a number or `max` (all corners will be applied). The syntax for other use cases is as below:
 
-* Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
-* Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
-* Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
+- Using 2 values: `top_left_bottom_right_radius:top_right_bottom_left_radius`(Example: `20:40`)
+- Using 3 values: `top_left:top_right_bottom_left:bottom_right` (Example: `20:30:40`)
+- Using 4 values: `top_left:top_right:bottom_left:bottom_right` (Example: `20:0:40:40`)
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -120,7 +130,7 @@ Round the specified corners of the desired image. If pass only a number or `max`
 Detemine which part of the image to cropped or to place the overlay.
 Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces`, `multipleFacesCenter`, `north`, `northEast`, `northWest`, `west`, `southWest`, `south`, `southEast`, `east`, `center`
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -135,7 +145,7 @@ Accepted values: `auto`, `subject`, `face`, `sink`, `faceCenter`, `multipleFaces
 
 Apply a filter or an effect on the desired asset. See [Effects for images](https://cloudinary.com/documentation/image_transformation_reference#effect_parameter) for the full list of syntax and available effects.
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -150,7 +160,7 @@ Apply a filter or an effect on the desired asset. See [Effects for images](https
 
 Color to use when text captions, shadow effect and colorize effect are in use.
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -171,7 +181,7 @@ The target device pixel ratio for the asset. `auto` means automatically matching
 
 Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -184,27 +194,23 @@ Adjust the opacity of the desired image. Scale: 0 to 100 (%).
 
 Create a layer **over** the base image. This can be use with `x`, `y`, `gravity` to customize the position of the overlay.
 
-```html
-<NuxtImg
-  provider="cloudinary"
-  src="/remote/nuxt-org/blog/going-full-static/main.png"
-  width="100"
-  height="100"
-  fit="thumb"
-  :modifiers="modifiers"
-/>
+```vue [index.vue]
+<template>
+  <NuxtImg
+    provider="cloudinary"
+    src="/remote/nuxt-org/blog/going-full-static/main.png"
+    width="100"
+    height="100"
+    fit="thumb"
+    :modifiers="modifiers"
+  />
+</template>
 
-<script>
-  export default {
-    data() {
-      return {
-        modifiers: {
-          gravity: 'north',
-          overlay: 'text:default_style:Hello+World',
-        }
-      }
-    }
-  }
+<script setup lang="ts">
+const modifiers = {
+  gravity: 'north',
+  overlay: 'text:default_style:Hello+World'
+}
 </script>
 ```
 
@@ -222,7 +228,7 @@ A pre-defined named transformation to apply to the asset.
 
 Use together with `fit='crop'` or `fit='thumb'` to decide how much of original image/video surronding the face to keep using face detection.
 
-```html [index.vue]
+```vue [index.vue]
 <template>
   <NuxtImg
     provider="cloudinary"
@@ -234,25 +240,19 @@ Use together with `fit='crop'` or `fit='thumb'` to decide how much of original i
   />
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        modifiers: {
-          zoom: 0.75,
-          gravity: "face"
-        }
-      }
-    }
-  }
+<script setup lang="ts">
+const modifiers = {
+  zoom: 0.75,
+  gravity: 'face'
+}
 </script>
 ```
 
 ### `colorSpace`
 
-Color space to use for the delivery image url. See [Color space Documentation](https://cloudinary.com/documentation/image_transformation_reference#color_space_parameter) for accepted values details.
+Color space to use for the delivery image URL. See [Color space Documentation](https://cloudinary.com/documentation/image_transformation_reference#color_space_parameter) for accepted values details.
 
-```html
+```vue
 <NuxtImg
   provider="cloudinary"
   src="/remote/nuxt-org/blog/going-full-static/main.png"
@@ -273,6 +273,6 @@ To define the density number when converting a vector file to image format.
 
 To crop or resize the asset to a new aspect ratio, for use with a crop/resize mode that determines how the asset is adjusted to the new dimensions.
 
-::callout
+::tip
 See [Cloudinary Image Transformation API](https://cloudinary.com/documentation/image_transformation_reference) for more details.
 ::

@@ -8,9 +8,13 @@ links:
     size: xs
 ---
 
-When deploying your nuxt applications to [Vercel](https://vercel.com/) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
+When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
 
-This provider will be enabled by default in vercel deployments.
+This provider will be enabled by default in Vercel deployments.
+
+::warning
+Vercel requires you to explicitly list all the widths used in your app. [See example below.](#sizes)
+::
 
 ## Domains
 
@@ -18,31 +22,67 @@ To use external URLs (images not in `public/` directory), hostnames should be wh
 
 **Example:**
 
-```ts [nuxt.config]
-export default {
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
-    domains: [
-      'avatars0.githubusercontent.com'
-    ]
+    domains: ['avatars0.githubusercontent.com']
   }
-}
+})
 ```
 
 ## Sizes
 
-Specify any custom `width` property you use in `<NuxtImg>`, `<NuxtPicture>` and `$img`.
+You need to specify **every custom width** used in `<NuxtImg>`, `<NuxtPicture>` or `$img` for Vercel to resize them properly ([source](https://vercel.com/docs/build-output-api/v3/configuration#api)).
 
 If a width is not defined, image will fallback to the next bigger width.
 
+::tip
+Don't forget to also take into account [`densities`](/get-started/configuration#densities).
+::
+
 **Example:**
 
-```ts [nuxt.config]
-export default {
+::code-group
+
+```vue [index.vue]
+<template>
+  <NuxtImg
+    height="40"
+    width="40"
+    preset="cover"
+    src="/nuxt-icon.png"
+  />
+</template>
+```
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
   image: {
     screens: {
       icon: 40,
-      avatar: 24
+      icon2x: 80
     }
   }
-}
+})
+```
+
+::
+
+## Options
+
+### `formats`
+
+- Type: **String[]** (optional)
+
+Specify the image format allow list for optimization.
+By default, the provider set the following formats: `['image/webp', 'image/avif']`.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    vercel: {
+      formats: ['image/webp']
+    }
+  }
+})
 ```

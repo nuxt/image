@@ -11,67 +11,68 @@ on:
 permissions: {}
 
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: corepack enable
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 22
           cache: "pnpm"
-      - run: pnpm install
 
-      # https://github.com/vitejs/vite/blob/main/.github/workflows/ci.yml#L62
-      # Install playwright's binary under custom directory to cache
-      - name: Set Playwright path (non-windows)
-        if: runner.os != 'Windows'
-        run: echo "PLAYWRIGHT_BROWSERS_PATH=$HOME/.cache/playwright-bin" >> $GITHUB_ENV
-      - name: Set Playwright path (windows)
-        if: runner.os == 'Windows'
-        run: echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
+      - name: 📦 Install dependencies
+        run: pnpm install
+        
+      - run: pnpm dev:prepare
 
-      - name: Cache Playwright's binary
-        uses: actions/cache@v4
+      - name: 🔠 Lint project
+        run: pnpm lint
+
+      - name: ✂️ Knip project
+        run: pnpm knip --workspace .
+
+      - name: ⚙️ Check package engines
+        run: pnpm installed-check -d --no-workspaces
+
+  ci:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - run: corepack enable
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          # Playwright removes unused browsers automatically
-          # So does not need to add playwright version to key
-          key: ${{ runner.os }}-playwright-bin-v1
-          path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
+          node-version: lts/-1
+          cache: "pnpm"
+
+      - name: 📦 Install dependencies
+        run: pnpm install
 
       - name: Install Playwright
         # does not need to explicitly set chromium after https://github.com/microsoft/playwright/issues/14862 is solved
         run: pnpm playwright-core install chromium
         
       - run: pnpm dev:prepare
-      - run: pnpm lint
-      - run: pnpm test -- --coverage
-      - run: pnpm build
-      - run: pnpm test:types
-      - run: pnpm dev:build
-      - uses: codecov/codecov-action@v4
 
-  release:
-    runs-on: ubuntu-latest
-    needs: ci
-    if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip-release]')
-    permissions:
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm dev:prepare
-      - run: pnpm build
-      - name: Release Edge
-        if: |
-          github.event_name == 'push' &&
-          !contains(github.event.head_commit.message, '[skip-release]')
-        run: ./scripts/release-edge.sh
+      - name: 💪 Type check
+        run: pnpm test:types
+
+      - name: 🛠 Build project
+        run: pnpm build
+
+      - name: 🧪 Test project
+        run: pnpm test
+
+      - name: 💪 Type check (built)
+        run: pnpm test:built:types
+        
+      - run: pnpm dev:build
+
+      - name: 🟩 Coverage
+        uses: codecov/codecov-action@v5
+        if: matrix.os != 'windows-latest'
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
-          NPM_CONFIG_PROVENANCE: true
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

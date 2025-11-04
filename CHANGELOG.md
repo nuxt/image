@@ -2,6 +2,291 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v1.10.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.9.0...v1.10.0)
+
+### 🚀 Enhancements
+
+- **imageengine:** Add new modifiers ([#1701](https://github.com/nuxt/image/pull/1701))
+- **filerobot:** Add new provider ([#1680](https://github.com/nuxt/image/pull/1680))
+
+### 🩹 Fixes
+
+- **NuxtImg:** Do not access `props` in template ([e2e61fa](https://github.com/nuxt/image/commit/e2e61fa))
+- **NuxtPicture:** Make `img-attrs` and `attrs` responsive ([#1696](https://github.com/nuxt/image/pull/1696))
+
+### 📖 Documentation
+
+- Overhaul documentation ([#1710](https://github.com/nuxt/image/pull/1710))
+- Add `filerobot` page ([ac056cc](https://github.com/nuxt/image/commit/ac056cc))
+
+### 📦 Build
+
+- Update to latest `nuxt/module-builder` ([#1668](https://github.com/nuxt/image/pull/1668))
+
+### 🏡 Chore
+
+- Skip missing commit in generating changelog ([a658787](https://github.com/nuxt/image/commit/a658787))
+- Revert to previous module builder ([54dc469](https://github.com/nuxt/image/commit/54dc469))
+- Remove unneeded `.nuxtrc` config ([#1708](https://github.com/nuxt/image/pull/1708))
+- Temporarily ignore typescript upgrade ([473f8f1](https://github.com/nuxt/image/commit/473f8f1))
+- Bump `@nuxtjs/tailwindcss` ([25379fb](https://github.com/nuxt/image/commit/25379fb))
+- Bump `@nuxtjs/tailwindcss` version ([36fb95e](https://github.com/nuxt/image/commit/36fb95e))
+
+### 🤖 CI
+
+- Force latest corepack ([090c31b](https://github.com/nuxt/image/commit/090c31b))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](https://github.com/danielroe))
+- Nicolas Payot ([@nicolaspayot](https://github.com/nicolaspayot))
+- AdityaKantipudi1 ([@AdityaKantipudi1](https://github.com/AdityaKantipudi1))
+- Damian Głowala ([@DamianGlowala](https://github.com/DamianGlowala))
+- Codeflorist ([@codeflorist](https://github.com/codeflorist))
+
+## v1.8.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.8.0...v1.8.1)
+
+### 🩹 Fixes
+
+- Suffix export of runtime utils with `/index` ([#1467](https://github.com/nuxt/image/pull/1467))
+- **vercel:** Added missing `formats` config & improved documentation ([#1514](https://github.com/nuxt/image/pull/1514))
+
+### 📖 Documentation
+
+- Update link to downloads count badge ([102d474](https://github.com/nuxt/image/commit/102d474))
+
+### 🏡 Chore
+
+- Use `tinyexec` internally ([3b9a4ea](https://github.com/nuxt/image/commit/3b9a4ea))
+
+### ❤️ Contributors
+
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+- Arnaud Gissinger ([@mathix420](http://github.com/mathix420))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+
+## v1.8.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.7.1...v1.8.0)
+
+### 🚀 Enhancements
+
+- **cloudinary:** Support reading project from absolute url ([#1361](https://github.com/nuxt/image/pull/1361))
+- Provide runtimeConfig to `getImage` ([#1428](https://github.com/nuxt/image/pull/1428))
+
+### 🩹 Fixes
+
+- **hygraph:** New asset management support ([#1415](https://github.com/nuxt/image/pull/1415))
+- Prevent hydration mismatch in `<NuxtImg>` ([#1445](https://github.com/nuxt/image/pull/1445))
+- **nuxt-picture:** Check before accessing index ([917242a](https://github.com/nuxt/image/commit/917242a))
+- Mark props as not required rather than `default: undefined` ([#1450](https://github.com/nuxt/image/pull/1450))
+- Handle undefined indices more accurately ([#1451](https://github.com/nuxt/image/pull/1451))
+- **hygraph:** Add back tests and refactor splitter ([#1452](https://github.com/nuxt/image/pull/1452))
+
+### ❤️ Contributors
+
+- Connor Pearson <cjp822@gmail.com>
+- Mark Brouch ([@markbrouch](http://github.com/markbrouch))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- Tim Benniks <tbenniks@gmail.com>
+
+## v1.7.1
+
+[compare changes](https://github.com/nuxt/image/compare/v1.7.0...v1.7.1)
+
+### 🩹 Fixes
+
+- **cloudinary:** Map `cover` to `lfill` mode ([#1355](https://github.com/nuxt/image/pull/1355))
+- Import runtime types from module entrypoint ([#1384](https://github.com/nuxt/image/pull/1384))
+- Update to latest `@nuxt/module-builder` ([#1439](https://github.com/nuxt/image/pull/1439))
+- Only add preload links on server ([510e719](https://github.com/nuxt/image/commit/510e719))
+- **weserv:** Map rotate operation to `ro` ([#1441](https://github.com/nuxt/image/pull/1441))
+
+### 💅 Refactors
+
+- Convert `<NuxtImg>` to SFC ([#1435](https://github.com/nuxt/image/pull/1435))
+- Convert `<NuxtPicture>` to SFC ([#1432](https://github.com/nuxt/image/pull/1432))
+- Use more `import.meta.*` properties ([#1440](https://github.com/nuxt/image/pull/1440))
+
+### 📖 Documentation
+
+- Update deps ([86b7d9b](https://github.com/nuxt/image/commit/86b7d9b))
+- Add resolution for nuxt ui ([3a98a68](https://github.com/nuxt/image/commit/3a98a68))
+- Prerender index ([59813cf](https://github.com/nuxt/image/commit/59813cf))
+- Prepare before build ([#1405](https://github.com/nuxt/image/pull/1405))
+- Fix inconsistent spelling ([#1421](https://github.com/nuxt/image/pull/1421))
+- Capitalize title ([#1393](https://github.com/nuxt/image/pull/1393))
+
+### 🏡 Chore
+
+- Refresh lockfile ([5524ae6](https://github.com/nuxt/image/commit/5524ae6))
+- Add subpath exports and set `type: module` ([04cd4cc](https://github.com/nuxt/image/commit/04cd4cc))
+- Remove unneeded lazy from regexp ([16b20b4](https://github.com/nuxt/image/commit/16b20b4))
+- Indicate compatibility with new v4 major ([#1385](https://github.com/nuxt/image/pull/1385))
+- Add @danielroe to code owners ([47f8b2c](https://github.com/nuxt/image/commit/47f8b2c))
+- Add `compatibilityDate` ([8e2a01a](https://github.com/nuxt/image/commit/8e2a01a))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- @beer ([@iiio2](http://github.com/iiio2))
+- Gangan ([@shinGangan](http://github.com/shinGangan))
+- Benjamin Canac ([@benjamincanac](http://github.com/benjamincanac))
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+- Ptdev <gomes.roberto@gmail.com>
+
+## v1.7.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.6.0...v1.7.0)
+
+### 🚀 Enhancements
+
+- Allow specifying `fetchpriority` when preloading images ([#989](https://github.com/nuxt/image/pull/989))
+
+### 🩹 Fixes
+
+- Ensure `src` comes after `loading` when rendering image ([#1338](https://github.com/nuxt/image/pull/1338))
+
+### 📖 Documentation
+
+- Fix typo in get-started/installation ([#1344](https://github.com/nuxt/image/pull/1344))
+
+### 🤖 CI
+
+- Add codecov token ([#1342](https://github.com/nuxt/image/pull/1342))
+
+### ❤️ Contributors
+
+- Jonas Thelemann <e-mail+github@jonas-thelemann.de>
+- Tom Tang ([@qwerzl](http://github.com/qwerzl))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Ragura ([@Ragura](http://github.com/Ragura))
+
+## v1.6.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.5.0...v1.6.0)
+
+### 🚀 Enhancements
+
+- Configure `domains` with `NUXT_IMAGE_DOMAINS` ([#1332](https://github.com/nuxt/image/pull/1332))
+- **nuxt-img:** Add `placeholderClass` prop ([#1111](https://github.com/nuxt/image/pull/1111))
+
+### 🩹 Fixes
+
+- **hygraph:** Support new hygraph asset system ([#1321](https://github.com/nuxt/image/pull/1321))
+- **uploadcare:** Omit base when resolved URL is returned ([#1254](https://github.com/nuxt/image/pull/1254))
+- Handle `undefined` or empty image source values ([#1300](https://github.com/nuxt/image/pull/1300))
+- Reduce warnings about `density` values > 2 ([dad493a](https://github.com/nuxt/image/commit/dad493a))
+- **netlify:** Normalise `jpeg` format to `jpg` ([a59e57c](https://github.com/nuxt/image/commit/a59e57c))
+
+### 📖 Documentation
+
+- Use new `nuxi module add` command in installation ([#1310](https://github.com/nuxt/image/pull/1310))
+- Warn `<NuxtPicture>` doesn't support different sources ([#1326](https://github.com/nuxt/image/pull/1326))
+
+### 🏡 Chore
+
+- Migrate to eslint v9 ([#1333](https://github.com/nuxt/image/pull/1333))
+- Slight reformatting ([3baadb5](https://github.com/nuxt/image/commit/3baadb5))
+- Lint test files ([e8db947](https://github.com/nuxt/image/commit/e8db947))
+- Bump `devDependencies` ([74605cb](https://github.com/nuxt/image/commit/74605cb))
+
+### ✅ Tests
+
+- Improve test stability ([42646f4](https://github.com/nuxt/image/commit/42646f4))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Thimo ([@ThimoDEV](http://github.com/ThimoDEV))
+- Nathan Chase ([@nathanchase](http://github.com/nathanchase))
+- Aaron Lejeune ([@aaronLejeune](http://github.com/aaronLejeune))
+- Lehoczky Zoltán ([@Lehoczky](http://github.com/Lehoczky))
+- Scott Kennedy ([@scottyzen](http://github.com/scottyzen))
+- Tim Benniks <tbenniks@gmail.com>
+
+## v1.5.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.4.0...v1.5.0)
+
+### 🚀 Enhancements
+
+- **netlify:** Support `domains` option with Netlify Image CDN ([#1287](https://github.com/nuxt/image/pull/1287))
+
+### 🩹 Fixes
+
+- Opt in to `import.meta.*` properties ([#1301](https://github.com/nuxt/image/pull/1301))
+- Don't attempt to parse falsy values in `options.domains` ([#1305](https://github.com/nuxt/image/pull/1305))
+
+### 📖 Documentation
+
+- Move to @nuxt/fonts ([812da3b](https://github.com/nuxt/image/commit/812da3b))
+- Remove conf for old modules ([1490f0e](https://github.com/nuxt/image/commit/1490f0e))
+
+### 🏡 Chore
+
+- Update changelog ([c1fd9b8](https://github.com/nuxt/image/commit/c1fd9b8))
+
+### ✅ Tests
+
+- Close out playwright `page` after each test ([2b4bac9](https://github.com/nuxt/image/commit/2b4bac9))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Matt Kane <matt.kane@netlify.com>
+- Damian Głowala ([@DamianGlowala](http://github.com/DamianGlowala))
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+
+## v1.4.0
+
+[compare changes](https://github.com/nuxt/image/compare/v1.3.0...v1.4.0)
+
+### 🚀 Enhancements
+
+- Add performance feature detection markers ([#1221](https://github.com/nuxt/image/pull/1221))
+- Support Netlify Image CDN ([#1234](https://github.com/nuxt/image/pull/1234))
+- Add `@error` event from `<NuxtPicture>` ([#1252](https://github.com/nuxt/image/pull/1252))
+
+### 🩹 Fixes
+
+- **ipx:** Temporarily downgrade ipx/sharp ([#1265](https://github.com/nuxt/image/pull/1265))
+
+### 📖 Documentation
+
+- Fix providers list ([8ad772e](https://github.com/nuxt/image/commit/8ad772e))
+
+### 🏡 Chore
+
+- **docs:** Upgrade versions and add carbon ads ([503b663](https://github.com/nuxt/image/commit/503b663))
+- Use explicit version to bust stackblitz cache ([ae93934](https://github.com/nuxt/image/commit/ae93934))
+- Assert event exists ([8701991](https://github.com/nuxt/image/commit/8701991))
+- Pin `vue` for docs hotfix ([b56c760](https://github.com/nuxt/image/commit/b56c760))
+- Upgrade ipx/sharp separately ([9a711e6](https://github.com/nuxt/image/commit/9a711e6))
+- Release `@nuxt/image-nightly` with changelogen ([074d12e](https://github.com/nuxt/image/commit/074d12e))
+
+### 🤖 CI
+
+- Remove read permission ([f62a9eb](https://github.com/nuxt/image/commit/f62a9eb))
+- Add changelogensets ([25d19ec](https://github.com/nuxt/image/commit/25d19ec))
+- Add missing import ([cfb2e7d](https://github.com/nuxt/image/commit/cfb2e7d))
+
+### ❤️ Contributors
+
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+- Arkadiusz Sygulski <arkadiusz@sygulski.pl>
+- Domenik Reitzner 
+- Sébastien Chopin ([@Atinux](http://github.com/Atinux))
+- Matt Kane <m@mk.gg>
+- Kara
+
 ## v1.3.0
 
 [compare changes](https://github.com/nuxt/image/compare/v1.2.0...v1.3.0)

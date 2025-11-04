@@ -1,8 +1,8 @@
-import { joinURL } from 'ufo'
-import type { ProviderGetImage } from '../../types'
-import { createOperationsGenerator } from '#image'
+import { joinURL, encodePath } from 'ufo'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
-export const operationsGenerator = createOperationsGenerator({
+const operationsGenerator = createOperationsGenerator({
   keyMap: {
     width: 'w',
     height: 'h',
@@ -15,7 +15,9 @@ export const operationsGenerator = createOperationsGenerator({
     screenPercent: 'pc',
     crop: 'cr',
     inline: 'in',
-    metadata: 'meta'
+    metadata: 'meta',
+    maxDpr: 'maxdpr',
+    download: 'dl',
   },
   valueMap: {
     fit: {
@@ -23,15 +25,16 @@ export const operationsGenerator = createOperationsGenerator({
       contain: 'letterbox',
       fill: 'stretch',
       inside: 'box',
-      outside: 'box'
+      outside: 'box',
+      productletterbox: 'productletterbox',
     },
     format: {
-      jpeg: 'jpg'
+      jpeg: 'jpg',
     },
-    quality (value: string) {
+    quality(value: string) {
       // ImageEngine uses compression, which is the opposite of quality,
       // so quality 90 == compression 10.  Convert using: compression = 100 - quality
-      let compression = (100 - parseInt(value, 10))
+      let compression = (100 - Number.parseInt(value, 10))
 
       // ImageEngine's values are 0-99 (100 values), whereas Nuxt uses 0-100 (101 values)
       // so we clip the upper bound at 99 if 100 was requested.
@@ -39,15 +42,21 @@ export const operationsGenerator = createOperationsGenerator({
         compression = 99
       }
       return compression.toString()
-    }
+    },
   },
   joinWith: '/',
-  formatter: (key, value) => `${key}_${value}`
+  formatter: (key, value: string | number) => encodePath(`${key}_${value}`),
 })
 
-export const getImage: ProviderGetImage = (src, { modifiers = {}, baseURL = '/' } = {}) => {
-  const operations = operationsGenerator(modifiers)
-  return {
-    url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : ''))
-  }
+interface ImageEngineOptions {
+  baseURL?: string
 }
+
+export default defineProvider<ImageEngineOptions>({
+  getImage: (src, { modifiers, baseURL = '/' }) => {
+    const operations = operationsGenerator(modifiers)
+    return {
+      url: joinURL(baseURL, src + (operations ? ('?imgeng=/' + operations) : '')),
+    }
+  },
+})

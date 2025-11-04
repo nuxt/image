@@ -1,13 +1,13 @@
-import { readdir } from 'fs/promises'
-import { fileURLToPath } from 'url'
+import { readdir } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { images } from '../providers'
-import { providers as playgroundProviders } from '../../playground/providers'
+import { providers as playgroundProviders } from '../../playground/app/providers'
 
 const missingProviderTests = [
   'ipxStatic', // build-time-only alias for ipx
   'strapi', // covered in a unique test
-  'layer0' // backwards-compatible alias for edgio
+  'strapi5', // covered in a unique test
 ]
 
 describe('Provider coverage', async () => {

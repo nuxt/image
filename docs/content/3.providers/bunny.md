@@ -8,18 +8,16 @@ links:
     size: xs
 ---
 
-Integration between [Bunny](https://bunny.net/) and the image module.
+Integration between [Bunny](https://bunny.net) and the image module.
 
 To use this provider you just need to specify the base URL of your project.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    bunny: {
-      baseURL: "https://<your-hostname>.b-cdn.net",
-    },
-  },
-});
+    bunny: {}
+  }
+})
 ```
 
 ## Modifiers

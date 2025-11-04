@@ -8,18 +8,18 @@ links:
     size: xs
 ---
 
-Integration between [Aliyun CDN](https://cdn.console.aliyun.com/) and the image module.
+Integration between [Aliyun CDN](https://cdn.console.aliyun.com) and the image module.
 
-To use this provider you just need to specify the base url (zone) of your service:
+To use this provider you just need to specify the base URL (zone) of your service:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
     aliyun: {
-      baseURL: "https://that-test.site",
-    },
-  },
-});
+      baseURL: 'https://that-test.site'
+    }
+  }
+})
 ```
 
 **Example:**
@@ -41,7 +41,7 @@ Default: `/`
 
 Your deployment's domain (zone).
 
-## modifiers
+## Modifiers
 
 **Example:**
 
@@ -51,10 +51,10 @@ Your deployment's domain (zone).
     fw: 900,
     fh: 200
   },
-  rotate:180,
-  bright:50
+  rotate: 180,
+  bright: 50,
   ...
 }
 ```
 
-For more modifiers configuration items, see [aliyun cdn docs](https://help.aliyun.com/zh/cdn/user-guide/image-editing/)
+For more modifiers configuration items, see [Aliyun CDN docs](https://help.aliyun.com/zh/cdn/user-guide/image-editing).

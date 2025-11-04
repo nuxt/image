@@ -1,12 +1,12 @@
 import { joinURL, hasProtocol } from 'ufo'
-import type { ProviderGetImage } from '../../types'
-import { createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
     fit: 'func',
     quality: 'q',
-    format: 'force_format'
+    format: 'force_format',
   },
   valueMap: {
     fit: {
@@ -14,55 +14,61 @@ const operationsGenerator = createOperationsGenerator({
       contain: 'fit',
       fill: 'cover',
       inside: 'bound',
-      outside: 'boundmin'
-    }
+      outside: 'boundmin',
+    },
   },
-  joinWith: '&',
-  formatter: (key, value) => `${key}=${value}`
 })
 
+interface CloudimageOptions {
+  token: string
+  apiVersion?: string
+  baseURL?: string
+  cdnURL?: string
+}
+
 // https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction
-export const getImage: ProviderGetImage = (src, {
-  modifiers = {},
-  baseURL = '',
-  token = '',
-  apiVersion = '',
-  cdnURL = ''
-} = {}) => {
-  const operations = operationsGenerator(modifiers)
-  const query = (operations ? ('?' + operations) : '')
+export default defineProvider<CloudimageOptions>({
+  getImage: (src, {
+    modifiers,
+    baseURL,
+    token = '',
+    apiVersion = '',
+    cdnURL = '',
+  }, ctx) => {
+    const operations = operationsGenerator(modifiers)
+    const query = (operations ? ('?' + operations) : '')
 
-  if (process.dev) {
-    const warning = []
+    if (import.meta.dev) {
+      const warning = []
 
-    if (!baseURL) {
-      warning.push('<baseURL>')
-    }
+      if (!token && !cdnURL) {
+        warning.push('<token> or <cdnURL>')
+      }
 
-    if (!token && !cdnURL) {
-      warning.push('<token> or <cdnURL>')
-    }
-
-    if (warning.length > 0) {
-      // eslint-disable-next-line no-console
-      console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
-      return {
-        url: joinURL('<token>', '<baseURL>', src) + query
+      if (warning.length > 0) {
+        console.warn(`[cloudimage] ${warning.join(', ')} is required to build image URL`)
+        return {
+          url: joinURL('<token>', '<baseURL>', src) + query,
+        }
       }
     }
-  }
 
-  if (!cdnURL) {
-    cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
-  }
-
-  if (hasProtocol(src)) {
-    return {
-      url: joinURL(src) + query
+    if (!cdnURL) {
+      cdnURL = `https://${token}.cloudimg.io/${apiVersion}`
     }
-  }
 
-  return {
-    url: joinURL(cdnURL, baseURL, src) + query
-  }
-}
+    if (hasProtocol(src)) {
+      return {
+        url: joinURL(cdnURL, src) + query,
+      }
+    }
+
+    if (!baseURL) {
+      baseURL = ctx.options.nuxt.baseURL
+    }
+
+    return {
+      url: joinURL(cdnURL, baseURL, src) + query,
+    }
+  },
+})
