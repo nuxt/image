@@ -1,17 +1,12 @@
 import { arch, platform } from 'node:os'
 import { readdir } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
-import { join, relative, resolve } from 'pathe'
+import { join, relative } from 'pathe'
 import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
-import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions } from 'ipx'
 import { defu } from 'defu'
 import { hasProtocol } from 'ufo'
 import type { ProviderSetup } from './types'
-
-export type IPXRuntimeConfig = Omit<IPXOptions, 'storage' | 'httpStorage'> & { http: HTTPStorageOptions, fs: NodeFSSOptions } & {
-  baseURL: string
-}
+import type { IPXRuntimeConfig } from './runtime/providers/ipx'
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
@@ -32,13 +27,6 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   // Options
-  const publicDirs = nuxt.options._layers.map((layer) => {
-    const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
-    const layerOptions = isRootLayer ? nuxt.options : layer.config
-    const path = isRootLayer ? moduleOptions.dir : layerOptions.dir?.public || 'public'
-
-    return resolve(layerOptions.srcDir, path)
-  }).filter(dir => existsSync(dir))
   const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
@@ -48,7 +36,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
       ...providerOptions.options?.alias,
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dir: nuxt.options.dev ? publicDirs : relativeDir,
+      dir: nuxt.options.dev ? moduleOptions.dirs : relativeDir,
       ...providerOptions.options?.fs,
     },
     http: (providerOptions.options?.http !== false) && {
@@ -63,7 +51,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxHandler = <NitroEventHandler>{
     route: `${ipxBaseURL}/**`,
     middleware: false,
-    handler: resolver.resolve('./runtime/ipx'),
+    handler: resolver.resolve('./runtime/server/routes/_ipx'),
   }
 
   if (!setupOptions?.isStatic) {
@@ -72,7 +60,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
 
   // Prerenderer
   if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: publicDirs } }, ipxOptions)
+    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: moduleOptions.dirs } }, ipxOptions)
     nitro.options._config.handlers!.push(ipxHandler)
   }
 

@@ -1,21 +1,30 @@
 import type { RuntimeConfig } from '@nuxt/schema'
 import type { H3Event } from 'h3'
-import type { ConfiguredImageProviders } from './module'
+import type { ConfiguredImageProviders, ImageProviders, ProviderDefaults } from './module'
 
 export interface ImageModifiers {
-  width: number
-  height: number
+  width: number | string
+  height: number | string
   fit: string
   format: string
   quality: string | number
   background: string
+  blur: number
 }
 
-export interface ImageOptions {
-  provider?: string
+export interface ResolvedImageModifiers extends ImageModifiers {
+  width: number
+  height: number
+}
+
+type DefaultProvider = ProviderDefaults extends Record<'provider', unknown> ? ProviderDefaults['provider'] : never
+
+export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = DefaultProvider> {
+  provider?: Provider
   preset?: string
   densities?: string
-  modifiers?: Partial<ImageModifiers>
+  modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
+    & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
   sizes?: string | Record<string, any>
 }
 
@@ -23,7 +32,7 @@ export interface ImageSizesOptions extends ImageOptions {
   sizes: Record<string, string | number> | string
 }
 
-export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: ImageOptions & { modifiers: NonNullable<ImageOptions['modifiers']> } & T, ctx: ImageCTX) => ResolvedImage
+export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: Omit<ImageOptions, 'modifiers'> & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
 
 interface ImageModifierOptions {
   modifiers?: Record<string, unknown>
@@ -46,7 +55,7 @@ export interface CreateImageOptions {
   }
   event?: H3Event
   presets: { [name: string]: ImageOptions }
-  provider: string
+  provider: (string & {}) | keyof ImageProviders
   screens: Record<string, number>
   alias: Record<string, string>
   domains: string[]

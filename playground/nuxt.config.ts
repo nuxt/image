@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     filerobot: {
       baseURL: 'https://fesrinkeb.filerobot.com/',
     },
+    github: {},
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/',
     },
@@ -95,6 +96,9 @@ export default defineNuxtConfig({
     },
     sanity: {
       projectId: 'zp7mbokg',
+    },
+    shopify: {
+      baseURL: 'https://cdn.shopify.com/',
     },
     strapi: {
       baseURL: 'http://localhost:1337/uploads/',

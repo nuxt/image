@@ -2,47 +2,46 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
-import { cleanDoubleSlashes } from '#image/utils'
-import ipx from '#image/providers/ipx'
-import none from '#image/providers/none'
-import weserv from '#image/providers/weserv'
-import aliyun from '#image/providers/aliyun'
-import awsAmplify from '#image/providers/awsAmplify'
-import cloudflare from '#image/providers/cloudflare'
-import cloudinary from '#image/providers/cloudinary'
-import twicpics from '#image/providers/twicpics'
-import fastly from '#image/providers/fastly'
-import prepr from '#image/providers/prepr'
-import glide from '#image/providers/glide'
-import imgix from '#image/providers/imgix'
-import gumlet from '#image/providers/gumlet'
-import imageengine from '#image/providers/imageengine'
-import unsplash from '#image/providers/unsplash'
-import imagekit from '#image/providers/imagekit'
-import netlifyImageCdn from '#image/providers/netlifyImageCdn'
-import netlifyLargeMedia from '#image/providers/netlifyLargeMedia'
-import prismic from '#image/providers/prismic'
-import sanity from '#image/providers/sanity'
-import contentful from '#image/providers/contentful'
-import cloudimage from '#image/providers/cloudimage'
-import storyblok from '#image/providers/storyblok'
-import strapi from '#image/providers/strapi'
-import strapi5 from '#image/providers/strapi5'
-import vercel from '#image/providers/vercel'
-import wagtail from '#image/providers/wagtail'
-import uploadcare from '#image/providers/uploadcare'
-import sirv from '#image/providers/sirv'
-import hygraph from '#image/providers/hygraph'
+import { useNuxtApp } from '#imports'
+import ipx from '../../dist/runtime/providers/ipx'
+import none from '../../dist/runtime/providers/none'
+import weserv from '../../dist/runtime/providers/weserv'
+import aliyun from '../../dist/runtime/providers/aliyun'
+import awsAmplify from '../../dist/runtime/providers/awsAmplify'
+import cloudflare from '../../dist/runtime/providers/cloudflare'
+import cloudinary from '../../dist/runtime/providers/cloudinary'
+import twicpics from '../../dist/runtime/providers/twicpics'
+import fastly from '../../dist/runtime/providers/fastly'
+import prepr from '../../dist/runtime/providers/prepr'
+import glide from '../../dist/runtime/providers/glide'
+import imgix from '../../dist/runtime/providers/imgix'
+import gumlet from '../../dist/runtime/providers/gumlet'
+import imageengine from '../../dist/runtime/providers/imageengine'
+import unsplash from '../../dist/runtime/providers/unsplash'
+import imagekit from '../../dist/runtime/providers/imagekit'
+import netlifyImageCdn from '../../dist/runtime/providers/netlifyImageCdn'
+import netlifyLargeMedia from '../../dist/runtime/providers/netlifyLargeMedia'
+import prismic from '../../dist/runtime/providers/prismic'
+import sanity from '../../dist/runtime/providers/sanity'
+import shopify from '../../dist/runtime/providers/shopify'
+import contentful from '../../dist/runtime/providers/contentful'
+import cloudimage from '../../dist/runtime/providers/cloudimage'
+import storyblok from '../../dist/runtime/providers/storyblok'
+import strapi from '../../dist/runtime/providers/strapi'
+import strapi5 from '../../dist/runtime/providers/strapi5'
+import vercel from '../../dist/runtime/providers/vercel'
+import wagtail from '../../dist/runtime/providers/wagtail'
+import uploadcare from '../../dist/runtime/providers/uploadcare'
+import sirv from '../../dist/runtime/providers/sirv'
+import hygraph from '../../dist/runtime/providers/hygraph'
 
 const emptyContext = {
   options: {
     screens: {
-      'xs': 320,
       'sm': 640,
       'md': 768,
       'lg': 1024,
       'xl': 1280,
-      'xxl': 1536,
       '2xl': 1536,
     },
     nuxt: useNuxtApp(),
@@ -63,7 +62,6 @@ describe('Providers', () => {
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = ipx().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
-      generated.url = cleanDoubleSlashes(generated.url)
       expect(generated).toMatchObject(image.ipx)
     }
   })
@@ -73,7 +71,6 @@ describe('Providers', () => {
 
     const src = '/images/test.png'
     const generated = ipx().getImage(src, { modifiers: {} }, context)
-    generated.url = cleanDoubleSlashes(generated.url)
     expect(generated).toMatchObject({
       url: '/_ipx/_/images/test.png',
     })
@@ -439,6 +436,20 @@ describe('Providers', () => {
     }
   })
 
+  it('shopify', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = shopify().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.shopify)
+    }
+  })
+
   it('prepr', () => {
     const providerOptions = {
       projectName: 'projectName',
@@ -474,6 +485,14 @@ describe('Providers', () => {
       const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudimage)
     }
+
+    const nonBaseURLProviderOptions = {
+      token: 'demo',
+      apiVersion: 'v7',
+    }
+    const src = 'https://localhost' + images[0].args[0]
+    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, emptyContext)
+    expect(generated).toMatchObject({ url: 'https://demo.cloudimg.io/v7/https://localhost/test.png' })
   })
 
   it('storyblok', () => {

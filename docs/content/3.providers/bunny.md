@@ -15,7 +15,9 @@ To use this provider you just need to specify the base URL of your project.
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    bunny: {}
+    bunny: {
+      baseURL: ''
+    }
   }
 })
 ```

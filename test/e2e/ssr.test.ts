@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { $fetch, setup, createPage, url, fetch } from '@nuxt/test-utils'
 
-import { providers } from '../../playground/providers'
+import { providers } from '../../playground/app/providers'
 
 await setup({
   rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
@@ -77,7 +77,7 @@ describe('browser (ssr: true)', () => {
   })
 
   it('works with server-side useImage', async () => {
-    expect(await $fetch('/api/image')).toMatchInlineSnapshot(`
+    expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
       {
         "format": "webp",
         "url": "/_ipx/f_webp&q_75/image.jpg",

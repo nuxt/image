@@ -3,7 +3,10 @@ import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
-import { createImage } from '#image'
+import { createImage } from '@nuxt/image/runtime'
+import { h, nextTick, useNuxtApp, useRuntimeConfig, useImage } from '#imports'
+import type { CreateImageOptions } from '@nuxt/image'
+import defu from 'defu'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -128,9 +131,18 @@ describe('Renders simple image', () => {
       src: '/image.png',
       width: 1000,
       height: 2000,
-      sizes: 'xs:100vw sm:100vw md:300px lg:350px xl:350px 2xl:350px',
+      sizes: 'sm:100vw md:300px lg:350px xl:350px 2xl:350px',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="1000" height="2000" data-nuxt-img="" sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 300px, (max-width: 1280px) 350px, (max-width: 1536px) 350px, 350px" srcset="/_ipx/s_300x600/image.png 300w, /_ipx/s_320x640/image.png 320w, /_ipx/s_350x700/image.png 350w, /_ipx/s_600x1200/image.png 600w, /_ipx/s_640x1280/image.png 640w, /_ipx/s_700x1400/image.png 700w, /_ipx/s_1280x2560/image.png 1280w" src="/_ipx/s_1280x2560/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="1000" height="2000" data-nuxt-img="" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 300px, (max-width: 1280px) 350px, (max-width: 1536px) 350px, 350px" srcset="/_ipx/s_300x600/image.png 300w, /_ipx/s_350x700/image.png 350w, /_ipx/s_600x1200/image.png 600w, /_ipx/s_640x1280/image.png 640w, /_ipx/s_700x1400/image.png 700w, /_ipx/s_1280x2560/image.png 1280w" src="/_ipx/s_1280x2560/image.png">"`)
+  })
+
+  it('without sizes', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+    })
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="300" height="400" data-nuxt-img="" srcset="/_ipx/s_300x400/image.png 1x, /_ipx/s_600x800/image.png 2x" src="/_ipx/s_300x400/image.png">"`)
   })
 
   it('without sizes, but densities', () => {
@@ -152,6 +164,17 @@ describe('Renders simple image', () => {
     })
     const domNonce = img.element.getAttribute('nonce')
     expect(domNonce).toBe('stub-nonce')
+  })
+
+  it('can access imgEl underlying img HTMLImageElement', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      nonce: 'stub-nonce',
+    })
+    expect(img.getCurrentComponent().exposed?.imgEl).toBeDefined()
+    expect(img.getCurrentComponent().exposed?.imgEl.value).toBeInstanceOf(HTMLImageElement)
   })
 })
 
@@ -306,9 +329,186 @@ describe('Renders placeholder image', () => {
   })
 })
 
+describe('Sizes and densities behavior', () => {
+  it('without sizes or densities, uses densities', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      // Both sizes and densities are undefined
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')
+    const sizes = imgElement.getAttribute('sizes')
+
+    // Should generate density-based srcset by default (for fixed-size images)
+    expect(srcset).toMatch(/\s1x\b/)
+    expect(srcset).toMatch(/\s2x\b/)
+    expect(srcset).not.toMatch(/\b\d+w\b/)
+    // Should NOT have sizes attribute (density-only path)
+    expect(sizes).toBeFalsy()
+  })
+
+  it('with explicit densities but no sizes, uses density-based srcset', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      densities: '1x 2x',
+      // sizes is undefined
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')
+    const sizes = imgElement.getAttribute('sizes')
+
+    // Should generate density-based srcset (x descriptors)
+    expect(srcset).toMatch(/\s1x\b/)
+    expect(srcset).toMatch(/\s2x\b/)
+    expect(srcset).not.toMatch(/\b\d+w\b/)
+    // Should NOT have sizes attribute (density path)
+    expect(sizes).toBeFalsy()
+  })
+
+  it('with explicit sizes, uses width-based srcset regardless of densities', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: 'sm:100vw md:50vw',
+      densities: '1x 2x', // densities will be applied to each size variant
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')
+    const sizes = imgElement.getAttribute('sizes')
+
+    // Should generate width-based srcset
+    expect(srcset).toMatch(/\b\d+w\b/)
+    expect(srcset).not.toMatch(/\s\d+x\b/)
+    // Should have sizes attribute
+    expect(sizes).toBeTruthy()
+  })
+})
+
+describe('Preset sizes and densities inheritance', () => {
+  const nuxtApp = useNuxtApp()
+  const src = '/image.png'
+
+  beforeEach(() => {
+    delete nuxtApp._img
+    delete nuxtApp.$img
+  })
+
+  it('preset sizes are used when component sizes prop is undefined', () => {
+    // Create preset with responsive sizes
+    setImageContext({
+      presets: {
+        responsive: {
+          sizes: 'sm:320px,md:640px,lg:1024px',
+        },
+      },
+    })
+
+    // Use getSizes directly to validate preset merging
+    const { srcset, sizes } = useImage().getSizes(src, {
+      preset: 'responsive',
+      modifiers: { width: 300, height: 400 },
+    })
+
+    // Should generate width-based srcset from preset sizes
+    expect(srcset).toMatch(/\b\d+w\b/)
+    expect(srcset).not.toMatch(/\s\d+x\b/)
+    // Should have sizes attribute from preset
+    expect(sizes).toBeTruthy()
+  })
+
+  it('preset densities are used when component densities prop is undefined', () => {
+    // Create preset with densities only
+    setImageContext({
+      presets: {
+        highDensity: {
+          densities: '1x 2x 3x',
+        },
+      },
+    })
+
+    const img = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 300,
+        height: 400,
+        preset: 'highDensity',
+        // densities is intentionally undefined to test preset inheritance
+      },
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')
+    const sizes = imgElement.getAttribute('sizes')
+
+    // Should use density-based srcset from preset
+    expect(srcset).toMatch(/\s1x\b/)
+    expect(srcset).toMatch(/\s2x\b/)
+    expect(srcset).toMatch(/\s3x\b/)
+    expect(srcset).not.toMatch(/\b\d+w\b/)
+    // Should NOT have sizes attribute (density-only path)
+    expect(sizes).toBeFalsy()
+  })
+
+  it('component props override preset values', () => {
+    // Create preset with sizes
+    setImageContext({
+      presets: {
+        myPreset: {
+          sizes: 'sm:100vw md:50vw',
+        },
+      },
+    })
+
+    // Pass explicit densities which will be applied to the preset sizes
+    const { srcset, sizes } = useImage().getSizes(src, {
+      preset: 'myPreset',
+      densities: '1x 2x',
+      modifiers: { width: 300, height: 400 },
+    })
+
+    // Should still use width-based srcset (sizes path takes precedence)
+    // but with the custom densities applied to each size variant
+    expect(srcset).toMatch(/\b\d+w\b/)
+    expect(sizes).toBeTruthy()
+    // Verify that we get width descriptors (because sizes is present)
+    expect(srcset).not.toMatch(/\s\d+x\b/)
+  })
+
+  it('component densities prop without preset sizes uses densities-only path', () => {
+    // Create preset without sizes
+    setImageContext({
+      presets: {
+        basicPreset: {
+          // No sizes defined in preset
+        },
+      },
+    })
+
+    // Pass explicit densities without sizes
+    const { srcset, sizes } = useImage().getSizes(src, {
+      preset: 'basicPreset',
+      densities: '1x 2x', // Should use densities-only path
+      modifiers: { width: 300, height: 400 },
+    })
+
+    // Should use density-based srcset
+    expect(srcset).toMatch(/\s1x\b/)
+    expect(srcset).toMatch(/\s2x\b/)
+    expect(srcset).not.toMatch(/\b\d+w\b/)
+    expect(sizes).toBeFalsy()
+  })
+})
+
 describe('Renders image, applies module config', () => {
   const nuxtApp = useNuxtApp()
-  const config = useRuntimeConfig()
   const src = '/image.png'
 
   beforeEach(() => {
@@ -316,13 +516,7 @@ describe('Renders image, applies module config', () => {
   })
 
   it('Module config .quality applies', () => {
-    nuxtApp._img = createImage({
-      ...imageOptions,
-      nuxt: {
-        baseURL: config.app.baseURL,
-      },
-      quality: 75,
-    })
+    setImageContext({ quality: 75 })
     const img = mount(NuxtImg, {
       propsData: {
         src,
@@ -335,13 +529,7 @@ describe('Renders image, applies module config', () => {
   })
 
   it('Module config .quality + props.quality => props.quality applies', () => {
-    nuxtApp._img = createImage({
-      ...imageOptions,
-      nuxt: {
-        baseURL: config.app.baseURL,
-      },
-      quality: 75,
-    })
+    setImageContext({ quality: 75 })
     const img = mount(NuxtImg, {
       propsData: {
         src,
@@ -355,12 +543,8 @@ describe('Renders image, applies module config', () => {
   })
 
   it('Without quality config => default image', () => {
-    nuxtApp._img = createImage({
-      ...imageOptions,
-      nuxt: {
-        baseURL: config.app.baseURL,
-      },
-    })
+    setImageContext({})
+
     const img = mount(NuxtImg, {
       propsData: {
         src,
@@ -422,3 +606,13 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
 })
 
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
+
+function setImageContext(options: Partial<CreateImageOptions>) {
+  const nuxtApp = useNuxtApp()
+  const config = useRuntimeConfig()
+  nuxtApp.$img = nuxtApp._img = createImage(defu(options, {
+    runtimeConfig: {} as any,
+    ...imageOptions,
+    nuxt: { baseURL: config.app.baseURL },
+  }))
+}

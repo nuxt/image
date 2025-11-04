@@ -1,11 +1,19 @@
 import { joinURL, encodePath, encodeParam } from 'ufo'
 import type { ImageModifiers } from '@nuxt/image'
-import type { IPXRuntimeConfig } from '../../ipx'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
+
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions as CoreIPXOptions } from 'ipx'
+
+export interface IPXRuntimeConfig extends Omit<CoreIPXOptions, 'storage' | 'httpStorage'> {
+  http: HTTPStorageOptions
+  fs: NodeFSSOptions
+  baseURL: string
+}
 
 // Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
 // TODO: https://github.com/unjs/ipx/issues/199
-export interface IPXModifiers extends Omit<ImageModifiers, 'fit' | 'format'> {
+export interface IPXModifiers extends Omit<ImageModifiers, 'fit' | 'format' | 'blur'> {
   format: 'jpeg' | 'jpg' | 'png' | 'webp' | 'avif' | 'gif' | 'heif' | 'tiff' | 'auto' | string & {}
   fit: 'contain' | 'cover' | 'fill' | 'inside' | 'outside' | string & {}
   resize: string
@@ -17,6 +25,7 @@ export interface IPXModifiers extends Omit<ImageModifiers, 'fit' | 'format'> {
   trim: number | string
   extend: string
   extract: string
+  crop: string
   rotate: number | string
   flip: true | 'true'
   flop: true | 'true'
@@ -41,12 +50,12 @@ export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'f',
-    fit: 'fit',
     width: 'w',
     height: 'h',
     resize: 's',
     quality: 'q',
     background: 'b',
+    position: 'pos',
   },
   formatter: (key, val: string | number | boolean) => encodeParam(key) + '_' + encodeParam(val.toString()),
 })

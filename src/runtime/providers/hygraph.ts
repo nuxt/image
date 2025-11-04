@@ -1,5 +1,5 @@
 import { joinURL, parseURL, withTrailingSlash } from 'ufo'
-import { defineProvider } from '#image'
+import { defineProvider } from '../utils/provider'
 
 type ImageOptimizations = {
   width?: number
@@ -67,6 +67,10 @@ function optimizeHygraphImage(baseURL: string, url: string, optimizations: Image
         optimList.push(`${key}:${value}`)
       }
     }
+  }
+
+  if (optimList.length === 0) {
+    return joinURL(baseURL, baseId, quality, imageFormat, imageId)
   }
 
   const optim = `${optimBase}=${optimList.join(',')}`

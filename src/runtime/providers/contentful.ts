@@ -1,5 +1,6 @@
 import { withBase, parseURL } from 'ufo'
-import { defineProvider, createOperationsGenerator } from '#image'
+import { createOperationsGenerator } from '../utils/index'
+import { defineProvider } from '../utils/provider'
 
 // https://www.contentful.com/developers/docs/references/images-api/
 const contentfulCDN = 'https://images.ctfassets.net'

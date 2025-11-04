@@ -1,9 +1,9 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 
 export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
@@ -21,12 +21,7 @@ export function createImage(globalOptions: CreateImageOptions) {
     return image
   }
 
-  const $img = ((input, modifiers = {}, options = {}) => {
-    return getImage(input, {
-      ...options,
-      modifiers: defu(modifiers, options.modifiers || {}),
-    }).url
-  }) as $Img
+  const $img = ((input, modifiers, options) => getImage(input, defu({ modifiers }, options)).url) as $Img
 
   for (const presetName in globalOptions.presets) {
     $img[presetName] = ((source, modifiers, options) =>
@@ -98,20 +93,15 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
   const _options = defu(options, preset, defaults as Partial<ImageOptions>)
   const resolvedOptions = {
     ..._options,
-    modifiers: { ..._options.modifiers },
-  }
-
-  const expectedFormat = resolvedOptions.modifiers.format
-  if (resolvedOptions.modifiers?.width) {
-    resolvedOptions.modifiers.width = parseSize(resolvedOptions.modifiers.width)
-  }
-  if (resolvedOptions.modifiers?.height) {
-    resolvedOptions.modifiers.height = parseSize(resolvedOptions.modifiers.height)
+    modifiers: {
+      ..._options.modifiers,
+      width: _options.modifiers?.width ? parseSize(_options.modifiers.width) : undefined,
+      height: _options.modifiers?.height ? parseSize(_options.modifiers.height) : undefined,
+    },
   }
 
   const image = provider.getImage(input, resolvedOptions, ctx)
-
-  image.format = image.format || expectedFormat || ''
+  image.format ||= resolvedOptions.modifiers.format || ''
 
   return image
 }
@@ -135,10 +125,16 @@ function getPreset(ctx: ImageCTX, name?: string): ImageOptions {
 }
 
 function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
-  const width = parseSize(opts.modifiers?.width)
-  const height = parseSize(opts.modifiers?.height)
-  const sizes = parseSizes(opts.sizes)
-  const densities = opts.densities?.trim() ? parseDensities(opts.densities.trim()) : ctx.options.densities
+  // Merge preset options so preset-provided sizes/densities are respected
+  const preset = getPreset(ctx, opts.preset)
+  const merged = defu(opts, preset)
+
+  const width = parseSize(merged.modifiers?.width)
+  const height = parseSize(merged.modifiers?.height)
+
+  const sizes = merged.sizes ? parseSizes(merged.sizes) : {}
+  const _densities = merged.densities?.trim()
+  const densities = _densities ? parseDensities(_densities) : ctx.options.densities
   checkDensities(densities)
 
   const hwRatio = (width && height) ? height / width : 0

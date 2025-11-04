@@ -12,7 +12,7 @@ When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, 
 
 This provider will be enabled by default in Vercel deployments.
 
-::callout{icon="i-heroicons-exclamation-triangle" color="amber"}
+::warning
 Vercel requires you to explicitly list all the widths used in your app. [See example below.](#sizes)
 ::
 
@@ -36,7 +36,7 @@ You need to specify **every custom width** used in `<NuxtImg>`, `<NuxtPicture>` 
 
 If a width is not defined, image will fallback to the next bigger width.
 
-::callout{icon="i-heroicons-light-bulb"}
+::tip
 Don't forget to also take into account [`densities`](/get-started/configuration#densities).
 ::
 
@@ -67,3 +67,22 @@ export default defineNuxtConfig({
 ```
 
 ::
+
+## Options
+
+### `formats`
+
+- Type: **String[]** (optional)
+
+Specify the image format allow list for optimization.
+By default, the provider set the following formats: `['image/webp', 'image/avif']`.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    vercel: {
+      formats: ['image/webp']
+    }
+  }
+})
+```
