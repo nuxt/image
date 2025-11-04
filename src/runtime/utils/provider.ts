@@ -1,3 +1,4 @@
+import type {} from '../..'
 import type { ImageProvider } from '../../module'
 
 export function defineProvider<T>(setup: ImageProvider<T> | (() => ImageProvider<T>)): () => ImageProvider<T> {
