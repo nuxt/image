@@ -22,9 +22,9 @@ import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
 import { prerenderStaticImages } from '../utils/prerender'
-import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import { markFeatureUsage } from '../utils/performance'
 import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
@@ -57,15 +57,46 @@ const sizes = computed(() => $img.getSizes(props.src!, {
 const placeholderLoaded = ref(false)
 
 const attrs = useAttrs() as ImgHTMLAttributes
-const imgAttrs = computed(() => ({
-  ...normalizedAttrs.value,
-  'data-nuxt-img': '',
-  ...(!props.placeholder || placeholderLoaded.value)
-    ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
-    : {},
-  ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-  ...attrs,
-}))
+const imgAttrs = computed(() => {
+  const base: ImgHTMLAttributes = {
+    ...normalizedAttrs.value,
+    'data-nuxt-img': '',
+    ...!props.placeholder
+      ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
+      : {},
+    ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+  }
+
+  if (props.placeholder) {
+    const chainHandlers = (a?: any, b?: any) =>
+      (a && b)
+        ? (...args: any[]) => {
+            a(...args)
+            b(...args)
+          }
+        : (a || b)
+
+    base.onLoad = chainHandlers(base.onLoad, (event: Event) => {
+      if (!placeholderLoaded.value) {
+        // Placeholder just loaded, trigger src update to mainSrc
+        placeholderLoaded.value = true
+      }
+      else {
+        // Main image loaded
+        emit('load', event)
+      }
+    })
+
+    base.onError = chainHandlers(base.onError, (event: Event) => {
+      emit('error', event)
+    })
+  }
+
+  return {
+    ...base,
+    ...attrs,
+  }
+})
 
 const placeholder = computed(() => {
   if (placeholderLoaded.value) {
@@ -134,31 +165,7 @@ const imgEl = useTemplateRef('imgEl')
 defineExpose({ imgEl })
 
 onMounted(() => {
-  if (placeholder.value || props.custom) {
-    const img = new Image()
-
-    if (mainSrc.value) {
-      img.src = mainSrc.value
-    }
-
-    if (props.sizes) {
-      img.sizes = sizes.value.sizes || ''
-      img.srcset = sizes.value.srcset
-    }
-
-    img.onload = (event) => {
-      placeholderLoaded.value = true
-      emit('load', event)
-    }
-
-    img.onerror = (event) => {
-      emit('error', event)
-    }
-
-    markFeatureUsage('nuxt-image')
-
-    return
-  }
+  markFeatureUsage('nuxt-img')
 
   if (!imgEl.value) {
     return
@@ -168,17 +175,22 @@ onMounted(() => {
     if (imgEl.value.getAttribute('data-error')) {
       emit('error', new Event('error'))
     }
+    else if (props.placeholder && !placeholderLoaded.value) {
+      placeholderLoaded.value = true
+    }
     else {
       emit('load', new Event('load'))
     }
   }
 
-  imgEl.value.onload = (event) => {
-    emit('load', event)
-  }
+  if (!props.placeholder) {
+    imgEl.value.onload = (event) => {
+      emit('load', event)
+    }
 
-  imgEl.value.onerror = (event) => {
-    emit('error', event)
+    imgEl.value.onerror = (event) => {
+      emit('error', event)
+    }
   }
 })
 </script>
