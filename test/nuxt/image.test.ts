@@ -233,7 +233,7 @@ describe('Renders placeholder image', () => {
 
     let domSrc = wrapper.find('img').element.getAttribute('src')
 
-    expect(domSrc).toMatchInlineSnapshot(`"/_ipx/q_50%26blur_3%26s_10x10/image.png"`)
+    expect(domSrc).toMatchInlineSnapshot(`"/_ipx/blur_3%26q_50%26s_10x10/image.png"`)
     expect(placeholderImage.src).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
 
     resolveImage()
@@ -296,7 +296,7 @@ describe('Renders placeholder image', () => {
         "other",
       ]
     `)
-    expect(wrapper.element.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/q_50%26blur_3%26s_10x10/image.png"`)
+    expect(wrapper.element.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/blur_3%26q_50%26s_10x10/image.png"`)
     resolveImage()
     await nextTick()
     expect([...wrapper.element.classList]).toMatchInlineSnapshot(`

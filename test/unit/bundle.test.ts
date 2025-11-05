@@ -22,7 +22,7 @@ describe.skipIf(process.env.ECOSYSTEM_CI || isWindows)('nuxt image bundle size',
       }),
     ])
 
-    expect(roundToKilobytes(withImage.totalBytes - withoutImage.totalBytes)).toMatchInlineSnapshot(`"12.7k"`)
+    expect(roundToKilobytes(withImage.totalBytes - withoutImage.totalBytes)).toMatchInlineSnapshot(`"12.4k"`)
   })
 })
 

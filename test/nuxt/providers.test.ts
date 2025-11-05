@@ -89,7 +89,7 @@ describe('Providers', () => {
       },
     }, context)
     expect(generated).toMatchObject({
-      url: '/_ipx/fit_inside%26f_png%26s_1200x630/images/test.png',
+      url: '/_ipx/f_png%26fit_inside%26s_1200x630/images/test.png',
     })
   })
 

@@ -71,7 +71,12 @@ export default defineProvider<Partial<IPXOptions>>({
       delete modifiers.height
     }
 
-    const params = operationsGenerator(modifiers) || '_'
+    let params = operationsGenerator(modifiers) || '_'
+
+    // TODO: Remove workaround for ipx sorting issue (https://github.com/nuxt/image/pull/2005#issuecomment-3485058016)
+    if (params !== '_' && params.includes('%26')) {
+      params = params.split('%26').sort().join('%26')
+    }
 
     if (!baseURL) {
       baseURL = joinURL(ctx.options.nuxt.baseURL, '/_ipx')
