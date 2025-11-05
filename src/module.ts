@@ -57,7 +57,7 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // fully resolve directory
-    options.dir = resolve(nuxt.options.srcDir, options.dir)
+    options.dir = resolve(nuxt.options.rootDir, options.dir)
 
     const publicDirs = new Set(options.dirs)
     for (const layer of nuxt.options._layers) {
