@@ -36,4 +36,4 @@ jobs:
         run: pnpm dev:prepare
 
       - name: 🛠 Build and release project
-        run: pnpm publish
+        run: pnpm publish --no-git-checks
