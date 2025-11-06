@@ -142,7 +142,8 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
   }
 
   const resolver = createResolver(import.meta.url)
-  input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
+  const isBuiltInProvider = BuiltInProviders.includes(input.provider as ImageProviderName)
+  input.provider = isBuiltInProvider
     ? resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
 
@@ -150,6 +151,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 
   return <ImageModuleProvider> {
     ...input,
+    isBuiltInProvider,
     setup,
     runtime: normalize(input.provider!),
     importName: `${key}Runtime$${genSafeVariableName(hash(input.provider))}`,
