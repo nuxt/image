@@ -1,0 +1,10 @@
+<template>
+  <div>
+    <nuxt-img
+      src="/images/colors.jpg"
+      placeholder
+      width="500"
+      height="500"
+    />
+  </div>
+</template>

@@ -84,4 +84,28 @@ describe('browser (ssr: true)', () => {
       }
     `)
   })
+
+  it('should not load the main image twice when placeholder is enabled', async () => {
+    const page = await createPage()
+
+    const requests: string[] = []
+    await page.route('**', (route) => {
+      requests.push(route.request().url())
+      return route.continue()
+    })
+
+    await page.goto(url('/placeholder-regression'), { waitUntil: 'networkidle' })
+
+    await page.waitForSelector('img')
+
+    const mainImageRequests = requests.filter(r =>
+      r.includes('/_ipx/')
+      && r.includes('images/colors.jpg')
+      && r.includes('s_500x500'),
+    )
+
+    expect(mainImageRequests.length).toBe(1)
+
+    await page.close()
+  })
 })
