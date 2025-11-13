@@ -32,13 +32,14 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { DataAttributes } from '../../types/image'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
 export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
   legacyFormat?: string
-  imgAttrs?: ImgHTMLAttributes
+  imgAttrs?: ImgHTMLAttributes & DataAttributes
 }
 
 defineOptions({ inheritAttrs: false })
