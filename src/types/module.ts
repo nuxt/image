@@ -25,6 +25,7 @@ export interface ImageModuleProvider {
   importName: string
   options: any
   provider: string
+  isBuiltInProvider: boolean
   runtime: string
   runtimeOptions: any
   setup: ProviderSetup
