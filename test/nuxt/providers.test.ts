@@ -29,6 +29,7 @@ import cloudimage from '../../dist/runtime/providers/cloudimage'
 import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
+import supabase from '../../dist/runtime/providers/supabase'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
@@ -502,6 +503,18 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = storyblok().getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.storyblok)
+    }
+  })
+
+  it('supabase', () => {
+    const providerOptions = {
+      baseURL: 'https://test.supabase.co/storage/v1/render/image/public/bucket',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = supabase().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.supabase)
     }
   })
 
