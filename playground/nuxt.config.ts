@@ -107,7 +107,7 @@ export default defineNuxtConfig({
       baseURL: 'http://localhost:1337/uploads/',
     },
     supabase: {
-      baseURL: 'https://test.supabase.co/storage/v1/render/image/public/bucket',
+      baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
     },
     unsplash: {},
     vercel: {

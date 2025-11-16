@@ -508,7 +508,7 @@ describe('Providers', () => {
 
   it('supabase', () => {
     const providerOptions = {
-      baseURL: 'https://test.supabase.co/storage/v1/render/image/public/bucket',
+      baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
     }
 
     for (const image of images) {
