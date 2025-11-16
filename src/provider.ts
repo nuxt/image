@@ -44,6 +44,7 @@ export const BuiltInProviders = [
   'storyblok',
   'strapi',
   'strapi5',
+  'supabase',
   'twicpics',
   'unsplash',
   'uploadcare',
