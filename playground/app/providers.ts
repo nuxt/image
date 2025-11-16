@@ -990,6 +990,29 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Supabase
+  {
+    name: 'supabase',
+    samples: [
+      {
+        src: '/test.png',
+        width: 300,
+        height: 200,
+      },
+      {
+        src: '/test.png',
+        width: 400,
+        height: 300,
+        quality: 80,
+      },
+      {
+        src: '/test.png',
+        width: 500,
+        height: 500,
+        fit: 'cover',
+      },
+    ],
+  },
   // Unsplash
   {
     name: 'unsplash',
