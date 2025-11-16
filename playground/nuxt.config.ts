@@ -106,6 +106,9 @@ export default defineNuxtConfig({
     strapi5: {
       baseURL: 'http://localhost:1337/uploads/',
     },
+    supabase: {
+      baseURL: 'https://test.supabase.co/storage/v1/render/image/public/bucket',
+    },
     unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image',
