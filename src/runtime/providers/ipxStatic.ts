@@ -20,7 +20,7 @@ export default defineProvider<Partial<IPXOptions>>({
     }
 
     return {
-      url: joinURL(baseURL, params, encodePath(src).replace(/\/{2,}/g, '/')),
+      url: joinURL(baseURL, params, encodePath(src)),
     }
   },
 })
