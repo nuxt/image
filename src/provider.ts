@@ -143,11 +143,12 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
   }
 
   const resolver = createResolver(import.meta.url)
+  
+  const setup = input.setup || providerSetup[input.provider as ImageProviderName] || providerSetup[input.name as ImageProviderName]
+
   input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
     ? resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
-
-  const setup = input.setup || providerSetup[input.name as ImageProviderName]
 
   return <ImageModuleProvider> {
     ...input,
