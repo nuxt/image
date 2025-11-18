@@ -3,7 +3,7 @@ import process from 'node:process'
 import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
 import { join, relative, resolve } from 'pathe'
-import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders } from './provider'
+import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders, isBuiltInProvider } from './provider'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
 import { existsSync } from 'node:fs'
 
@@ -122,7 +122,7 @@ export default defineNuxtModule<ModuleOptions>({
             provider: ${JSON.stringify(options.provider)}
           }
           interface ConfiguredImageProviders {
-${providers.map(p => `            ${JSON.stringify(p.name)}: ${BuiltInProviders.includes(p.name as 'ipx') ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
+${providers.map(p => `            ${JSON.stringify(p.name)}: ${isBuiltInProvider(p) ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
           }
           interface ImageProviders {
 ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}

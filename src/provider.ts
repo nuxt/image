@@ -54,6 +54,13 @@ export const BuiltInProviders = [
   'sirv',
 ] as const
 
+const resolver = createResolver(import.meta.url)
+const providerRuntime = resolver.resolve('./runtime/providers/')
+
+export function isBuiltInProvider(provider: ImageModuleProvider) {
+  return provider.provider?.startsWith(providerRuntime) ?? BuiltInProviders.includes(provider.name as 'ipx')
+}
+
 type ImageProviderName = typeof BuiltInProviders[number]
 
 const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
@@ -127,7 +134,7 @@ export async function resolveProviders(nuxt: any, options: ModuleOptions): Promi
 
 export async function resolveProvider(_nuxt: any, key: string, input: InputProvider): Promise<ImageModuleProvider> {
   if (typeof input === 'string') {
-    input = { name: input }
+    input = { name: key, provider: input }
   }
 
   if (!input.name) {
@@ -142,7 +149,6 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
     input.provider = normalizableProviders[input.provider]!()
   }
 
-  const resolver = createResolver(import.meta.url)
   input.provider = BuiltInProviders.includes(input.provider as ImageProviderName)
     ? resolver.resolve('./runtime/providers/' + input.provider)
     : await resolvePath(input.provider)
