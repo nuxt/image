@@ -61,7 +61,7 @@ export interface CreateImageOptions {
   domains: string[]
   densities: number[]
   format: string[]
-  quality?: number
+  quality?: number | Record<string, number>
   runtimeConfig: RuntimeConfig
 }
 
