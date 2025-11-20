@@ -98,7 +98,7 @@ export default defineNuxtModule<ModuleOptions>({
       options[options.provider as keyof ImageProviders] = options[options.provider as keyof ImageProviders] || {}
     }
     options.densities = options.densities || []
-    
+
     // Deduplicate format array (defu merges arrays, causing duplicates)
     if (options.format && Array.isArray(options.format)) {
       options.format = [...new Set(options.format)]
