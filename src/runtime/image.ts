@@ -93,12 +93,20 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
   const _options = defu(options, preset, defaults as Partial<ImageOptions>)
 
   // Determine the final format (might come from modifiers, defaults, or global config)
-  const finalFormat = (_options.modifiers?.format as string | undefined) || ctx.options.format?.[0];
+  const finalFormat = (_options.modifiers?.format as string | undefined) || ctx.options.format?.[0]
+
+  if (!_options.modifiers?.quality && typeof ctx.options.quality === 'object') {
+    const qualityMap = ctx.options.quality as Record<string, number>
+    const mappedQuality = (finalFormat && qualityMap[finalFormat]) ?? qualityMap.default ?? Object.values(qualityMap)[0]
+    if (typeof mappedQuality === 'number') {
+      _options.modifiers = { ..._options.modifiers, quality: mappedQuality }
+    }
+  }
 
   // Resolve quality: if it's an object (quality map), resolve to number based on format
-  if (_options.modifiers?.quality && typeof _options.modifiers.quality === "object") {
-    const qualityMap = _options.modifiers.quality as Record<string, number>;
-    _options.modifiers.quality = (finalFormat && qualityMap[finalFormat]) || qualityMap.default;
+  if (_options.modifiers?.quality && typeof _options.modifiers.quality === 'object') {
+    const qualityMap = _options.modifiers.quality as Record<string, number>
+    _options.modifiers.quality = (finalFormat && qualityMap[finalFormat]) || qualityMap.default
   }
 
   const resolvedOptions = {
