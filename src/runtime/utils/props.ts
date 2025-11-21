@@ -54,7 +54,7 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
       width: props.width,
       height: props.height,
       format: props.format,
-      quality: props.quality || $img.options.quality,
+      quality: props.quality ?? (typeof $img.options.quality === 'object' ? undefined : $img.options.quality),
       background: props.background,
       fit: props.fit,
     } satisfies Partial<ImageModifiers>

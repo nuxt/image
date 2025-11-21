@@ -24,7 +24,9 @@ export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = 
   preset?: string
   densities?: string
   modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
-    & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
+    & ('modifiers' extends keyof ConfiguredImageProviders[Provider]
+      ? ConfiguredImageProviders[Provider]['modifiers']
+      : Record<string, unknown>)
   sizes?: string | Record<string, any>
 }
 
@@ -61,7 +63,7 @@ export interface CreateImageOptions {
   domains: string[]
   densities: number[]
   format: string[]
-  quality?: number
+  quality?: number | Record<string, number>
   runtimeConfig: RuntimeConfig
 }
 
