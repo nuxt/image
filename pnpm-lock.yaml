@@ -88,8 +88,8 @@ importers:
         specifier: 2.6.1
         version: 2.6.1
       knip:
-        specifier: ^5.70.1
-        version: 5.70.1(@types/node@24.10.1)(typescript@5.9.3)
+        specifier: ^5.70.2
+        version: 5.70.2(@types/node@24.10.1)(typescript@5.9.3)
       nitropack:
         specifier: ^2.12.9
         version: 2.12.9(better-sqlite3@12.4.6)
@@ -4425,8 +4425,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  knip@5.70.1:
-    resolution: {integrity: sha512-tGRjOivkHPV+YoVVDz0oKSlvCAY6d009Mlhufs4Y+7VWl/Ky073+KURcrgMLzJVy4pkpZvoxYu3wmC0gK7XS5g==}
+  knip@5.70.2:
+    resolution: {integrity: sha512-LI7DbeVnk7h9+FAet5KzzHNdDwJyqDa2+cn4uQfZYTfpuVjEqtGmYD9r5b9JEuOs4eVkf/7sskNhWXxELm3C/Q==}
     engines: {node: '>=18.18.0'}
     hasBin: true
     peerDependencies:
@@ -9233,7 +9233,7 @@ snapshots:
   '@rollup/plugin-yaml@4.1.2(rollup@4.53.1)':
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.53.1)
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       tosource: 2.0.0-alpha.3
     optionalDependencies:
       rollup: 4.53.1
@@ -11918,7 +11918,7 @@ snapshots:
 
   klona@2.0.6: {}
 
-  knip@5.70.1(@types/node@24.10.1)(typescript@5.9.3):
+  knip@5.70.2(@types/node@24.10.1)(typescript@5.9.3):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@types/node': 24.10.1
