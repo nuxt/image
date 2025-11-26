@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-Integration between [Storyblok](https://www.storyblok.com/docs/image-service) and the image module. To use this provider you just need to specify the base URL of your service in Storyblok.
+Integration between [Storyblok](https://www.storyblok.com/docs/api/image-service) and the image module. To use this provider you just need to specify the base URL of your service in Storyblok.
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -22,11 +22,11 @@ export default defineNuxtConfig({
 
 ## Storyblok Modifiers
 
-Check out available [Storyblok image service](https://www.storyblok.com/docs/api/image-service/operations) modifiers.
+Check out available [Storyblok image service](https://www.storyblok.com/docs/api/image-service) modifiers.
 
 ### Resizing
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#resizing) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/resize) if you want to know more.
 
 the logic is:
 
@@ -67,7 +67,7 @@ Example:
 
 ### Fit in with background or not
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#fit-in) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/fit-in) if you want to know more.
 
 If you want to use it just add a props `fit="in"`. Take care that Storyblok only support `fit-in`.
 
@@ -88,7 +88,7 @@ Example:
 
 ### Format
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#changing-the-format) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/format) if you want to know more.
 
 You can modify your image format. Supported format are `webp`, `jpeg` and `png`.
 
@@ -105,7 +105,7 @@ Example:
 
 ### Quality
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#quality-optimization) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/quality) if you want to know more.
 
 You can update your image quality by defining the quality filters.
 
@@ -122,7 +122,7 @@ Example:
 
 ### Facial detection
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#facial-detection-and-smart-cropping) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/crop#smart-crop) if you want to know more.
 
 To have a smart crop just define a smart property inside modifier.
 
@@ -140,7 +140,7 @@ Example:
 
 ### Custom focal point
 
-Check [Storyblok documentation](https://www.storyblok.com/docs/image-service#custom-focal-point) if you want to know more.
+Check [Storyblok documentation](https://www.storyblok.com/docs/api/image-service/operations/focal-point) if you want to know more.
 
 Storyblok allows you to focalize on a specific part of your image. Just use `focal` filters.
 
