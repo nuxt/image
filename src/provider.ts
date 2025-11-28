@@ -16,6 +16,7 @@ export const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
   'bunny',
+  'builderio',
   'caisy',
   'cloudflare',
   'cloudimage',

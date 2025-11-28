@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     bunny: {
       baseURL: 'https://bunnyoptimizerdemo.b-cdn.net',
     },
+    builderio: {},
     twicpics: {
       baseURL: 'https://demo.twic.pics/',
     },
