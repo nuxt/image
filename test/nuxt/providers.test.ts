@@ -24,6 +24,7 @@ import netlifyLargeMedia from '../../dist/runtime/providers/netlifyLargeMedia'
 import prismic from '../../dist/runtime/providers/prismic'
 import sanity from '../../dist/runtime/providers/sanity'
 import shopify from '../../dist/runtime/providers/shopify'
+import builderio from '../../dist/runtime/providers/builderio'
 import contentful from '../../dist/runtime/providers/contentful'
 import cloudimage from '../../dist/runtime/providers/cloudimage'
 import storyblok from '../../dist/runtime/providers/storyblok'
@@ -448,6 +449,18 @@ describe('Providers', () => {
       const [, modifiers] = image.args
       const generated = shopify().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.shopify)
+    }
+  })
+
+  it('builderio', () => {
+    const providerOptions = {}
+
+    const originalUrl = 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = builderio().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.builderio)
     }
   })
 
