@@ -1,6 +1,9 @@
 import type { ImageProvider } from './types'
 
 declare module './types' {
+  interface ProviderDefaults {
+    provider: 'ipx'
+  }
   interface ConfiguredImageProviders {
     ipx: ImageProviders['ipx']
   }

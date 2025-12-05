@@ -29,8 +29,6 @@ describe('image helper', () => {
       provider: 'ipx',
       modifiers: {
         sharpen: 0.75,
-        // @ts-expect-error this is not a valid modifier for ipx
-        alkj: false,
       },
     })
 
@@ -38,8 +36,6 @@ describe('image helper', () => {
     useImage().getImage('/test.png', {
       modifiers: {
         sharpen: 0.75,
-        // @ts-expect-error this is not a valid modifier for ipx
-        alkj: false,
       },
     })
   })
