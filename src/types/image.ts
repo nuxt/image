@@ -17,7 +17,7 @@ export interface ResolvedImageModifiers extends ImageModifiers {
   height: number
 }
 
-type DefaultProvider = ProviderDefaults extends Record<'provider', unknown> ? ProviderDefaults['provider'] : never
+type DefaultProvider = ProviderDefaults extends Record<'provider', infer P> ? P : keyof ConfiguredImageProviders
 
 export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = DefaultProvider> {
   provider?: Provider
