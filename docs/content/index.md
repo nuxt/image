@@ -139,6 +139,7 @@ orientation: horizontal
   providers:
     - caisy
     - bunny
+    - builderio
     - cloudflare
     - cloudimage
     - cloudinary
