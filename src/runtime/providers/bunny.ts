@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { withBase, withQuery, getQuery } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -32,7 +32,7 @@ export default defineProvider<BunnyOptions>({
   getImage: (src, { modifiers, baseURL }) => {
     const operations = operationsGenerator(modifiers)
     return {
-      url: joinURL(baseURL, src + (operations ? '?' + operations : '')),
+      url: withQuery(withBase(src, baseURL), getQuery('?' + operations)),
     }
   },
 })
