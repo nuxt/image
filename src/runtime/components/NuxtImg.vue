@@ -60,11 +60,11 @@ const attrs = useAttrs() as ImgHTMLAttributes
 const imgAttrs = computed(() => ({
   ...normalizedAttrs.value,
   'data-nuxt-img': '',
+  ...attrs,
   ...(!props.placeholder || placeholderLoaded.value)
-    ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
+    ? { sizes: attrs.sizes || sizes.value.sizes, srcset: attrs.sizes || sizes.value.srcset }
     : {},
   ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-  ...attrs,
 }))
 
 const placeholder = computed(() => {
