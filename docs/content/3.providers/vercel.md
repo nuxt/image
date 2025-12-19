@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, image module can use Vercel's [Edge Network](https://vercel.com/docs/edge-network/overview) to optimize images on demand.
+When deploying your Nuxt applications to [Vercel](https://vercel.com) platform, image module can use [Vercel's CDN](https://vercel.com/docs/cdn) to optimize images on demand.
 
 This provider will be enabled by default in Vercel deployments.
 
@@ -62,6 +62,7 @@ export default defineNuxtConfig({
       icon: 40,
       icon2x: 80
     }
+    // will be converted to sizes: [40, 80] for Vercel output API
   }
 })
 ```
