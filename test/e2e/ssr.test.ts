@@ -80,7 +80,7 @@ describe('browser (ssr: true)', () => {
     expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
       {
         "format": "webp",
-        "url": "/_ipx/f_webp&q_75/image.jpg",
+        "url": "/_ipx/f_webp%26q_75/image.jpg",
       }
     `)
   })
