@@ -57,6 +57,7 @@ export const operationsGenerator = createOperationsGenerator({
     background: 'b',
     position: 'pos',
   },
+  joinWith: encodeURIComponent('&'),
   formatter: (key, val: string | number | boolean) => encodeParam(key) + '_' + encodeParam(val.toString()),
 })
 
