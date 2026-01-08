@@ -10,4 +10,7 @@ export default defineNuxtConfig({
     domain: 'https://image.nuxt.com',
     description: 'Nuxt Image is a module for Nuxt to optimize image for best performance.',
   },
+  mcp: {
+    name: 'Nuxt Image',
+  },
 })
