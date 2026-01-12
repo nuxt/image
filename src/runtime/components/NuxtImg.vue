@@ -29,7 +29,9 @@ import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-export interface ImageProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
+export interface ImageProps<Provider extends keyof ConfiguredImageProviders>
+  extends Omit<ImgHTMLAttributes, 'sizes' | 'crossorigin' | 'placeholder'>, // we overwrite some props in our implementation
+  BaseImageProps<Provider> {
   custom?: boolean
   placeholder?: boolean | string | number | [w: number, h: number, q?: number, b?: number]
   placeholderClass?: string
