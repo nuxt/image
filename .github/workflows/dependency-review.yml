@@ -15,4 +15,4 @@ jobs:
   check-provenance:
     uses: nuxt/.github/.github/workflows/dependency-review.yml@main
     with:
-      fail-on-change: true
+      fail-on-provenance-change: true
