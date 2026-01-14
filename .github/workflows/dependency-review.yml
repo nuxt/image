@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  check-provenance:
-    uses: nuxt/.github/.github/workflows/dependency-review.yml@24a72f836050b01991052633f959d7b343610f73
+  dependency-review:
+    uses: nuxt/.github/.github/workflows/dependency-review.yml@main
     with:
       fail-on-provenance-change: true
