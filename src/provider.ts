@@ -159,7 +159,7 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
     ...input,
     setup,
     runtime: normalize(input.provider!),
-    importName: `${key}Runtime$${genSafeVariableName(hash(input.provider))}`,
+    importName: genSafeVariableName(`${key}Runtime$${hash(input.provider)}`),
     runtimeOptions: input.options,
   }
 }
