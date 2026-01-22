@@ -1,46 +1,15 @@
 import { joinURL, encodePath, encodeParam } from 'ufo'
-import type { ImageModifiers } from '@nuxt/image'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
-import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions as CoreIPXOptions } from 'ipx'
+import type { HTTPStorageOptions, NodeFSSOptions, IPXOptions as CoreIPXOptions, IPXModifiers } from 'ipx'
+
+export type { IPXModifiers }
 
 export interface IPXRuntimeConfig extends Omit<CoreIPXOptions, 'storage' | 'httpStorage'> {
   http: HTTPStorageOptions
   fs: NodeFSSOptions
   baseURL: string
-}
-
-// Reference: https://github.com/unjs/ipx?tab=readme-ov-file#modifiers
-// TODO: https://github.com/unjs/ipx/issues/199
-export interface IPXModifiers extends Omit<ImageModifiers, 'fit' | 'format' | 'blur'> {
-  format: 'jpeg' | 'jpg' | 'png' | 'webp' | 'avif' | 'gif' | 'heif' | 'tiff' | 'auto' | string & {}
-  fit: 'contain' | 'cover' | 'fill' | 'inside' | 'outside' | string & {}
-  resize: string
-  quality: number | string
-  background: string
-  position: string
-  enlarge: true | 'true'
-  kernel: 'nearest' | 'cubic' | 'mitchell' | 'lanczos2' | 'lanczos3' | string & {}
-  trim: number | string
-  extend: string
-  extract: string
-  crop: string
-  rotate: number | string
-  flip: true | 'true'
-  flop: true | 'true'
-  sharpen: number | string
-  median: number | string
-  blur: number | string
-  flatten: true | 'true'
-  gamma: string
-  negate: true | 'true'
-  normalize: true | 'true'
-  threshold: number | string
-  modulate: string
-  tint: number | string
-  grayscale: true | 'true'
-  animated: true | 'true'
 }
 
 export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
