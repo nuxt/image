@@ -1,8 +1,8 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXFetchHandler, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import type { IPXOptions } from 'ipx'
-import { lazyEventHandler, useBase } from 'h3'
+import { lazyEventHandler, defineEventHandler, getRequestURL, sendWebResponse } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 
@@ -27,7 +27,29 @@ export default lazyEventHandler(() => {
   }
 
   const ipx = createIPX(ipxOptions)
+  const _handler = createIPXFetchHandler(ipx)
 
-  const ipxHandler = createIPXH3Handler(ipx)
-  return useBase(opts.baseURL, ipxHandler)
+  return defineEventHandler(async (event) => {
+    // Get the path after the base URL (e.g., /_ipx)
+    const url = getRequestURL(event)
+
+    // Strip the base URL prefix from the pathname
+    const baseURL = opts.baseURL || '/_ipx'
+    let pathname = url.pathname
+    if (pathname.startsWith(baseURL)) {
+      pathname = pathname.slice(baseURL.length) || '/'
+    }
+
+    // Create a new URL with the stripped pathname for IPX
+    const ipxURL = new URL(pathname + url.search, url.origin)
+
+    // Create a request with the modified URL
+    const request = new Request(ipxURL, {
+      method: event.method,
+      headers: event.headers,
+    })
+
+    const response = await _handler(request)
+    return sendWebResponse(event, response)
+  })
 })
