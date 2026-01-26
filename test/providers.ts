@@ -37,6 +37,7 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425' },
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -76,6 +77,7 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200' },
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -114,6 +116,7 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=height:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?height=200' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?height=200' },
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -152,6 +155,7 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200' },
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -190,6 +194,7 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200,fit:max/auto_image/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain' },
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -228,5 +233,6 @@ export const images = [
     hygraph: { url: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/resize=width:200,height:200,fit:max/output=format:jpeg/cltsrex89477t08unlckqx9ue' },
     caisy: { url: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg?w=200&h=200' },
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
+    builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain&format=jpeg' },
   },
 ] as const
