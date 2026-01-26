@@ -63,6 +63,19 @@ export function isBuiltInProvider(provider: ImageModuleProvider) {
 
 type ImageProviderName = typeof BuiltInProviders[number]
 
+// https://docs.netlify.com/image-cdn/create-integration/
+const netlifySetup: ProviderSetup = (_providerOptions, moduleOptions, nuxt: Nuxt) => {
+  if (moduleOptions.domains?.length > 0) {
+    nuxt.options.nitro = defu(nuxt.options.nitro, {
+      netlify: {
+        images: {
+          remote_images: moduleOptions.domains.map(domain => `https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*`),
+        },
+      },
+    })
+  }
+}
+
 const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   // IPX
   ipx: ipxSetup(),
@@ -103,17 +116,9 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
     })
   },
   // https://docs.netlify.com/image-cdn/create-integration/
-  netlify(_providerOptions, moduleOptions, nuxt: Nuxt) {
-    if (moduleOptions.domains?.length > 0) {
-      nuxt.options.nitro = defu(nuxt.options.nitro, {
-        netlify: {
-          images: {
-            remote_images: moduleOptions.domains.map(domain => `https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*`),
-          },
-        },
-      })
-    }
-  },
+  netlify: netlifySetup,
+  netlifyImageCdn: netlifySetup,
+  netlifyLargeMedia: netlifySetup,
 }
 
 export async function resolveProviders(nuxt: any, options: ModuleOptions): Promise<ImageModuleProvider[]> {
