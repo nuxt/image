@@ -20,6 +20,8 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   preset?: string
   provider?: Provider
 
+  options?: ConfiguredImageProviders[Provider]
+
   sizes?: string | Record<string, any>
   densities?: string
   preload?: boolean | { fetchPriority: 'auto' | 'high' | 'low' }
@@ -39,6 +41,7 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
   const providerOptions = computed(() => ({
     provider: props.provider,
     preset: props.preset,
+    ...props.options,
   }))
 
   const normalizedAttrs = computed(() => ({
