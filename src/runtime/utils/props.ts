@@ -39,9 +39,9 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
   const $img = useImage()
 
   const providerOptions = computed(() => ({
+    ...props.options,
     provider: props.provider,
     preset: props.preset,
-    ...props.options,
   }))
 
   const normalizedAttrs = computed(() => ({
