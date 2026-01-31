@@ -18,6 +18,7 @@ export const BuiltInProviders = [
   'bunny',
   'caisy',
   'cloudflare',
+  'cloudflareimages',
   'cloudimage',
   'cloudinary',
   'contentful',
