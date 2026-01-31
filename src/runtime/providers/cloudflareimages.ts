@@ -21,6 +21,7 @@ export interface CloudflareImagesModifiers extends ImageModifiers {
   segment: 'foreground'
   /**
    * The variant of the image to deliver (e.g., 'public', 'thumbnail', etc.)
+   * This gets priority over other modifiers.
    * @default 'public' if no modifiers is provided
    * @see https://developers.cloudflare.com/images/cloudflare-images/image-variants/
    */
@@ -74,11 +75,11 @@ export interface CloudflareImagesOptions {
 
 export default defineProvider<CloudflareImagesOptions>({
   getImage(imageId: string, { modifiers = {}, baseURL = 'https://imagedelivery.net/', accountHash }) {
-    const { variant = 'public', ...restModifiers } = modifiers
+    const { variant, ...restModifiers } = modifiers
 
-    if (Object.keys(restModifiers).length === 0) {
+    if (Object.keys(restModifiers).length === 0 || variant) {
       return {
-        url: joinURL(baseURL, accountHash, imageId, variant),
+        url: joinURL(baseURL, accountHash, imageId, variant ?? 'public'),
       }
     }
 
