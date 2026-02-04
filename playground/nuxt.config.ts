@@ -91,6 +91,7 @@ export default defineNuxtConfig({
       baseURL: 'https://netlify-photo-gallery.netlify.app',
     },
     prismic: {},
+    picsum: {},
     prepr: {
       projectName: 'nuxt-prepr-demo',
     },
