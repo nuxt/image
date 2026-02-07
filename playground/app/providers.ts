@@ -506,6 +506,38 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Picsum (Lorem Picsum placeholder images)
+  {
+    name: 'picsum',
+    samples: [
+      {
+        src: 'id/237',
+        width: 200,
+        height: 300,
+      },
+      {
+        src: 'id/870',
+        width: 300,
+        height: 200,
+        modifiers: {
+          grayscale: true,
+        },
+      },
+      {
+        src: 'id/1025',
+        width: 250,
+        height: 250,
+        modifiers: {
+          blur: 5,
+        },
+      },
+      {
+        src: 'seed/picsum',
+        width: 200,
+        height: 200,
+      },
+    ],
+  },
   // Prepr
   {
     name: 'prepr',
