@@ -135,6 +135,77 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Builder.io
+  {
+    name: 'builderio',
+    samples: [
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 450,
+        height: 300,
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        format: 'webp',
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        fit: 'contain',
+        format: 'webp',
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        fit: 'cover',
+        format: 'webp',
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        fit: 'fill',
+        format: 'webp',
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        modifiers: {
+          position: 'top',
+        },
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        modifiers: {
+          position: 'left bottom',
+        },
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        quality: 80,
+      },
+      {
+        src: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425',
+        width: 300,
+        height: 300,
+        format: 'png',
+      },
+    ],
+  },
   // Bunny
   {
     name: 'bunny',
