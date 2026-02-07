@@ -32,9 +32,9 @@ export default defineProvider<PicsumOptions>({
     // - "id/237" for a specific image
     // - "seed/picsum" for a seeded image
     if (src && src !== '/') {
-      const cleanSrc = src.startsWith('/') ? src.slice(1) : src
-      if (cleanSrc) {
-        parts.push(cleanSrc)
+      const [type, id] = (src.startsWith('/') ? src.slice(1) : src).split('/')
+      if (type && (type === 'id' || type === 'seed')) {
+        parts.push(`${type}/${id}`)
       }
     }
 
