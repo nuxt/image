@@ -36,6 +36,7 @@ export const BuiltInProviders = [
   'netlify',
   'netlifyLargeMedia',
   'netlifyImageCdn',
+  'picsum',
   'prepr',
   'none',
   'prismic',
