@@ -12,6 +12,7 @@ import cloudflare from '../../dist/runtime/providers/cloudflare'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
 import twicpics from '../../dist/runtime/providers/twicpics'
 import fastly from '../../dist/runtime/providers/fastly'
+import picsum from '../../dist/runtime/providers/picsum'
 import prepr from '../../dist/runtime/providers/prepr'
 import glide from '../../dist/runtime/providers/glide'
 import imgix from '../../dist/runtime/providers/imgix'
@@ -462,6 +463,16 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.prepr)
     }
   })
+  it('picsum', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [_src, modifiers] = image.args
+      const generated = picsum().getImage('', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.picsum)
+    }
+  })
+
   it('contentful', () => {
     const providerOptions = {
       baseURL: '',
