@@ -1,4 +1,4 @@
-import { joinURL, encodeQueryItem } from 'ufo'
+import { encodeQueryItem, getQuery, withQuery } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -51,7 +51,7 @@ export default defineProvider({
     const operations = operationsGenerator(modifiers)
 
     return {
-      url: joinURL(src + (operations ? '?' + operations : '')),
+      url: withQuery(src, getQuery('?' + operations)),
     }
   },
 })
