@@ -120,4 +120,3 @@ export interface ImageSizesVariant {
   _cHeight?: number | undefined
 }
 
-export type DataAttributes = Record<`data-${string}`, string>
