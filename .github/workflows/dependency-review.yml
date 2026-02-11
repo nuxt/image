@@ -13,6 +13,6 @@ permissions:
 
 jobs:
   dependency-review:
-    uses: nuxt/.github/.github/workflows/dependency-review.yml@main
+    uses: nuxt/.github/.github/workflows/dependency-review.yml@189b88d32500e7accd1610e4bb14f88001ea7c2c # main
     with:
       fail-on-provenance-change: true
