@@ -78,6 +78,24 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png',
     })
   })
+
+  it('ipx encodes reserved URI characters', () => {
+    const context = { ...emptyContext }
+
+    const src = '/images/test.png'
+    const generated = ipx().getImage(src, {
+      modifiers: {
+        fit: 'inside',
+        format: 'png',
+        width: 1200,
+        height: 630,
+      },
+    }, context)
+    expect(generated).toMatchObject({
+      url: '/_ipx/f_png%26fit_inside%26s_1200x630/images/test.png',
+    })
+  })
+
   it('aliyun', () => {
     const providerOptions = {
       baseURL: '/',
