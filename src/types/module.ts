@@ -11,8 +11,9 @@ export interface InputProvider<T = any> {
   setup?: ProviderSetup
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ProviderDefaults {}
+export interface ProviderDefaults {
+  provider: 'ipx'
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ConfiguredImageProviders {}
