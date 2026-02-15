@@ -105,6 +105,7 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
     zoom: 'z',
     dpr: 'dpr',
     enlarge: 'el',
+    extend: 'ex',
     extendAspectRatio: 'exar',
     gravity: 'g',
     crop: 'c',
