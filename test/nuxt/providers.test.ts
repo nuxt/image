@@ -381,7 +381,7 @@ describe('Providers', () => {
           dpr: 0.1,
           extend: true,
           extendAspectRatio: '1:no:0:1',
-          rotate: 192,
+          rotate: 180,
           background: '255:255:0',
           sharpen: 10,
           pixelate: 10,

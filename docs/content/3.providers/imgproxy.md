@@ -15,7 +15,7 @@ At a minimum, you must configure the `imgproxy` provider with the `baseURL`, `ke
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    imageengine: {
+    imgproxy: {
       baseURL: 'http://localhost:8080/', 
       key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
       salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
@@ -34,11 +34,13 @@ The `fit` option is kept for backwards compatibility with @nuxt/image. The `cont
 ## Imgproxy Modifiers
 
 By default, the Imgproxy provider has the following settings for modifiers
-```
+```typescript
+const defaultModifiers: Partial<ImgproxyModifiers> = {
   resizingType: 'fit',
   gravity: 'ce',
   enlarge: true,
   format: 'webp',
+}
  ```
 
 If you want to change them, define them in your nuxt.config.ts file.
@@ -98,7 +100,7 @@ Example 2: Add blur to an image:
 
 ```vue
 <NuxtImg
-  provider="imagick"
+  provider="imgproxy"
   src="/some-image.jpg"
   width="500"
   height="500"
@@ -110,7 +112,7 @@ Example 2: Using [presets](https://docs.imgproxy.net/configuration/options#prese
 
 ```vue
 <NuxtImg
-  provider="imagick"
+  provider="imgproxy"
   src="/some-image.jpg"
   width="500"
   height="500"
