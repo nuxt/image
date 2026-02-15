@@ -82,6 +82,11 @@ export default defineNuxtConfig({
     imgix: {
       baseURL: 'https://assets.imgix.net',
     },
+    imgproxy: {
+      baseURL: 'http://localhost:8080',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    },
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo',
     },
