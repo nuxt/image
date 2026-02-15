@@ -1,5 +1,3 @@
-// https://imgproxy.net/
-
 import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
@@ -70,6 +68,11 @@ interface ImgproxyOptions {
   modifiers?: Partial<ImgproxyModifiers>
 }
 
+/**
+ * Convert boolean, number, string or ImgproxyCrop to Imgproxy boolean primitive
+ *
+ * @param value
+ */
 const booleanMap = (value: string | number | boolean | ImgproxyCrop | ImgproxyBooleanPrimitive): number => {
   if (typeof value === 'boolean') {
     return value ? 1 : 0
@@ -131,6 +134,11 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
     maxResultDimension: 'mrd',
   },
   valueMap: {
+    /**
+     * Converting the image cropping configuration object into primitives for imgproxy.
+     *
+     * @param value
+     */
     crop: (value: string | number | boolean | ImgproxyCrop | ImgproxyBooleanPrimitive): string => {
       if (typeof value === 'string') {
         return value
@@ -151,8 +159,16 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
     enforceThumbnail: booleanMap,
     raw: booleanMap,
     returnAttachment: booleanMap,
+    /**
+     * Checking and calculating only permitted rotation angles. Only positive numbers in the range from 0 to 360 are permitted.
+     * The function converts the value to the nearest smaller value.
+     *
+     * @see https://docs.imgproxy.net/usage/processing#rotate
+     *
+     * @param value
+     */
     rotate: (value): number => {
-      if (typeof value !== 'number' || value < 0 || value >= 359) {
+      if (typeof value !== 'number' || value < 0 || value > 359) {
         throw new TypeError('Wrong rotate format')
       }
 
@@ -163,6 +179,11 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
   joinWith: '/',
 })
 
+/**
+ * Convert hex string to Uint8Array
+ *
+ * @param hex
+ */
 function hexToBytes(hex: string): Uint8Array {
   const bytes = new Uint8Array(hex.length / 2)
   for (let i = 0; i < hex.length; i += 2) {
@@ -171,6 +192,11 @@ function hexToBytes(hex: string): Uint8Array {
   return bytes
 }
 
+/**
+ * Convert Uint8Array or string to URL-safe base64
+ *
+ * @param input
+ */
 function urlSafeBase64(input: string | Uint8Array): string {
   const bytes = typeof input === 'string'
     ? new TextEncoder().encode(input)
@@ -185,6 +211,14 @@ function urlSafeBase64(input: string | Uint8Array): string {
     .replace(/\//g, '_')
 }
 
+/**
+ * Sign target with salt and secret using HMAC-SHA256
+ * @see https://docs.imgproxy.net/usage/signing_url#calculating-url-signature
+ *
+ * @param salt
+ * @param target
+ * @param secret
+ */
 function sign(salt: string, target: string, secret: string) {
   const signature = hmac.create(sha256, hexToBytes(secret))
   signature.update(hexToBytes(salt))
@@ -200,6 +234,11 @@ const defaultModifiers: Partial<ImgproxyModifiers> = {
   format: 'webp',
 }
 
+/**
+ * Convert @nuxt/image modifiers to Imgproxy modifiers
+ *
+ * @param modifiers
+ */
 function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<ImgproxyModifiers> {
   if (modifiers?.fit) {
     switch (modifiers.fit) {
@@ -216,6 +255,10 @@ function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<Imgpro
   return modifiers
 }
 
+/**
+ * Imgproxy provider
+ * @see https://imgproxy.net/
+ */
 export default defineProvider<ImgproxyOptions>({
   getImage: (src, { modifiers, baseURL, key, salt }) => {
     const mergeModifiers = resolveModifiers(defu(modifiers, defaultModifiers))
