@@ -437,6 +437,67 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // imgproxy
+  {
+    name: 'imgproxy',
+    samples: [
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 300,
+        height: 300,
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 300,
+        height: 300,
+        quality: 10,
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        background: 'FFCC00',
+        modifiers: {
+          resize: 'fit:500:500:1:1',
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          rotate: 180,
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          blur: 100,
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          dpr: 0.1,
+          extend: true,
+          extendAspectRatio: '1:no:0:1',
+          rotate: 192,
+          background: '255:255:0',
+          sharpen: 10,
+          pixelate: 10,
+          stripMetadata: true,
+          keepCopyright: false,
+          stripColorProfile: true,
+          maxBytes: 10,
+          cachebuster: 'test',
+          expires: 4106340630,
+          filename: 'test',
+        },
+      },
+    ],
+  },
   // imgix
   {
     name: 'imgix',
