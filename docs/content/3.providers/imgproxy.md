@@ -151,7 +151,7 @@ This implementation approximates the behavior.
 
 ---
 
-# Summary Table
+### Summary Table
 
 | fit value | Both Dimensions Provided | resizingType | extend |
 |-----------|--------------------------|--------------|--------|
@@ -167,7 +167,7 @@ This implementation approximates the behavior.
 
 ---
 
-# Dimension Edge Cases
+### Dimension Edge Cases
 
 - If neither `width` nor `height` is provided, resizing defaults to proportional behavior.
 - If only one dimension is provided, proportional scaling is applied.
@@ -230,6 +230,8 @@ property with the following attribute names:
 > parameters are correct. Some parameters (e.g., `crop`) accept an object as input and convert the request into a valid
 > string for your server. You can find more detailed information about all image processing options on
 > the [Imgproxy](https://docs.imgproxy.net/usage/processing#processing-options) website.
+
+## Examples
 
 Example 1: Cropping an image to a width and height of 500x500 and rotate by 180 degrees:
 
