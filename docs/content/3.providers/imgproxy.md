@@ -90,7 +90,7 @@ Example 1: Cropping an image to a width and height of 500x500 and rotate by 180 
   src="/some-image.jpg"
   width="500"
   height="500"
-  :modifiers="{ rotate: '180' }"
+  :modifiers="{ rotate: 180 }"
 />
 ```
 
