@@ -152,7 +152,7 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
     raw: booleanMap,
     returnAttachment: booleanMap,
     rotate: (value): number => {
-      if (typeof value !== 'number' || value <= 0 || value >= 359) {
+      if (typeof value !== 'number' || value < 0 || value >= 359) {
         throw new TypeError('Wrong rotate format')
       }
 
