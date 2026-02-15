@@ -25,7 +25,7 @@ export interface ImgproxyModifiers extends Omit<ImageModifiers, 'fit' | 'format'
   width: number
   height: number
   format: ImgproxyFormat
-  fit: ImgproxyResizingType | 'contain'
+  fit: 'cover' | 'contain' | 'fill' | 'inside' | 'outside'
   resizingType: ImgproxyResizingType
   resize: string
   size: string
@@ -229,9 +229,8 @@ function sign(salt: string, target: string, secret: string) {
 }
 
 const defaultModifiers: Partial<ImgproxyModifiers> = {
-  resizingType: 'fit',
+  resizingType: 'auto',
   gravity: 'ce',
-  enlarge: true,
   format: 'webp',
 }
 
@@ -242,13 +241,29 @@ const defaultModifiers: Partial<ImgproxyModifiers> = {
  */
 function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<ImgproxyModifiers> {
   if (modifiers?.fit) {
+    const hasW = typeof modifiers?.width === 'number' && modifiers.width > 0
+    const hasH = typeof modifiers?.height === 'number' && modifiers.height > 0
+    const hasBoth = hasW && hasH
+
     switch (modifiers.fit) {
+      case 'cover':
+        modifiers.resizingType = hasBoth ? 'fill' : 'fit'
+        break
       case 'contain':
-        modifiers.resizingType = 'fill'
+        modifiers.resizingType = 'fit'
+        modifiers.extend = hasBoth
+        break
+      case 'fill':
+        modifiers.resizingType = hasBoth ? 'force' : 'fit'
+        break
+      case 'inside':
+        modifiers.resizingType = 'fit'
+        break
+      case 'outside':
+        modifiers.resizingType = hasBoth ? 'fill' : 'fit'
         break
       default:
-        modifiers.resizingType = modifiers.fit
-        break
+        throw new TypeError('Unsupported fit format')
     }
     delete modifiers.fit
   }
