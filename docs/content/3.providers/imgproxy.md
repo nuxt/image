@@ -29,8 +29,6 @@ export default defineNuxtConfig({
 All `fit` values are converted to [`resizing_type`](https://docs.imgproxy.net/usage/processing#resizing-type) option provided by Imgproxy. 
 The `fit` option is kept for backwards compatibility with @nuxt/image. The `contain` value is converted to `fill`.
 
-## Imgproxy default options
-
 ## Imgproxy Modifiers
 
 By default, the Imgproxy provider has the following settings for modifiers
