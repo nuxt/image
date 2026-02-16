@@ -1,4 +1,4 @@
-name: Reproduire
+name: Needs Reproduction
 on:
   issues:
     types: [labeled]
@@ -7,7 +7,7 @@ permissions:
   issues: write
 
 jobs:
-  reproduire:
+  needs-reproduction:
     uses: nuxt/.github/.github/workflows/needs-reproduction.yml@main
     with:
       comment: |
