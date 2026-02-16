@@ -82,8 +82,8 @@ importers:
         specifier: ^20.5.3
         version: 20.5.3
       installed-check:
-        specifier: ^9.3.0
-        version: 9.3.0
+        specifier: ^10.0.0
+        version: 10.0.0
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -5071,9 +5071,9 @@ packages:
     resolution: {integrity: sha512-5yH+YyCw2AO1OQpOSce2yUaooOSrK8XXmkOn2xdVpdtpt0pqwfdqU77FIpWN4fPHDcINKUf4R7hgDEfqpy1Z9g==}
     engines: {node: '>=18.6.0'}
 
-  installed-check@9.3.0:
-    resolution: {integrity: sha512-4aL5tUyCc/MVkaKnTqg5CdMa20uf7HYHjHJfiv4WeIoBoSKDLd/frMnIRUglnUovHUHrwRuzUDHOd4DidHKkkA==}
-    engines: {node: '>=18.6.0'}
+  installed-check@10.0.0:
+    resolution: {integrity: sha512-lfk580bIgRtiKJBoyPAd7geSIXF1zlVXi8VP0eU2mBTRpfcqIFG4JK+c8o7R+EOA6lfKPhnThIkx7LjaFwj7fg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     hasBin: true
 
   ioredis@5.9.1:
@@ -5607,10 +5607,6 @@ packages:
   media-typer@1.1.0:
     resolution: {integrity: sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw==}
     engines: {node: '>= 0.8'}
-
-  meow@12.1.1:
-    resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
-    engines: {node: '>=16.10'}
 
   merge-descriptors@2.0.0:
     resolution: {integrity: sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==}
@@ -6158,6 +6154,10 @@ packages:
     resolution: {integrity: sha512-//nshmD55c46FuFw26xV/xFAaB5HF9Xdap7HJBBnrKdAd6/GxDBaNA1870O79+9ueg61cZLSVc+OaFlfmObYVQ==}
     engines: {node: '>= 14.16'}
 
+  peowly@1.3.3:
+    resolution: {integrity: sha512-5UmUtvuCv3KzBX2NuQw2uF28o0t8Eq4KkPRZfUCzJs+DiNVKw7OaYn29vNDgrt/Pggs23CPlSTqgzlhHJfpT0A==}
+    engines: {node: '>=18.6.0', typescript: '>=5.8'}
+
   perfect-debounce@2.0.0:
     resolution: {integrity: sha512-fkEH/OBiKrqqI/yIgjR92lMfs2K8105zt/VT6+7eTjNwisrsh47CeIED9z58zI7DfKdH3uHAn25ziRZn3kgAow==}
 
@@ -6678,6 +6678,9 @@ packages:
 
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+
+  resolve-workspace-root@2.0.1:
+    resolution: {integrity: sha512-nR23LHAvaI6aHtMg6RWoaHpdR4D881Nydkzi2CixINyg9T00KgaJdJI6Vwty+Ps8WLxZHuxsS0BseWjxSA4C+w==}
 
   resolve@1.22.11:
     resolution: {integrity: sha512-RfqAvLnMl313r7c9oclB1HhUEAezcpLjz95wFH4LVuhk9JF/r22qmVP9AMmOU4vMX7Q8pN8jwNg/CSpdFnMjTQ==}
@@ -13245,12 +13248,13 @@ snapshots:
       picomatch: 4.0.3
       semver: 7.7.4
 
-  installed-check@9.3.0:
+  installed-check@10.0.0:
     dependencies:
       chalk: 5.6.2
       installed-check-core: 8.3.1
-      meow: 12.1.1
+      peowly: 1.3.3
       pony-cause: 2.1.11
+      resolve-workspace-root: 2.0.1
       version-guard: 1.1.3
 
   ioredis@5.9.1:
@@ -13873,8 +13877,6 @@ snapshots:
   mdurl@2.0.0: {}
 
   media-typer@1.1.0: {}
-
-  meow@12.1.1: {}
 
   merge-descriptors@2.0.0: {}
 
@@ -14869,6 +14871,8 @@ snapshots:
 
   pathval@2.0.1: {}
 
+  peowly@1.3.3: {}
+
   perfect-debounce@2.0.0: {}
 
   picocolors@1.1.1: {}
@@ -15513,6 +15517,8 @@ snapshots:
   resolve-from@5.0.0: {}
 
   resolve-pkg-maps@1.0.0: {}
+
+  resolve-workspace-root@2.0.1: {}
 
   resolve@1.22.11:
     dependencies:
