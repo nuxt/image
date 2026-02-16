@@ -185,7 +185,24 @@ const defaultModifiers: Partial<ImgproxyModifiers> = {
 }
  ```
 
-If you want to change them, you can define it `nuxt.config.ts` file.
+If you want to change them, you can define them in your `nuxt.config.ts` file:
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+    image: {
+        imgproxy: {
+            baseURL: 'http://localhost:8080/',
+            key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+            salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+            modifiers: {
+                resizingType: 'fit',
+                gravity: 'no',
+                format: 'png',
+            }
+        }
+    }
+})
+```
 
 In addition to the [standard modifiers](/usage/nuxt-img#modifiers), you can also use most
 of [Imgproxy Options](https://docs.imgproxy.net/usage/processing#processing-options) by adding them to the `modifiers`
@@ -290,6 +307,22 @@ Example 4: Advanced image manipulation:
 />
 ```
 
+### Contributing
+
+When developing this provider, a locally installed version of imgproxy was used with the following settings:
+
+```yaml [docker-compose.yml]
+
+services:
+  app:
+    image: ghcr.io/imgproxy/imgproxy
+    environment:
+      - IMGPROXY_KEY=ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800
+      - IMGPROXY_SALT=8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e
+      - IMGPROXY_PRESETS=default=resizing_type:fill/enlarge:1,sharp=sharpen:0.7,blurry=blur:100
+    ports:
+      - 8080:8080
+```
 
 
 
