@@ -164,7 +164,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/fit_contain&s_200x200/test.png' },
+    ipx: { url: '/_ipx/fit_contain%26s_200x200/test.png' },
     aliyun: { url: '/test.png?image_process=fit,contain/resize,fw_200,fh_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=640&h=200&fit=contain&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain/test.png' },
@@ -204,7 +204,7 @@ export const images = [
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
     none: { url: '/test.png' },
-    ipx: { url: '/_ipx/fit_contain&f_jpeg&s_200x200/test.png' },
+    ipx: { url: '/_ipx/f_jpeg%26fit_contain%26s_200x200/test.png' },
     aliyun: { url: '/test.png?image_process=fit,contain/format,jpeg/resize,fw_200,fh_200' },
     awsAmplify: { url: '/?url=%2Ftest.png&w=640&h=200&fit=contain&format=jpeg&q=100' },
     cloudflare: { url: '/cdn-cgi/image/w=200,h=200,fit=contain,f=jpeg/test.png' },
