@@ -3,7 +3,7 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
+import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders, ResponsiveBreakpoints } from '@nuxt/image'
 
 export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
@@ -141,6 +141,8 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
   const sizeVariants = []
   const srcsetVariants = []
 
+  const responsiveBreakpoints = merged.responsiveBreakpoints || ctx.options.responsiveBreakpoints
+
   if (Object.keys(sizes).length >= 1) {
     // 'sizes path'
     for (const key in sizes) {
@@ -153,7 +155,7 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
       sizeVariants.push({
         size: variant.size,
         screenMaxWidth: variant.screenMaxWidth,
-        media: `(max-width: ${variant.screenMaxWidth}px)`,
+        media: `(${responsiveBreakpoints}: ${variant.screenMaxWidth}px)`,
       })
 
       // add srcset variants for all densities (for current 'size' processed)
@@ -165,7 +167,7 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
       }
     }
 
-    finaliseSizeVariants(sizeVariants)
+    finaliseSizeVariants(sizeVariants, responsiveBreakpoints)
   }
   else {
     // 'densities path'
@@ -242,7 +244,7 @@ function getVariantSrc(ctx: ImageCTX, input: string, opts: ImageSizesOptions, va
     opts)
 }
 
-function finaliseSizeVariants(sizeVariants: any[]) {
+function finaliseSizeVariants(sizeVariants: any[], responsiveBreakpoints: ResponsiveBreakpoints) {
   sizeVariants.sort((v1, v2) => v1.screenMaxWidth - v2.screenMaxWidth)
 
   // de-duplicate size variants (by key `media`)
@@ -255,8 +257,19 @@ function finaliseSizeVariants(sizeVariants: any[]) {
     previousMedia = sizeVariant.media
   }
 
-  for (let i = 0; i < sizeVariants.length; i++) {
-    sizeVariants[i].media = sizeVariants[i + 1]?.media || ''
+  if (responsiveBreakpoints === 'min-width') {
+    // Reverse to descending order (largest breakpoint first)
+    sizeVariants.reverse()
+    // Last variant (smallest screen) becomes the fallback (no media query)
+    if (sizeVariants.length > 0) {
+      sizeVariants[sizeVariants.length - 1].media = ''
+    }
+  }
+  else {
+    // max-width: shift media values so each variant uses the next breakpoint's media
+    for (let i = 0; i < sizeVariants.length; i++) {
+      sizeVariants[i].media = sizeVariants[i + 1]?.media || ''
+    }
   }
 }
 

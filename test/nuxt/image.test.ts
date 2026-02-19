@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect, vi } from 'vitest'
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
@@ -175,6 +175,88 @@ describe('Renders simple image', () => {
     })
     expect(img.getCurrentComponent().exposed?.imgEl).toBeDefined()
     expect(img.getCurrentComponent().exposed?.imgEl.value).toBeInstanceOf(HTMLImageElement)
+  })
+})
+
+describe('Renders image with min-width responsive breakpoints', () => {
+  it('uses min-width media queries via prop', () => {
+    const img = mountImage({
+      width: 200,
+      height: 200,
+      sizes: '200,500:500,900:900',
+      responsiveBreakpoints: 'min-width',
+      src: '/image.png',
+    })
+    const sizes = img.find('img').element.getAttribute('sizes')
+    expect(sizes).toMatchInlineSnapshot('"(min-width: 900px) 900px, (min-width: 500px) 500px, 200px"')
+  })
+
+  it('uses min-width with named breakpoints', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 1000,
+      height: 2000,
+      sizes: 'sm:100vw md:300px lg:350px',
+      responsiveBreakpoints: 'min-width',
+    })
+    const sizes = img.find('img').element.getAttribute('sizes')
+    expect(sizes).toMatchInlineSnapshot('"(min-width: 1024px) 350px, (min-width: 768px) 300px, 100vw"')
+  })
+
+  it('with single sizes entry and min-width', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: 'sm:150',
+      responsiveBreakpoints: 'min-width',
+    })
+    const sizes = img.find('img').element.getAttribute('sizes')
+    expect(sizes).toMatchInlineSnapshot('"150px"')
+  })
+})
+
+describe('Module-level responsiveBreakpoints config', () => {
+  const nuxtApp = useNuxtApp()
+  const src = '/image.png'
+
+  beforeEach(() => {
+    delete nuxtApp._img
+    delete nuxtApp.$img
+  })
+
+  afterEach(() => {
+    delete nuxtApp._img
+    delete nuxtApp.$img
+  })
+
+  it('module config responsiveBreakpoints=min-width applies globally', () => {
+    setImageContext({ responsiveBreakpoints: 'min-width' })
+    const img = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 200,
+        height: 200,
+        sizes: '200,500:500,900:900',
+      },
+    })
+    const sizes = img.find('img').element.getAttribute('sizes')
+    expect(sizes).toMatchInlineSnapshot('"(min-width: 900px) 900px, (min-width: 500px) 500px, 200px"')
+  })
+
+  it('component prop overrides module config', () => {
+    setImageContext({ responsiveBreakpoints: 'min-width' })
+    const img = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 200,
+        height: 200,
+        sizes: '200,500:500,900:900',
+        responsiveBreakpoints: 'max-width',
+      },
+    })
+    const sizes = img.find('img').element.getAttribute('sizes')
+    expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
   })
 })
 

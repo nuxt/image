@@ -19,10 +19,13 @@ export interface ResolvedImageModifiers extends ImageModifiers {
 
 type DefaultProvider = ProviderDefaults extends Record<'provider', unknown> ? ProviderDefaults['provider'] : never
 
+export type ResponsiveBreakpoints = 'max-width' | 'min-width'
+
 export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = DefaultProvider> {
   provider?: Provider
   preset?: string
   densities?: string
+  responsiveBreakpoints?: ResponsiveBreakpoints
   modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
     & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
   sizes?: string | Record<string, any>
@@ -57,6 +60,7 @@ export interface CreateImageOptions {
   presets: { [name: string]: ImageOptions }
   provider: (string & {}) | keyof ImageProviders
   screens: Record<string, number>
+  responsiveBreakpoints: ResponsiveBreakpoints
   alias: Record<string, string>
   domains: string[]
   densities: number[]

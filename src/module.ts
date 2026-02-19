@@ -16,6 +16,7 @@ export interface ModuleOptions extends ImageProviders {
   domains: string[]
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
+  responsiveBreakpoints: CreateImageOptions['responsiveBreakpoints']
   providers: { [name: string]: InputProvider | any }
   densities: number[]
   format: CreateImageOptions['format']
@@ -45,6 +46,7 @@ export default defineNuxtModule<ModuleOptions>({
     providers: {},
     alias: {},
     densities: [1, 2],
+    responsiveBreakpoints: 'max-width',
   }),
   meta: {
     name: '@nuxt/image',
@@ -113,6 +115,7 @@ export default defineNuxtModule<ModuleOptions>({
       'densities',
       'format',
       'quality',
+      'responsiveBreakpoints',
     ])
 
     const providers = await resolveProviders(nuxt, options)
@@ -235,16 +238,19 @@ function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]):
 }
 
 function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'>): string {
+  const { responsiveBreakpoints, ...serializableOptions } = imageOptions
   return `
   ${providers.map(p => `import ${p.importName} from '${p.runtime}'`).join('\n')}
   
   export const imageOptions = {
-    ...${JSON.stringify(imageOptions, null, 2)},
+    ...${JSON.stringify(serializableOptions, null, 2)},
     /** @type {${JSON.stringify(imageOptions.provider)}} */
     provider: ${JSON.stringify(imageOptions.provider)},
     providers: {
       ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
-    }
+    },
+    /** @type {import('@nuxt/image').ResponsiveBreakpoints} */
+    responsiveBreakpoints: ${JSON.stringify(responsiveBreakpoints)},
   }
 `
 }

@@ -113,6 +113,7 @@ const sources = computed<Source[]>(() => {
       ...providerOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,
+      responsiveBreakpoints: props.responsiveBreakpoints,
       modifiers: { ...imageModifiers.value, format },
     })
 
