@@ -51,6 +51,7 @@ const sizes = computed(() => $img.getSizes(props.src!, {
   ...providerOptions.value,
   sizes: props.sizes,
   densities: props.densities,
+  responsiveBreakpoints: props.responsiveBreakpoints,
   modifiers: imageModifiers.value,
 }))
 

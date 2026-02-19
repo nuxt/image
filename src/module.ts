@@ -16,6 +16,7 @@ export interface ModuleOptions extends ImageProviders {
   domains: string[]
   alias: Record<string, string>
   screens: CreateImageOptions['screens']
+  responsiveBreakpoints: CreateImageOptions['responsiveBreakpoints']
   providers: { [name: string]: InputProvider | any }
   densities: number[]
   format: CreateImageOptions['format']
@@ -45,6 +46,7 @@ export default defineNuxtModule<ModuleOptions>({
     providers: {},
     alias: {},
     densities: [1, 2],
+    responsiveBreakpoints: 'max-width',
   }),
   meta: {
     name: '@nuxt/image',
@@ -113,6 +115,7 @@ export default defineNuxtModule<ModuleOptions>({
       'densities',
       'format',
       'quality',
+      'responsiveBreakpoints',
     ])
 
     const providers = await resolveProviders(nuxt, options)

@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
+import type { ConfiguredImageProviders, ImageModifiers, ResponsiveBreakpoints } from '@nuxt/image'
 import { parseSize } from '.'
 import { useImage } from '#imports'
 
@@ -22,6 +22,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
 
   sizes?: string | Record<string, any>
   densities?: string
+  responsiveBreakpoints?: ResponsiveBreakpoints
   preload?: boolean | { fetchPriority: 'auto' | 'high' | 'low' }
 
   // <img> attributes
