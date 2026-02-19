@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 import { images } from '../providers'
 
@@ -107,6 +107,188 @@ describe('Providers', () => {
       const generated = cloudflare().getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.cloudflare)
     }
+  })
+
+  it('cloudflare with app.baseURL', () => {
+    const ctx = { options: { ...emptyContext.options, nuxt: { baseURL: '/admin/' } } } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: '/',
+    }, ctx)).toMatchObject({ url: '/cdn-cgi/image/w=200/admin/images/test.png' })
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: {},
+      baseURL: '/',
+    }, ctx)).toMatchObject({ url: '/admin/images/test.png' })
+  })
+
+  it('cloudflare with external image', () => {
+    expect(cloudflare().getImage('https://example.com/photo.jpg', {
+      modifiers: { width: 200 },
+      baseURL: '/',
+    }, emptyContext)).toMatchObject({ url: '/cdn-cgi/image/w=200/https://example.com/photo.jpg' })
+
+    expect(cloudflare().getImage('https://example.com/photo.jpg', {
+      modifiers: {},
+      baseURL: '/',
+    }, emptyContext)).toMatchObject({ url: 'https://example.com/photo.jpg' })
+  })
+
+  it('cloudflare cross-zone', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/' },
+        event: {
+          headers: new Headers({
+            'host': 'app.example.com',
+            'x-forwarded-proto': 'https',
+          }),
+        },
+      },
+    } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://app.example.com/images/test.png' })
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: {},
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: '/images/test.png' })
+  })
+
+  it('cloudflare cross-zone with app.baseURL', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/admin/' },
+        event: {
+          headers: new Headers({
+            'host': 'app.example.com',
+            'x-forwarded-proto': 'https',
+          }),
+        },
+      },
+    } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://app.example.com/admin/images/test.png' })
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: {},
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: '/admin/images/test.png' })
+  })
+
+  it('cloudflare cross-zone with external src', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/' },
+        event: {
+          headers: new Headers({
+            'host': 'app.example.com',
+            'x-forwarded-proto': 'https',
+          }),
+        },
+      },
+    } as any
+
+    expect(cloudflare().getImage('https://other.example.com/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://other.example.com/images/test.png' })
+
+    expect(cloudflare().getImage('https://other.example.com/images/test.png', {
+      modifiers: {},
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: 'https://other.example.com/images/test.png' })
+  })
+
+  it('cloudflare cross-zone with appOrigin', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/admin/' },
+      },
+    } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+      appOrigin: 'https://app.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://app.example.com/admin/images/test.png' })
+  })
+
+  it('cloudflare cross-zone warns when origin cannot be determined', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/' },
+      },
+    } as any
+
+    const origOrigin = window.location.origin
+    Object.defineProperty(window, 'location', { value: { origin: 'null' }, writable: true })
+
+    cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+    }, ctx)
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('[nuxt-image] Cloudflare cross-zone'),
+    )
+
+    Object.defineProperty(window, 'location', { value: { origin: origOrigin }, writable: true })
+    warnSpy.mockRestore()
+  })
+
+  it('cloudflare cross-zone handles multi-value x-forwarded-proto', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/' },
+        event: {
+          headers: new Headers({
+            'host': 'app.example.com',
+            'x-forwarded-proto': 'https, http',
+          }),
+        },
+      },
+    } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://app.example.com/images/test.png' })
+  })
+
+  it('cloudflare cross-zone appOrigin overrides headers', () => {
+    const ctx = {
+      options: {
+        ...emptyContext.options,
+        nuxt: { baseURL: '/' },
+        event: {
+          headers: new Headers({
+            'host': 'injected.attacker.com',
+            'x-forwarded-proto': 'https',
+          }),
+        },
+      },
+    } as any
+
+    expect(cloudflare().getImage('/images/test.png', {
+      modifiers: { width: 200 },
+      baseURL: 'https://cdn.example.com',
+      appOrigin: 'https://app.example.com',
+    }, ctx)).toMatchObject({ url: 'https://cdn.example.com/cdn-cgi/image/w=200/https://app.example.com/images/test.png' })
   })
 
   it('cloudinary', () => {
