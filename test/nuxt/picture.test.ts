@@ -356,7 +356,7 @@ describe('NuxtPicture with min-width responsive breakpoints', () => {
       runtimeConfig: {} as any,
       ...imageOptions,
       nuxt: { baseURL: config.app.baseURL },
-      responsiveBreakpoints: 'min-width'
+      responsiveBreakpoints: 'min-width',
     })
     const picture = mount(NuxtPicture, {
       propsData: {
