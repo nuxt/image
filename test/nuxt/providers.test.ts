@@ -37,6 +37,7 @@ import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
 import sirv from '../../dist/runtime/providers/sirv'
 import hygraph from '../../dist/runtime/providers/hygraph'
+import flyimg from '../../dist/runtime/providers/flyimg'
 
 const emptyContext = {
   options: {
@@ -716,6 +717,27 @@ describe('Providers', () => {
       const generated = hygraph().getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.hygraph)
     }
+  })
+
+  it('flyimg', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://my-website.com',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.flyimg)
+    }
+
+    // fit: 'cover' → c_1 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, emptyContext))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,c_1/https://my-website.com/test.png' })
+
+    // fit: 'fill' → par_0 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, emptyContext))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,par_0/https://my-website.com/test.png' })
   })
 
   it('weserv', () => {
