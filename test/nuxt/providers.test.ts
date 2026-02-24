@@ -444,7 +444,7 @@ describe('Providers', () => {
       baseURL: '',
     }
 
-    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg'
+    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg?v=1763534395'
 
     for (const image of images) {
       const [, modifiers] = image.args
