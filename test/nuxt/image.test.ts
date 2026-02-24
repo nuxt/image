@@ -22,7 +22,7 @@ describe('Renders simple image', () => {
   })
 
   it('Matches snapshot', () => {
-    expect(wrapper.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w" src="/_ipx/s_1800x1800/image.png">"`)
+    expect(wrapper.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 499px) 200px, (max-width: 899px) 500px, 900px" srcset="/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w" src="/_ipx/s_1800x1800/image.png">"`)
   })
 
   it('props.src is picked up by getImage()', () => {
@@ -41,7 +41,7 @@ describe('Renders simple image', () => {
 
   it('sizes', () => {
     const sizes = wrapper.find('img').element.getAttribute('sizes')
-    expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
+    expect(sizes).toMatchInlineSnapshot(`"(max-width: 499px) 200px, (max-width: 899px) 500px, 900px"`)
   })
 
   it('applies densities', () => {
@@ -52,7 +52,7 @@ describe('Renders simple image', () => {
       densities: '1x 2x 3x',
       src: 'image.png',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 400px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_900x1350/image.png 900w, /_ipx/s_1200x1800/image.png 1200w" src="/_ipx/s_1200x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 399px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_900x1350/image.png 900w, /_ipx/s_1200x1800/image.png 1200w" src="/_ipx/s_1200x1800/image.png">"`)
   })
 
   it('empty densities (fallback to global)', () => {
@@ -63,7 +63,7 @@ describe('Renders simple image', () => {
       densities: '',
       src: 'image.png',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 400px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w" src="/_ipx/s_800x1200/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 399px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w" src="/_ipx/s_800x1200/image.png">"`)
   })
 
   it('empty string densities (fallback to global)', () => {
@@ -74,7 +74,7 @@ describe('Renders simple image', () => {
       densities: ' ',
       src: 'image.png',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 400px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w" src="/_ipx/s_800x1200/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 399px) 300px, 400px" srcset="/_ipx/s_300x450/image.png 300w, /_ipx/s_400x600/image.png 400w, /_ipx/s_600x900/image.png 600w, /_ipx/s_800x1200/image.png 800w" src="/_ipx/s_800x1200/image.png">"`)
   })
 
   it('error on invalid densities', () => {
@@ -113,7 +113,7 @@ describe('Renders simple image', () => {
       sizes: '200:200px,300:200px,400:400px,400:400px,500:500px,800:800px',
       src: 'image.png',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 300px) 200px, (max-width: 400px) 200px, (max-width: 500px) 400px, (max-width: 800px) 500px, 800px" srcset="/_ipx/s_200x300/image.png 200w, /_ipx/s_400x600/image.png 400w, /_ipx/s_500x750/image.png 500w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_1000x1500/image.png 1000w, /_ipx/s_1600x2400/image.png 1600w" src="/_ipx/s_1600x2400/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 299px) 200px, (max-width: 399px) 200px, (max-width: 499px) 400px, (max-width: 799px) 500px, 800px" srcset="/_ipx/s_200x300/image.png 200w, /_ipx/s_400x600/image.png 400w, /_ipx/s_500x750/image.png 500w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_1000x1500/image.png 1000w, /_ipx/s_1600x2400/image.png 1600w" src="/_ipx/s_1600x2400/image.png">"`)
   })
 
   it('encodes characters', () => {
@@ -123,7 +123,7 @@ describe('Renders simple image', () => {
       sizes: '200,500:500,900:900',
       src: '/汉字.png',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/s_200x200/%E6%B1%89%E5%AD%97.png 200w, /_ipx/s_400x400/%E6%B1%89%E5%AD%97.png 400w, /_ipx/s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w" src="/_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 499px) 200px, (max-width: 899px) 500px, 900px" srcset="/_ipx/s_200x200/%E6%B1%89%E5%AD%97.png 200w, /_ipx/s_400x400/%E6%B1%89%E5%AD%97.png 400w, /_ipx/s_500x500/%E6%B1%89%E5%AD%97.png 500w, /_ipx/s_900x900/%E6%B1%89%E5%AD%97.png 900w, /_ipx/s_1000x1000/%E6%B1%89%E5%AD%97.png 1000w, /_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png 1800w" src="/_ipx/s_1800x1800/%E6%B1%89%E5%AD%97.png">"`)
   })
 
   it('correctly sets crop', () => {
@@ -133,7 +133,7 @@ describe('Renders simple image', () => {
       height: 2000,
       sizes: 'sm:100vw md:300px lg:350px xl:350px 2xl:350px',
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="1000" height="2000" data-nuxt-img="" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 300px, (max-width: 1280px) 350px, (max-width: 1536px) 350px, 350px" srcset="/_ipx/s_300x600/image.png 300w, /_ipx/s_350x700/image.png 350w, /_ipx/s_600x1200/image.png 600w, /_ipx/s_640x1280/image.png 640w, /_ipx/s_700x1400/image.png 700w, /_ipx/s_1280x2560/image.png 1280w" src="/_ipx/s_1280x2560/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="1000" height="2000" data-nuxt-img="" sizes="(max-width: 767px) 100vw, (max-width: 1023px) 300px, (max-width: 1279px) 350px, (max-width: 1535px) 350px, 350px" srcset="/_ipx/s_300x600/image.png 300w, /_ipx/s_350x700/image.png 350w, /_ipx/s_600x1200/image.png 600w, /_ipx/s_640x1280/image.png 640w, /_ipx/s_700x1400/image.png 700w, /_ipx/s_1280x2560/image.png 1280w" src="/_ipx/s_1280x2560/image.png">"`)
   })
 
   it('without sizes', () => {
@@ -265,14 +265,14 @@ describe('Renders placeholder image', () => {
     let sizes = wrapper.find('img').element.getAttribute('sizes')
 
     expect(sizes).toMatchInlineSnapshot('null')
-    expect(placeholderImage.sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
+    expect(placeholderImage.sizes).toMatchInlineSnapshot(`"(max-width: 499px) 200px, (max-width: 899px) 500px, 900px"`)
 
     resolveImage()
     await nextTick()
 
     sizes = wrapper.find('img').element.getAttribute('sizes')
 
-    expect(sizes).toMatchInlineSnapshot('"(max-width: 500px) 200px, (max-width: 900px) 500px, 900px"')
+    expect(sizes).toMatchInlineSnapshot(`"(max-width: 499px) 200px, (max-width: 899px) 500px, 900px"`)
     expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
 
@@ -525,7 +525,7 @@ describe('Renders image, applies module config', () => {
         sizes: '200,500:500,900:900',
       },
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_75&amp;s_200x200/image.png 200w, /_ipx/q_75&amp;s_400x400/image.png 400w, /_ipx/q_75&amp;s_500x500/image.png 500w, /_ipx/q_75&amp;s_900x900/image.png 900w, /_ipx/q_75&amp;s_1000x1000/image.png 1000w, /_ipx/q_75&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_75&amp;s_1800x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 499px) 200px, (max-width: 899px) 500px, 900px" srcset="/_ipx/q_75&amp;s_200x200/image.png 200w, /_ipx/q_75&amp;s_400x400/image.png 400w, /_ipx/q_75&amp;s_500x500/image.png 500w, /_ipx/q_75&amp;s_900x900/image.png 900w, /_ipx/q_75&amp;s_1000x1000/image.png 1000w, /_ipx/q_75&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_75&amp;s_1800x1800/image.png">"`)
   })
 
   it('Module config .quality + props.quality => props.quality applies', () => {
@@ -539,7 +539,7 @@ describe('Renders image, applies module config', () => {
         quality: 90,
       },
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/q_90&amp;s_200x200/image.png 200w, /_ipx/q_90&amp;s_400x400/image.png 400w, /_ipx/q_90&amp;s_500x500/image.png 500w, /_ipx/q_90&amp;s_900x900/image.png 900w, /_ipx/q_90&amp;s_1000x1000/image.png 1000w, /_ipx/q_90&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_90&amp;s_1800x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 499px) 200px, (max-width: 899px) 500px, 900px" srcset="/_ipx/q_90&amp;s_200x200/image.png 200w, /_ipx/q_90&amp;s_400x400/image.png 400w, /_ipx/q_90&amp;s_500x500/image.png 500w, /_ipx/q_90&amp;s_900x900/image.png 900w, /_ipx/q_90&amp;s_1000x1000/image.png 1000w, /_ipx/q_90&amp;s_1800x1800/image.png 1800w" src="/_ipx/q_90&amp;s_1800x1800/image.png">"`)
   })
 
   it('Without quality config => default image', () => {
@@ -553,7 +553,7 @@ describe('Renders image, applies module config', () => {
         sizes: '200,500:500,900:900',
       },
     })
-    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 500px) 200px, (max-width: 900px) 500px, 900px" srcset="/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w" src="/_ipx/s_1800x1800/image.png">"`)
+    expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="200" data-nuxt-img="" sizes="(max-width: 499px) 200px, (max-width: 899px) 500px, 900px" srcset="/_ipx/s_200x200/image.png 200w, /_ipx/s_400x400/image.png 400w, /_ipx/s_500x500/image.png 500w, /_ipx/s_900x900/image.png 900w, /_ipx/s_1000x1000/image.png 1000w, /_ipx/s_1800x1800/image.png 1800w" src="/_ipx/s_1800x1800/image.png">"`)
   })
 })
 
