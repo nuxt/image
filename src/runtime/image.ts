@@ -153,7 +153,7 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
       sizeVariants.push({
         size: variant.size,
         screenMaxWidth: variant.screenMaxWidth,
-        media: `(max-width: ${variant.screenMaxWidth}px)`,
+        media: `(max-width: ${variant.screenMaxWidth - 1}px)`,
       })
 
       // add srcset variants for all densities (for current 'size' processed)
