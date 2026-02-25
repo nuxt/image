@@ -38,18 +38,20 @@ import uploadcare from '../../dist/runtime/providers/uploadcare'
 import sirv from '../../dist/runtime/providers/sirv'
 import hygraph from '../../dist/runtime/providers/hygraph'
 
-const emptyContext = {
-  options: {
-    screens: {
-      'sm': 640,
-      'md': 768,
-      'lg': 1024,
-      'xl': 1280,
-      '2xl': 1536,
+function getEmptyContext() {
+  return {
+    options: {
+      screens: {
+        'sm': 640,
+        'md': 768,
+        'lg': 1024,
+        'xl': 1280,
+        '2xl': 1536,
+      },
+      nuxt: useNuxtApp(),
     },
-    nuxt: useNuxtApp(),
-  },
-} as any
+  } as any
+}
 
 describe('Providers', () => {
   it('validate returned urls', async () => {
@@ -64,13 +66,13 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = ipx().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = ipx().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.ipx)
     }
   })
 
   it('ipx router base', () => {
-    const context = { ...emptyContext }
+    const context = { ...getEmptyContext() }
 
     const src = '/images/test.png'
     const generated = ipx().getImage(src, { modifiers: {} }, context)
@@ -84,7 +86,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = aliyun().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = aliyun().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.aliyun)
     }
   })
@@ -94,7 +96,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = awsAmplify().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = awsAmplify().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.awsAmplify)
     }
   })
@@ -104,7 +106,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = cloudflare().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = cloudflare().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.cloudflare)
     }
   })
@@ -116,14 +118,14 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = cloudinary().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = cloudinary().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.cloudinary)
     }
   })
 
   it('cloudinary absolute url', () => {
     const absoluteUrl = 'https://res.cloudinary.com/example/image/upload/test.png'
-    const generated = cloudinary().getImage(absoluteUrl, { modifiers: { width: 300, height: 300 } }, emptyContext)
+    const generated = cloudinary().getImage(absoluteUrl, { modifiers: { width: 300, height: 300 } }, getEmptyContext())
     expect(generated).toMatchObject({
       url: 'https://res.cloudinary.com/example/image/upload/f_auto,q_auto,w_300,h_300/test.png',
     })
@@ -143,7 +145,7 @@ describe('Providers', () => {
           height: 300,
         },
         ...providerOptions,
-      }, emptyContext,
+      }, getEmptyContext(),
     )
     expect(generated).toMatchObject({
       url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,w_300,h_300/${remoteUrl}`,
@@ -163,7 +165,7 @@ describe('Providers', () => {
           blur: 100,
         },
         ...providerOptions,
-      }, emptyContext,
+      }, getEmptyContext(),
     )
     expect(generated).toMatchObject({
       url: `https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto,e_blur:100/${remoteUrl}`,
@@ -182,7 +184,7 @@ describe('Providers', () => {
           height: 300,
         },
         ...providerOptions,
-      }, emptyContext,
+      }, getEmptyContext(),
     )
     expect(generated).toMatchObject({
       url: 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_300,h_300/remote/1/13/Benedict_Cumberbatch_2011.png',
@@ -196,7 +198,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = twicpics().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = twicpics().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.twicpics)
     }
   })
@@ -207,7 +209,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = glide().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = glide().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.glide)
     }
   })
@@ -218,7 +220,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = fastly().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = fastly().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.fastly)
     }
   })
@@ -230,7 +232,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = gumlet().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = gumlet().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.gumlet)
     }
   })
@@ -242,7 +244,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imgix().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = imgix().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.imgix)
     }
   })
@@ -254,7 +256,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imageengine().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = imageengine().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.imageengine)
     }
   })
@@ -271,7 +273,7 @@ describe('Providers', () => {
           quality: 0,
         },
         ...providerOptions,
-      }, emptyContext,
+      }, getEmptyContext(),
     )
     expect(generated).toMatchObject({
       url: 'https://foo.bar.com/test.jpg?imgeng=/w_150/cmpr_99',
@@ -342,7 +344,7 @@ describe('Providers', () => {
           modifiers: input.modifiers,
           ...providerOptions,
         },
-        emptyContext,
+        getEmptyContext(),
       )
       expect(generated).toMatchObject(expected)
     }
@@ -355,7 +357,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = unsplash().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = unsplash().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.unsplash)
     }
   })
@@ -367,7 +369,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = imagekit().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = imagekit().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.imagekit)
     }
   })
@@ -379,7 +381,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlifyImageCdn().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = netlifyImageCdn().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.netlifyImageCdn)
     }
   })
@@ -391,7 +393,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = netlifyLargeMedia().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = netlifyLargeMedia().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.netlifyLargeMedia)
     }
   })
@@ -406,7 +408,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = prismic().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, emptyContext)
+      const generated = prismic().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prismic)
     }
   })
@@ -421,7 +423,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = prismic().getImage(`${image.prismicUnsplash.url.split('?').shift()}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, emptyContext)
+      const generated = prismic().getImage(`${image.prismicUnsplash.url.split('?').shift()}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prismicUnsplash)
     }
   })
@@ -434,7 +436,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = sanity().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = sanity().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.sanity)
     }
   })
@@ -444,11 +446,11 @@ describe('Providers', () => {
       baseURL: '',
     }
 
-    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg'
+    const originalUrl = 'https://cdn.shopify.com/static/sample-images/garnished.jpeg?v=1763534395'
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = shopify().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
+      const generated = shopify().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.shopify)
     }
   })
@@ -460,7 +462,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = builderio().getImage(originalUrl, { modifiers, ...providerOptions }, emptyContext)
+      const generated = builderio().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.builderio)
     }
   })
@@ -472,7 +474,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [, modifiers] = image.args
-      const generated = prepr().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = prepr().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prepr)
     }
   })
@@ -481,7 +483,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [_src, modifiers] = image.args
-      const generated = picsum().getImage('', { modifiers: { ...modifiers }, ...providerOptions }, emptyContext)
+      const generated = picsum().getImage('', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.picsum)
     }
   })
@@ -493,7 +495,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = contentful().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = contentful().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.contentful)
     }
   })
@@ -507,7 +509,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.cloudimage)
     }
 
@@ -516,7 +518,7 @@ describe('Providers', () => {
       apiVersion: 'v7',
     }
     const src = 'https://localhost' + images[0].args[0]
-    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, emptyContext)
+    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, getEmptyContext())
     expect(generated).toMatchObject({ url: 'https://demo.cloudimg.io/v7/https://localhost/test.png' })
   })
 
@@ -525,7 +527,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = storyblok().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = storyblok().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.storyblok)
     }
   })
@@ -537,7 +539,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = supabase().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = supabase().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.supabase)
     }
   })
@@ -549,7 +551,7 @@ describe('Providers', () => {
     }
 
     for (const [breakpoint, expected] of Object.entries(test)) {
-      const generated = strapi().getImage('/test.png', { modifiers: { breakpoint } }, emptyContext)
+      const generated = strapi().getImage('/test.png', { modifiers: { breakpoint } }, getEmptyContext())
       expect(generated.url).toBe(expected)
     }
   })
@@ -661,7 +663,7 @@ describe('Providers', () => {
     ]
 
     for (const { modifiers, expected } of tests) {
-      const generated = strapi5().getImage('/test.png', { modifiers }, emptyContext)
+      const generated = strapi5().getImage('/test.png', { modifiers }, getEmptyContext())
       expect(generated.url).toBe(expected)
     }
   })
@@ -672,7 +674,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = vercel().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = vercel().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.vercel)
     }
   })
@@ -682,7 +684,7 @@ describe('Providers', () => {
     const testImageId = '329944'
     for (const image of images) {
       const [_src, modifiers] = image.args
-      const generated = wagtail().getImage(testImageId, { modifiers, ...providerOptions }, emptyContext)
+      const generated = wagtail().getImage(testImageId, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.wagtail)
     }
   })
@@ -691,7 +693,7 @@ describe('Providers', () => {
     const providerOptions = {}
     const testImageId = 'c160afba-8b42-45a9-a46a-d393248b0072'
     for (const image of images) {
-      const generated = uploadcare().getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, emptyContext)
+      const generated = uploadcare().getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.uploadcare)
     }
   })
@@ -702,7 +704,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = sirv().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = sirv().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.sirv)
     }
   })
@@ -713,7 +715,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [_src, modifiers] = image.args
-      const generated = hygraph().getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, emptyContext)
+      const generated = hygraph().getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.hygraph)
     }
   })
@@ -725,12 +727,12 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = weserv().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = weserv().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.weserv)
     }
 
     // @ts-expect-error baseURL is required
-    const generated = weserv().getImage('test.png', {}, emptyContext)
+    const generated = weserv().getImage('test.png', {}, getEmptyContext())
     expect(generated).toMatchObject({ url: 'test.png' })
   })
 
@@ -740,7 +742,7 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = none().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = none().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.none)
     }
   })

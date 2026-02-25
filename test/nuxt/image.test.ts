@@ -184,7 +184,7 @@ const getImageLoad = (cb = () => {}) => {
   let image = {} as HTMLImageElement
   const loadEvent = Symbol('loadEvent')
   const errorEvent = Symbol('errorEvent')
-  const ImageMock = vi.fn(() => {
+  const ImageMock = vi.fn(function (this: HTMLImageElement) {
     const _image = {
       onload: () => {},
       onerror: () => {},
@@ -393,10 +393,10 @@ describe('Sizes and densities behavior', () => {
 })
 
 describe('Preset sizes and densities inheritance', () => {
-  const nuxtApp = useNuxtApp()
   const src = '/image.png'
 
   beforeEach(() => {
+    const nuxtApp = useNuxtApp()
     delete nuxtApp._img
     delete nuxtApp.$img
   })
@@ -508,10 +508,10 @@ describe('Preset sizes and densities inheritance', () => {
 })
 
 describe('Renders image, applies module config', () => {
-  const nuxtApp = useNuxtApp()
   const src = '/image.png'
 
   beforeEach(() => {
+    const nuxtApp = useNuxtApp()
     delete nuxtApp._img
   })
 

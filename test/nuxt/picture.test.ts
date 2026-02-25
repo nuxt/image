@@ -5,6 +5,7 @@ import { NuxtPicture } from '#components'
 import { useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
 import { imageOptions } from '#build/image-options.mjs'
 import { createImage } from '@nuxt/image/runtime'
+import type { RuntimeConfig } from 'nuxt/schema'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -178,11 +179,13 @@ describe('Renders simple image', () => {
 })
 
 describe('Renders image, applies module config', () => {
-  const nuxtApp = useNuxtApp()
-  const config = useRuntimeConfig()
+  let nuxtApp: ReturnType<typeof useNuxtApp>
+  let config: RuntimeConfig
   const src = '/image.png'
 
   beforeEach(() => {
+    nuxtApp = useNuxtApp()
+    config = useRuntimeConfig()
     delete nuxtApp._img
   })
 

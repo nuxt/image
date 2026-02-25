@@ -46,13 +46,13 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
-  nitro.options.runtimeConfig.ipx = ipxOptions
+  nitro.options.runtimeConfig.ipx = defu(nitro.options.runtimeConfig.ipx, ipxOptions)
 
-  const ipxHandler = <NitroEventHandler>{
+  const ipxHandler = {
     route: `${ipxBaseURL}/**`,
     middleware: false,
     handler: resolver.resolve('./runtime/server/routes/_ipx'),
-  }
+  } satisfies NitroEventHandler
 
   if (!setupOptions?.isStatic) {
     nitro.options.handlers.push(ipxHandler)

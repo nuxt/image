@@ -14,13 +14,12 @@ describe.skipIf(process.env.ECOSYSTEM_CI || isWindows)('nuxt image bundle size',
     const rootDir = fileURLToPath(new URL('../.tmp', import.meta.url))
     await fsp.rm(rootDir, { recursive: true, force: true })
 
-    const [withoutImage, withImage] = await Promise.all([
-      build(join(rootDir, 'without')),
-      build(join(rootDir, 'with'), {
-        modules: ['@nuxt/image'],
-        image: { provider: 'ipx' },
-      }),
-    ])
+    const withoutImage = await build(join(rootDir, 'without'))
+
+    const withImage = await build(join(rootDir, 'with'), {
+      modules: ['@nuxt/image'],
+      image: { provider: 'ipx' },
+    })
 
     expect(roundToKilobytes(withImage.totalBytes - withoutImage.totalBytes)).toMatchInlineSnapshot(`"12.8k"`)
   })
