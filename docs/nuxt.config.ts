@@ -7,8 +7,21 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2025-08-07',
   nitro: {
-    prerender: {
-      routes: ['/usage/nuxt-picture', '/usage/use-image'],
+    cloudflare: {
+      pages: {
+        routes: {
+          exclude: [
+            '/get-started/*',
+            '/usage/*',
+            '/providers/*',
+            '/advanced/*',
+            '/playground',
+            '/__og-image__/*',
+            '/__nuxt_content/*',
+            '/raw/*',
+          ],
+        },
+      },
     },
   },
   llms: {
