@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-08-07',
   nitro: {
     prerender: {
-      routes: ['/usage/nuxt-picture'],
+      routes: ['/usage/nuxt-picture', '/usage/use-image'],
     },
   },
   llms: {
