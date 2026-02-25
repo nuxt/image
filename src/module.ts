@@ -92,15 +92,15 @@ export default defineNuxtModule<ModuleOptions>({
 
     options.format = [...new Set(options.format || ['webp'])]
 
-    options.screens = options.screens ||
-        // https://tailwindcss.com/docs/breakpoints
-        {
-            'sm': 640,
-            'md': 768,
-            'lg': 1024,
-            'xl': 1280,
-            '2xl': 1536,
-        }
+    options.screens = options.screens
+    // https://tailwindcss.com/docs/breakpoints
+      || {
+        'sm': 640,
+        'md': 768,
+        'lg': 1024,
+        'xl': 1280,
+        '2xl': 1536,
+      }
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'> = pick(options, [
       'screens',
