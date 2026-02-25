@@ -1,4 +1,4 @@
-import { joinURL } from 'ufo'
+import { parseQuery, withBase, withQuery } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -22,7 +22,10 @@ export default defineProvider<FastlyOptions>({
   getImage: (src, { modifiers, baseURL = '/' }) => {
     const operations = operationsGenerator(modifiers)
     return {
-      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
+      url: withBase(
+        withQuery(src, parseQuery(operations)),
+        baseURL,
+      ),
     }
   },
 })
