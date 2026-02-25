@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     name: 'Nuxt Image',
   },
   compatibilityDate: '2025-08-07',
+  nitro: {
+    prerender: {
+      routes: ['/usage/nuxt-picture'],
+    },
+  },
   llms: {
     domain: 'https://image.nuxt.com',
     description: 'Nuxt Image is a module for Nuxt to optimize image for best performance.',
