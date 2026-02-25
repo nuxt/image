@@ -225,6 +225,20 @@ describe('Providers', () => {
     }
   })
 
+  it('fastly with absolute url and preexisting query params', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    const originalUrl = 'https://www.fastly.io/image.jpg?v=123'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = fastly().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.fastlyAbsoluteUrl)
+    }
+  })
+
   it('gumlet', () => {
     const providerOptions = {
       baseURL: '',
