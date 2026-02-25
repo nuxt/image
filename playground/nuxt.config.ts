@@ -16,8 +16,6 @@ export default defineNuxtConfig({
       'https://images.unsplash.com',
       'https://upload.wikimedia.org',
     ],
-    format: ['webp', 'jpg', 'jpeg'],
-    densities: [1, 2, 3, 4],
     screens: {
       'sm': 640,
       '750': 750,
