@@ -16,7 +16,6 @@ export default defineNuxtConfig({
             '/providers/*',
             '/advanced/*',
             '/playground',
-            '/__og-image__/*',
             '/__nuxt_content/*',
             '/raw/*',
           ],
