@@ -3,7 +3,7 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
+import type { ImageOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 
 export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
@@ -31,7 +31,7 @@ export function createImage(globalOptions: CreateImageOptions) {
   $img.options = globalOptions
   $img.getImage = getImage
   $img.getMeta = ((input: string, options?: ImageOptions<any>) => getMeta(ctx, input, options)) as $Img['getMeta']
-  $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
+  $img.getSizes = ((input: string, options?: ImageOptions<any>) => getSizes(ctx, input, options)) as $Img['getSizes']
 
   ctx.$img = $img as $Img
 
@@ -124,9 +124,9 @@ function getPreset(ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
+function getSizes(ctx: ImageCTX, input: string, opts?: ImageOptions<any>): ImageSizes {
   // Merge preset options so preset-provided sizes/densities are respected
-  const preset = getPreset(ctx, opts.preset)
+  const preset = getPreset(ctx, opts?.preset)
   const merged = defu(opts, preset)
 
   const width = parseSize(merged.modifiers?.width)
@@ -160,7 +160,7 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
       for (const density of densities) {
         srcsetVariants.push({
           width: variant._cWidth * density,
-          src: getVariantSrc(ctx, input, opts, variant, density),
+          src: getVariantSrc(ctx, input, variant, density, opts),
         })
       }
     }
@@ -179,14 +179,14 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
         variant = {
           size: '',
           screenMaxWidth: 0,
-          _cWidth: opts.modifiers?.width as number,
-          _cHeight: opts.modifiers?.height as number,
+          _cWidth: opts?.modifiers?.width as number,
+          _cHeight: opts?.modifiers?.height as number,
         }
       }
 
       srcsetVariants.push({
         width: density,
-        src: getVariantSrc(ctx, input, opts, variant, density),
+        src: getVariantSrc(ctx, input, variant, density, opts),
       })
     }
   }
@@ -232,10 +232,10 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
   }
 }
 
-function getVariantSrc(ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
+function getVariantSrc(ctx: ImageCTX, input: string, variant: ImageSizesVariant, density: number, opts?: ImageOptions) {
   return ctx.$img!(input,
     {
-      ...opts.modifiers,
+      ...opts?.modifiers,
       width: variant._cWidth ? variant._cWidth * density : undefined,
       height: variant._cHeight ? variant._cHeight * density : undefined,
     },
