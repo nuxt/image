@@ -84,11 +84,15 @@ export interface ImageSizes {
 }
 
 export interface Img {
-  (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
+  <TProvider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders>(
+    source: string,
+    modifiers?: ImageOptions<TProvider>['modifiers'],
+    options?: ImageOptions<TProvider>
+  ): ResolvedImage['url']
   options: CreateImageOptions
-  getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
-  getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
+  getImage: <TProvider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>) => ResolvedImage
+  getSizes: <TProvider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>, sizes?: string[]) => ImageSizes
+  getMeta: <TProvider extends keyof ConfiguredImageProviders = keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>) => Promise<ImageInfo>
 }
 
 export type $Img = Img & {

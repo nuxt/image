@@ -10,7 +10,7 @@ export function createImage(globalOptions: CreateImageOptions) {
     options: globalOptions,
   }
 
-  const getImage: $Img['getImage'] = (input: string, options = {}) => {
+  const getImage = (input: string, options: ImageOptions<any> = {}): ResolvedImage => {
     const image = resolveImage(ctx, input, options)
 
     // Prerender static images
@@ -25,12 +25,12 @@ export function createImage(globalOptions: CreateImageOptions) {
 
   for (const presetName in globalOptions.presets) {
     $img[presetName] = ((source, modifiers, options) =>
-      $img(source, modifiers, { ...globalOptions.presets[presetName], ...options })) as $Img[string]
+      $img(source, modifiers, { ...globalOptions.presets[presetName], ...options } as ImageOptions<any>)) as $Img[string]
   }
 
   $img.options = globalOptions
   $img.getImage = getImage
-  $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
+  $img.getMeta = ((input: string, options?: ImageOptions<any>) => getMeta(ctx, input, options)) as $Img['getMeta']
   $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
 
   ctx.$img = $img as $Img
@@ -38,7 +38,7 @@ export function createImage(globalOptions: CreateImageOptions) {
   return $img
 }
 
-async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
+async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions<any>) {
   const image = resolveImage(ctx, input, { ...options })
 
   if (typeof image.getMeta === 'function') {
@@ -49,7 +49,7 @@ async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
   }
 }
 
-function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
+function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions<any>): ResolvedImage {
   if (input && typeof input !== 'string') {
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
