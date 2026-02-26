@@ -47,7 +47,7 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
     height: parseSize(props.height),
     crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
     nonce: props.nonce,
-    alt: props.alt
+    alt: props.alt,
   }))
 
   const imageModifiers = computed(() => {
