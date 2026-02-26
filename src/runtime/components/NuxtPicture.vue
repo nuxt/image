@@ -78,7 +78,7 @@ const attrs = computed(() => {
   return attrs
 })
 
-const originalFormat = computed(() => props.src?.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1])
+const originalFormat = computed(() => props.src.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1])
 
 const legacyFormat = computed(() => {
   if (props.legacyFormat) {
@@ -97,7 +97,7 @@ const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
 
   if (formats[0] === 'svg') {
-    return [{ src: props.src! }]
+    return [{ src: props.src }]
   }
 
   if (!formats.includes(legacyFormat.value)) {
@@ -109,7 +109,7 @@ const sources = computed<Source[]>(() => {
   }
 
   return formats.map((format) => {
-    const { srcset, sizes, src } = $img.getSizes(props.src!, {
+    const { srcset, sizes, src } = $img.getSizes(props.src, {
       ...providerOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,
