@@ -12,6 +12,7 @@
             :provider="provider.name as any"
             v-bind="sample"
             :preload="{ fetchPriority: 'auto' }"
+            alt=""
           />
           <pre>{{ sample }}</pre>
         </div>

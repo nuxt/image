@@ -5,6 +5,7 @@
       src="/images/colors.jpg"
       width="500"
       height="500"
+      alt=""
       @load="isLoaded = true"
     />
     <p>Received onLoad event: {{ isLoaded }}</p>
@@ -15,6 +16,7 @@
       placeholder
       width="500"
       height="500"
+      alt=""
       @load="isLoaded = true"
     />
   </div>
