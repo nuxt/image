@@ -274,7 +274,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [_src, modifiers] = image.args
-      const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers, ...providerOptions }, emptyContext)
+      const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers, ...providerOptions }, getEmptyContext())
 
       expect(generated.url).toBe(image.imgproxy.url)
     }
@@ -473,7 +473,7 @@ describe('Providers', () => {
           modifiers,
           ...providerOptions,
         },
-        emptyContext,
+        getEmptyContext(),
       )
 
       expect(generated).toMatchObject(expected)
