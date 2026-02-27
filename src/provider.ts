@@ -172,9 +172,9 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 }
 
 const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> = {
-  vercel: 'vercel',
   aws_amplify: 'awsAmplify',
   netlify: 'netlify',
+  vercel: 'vercel',
 }
 
 const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = {
