@@ -246,6 +246,17 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Cloudflare Images
+  {
+    name: 'cloudflareimages',
+    samples: [
+      {
+        src: 'test-image-id',
+        width: 300,
+        height: 300,
+      },
+    ],
+  },
   // Cloudinary
   {
     name: 'cloudinary',

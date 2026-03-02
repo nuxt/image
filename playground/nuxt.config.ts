@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     cloudflare: {
       baseURL: 'https://that-test.site',
     },
+    cloudflareimages: {
+      accountHash: 'accountHash',
+    },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/',
     },

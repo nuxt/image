@@ -19,6 +19,7 @@ export const BuiltInProviders = [
   'builderio',
   'caisy',
   'cloudflare',
+  'cloudflareimages',
   'cloudimage',
   'cloudinary',
   'contentful',
