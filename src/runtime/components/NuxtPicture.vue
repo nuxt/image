@@ -32,7 +32,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
-import type { DataAttributes } from '../../types/image'
+import type { DataAttributes } from '../types'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
