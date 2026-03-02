@@ -32,6 +32,7 @@ export const BuiltInProviders = [
   'imageengine',
   'imagekit',
   'imgix',
+  'imgproxy',
   'ipx',
   'ipxStatic',
   'netlify',
