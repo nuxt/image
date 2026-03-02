@@ -63,7 +63,6 @@ const imgAttrs = computed(() => ({
   ...(!props.placeholder || placeholderLoaded.value)
     ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
     : {},
-  ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
   ...attrs,
 }))
 
@@ -134,6 +133,10 @@ const imgEl = useTemplateRef('imgEl')
 defineExpose({ imgEl })
 
 onMounted(() => {
+  if (imgEl.value) {
+    imgEl.value.addEventListener('error', handleImgError)
+  }
+
   if (placeholder.value || props.custom) {
     const img = new Image()
 
@@ -196,6 +199,10 @@ onMounted(() => {
     emit('error', event)
   }
 })
+
+function handleImgError() {
+  this.setAttribute('data-error', '1')
+}
 </script>
 
 <script lang="ts">
