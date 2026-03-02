@@ -2,7 +2,7 @@
   <img
     v-if="!custom"
     ref="imgEl"
-    :class="placeholder ? placeholderClass : undefined"
+    :class="placeholderSrc ? _placeholderClass : undefined"
     v-bind="imgAttrs"
     :src="src"
   >
@@ -45,6 +45,7 @@ const emit = defineEmits<{
 defineSlots<{ default(props: DefaultSlotProps): any }>()
 
 const $img = useImage()
+
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
 
 const sizes = computed(() => $img.getSizes(props.src!, {
@@ -56,43 +57,46 @@ const sizes = computed(() => $img.getSizes(props.src!, {
 
 const placeholderLoaded = ref(false)
 
-const attrs = useAttrs() as ImgHTMLAttributes
-const imgAttrs = computed(() => ({
-  ...normalizedAttrs.value,
-  'data-nuxt-img': '',
-  ...(!props.placeholder || placeholderLoaded.value)
-    ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
-    : {},
-  ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
-  ...attrs,
-}))
+const _placeholder = computed(
+  () => props.placeholder || (props.preset && $img.options.presets[props.preset]?.placeholder),
+)
 
-const placeholder = computed(() => {
+const _placeholderClass = computed(
+  () => props.placeholderClass || (props.preset && $img.options.presets[props.preset]?.placeholderClass),
+)
+
+const placeholderSrc = computed(() => {
   if (placeholderLoaded.value) {
-    return false
+    return undefined
   }
 
-  const placeholder = props.placeholder === '' ? [10, 10] : props.placeholder
+  const src = _placeholder.value
 
-  if (!placeholder) {
-    return false
+  if (!src) {
+    return undefined
   }
 
-  if (typeof placeholder === 'string') {
-    return placeholder
+  if (typeof src === 'string') {
+    return src
   }
 
-  const [width = 10, height = width, quality = 50, blur = 3] = Array.isArray(placeholder)
-    ? placeholder
-    : typeof placeholder === 'number' ? [placeholder] : []
+  const [width = 10, height = width, quality = 50, blur = 3] = Array.isArray(src)
+    ? src
+    : typeof src === 'number'
+      ? [src]
+      : []
 
-  return $img(props.src!, {
-    ...imageModifiers.value,
-    width,
-    height,
-    quality,
-    blur,
-  }, providerOptions.value)
+  return $img(
+    props.src!,
+    {
+      ...imageModifiers.value,
+      width,
+      height,
+      quality,
+      blur,
+    },
+    providerOptions.value,
+  )
 })
 
 const mainSrc = computed(() =>
@@ -101,7 +105,19 @@ const mainSrc = computed(() =>
     : $img(props.src!, imageModifiers.value, providerOptions.value),
 )
 
-const src = computed(() => placeholder.value || mainSrc.value)
+const src = computed(() => placeholderSrc.value || mainSrc.value)
+
+const attrs = useAttrs() as ImgHTMLAttributes
+
+const imgAttrs = computed(() => ({
+  ...normalizedAttrs.value,
+  'data-nuxt-img': '',
+  ...!placeholderSrc.value
+    ? { sizes: sizes.value.sizes, srcset: sizes.value.srcset }
+    : {},
+  ...import.meta.server ? { onerror: 'this.setAttribute(\'data-error\', 1)' } : {},
+  ...attrs,
+}))
 
 if (import.meta.server && props.preload) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')
@@ -134,7 +150,7 @@ const imgEl = useTemplateRef('imgEl')
 defineExpose({ imgEl })
 
 onMounted(() => {
-  if (placeholder.value || props.custom) {
+  if (placeholderSrc.value || props.custom) {
     const img = new Image()
 
     if (mainSrc.value) {
