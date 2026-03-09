@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
+import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
+
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
 import none from '../../dist/runtime/providers/none'
@@ -16,6 +18,7 @@ import picsum from '../../dist/runtime/providers/picsum'
 import prepr from '../../dist/runtime/providers/prepr'
 import glide from '../../dist/runtime/providers/glide'
 import imgix from '../../dist/runtime/providers/imgix'
+import imgproxy from '../../dist/runtime/providers/imgproxy'
 import gumlet from '../../dist/runtime/providers/gumlet'
 import imageengine from '../../dist/runtime/providers/imageengine'
 import unsplash from '../../dist/runtime/providers/unsplash'
@@ -260,6 +263,220 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = imgix().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.imgix)
+    }
+  })
+
+  it('imgproxy', () => {
+    const providerOptions = {
+      baseURL: 'http://localhost:8080/',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    }
+    for (const image of images) {
+      const [_src, modifiers] = image.args
+      const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers, ...providerOptions }, getEmptyContext())
+
+      expect(generated.url).toBe(image.imgproxy.url)
+    }
+  })
+
+  it('imgproxy modifiers', () => {
+    const providerOptions = {
+      baseURL: 'http://localhost:8080/',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    }
+
+    const sourceUrl: string = 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg'
+
+    const testCases: {
+      modifiers: Partial<ImgproxyModifiers>
+      expected: {
+        url: string
+      }
+    }[] = [
+      {
+        modifiers: {
+          fit: 'contain',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/WDEF0lvBmcLhtzT11ww-9XMtA9YY2BiMWACintty0yg/rt:fit/g:ce/f:webp/w:100/h:100/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'cover',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/xnHZGPNtwahuGtmDh7vD5PQYjsxB8vpvyGr3eiq3jGo/rt:fill/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'outside',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/xnHZGPNtwahuGtmDh7vD5PQYjsxB8vpvyGr3eiq3jGo/rt:fill/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'inside',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/J-5_ixsKBIzg0qwYtypqPcC6MnEp2a5iErUKCbNqID8/rt:fit/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          fit: 'contain',
+          format: 'jpeg',
+        },
+        expected: {
+          url: 'http://localhost:8080/0s7rNhOEt_rzLVU0CdGXMbkV6j5fH2VOI6PQlxaQbsc/rt:fit/g:ce/f:jpeg/w:100/h:100/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          resizingType: 'fit',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/J-5_ixsKBIzg0qwYtypqPcC6MnEp2a5iErUKCbNqID8/rt:fit/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          resize: 'fit:100:100:1:1',
+          background: 'FFCC00',
+        },
+        expected: {
+          url: 'http://localhost:8080/0RHxLESHHIkkMAv8z4RlWIG6smintg8G9wtf0l5hCR0/rt:auto/g:ce/f:webp/rs:fit:100:100:1:1/bg:FFCC00/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          minWidth: 2000,
+          minHeight: 2000,
+        },
+        expected: {
+          url: 'http://localhost:8080/Zbqd-IqLtLZnIiHtFKAYPEpo6FuQOPraNd4nsL52Isg/rt:auto/g:ce/f:webp/w:100/h:100/mw:2000/mh:2000/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          zoom: '0.2:0.2',
+        },
+        expected: {
+          url: 'http://localhost:8080/3GanjhskAMK8HRDfxSmIk1e_pE7BgjRptfSaokW1mDM/rt:auto/g:ce/f:webp/z:0.2:0.2/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          enlarge: true,
+          width: 500,
+          height: 500,
+          fit: 'fill',
+        },
+        expected: {
+          url: 'http://localhost:8080/brfso4JHXYB1bTSWet-LEmhVhZbPr_T6kgZi2gRs5CM/rt:force/g:ce/f:webp/el:1/w:500/h:500/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          gravity: 'noea',
+          crop: {
+            width: 500,
+            height: 500,
+          },
+          fit: 'fill',
+        },
+        expected: {
+          url: 'http://localhost:8080/h90gjXPIuMedfFTptj3YBVx6wQybWqirYzoN_w3DfqM/rt:fit/g:noea/f:webp/c:500:500/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          autoRotate: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/YJn9J2b4RzApSgFXomIHirK3lt1oxhVj-FR7odgPGE0/rt:auto/g:ce/f:webp/ar:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          dpr: 0.1,
+          extend: true,
+          extendAspectRatio: '1:no:0:1',
+          rotate: 180,
+          background: '255:255:0',
+          sharpen: 10,
+          pixelate: 10,
+          stripMetadata: true,
+          keepCopyright: false,
+          stripColorProfile: true,
+          maxBytes: 10,
+          cachebuster: 'test',
+          expires: 4106340630,
+          filename: 'test',
+          blur: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/2M-s-AwAAAm54MhfBSM8luh3_6fadayCOd8LHqsSD10/rt:auto/g:ce/f:webp/dpr:0.1/ex:1/exar:1:no:0:1/rot:180/bg:255:255:0/sh:10/pix:10/sm:1/kcr:0/scp:1/mb:10/cb:test/exp:4106340630/fn:test/bl:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          returnAttachment: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/u_mLtYCSpOu7VawiphkQ51pZeNb0PFcP-3lRSIVALAg/rt:auto/g:ce/f:webp/att:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          preset: 'blurry',
+        },
+        expected: {
+          url: 'http://localhost:8080/DJ4Naz9SLYbQOIJDeq83o5RBj-7u4gcFoB-eFhHbU3o/rt:auto/g:ce/f:webp/pr:blurry/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          raw: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/MQLhXkyO7bXibkqMUJL7RffHQ9Ks_jMwjWTPvAG9vhM/rt:auto/g:ce/f:webp/w:100/h:100/raw:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+    ]
+
+    for (const { modifiers, expected } of testCases) {
+      const generated = imgproxy().getImage(
+        sourceUrl,
+        {
+          modifiers,
+          ...providerOptions,
+        },
+        getEmptyContext(),
+      )
+
+      expect(generated).toMatchObject(expected)
     }
   })
 
