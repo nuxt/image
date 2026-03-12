@@ -112,7 +112,7 @@ describe('Providers', () => {
   })
 
   it('cloudflare with app.baseURL', () => {
-    const ctx = { options: { ...emptyContext.options, nuxt: { baseURL: '/admin/' } } } as any
+    const ctx = { options: { ...getEmptyContext().options, nuxt: { baseURL: '/admin/' } } } as any
 
     expect(cloudflare().getImage('/images/test.png', {
       modifiers: { width: 200 },
@@ -129,18 +129,18 @@ describe('Providers', () => {
     expect(cloudflare().getImage('https://example.com/photo.jpg', {
       modifiers: { width: 200 },
       baseURL: '/',
-    }, emptyContext)).toMatchObject({ url: '/cdn-cgi/image/w=200/https://example.com/photo.jpg' })
+    }, getEmptyContext())).toMatchObject({ url: '/cdn-cgi/image/w=200/https://example.com/photo.jpg' })
 
     expect(cloudflare().getImage('https://example.com/photo.jpg', {
       modifiers: {},
       baseURL: '/',
-    }, emptyContext)).toMatchObject({ url: 'https://example.com/photo.jpg' })
+    }, getEmptyContext())).toMatchObject({ url: 'https://example.com/photo.jpg' })
   })
 
   it('cloudflare cross-zone', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/' },
         event: {
           headers: new Headers({
@@ -165,7 +165,7 @@ describe('Providers', () => {
   it('cloudflare cross-zone with app.baseURL', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/admin/' },
         event: {
           headers: new Headers({
@@ -190,7 +190,7 @@ describe('Providers', () => {
   it('cloudflare cross-zone with external src', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/' },
         event: {
           headers: new Headers({
@@ -215,7 +215,7 @@ describe('Providers', () => {
   it('cloudflare cross-zone with appOrigin', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/admin/' },
       },
     } as any
@@ -231,7 +231,7 @@ describe('Providers', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/' },
       },
     } as any
@@ -255,7 +255,7 @@ describe('Providers', () => {
   it('cloudflare cross-zone handles multi-value x-forwarded-proto', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/' },
         event: {
           headers: new Headers({
@@ -275,7 +275,7 @@ describe('Providers', () => {
   it('cloudflare cross-zone appOrigin overrides headers', () => {
     const ctx = {
       options: {
-        ...emptyContext.options,
+        ...getEmptyContext().options,
         nuxt: { baseURL: '/' },
         event: {
           headers: new Headers({
