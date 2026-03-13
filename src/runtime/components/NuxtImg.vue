@@ -47,7 +47,7 @@ defineSlots<{ default(props: DefaultSlotProps): any }>()
 const $img = useImage()
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
 
-const sizes = computed(() => $img.getSizes(props.src!, {
+const sizes = computed(() => $img.getSizes(props.src, {
   ...providerOptions.value,
   sizes: props.sizes,
   densities: props.densities,
@@ -86,7 +86,7 @@ const placeholder = computed(() => {
     ? placeholder
     : typeof placeholder === 'number' ? [placeholder] : []
 
-  return $img(props.src!, {
+  return $img(props.src, {
     ...imageModifiers.value,
     width,
     height,
@@ -98,7 +98,7 @@ const placeholder = computed(() => {
 const mainSrc = computed(() =>
   props.sizes
     ? sizes.value.src
-    : $img(props.src!, imageModifiers.value, providerOptions.value),
+    : $img(props.src, imageModifiers.value, providerOptions.value),
 )
 
 const src = computed(() => placeholder.value || mainSrc.value)
