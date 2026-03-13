@@ -366,6 +366,31 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Flyimg
+  {
+    name: 'flyimg',
+    samples: [
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 500,
+        height: 375,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 300,
+        height: 200,
+        fit: 'cover',
+        quality: 75,
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 200,
+        fit: 'contain',
+      },
+    ],
+  },
   // ImageKit
   {
     name: 'imagekit',
