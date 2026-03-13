@@ -1,5 +1,5 @@
 import { createOperationsGenerator, type InferModifiers } from '../utils/index'
-import { defineProvider } from '../utils/provider'
+import { defineProvider } from '~/src/runtime'
 import { joinURL } from 'ufo'
 
 const operationsGenerator = createOperationsGenerator({
