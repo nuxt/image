@@ -4,12 +4,14 @@
     <NuxtImg
       :sizes="{ sm: 100, md: 500 }"
       src="/images/damavand.jpg"
+      alt=""
     />
 
     <h2>nuxt-picture</h2>
     <NuxtPicture
       :sizes="{ sm: 100, md: 500 }"
       src="/images/damavand.jpg"
+      alt=""
     /> -->
     <div style="width: 50vw">
       i'm 50vw
@@ -18,12 +20,14 @@
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
       loading="lazy"
+      alt=""
     />
     <br>
     <nuxt-picture
       src="/logos/nuxt.png"
       sizes="sm:100vw md:50vw lg:400px"
       loading="lazy"
+      alt=""
     />
 
     <div style="width: 50vw; background-color: red">
@@ -34,6 +38,7 @@
       sizes="sm:100vw md:50vw lg:400px"
       placeholder
       class="responsive-placeholder-img"
+      alt=""
     />
   </div>
 </template>

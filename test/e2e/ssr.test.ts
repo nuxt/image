@@ -32,7 +32,7 @@ describe('browser (ssr: true)', () => {
       await page.goto(url(providerPath), { waitUntil: 'networkidle' })
 
       await page.waitForSelector('img')
-      const images = await page.getByRole('img').all()
+      const images = await page.locator('img').all()
 
       expect(images).toHaveLength(provider.samples.length)
 
