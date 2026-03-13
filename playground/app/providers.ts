@@ -1397,4 +1397,58 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Umbraco
+  {
+    name: 'umbracoImage',
+    samples: [
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 90,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 60,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 30,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 1500,
+        height: 500,
+        format: '',
+        quality: 40,
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 50,
+        height: 200,
+        title: 'crop by focal point example 1',
+        format: 'webp',
+        modifiers: {
+          focalPointXY: '0.5488476724567298,0.5772994963168611',
+        },
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 50,
+        height: 200,
+        title: 'crop by focal point example 2',
+        format: 'webp',
+        modifiers: {
+          focalPointXY: '0.7488476724567298,0.5772994963168611',
+        },
+      },
+    ],
+  },
 ]
