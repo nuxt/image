@@ -1,6 +1,7 @@
 import { createOperationsGenerator, type InferModifiers } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 import { encodeQueryItem, joinURL } from 'ufo'
+import { defu } from 'defu'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -34,7 +35,14 @@ export default defineProvider<ImageSharpOptions>({
     modifiers,
     baseURL = '',
   }) => {
-    const mergedModifiers = { ...defaultModifiers, ...modifiers }
+    // modifiers with default values are explicitly deleted, because empty values could override defaults
+    if (!modifiers.format) {
+      delete modifiers.format
+    }
+    if (!modifiers.quality) {
+      delete modifiers.quality
+    }
+    const mergedModifiers = defu(modifiers, defaultModifiers)
     const operations = operationsGenerator(mergedModifiers)
 
     return {
