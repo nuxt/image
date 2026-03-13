@@ -48,6 +48,7 @@ export const BuiltInProviders = [
   'strapi5',
   'supabase',
   'twicpics',
+  'umbracoImage',
   'unsplash',
   'uploadcare',
   'vercel',
