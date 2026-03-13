@@ -1,6 +1,6 @@
 import { createOperationsGenerator, type InferModifiers } from '../utils/index'
-import { defineProvider } from '~/src/runtime'
-import { joinURL } from 'ufo'
+import { defineProvider } from '../utils/provider'
+import { encodeQueryItem, joinURL } from 'ufo'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -14,6 +14,7 @@ const operationsGenerator = createOperationsGenerator({
     anchorPosition: 'ranchor',
   },
   joinWith: '&',
+  formatter: (key, value) => encodeQueryItem(key, value),
 })
 const defaultModifiers = {
   format: 'webp',
@@ -21,7 +22,7 @@ const defaultModifiers = {
 }
 
 interface ImageSharpOptions {
-  baseUrl?: string
+  baseURL?: string
   modifiers?: InferModifiers<typeof operationsGenerator>
     & { fit?: 'boxpad' | 'crop' | 'manual' | 'max' | 'min' | 'pad' | 'stretch' }
     & { sampler?: 'bicubic' | 'nearest' | 'box' | 'mitchell' | 'catmull' | 'lanczos2' | 'lanczos3' | 'lanczos5' | 'lanczos8' | 'welch' | 'robidoux' | 'robidouxsharp' | 'spline' | 'triangle' | 'hermite' }
@@ -31,13 +32,13 @@ interface ImageSharpOptions {
 export default defineProvider<ImageSharpOptions>({
   getImage: (src, {
     modifiers,
-    baseUrl = '',
+    baseURL = '',
   }) => {
     const mergedModifiers = { ...defaultModifiers, ...modifiers }
     const operations = operationsGenerator(mergedModifiers)
 
     return {
-      url: joinURL(baseUrl, src + (operations ? ('?' + operations) : '')),
+      url: joinURL(baseURL, src + (operations ? ('?' + operations) : '')),
     }
   },
 })
