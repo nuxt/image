@@ -11,7 +11,7 @@ const operationsGenerator = createOperationsGenerator({
     quality: 'quality',
     fit: 'rmode',
     sampler: 'rsampler',
-    anchorPosition: 'ranchor'
+    anchorPosition: 'ranchor',
   },
   joinWith: '&',
 })
