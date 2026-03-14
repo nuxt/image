@@ -40,7 +40,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425' },
     picsum: { url: 'https://picsum.photos/' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png' },
+    umbracoImage: { url: '/test.png' },
   },
   {
     args: ['/test.png', { width: 200 }],
@@ -83,7 +83,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200' },
     picsum: { url: 'https://picsum.photos/200' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png?width=200' },
+    umbracoImage: { url: '/test.png?width=200' },
   },
   {
     args: ['/test.png', { height: 200 }],
@@ -125,7 +125,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?height=200' },
     picsum: { url: 'https://picsum.photos/200' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png?height=200' },
+    umbracoImage: { url: '/test.png?height=200' },
   },
   {
     args: ['/test.png', { width: 200, height: 200 }],
@@ -167,7 +167,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200' },
     picsum: { url: 'https://picsum.photos/200/200' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png?width=200&height=200' },
+    umbracoImage: { url: '/test.png?width=200&height=200' },
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain' }],
@@ -209,7 +209,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain' },
     picsum: { url: 'https://picsum.photos/200/200' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png?width=200&height=200&rmode=crop' },
+    umbracoImage: { url: '/test.png?width=200&height=200&rmode=crop' },
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -251,6 +251,6 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain&format=jpeg' },
     picsum: { url: 'https://picsum.photos/200/200' },
-    umbracoImage: { url: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png?width=200&height=200&rmode=crop&format=jpeg' },
+    umbracoImage: { url: '/test.png?width=200&height=200&rmode=crop&format=jpeg' },
   },
 ] as const

@@ -17,31 +17,26 @@ const operationsGenerator = createOperationsGenerator({
   joinWith: '&',
   formatter: (key, value) => encodeQueryItem(key, value),
 })
-const defaultModifiers = {
-  format: 'webp',
-  quality: '50',
-}
+const defaultModifiers = {}
 
-interface ImageSharpOptions {
+interface UmbracoImageOptions {
   baseURL?: string
   modifiers?: InferModifiers<typeof operationsGenerator>
-    & { fit?: 'boxpad' | 'crop' | 'manual' | 'max' | 'min' | 'pad' | 'stretch' }
+    & { fit?: 'boxpad' | 'crop' | 'manual' | 'max' | 'min' | 'pad' | 'stretch' | 'contain' }
     & { sampler?: 'bicubic' | 'nearest' | 'box' | 'mitchell' | 'catmull' | 'lanczos2' | 'lanczos3' | 'lanczos5' | 'lanczos8' | 'welch' | 'robidoux' | 'robidouxsharp' | 'spline' | 'triangle' | 'hermite' }
     & { anchorPosition?: 'bottom' | 'bottomleft' | 'bottomright' | 'center' | 'left' | 'right' | 'top' | 'topleft' | 'topright' }
 }
 
-export default defineProvider<ImageSharpOptions>({
+export default defineProvider<UmbracoImageOptions>({
   getImage: (src, {
     modifiers,
     baseURL = '',
   }) => {
-    // modifiers with default values are explicitly deleted, because empty values could override defaults
-    if (!modifiers.format) {
-      delete modifiers.format
+    // modifier.fit - 'contain' is remapped to use 'crop', since this is the value used by ImageSharp.
+    if (modifiers.fit === 'contain') {
+      modifiers.fit = 'crop'
     }
-    if (!modifiers.quality) {
-      delete modifiers.quality
-    }
+
     const mergedModifiers = defu(modifiers, defaultModifiers)
     const operations = operationsGenerator(mergedModifiers)
 
