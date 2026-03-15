@@ -1397,4 +1397,33 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Umbraco
+  {
+    name: 'umbracoImage',
+    samples: [
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 30,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 90,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        format: 'webp',
+        modifiers: {
+          focalPointXY: '0.5488476724567298,0.5772994963168611',
+        },
+      },
+    ],
+  },
 ]

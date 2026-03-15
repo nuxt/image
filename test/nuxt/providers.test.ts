@@ -37,6 +37,7 @@ import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
 import sirv from '../../dist/runtime/providers/sirv'
 import hygraph from '../../dist/runtime/providers/hygraph'
+import umbracoImage from '../../dist/runtime/providers/umbracoImage'
 
 function getEmptyContext() {
   return {
@@ -758,6 +759,16 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = none().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.none)
+    }
+  })
+
+  it('umbracoImage', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = umbracoImage().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.umbracoImage)
     }
   })
 })

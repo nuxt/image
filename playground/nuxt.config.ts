@@ -131,6 +131,9 @@ export default defineNuxtConfig({
     },
     caisy: {
     },
+    umbracoImage: {
+      baseURL: '',
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',
