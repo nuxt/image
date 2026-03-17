@@ -1116,6 +1116,49 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Tencent Cloud
+  {
+    name: 'tencentCloud',
+    samples: [
+      {
+        src: '/tencentcloud/1.png',
+        width: 400,
+        height: 300,
+        fit: 'contain',
+      },
+      {
+        src: '/tencentcloud/1.png',
+        width: 400,
+        height: 300,
+        fit: 'cover',
+      },
+      {
+        src: '/tencentcloud/1.png',
+        width: 400,
+        height: 300,
+        fit: 'fill',
+      },
+      {
+        src: '/tencentcloud/1.png',
+        width: 300,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: '/tencentcloud/1.png',
+        modifiers: {
+          rotate: 90,
+        },
+      },
+      {
+        src: '/tencentcloud/1.png',
+        modifiers: {
+          blur: 15,
+          quality: 50,
+        },
+      },
+    ],
+  },
   // Unsplash
   {
     name: 'unsplash',

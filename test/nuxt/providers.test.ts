@@ -32,6 +32,7 @@ import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
+import tencentCloud from '../../dist/runtime/providers/tencentCloud'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
@@ -540,6 +541,156 @@ describe('Providers', () => {
       const generated = supabase().getImage(src, { modifiers, ...providerOptions }, emptyContext)
       expect(generated).toMatchObject(image.supabase)
     }
+  })
+
+  it('tencentCloud', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = tencentCloud().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      expect(generated).toMatchObject(image.tencentCloud)
+    }
+  })
+
+  it('tencentCloud cover fit', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { width: 300, height: 200, fit: 'cover' },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/!300x200r',
+    })
+  })
+
+  it('tencentCloud fill fit', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { width: 300, height: 200, fit: 'fill' },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/300x200!',
+    })
+  })
+
+  it('tencentCloud blur', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { blur: 10 },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/blur/10x10',
+    })
+  })
+
+  it('tencentCloud rotate', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { rotate: 90 },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/rotate/90',
+    })
+  })
+
+  it('tencentCloud crop with gravity', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { crop: '300x400', gravity: 'center' },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/crop/300x400/gravity/center',
+    })
+  })
+
+  it('tencentCloud sharpen and strip', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { sharpen: 70, strip: true },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/sharpen/70/strip',
+    })
+  })
+
+  it('tencentCloud scrop (smart face crop)', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { scrop: '200x200' },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/scrop/200x200',
+    })
+  })
+
+  it('tencentCloud interlace and autoOrient', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { interlace: true, autoOrient: true },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/auto-orient/interlace/1',
+    })
+  })
+
+  it('tencentCloud iradius (circle crop)', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: { iradius: 100 },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/iradius/100',
+    })
+  })
+
+  it('tencentCloud combined operations', () => {
+    const providerOptions = {
+      baseURL: 'https://example.cos.com',
+    }
+    const generated = tencentCloud().getImage('/test.png', {
+      modifiers: {
+        width: 800,
+        height: 600,
+        fit: 'cover',
+        quality: 85,
+        format: 'webp',
+        sharpen: 50,
+        interlace: true,
+      },
+      ...providerOptions,
+    }, emptyContext)
+    expect(generated).toMatchObject({
+      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/!800x600r/quality/85/format/webp/sharpen/50/interlace/1',
+    })
   })
 
   it('strapi', () => {

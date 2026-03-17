@@ -111,6 +111,9 @@ export default defineNuxtConfig({
     supabase: {
       baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
     },
+    tencentCloud: {
+      baseURL: 'https://deploy-nuxt-on-edgeone-s9dwqjnz.edgeone.dev',
+    },
     unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image',
