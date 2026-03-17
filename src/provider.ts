@@ -47,6 +47,7 @@ export const BuiltInProviders = [
   'strapi',
   'strapi5',
   'supabase',
+  'tencentCloud',
   'twicpics',
   'unsplash',
   'uploadcare',
