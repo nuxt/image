@@ -142,7 +142,7 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
   // See: https://github.com/nuxt/image/issues/1433
   if (SIZES_DEFAULT_KEY in sizes) {
     const defaultSize = sizes[SIZES_DEFAULT_KEY]!
-    delete sizes[SIZES_DEFAULT_KEY]
+    delete sizes['default']
     if (defaultSize.endsWith('vw')) {
       const screens = ctx.options.screens || {}
       for (const screen in screens) {
