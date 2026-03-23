@@ -2,7 +2,7 @@ import { joinURL } from 'ufo'
 import type { ImageModifiers } from '@nuxt/image'
 import { defineProvider } from '../utils/provider'
 
-interface TencentCloudModifiers extends ImageModifiers {
+interface EdgeOnePagesModifiers extends ImageModifiers {
   /** Regular crop: '<width>x<height>' e.g. '300x400' */
   crop: string
   /** Crop/scale gravity: center, north, south, west, east, northwest, northeast, southwest, southeast */
@@ -29,12 +29,12 @@ interface TencentCloudModifiers extends ImageModifiers {
   pad: boolean | number
 }
 
-/** Options for the Tencent Cloud COS image provider. */
-export interface TencentCloudOptions {
-  /** Base URL of the COS bucket (e.g. `https://example.cos.ap-guangzhou.myqcloud.com`). */
+/** Options for the EdgeOne Pages image provider. */
+export interface EdgeOnePagesOptions {
+  /** Base URL of the EdgeOne Pages site (e.g. `https://domain`). */
   baseURL: string
   /** Optional image processing modifiers. */
-  modifiers?: Partial<TencentCloudModifiers>
+  modifiers?: Partial<EdgeOnePagesModifiers>
 }
 
 const fitMap: Record<string, string> = {
@@ -45,8 +45,8 @@ const fitMap: Record<string, string> = {
   outside: 'r', // same as cover
 }
 
-/** Encode a hex color string to URL-safe Base64 for COS background fill. */
-function encodeCosColor(color: string): string {
+/** Encode a hex color string to URL-safe Base64 for background fill. */
+function encodeColor(color: string): string {
   const hex = color.startsWith('#') ? color : `#${color}`
   if (typeof globalThis.btoa === 'function') {
     return globalThis.btoa(hex).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
@@ -55,17 +55,17 @@ function encodeCosColor(color: string): string {
 }
 
 /**
- * Tencent Cloud COS image provider.
+ * EdgeOne Pages image provider.
  *
- * Transforms images via the COS `imageMogr2` API, supporting resize,
+ * Transforms images via the `imageMogr2` API, supporting resize,
  * crop, rotate, blur, quality, format conversion and more.
  *
- * @see https://cloud.tencent.com/document/product/460/6924
+ * @see https://edgeone.ai/document/162498
  */
-export default defineProvider<TencentCloudOptions>({
+export default defineProvider<EdgeOnePagesOptions>({
   getImage: (src, { modifiers = {}, baseURL }) => {
     if (!baseURL) {
-      throw new Error('Tencent Cloud provider requires baseURL to be set')
+      throw new Error('EdgeOne Pages provider requires baseURL to be set')
     }
 
     const {
@@ -88,7 +88,7 @@ export default defineProvider<TencentCloudOptions>({
       strip,
       interlace,
       pad,
-    } = modifiers as Partial<TencentCloudModifiers>
+    } = modifiers as Partial<EdgeOnePagesModifiers>
 
     const operations: string[] = []
 
@@ -116,7 +116,7 @@ export default defineProvider<TencentCloudOptions>({
     if (pad || (background && (width || height))) {
       operations.push('pad/1')
       if (background) {
-        operations.push(`color/${encodeCosColor(background)}`)
+        operations.push(`color/${encodeColor(background)}`)
       }
     }
 

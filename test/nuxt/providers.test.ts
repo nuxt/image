@@ -32,7 +32,7 @@ import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
-import tencentCloud from '../../dist/runtime/providers/tencentCloud'
+import edgeonePages from '../../dist/runtime/providers/edgeonePages'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
@@ -559,140 +559,166 @@ describe('Providers', () => {
     }
   })
 
-  it('tencentCloud', () => {
+  it('edgeonePages', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = tencentCloud().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.tencentCloud)
+      const generated = edgeonePages().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.edgeonePages)
     }
+
+    const src = '/ssg-img.png'
+
+    // no modifiers
+    expect(edgeonePages().getImage(src, { modifiers: {}, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png' })
+
+    // width only
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x' })
+
+    // height only
+    expect(edgeonePages().getImage(src, { modifiers: { height: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/x200' })
+
+    // width + height
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200' })
+
+    // width + height + fit contain
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200, fit: 'contain' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200' })
+
+    // width + height + fit contain + format
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200, fit: 'contain', format: 'jpeg' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200/format/jpg' })
   })
 
-  it('tencentCloud cover fit', () => {
+  it('edgeonePages cover fit', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { width: 300, height: 200, fit: 'cover' },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/!300x200r',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/!300x200r',
     })
   })
 
-  it('tencentCloud fill fit', () => {
+  it('edgeonePages fill fit', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { width: 300, height: 200, fit: 'fill' },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/300x200!',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/300x200!',
     })
   })
 
-  it('tencentCloud blur', () => {
+  it('edgeonePages blur', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { blur: 10 },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/blur/10x10',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/blur/10x10',
     })
   })
 
-  it('tencentCloud rotate', () => {
+  it('edgeonePages rotate', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { rotate: 90 },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/rotate/90',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/rotate/90',
     })
   })
 
-  it('tencentCloud crop with gravity', () => {
+  it('edgeonePages crop with gravity', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { crop: '300x400', gravity: 'center' },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/crop/300x400/gravity/center',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/crop/300x400/gravity/center',
     })
   })
 
-  it('tencentCloud sharpen and strip', () => {
+  it('edgeonePages sharpen and strip', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { sharpen: 70, strip: true },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/sharpen/70/strip',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/sharpen/70/strip',
     })
   })
 
-  it('tencentCloud scrop (smart face crop)', () => {
+  it('edgeonePages scrop (smart face crop)', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { scrop: '200x200' },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/scrop/200x200',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/scrop/200x200',
     })
   })
 
-  it('tencentCloud interlace and autoOrient', () => {
+  it('edgeonePages interlace and autoOrient', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { interlace: true, autoOrient: true },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/auto-orient/interlace/1',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/auto-orient/interlace/1',
     })
   })
 
-  it('tencentCloud iradius (circle crop)', () => {
+  it('edgeonePages iradius (circle crop)', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: { iradius: 100 },
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/iradius/100',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/iradius/100',
     })
   })
 
-  it('tencentCloud combined operations', () => {
+  it('edgeonePages combined operations', () => {
     const providerOptions = {
-      baseURL: 'https://example.cos.com',
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
     }
-    const generated = tencentCloud().getImage('/test.png', {
+    const generated = edgeonePages().getImage('/ssg-img.png', {
       modifiers: {
         width: 800,
         height: 600,
@@ -705,7 +731,7 @@ describe('Providers', () => {
       ...providerOptions,
     }, getEmptyContext())
     expect(generated).toMatchObject({
-      url: 'https://example.cos.com/test.png?imageMogr2/thumbnail/!800x600r/quality/85/format/webp/sharpen/50/interlace/1',
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/!800x600r/quality/85/format/webp/sharpen/50/interlace/1',
     })
   })
 

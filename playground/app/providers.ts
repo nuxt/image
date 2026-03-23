@@ -1116,42 +1116,42 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Tencent Cloud
+  // EdgeOne Pages
   {
-    name: 'tencentCloud',
+    name: 'edgeonePages',
     samples: [
       {
-        src: '/images/cases/case3.png',
+        src: '/ssg-img.png',
         width: 400,
         height: 300,
         fit: 'contain',
       },
       {
-        src: '/images/cases/case2.png',
+        src: '/ssg-img.png',
         width: 400,
         height: 300,
         fit: 'cover',
       },
       {
-        src: '/images/cases/case4.png',
+        src: '/ssg-img.png',
         width: 400,
         height: 300,
         fit: 'fill',
       },
       {
-        src: '/images/cases/case3.png',
+        src: '/ssg-img.png',
         width: 300,
         quality: 80,
         format: 'webp',
       },
       {
-        src: '/images/cases/case2.png',
+        src: '/ssg-img.png',
         modifiers: {
           rotate: 90,
         },
       },
       {
-        src: '/images/cases/case4.png',
+        src: '/ssg-img.png',
         modifiers: {
           blur: 15,
           quality: 50,

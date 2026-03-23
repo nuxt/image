@@ -3,11 +3,11 @@
     <header class="hero">
       <div>
         <p class="eyebrow">
-          Tencent Cloud · COS
+          EdgeOne Pages
         </p>
         <h1>Image Processing Playground</h1>
         <p class="lead">
-          Enter your COS bucket domain and object path to compare the original image with the optimized result from the Nuxt Image tencentCloud provider.
+          Enter your EdgeOne Pages domain and image path to compare the original image with the optimized result from the Nuxt Image edgeonePages provider.
         </p>
       </div>
     </header>
@@ -16,10 +16,10 @@
       <div class="card">
         <h2>Parameters</h2>
         <div class="field">
-          <label>Bucket Domain (baseURL)</label>
+          <label>Site Domain (baseURL)</label>
           <input
             v-model="baseURL"
-            placeholder="https://<bucket>.cos.<region>.myqcloud.com"
+            placeholder="https://<your-site>.edgeone.app"
           >
         </div>
         <div class="field">
@@ -167,7 +167,7 @@
         <NuxtImg
           v-if="baseURL && src"
           :key="refreshKey + '-optimized'"
-          provider="tencentCloud"
+          provider="edgeonePages"
           :src="src"
           :width="width || undefined"
           :height="height || undefined"
@@ -213,8 +213,8 @@ import { useRuntimeConfig } from '#imports'
 
 const runtimeConfig = useRuntimeConfig()
 
-const baseURL = ref('https://saas-starter.edgeone.app')
-const src = ref('/images/cases/case3.png')
+const baseURL = ref('https://nuxt-mix-template.edgeone.site')
+const src = ref('/ssg-img.png')
 const width = ref<number | null>(800)
 const height = ref<number | null>(500)
 const fit = ref<'cover' | 'contain' | 'fill' | ''>('contain')
@@ -233,7 +233,7 @@ watchEffect(() => {
   cfg.public = cfg.public || {}
   cfg.public.image = cfg.public.image || {}
   cfg.public.image.providers = cfg.public.image.providers || {}
-  cfg.public.image.providers.tencentCloud = {
+  cfg.public.image.providers.edgeonePages = {
     baseURL: baseURL.value,
   }
 })
