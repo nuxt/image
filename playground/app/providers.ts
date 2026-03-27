@@ -849,66 +849,6 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Strapi
-  {
-    name: 'strapi',
-    samples: [
-      {
-        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Image 1',
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Thumbnail image',
-        modifiers: { breakpoint: 'thumbnail' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Small image',
-        modifiers: { breakpoint: 'small' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Medium image',
-        modifiers: { breakpoint: 'medium' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Large image',
-        modifiers: { breakpoint: 'large' },
-      },
-    ],
-  },
-  // Strapi5
-  {
-    name: 'strapi5',
-    samples: [
-      {
-        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Image 1',
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Thumbnail image',
-        modifiers: { breakpoint: 'thumbnail' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Small image',
-        modifiers: { breakpoint: 'small' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Medium image',
-        modifiers: { breakpoint: 'medium' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Large image',
-        modifiers: { breakpoint: 'large' },
-      },
-    ],
-  },
   // Storyblok
   {
     name: 'storyblok',
@@ -973,6 +913,66 @@ export const providers: Provider[] = [
         width: 600,
         height: 130,
         operations: { filters: { focal: '450x0:550x100' } },
+      },
+    ],
+  },
+  // Strapi
+  {
+    name: 'strapi',
+    samples: [
+      {
+        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Image 1',
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Thumbnail image',
+        modifiers: { breakpoint: 'thumbnail' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Small image',
+        modifiers: { breakpoint: 'small' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Medium image',
+        modifiers: { breakpoint: 'medium' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Large image',
+        modifiers: { breakpoint: 'large' },
+      },
+    ],
+  },
+  // Strapi5
+  {
+    name: 'strapi5',
+    samples: [
+      {
+        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Image 1',
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Thumbnail image',
+        modifiers: { breakpoint: 'thumbnail' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Small image',
+        modifiers: { breakpoint: 'small' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Medium image',
+        modifiers: { breakpoint: 'medium' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Large image',
+        modifiers: { breakpoint: 'large' },
       },
     ],
   },
