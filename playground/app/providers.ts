@@ -235,6 +235,18 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Caisy
+  {
+    name: 'caisy',
+    samples: [
+      {
+        src: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg',
+        width: 500,
+        height: 500,
+        quality: 90,
+      },
+    ],
+  },
   // Cloudflare
   {
     name: 'cloudflare',
@@ -243,6 +255,41 @@ export const providers: Provider[] = [
         src: 'https://s3.that-test.site/burger.jpeg',
         height: 300,
         fit: 'contain',
+      },
+    ],
+  },
+  // Cloudimage
+  {
+    name: 'cloudimage',
+    samples: [
+      {
+        src: 'https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1',
+        width: 400,
+        height: 250,
+        densities: 'x1 x2',
+        fit: 'contain',
+        quality: 65,
+        format: 'webp',
+      },
+      {
+        src: 'bag.jpg',
+        width: 500,
+        height: 500,
+        fit: 'contain',
+      },
+      {
+        src: 'boat.jpg',
+        width: 800,
+        height: 800,
+        quality: 75,
+        fit: 'cover',
+      },
+      {
+        src: 'img.jpg',
+        width: 300,
+        height: 300,
+        format: 'webp',
+        fit: 'fill',
       },
     ],
   },
@@ -288,38 +335,34 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Cloudimage
+  // Directus
   {
-    name: 'cloudimage',
+    name: 'directus',
     samples: [
       {
-        src: 'https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1',
-        width: 400,
-        height: 250,
-        densities: 'x1 x2',
-        fit: 'contain',
-        quality: 65,
-        format: 'webp',
+        src: '39ff62fd-902e-458c-808f-702460c51309',
+        alt: 'Image 1',
       },
       {
-        src: 'bag.jpg',
-        width: 500,
-        height: 500,
-        fit: 'contain',
-      },
-      {
-        src: 'boat.jpg',
-        width: 800,
-        height: 800,
-        quality: 75,
+        src: '39ff62fd-902e-458c-808f-702460c51309.jpg',
+        alt: '1024px width',
+        width: 1024,
+        height: 256,
         fit: 'cover',
+        modifiers: { withoutEnlargement: 'true' },
       },
       {
-        src: 'img.jpg',
-        width: 300,
-        height: 300,
+        src: '39ff62fd-902e-458c-808f-702460c51309',
+        alt: '256px width, webp',
+        width: 256,
         format: 'webp',
-        fit: 'fill',
+      },
+      {
+        src: '39ff62fd-902e-458c-808f-702460c51309',
+        alt: '256px width, webp',
+        width: 256,
+        format: 'webp',
+        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] },
       },
     ],
   },
@@ -366,6 +409,88 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // GitHub
+  {
+    name: 'github',
+    samples: [
+      {
+        src: 'npm',
+        width: 50,
+        height: 50,
+      },
+      {
+        src: 'nuxt',
+        width: 50,
+        height: 100,
+      },
+      {
+        src: 'unjs',
+      },
+    ],
+  },
+  // Glide
+  {
+    name: 'glide',
+    samples: [
+      {
+        src: '/kayaks.jpg',
+        width: 1000,
+        quality: 70,
+        modifiers: { gam: 0.9, sharp: 8 },
+      },
+    ],
+  },
+  // gumlet
+  {
+    name: 'gumlet',
+    samples: [
+      {
+        src: '/sea.jpeg',
+        width: 300,
+        height: 300,
+        fit: 'cover',
+      },
+    ],
+  },
+  // Hygraph
+  {
+    name: 'hygraph',
+    samples: [
+      {
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
+        width: 500,
+        height: 500,
+        fit: 'crop',
+        quality: 90,
+      },
+      {
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
+        width: 500,
+        fit: 'max',
+        format: 'auto_image',
+      },
+      {
+        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
+        width: 300,
+        height: 300,
+        fit: 'clip',
+        format: 'jpeg',
+      },
+    ],
+  },
+  // imageengine
+  {
+    name: 'imageengine',
+    samples: [
+      {
+        src: '/images/image.jpg',
+        width: 300,
+        height: 300,
+        fit: 'inside',
+        modifiers: { metadata: 'true', sharpen: 10 },
+      },
+    ],
+  },
   // ImageKit
   {
     name: 'imagekit',
@@ -406,37 +531,6 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // GitHub
-  {
-    name: 'github',
-    samples: [
-      {
-        src: 'npm',
-        width: 50,
-        height: 50,
-      },
-      {
-        src: 'nuxt',
-        width: 50,
-        height: 100,
-      },
-      {
-        src: 'unjs',
-      },
-    ],
-  },
-  // gumlet
-  {
-    name: 'gumlet',
-    samples: [
-      {
-        src: '/sea.jpeg',
-        width: 300,
-        height: 300,
-        fit: 'cover',
-      },
-    ],
-  },
   // imgix
   {
     name: 'imgix',
@@ -449,31 +543,7 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // imageengine
-  {
-    name: 'imageengine',
-    samples: [
-      {
-        src: '/images/image.jpg',
-        width: 300,
-        height: 300,
-        fit: 'inside',
-        modifiers: { metadata: 'true', sharpen: 10 },
-      },
-    ],
-  },
-  // Glide
-  {
-    name: 'glide',
-    samples: [
-      {
-        src: '/kayaks.jpg',
-        width: 1000,
-        quality: 70,
-        modifiers: { gam: 0.9, sharp: 8 },
-      },
-    ],
-  },
+  // netlifyImageCdn
   {
     name: 'netlifyImageCdn',
     samples: [
@@ -490,6 +560,7 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // netlifyLargeMedia
   {
     name: 'netlifyLargeMedia',
     samples: [
@@ -506,7 +577,7 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Picsum (Lorem Picsum placeholder images)
+  // Picsum
   {
     name: 'picsum',
     samples: [
@@ -597,6 +668,304 @@ export const providers: Provider[] = [
         width: 200,
         height: 200,
         fit: 'crop',
+      },
+    ],
+  },
+  // Sanity
+  {
+    name: 'sanity',
+    samples: [
+      {
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
+      },
+      {
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
+        width: 200,
+        height: 200,
+        fit: 'fill',
+      },
+      {
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
+        width: 200,
+        height: 200,
+        fit: 'cover',
+      },
+      {
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
+        width: 200,
+        height: 200,
+        fit: 'contain',
+      },
+      {
+        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
+        width: 200,
+        modifiers: {
+          crop: {
+            _type: 'sanity.imageCrop',
+            bottom: 0.36903637222484653,
+            left: 0.23801369863013686,
+            right: 0,
+            top: 0.009840969925995906,
+          },
+          hotspot: {
+            _type: 'sanity.imageHotspot',
+            height: 0.6063612029601636,
+            width: 0.21575342465753433,
+            x: 0.4469178082191783,
+            y: 0.32778302629507167,
+          },
+        },
+      },
+    ],
+  },
+  // Shopify
+  {
+    name: 'shopify',
+    samples: [
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 300,
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          padColor: 'ff0000',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        modifiers: {
+          crop: 'center',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'top',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 450,
+        height: 150,
+        modifiers: {
+          crop: 'bottom',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'left',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 450,
+        modifiers: {
+          crop: 'right',
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        modifiers: {
+          crop: 'region',
+          cropLeft: 100,
+          cropTop: 100,
+          cropWidth: 450,
+          cropHeight: 300,
+        },
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        format: 'png',
+      },
+      {
+        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
+        width: 300,
+        height: 300,
+        quality: 1,
+      },
+    ],
+  },
+  // Sirv
+  {
+    name: 'sirv',
+    samples: [
+      {
+        src: '/test.png',
+        width: 750,
+        quality: 75,
+      },
+      {
+        src: '/harris-large.jpg',
+        width: 500,
+        format: 'png',
+      },
+      {
+        src: '/lacoste.jpg',
+        width: 500,
+        quality: 95,
+        modifiers: { crop: 'trim' },
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        fit: 'contain',
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { crop: 'face' },
+      },
+      {
+        src: '/QW.pdf',
+        width: 500,
+        modifiers: { pdfPage: 1 },
+      },
+      {
+        src: '/look-big.jpg',
+        height: 500,
+        modifiers: { text: 'Hello', textAlign: 'center', textPositionGravity: 'south', textBackgroundColor: '#ffff', textSize: 60, textFontFamily: 'Arial', textColor: 'white' },
+      },
+      {
+        src: 't-shirt-man.jpg',
+        height: 500,
+        modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' },
+      },
+    ],
+  },
+  // Strapi
+  {
+    name: 'strapi',
+    samples: [
+      {
+        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Image 1',
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Thumbnail image',
+        modifiers: { breakpoint: 'thumbnail' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Small image',
+        modifiers: { breakpoint: 'small' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Medium image',
+        modifiers: { breakpoint: 'medium' },
+      },
+      {
+        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
+        alt: 'Large image',
+        modifiers: { breakpoint: 'large' },
+      },
+    ],
+  },
+  // Storyblok
+  {
+    name: 'storyblok',
+    samples: [
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Original',
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Resized static',
+        width: 500,
+        height: 500,
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Proportional to Width',
+        width: 500,
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Proportional to Height',
+        height: 500,
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Fit in with background CCCCCC',
+        width: 200,
+        height: 200,
+        fit: 'in',
+        filters: { fill: 'CCCCCC' },
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
+        alt: 'Change image format',
+        width: 200,
+        format: 'webp',
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        alt: 'Resized without Smart Crop',
+        width: 600,
+        height: 130,
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        alt: 'Resized with Smart Crop (Facial detection)',
+        width: 600,
+        height: 130,
+        smart: true,
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        alt: 'Custom focal point (Focus on the bottom of the image)',
+        width: 600,
+        height: 130,
+        operations: { filters: { focal: '450x500:550x600' } },
+      },
+      {
+        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
+        alt: 'Custom focal point (Focus on the top of the image)',
+        width: 600,
+        height: 130,
+        operations: { filters: { focal: '450x0:550x100' } },
+      },
+    ],
+  },
+  // Supabase
+  {
+    name: 'supabase',
+    samples: [
+      {
+        src: '/test.png',
+        width: 300,
+        height: 200,
+      },
+      {
+        src: '/test.png',
+        width: 400,
+        height: 300,
+        quality: 80,
+      },
+      {
+        src: '/test.png',
+        width: 500,
+        height: 500,
+        fit: 'cover',
       },
     ],
   },
@@ -835,287 +1204,6 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Sanity
-  {
-    name: 'sanity',
-    samples: [
-      {
-        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
-      },
-      {
-        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
-        width: 200,
-        height: 200,
-        fit: 'fill',
-      },
-      {
-        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
-        width: 200,
-        height: 200,
-        fit: 'cover',
-      },
-      {
-        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
-        width: 200,
-        height: 200,
-        fit: 'contain',
-      },
-      {
-        src: 'image-G3i4emG6B8JnTmGoN0UjgAp8-300x450-jpg',
-        width: 200,
-        modifiers: {
-          crop: {
-            _type: 'sanity.imageCrop',
-            bottom: 0.36903637222484653,
-            left: 0.23801369863013686,
-            right: 0,
-            top: 0.009840969925995906,
-          },
-          hotspot: {
-            _type: 'sanity.imageHotspot',
-            height: 0.6063612029601636,
-            width: 0.21575342465753433,
-            x: 0.4469178082191783,
-            y: 0.32778302629507167,
-          },
-        },
-      },
-    ],
-  },
-  // Shopify
-  {
-    name: 'shopify',
-    samples: [
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 450,
-        height: 300,
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 300,
-        modifiers: {
-          padColor: 'ff0000',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 300,
-        modifiers: {
-          crop: 'center',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 450,
-        height: 150,
-        modifiers: {
-          crop: 'top',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 450,
-        height: 150,
-        modifiers: {
-          crop: 'bottom',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 450,
-        modifiers: {
-          crop: 'left',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 450,
-        modifiers: {
-          crop: 'right',
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        modifiers: {
-          crop: 'region',
-          cropLeft: 100,
-          cropTop: 100,
-          cropWidth: 450,
-          cropHeight: 300,
-        },
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 300,
-        format: 'png',
-      },
-      {
-        src: 'https://cdn.shopify.com/static/sample-images/garnished.jpeg',
-        width: 300,
-        height: 300,
-        quality: 1,
-      },
-    ],
-  },
-  // Strapi
-  {
-    name: 'strapi',
-    samples: [
-      {
-        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Image 1',
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Thumbnail image',
-        modifiers: { breakpoint: 'thumbnail' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Small image',
-        modifiers: { breakpoint: 'small' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Medium image',
-        modifiers: { breakpoint: 'medium' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Large image',
-        modifiers: { breakpoint: 'large' },
-      },
-    ],
-  },
-  // Strapi5
-  {
-    name: 'strapi5',
-    samples: [
-      {
-        src: '/4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Image 1',
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Thumbnail image',
-        modifiers: { breakpoint: 'thumbnail' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Small image',
-        modifiers: { breakpoint: 'small' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Medium image',
-        modifiers: { breakpoint: 'medium' },
-      },
-      {
-        src: '4d9z1eiyo2gmf6gd7xhp_823ae510e8.png',
-        alt: 'Large image',
-        modifiers: { breakpoint: 'large' },
-      },
-    ],
-  },
-  // Storyblok
-  {
-    name: 'storyblok',
-    samples: [
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Original',
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Resized static',
-        width: 500,
-        height: 500,
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Proportional to Width',
-        width: 500,
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Proportional to Height',
-        height: 500,
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Fit in with background CCCCCC',
-        width: 200,
-        height: 200,
-        fit: 'in',
-        filters: { fill: 'CCCCCC' },
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/3310x2192/e4ec08624e/demo-image.jpeg',
-        alt: 'Change image format',
-        width: 200,
-        format: 'webp',
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
-        alt: 'Resized without Smart Crop',
-        width: 600,
-        height: 130,
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
-        alt: 'Resized with Smart Crop (Facial detection)',
-        width: 600,
-        height: 130,
-        smart: true,
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
-        alt: 'Custom focal point (Focus on the bottom of the image)',
-        width: 600,
-        height: 130,
-        operations: { filters: { focal: '450x500:550x600' } },
-      },
-      {
-        src: 'https://a.storyblok.com/f/39898/2250x1500/c15735a73c/demo-image-human.jpeg',
-        alt: 'Custom focal point (Focus on the top of the image)',
-        width: 600,
-        height: 130,
-        operations: { filters: { focal: '450x0:550x100' } },
-      },
-    ],
-  },
-  // Supabase
-  {
-    name: 'supabase',
-    samples: [
-      {
-        src: '/test.png',
-        width: 300,
-        height: 200,
-      },
-      {
-        src: '/test.png',
-        width: 400,
-        height: 300,
-        quality: 80,
-      },
-      {
-        src: '/test.png',
-        width: 500,
-        height: 500,
-        fit: 'cover',
-      },
-    ],
-  },
   // Unsplash
   {
     name: 'unsplash',
@@ -1139,17 +1227,6 @@ export const providers: Provider[] = [
         format: 'auto',
         from: 'Photo by Jezael Melgoza',
         link: 'https://unsplash.com/@jezar?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText',
-      },
-    ],
-  },
-  // Vercel
-  {
-    name: 'vercel',
-    samples: [
-      {
-        src: 'colors.jpg',
-        width: 750,
-        quality: 75,
       },
     ],
   },
@@ -1205,6 +1282,17 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Vercel
+  {
+    name: 'vercel',
+    samples: [
+      {
+        src: 'colors.jpg',
+        width: 750,
+        quality: 75,
+      },
+    ],
+  },
   // wagtail
   {
     name: 'wagtail',
@@ -1256,37 +1344,6 @@ export const providers: Provider[] = [
       },
     ],
   },
-  // Directus
-  {
-    name: 'directus',
-    samples: [
-      {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
-        alt: 'Image 1',
-      },
-      {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee.jpg',
-        alt: '1024px width',
-        width: 1024,
-        height: 256,
-        fit: 'cover',
-        modifiers: { withoutEnlargement: 'true' },
-      },
-      {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
-        alt: '256px width, webp',
-        width: 256,
-        format: 'webp',
-      },
-      {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
-        alt: '256px width, webp',
-        width: 256,
-        format: 'webp',
-        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] },
-      },
-    ],
-  },
   // weserv
   {
     name: 'weserv',
@@ -1309,91 +1366,6 @@ export const providers: Provider[] = [
         src: 'https://picsum.photos/200',
         format: 'webp',
         modifiers: { mask: 'circle', filter: 'sepia', quality: 80 },
-      },
-    ],
-  },
-  // Sirv
-  {
-    name: 'sirv',
-    samples: [
-      {
-        src: '/test.png',
-        width: 750,
-        quality: 75,
-      },
-      {
-        src: '/harris-large.jpg',
-        width: 500,
-        format: 'png',
-      },
-      {
-        src: '/lacoste.jpg',
-        width: 500,
-        quality: 95,
-        modifiers: { crop: 'trim' },
-      },
-      {
-        src: '/look-big.jpg',
-        height: 500,
-        fit: 'contain',
-      },
-      {
-        src: '/look-big.jpg',
-        height: 500,
-        modifiers: { crop: 'face' },
-      },
-      {
-        src: '/QW.pdf',
-        width: 500,
-        modifiers: { pdfPage: 1 },
-      },
-      {
-        src: '/look-big.jpg',
-        height: 500,
-        modifiers: { text: 'Hello', textAlign: 'center', textPositionGravity: 'south', textBackgroundColor: '#ffff', textSize: 60, textFontFamily: 'Arial', textColor: 'white' },
-      },
-      {
-        src: 't-shirt-man.jpg',
-        height: 500,
-        modifiers: { watermark: '/watermark-v1.png', watermarkPosition: 'center', watermarkWidth: '30%' },
-      },
-    ],
-  },
-  // Hygraph
-  {
-    name: 'hygraph',
-    samples: [
-      {
-        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
-        width: 500,
-        height: 500,
-        fit: 'crop',
-        quality: 90,
-      },
-      {
-        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
-        width: 500,
-        fit: 'max',
-        format: 'auto_image',
-      },
-      {
-        src: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue',
-        width: 300,
-        height: 300,
-        fit: 'clip',
-        format: 'jpeg',
-      },
-    ],
-  },
-  // Caisy
-  {
-    name: 'caisy',
-    samples: [
-      {
-        src: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg',
-        width: 500,
-        height: 500,
-        quality: 90,
       },
     ],
   },

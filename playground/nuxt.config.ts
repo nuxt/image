@@ -64,7 +64,7 @@ export default defineNuxtConfig({
       apiVersion: 'v7',
     },
     directus: {
-      baseURL: 'http://localhost:8055/assets/',
+      baseURL: 'https://example.directus.app/assets/',
     },
     fastly: {
       baseURL: 'https://www.fastly.io',
@@ -103,9 +103,6 @@ export default defineNuxtConfig({
       baseURL: 'https://cdn.shopify.com/',
     },
     strapi: {
-      baseURL: 'http://localhost:1337/uploads/',
-    },
-    strapi5: {
       baseURL: 'http://localhost:1337/uploads/',
     },
     supabase: {
