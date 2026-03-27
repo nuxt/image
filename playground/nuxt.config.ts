@@ -105,6 +105,9 @@ export default defineNuxtConfig({
     strapi: {
       baseURL: 'http://localhost:1337/uploads/',
     },
+    strapi5: {
+      baseURL: 'http://localhost:1337/uploads/',
+    },
     supabase: {
       baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
     },
