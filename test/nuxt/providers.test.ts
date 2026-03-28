@@ -17,7 +17,7 @@ import contentful from '../../dist/runtime/providers/contentful'
 // import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
 // import filerobot from '../../dist/runtime/providers/filerobot'
-// import github from '../../dist/runtime/providers/github'
+import github from '../../dist/runtime/providers/github'
 import glide from '../../dist/runtime/providers/glide'
 import gumlet from '../../dist/runtime/providers/gumlet'
 import hygraph from '../../dist/runtime/providers/hygraph'
@@ -132,8 +132,9 @@ describe('Providers', () => {
     }
   })
 
-  // Bunny missing test
-  // Caisy missing test
+  it.todo('bunny')
+
+  it.todo('caisy')
 
   it('cloudflare', () => {
     const providerOptions = {
@@ -260,7 +261,7 @@ describe('Providers', () => {
     }
   })
 
-  // Directus missing test
+  it.todo('directus')
 
   it('fastly', () => {
     const providerOptions = {
@@ -287,8 +288,16 @@ describe('Providers', () => {
     }
   })
 
-  // Filerobot missing test
-  // Github missing test
+  it.todo('filerobot')
+
+  it('github', () => {
+    const providerOptions = {}
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = github().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.github)
+    }
+  })
 
   it('glide', () => {
     const providerOptions = {

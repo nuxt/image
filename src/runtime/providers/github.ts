@@ -16,7 +16,7 @@ export default defineProvider<GitHubOptions>({
     let size = 460 // Default size
     // Calculate size based on width/height
     if (modifiers?.width || modifiers?.height) {
-      size = Math.max(modifiers?.height ?? 0, modifiers?.width ?? 0)
+      size = Math.min(Math.max(modifiers?.height ?? 1, modifiers?.width ?? 1), 460)
     }
 
     const operations = operationsGenerator({
