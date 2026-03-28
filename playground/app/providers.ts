@@ -370,8 +370,18 @@ export const providers: Provider[] = [
   {
     name: 'fastly',
     samples: [
-      { src: '/image.jpg' },
-      { src: '/plant.jpeg' },
+      {
+        src: '/image.jpg',
+        width: 400,
+      },
+      {
+        src: '/image.png',
+        height: 250,
+      },
+      {
+        src: 'https://www.fastly.io/image.gif?v=123',
+        height: 100,
+      },
     ],
   },
   // Filerobot
