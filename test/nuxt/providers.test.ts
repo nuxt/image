@@ -8,8 +8,8 @@ import none from '../../dist/runtime/providers/none'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
 import builderio from '../../dist/runtime/providers/builderio'
-// import bunny from '../../dist/runtime/providers/bunny'
-// import caisy from '../../dist/runtime/providers/caisy'
+import bunny from '../../dist/runtime/providers/bunny'
+import caisy from '../../dist/runtime/providers/caisy'
 import cloudflare from '../../dist/runtime/providers/cloudflare'
 import cloudimage from '../../dist/runtime/providers/cloudimage'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
@@ -132,9 +132,31 @@ describe('Providers', () => {
     }
   })
 
-  it.todo('bunny')
+  // bunny does not support `fit` Tests currently fail (although impact to user is silent failure).
+  it.todo('bunny', () => {
+    const providerOptions = {
+      baseURL: 'https://bunnyoptimizerdemo.b-cdn.net/',
+    }
 
-  it.todo('caisy')
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = bunny().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.bunny)
+    }
+  })
+
+  // caisy uses a project id and not a baseURL. see: https://caisy.io/developer/docs/internal-api/asset-cdn#top
+  it.todo('caisy', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = caisy().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.caisy)
+    }
+  })
 
   it('cloudflare', () => {
     const providerOptions = {
