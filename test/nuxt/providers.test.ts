@@ -267,9 +267,10 @@ describe('Providers', () => {
     const providerOptions = {
       baseURL: '',
     }
+    const EXISTING_QUERY_PARAMETERS = '?v=123'
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = fastly().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      const generated = fastly().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.fastly)
     }
   })
