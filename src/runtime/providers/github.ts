@@ -15,8 +15,9 @@ export default defineProvider<GitHubOptions>({
   getImage: (src, { modifiers, baseURL = 'https://avatars.githubusercontent.com/' }) => {
     let size = 460 // Default size
     // Calculate size based on width/height
-    if (modifiers?.width || modifiers?.height) {
-      size = Math.min(Math.max(modifiers?.height ?? 1, modifiers?.width ?? 1), 460)
+    const requestedSize = Math.max(modifiers?.height ?? 0, modifiers?.width ?? 0)
+    if (requestedSize > 0) {
+      size = Math.min(Math.max(1, requestedSize), 460)
     }
 
     const operations = operationsGenerator({
