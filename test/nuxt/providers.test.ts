@@ -14,7 +14,7 @@ import cloudflare from '../../dist/runtime/providers/cloudflare'
 import cloudimage from '../../dist/runtime/providers/cloudimage'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
 import contentful from '../../dist/runtime/providers/contentful'
-// import directus from '../../dist/runtime/providers/directus'
+import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
 // import filerobot from '../../dist/runtime/providers/filerobot'
 import github from '../../dist/runtime/providers/github'
@@ -261,7 +261,16 @@ describe('Providers', () => {
     }
   })
 
-  it.todo('directus')
+  it('directus', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.directus.app/assets/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = directus().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.directus)
+    }
+  })
 
   it('fastly', () => {
     const providerOptions = {
