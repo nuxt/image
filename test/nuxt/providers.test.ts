@@ -16,7 +16,7 @@ import cloudinary from '../../dist/runtime/providers/cloudinary'
 import contentful from '../../dist/runtime/providers/contentful'
 import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
-// import filerobot from '../../dist/runtime/providers/filerobot'
+import filerobot from '../../dist/runtime/providers/filerobot'
 import github from '../../dist/runtime/providers/github'
 import glide from '../../dist/runtime/providers/glide'
 import gumlet from '../../dist/runtime/providers/gumlet'
@@ -284,8 +284,16 @@ describe('Providers', () => {
     }
   })
 
-  it.todo('filerobot')
-
+  it('filerobot', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.filerobot.com/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = filerobot().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.filerobot)
+    }
+  })
   it('github', () => {
     const providerOptions = {}
     for (const image of images) {
