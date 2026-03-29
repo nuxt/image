@@ -240,7 +240,7 @@ export const providers: Provider[] = [
     name: 'caisy',
     samples: [
       {
-        src: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/056c27e2-81f5-4cd3-b728-cef181dfe7dc/d83ea6f0-f90a-462c-aebd-b8bc615fdce0pexelsmiguelapadrinan1591056.jpg',
+        src: 'https://assets.caisy.io/assets/b76210be-a043-4989-98df-ecaf6c6e68d8/2d99a80a-92a9-4865-b666-149431eb1732/edcbb3ec-660b-4683-ac8d-56b428da55e1pexelscottonbrostudio4965822.jpg',
         width: 500,
         height: 500,
         quality: 90,
