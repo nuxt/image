@@ -488,8 +488,8 @@ describe('Providers', () => {
     }
 
     for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = prepr().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
+      const [src, modifiers] = image.args
+      const generated = prepr().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prepr)
     }
   })
