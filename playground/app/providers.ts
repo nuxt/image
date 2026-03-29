@@ -263,7 +263,7 @@ export const providers: Provider[] = [
     name: 'cloudimage',
     samples: [
       {
-        src: 'https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media&token=62ff753d-83eb-4e3f-932c-96eb72d455f1',
+        src: 'https://2412819702-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FlIgyYELwJG6odLEyCM6i%2Fuploads%2FAHcbuKRYbIlBWO4cJ88b%2Fimage.png?alt=media',
         width: 400,
         height: 250,
         densities: 'x1 x2',
