@@ -37,7 +37,7 @@ import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
 import twicpics from '../../dist/runtime/providers/twicpics'
-import unsplash from '../../dist/runtime/providers/unsplash'
+import unsplash, { unsplashCDN } from '../../dist/runtime/providers/unsplash'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
@@ -496,31 +496,25 @@ describe('Providers', () => {
 
   it('prismic', () => {
     const providerOptions = {
-      baseURL: '', // Use empty base URL for the sake of simplicity
+      baseURL: 'https://example.com/',
     }
 
-    const EXISTING_QUERY_PARAMETERS
-      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+    const EXISTING_QUERY_PARAMETERS = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
 
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = prismic().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prismic)
     }
-  })
-
-  it('prismic (unsplash)', () => {
-    const providerOptions = {
-      baseURL: '', // Use empty base URL for the sake of simplicity
-    }
-
-    const EXISTING_QUERY_PARAMETERS
-      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
-
     for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = prismic().getImage(`${image.prismicUnsplash.url.split('?').shift()}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.prismicUnsplash)
+      const [src, modifiers] = image.args
+      // simulate src from unsplash
+      const unsplashSrc = `${unsplashCDN}${src.replace(/^\//, '')}${EXISTING_QUERY_PARAMETERS}`
+      const generatedSimulated = prismic().getImage(unsplashSrc, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generatedSimulated.url.startsWith(unsplashCDN), 'prismic+unsplash ignore baseURL').toBe(true)
+      expect(() => decodeURIComponent(generatedSimulated.url), 'prismic+unsplash to return valid URI').not.toThrow()
+      const simulatePrismic = { url: generatedSimulated.url.replace(unsplashCDN, providerOptions.baseURL) }
+      expect(simulatePrismic).toMatchObject(image.prismic)
     }
   })
 
