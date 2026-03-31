@@ -56,7 +56,7 @@ importers:
         version: 4.4.2
       '@nuxt/test-utils':
         specifier: ^4.0.0
-        version: 4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.8)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
+        version: 4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.9)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -68,7 +68,7 @@ importers:
         version: 2.1.12(vue@3.5.31(typescript@6.0.2))
       '@vitest/coverage-v8':
         specifier: ^4.1.2
-        version: 4.1.2(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
+        version: 4.1.2(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -80,7 +80,7 @@ importers:
         version: 10.1.0(jiti@2.6.1)
       happy-dom:
         specifier: ^20.8.8
-        version: 20.8.8
+        version: 20.8.9
       installed-check:
         specifier: ^10.0.1
         version: 10.0.1
@@ -122,7 +122,7 @@ importers:
         version: 3.6.1(typescript@6.0.2)(vue-sfc-transformer@0.1.17(@vue/compiler-core@3.5.31)(esbuild@0.27.4)(vue@3.5.31(typescript@6.0.2)))(vue-tsc@3.2.6(typescript@6.0.2))(vue@3.5.31(typescript@6.0.2))
       vitest:
         specifier: ^4.1.2
-        version: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
+        version: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
       vue:
         specifier: 3.5.31
         version: 3.5.31(typescript@6.0.2)
@@ -5004,8 +5004,8 @@ packages:
       crossws:
         optional: true
 
-  happy-dom@20.8.8:
-    resolution: {integrity: sha512-5/F8wxkNxYtsN0bXfMwIyNLZ9WYsoOYPbmoluqVJqv8KBUbcyKZawJ7uYK4WTX8IHBLYv+VXIwfeNDPy1oKMwQ==}
+  happy-dom@20.8.9:
+    resolution: {integrity: sha512-Tz23LR9T9jOGVZm2x1EPdXqwA37G/owYMxRwU0E4miurAtFsPMQ1d2Jc2okUaSjZqAFz2oEn3FLXC5a0a+siyA==}
     engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
@@ -7934,8 +7934,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.19.0:
-    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+  ws@8.20.0:
+    resolution: {integrity: sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -9082,7 +9082,7 @@ snapshots:
       vite-plugin-inspect: 11.3.3(@nuxt/kit@4.4.2(magicast@0.5.2))(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
       vite-plugin-vue-tracer: 1.2.0(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.31(typescript@6.0.2))
       which: 5.0.0
-      ws: 8.19.0
+      ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -9349,7 +9349,7 @@ snapshots:
       rc9: 3.0.0
       std-env: 3.10.0
 
-  '@nuxt/test-utils@4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.8)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))':
+  '@nuxt/test-utils@4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.9)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))':
     dependencies:
       '@clack/prompts': 1.0.0
       '@nuxt/devtools-kit': 2.7.0(magicast@0.5.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
@@ -9378,13 +9378,13 @@ snapshots:
       tinyexec: 1.0.4
       ufo: 1.6.3
       unplugin: 3.0.0
-      vitest-environment-nuxt: 1.0.1(@vue/test-utils@2.4.6)(happy-dom@20.8.8)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
+      vitest-environment-nuxt: 1.0.1(@vue/test-utils@2.4.6)(happy-dom@20.8.9)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
       vue: 3.5.31(typescript@6.0.2)
     optionalDependencies:
       '@vue/test-utils': 2.4.6
-      happy-dom: 20.8.8
+      happy-dom: 20.8.9
       playwright-core: 1.58.2
-      vitest: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
+      vitest: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
     transitivePeerDependencies:
       - crossws
       - magicast
@@ -11313,7 +11313,7 @@ snapshots:
       vite: 7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)
       vue: 3.5.31(typescript@6.0.2)
 
-  '@vitest/coverage-v8@4.1.2(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))':
+  '@vitest/coverage-v8@4.1.2(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.1.2
@@ -11325,7 +11325,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
+      vitest: 4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
 
   '@vitest/expect@4.1.2':
     dependencies:
@@ -13117,14 +13117,14 @@ snapshots:
       rou3: 0.7.12
       srvx: 0.10.1
 
-  happy-dom@20.8.8:
+  happy-dom@20.8.9:
     dependencies:
       '@types/node': 24.12.0
       '@types/whatwg-mimetype': 3.0.2
       '@types/ws': 8.18.1
       entities: 7.0.1
       whatwg-mimetype: 3.0.0
-      ws: 8.19.0
+      ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -16742,9 +16742,9 @@ snapshots:
       terser: 5.44.1
       yaml: 2.8.2
 
-  vitest-environment-nuxt@1.0.1(@vue/test-utils@2.4.6)(happy-dom@20.8.8)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))):
+  vitest-environment-nuxt@1.0.1(@vue/test-utils@2.4.6)(happy-dom@20.8.9)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))):
     dependencies:
-      '@nuxt/test-utils': 4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.8)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
+      '@nuxt/test-utils': 4.0.0(@vue/test-utils@2.4.6)(happy-dom@20.8.9)(magicast@0.5.2)(playwright-core@1.58.2)(typescript@6.0.2)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))(vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)))
     transitivePeerDependencies:
       - '@cucumber/cucumber'
       - '@jest/globals'
@@ -16761,7 +16761,7 @@ snapshots:
       - vite
       - vitest
 
-  vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.8)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)):
+  vitest@4.1.2(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(happy-dom@20.8.9)(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2)):
     dependencies:
       '@vitest/expect': 4.1.2
       '@vitest/mocker': 4.1.2(vite@7.3.1(@types/node@24.12.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.44.1)(yaml@2.8.2))
@@ -16786,7 +16786,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.0
       '@types/node': 24.12.0
-      happy-dom: 20.8.8
+      happy-dom: 20.8.9
     transitivePeerDependencies:
       - msw
 
@@ -16950,7 +16950,7 @@ snapshots:
 
   ws@8.17.1: {}
 
-  ws@8.19.0: {}
+  ws@8.20.0: {}
 
   wsl-utils@0.1.0:
     dependencies:
