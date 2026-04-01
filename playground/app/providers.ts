@@ -1435,7 +1435,7 @@ export const providers: Provider[] = [
   },
   // Umbraco
   {
-    name: 'umbracoImage',
+    name: 'umbraco',
     samples: [
       {
         src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',

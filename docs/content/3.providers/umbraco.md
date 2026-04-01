@@ -4,7 +4,7 @@ description: Nuxt Image has first class integration with Umbraco.
 links:
   - label: Source
     icon: i-simple-icons-github
-    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/umbracoImage.ts
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/umbraco.ts
     size: xs
 ---
 
@@ -17,7 +17,7 @@ To use this provider, configure the base URL of your Umbraco site:
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   image: {
-    umbracoImage: {
+    umbraco: {
       baseURL: 'https://your-umbraco-site.com'
     }
   }
@@ -28,7 +28,7 @@ You can then use the provider with `NuxtImg` or `NuxtPicture`:
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="/media/abcd1234/example.jpg"
   width="800"
   height="450"
@@ -50,7 +50,7 @@ If you already pass absolute Umbraco media URLs as `src`, `baseURL` can be omitt
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="https://your-umbraco-site.com/media/abcd1234/example.jpg"
   width="800"
   height="450"
@@ -92,7 +92,7 @@ The standard Nuxt Image values `contain` and `cover` are mapped to their ImageSh
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="/media/abcd1234/example.jpg"
   width="1200"
   height="630"
@@ -106,7 +106,7 @@ Use `focalPointXY` when you want to crop around an exact focal point. The value 
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="/media/abcd1234/example.jpg"
   width="400"
   height="400"
@@ -133,7 +133,7 @@ Supported values:
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="/media/abcd1234/example.jpg"
   width="800"
   height="400"
@@ -165,7 +165,7 @@ Supported values:
 
 ```vue
 <NuxtImg
-  provider="umbracoImage"
+  provider="umbraco"
   src="/media/abcd1234/example.jpg"
   width="600"
   height="338"
@@ -198,7 +198,7 @@ Umbraco can enforce maximum resize dimensions through its imaging settings. If t
 ```vue
 <template>
   <NuxtImg
-    provider="umbracoImage"
+    provider="umbraco"
     src="/media/hvjlhtfw/home-full-screen-4.png"
     width="500"
     height="200"

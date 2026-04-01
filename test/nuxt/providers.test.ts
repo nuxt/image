@@ -38,7 +38,7 @@ import wagtail from '../../dist/runtime/providers/wagtail'
 import uploadcare from '../../dist/runtime/providers/uploadcare'
 import sirv from '../../dist/runtime/providers/sirv'
 import hygraph from '../../dist/runtime/providers/hygraph'
-import umbracoImage from '../../dist/runtime/providers/umbracoImage'
+import umbraco from '../../dist/runtime/providers/umbraco'
 import flyimg from '../../dist/runtime/providers/flyimg'
 
 function getEmptyContext() {
@@ -814,13 +814,13 @@ describe('Providers', () => {
     }
   })
 
-  it('umbracoImage', () => {
+  it('umbraco', () => {
     const providerOptions = {}
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = umbracoImage().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.umbracoImage)
+      const generated = umbraco().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.umbraco)
     }
   })
 })
