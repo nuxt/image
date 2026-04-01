@@ -246,6 +246,17 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Cloudflare Images
+  {
+    name: 'cloudflareimages',
+    samples: [
+      {
+        src: 'test-image-id',
+        width: 300,
+        height: 300,
+      },
+    ],
+  },
   // Cloudinary
   {
     name: 'cloudinary',
@@ -363,6 +374,31 @@ export const providers: Provider[] = [
         height: 300,
         format: 'webp',
         fit: 'fill',
+      },
+    ],
+  },
+  // Flyimg
+  {
+    name: 'flyimg',
+    samples: [
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 500,
+        height: 375,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 300,
+        height: 200,
+        fit: 'cover',
+        quality: 75,
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 200,
+        fit: 'contain',
       },
     ],
   },

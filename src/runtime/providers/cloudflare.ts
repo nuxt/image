@@ -1,4 +1,4 @@
-import { encodeQueryItem, joinURL } from 'ufo'
+import { encodeQueryItem, hasProtocol, joinURL } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -46,7 +46,7 @@ export default defineProvider<CloudflareOptions>({
     const operations = operationsGenerator(mergeModifiers as any)
 
     // https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
-    const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : src
+    const url = operations ? joinURL(baseURL, 'cdn-cgi/image', operations, src) : hasProtocol(src) ? src : joinURL(baseURL, src)
 
     return {
       url,
