@@ -138,6 +138,9 @@ export default defineNuxtConfig({
     },
     caisy: {
     },
+    umbraco: {
+      baseURL: '',
+    },
     providers: {
       custom: {
         provider: '~/providers/custom',
