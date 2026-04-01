@@ -743,16 +743,16 @@ describe('Providers', () => {
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.flyimg)
     }
 
     // fit: 'cover' → c_1 flag
-    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, emptyContext))
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, getEmptyContext()))
       .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,c_1/https://my-website.com/test.png' })
 
     // fit: 'fill' → par_0 flag
-    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, emptyContext))
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, getEmptyContext()))
       .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,par_0/https://my-website.com/test.png' })
   })
 
