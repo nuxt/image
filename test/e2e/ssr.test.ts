@@ -55,6 +55,30 @@ describe('browser (ssr: true)', () => {
     })
   }
 
+  it('preloads image with correct attributes', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+
+    const link1 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_500x500/images/colors-no-densities-or-sizes-prop.jpg"]')
+    expect(await link1.getAttribute('imagesizes')).toBeNull()
+    expect(await link1.getAttribute('imagesrcset')).toBeNull()
+
+    const link2 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1000x1000/images/colors-with-densities-and-no-sizes-prop.jpg"]')
+    expect(await link2.getAttribute('imagesizes')).toBeNull()
+    expect(await link2.getAttribute('imagesrcset')).not.toBeNull()
+
+    const link3 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1000x1000/images/colors-with-densities-and-sizes-prop.jpg"]')
+    expect(await link3.getAttribute('imagesizes')).not.toBeNull()
+    expect(await link3.getAttribute('imagesrcset')).not.toBeNull()
+
+    const link4 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1000x1000/images/colors-with-densities-sizes-and-fetchprio-prop.jpg"]')
+    expect(await link4.getAttribute('imagesizes')).not.toBeNull()
+    expect(await link4.getAttribute('imagesrcset')).not.toBeNull()
+    expect(await link4.getAttribute('fetchpriority')).toBe('high')
+
+    await page.close()
+  })
+
   it('should emit load and error events', async () => {
     const page = await createPage()
     const logs: string[] = []

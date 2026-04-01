@@ -49,14 +49,14 @@ npx nuxt module add image
 Published under the [MIT License](./LICENSE)
 
 <!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/@nuxt/image/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-version-href]: https://npmjs.com/package/@nuxt/image/v/latest
+[npm-version-src]: https://npmx.dev/api/registry/badge/version/@nuxt/image
+[npm-version-href]: https://npmx.dev/package/@nuxt/image/v/latest
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-src]: https://npmx.dev/api/registry/badge/downloads/@nuxt/image
 [npm-downloads-href]: https://npm.chart.dev/@nuxt/image
 
-[license-src]: https://img.shields.io/npm/l/@nuxt/image.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://npmjs.com/package/@nuxt/image
+[license-src]: https://npmx.dev/api/registry/badge/license/@nuxt/image
+[license-href]: https://npmx.dev/package/@nuxt/image
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt
 [nuxt-href]: https://nuxt.com

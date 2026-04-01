@@ -16,6 +16,7 @@ export const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
   'bunny',
+  'builderio',
   'caisy',
   'cloudflare',
   'cloudflareimages',
@@ -37,6 +38,7 @@ export const BuiltInProviders = [
   'netlify',
   'netlifyLargeMedia',
   'netlifyImageCdn',
+  'picsum',
   'prepr',
   'none',
   'prismic',
@@ -63,6 +65,19 @@ export function isBuiltInProvider(provider: ImageModuleProvider) {
 }
 
 type ImageProviderName = typeof BuiltInProviders[number]
+
+// https://docs.netlify.com/image-cdn/create-integration/
+const netlifySetup: ProviderSetup = (_providerOptions, moduleOptions, nuxt: Nuxt) => {
+  if (moduleOptions.domains?.length > 0) {
+    nuxt.options.nitro = defu(nuxt.options.nitro, {
+      netlify: {
+        images: {
+          remote_images: moduleOptions.domains.map(domain => `https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*`),
+        },
+      },
+    })
+  }
+}
 
 const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
   // IPX
@@ -104,17 +119,9 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
     })
   },
   // https://docs.netlify.com/image-cdn/create-integration/
-  netlify(_providerOptions, moduleOptions, nuxt: Nuxt) {
-    if (moduleOptions.domains?.length > 0) {
-      nuxt.options.nitro = defu(nuxt.options.nitro, {
-        netlify: {
-          images: {
-            remote_images: moduleOptions.domains.map(domain => `https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*`),
-          },
-        },
-      })
-    }
-  },
+  netlify: netlifySetup,
+  netlifyImageCdn: netlifySetup,
+  netlifyLargeMedia: netlifySetup,
 }
 
 export async function resolveProviders(nuxt: any, options: ModuleOptions): Promise<ImageModuleProvider[]> {
@@ -166,9 +173,9 @@ export async function resolveProvider(_nuxt: any, key: string, input: InputProvi
 }
 
 const autodetectableProviders: Partial<Record<ProviderName, ImageProviderName>> = {
-  vercel: 'vercel',
   aws_amplify: 'awsAmplify',
   netlify: 'netlify',
+  vercel: 'vercel',
 }
 
 const normalizableProviders: Partial<Record<string, () => ImageProviderName>> = {

@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     bunny: {
       baseURL: 'https://bunnyoptimizerdemo.b-cdn.net',
     },
+    builderio: {},
     twicpics: {
       baseURL: 'https://demo.twic.pics/',
     },
@@ -94,6 +95,7 @@ export default defineNuxtConfig({
       baseURL: 'https://netlify-photo-gallery.netlify.app',
     },
     prismic: {},
+    picsum: {},
     prepr: {
       projectName: 'nuxt-prepr-demo',
     },

@@ -43,7 +43,6 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 }
 
 defineOptions({ inheritAttrs: false })
-defineSlots<{ default(props: DefaultSlotProps): any }>()
 
 const props = defineProps<PictureProps<Provider>>()
 
@@ -180,12 +179,4 @@ onMounted(() => {
 
   markFeatureUsage('nuxt-picture')
 })
-</script>
-
-<script lang="ts">
-export interface DefaultSlotProps {
-  imgAttrs: ImgHTMLAttributes
-  isLoaded: boolean
-  src?: string
-}
 </script>
