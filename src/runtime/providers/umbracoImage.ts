@@ -22,7 +22,7 @@ const defaultModifiers = {}
 interface UmbracoImageOptions {
   baseURL?: string
   modifiers?: InferModifiers<typeof operationsGenerator>
-    & { fit?: 'boxpad' | 'crop' | 'manual' | 'max' | 'min' | 'pad' | 'stretch' | 'contain' }
+    & { fit?: 'boxpad' | 'crop' | 'manual' | 'max' | 'min' | 'pad' | 'stretch' | 'contain' | 'cover' }
     & { sampler?: 'bicubic' | 'nearest' | 'box' | 'mitchell' | 'catmull' | 'lanczos2' | 'lanczos3' | 'lanczos5' | 'lanczos8' | 'welch' | 'robidoux' | 'robidouxsharp' | 'spline' | 'triangle' | 'hermite' }
     & { anchorPosition?: 'bottom' | 'bottomleft' | 'bottomright' | 'center' | 'left' | 'right' | 'top' | 'topleft' | 'topright' }
 }
@@ -32,8 +32,11 @@ export default defineProvider<UmbracoImageOptions>({
     modifiers,
     baseURL = '',
   }) => {
-    // modifier.fit - 'contain' is remapped to use 'crop', since this is the value used by ImageSharp.
+    // Map standard Nuxt Image fit values to ImageSharp resize modes
     if (modifiers.fit === 'contain') {
+      modifiers.fit = 'max'
+    }
+    else if (modifiers.fit === 'cover') {
       modifiers.fit = 'crop'
     }
 

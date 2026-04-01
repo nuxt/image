@@ -86,8 +86,9 @@ Supported values:
 - `pad`
 - `stretch`
 - `contain`
+- `cover`
 
-`contain` is accepted for compatibility with Nuxt Image and is converted to `rmode=crop` by the provider implementation.
+The standard Nuxt Image values `contain` and `cover` are mapped to their ImageSharp equivalents: `contain` becomes `rmode=max` and `cover` becomes `rmode=crop`.
 
 ```vue
 <NuxtImg

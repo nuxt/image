@@ -219,7 +219,7 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain' },
     picsum: { url: 'https://picsum.photos/200/200' },
-    umbracoImage: { url: '/test.png?width=200&height=200&rmode=crop' },
+    umbracoImage: { url: '/test.png?width=200&height=200&rmode=max' },
   },
   {
     args: ['/test.png', { width: 200, height: 200, fit: 'contain', format: 'jpeg' }],
@@ -263,6 +263,6 @@ export const images = [
     bunny: { url: 'https://bunnyoptimizerdemo.b-cdn.net?width=200&height=200' },
     builderio: { url: 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425?width=200&height=200&fit=contain&format=jpeg' },
     picsum: { url: 'https://picsum.photos/200/200' },
-    umbracoImage: { url: '/test.png?width=200&height=200&rmode=crop&format=jpeg' },
+    umbracoImage: { url: '/test.png?width=200&height=200&rmode=max&format=jpeg' },
   },
 ] as const
