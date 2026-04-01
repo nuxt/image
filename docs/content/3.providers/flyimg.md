@@ -1,4 +1,3 @@
-````mdc
 ---
 title: Flyimg
 description: Nuxt Image has first class integration with Flyimg.
@@ -91,4 +90,3 @@ In addition to the standard `width`, `height`, `quality`, `format`, and `fit` mo
 ```
 
 Refer to the [Flyimg URL options documentation](https://docs.flyimg.io/url-options/) for the full list of supported parameters.
-````
