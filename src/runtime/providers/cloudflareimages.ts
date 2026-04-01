@@ -23,7 +23,7 @@ export interface CloudflareImagesModifiers extends ImageModifiers {
    * The variant of the image to deliver (e.g., 'public', 'thumbnail', etc.)
    * This gets priority over other modifiers.
    * @default 'public' if no modifiers is provided
-   * @see https://developers.cloudflare.com/images/cloudflare-images/image-variants/
+   * @see https://developers.cloudflare.com/images/manage-images/create-variants/
    */
   variant: string
 }
