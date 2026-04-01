@@ -43,4 +43,19 @@ describe('image helper', () => {
       },
     })
   })
+
+  it('accepts non-default configured providers', () => {
+    const img = useImage()
+
+    // All Img interface methods should accept a configured non-default provider
+    img.getImage('/test.png', { provider: 'cloudinary' })
+    img.getSizes('/test.png', { provider: 'cloudinary' })
+    img('/test.png', {}, { provider: 'cloudinary', modifiers: { roundCorner: 'true' } })
+
+    // @ts-expect-error ipx does not accept roundCorner as a modifier
+    img('/test.png', {}, { provider: 'ipx', modifiers: { roundCorner: 'true' } })
+
+    // @ts-expect-error this provider is not configured, so it should throw an error
+    img('/test.png', {}, { provider: 'unknown-provider' })
+  })
 })
