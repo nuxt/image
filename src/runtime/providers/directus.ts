@@ -7,7 +7,8 @@ const operationsGenerator = createOperationsGenerator()
 interface DirectusOptions {
   baseURL: string
   modifiers?: {
-    transforms: string[]
+    transforms?: string[]
+    withoutEnlargement?: boolean
   }
 }
 

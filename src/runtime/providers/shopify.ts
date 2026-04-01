@@ -1,4 +1,4 @@
-import { joinURL, withBase } from 'ufo'
+import { parseQuery, withBase, withQuery } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -36,7 +36,10 @@ export default defineProvider<ShopifyOptions>({
     const operations = operationsGenerator(modifiers)
 
     return {
-      url: withBase(joinURL(src + (operations ? ('?' + operations) : '')), baseURL),
+      url: withBase(
+        withQuery(src, parseQuery(operations)),
+        baseURL,
+      ),
     }
   },
 })
