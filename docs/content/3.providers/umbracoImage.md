@@ -4,7 +4,7 @@ description: Nuxt Image has first class integration with Umbraco.
 links:
   - label: Source
     icon: i-simple-icons-github
-    to: https://github.com/jemomi/nuxt-image/blob/main/src/runtime/providers/umbracoImage.ts
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/umbracoImage.ts
     size: xs
 ---
 
