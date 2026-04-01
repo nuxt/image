@@ -75,6 +75,10 @@ export default defineNuxtConfig({
     filerobot: {
       baseURL: 'https://fesrinkeb.filerobot.com/',
     },
+    flyimg: {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://picsum.photos',
+    },
     github: {},
     glide: {
       baseURL: 'https://glide.herokuapp.com/1.0/',
