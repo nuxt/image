@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     cloudflare: {
       baseURL: 'https://that-test.site',
     },
+    cloudflareimages: {
+      accountHash: 'accountHash',
+    },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/',
     },
@@ -71,6 +74,10 @@ export default defineNuxtConfig({
     },
     filerobot: {
       baseURL: 'https://fesrinkeb.filerobot.com/',
+    },
+    flyimg: {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://picsum.photos',
     },
     github: {},
     glide: {
@@ -130,6 +137,9 @@ export default defineNuxtConfig({
       baseURL: '/',
     },
     caisy: {
+    },
+    umbraco: {
+      baseURL: '',
     },
     providers: {
       custom: {

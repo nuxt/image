@@ -258,6 +258,17 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Cloudflare Images
+  {
+    name: 'cloudflareimages',
+    samples: [
+      {
+        src: 'test-image-id',
+        width: 300,
+        height: 300,
+      },
+    ],
+  },
   // Cloudimage
   {
     name: 'cloudimage',
@@ -416,6 +427,31 @@ export const providers: Provider[] = [
         height: 300,
         format: 'webp',
         fit: 'fill',
+      },
+    ],
+  },
+  // Flyimg
+  {
+    name: 'flyimg',
+    samples: [
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 500,
+        height: 375,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 300,
+        height: 200,
+        fit: 'cover',
+        quality: 75,
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 200,
+        fit: 'contain',
       },
     ],
   },
@@ -1406,6 +1442,35 @@ export const providers: Provider[] = [
         src: 'https://picsum.photos/200',
         format: 'webp',
         modifiers: { mask: 'circle', filter: 'sepia', quality: 80 },
+      },
+    ],
+  },
+  // Umbraco
+  {
+    name: 'umbraco',
+    samples: [
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 30,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 90,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        format: 'webp',
+        modifiers: {
+          focalPointXY: '0.5488476724567298,0.5772994963168611',
+        },
       },
     ],
   },
