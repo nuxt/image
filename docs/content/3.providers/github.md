@@ -18,7 +18,7 @@ Just pass the username as the `src` prop and set the width or height. Since GitH
 <!-- Width and Height -->
 <NuxtImg provider="github" src="nuxt" height="50" width="50" />
 
-<!--Width above 460 resolves to the default size of 460 -->
+<!-- Width above 460 resolves to the default size of 460 -->
 <NuxtImg provider="github" src="unjs" width="512" />
 
 <!-- Default size -->
