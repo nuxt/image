@@ -119,7 +119,7 @@ describe('Providers', () => {
     }
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = cloudflareimages().getImage(src, { modifiers, ...providerOptions }, emptyContext)
+      const generated = cloudflareimages().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.cloudflareimages)
     }
   })
@@ -129,7 +129,7 @@ describe('Providers', () => {
       accountHash: 'accountHash',
     }
     // Should use 'public' variant when no modifiers are provided
-    const generated = cloudflareimages().getImage('imageId123', { modifiers: {}, ...providerOptions }, emptyContext)
+    const generated = cloudflareimages().getImage('imageId123', { modifiers: {}, ...providerOptions }, getEmptyContext())
     expect(generated).toMatchObject({ url: 'https://imagedelivery.net/accountHash/imageId123/public' })
   })
 
@@ -138,7 +138,7 @@ describe('Providers', () => {
       accountHash: 'accountHash',
     }
     // Should ignore other modifiers when variant is provided
-    const generated = cloudflareimages().getImage('imageId123', { modifiers: { variant: 'customVariant', width: 500 }, ...providerOptions }, emptyContext)
+    const generated = cloudflareimages().getImage('imageId123', { modifiers: { variant: 'customVariant', width: 500 }, ...providerOptions }, getEmptyContext())
     expect(generated).toMatchObject({ url: 'https://imagedelivery.net/accountHash/imageId123/customVariant' })
   })
   it('cloudinary', () => {
