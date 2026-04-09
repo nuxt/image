@@ -5,41 +5,42 @@ import { images } from '../providers'
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
 import none from '../../dist/runtime/providers/none'
-import weserv from '../../dist/runtime/providers/weserv'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
+import builderio from '../../dist/runtime/providers/builderio'
 import cloudflare from '../../dist/runtime/providers/cloudflare'
 import cloudflareimages from '../../dist/runtime/providers/cloudflareimages'
+import cloudimage from '../../dist/runtime/providers/cloudimage'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
-import twicpics from '../../dist/runtime/providers/twicpics'
+import contentful from '../../dist/runtime/providers/contentful'
+import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
-import picsum from '../../dist/runtime/providers/picsum'
-import prepr from '../../dist/runtime/providers/prepr'
+import flyimg from '../../dist/runtime/providers/flyimg'
 import glide from '../../dist/runtime/providers/glide'
-import imgix from '../../dist/runtime/providers/imgix'
 import gumlet from '../../dist/runtime/providers/gumlet'
+import hygraph from '../../dist/runtime/providers/hygraph'
 import imageengine from '../../dist/runtime/providers/imageengine'
-import unsplash from '../../dist/runtime/providers/unsplash'
 import imagekit from '../../dist/runtime/providers/imagekit'
+import imgix from '../../dist/runtime/providers/imgix'
 import netlifyImageCdn from '../../dist/runtime/providers/netlifyImageCdn'
 import netlifyLargeMedia from '../../dist/runtime/providers/netlifyLargeMedia'
+import picsum from '../../dist/runtime/providers/picsum'
+import prepr from '../../dist/runtime/providers/prepr'
 import prismic from '../../dist/runtime/providers/prismic'
 import sanity from '../../dist/runtime/providers/sanity'
 import shopify from '../../dist/runtime/providers/shopify'
-import builderio from '../../dist/runtime/providers/builderio'
-import contentful from '../../dist/runtime/providers/contentful'
-import cloudimage from '../../dist/runtime/providers/cloudimage'
+import sirv from '../../dist/runtime/providers/sirv'
 import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
+import twicpics from '../../dist/runtime/providers/twicpics'
+import umbraco from '../../dist/runtime/providers/umbraco'
+import unsplash from '../../dist/runtime/providers/unsplash'
+import uploadcare from '../../dist/runtime/providers/uploadcare'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
-import uploadcare from '../../dist/runtime/providers/uploadcare'
-import sirv from '../../dist/runtime/providers/sirv'
-import hygraph from '../../dist/runtime/providers/hygraph'
-import umbraco from '../../dist/runtime/providers/umbraco'
-import flyimg from '../../dist/runtime/providers/flyimg'
+import weserv from '../../dist/runtime/providers/weserv'
 
 function getEmptyContext() {
   return {
@@ -544,6 +545,30 @@ describe('Providers', () => {
       const generated = contentful().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.contentful)
     }
+  })
+
+  it('directus', () => {
+    const providerOptions = {
+      baseURL: '/assets/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = directus().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.directus)
+    }
+  })
+
+  it('directus w/ key modifier', () => {
+    const providerOptions = {
+      baseURL: '/assets/',
+      width: 200,
+      modifiers: {
+        key: 'system-small-cover',
+        allOtherModifiers: 'ignored',
+      },
+    }
+    const generated = directus().getImage('uuid-example', { ...providerOptions }, getEmptyContext())
+    expect(generated.url).toBe('/assets/uuid-example?key=system-small-cover')
   })
 
   it('cloudimage', () => {
