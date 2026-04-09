@@ -1,13 +1,3 @@
-/**
- * SharpOperations
- * [ ] Resize // These operations are advanced and add a lot of complexity to the code base; they are already abstracted in Directus to be simpler
- *
- * [X] Image
- * [X] Color
- * [X] Channel
- *
- */
-
 import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
