@@ -1,13 +1,12 @@
 /**
-* SharpOperations
-* [ ] Resize // These operations are advanced and add a lot of complexity to the code base; they are already abstracted in Directus to be simpler
-* 
-* [X] Image
-* [X] Color
-* [X] Channel
-*
-*/
-
+ * SharpOperations
+ * [ ] Resize // These operations are advanced and add a lot of complexity to the code base; they are already abstracted in Directus to be simpler
+ *
+ * [X] Image
+ * [X] Color
+ * [X] Channel
+ *
+ */
 
 import { joinURL } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
@@ -110,49 +109,38 @@ interface DirectusOptions {
   modifiers?: DirectusModifiers
 }
 
-function validateTransforms(
-  transforms?: SharpOperation[],
-): string | undefined {
-  if (!transforms) return
-  if (!Array.isArray(transforms)) {
-    throw new TypeError('[nuxt][image][directus] transforms must be an array of tuples.')
-  }
-  for (let i = 0; i < transforms.length; i++) {
-    const t = transforms[i]
-    if (!Array.isArray(t) || t.length === 0) {
-      throw new TypeError(`[nuxt][image][directus] invalid transform at index ${i}.`)
-    }
-    if (typeof t[0] !== 'string') {
-      throw new TypeError(`[nuxt][image][directus] transform at index ${i} must start with string.`)
-    }
-  }
-  return JSON.stringify(transforms)
-}
-
-const buildQueryParams = createOperationsGenerator({
-  keyMap: (key: any) => key, // identity map for Directus keys
-  formatter: (key: string, value: any) =>
-    key === 'transforms' ? `transforms=${value}` : `${key}=${value}`,
+// HACK: See Discussion #2206
+const operationsGenerator = createOperationsGenerator({
+  valueMap: {
+    transforms(value: SharpOperation[]) {
+      return value.length > 0
+        ? JSON.stringify(
+            Array.from(new Set(value.map(v => JSON.stringify(v))))
+              .map(v => JSON.parse(v)),
+          )
+        : undefined
+    },
+  },
 })
 
-function buildQuery(modifiers: DirectusOptions['modifiers'] = {}) {
-  if ('key' in modifiers && modifiers.key) {
-    return `key=${encodeURIComponent(modifiers.key)}`
-  }
-  const { transforms, ...rest } = modifiers as Exclude<DirectusModifiers, { key: string }>
-  const validatedTransforms = validateTransforms(transforms)
-  return buildQueryParams({
-    ...rest,
-    ...(validatedTransforms ? { transforms: validatedTransforms } : {}),
-  })
+function isKeyModifier(
+  mod: DirectusModifiers | undefined,
+): mod is { key: string } {
+  return !!mod && 'key' in mod && typeof mod.key === 'string'
 }
 
 export default defineProvider<DirectusOptions>({
   getImage: (src, { modifiers, baseURL }) => {
-    console.log('modifiers: ', modifiers)
-    const query = buildQuery(modifiers)
+    if (isKeyModifier(modifiers)) {
+      return {
+        url: joinURL(baseURL, src + `?key=${modifiers.key}`),
+      }
+    }
+
+    const operations = operationsGenerator(modifiers)
+
     return {
-      url: joinURL(baseURL, query ? `${src}?${query}` : src),
+      url: joinURL(baseURL, src + (operations ? `?${operations}` : '')),
     }
   },
 })
