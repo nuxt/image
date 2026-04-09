@@ -1298,7 +1298,7 @@ export const providers: Provider[] = [
     samples: [
       {
         src: '8f748634-d77b-4985-b27e-7e1f3559881a',
-        alt: 'Image 1',
+        alt: 'Raw Image (no modifiers or transforms)',
       },
       {
         src: '8f748634-d77b-4985-b27e-7e1f3559881a.jpg',
@@ -1314,6 +1314,13 @@ export const providers: Provider[] = [
         width: 256,
         format: 'webp',
       },
+      {
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
+        alt: 'keyed transform (all other inputs ignored)',
+        format: 'tiff',
+        modifiers: { key: 'system-large-cover' },
+      },
+
       {
         src: '8f748634-d77b-4985-b27e-7e1f3559881a',
         alt: '256px width, webp',
