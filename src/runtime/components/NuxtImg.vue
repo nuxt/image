@@ -103,7 +103,7 @@ const mainSrc = computed(() =>
 
 const src = computed(() => placeholder.value || mainSrc.value)
 
-if (import.meta.server && props.preload) {
+if (import.meta.server && props.preload && props.src) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')
   const isResponsive = hasMultipleDensities || !!sizes.value.sizes
 
@@ -139,11 +139,11 @@ onMounted(() => {
 
     if (mainSrc.value) {
       img.src = mainSrc.value
-    }
 
-    if (props.sizes) {
-      img.sizes = sizes.value.sizes || ''
-      img.srcset = sizes.value.srcset
+      if (props.sizes) {
+        img.sizes = sizes.value.sizes || ''
+        img.srcset = sizes.value.srcset
+      }
     }
 
     // img.decode() can avoid jank and flash
