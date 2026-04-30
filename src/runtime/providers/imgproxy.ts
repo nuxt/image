@@ -184,8 +184,13 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
  * Convert hex string to Uint8Array
  *
  * @param hex
+ * @param label identifies which input failed validation in error messages
  */
-function hexToBytes(hex: string): Uint8Array {
+function hexToBytes(hex: string, label = 'signing key/salt'): Uint8Array {
+  if (hex.length === 0 || hex.length % 2 !== 0 || !/^[0-9a-f]+$/i.test(hex)) {
+    throw new Error(`Invalid hex string for ${label}: must be non-empty, even-length hex`)
+  }
+
   const bytes = new Uint8Array(hex.length / 2)
   for (let i = 0; i < hex.length; i += 2) {
     bytes[i / 2] = Number.parseInt(hex.slice(i, i + 2), 16)
@@ -221,8 +226,8 @@ function urlSafeBase64(input: string | Uint8Array): string {
  * @param secret
  */
 function sign(salt: string, target: string, secret: string) {
-  const signature = hmac.create(sha256, hexToBytes(secret))
-  signature.update(hexToBytes(salt))
+  const signature = hmac.create(sha256, hexToBytes(secret, 'signing key'))
+  signature.update(hexToBytes(salt, 'signing salt'))
   signature.update(new TextEncoder().encode(target))
 
   return urlSafeBase64(signature.digest())
