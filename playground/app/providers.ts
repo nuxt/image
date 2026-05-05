@@ -1297,11 +1297,11 @@ export const providers: Provider[] = [
     name: 'directus',
     samples: [
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
-        alt: 'Image 1',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
+        alt: 'Raw Image (no modifiers or transforms)',
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee.jpg',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a.jpg',
         alt: '1024px width',
         width: 1024,
         height: 256,
@@ -1309,13 +1309,20 @@ export const providers: Provider[] = [
         modifiers: { withoutEnlargement: 'true' },
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
+        alt: 'keyed transform (all other inputs ignored)',
+        format: 'tiff',
+        modifiers: { key: 'system-large-cover' },
+      },
+
+      {
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
