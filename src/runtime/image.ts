@@ -1,7 +1,7 @@
 import { defu } from 'defu'
 import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import { imageMeta } from './utils/meta'
-import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
+import { checkDensities, parseDensities, parseSize, parseSizes, SIZES_DEFAULT_KEY } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 
@@ -133,6 +133,30 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
   const height = parseSize(merged.modifiers?.height)
 
   const sizes = merged.sizes ? parseSizes(merged.sizes) : {}
+
+  // Handle bare/default size values (e.g. `sizes="100vw"` or `sizes="200px"`).
+  // For fluid values (vw), the rendered pixel width depends on viewport size,
+  // so we must expand to all screen breakpoints for correct srcset generation.
+  // For fixed pixel values, we keep the original 1px sentinel which sorts
+  // before all breakpoints in finaliseSizeVariants.
+  // See: https://github.com/nuxt/image/issues/1433
+  if (SIZES_DEFAULT_KEY in sizes) {
+    const defaultSize = sizes[SIZES_DEFAULT_KEY]!
+    delete sizes['default']
+    if (defaultSize.endsWith('vw')) {
+      const screens = ctx.options.screens || {}
+      for (const screen in screens) {
+        if (!(screen in sizes)) {
+          sizes[screen] = defaultSize
+        }
+      }
+    }
+    else {
+      // Fixed pixel value: use 1px key so it sorts before all breakpoints
+      sizes['1px'] = defaultSize
+    }
+  }
+
   const _densities = merged.densities?.trim()
   const densities = _densities ? parseDensities(_densities) : ctx.options.densities
   checkDensities(densities)
