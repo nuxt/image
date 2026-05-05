@@ -49,6 +49,7 @@ export const BuiltInProviders = [
   'strapi',
   'strapi5',
   'supabase',
+  'edgeonePages',
   'twicpics',
   'umbraco',
   'unsplash',

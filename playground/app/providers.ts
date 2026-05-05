@@ -1152,6 +1152,49 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // EdgeOne Pages
+  {
+    name: 'edgeonePages',
+    samples: [
+      {
+        src: '/ssg-img.png',
+        width: 400,
+        height: 300,
+        fit: 'contain',
+      },
+      {
+        src: '/ssg-img.png',
+        width: 400,
+        height: 300,
+        fit: 'cover',
+      },
+      {
+        src: '/ssg-img.png',
+        width: 400,
+        height: 300,
+        fit: 'fill',
+      },
+      {
+        src: '/ssg-img.png',
+        width: 300,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: '/ssg-img.png',
+        modifiers: {
+          rotate: 90,
+        },
+      },
+      {
+        src: '/ssg-img.png',
+        modifiers: {
+          blur: 15,
+          quality: 50,
+        },
+      },
+    ],
+  },
   // Unsplash
   {
     name: 'unsplash',
