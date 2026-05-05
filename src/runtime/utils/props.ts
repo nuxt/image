@@ -28,9 +28,6 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   width?: string | number
   height?: string | number
   crossorigin?: 'anonymous' | 'use-credentials' | boolean
-
-  // csp
-  nonce?: string
 }
 
 export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(props: BaseImageProps<Provider>) => {
@@ -45,7 +42,6 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
     width: parseSize(props.width),
     height: parseSize(props.height),
     crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
-    nonce: props.nonce,
   }))
 
   const imageModifiers = computed(() => {
