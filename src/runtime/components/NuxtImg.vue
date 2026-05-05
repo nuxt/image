@@ -47,12 +47,40 @@ defineSlots<{ default(props: DefaultSlotProps): any }>()
 const $img = useImage()
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
 
-const sizes = computed(() => $img.getSizes(props.src!, {
-  ...providerOptions.value,
-  sizes: props.sizes,
-  densities: props.densities,
-  modifiers: imageModifiers.value,
-}))
+/**
+ * Detect SVG sources that should bypass IPX raster processing.
+ * SVGs are vector images that don't benefit from resize, srcset density
+ * variants, or placeholder blur. Passing them through IPX causes crashes
+ * (svgo/css-tree bundler issues) and incorrect sizing.
+ *
+ * When the user explicitly requests format conversion (e.g.
+ * `<NuxtImg src="/logo.svg" format="png" />`), we let the request
+ * through to IPX so the conversion can happen.
+ *
+ * @see https://github.com/nuxt/image/issues/2035
+ * @see https://github.com/nuxt/image/issues/1967
+ * @see https://github.com/nuxt/image/issues/2075
+ */
+const isSvg = computed(() => {
+  if (!(/^[^?#]+\.svg(?:$|[?#])/i.test(props.src || ''))) {
+    return false
+  }
+  // Allow explicit format conversion (e.g. format="png") to pass through to IPX
+  const requestedFormat = props.format?.toLowerCase()
+  return !requestedFormat || requestedFormat === 'svg'
+})
+
+const sizes = computed(() => {
+  if (isSvg.value) {
+    return { src: props.src!, sizes: undefined, srcset: '' }
+  }
+  return $img.getSizes(props.src!, {
+    ...providerOptions.value,
+    sizes: props.sizes,
+    densities: props.densities,
+    modifiers: imageModifiers.value,
+  })
+})
 
 const placeholderLoaded = ref(false)
 
@@ -68,6 +96,12 @@ const imgAttrs = computed(() => ({
 }))
 
 const placeholder = computed(() => {
+  // SVGs are lightweight vectors — no placeholder blur needed, and
+  // sending them through $img() would hit IPX which crashes on SVGs.
+  if (isSvg.value) {
+    return false
+  }
+
   if (placeholderLoaded.value) {
     return false
   }
@@ -95,11 +129,14 @@ const placeholder = computed(() => {
   }, providerOptions.value)
 })
 
-const mainSrc = computed(() =>
-  props.sizes
+const mainSrc = computed(() => {
+  if (isSvg.value) {
+    return props.src!
+  }
+  return props.sizes
     ? sizes.value.src
-    : $img(props.src!, imageModifiers.value, providerOptions.value),
-)
+    : $img(props.src!, imageModifiers.value, providerOptions.value)
+})
 
 const src = computed(() => placeholder.value || mainSrc.value)
 
