@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       apiVersion: 'v7',
     },
     directus: {
-      baseURL: 'http://localhost:8055/assets/',
+      baseURL: 'https://example.directus.app/assets/',
     },
     fastly: {
       baseURL: 'https://www.fastly.io',

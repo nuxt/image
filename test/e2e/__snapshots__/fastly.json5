@@ -1,10 +1,12 @@
 {
   "requests": [
-    "https://www.fastly.io/image.jpg",
-    "https://www.fastly.io/plant.jpeg",
+    "https://www.fastly.io/image.gif?v=123&height=100",
+    "https://www.fastly.io/image.jpg?width=400",
+    "https://www.fastly.io/image.png?height=250",
   ],
   "sources": [
-    "https://www.fastly.io/image.jpg",
-    "https://www.fastly.io/plant.jpeg",
+    "https://www.fastly.io/image.jpg?width=400",
+    "https://www.fastly.io/image.png?height=250",
+    "https://www.fastly.io/image.gif?v=123&height=100",
   ],
 }

@@ -5,41 +5,46 @@ import { images } from '../providers'
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
 import none from '../../dist/runtime/providers/none'
-import weserv from '../../dist/runtime/providers/weserv'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
+import builderio from '../../dist/runtime/providers/builderio'
+import bunny from '../../dist/runtime/providers/bunny'
+import caisy from '../../dist/runtime/providers/caisy'
 import cloudflare from '../../dist/runtime/providers/cloudflare'
 import cloudflareimages from '../../dist/runtime/providers/cloudflareimages'
+import cloudimage from '../../dist/runtime/providers/cloudimage'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
-import twicpics from '../../dist/runtime/providers/twicpics'
+import contentful from '../../dist/runtime/providers/contentful'
+import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
-import picsum from '../../dist/runtime/providers/picsum'
-import prepr from '../../dist/runtime/providers/prepr'
+import filerobot from '../../dist/runtime/providers/filerobot'
+import github from '../../dist/runtime/providers/github'
 import glide from '../../dist/runtime/providers/glide'
-import imgix from '../../dist/runtime/providers/imgix'
 import gumlet from '../../dist/runtime/providers/gumlet'
+import hygraph from '../../dist/runtime/providers/hygraph'
 import imageengine from '../../dist/runtime/providers/imageengine'
-import unsplash from '../../dist/runtime/providers/unsplash'
 import imagekit from '../../dist/runtime/providers/imagekit'
+import imgix from '../../dist/runtime/providers/imgix'
 import netlifyImageCdn from '../../dist/runtime/providers/netlifyImageCdn'
 import netlifyLargeMedia from '../../dist/runtime/providers/netlifyLargeMedia'
+import picsum from '../../dist/runtime/providers/picsum'
+import prepr from '../../dist/runtime/providers/prepr'
 import prismic from '../../dist/runtime/providers/prismic'
 import sanity from '../../dist/runtime/providers/sanity'
 import shopify from '../../dist/runtime/providers/shopify'
-import builderio from '../../dist/runtime/providers/builderio'
-import contentful from '../../dist/runtime/providers/contentful'
-import cloudimage from '../../dist/runtime/providers/cloudimage'
+import sirv from '../../dist/runtime/providers/sirv'
 import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
+import twicpics from '../../dist/runtime/providers/twicpics'
+import unsplash, { unsplashCDN } from '../../dist/runtime/providers/unsplash'
+import uploadcare from '../../dist/runtime/providers/uploadcare'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
-import uploadcare from '../../dist/runtime/providers/uploadcare'
-import sirv from '../../dist/runtime/providers/sirv'
-import hygraph from '../../dist/runtime/providers/hygraph'
-import umbraco from '../../dist/runtime/providers/umbraco'
+import weserv from '../../dist/runtime/providers/weserv'
 import flyimg from '../../dist/runtime/providers/flyimg'
+import umbraco from '../../dist/runtime/providers/umbraco'
 
 function getEmptyContext() {
   return {
@@ -64,6 +69,7 @@ describe('Providers', () => {
       }
     }
   })
+
   it('ipx', () => {
     const providerOptions = {}
 
@@ -83,6 +89,18 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png',
     })
   })
+
+  it('none', () => {
+    const providerOptions = {
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = none().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.none)
+    }
+  })
+
   it('aliyun', () => {
     const providerOptions = {
       baseURL: '/',
@@ -93,6 +111,7 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.aliyun)
     }
   })
+
   it('awsAmplify', () => {
     const providerOptions = {
       baseURL: '/',
@@ -103,6 +122,45 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.awsAmplify)
     }
   })
+
+  it('builderio', () => {
+    const providerOptions = {}
+
+    const originalUrl = 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425'
+
+    for (const image of images) {
+      const [, modifiers] = image.args
+      const generated = builderio().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.builderio)
+    }
+  })
+
+  // bunny does not support `fit` Tests currently fail (although impact to user is silent failure).
+  it.todo('bunny', () => {
+    const providerOptions = {
+      baseURL: 'https://bunnyoptimizerdemo.b-cdn.net/',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = bunny().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.bunny)
+    }
+  })
+
+  // caisy uses a project id and not a baseURL. see: https://caisy.io/developer/docs/internal-api/asset-cdn#top
+  it.todo('caisy', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = caisy().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.caisy)
+    }
+  })
+
   it('cloudflare', () => {
     const providerOptions = {
       baseURL: '/',
@@ -143,6 +201,29 @@ describe('Providers', () => {
     const generated = cloudflareimages().getImage('imageId123', { modifiers: { variant: 'customVariant', width: 500 }, ...providerOptions }, getEmptyContext())
     expect(generated).toMatchObject({ url: 'https://imagedelivery.net/accountHash/imageId123/customVariant' })
   })
+
+  it('cloudimage', () => {
+    const providerOptions = {
+      token: 'demo',
+      apiVersion: 'v7',
+      baseURL: '_sl_',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.cloudimage)
+    }
+
+    const nonBaseURLProviderOptions = {
+      token: 'demo',
+      apiVersion: 'v7',
+    }
+    const src = 'https://localhost' + images[0].args[0]
+    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, getEmptyContext())
+    expect(generated).toMatchObject({ url: 'https://demo.cloudimg.io/v7/https://localhost/test.png' })
+  })
+
   it('cloudinary', () => {
     const providerOptions = {
       baseURL: '/',
@@ -223,15 +304,79 @@ describe('Providers', () => {
     })
   })
 
-  it('twicpics', () => {
+  it('contentful', () => {
     const providerOptions = {
       baseURL: '',
     }
 
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = twicpics().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.twicpics)
+      const generated = contentful().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.contentful)
+    }
+  })
+
+  it('directus', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.directus.app/assets/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = directus().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.directus)
+    }
+  })
+
+  it('fastly', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+    const EXISTING_QUERY_PARAMETERS = '?v=123'
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = fastly().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.fastly)
+    }
+  })
+
+  it('filerobot', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.filerobot.com/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = filerobot().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.filerobot)
+    }
+  })
+
+  it('flyimg', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://my-website.com',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.flyimg)
+    }
+
+    // fit: 'cover' → c_1 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,c_1/https://my-website.com/test.png' })
+
+    // fit: 'fill' → par_0 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,par_0/https://my-website.com/test.png' })
+  })
+
+  it('github', () => {
+    const providerOptions = {}
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = github().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.github)
     }
   })
 
@@ -243,31 +388,6 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = glide().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.glide)
-    }
-  })
-
-  it('fastly', () => {
-    const providerOptions = {
-      baseURL: '',
-    }
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = fastly().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.fastly)
-    }
-  })
-
-  it('fastly with absolute url and preexisting query params', () => {
-    const providerOptions = {
-      baseURL: '',
-    }
-
-    const originalUrl = 'https://www.fastly.io/image.jpg?v=123'
-
-    for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = fastly().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.fastlyAbsoluteUrl)
     }
   })
 
@@ -283,15 +403,14 @@ describe('Providers', () => {
     }
   })
 
-  it('imgix', () => {
+  it('hygraph', () => {
     const providerOptions = {
-      baseURL: '',
+      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
     }
-
     for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = imgix().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.imgix)
+      const [_src, modifiers] = image.args
+      const generated = hygraph().getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.hygraph)
     }
   })
 
@@ -396,18 +515,6 @@ describe('Providers', () => {
     }
   })
 
-  it('unsplash', () => {
-    const providerOptions = {
-      baseURL: '',
-    }
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = unsplash().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.unsplash)
-    }
-  })
-
   it('imagekit', () => {
     const providerOptions = {
       baseURL: '',
@@ -419,6 +526,20 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.imagekit)
     }
   })
+
+  it('imgix', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = imgix().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.imgix)
+    }
+  })
+
+  // ipx is at the top!
 
   it('netlifyImageCdn', () => {
     const providerOptions = {
@@ -444,33 +565,51 @@ describe('Providers', () => {
     }
   })
 
-  it('prismic', () => {
+  // None is at the top!
+
+  it('picsum', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [_src, modifiers] = image.args
+      const generated = picsum().getImage('', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.picsum)
+    }
+  })
+
+  it('prepr', () => {
     const providerOptions = {
-      baseURL: '', // Use empty base URL for the sake of simplicity
+      projectName: 'projectName',
     }
 
-    const EXISTING_QUERY_PARAMETERS
-      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = prepr().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.prepr)
+    }
+  })
+
+  it('prismic', () => {
+    const providerOptions = {
+      baseURL: 'https://example.com/',
+    }
+
+    const EXISTING_QUERY_PARAMETERS = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
 
     for (const image of images) {
       const [src, modifiers] = image.args
       const generated = prismic().getImage(`${src}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.prismic)
     }
-  })
-
-  it('prismic (unsplash)', () => {
-    const providerOptions = {
-      baseURL: '', // Use empty base URL for the sake of simplicity
-    }
-
-    const EXISTING_QUERY_PARAMETERS
-      = '?auto=compress,format&rect=0,0,200,200&w=100&h=100'
-
     for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = prismic().getImage(`${image.prismicUnsplash.url.split('?').shift()}${EXISTING_QUERY_PARAMETERS}`, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.prismicUnsplash)
+      const [src, modifiers] = image.args
+      // simulate src from unsplash
+      const unsplashSrc = `${unsplashCDN}${src.replace(/^\//, '')}${EXISTING_QUERY_PARAMETERS}`
+      const generatedSimulated = prismic().getImage(unsplashSrc, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generatedSimulated.url.startsWith(unsplashCDN), 'prismic+unsplash ignore baseURL').toBe(true)
+      expect(() => decodeURIComponent(generatedSimulated.url), 'prismic+unsplash to return valid URI').not.toThrow()
+      const simulatePrismic = { url: generatedSimulated.url.replace(unsplashCDN, providerOptions.baseURL) }
+      expect(simulatePrismic).toMatchObject(image.prismic)
     }
   })
 
@@ -501,71 +640,15 @@ describe('Providers', () => {
     }
   })
 
-  it('builderio', () => {
-    const providerOptions = {}
-
-    const originalUrl = 'https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F869bfbaec9c64415ae68235d9b7b1425'
-
-    for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = builderio().getImage(originalUrl, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.builderio)
-    }
-  })
-
-  it('prepr', () => {
+  it('sirv', () => {
     const providerOptions = {
-      projectName: 'projectName',
+      baseURL: 'https://demo.sirv.com',
     }
-
-    for (const image of images) {
-      const [, modifiers] = image.args
-      const generated = prepr().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.prepr)
-    }
-  })
-  it('picsum', () => {
-    const providerOptions = {}
-
-    for (const image of images) {
-      const [_src, modifiers] = image.args
-      const generated = picsum().getImage('', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.picsum)
-    }
-  })
-
-  it('contentful', () => {
-    const providerOptions = {
-      baseURL: '',
-    }
-
     for (const image of images) {
       const [src, modifiers] = image.args
-      const generated = contentful().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.contentful)
+      const generated = sirv().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.sirv)
     }
-  })
-
-  it('cloudimage', () => {
-    const providerOptions = {
-      token: 'demo',
-      apiVersion: 'v7',
-      baseURL: '_sl_',
-    }
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = cloudimage().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.cloudimage)
-    }
-
-    const nonBaseURLProviderOptions = {
-      token: 'demo',
-      apiVersion: 'v7',
-    }
-    const src = 'https://localhost' + images[0].args[0]
-    const generated = cloudimage().getImage(src, { modifiers: { ...images[0].args[1] }, ...nonBaseURLProviderOptions }, getEmptyContext())
-    expect(generated).toMatchObject({ url: 'https://demo.cloudimg.io/v7/https://localhost/test.png' })
   })
 
   it('storyblok', () => {
@@ -575,18 +658,6 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = storyblok().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.storyblok)
-    }
-  })
-
-  it('supabase', () => {
-    const providerOptions = {
-      baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
-    }
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = supabase().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.supabase)
     }
   })
 
@@ -714,6 +785,61 @@ describe('Providers', () => {
     }
   })
 
+  it('supabase', () => {
+    const providerOptions = {
+      baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = supabase().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.supabase)
+    }
+  })
+
+  it('twicpics', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = twicpics().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.twicpics)
+    }
+  })
+
+  it('umbraco', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = umbraco().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.umbraco)
+    }
+  })
+
+  it('unsplash', () => {
+    const providerOptions = {
+      baseURL: '',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = unsplash().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.unsplash)
+    }
+  })
+
+  it('uploadcare', () => {
+    const providerOptions = {}
+    const testImageId = 'c160afba-8b42-45a9-a46a-d393248b0072'
+    for (const image of images) {
+      const generated = uploadcare().getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.uploadcare)
+    }
+  })
+
   it('vercel', () => {
     const providerOptions = {
     }
@@ -735,58 +861,6 @@ describe('Providers', () => {
     }
   })
 
-  it('uploadcare', () => {
-    const providerOptions = {}
-    const testImageId = 'c160afba-8b42-45a9-a46a-d393248b0072'
-    for (const image of images) {
-      const generated = uploadcare().getImage(testImageId, { modifiers: { ...image.args[1] }, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.uploadcare)
-    }
-  })
-
-  it('sirv', () => {
-    const providerOptions = {
-      baseURL: 'https://demo.sirv.com',
-    }
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = sirv().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.sirv)
-    }
-  })
-
-  it('hygraph', () => {
-    const providerOptions = {
-      baseURL: 'https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/',
-    }
-    for (const image of images) {
-      const [_src, modifiers] = image.args
-      const generated = hygraph().getImage('https://eu-central-1-shared-euc1-02.graphassets.com/cltsj3mii0pvd07vwb5cyh1ig/cltsrex89477t08unlckqx9ue', { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.hygraph)
-    }
-  })
-
-  it('flyimg', () => {
-    const providerOptions = {
-      baseURL: 'https://demo.flyimg.io',
-      sourceURL: 'https://my-website.com',
-    }
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.flyimg)
-    }
-
-    // fit: 'cover' → c_1 flag
-    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, getEmptyContext()))
-      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,c_1/https://my-website.com/test.png' })
-
-    // fit: 'fill' → par_0 flag
-    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, getEmptyContext()))
-      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,par_0/https://my-website.com/test.png' })
-  })
-
   it('weserv', () => {
     const providerOptions = {
       baseURL: 'https://my-website.com/',
@@ -801,26 +875,5 @@ describe('Providers', () => {
     // @ts-expect-error baseURL is required
     const generated = weserv().getImage('test.png', {}, getEmptyContext())
     expect(generated).toMatchObject({ url: 'test.png' })
-  })
-
-  it('none', () => {
-    const providerOptions = {
-    }
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = none().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.none)
-    }
-  })
-
-  it('umbraco', () => {
-    const providerOptions = {}
-
-    for (const image of images) {
-      const [src, modifiers] = image.args
-      const generated = umbraco().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
-      expect(generated).toMatchObject(image.umbraco)
-    }
   })
 })
