@@ -1306,7 +1306,7 @@ export const providers: Provider[] = [
         width: 1024,
         height: 256,
         fit: 'cover',
-        modifiers: { withoutEnlargement: 'true' },
+        modifiers: { withoutEnlargement: true },
       },
       {
         src: '8f748634-d77b-4985-b27e-7e1f3559881a',
@@ -1326,7 +1326,7 @@ export const providers: Provider[] = [
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
-        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] },
+        modifiers: { withoutEnlargement: true, transforms: [['blur', 4], ['negate']] },
       },
     ],
   },
