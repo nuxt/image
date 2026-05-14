@@ -38,7 +38,7 @@ The NuxtImg Props map cleanly to the Directus Transforms.
 
 ### Modifiers
 
-The `modifiers` object is used for Directus specific features. All modifiers are optional.
+The `modifiers` object is used for Directus-specific features. All modifiers are optional.
 
 #### Examples of Modifiers
 
@@ -49,7 +49,7 @@ The `modifiers` object is used for Directus specific features. All modifiers are
 <NuxtImg
   provider="directus"
   :modifiers="{
-    withoutEnlargement: 'true',
+    withoutEnlargement: true,
     transforms: [['blur', 4], ['negate']]
   }"
 />
@@ -63,7 +63,7 @@ The `modifiers` object is used for Directus specific features. All modifiers are
 <NuxtImg
   provider="directus"
   :modifiers="{
-    key: "system-large-cover"
+    key: 'system-large-cover'
   }"
 />
 ```
@@ -79,7 +79,7 @@ The `modifiers` object is used for Directus specific features. All modifiers are
 Disable automatically upscaling the image when true.
 ::
 
-::field{name="transforms" type="['string', ...any][]"}
+::field{name="transforms" type="[string, ...any[]][]"}
 A pipeline of transforms to tell Directus how to modify the image before sending.
 :::collapsible
 
@@ -117,5 +117,5 @@ Directus defaults `ASSETS_TRANSFORM_MAX_OPERATIONS` to `5`. If you need more, it
 :::
 
 ::field{name="key" type="string"}
-Sets a unique identifier for allowing faster and easier image transformation requests.
+Sets a unique identifier for a pre-configured Directus transform. When `key` is provided, do not combine it with other modifiers.
 ::
