@@ -52,7 +52,7 @@ const emit = defineEmits<{
 }>()
 
 const _attrs = useAttrs()
-const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding', 'nonce'])
+const imageAttrNames = new Set(['alt', 'referrerpolicy', 'usemap', 'longdesc', 'ismap', 'loading', 'crossorigin', 'decoding'])
 const attrs = computed(() => {
   const attrs: Record<'img' | 'picture', Record<string, unknown>> = {
     img: {
@@ -130,7 +130,6 @@ if (import.meta.server && props.preload) {
       rel: 'preload',
       as: 'image',
       imagesrcset: firstSource.srcset,
-      nonce: props.nonce,
       ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }
         : {}),
