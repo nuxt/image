@@ -122,7 +122,7 @@ const sources = computed<Source[]>(() => {
 if (import.meta.server && props.preload) {
   useHead({ link: () => {
     const firstSource = sources.value[0]
-    if (!firstSource) {
+    if (!firstSource?.srcset) {
       return []
     }
 
@@ -131,14 +131,12 @@ if (import.meta.server && props.preload) {
       as: 'image',
       imagesrcset: firstSource.srcset,
       nonce: props.nonce,
+      ...(firstSource.sizes ? { imagesizes: firstSource.sizes } : {}),
       ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }
         : {}),
     }
 
-    if (sources.value?.[0]?.sizes) {
-      link.imagesizes = sources.value[0].sizes
-    }
     return [link]
   } })
 }
