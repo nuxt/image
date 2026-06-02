@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 
 ## Props
 
-The NuxtImg Props map cleanly to the Directus Transforms.
+Supported NuxtImg props (such as `width`, `height`, `quality`, `format`, and `fit`) map to Directus transforms.
 
 ```vue
 <NuxtImg
