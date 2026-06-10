@@ -605,6 +605,61 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
   })
 })
 
+describe('SVG passthrough (#2035)', () => {
+  it('serves SVG as-is without IPX processing', () => {
+    const wrapper = mountImage({ src: '/logo.svg' })
+    const img = wrapper.find('img')
+    expect(img.element.getAttribute('src')).toBe('/logo.svg')
+    expect(img.element.getAttribute('srcset')).toBeFalsy()
+    expect(img.element.getAttribute('sizes')).toBeFalsy()
+  })
+
+  it('handles SVG with query string', () => {
+    const wrapper = mountImage({ src: '/logo.svg?v=123' })
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/logo.svg?v=123')
+  })
+
+  it('handles SVG with hash', () => {
+    const wrapper = mountImage({ src: '/logo.svg#icon' })
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/logo.svg#icon')
+  })
+
+  it('is case-insensitive for .SVG extension', () => {
+    const wrapper = mountImage({ src: '/logo.SVG' })
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/logo.SVG')
+    expect(wrapper.find('img').element.getAttribute('srcset')).toBeFalsy()
+  })
+
+  it('ignores sizes prop for SVGs', () => {
+    const wrapper = mountImage({ src: '/logo.svg', sizes: 'sm:100vw md:50vw' })
+    const img = wrapper.find('img')
+    expect(img.element.getAttribute('src')).toBe('/logo.svg')
+    expect(img.element.getAttribute('srcset')).toBeFalsy()
+  })
+
+  it('ignores width/height modifiers for SVGs', () => {
+    const wrapper = mountImage({ src: '/logo.svg', width: 200, height: 200 })
+    const img = wrapper.find('img')
+    expect(img.element.getAttribute('src')).toBe('/logo.svg')
+    expect(img.element.getAttribute('srcset')).toBeFalsy()
+  })
+
+  it('allows explicit format conversion (svg → png) through IPX', () => {
+    const wrapper = mountImage({ src: '/logo.svg', format: 'png', width: 200 })
+    const img = wrapper.find('img')
+    const src = img.element.getAttribute('src')
+    expect(src).toContain('/_ipx/')
+    expect(src).toContain('f_png')
+  })
+
+  it('still processes non-SVG images normally', () => {
+    const wrapper = mountImage({ src: '/image.png', width: 200, sizes: '200' })
+    const img = wrapper.find('img')
+    expect(img.element.getAttribute('src')).toContain('/_ipx/')
+    expect(img.element.getAttribute('srcset')).toBeTruthy()
+  })
+})
+
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
 
 function setImageContext(options: Partial<CreateImageOptions>) {
