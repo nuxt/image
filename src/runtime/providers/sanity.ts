@@ -64,6 +64,7 @@ const getMetadata = (id: string) => {
 interface SanityOptions {
   projectId: string
   dataset?: string
+  baseURL?: string
   modifiers?: {
     'crop'?: string | { left: number, top: number, right: number, bottom: number }
     'rect'?: `${number},${number},${number},${number}`
@@ -76,7 +77,7 @@ interface SanityOptions {
 }
 
 export default defineProvider<SanityOptions>({
-  getImage: (src, { modifiers, projectId, dataset = 'production' }) => {
+  getImage: (src, { modifiers, projectId, dataset = 'production', baseURL = sanityCDN }) => {
     const { height: sourceHeight, width: sourceWidth } = getMetadata(src)
     if (modifiers.crop && typeof modifiers.crop !== 'string' && sourceWidth && sourceHeight) {
       const left = modifiers.crop.left * sourceWidth
@@ -108,7 +109,7 @@ export default defineProvider<SanityOptions>({
     const filenameAndQueries = parts.join('-') + '.' + format + (operations ? ('?' + operations) : '')
 
     return {
-      url: joinURL(sanityCDN, projectId, dataset, filenameAndQueries),
+      url: joinURL(baseURL, projectId, dataset, filenameAndQueries),
     }
   },
 })

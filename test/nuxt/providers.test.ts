@@ -476,7 +476,6 @@ describe('Providers', () => {
 
   it('sanity', () => {
     const providerOptions = {
-      baseURL: '',
       projectId: 'projectid',
     }
 
@@ -485,6 +484,10 @@ describe('Providers', () => {
       const generated = sanity().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.sanity)
     }
+
+    // baseURL: '/api/sanity/images'
+    expect(sanity().getImage('image-test-300x450-png', { baseURL: '/api/sanity/images', modifiers: {}, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: '/api/sanity/images/projectid/production/test-300x450.png?auto=format' })
   })
 
   it('shopify', () => {
