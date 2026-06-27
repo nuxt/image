@@ -47,7 +47,7 @@ defineSlots<{ default(props: DefaultSlotProps): any }>()
 const $img = useImage()
 const { providerOptions, normalizedAttrs, imageModifiers } = useImageProps(props)
 
-const sizes = computed(() => $img.getSizes(props.src!, {
+const sizes = computed(() => $img.getSizes(props.src as string, {
   ...providerOptions.value,
   sizes: props.sizes,
   densities: props.densities,
@@ -74,7 +74,7 @@ const placeholder = computed(() => {
 
   const placeholder = props.placeholder === '' ? [10, 10] : props.placeholder
 
-  if (!placeholder) {
+  if (!placeholder || !props.src) {
     return false
   }
 
@@ -86,7 +86,7 @@ const placeholder = computed(() => {
     ? placeholder
     : typeof placeholder === 'number' ? [placeholder] : []
 
-  return $img(props.src!, {
+  return $img(props.src, {
     ...imageModifiers.value,
     width,
     height,
@@ -98,12 +98,12 @@ const placeholder = computed(() => {
 const mainSrc = computed(() =>
   props.sizes
     ? sizes.value.src
-    : $img(props.src!, imageModifiers.value, providerOptions.value),
+    : $img(props.src as string, imageModifiers.value, providerOptions.value),
 )
 
 const src = computed(() => placeholder.value || mainSrc.value)
 
-if (import.meta.server && props.preload) {
+if (import.meta.server && props.preload && props.src) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')
   const isResponsive = hasMultipleDensities || !!sizes.value.sizes
 
@@ -139,11 +139,11 @@ onMounted(() => {
 
     if (mainSrc.value) {
       img.src = mainSrc.value
-    }
 
-    if (props.sizes) {
-      img.sizes = sizes.value.sizes || ''
-      img.srcset = sizes.value.srcset
+      if (props.sizes) {
+        img.sizes = sizes.value.sizes || ''
+        img.srcset = sizes.value.srcset
+      }
     }
 
     // img.decode() can avoid jank and flash
