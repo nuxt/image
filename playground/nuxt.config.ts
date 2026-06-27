@@ -118,6 +118,9 @@ export default defineNuxtConfig({
     supabase: {
       baseURL: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt',
     },
+    edgeonePages: {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    },
     unsplash: {},
     vercel: {
       baseURL: 'https://image-component.nextjs.gallery/_next/image',
