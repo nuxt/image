@@ -489,6 +489,26 @@ describe('Providers', () => {
     expect(sanity().getImage('image-test-300x450-png', { baseURL: '/api/sanity/images', modifiers: {}, ...providerOptions }, getEmptyContext()))
       .toMatchObject({ url: '/api/sanity/images/projectid/production/test-300x450.png?auto=format' })
   })
+  it('sanity with absolute url and preexisting query params', () => {
+    const originalUrl = 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png'
+
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    const generated = sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 } }, getEmptyContext())
+    expect(generated).toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // projectId: 'projectid' → overwrite
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, projectId: 'projectid' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/projectid/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // dataset: 'dataset' → overwrite
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, dataset: 'dataset' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/dataset/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // projectId: '', dataset: '' → inherit
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, projectId: '', dataset: '' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+  })
 
   it('shopify', () => {
     const providerOptions = {
