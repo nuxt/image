@@ -489,7 +489,7 @@ describe('Providers', () => {
     expect(sanity().getImage('image-test-300x450-png', { baseURL: '/api/sanity/images', modifiers: {}, ...providerOptions }, getEmptyContext()))
       .toMatchObject({ url: '/api/sanity/images/projectid/production/test-300x450.png?auto=format' })
   })
-  it('sanity with absolute url and preexisting query params', () => {
+  it('sanity with absolute url and option overrides', () => {
     const originalUrl = 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png'
 
     // @ts-expect-error `projectId` is extracted from the absolute URL
@@ -508,6 +508,29 @@ describe('Providers', () => {
     // projectId: '', dataset: '' → inherit
     expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, projectId: '', dataset: '' }, getEmptyContext()))
       .toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+  })
+  it('sanity with absolute url and preexisting query params', () => {
+    const originalUrl = 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png'
+
+    // single existing param
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=999&h=10&auto=format' })
+
+    // multiple existing params
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999&q=92', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=999&q=92&h=10&auto=format' })
+
+    // '?' with no param
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?h=10&auto=format' })
+
+    // param override
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999&q=92', { modifiers: { height: 10, width: 420 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=420&q=92&h=10&auto=format' })
   })
 
   it('shopify', () => {

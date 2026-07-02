@@ -1,4 +1,4 @@
-import { joinURL, encodePath, hasProtocol } from 'ufo'
+import { joinURL, encodePath, hasProtocol, withQuery, parseQuery } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -78,8 +78,11 @@ interface SanityOptions {
 
 export default defineProvider<SanityOptions>({
   getImage: (src, { modifiers, projectId, dataset, baseURL = sanityCDN }) => {
-    const [_projectId, _dataset, _src] = hasProtocol(src) ? src.split('/').slice(-3) : [projectId, dataset, src]
-    const { height: sourceHeight, width: sourceWidth } = getMetadata(_src)
+    const isAbsolute = hasProtocol(src)
+    const [_projectId, _dataset, _segment] = isAbsolute ? src.split('/').slice(-3) : [projectId, dataset, src]
+    const [_id] = isAbsolute ? _segment.split('?') : [src]
+    const { height: sourceHeight, width: sourceWidth } = getMetadata(_id)
+
     if (modifiers.crop && typeof modifiers.crop !== 'string' && sourceWidth && sourceHeight) {
       const left = modifiers.crop.left * sourceWidth
       const top = modifiers.crop.top * sourceHeight
@@ -102,13 +105,14 @@ export default defineProvider<SanityOptions>({
     if (modifiers.fit === 'contain' && !modifiers.bg) {
       modifiers.bg = 'ffffff'
     }
-    const operations = operationsGenerator(modifiers)
 
+    const operations = operationsGenerator(modifiers)
     const parts = src.split('-').slice(1)
     const format = parts.pop()
-    const query = (operations ? ('?' + operations) : '')
-
-    const filenameAndQueries = (hasProtocol(src) ? _src : `${parts.join('-')}.${format}`) + query
+    const filenameAndQueries = withQuery(
+      isAbsolute ? _segment : `${parts.join('-')}.${format}`,
+      parseQuery(operations),
+    )
 
     return {
       url: joinURL(baseURL, projectId || _projectId, dataset || _dataset || 'production', filenameAndQueries),
