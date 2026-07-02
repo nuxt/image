@@ -80,7 +80,7 @@ export default defineProvider<SanityOptions>({
   getImage: (src, { modifiers, projectId, dataset, baseURL = sanityCDN }) => {
     const isAbsolute = hasProtocol(src)
     const [_projectId, _dataset, _segment] = isAbsolute ? src.split('/').slice(-3) : [projectId, dataset, src]
-    const [_id] = isAbsolute ? _segment.split('?') : [src]
+    const _id = (isAbsolute ? _segment?.split('?')[0] : src) ?? ''
     const { height: sourceHeight, width: sourceWidth } = getMetadata(_id)
 
     if (modifiers.crop && typeof modifiers.crop !== 'string' && sourceWidth && sourceHeight) {
