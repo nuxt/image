@@ -7,6 +7,7 @@ import { defineProvider } from '../utils/provider'
 interface VercelOptions {
   baseURL?: string
   formats?: NonNullable<NonNullable<NonNullable<NitroConfig['vercel']>['config']>['images']>['formats']
+  minimumCacheTTL?: NonNullable<NonNullable<NonNullable<NitroConfig['vercel']>['config']>['images']>['minimumCacheTTL']
   modifiers?: {
     quality?: string | number
   }
