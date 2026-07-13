@@ -24,8 +24,7 @@ jobs:
         uses: MatteoGabriele/agentscan-action@c357c0985e0d5ae9220fa0adda1a170831eebd81 # v2.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          skip-members: "dependabot[bot],renovate[bot]"
-          agent-scan-comment: false
+          mode: silent
       - name: Handle flagged PR
         if: contains(fromJSON('["automation","mixed"]'), steps.agentscan.outputs.classification) || steps.agentscan.outputs.community-flagged == 'true'
         env:
