@@ -1,8 +1,8 @@
 import { arch, platform } from 'node:os'
 import { readdir } from 'node:fs/promises'
-import { join, relative } from 'pathe'
+import { join } from 'pathe'
 import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
-import type { NitroEventHandler } from 'nitropack'
+import type { NitroEventHandler } from 'nitro/types'
 import { defu } from 'defu'
 import { hasProtocol } from 'ufo'
 import type { ProviderSetup } from './types'
@@ -27,7 +27,6 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 
   // Options
-  const relativeDir = relative(nitro.options.output.serverDir, nitro.options.output.publicDir)
   const ipxOptions: IPXRuntimeConfig = {
     ...providerOptions.options,
     baseURL: ipxBaseURL,
@@ -36,7 +35,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
       ...providerOptions.options?.alias,
     },
     fs: (providerOptions.options?.fs !== false) && {
-      dir: nuxt.options.dev ? moduleOptions.dirs : relativeDir,
+      dir: nuxt.options.dev ? moduleOptions.dirs : nitro.options.output.publicDir,
       ...providerOptions.options?.fs,
     },
     http: (providerOptions.options?.http !== false) && {
@@ -80,7 +79,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   }
 }
 
-declare module 'nitropack' {
+declare module 'nitro/types' {
   interface NitroRuntimeConfig {
     ipx?: IPXRuntimeConfig
   }

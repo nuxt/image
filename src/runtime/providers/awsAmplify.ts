@@ -1,5 +1,5 @@
 import { encodeQueryItem, joinURL } from 'ufo'
-import type { NitroConfig } from 'nitropack'
+import type { NitroConfig } from 'nitro/types'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 

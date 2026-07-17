@@ -2,11 +2,11 @@ import { fileURLToPath } from 'node:url'
 
 import { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import type { IPXOptions } from 'ipx'
-import { lazyEventHandler, useBase } from 'h3'
+import { lazyEventHandler, withBase } from 'h3'
 import { isAbsolute } from 'pathe'
-import type { NitroRuntimeConfig } from 'nitropack'
+import type { NitroRuntimeConfig } from 'nitro/types'
 
-import { useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from 'nitro/runtime-config'
 
 export default lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
@@ -29,5 +29,5 @@ export default lazyEventHandler(() => {
   const ipx = createIPX(ipxOptions)
 
   const ipxHandler = createIPXH3Handler(ipx)
-  return useBase(opts.baseURL, ipxHandler)
+  return withBase(opts.baseURL, ipxHandler)
 })

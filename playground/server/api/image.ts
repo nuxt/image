@@ -1,3 +1,5 @@
+import { defineEventHandler } from 'h3'
+
 export default defineEventHandler(async (event) => {
   const image = useImage(event)
   return image.getImage('/image.jpg', {
