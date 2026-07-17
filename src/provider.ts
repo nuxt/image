@@ -1,7 +1,7 @@
 import { normalize } from 'pathe'
 import { defu } from 'defu'
 import type { Nuxt } from '@nuxt/schema'
-import type { NitroConfig } from 'nitropack'
+import type { NitroConfig } from 'nitro/types'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'
@@ -91,6 +91,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       vercel: {
         config: {
+          version: 3,
           images: {
             domains: moduleOptions.domains,
             minimumCacheTTL: 60 * 5,

@@ -1,7 +1,6 @@
 import { joinURL, encodePath } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
-import { useRuntimeConfig } from '#imports'
 
 const operationsGenerator = createOperationsGenerator({
   joinWith: '/',
@@ -34,10 +33,10 @@ function getResizeValue(height?: number, width?: number) {
 }
 
 export default defineProvider<AliyunOptions>({
-  getImage: (src, { modifiers, baseURL }) => {
+  getImage: (src, { modifiers, baseURL }, ctx) => {
     if (!baseURL) {
       // also support runtime config
-      baseURL = useRuntimeConfig().public.siteUrl as string | undefined || '/'
+      baseURL = ctx.options.runtimeConfig.public.siteUrl as string | undefined || '/'
     }
     const _modifiers = { ...modifiers }
     const { resize, width, height, quality } = _modifiers

@@ -7,7 +7,6 @@ verifyDepsBeforeRun: install
 
 overrides:
   "@nuxt/image": "workspace:*"
-  "@nuxt/schema": "4.4.8"
   "@types/node": "^24.13.2"
   vue: "3.5.38"
 
@@ -18,3 +17,10 @@ allowBuilds:
   sharp: true
   unrs-resolver: false
   vue-demi: false
+
+minimumReleaseAgeExclude:
+  - '@nuxt/kit-nightly@5.0.0-29738334.1405742f'
+  - '@nuxt/nitro-server-nightly@5.0.0-29738334.1405742f'
+  - '@nuxt/schema-nightly@5.0.0-29738334.1405742f'
+  - '@nuxt/vite-builder-nightly@5.0.0-29738334.1405742f'
+  - nuxt-nightly@5.0.0-29738334.1405742f
