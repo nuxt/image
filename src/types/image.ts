@@ -84,11 +84,11 @@ export interface ImageSizes {
 }
 
 export interface Img {
-  (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
+  (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions<keyof ConfiguredImageProviders>): ResolvedImage['url']
   options: CreateImageOptions
-  getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
-  getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
+  getImage: (source: string, options?: ImageOptions<keyof ConfiguredImageProviders>) => ResolvedImage
+  getSizes: (source: string, options?: ImageOptions<keyof ConfiguredImageProviders>, sizes?: string[]) => ImageSizes
+  getMeta: (source: string, options?: ImageOptions<keyof ConfiguredImageProviders>) => Promise<ImageInfo>
 }
 
 export type $Img = Img & {
