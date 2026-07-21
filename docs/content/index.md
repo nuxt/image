@@ -152,6 +152,7 @@ orientation: horizontal
     - imageengine
     - imagekit
     - imgix
+    - imgproxy
     - ipx
     - netlify
     - prepr
