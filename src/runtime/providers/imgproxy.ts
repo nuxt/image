@@ -3,7 +3,6 @@ import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 import { hmac } from '@noble/hashes/hmac.js'
 import { sha256 } from '@noble/hashes/sha2.js'
-import { defu } from 'defu'
 import type { ImageModifiers } from '@nuxt/image'
 
 // https://docs.imgproxy.net/usage/processing#resizing-type
@@ -19,7 +18,7 @@ export interface ImgproxyCrop {
 
 export type ImgproxyFormat = 'webp' | 'png' | 'jpg' | 'jpeg' | 'jxl' | 'avif' | 'gif' | 'ico' | 'svg' | 'heic' | 'bmp' | 'tiff' | 'pdf' | 'psd' | 'mp4'
 
-export type ImgproxyBooleanPrimitive = string | number | boolean | 't'
+export type ImgproxyBooleanPrimitive = string | number | boolean
 
 export interface ImgproxyModifiers extends Omit<ImageModifiers, 'fit' | 'format' | 'background' | 'resize' | 'width' | 'height'> {
   width: number
@@ -63,8 +62,13 @@ export interface ImgproxyModifiers extends Omit<ImageModifiers, 'fit' | 'format'
 
 interface ImgproxyOptions {
   baseURL: string
-  salt: string
-  key: string
+  /**
+   * Hex-encoded signing key. When omitted (along with `salt`), URLs are
+   * generated unsigned with the `unsafe` signature segment.
+   */
+  key?: string
+  /** Hex-encoded signing salt. */
+  salt?: string
   modifiers?: Partial<ImgproxyModifiers>
 }
 
@@ -76,10 +80,6 @@ interface ImgproxyOptions {
 const booleanMap = (value: string | number | boolean | ImgproxyCrop | ImgproxyBooleanPrimitive): number => {
   if (typeof value === 'boolean') {
     return value ? 1 : 0
-  }
-
-  if (typeof value === 'object') {
-    return 0
   }
 
   switch (value) {
@@ -140,16 +140,12 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
      *
      * @param value
      */
-    crop: (value: string | number | boolean | ImgproxyCrop | ImgproxyBooleanPrimitive): string => {
-      if (typeof value === 'string') {
-        return value
+    crop: (value) => {
+      if (typeof value === 'object' && value !== null) {
+        return `${value.width}:${value.height}${value.gravity ? `:${value.gravity}` : ''}`
       }
 
-      if (typeof value === 'object') {
-        return `${value.width}:${value.height}${value?.gravity ? `:${value.gravity}` : ''}`
-      }
-
-      throw new Error('Wrong crop format')
+      return value
     },
     enlarge: booleanMap,
     extend: booleanMap,
@@ -161,19 +157,21 @@ const operationsGenerator = createOperationsGenerator<keyof ImgproxyModifiers, s
     raw: booleanMap,
     returnAttachment: booleanMap,
     /**
-     * Checking and calculating only permitted rotation angles. Only positive numbers in the range from 0 to 360 are permitted.
-     * The function converts the value to the nearest smaller value.
+     * imgproxy only supports rotation by multiples of 90 degrees, so numeric
+     * values are normalised into the 0-359 range and floored to the nearest
+     * multiple of 90.
      *
      * @see https://docs.imgproxy.net/usage/processing#rotate
      *
      * @param value
      */
-    rotate: (value): number => {
-      if (typeof value !== 'number' || value < 0 || value > 359) {
-        throw new TypeError('Wrong rotate format')
+    rotate: (value) => {
+      if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return value
       }
 
-      return value - (value % 90)
+      const normalized = ((value % 360) + 360) % 360
+      return normalized - (normalized % 90)
     },
   },
   formatter: (key, value) => `${key}:${value}`,
@@ -208,7 +206,10 @@ function urlSafeBase64(input: string | Uint8Array): string {
     ? new TextEncoder().encode(input)
     : input
 
-  const binaryString = String.fromCharCode(...bytes)
+  let binaryString = ''
+  for (const byte of bytes) {
+    binaryString += String.fromCharCode(byte)
+  }
   const base64 = btoa(binaryString)
 
   return base64
@@ -218,25 +219,24 @@ function urlSafeBase64(input: string | Uint8Array): string {
 }
 
 /**
- * Sign target with salt and secret using HMAC-SHA256
+ * Sign target with salt and secret using HMAC-SHA256. Returns the `unsafe`
+ * signature segment when no key/salt is configured.
  * @see https://docs.imgproxy.net/usage/signing_url#calculating-url-signature
  *
  * @param salt
  * @param target
  * @param secret
  */
-function sign(salt: string, target: string, secret: string) {
+function sign(salt: string | undefined, target: string, secret: string | undefined) {
+  if (!secret || !salt) {
+    return 'unsafe'
+  }
+
   const signature = hmac.create(sha256, hexToBytes(secret, 'signing key'))
   signature.update(hexToBytes(salt, 'signing salt'))
   signature.update(new TextEncoder().encode(target))
 
   return urlSafeBase64(signature.digest())
-}
-
-const defaultModifiers: Partial<ImgproxyModifiers> = {
-  resizingType: 'auto',
-  gravity: 'ce',
-  format: 'webp',
 }
 
 /**
@@ -256,7 +256,9 @@ function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<Imgpro
         break
       case 'contain':
         modifiers.resizingType = 'fit'
-        modifiers.extend = hasBoth
+        if (hasBoth) {
+          modifiers.extend = true
+        }
         break
       case 'fill':
         modifiers.resizingType = hasBoth ? 'force' : 'fit'
@@ -267,8 +269,6 @@ function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<Imgpro
       case 'outside':
         modifiers.resizingType = hasBoth ? 'fill' : 'fit'
         break
-      default:
-        throw new TypeError('Unsupported fit format')
     }
     delete modifiers.fit
   }
@@ -282,10 +282,10 @@ function resolveModifiers(modifiers: Partial<ImgproxyModifiers>): Partial<Imgpro
  */
 export default defineProvider<ImgproxyOptions>({
   getImage: (src, { modifiers, baseURL, key, salt }) => {
-    const mergeModifiers = resolveModifiers(defu(modifiers, defaultModifiers))
+    const resolvedModifiers = resolveModifiers({ ...modifiers })
 
     const encodedUrl = urlSafeBase64(src)
-    const path = joinURL('/', operationsGenerator(mergeModifiers), encodedUrl)
+    const path = joinURL('/', operationsGenerator(resolvedModifiers), encodedUrl)
     const signature = sign(salt, path, key)
 
     return {

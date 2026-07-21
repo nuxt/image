@@ -312,6 +312,12 @@ describe('Providers', () => {
     }
   })
 
+  it('imgproxy unsigned', () => {
+    const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers: { width: 200 }, baseURL: 'http://localhost:8080/' }, getEmptyContext())
+
+    expect(generated.url).toBe('http://localhost:8080/unsafe/w:200/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn')
+  })
+
   it('imgproxy modifiers', () => {
     const providerOptions = {
       baseURL: 'http://localhost:8080/',
@@ -334,7 +340,7 @@ describe('Providers', () => {
           height: 100,
         },
         expected: {
-          url: 'http://localhost:8080/WDEF0lvBmcLhtzT11ww-9XMtA9YY2BiMWACintty0yg/rt:fit/g:ce/f:webp/w:100/h:100/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/qC79sRaWwffPijUfzS7SXNA8YSg4Yu7GdasKJBEBiME/w:100/h:100/rt:fit/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -344,7 +350,7 @@ describe('Providers', () => {
           height: 100,
         },
         expected: {
-          url: 'http://localhost:8080/xnHZGPNtwahuGtmDh7vD5PQYjsxB8vpvyGr3eiq3jGo/rt:fill/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/EzCQHyN_dfw3wdid1qjfSCdf6c31Z6tKkI3zE-Lckjk/w:100/h:100/rt:fill/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -354,7 +360,7 @@ describe('Providers', () => {
           height: 100,
         },
         expected: {
-          url: 'http://localhost:8080/xnHZGPNtwahuGtmDh7vD5PQYjsxB8vpvyGr3eiq3jGo/rt:fill/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/EzCQHyN_dfw3wdid1qjfSCdf6c31Z6tKkI3zE-Lckjk/w:100/h:100/rt:fill/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -364,7 +370,7 @@ describe('Providers', () => {
           height: 100,
         },
         expected: {
-          url: 'http://localhost:8080/J-5_ixsKBIzg0qwYtypqPcC6MnEp2a5iErUKCbNqID8/rt:fit/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/ZbjARlwSeHhG9OG7w8igXwzvPHjzBaz3lG0kfmb77O8/w:100/h:100/rt:fit/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -375,7 +381,7 @@ describe('Providers', () => {
           format: 'jpeg',
         },
         expected: {
-          url: 'http://localhost:8080/0s7rNhOEt_rzLVU0CdGXMbkV6j5fH2VOI6PQlxaQbsc/rt:fit/g:ce/f:jpeg/w:100/h:100/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/H8yD6Q0BmkpSjNDSiofLZ2fzOjEmDMSL3h8RE8Oo3eU/w:100/h:100/f:jpeg/rt:fit/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -385,7 +391,7 @@ describe('Providers', () => {
           height: 100,
         },
         expected: {
-          url: 'http://localhost:8080/J-5_ixsKBIzg0qwYtypqPcC6MnEp2a5iErUKCbNqID8/rt:fit/g:ce/f:webp/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/vf-rueQkoR79Ebq3S58MtBpEE3dEU0zUhHiv3quFUOY/rt:fit/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -394,7 +400,7 @@ describe('Providers', () => {
           background: 'FFCC00',
         },
         expected: {
-          url: 'http://localhost:8080/0RHxLESHHIkkMAv8z4RlWIG6smintg8G9wtf0l5hCR0/rt:auto/g:ce/f:webp/rs:fit:100:100:1:1/bg:FFCC00/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/UnTMGu4VEx4GJv7j7CHbocZZc1g-fi6xVRO2tlhhW_c/rs:fit:100:100:1:1/bg:FFCC00/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -405,7 +411,7 @@ describe('Providers', () => {
           minHeight: 2000,
         },
         expected: {
-          url: 'http://localhost:8080/Zbqd-IqLtLZnIiHtFKAYPEpo6FuQOPraNd4nsL52Isg/rt:auto/g:ce/f:webp/w:100/h:100/mw:2000/mh:2000/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/l24NcKdpeyE88PPZESXTFH-_wNCbocsqLgdQiZsjCis/w:100/h:100/mw:2000/mh:2000/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -413,7 +419,7 @@ describe('Providers', () => {
           zoom: '0.2:0.2',
         },
         expected: {
-          url: 'http://localhost:8080/3GanjhskAMK8HRDfxSmIk1e_pE7BgjRptfSaokW1mDM/rt:auto/g:ce/f:webp/z:0.2:0.2/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/T4QMy0OqZQh22y1qFuvVwVb5xzB3W9Lv89jp0LAxIBg/z:0.2:0.2/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -424,7 +430,7 @@ describe('Providers', () => {
           fit: 'fill',
         },
         expected: {
-          url: 'http://localhost:8080/brfso4JHXYB1bTSWet-LEmhVhZbPr_T6kgZi2gRs5CM/rt:force/g:ce/f:webp/el:1/w:500/h:500/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/lSbqjZ91zpwxXdlSMswCc-L1-sD4ue2ni0iBEyYV_bU/el:1/w:500/h:500/rt:force/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -437,7 +443,7 @@ describe('Providers', () => {
           fit: 'fill',
         },
         expected: {
-          url: 'http://localhost:8080/h90gjXPIuMedfFTptj3YBVx6wQybWqirYzoN_w3DfqM/rt:fit/g:noea/f:webp/c:500:500/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/ZCQc_VbvdkTgQkqe1me6Mv0SO12gz_iO-CTxJ45mrJM/g:noea/c:500:500/rt:fit/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -445,7 +451,7 @@ describe('Providers', () => {
           autoRotate: true,
         },
         expected: {
-          url: 'http://localhost:8080/YJn9J2b4RzApSgFXomIHirK3lt1oxhVj-FR7odgPGE0/rt:auto/g:ce/f:webp/ar:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/r7UYCvCFcNbvdQT4tIsccCPDXR4TLatrZ4VLnnymH80/ar:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -467,7 +473,7 @@ describe('Providers', () => {
           blur: 100,
         },
         expected: {
-          url: 'http://localhost:8080/2M-s-AwAAAm54MhfBSM8luh3_6fadayCOd8LHqsSD10/rt:auto/g:ce/f:webp/dpr:0.1/ex:1/exar:1:no:0:1/rot:180/bg:255:255:0/sh:10/pix:10/sm:1/kcr:0/scp:1/mb:10/cb:test/exp:4106340630/fn:test/bl:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/WUlQoXFU71rFZN2s8vMUJLh4LomoByiVnrNgYaand_I/dpr:0.1/ex:1/exar:1:no:0:1/rot:180/bg:255:255:0/sh:10/pix:10/sm:1/kcr:0/scp:1/mb:10/cb:test/exp:4106340630/fn:test/bl:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -475,7 +481,7 @@ describe('Providers', () => {
           returnAttachment: true,
         },
         expected: {
-          url: 'http://localhost:8080/u_mLtYCSpOu7VawiphkQ51pZeNb0PFcP-3lRSIVALAg/rt:auto/g:ce/f:webp/att:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/uPrGTBiiJR6kaDHLszYcEfku5A2QcFJ4kbkHADd9pP8/att:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -483,7 +489,7 @@ describe('Providers', () => {
           preset: 'blurry',
         },
         expected: {
-          url: 'http://localhost:8080/DJ4Naz9SLYbQOIJDeq83o5RBj-7u4gcFoB-eFhHbU3o/rt:auto/g:ce/f:webp/pr:blurry/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/d8sZz8HBsm-p0uaSm22y_lHDl8_U5RMGmzFsD2XYzS8/pr:blurry/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
       {
@@ -493,7 +499,7 @@ describe('Providers', () => {
           raw: true,
         },
         expected: {
-          url: 'http://localhost:8080/MQLhXkyO7bXibkqMUJL7RffHQ9Ks_jMwjWTPvAG9vhM/rt:auto/g:ce/f:webp/w:100/h:100/raw:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+          url: 'http://localhost:8080/qaTooRhF4CIcNYJRAPxuPdpr3ha5uWgD0H7y4GmeFwM/w:100/h:100/raw:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
         },
       },
     ]

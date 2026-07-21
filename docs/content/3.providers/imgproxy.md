@@ -10,20 +10,44 @@ links:
 
 Integration between [Imgproxy](https://imgproxy.net/) and the image module.
 
-At a minimum, you must configure the `imgproxy` provider with the `baseURL`, `key` and `salt` set to your Imgproxy
-instance:
+At a minimum, you must configure the `imgproxy` provider with the `baseURL` set to your Imgproxy instance:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-    image: {
-        imgproxy: {
-            baseURL: 'http://localhost:8080/',
-            key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
-            salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
-        }
+  image: {
+    imgproxy: {
+      baseURL: 'http://localhost:8080/',
     }
+  }
 })
 ```
+
+Without a `key` and `salt`, URLs are generated unsigned (using the `unsafe` signature segment), which requires your
+Imgproxy instance to allow unsigned URLs (the default when `IMGPROXY_KEY`/`IMGPROXY_SALT` are not set).
+
+## URL signing
+
+If your Imgproxy instance requires signed URLs, provide the hex-encoded `key` and `salt`:
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    imgproxy: {
+      baseURL: 'http://localhost:8080/',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    }
+  }
+})
+```
+
+::warning
+Image URLs are generated in the browser as well as on the server, so the `key` and `salt` are included in the public
+client bundle. Anyone can extract them and sign arbitrary Imgproxy URLs. Signing therefore does **not** protect your
+instance against abuse in this setup. Restrict your instance by other means, for example with
+[`IMGPROXY_ALLOWED_SOURCES`](https://docs.imgproxy.net/configuration/options#IMGPROXY_ALLOWED_SOURCES) and related
+options, and do not reuse this key pair for an Imgproxy instance whose signing you rely on elsewhere.
+::
 
 ## Processing of `fit` values by the imgproxy provider
 
@@ -80,8 +104,7 @@ When both dimensions are defined, padding (letterboxing) is applied so the final
 **Parameters Used**
 
 - `resizingType = 'fit'`
-- `extend = true` when both dimensions are provided
-- `extend = false` (or omitted) when not
+- `extend = true` when both dimensions are provided (omitted otherwise)
 
 **Behavior**
 
@@ -158,7 +181,7 @@ This implementation approximates the behavior.
 | cover     | Yes                      | fill         | —      |
 | cover     | No                       | fit          | —      |
 | contain   | Yes                      | fit          | true   |
-| contain   | No                       | fit          | false  |
+| contain   | No                       | fit          | —      |
 | fill      | Yes                      | force        | —      |
 | fill      | No                       | fit          | —      |
 | inside    | Any                      | fit          | —      |
@@ -175,32 +198,20 @@ This implementation approximates the behavior.
 
 ## Imgproxy Modifiers
 
-By default, the Imgproxy provider has the following settings for modifiers
-
-```typescript
-const defaultModifiers: Partial<ImgproxyModifiers> = {
-    resizingType: 'auto',
-    gravity: 'ce',
-    format: 'webp',
-}
- ```
-
-If you want to change them, you can define them in your `nuxt.config.ts` file:
+You can set default modifiers for all images in your `nuxt.config.ts` file:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-    image: {
-        imgproxy: {
-            baseURL: 'http://localhost:8080/',
-            key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
-            salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
-            modifiers: {
-                resizingType: 'fit',
-                gravity: 'no',
-                format: 'png',
-            }
-        }
+  image: {
+    imgproxy: {
+      baseURL: 'http://localhost:8080/',
+      modifiers: {
+        resizingType: 'fit',
+        gravity: 'no',
+        format: 'png',
+      }
     }
+  }
 })
 ```
 
@@ -253,57 +264,53 @@ property with the following attribute names:
 Example 1: Cropping an image to a width and height of 500x500 and rotate by 180 degrees:
 
 ```vue
-
 <NuxtImg
-    provider="imgproxy"
-    src="/some-image.jpg"
-    width="500"
-    height="500"
-    :modifiers="{ rotate: 180 }"
+  provider="imgproxy"
+  src="/some-image.jpg"
+  width="500"
+  height="500"
+  :modifiers="{ rotate: 180 }"
 />
 ```
 
 Example 2: Add blur to an image:
 
 ```vue
-
 <NuxtImg
-    provider="imgproxy"
-    src="/some-image.jpg"
-    width="500"
-    height="500"
-    :modifiers="{ blur: 100 }"
+  provider="imgproxy"
+  src="/some-image.jpg"
+  width="500"
+  height="500"
+  :modifiers="{ blur: 100 }"
 />
 ```
 
 Example 3: Using [presets](https://docs.imgproxy.net/configuration/options#presets):
 
 ```vue
-
 <NuxtImg
-    provider="imgproxy"
-    src="/some-image.jpg"
-    width="500"
-    height="500"
-    :modifiers="{ preset: 'my-preset' }"
+  provider="imgproxy"
+  src="/some-image.jpg"
+  width="500"
+  height="500"
+  :modifiers="{ preset: 'my-preset' }"
 />
 ```
 
 Example 4: Advanced image manipulation:
 
 ```vue
-
 <NuxtImg
-    provider="imgproxy"
-    src="/some-image.jpg"
-    width="100"
-    height="100"
-    :modifiers="{ 
-       resize: 'fit:100:100:1:1',
-       background: 'FFCC00',
-       format: 'png',
-       pixelate: 50,
-     }"
+  provider="imgproxy"
+  src="/some-image.jpg"
+  width="100"
+  height="100"
+  :modifiers="{
+    resize: 'fit:100:100:1:1',
+    background: 'FFCC00',
+    format: 'png',
+    pixelate: 50,
+  }"
 />
 ```
 
