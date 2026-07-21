@@ -37,6 +37,7 @@ import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
+import edgeonePages from '../../dist/runtime/providers/edgeonePages'
 import twicpics from '../../dist/runtime/providers/twicpics'
 import umbraco from '../../dist/runtime/providers/umbraco'
 import unsplash from '../../dist/runtime/providers/unsplash'
@@ -882,6 +883,195 @@ describe('Providers', () => {
       const generated = supabase().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.supabase)
     }
+  })
+
+  it('edgeonePages', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = edgeonePages().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.edgeonePages)
+    }
+
+    const src = '/ssg-img.png'
+
+    // no modifiers
+    expect(edgeonePages().getImage(src, { modifiers: {}, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png' })
+
+    // width only
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x' })
+
+    // height only
+    expect(edgeonePages().getImage(src, { modifiers: { height: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/x200' })
+
+    // width + height
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200 }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200' })
+
+    // width + height + fit contain
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200, fit: 'contain' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200' })
+
+    // width + height + fit contain + format
+    expect(edgeonePages().getImage(src, { modifiers: { width: 200, height: 200, fit: 'contain', format: 'jpeg' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200/format/jpg' })
+  })
+
+  it('edgeonePages cover fit', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { width: 300, height: 200, fit: 'cover' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/!300x200r',
+    })
+  })
+
+  it('edgeonePages fill fit', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { width: 300, height: 200, fit: 'fill' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/300x200!',
+    })
+  })
+
+  it('edgeonePages blur', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { blur: 10 },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/blur/10x10',
+    })
+  })
+
+  it('edgeonePages rotate', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { rotate: 90 },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/rotate/90',
+    })
+  })
+
+  it('edgeonePages crop with gravity', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { crop: '300x400', gravity: 'center' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/crop/300x400/gravity/center',
+    })
+  })
+
+  it('edgeonePages sharpen and strip', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { sharpen: 70, strip: true },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/sharpen/70/strip',
+    })
+  })
+
+  it('edgeonePages scrop (smart face crop)', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { scrop: '200x200' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/scrop/200x200',
+    })
+  })
+
+  it('edgeonePages interlace and autoOrient', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { interlace: true, autoOrient: true },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/auto-orient/interlace/1',
+    })
+  })
+
+  it('edgeonePages iradius (circle crop)', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { iradius: 100 },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/iradius/100',
+    })
+  })
+
+  it('edgeonePages background fill', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { width: 200, height: 200, fit: 'contain', background: '#ff0000' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200/pad/1/color/ZmYwMDAw',
+    })
+  })
+
+  it('edgeonePages combined operations', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: {
+        width: 800,
+        height: 600,
+        fit: 'cover',
+        quality: 85,
+        format: 'webp',
+        sharpen: 50,
+        interlace: true,
+      },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/!800x600r/quality/85/format/webp/sharpen/50/interlace/1',
+    })
   })
 
   it('strapi', () => {

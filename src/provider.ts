@@ -24,6 +24,7 @@ export const BuiltInProviders = [
   'cloudinary',
   'contentful',
   'directus',
+  'edgeonePages',
   'fastly',
   'filerobot',
   'flyimg',

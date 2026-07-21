@@ -144,6 +144,7 @@ orientation: horizontal
     - cloudimage
     - cloudinary
     - directus
+    - edgeone-pages
     - fastly
     - filerobot
     - glide
