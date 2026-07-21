@@ -714,6 +714,19 @@ describe('Providers', () => {
     })
   })
 
+  it('edgeonePages background fill', () => {
+    const providerOptions = {
+      baseURL: 'https://nuxt-mix-template.edgeone.site',
+    }
+    const generated = edgeonePages().getImage('/ssg-img.png', {
+      modifiers: { width: 200, height: 200, fit: 'contain', background: '#ff0000' },
+      ...providerOptions,
+    }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: 'https://nuxt-mix-template.edgeone.site/ssg-img.png?imageMogr2/thumbnail/200x200/pad/1/color/ZmYwMDAw',
+    })
+  })
+
   it('edgeonePages combined operations', () => {
     const providerOptions = {
       baseURL: 'https://nuxt-mix-template.edgeone.site',

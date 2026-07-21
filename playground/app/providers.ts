@@ -1157,6 +1157,15 @@ export const providers: Provider[] = [
           quality: 50,
         },
       },
+      {
+        src: '/ssg-img.png',
+        width: 400,
+        height: 300,
+        fit: 'contain',
+        modifiers: {
+          background: '#ff0000',
+        },
+      },
     ],
   },
   // Unsplash

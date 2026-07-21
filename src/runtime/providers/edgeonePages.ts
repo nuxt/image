@@ -38,16 +38,20 @@ export interface EdgeOnePagesOptions {
 }
 
 const fitMap: Record<string, string> = {
-  contain: '', // /thumbnail/<W>x<H>  — scale to fit within bounds (default)
-  cover: 'r', // /thumbnail/!<W>x<H>r — scale to cover minimum bounds
-  fill: '!', // /thumbnail/<W>x<H>!  — force stretch to exact dimensions
-  inside: '', // same as contain
-  outside: 'r', // same as cover
+  contain: '',
+  cover: 'r',
+  fill: '!',
+  inside: '',
+  outside: 'r',
 }
 
-/** Encode a hex color string to URL-safe Base64 for background fill. */
+/**
+ * Encode a hex color to the URL-safe Base64 form imageMogr2's `color`
+ * parameter expects. The leading `#` is dropped: the API wants the bare
+ * RGB hex (e.g. `ff0000`), not `#ff0000`.
+ */
 function encodeColor(color: string): string {
-  const hex = color.startsWith('#') ? color : `#${color}`
+  const hex = color.startsWith('#') ? color.slice(1) : color
   if (typeof globalThis.btoa === 'function') {
     return globalThis.btoa(hex).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
   }
@@ -92,27 +96,22 @@ export default defineProvider<EdgeOnePagesOptions>({
 
     const operations: string[] = []
 
-    // --- Thumbnail (resize) ---
     if (width || height) {
       const w = width ?? ''
       const h = height ?? ''
       const fitSuffix = fit ? (fitMap[fit] ?? '') : ''
 
       if (fitSuffix === 'r') {
-        // cover / outside: !<W>x<H>r
         operations.push(`thumbnail/!${w}x${h}r`)
       }
       else if (fitSuffix === '!') {
-        // fill: <W>x<H>!
         operations.push(`thumbnail/${w}x${h}!`)
       }
       else {
-        // contain / inside / default: <W>x<H>
         operations.push(`thumbnail/${w}x${h}`)
       }
     }
 
-    // --- Pad + Color (background fill) ---
     if (pad || (background && (width || height))) {
       operations.push('pad/1')
       if (background) {
@@ -120,7 +119,6 @@ export default defineProvider<EdgeOnePagesOptions>({
       }
     }
 
-    // --- Crop (regular crop) ---
     if (crop) {
       operations.push(`crop/${crop}`)
       if (gravity) {
@@ -134,53 +132,43 @@ export default defineProvider<EdgeOnePagesOptions>({
       }
     }
 
-    // --- iradius (inscribed circle crop) ---
     if (typeof iradius !== 'undefined') {
       operations.push(`iradius/${iradius}`)
     }
 
-    // --- scrop (smart face crop) ---
     if (scrop) {
       operations.push(`scrop/${scrop}`)
     }
 
-    // --- Rotate ---
     if (typeof rotate !== 'undefined') {
       operations.push(`rotate/${rotate}`)
     }
 
-    // --- Auto-orient ---
     if (autoOrient) {
       operations.push('auto-orient')
     }
 
-    // --- Quality ---
     if (typeof quality !== 'undefined') {
       operations.push(`quality/${quality}`)
     }
 
-    // --- Format ---
     if (format) {
       const mappedFormat = format === 'jpeg' ? 'jpg' : format
       operations.push(`format/${mappedFormat}`)
     }
 
-    // --- Blur (Gaussian blur) ---
     if (typeof blur !== 'undefined' && blur) {
       operations.push(`blur/${blur}x${blur}`)
     }
 
-    // --- Sharpen ---
     if (typeof sharpen !== 'undefined') {
       operations.push(`sharpen/${sharpen}`)
     }
 
-    // --- Strip (remove metadata) ---
     if (strip) {
       operations.push('strip')
     }
 
-    // --- Interlace (progressive display) ---
     if (interlace) {
       operations.push(`interlace/${typeof interlace === 'number' ? interlace : 1}`)
     }

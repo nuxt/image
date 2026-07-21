@@ -7,7 +7,7 @@
         </p>
         <h1>Image Processing Playground</h1>
         <p class="lead">
-          Enter your EdgeOne Pages domain and image path to compare the original image with the optimized result from the Nuxt Image edgeonePages provider.
+          Compare the original image with the optimized result from the Nuxt Image edgeonePages provider. The site domain is read from the <code>edgeonePages.baseURL</code> configured in <code>nuxt.config.ts</code>.
         </p>
       </div>
     </header>
@@ -17,10 +17,9 @@
         <h2>Parameters</h2>
         <div class="field">
           <label>Site Domain (baseURL)</label>
-          <input
-            v-model="baseURL"
-            placeholder="https://<your-site>.edgeone.app"
-          >
+          <p class="url">
+            {{ baseURL || '(not configured)' }}
+          </p>
         </div>
         <div class="field">
           <label>Object Path (src)</label>
@@ -207,13 +206,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref } from 'vue'
 import { joinURL } from 'ufo'
-import { useRuntimeConfig } from '#imports'
+import { useImage, useRuntimeConfig } from '#imports'
 
+const $img = useImage()
 const runtimeConfig = useRuntimeConfig()
 
-const baseURL = ref('https://nuxt-mix-template.edgeone.site')
+const providerConfig = runtimeConfig.public.image?.providers?.edgeonePages as { baseURL?: string } | undefined
+const baseURL = providerConfig?.baseURL ?? ''
 const src = ref('/ssg-img.png')
 const width = ref<number | null>(800)
 const height = ref<number | null>(500)
@@ -228,16 +229,6 @@ const autoOrient = ref(false)
 const interlace = ref(false)
 const refreshKey = ref(0)
 
-watchEffect(() => {
-  const cfg = runtimeConfig as any
-  cfg.public = cfg.public || {}
-  cfg.public.image = cfg.public.image || {}
-  cfg.public.image.providers = cfg.public.image.providers || {}
-  cfg.public.image.providers.edgeonePages = {
-    baseURL: baseURL.value,
-  }
-})
-
 const computedModifiers = computed(() => {
   const mods: Record<string, any> = {}
   if (fit.value) mods.fit = fit.value
@@ -251,42 +242,15 @@ const computedModifiers = computed(() => {
   return mods
 })
 
-const fitMap: Record<string, string> = {
-  contain: '',
-  cover: 'r',
-  fill: '!',
-}
-
-const rawUrl = computed(() => baseURL.value && src.value ? joinURL(baseURL.value, src.value) : '')
+const rawUrl = computed(() => baseURL && src.value ? joinURL(baseURL, src.value) : '')
 const optimizedUrl = computed(() => {
-  if (!baseURL.value || !src.value) return ''
-
-  const ops: string[] = []
-  const w = width.value ?? ''
-  const h = height.value ?? ''
-  if (w || h) {
-    const suffix = fit.value ? (fitMap[fit.value] ?? '') : ''
-    if (suffix === 'r') {
-      ops.push(`thumbnail/!${w}x${h}r`)
-    }
-    else if (suffix === '!') {
-      ops.push(`thumbnail/${w}x${h}!`)
-    }
-    else {
-      ops.push(`thumbnail/${w}x${h}`)
-    }
-  }
-  if (rotate.value) ops.push(`rotate/${rotate.value}`)
-  if (autoOrient.value) ops.push('auto-orient')
-  if (quality.value) ops.push(`quality/${quality.value}`)
-  if (format.value) ops.push(`format/${format.value === 'jpeg' ? 'jpg' : format.value}`)
-  if (blur.value) ops.push(`blur/${blur.value}x${blur.value}`)
-  if (sharpen.value) ops.push(`sharpen/${sharpen.value}`)
-  if (strip.value) ops.push('strip')
-  if (interlace.value) ops.push('interlace/1')
-
-  const opString = ops.length ? `?imageMogr2/${ops.join('/')}` : ''
-  return joinURL(baseURL.value, src.value + opString)
+  if (!baseURL || !src.value) return ''
+  return $img(src.value, {
+    ...computedModifiers.value,
+    width: width.value || undefined,
+    height: height.value || undefined,
+    format: format.value || undefined,
+  }, { provider: 'edgeonePages' })
 })
 </script>
 
