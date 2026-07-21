@@ -2,42 +2,49 @@ import { describe, it, expect } from 'vitest'
 
 import { images } from '../providers'
 
+import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
+
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
 import none from '../../dist/runtime/providers/none'
-import weserv from '../../dist/runtime/providers/weserv'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
+import builderio from '../../dist/runtime/providers/builderio'
 import cloudflare from '../../dist/runtime/providers/cloudflare'
+import cloudflareimages from '../../dist/runtime/providers/cloudflareimages'
+import cloudimage from '../../dist/runtime/providers/cloudimage'
 import cloudinary from '../../dist/runtime/providers/cloudinary'
-import twicpics from '../../dist/runtime/providers/twicpics'
+import contentful from '../../dist/runtime/providers/contentful'
+import directus from '../../dist/runtime/providers/directus'
 import fastly from '../../dist/runtime/providers/fastly'
-import picsum from '../../dist/runtime/providers/picsum'
-import prepr from '../../dist/runtime/providers/prepr'
+import flyimg from '../../dist/runtime/providers/flyimg'
 import glide from '../../dist/runtime/providers/glide'
-import imgix from '../../dist/runtime/providers/imgix'
 import gumlet from '../../dist/runtime/providers/gumlet'
+import hygraph from '../../dist/runtime/providers/hygraph'
 import imageengine from '../../dist/runtime/providers/imageengine'
-import unsplash from '../../dist/runtime/providers/unsplash'
 import imagekit from '../../dist/runtime/providers/imagekit'
+import imgix from '../../dist/runtime/providers/imgix'
+import imgproxy from '../../dist/runtime/providers/imgproxy'
 import netlifyImageCdn from '../../dist/runtime/providers/netlifyImageCdn'
 import netlifyLargeMedia from '../../dist/runtime/providers/netlifyLargeMedia'
+import picsum from '../../dist/runtime/providers/picsum'
+import prepr from '../../dist/runtime/providers/prepr'
 import prismic from '../../dist/runtime/providers/prismic'
 import sanity from '../../dist/runtime/providers/sanity'
 import shopify from '../../dist/runtime/providers/shopify'
-import builderio from '../../dist/runtime/providers/builderio'
-import contentful from '../../dist/runtime/providers/contentful'
-import cloudimage from '../../dist/runtime/providers/cloudimage'
+import sirv from '../../dist/runtime/providers/sirv'
 import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
 import edgeonePages from '../../dist/runtime/providers/edgeonePages'
+import twicpics from '../../dist/runtime/providers/twicpics'
+import umbraco from '../../dist/runtime/providers/umbraco'
+import unsplash from '../../dist/runtime/providers/unsplash'
+import uploadcare from '../../dist/runtime/providers/uploadcare'
 import vercel from '../../dist/runtime/providers/vercel'
 import wagtail from '../../dist/runtime/providers/wagtail'
-import uploadcare from '../../dist/runtime/providers/uploadcare'
-import sirv from '../../dist/runtime/providers/sirv'
-import hygraph from '../../dist/runtime/providers/hygraph'
+import weserv from '../../dist/runtime/providers/weserv'
 
 function getEmptyContext() {
   return {
@@ -112,6 +119,35 @@ describe('Providers', () => {
     }
   })
 
+  it('cloudflareimages', () => {
+    const providerOptions = {
+      baseURL: 'https://imagedelivery.net/',
+      accountHash: 'accountHash',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = cloudflareimages().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.cloudflareimages)
+    }
+  })
+
+  it('cloudflareimage variant default', () => {
+    const providerOptions = {
+      accountHash: 'accountHash',
+    }
+    // Should use 'public' variant when no modifiers are provided
+    const generated = cloudflareimages().getImage('imageId123', { modifiers: {}, ...providerOptions }, getEmptyContext())
+    expect(generated).toMatchObject({ url: 'https://imagedelivery.net/accountHash/imageId123/public' })
+  })
+
+  it('cloudflareimage variant custom', () => {
+    const providerOptions = {
+      accountHash: 'accountHash',
+    }
+    // Should ignore other modifiers when variant is provided
+    const generated = cloudflareimages().getImage('imageId123', { modifiers: { variant: 'customVariant', width: 500 }, ...providerOptions }, getEmptyContext())
+    expect(generated).toMatchObject({ url: 'https://imagedelivery.net/accountHash/imageId123/customVariant' })
+  })
   it('cloudinary', () => {
     const providerOptions = {
       baseURL: '/',
@@ -261,6 +297,226 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = imgix().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.imgix)
+    }
+  })
+
+  it('imgproxy', () => {
+    const providerOptions = {
+      baseURL: 'http://localhost:8080/',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    }
+    for (const image of images) {
+      const [_src, modifiers] = image.args
+      const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers, ...providerOptions }, getEmptyContext())
+
+      expect(generated.url).toBe(image.imgproxy.url)
+    }
+  })
+
+  it('imgproxy unsigned', () => {
+    const generated = imgproxy().getImage('https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg', { modifiers: { width: 200 }, baseURL: 'http://localhost:8080/' }, getEmptyContext())
+
+    expect(generated.url).toBe('http://localhost:8080/unsafe/w:200/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn')
+  })
+
+  it('imgproxy modifiers', () => {
+    const providerOptions = {
+      baseURL: 'http://localhost:8080/',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
+    }
+
+    const sourceUrl: string = 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg'
+
+    const testCases: {
+      modifiers: Partial<ImgproxyModifiers>
+      expected: {
+        url: string
+      }
+    }[] = [
+      {
+        modifiers: {
+          fit: 'contain',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/qC79sRaWwffPijUfzS7SXNA8YSg4Yu7GdasKJBEBiME/w:100/h:100/rt:fit/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'cover',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/EzCQHyN_dfw3wdid1qjfSCdf6c31Z6tKkI3zE-Lckjk/w:100/h:100/rt:fill/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'outside',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/EzCQHyN_dfw3wdid1qjfSCdf6c31Z6tKkI3zE-Lckjk/w:100/h:100/rt:fill/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          fit: 'inside',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/ZbjARlwSeHhG9OG7w8igXwzvPHjzBaz3lG0kfmb77O8/w:100/h:100/rt:fit/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          fit: 'contain',
+          format: 'jpeg',
+        },
+        expected: {
+          url: 'http://localhost:8080/H8yD6Q0BmkpSjNDSiofLZ2fzOjEmDMSL3h8RE8Oo3eU/w:100/h:100/f:jpeg/rt:fit/ex:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          resizingType: 'fit',
+          width: 100,
+          height: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/vf-rueQkoR79Ebq3S58MtBpEE3dEU0zUhHiv3quFUOY/rt:fit/w:100/h:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          resize: 'fit:100:100:1:1',
+          background: 'FFCC00',
+        },
+        expected: {
+          url: 'http://localhost:8080/UnTMGu4VEx4GJv7j7CHbocZZc1g-fi6xVRO2tlhhW_c/rs:fit:100:100:1:1/bg:FFCC00/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          minWidth: 2000,
+          minHeight: 2000,
+        },
+        expected: {
+          url: 'http://localhost:8080/l24NcKdpeyE88PPZESXTFH-_wNCbocsqLgdQiZsjCis/w:100/h:100/mw:2000/mh:2000/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          zoom: '0.2:0.2',
+        },
+        expected: {
+          url: 'http://localhost:8080/T4QMy0OqZQh22y1qFuvVwVb5xzB3W9Lv89jp0LAxIBg/z:0.2:0.2/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          enlarge: true,
+          width: 500,
+          height: 500,
+          fit: 'fill',
+        },
+        expected: {
+          url: 'http://localhost:8080/lSbqjZ91zpwxXdlSMswCc-L1-sD4ue2ni0iBEyYV_bU/el:1/w:500/h:500/rt:force/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          gravity: 'noea',
+          crop: {
+            width: 500,
+            height: 500,
+          },
+          fit: 'fill',
+        },
+        expected: {
+          url: 'http://localhost:8080/ZCQc_VbvdkTgQkqe1me6Mv0SO12gz_iO-CTxJ45mrJM/g:noea/c:500:500/rt:fit/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          autoRotate: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/r7UYCvCFcNbvdQT4tIsccCPDXR4TLatrZ4VLnnymH80/ar:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          dpr: 0.1,
+          extend: true,
+          extendAspectRatio: '1:no:0:1',
+          rotate: 180,
+          background: '255:255:0',
+          sharpen: 10,
+          pixelate: 10,
+          stripMetadata: true,
+          keepCopyright: false,
+          stripColorProfile: true,
+          maxBytes: 10,
+          cachebuster: 'test',
+          expires: 4106340630,
+          filename: 'test',
+          blur: 100,
+        },
+        expected: {
+          url: 'http://localhost:8080/WUlQoXFU71rFZN2s8vMUJLh4LomoByiVnrNgYaand_I/dpr:0.1/ex:1/exar:1:no:0:1/rot:180/bg:255:255:0/sh:10/pix:10/sm:1/kcr:0/scp:1/mb:10/cb:test/exp:4106340630/fn:test/bl:100/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          returnAttachment: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/uPrGTBiiJR6kaDHLszYcEfku5A2QcFJ4kbkHADd9pP8/att:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          preset: 'blurry',
+        },
+        expected: {
+          url: 'http://localhost:8080/d8sZz8HBsm-p0uaSm22y_lHDl8_U5RMGmzFsD2XYzS8/pr:blurry/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+      {
+        modifiers: {
+          width: 100,
+          height: 100,
+          raw: true,
+        },
+        expected: {
+          url: 'http://localhost:8080/qaTooRhF4CIcNYJRAPxuPdpr3ha5uWgD0H7y4GmeFwM/w:100/h:100/raw:1/aHR0cHM6Ly9tYXJzLm5hc2EuZ292L3N5c3RlbS9kb3dubG9hZGFibGVfaXRlbXMvMzkwOTlfTWFycy1NUk8tb3JiaXRlci1mcmVzaC1jcmF0ZXItc2lyZW51bS1mb3NzYWUuanBn',
+        },
+      },
+    ]
+
+    for (const { modifiers, expected } of testCases) {
+      const generated = imgproxy().getImage(
+        sourceUrl,
+        {
+          modifiers,
+          ...providerOptions,
+        },
+        getEmptyContext(),
+      )
+
+      expect(generated).toMatchObject(expected)
     }
   })
 
@@ -445,7 +701,6 @@ describe('Providers', () => {
 
   it('sanity', () => {
     const providerOptions = {
-      baseURL: '',
       projectId: 'projectid',
     }
 
@@ -454,6 +709,53 @@ describe('Providers', () => {
       const generated = sanity().getImage('image-test-300x450-png', { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.sanity)
     }
+
+    // baseURL: '/api/sanity/images'
+    expect(sanity().getImage('image-test-300x450-png', { baseURL: '/api/sanity/images', modifiers: {}, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: '/api/sanity/images/projectid/production/test-300x450.png?auto=format' })
+  })
+  it('sanity with absolute url and option overrides', () => {
+    const originalUrl = 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png'
+
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    const generated = sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 } }, getEmptyContext())
+    expect(generated).toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // projectId: 'projectid' → overwrite
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, projectId: 'projectid' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/projectid/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // dataset: 'dataset' → overwrite
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, dataset: 'dataset' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/dataset/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+
+    // projectId: '', dataset: '' → inherit
+    expect(sanity().getImage(originalUrl, { modifiers: { height: 10, blur: 2, quality: 10 }, projectId: '', dataset: '' }, getEmptyContext()))
+      .toMatchObject({ url: 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png?h=10&blur=2&q=10&auto=format' })
+  })
+  it('sanity with absolute url and preexisting query params', () => {
+    const originalUrl = 'https://cdn.sanity.io/images/xenf4f6n/redesign/228cc6aa1c47854699f13c35719073cfcaf7ee54-1552x982.png'
+
+    // single existing param
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=999&h=10&auto=format' })
+
+    // multiple existing params
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999&q=92', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=999&q=92&h=10&auto=format' })
+
+    // '?' with no param
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?', { modifiers: { height: 10 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?h=10&auto=format' })
+
+    // param override
+    // @ts-expect-error `projectId` is extracted from the absolute URL
+    expect(sanity().getImage(originalUrl + '?w=999&q=92', { modifiers: { height: 10, width: 420 } }, getEmptyContext()))
+      .toMatchObject({ url: originalUrl + '?w=420&q=92&h=10&auto=format' })
   })
 
   it('shopify', () => {
@@ -513,6 +815,30 @@ describe('Providers', () => {
       const generated = contentful().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.contentful)
     }
+  })
+
+  it('directus', () => {
+    const providerOptions = {
+      baseURL: '/assets/',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = directus().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.directus)
+    }
+  })
+
+  it('directus w/ key modifier', () => {
+    const providerOptions = {
+      baseURL: '/assets/',
+      width: 200,
+      modifiers: {
+        key: 'system-small-cover',
+        allOtherModifiers: 'ignored',
+      },
+    }
+    const generated = directus().getImage('uuid-example', { ...providerOptions }, getEmptyContext())
+    expect(generated.url).toBe('/assets/uuid-example?key=system-small-cover')
   })
 
   it('cloudimage', () => {
@@ -924,6 +1250,27 @@ describe('Providers', () => {
     }
   })
 
+  it('flyimg', () => {
+    const providerOptions = {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://my-website.com',
+    }
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = flyimg().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.flyimg)
+    }
+
+    // fit: 'cover' → c_1 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'cover' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,c_1/https://my-website.com/test.png' })
+
+    // fit: 'fill' → par_0 flag
+    expect(flyimg().getImage('/test.png', { modifiers: { width: 200, height: 200, fit: 'fill' }, ...providerOptions }, getEmptyContext()))
+      .toMatchObject({ url: 'https://demo.flyimg.io/upload/w_200,h_200,par_0/https://my-website.com/test.png' })
+  })
+
   it('weserv', () => {
     const providerOptions = {
       baseURL: 'https://my-website.com/',
@@ -948,6 +1295,16 @@ describe('Providers', () => {
       const [src, modifiers] = image.args
       const generated = none().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
       expect(generated).toMatchObject(image.none)
+    }
+  })
+
+  it('umbraco', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = umbraco().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.umbraco)
     }
   })
 })

@@ -11,17 +11,21 @@ links:
 Easily use GitHub avatars in your Nuxt app. 
 
 
-Just pass the username as the `src` prop and set the width and height. Since GitHub avatars must always be square, the largest dimension is used as the size.
+Just pass the username as the `src` prop and set the width or height. Since GitHub avatars must always be square, the largest dimension is used as the size.
 
 
 ```vue
 <!-- Width and Height -->
 <NuxtImg provider="github" src="nuxt" height="50" width="50" />
 
-<!-- Width only -->
+<!-- Width above 460 resolves to the default size of 460 -->
 <NuxtImg provider="github" src="unjs" width="512" />
 
 <!-- Default size -->
 <NuxtImg provider="github" src="npm"/>
 ```
 
+
+::note
+GitHub Avatars are returned with a minimum size of 1 and maximum size of 460 with a default size of 460. Values outside of the bounds will return the default.
+::

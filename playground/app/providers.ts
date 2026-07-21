@@ -246,6 +246,17 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Cloudflare Images
+  {
+    name: 'cloudflareimages',
+    samples: [
+      {
+        src: 'test-image-id',
+        width: 300,
+        height: 300,
+      },
+    ],
+  },
   // Cloudinary
   {
     name: 'cloudinary',
@@ -366,6 +377,31 @@ export const providers: Provider[] = [
       },
     ],
   },
+  // Flyimg
+  {
+    name: 'flyimg',
+    samples: [
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 500,
+        height: 375,
+        quality: 80,
+        format: 'webp',
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 300,
+        height: 200,
+        fit: 'cover',
+        quality: 75,
+      },
+      {
+        src: 'https://picsum.photos/seed/nuxtimage/800/600',
+        width: 200,
+        fit: 'contain',
+      },
+    ],
+  },
   // ImageKit
   {
     name: 'imagekit',
@@ -434,6 +470,67 @@ export const providers: Provider[] = [
         width: 300,
         height: 300,
         fit: 'cover',
+      },
+    ],
+  },
+  // imgproxy
+  {
+    name: 'imgproxy',
+    samples: [
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 300,
+        height: 300,
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 300,
+        height: 300,
+        quality: 10,
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        background: 'FFCC00',
+        modifiers: {
+          resize: 'fit:500:500:1:1',
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          rotate: 180,
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          blur: 100,
+        },
+      },
+      {
+        src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
+        width: 500,
+        height: 500,
+        modifiers: {
+          dpr: 0.1,
+          extend: true,
+          extendAspectRatio: '1:no:0:1',
+          rotate: 180,
+          background: '255:255:0',
+          sharpen: 10,
+          pixelate: 10,
+          stripMetadata: true,
+          keepCopyright: false,
+          stripColorProfile: true,
+          maxBytes: 10,
+          cachebuster: 'test',
+          expires: 4106340630,
+          filename: 'test',
+        },
       },
     ],
   },
@@ -1313,29 +1410,36 @@ export const providers: Provider[] = [
     name: 'directus',
     samples: [
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
-        alt: 'Image 1',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
+        alt: 'Raw Image (no modifiers or transforms)',
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee.jpg',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a.jpg',
         alt: '1024px width',
         width: 1024,
         height: 256,
         fit: 'cover',
-        modifiers: { withoutEnlargement: 'true' },
+        modifiers: { withoutEnlargement: true },
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
       },
       {
-        src: 'ad514db1-eb90-4523-8183-46781437e7ee',
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
+        alt: 'keyed transform (all other inputs ignored)',
+        format: 'tiff',
+        modifiers: { key: 'system-large-cover' },
+      },
+
+      {
+        src: '8f748634-d77b-4985-b27e-7e1f3559881a',
         alt: '256px width, webp',
         width: 256,
         format: 'webp',
-        modifiers: { withoutEnlargement: 'true', transforms: [['blur', 4], ['negate']] },
+        modifiers: { withoutEnlargement: true, transforms: [['blur', 4], ['negate']] },
       },
     ],
   },
@@ -1446,6 +1550,35 @@ export const providers: Provider[] = [
         width: 500,
         height: 500,
         quality: 90,
+      },
+    ],
+  },
+  // Umbraco
+  {
+    name: 'umbraco',
+    samples: [
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 30,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        quality: 90,
+        format: 'webp',
+      },
+      {
+        src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
+        width: 500,
+        height: 200,
+        format: 'webp',
+        modifiers: {
+          focalPointXY: '0.5488476724567298,0.5772994963168611',
+        },
       },
     ],
   },

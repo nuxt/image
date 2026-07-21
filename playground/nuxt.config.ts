@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     cloudflare: {
       baseURL: 'https://that-test.site',
     },
+    cloudflareimages: {
+      accountHash: 'accountHash',
+    },
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/nuxt/image/upload/',
     },
@@ -64,13 +67,17 @@ export default defineNuxtConfig({
       apiVersion: 'v7',
     },
     directus: {
-      baseURL: 'http://localhost:8055/assets/',
+      baseURL: 'https://sandbox.directus.io/assets/',
     },
     fastly: {
       baseURL: 'https://www.fastly.io',
     },
     filerobot: {
       baseURL: 'https://fesrinkeb.filerobot.com/',
+    },
+    flyimg: {
+      baseURL: 'https://demo.flyimg.io',
+      sourceURL: 'https://picsum.photos',
     },
     github: {},
     glide: {
@@ -81,6 +88,11 @@ export default defineNuxtConfig({
     },
     imgix: {
       baseURL: 'https://assets.imgix.net',
+    },
+    imgproxy: {
+      baseURL: 'http://localhost:8080',
+      key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
+      salt: '8dd0e39bb7b14eeaf02d49e5dc76d2bc0abd9e09d52e7049e791acd3558db68e',
     },
     imagekit: {
       baseURL: 'https://ik.imagekit.io/demo',
@@ -133,6 +145,9 @@ export default defineNuxtConfig({
       baseURL: '/',
     },
     caisy: {
+    },
+    umbraco: {
+      baseURL: '',
     },
     providers: {
       custom: {

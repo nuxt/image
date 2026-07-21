@@ -19,6 +19,7 @@ export const BuiltInProviders = [
   'builderio',
   'caisy',
   'cloudflare',
+  'cloudflareimages',
   'cloudimage',
   'cloudinary',
   'contentful',
@@ -26,6 +27,7 @@ export const BuiltInProviders = [
   'edgeonePages',
   'fastly',
   'filerobot',
+  'flyimg',
   'github',
   'glide',
   'gumlet',
@@ -33,6 +35,7 @@ export const BuiltInProviders = [
   'imageengine',
   'imagekit',
   'imgix',
+  'imgproxy',
   'ipx',
   'ipxStatic',
   'netlify',
@@ -49,6 +52,7 @@ export const BuiltInProviders = [
   'strapi5',
   'supabase',
   'twicpics',
+  'umbraco',
   'unsplash',
   'uploadcare',
   'vercel',
@@ -91,7 +95,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
         config: {
           images: {
             domains: moduleOptions.domains,
-            minimumCacheTTL: 60 * 5,
+            minimumCacheTTL: providerOptions.options?.minimumCacheTTL ?? 60 * 5,
             sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
             formats: providerOptions.options?.formats ?? ['image/webp', 'image/avif'],
           },
@@ -110,7 +114,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
         imageSettings: {
           sizes: Array.from(new Set(Object.values(moduleOptions.screens || {}))),
           formats: providerOptions.options?.formats ?? ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
-          minimumCacheTTL: 60 * 5,
+          minimumCacheTTL: providerOptions.options?.minimumCacheTTL ?? 60 * 5,
           domains: moduleOptions.domains,
           remotePatterns: [], // Provided by domains
           dangerouslyAllowSVG: false, // TODO

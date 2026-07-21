@@ -5,12 +5,16 @@ packages:
 
 verifyDepsBeforeRun: install
 
-onlyBuiltDependencies:
-  - better-sqlite3
-  - sharp
+overrides:
+  "@nuxt/image": "workspace:*"
+  "@nuxt/schema": "4.4.8"
+  "@types/node": "^24.13.2"
+  vue: "3.5.38"
 
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - vue-demi
-
+allowBuilds:
+  "@parcel/watcher": false
+  better-sqlite3: true
+  esbuild: false
+  sharp: true
+  unrs-resolver: false
+  vue-demi: false

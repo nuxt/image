@@ -115,7 +115,7 @@ if (import.meta.server && props.preload) {
       crossorigin: normalizedAttrs.value.crossorigin,
       href: isResponsive ? sizes.value.src : src.value,
       ...(sizes.value.sizes && { imagesizes: sizes.value.sizes }),
-      ...(hasMultipleDensities && { imagesrcset: sizes.value.srcset }),
+      ...(isResponsive && { imagesrcset: sizes.value.srcset }),
       ...(typeof props.preload !== 'boolean' && props.preload.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }
         : {}),
