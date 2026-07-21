@@ -253,7 +253,7 @@ export const images = [
     supabase: { url: 'https://ovzjdhllnxrizgszqlsi.supabase.co/storage/v1/render/image/public/nuxt/test.png?width=200&height=200&resize=contain&format=jpeg' },
     vercel: { url: '/_vercel/image?url=%2Ftest.png&w=640&q=100' },
     wagtail: { url: '329944/fill-200x200-c0|format-jpeg|jpegquality-70' },
-    directus: { url: '/assets/test.png?width=200&height=200&fit=contain&format=jpeg' },
+    directus: { url: '/assets/test.png?width=200&height=200&fit=contain&format=jpg' },
     uploadcare: { url: 'https://ucarecdn.com/c160afba-8b42-45a9-a46a-d393248b0072/-/format/jpeg/-/resize/200x200/-/stretch/off/' },
     weserv: { url: 'https://wsrv.nl/?filename=test.png&we&w=200&h=200&fit=contain&output=jpg&url=https%3A%2F%2Fmy-website.com%2Ftest.png' },
     flyimg: { url: 'https://demo.flyimg.io/upload/w_200,h_200,o_jpeg/https://my-website.com/test.png' },

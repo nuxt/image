@@ -91,11 +91,6 @@ type DirectusModifiers
 
 interface DirectusOptions {
   baseURL: string
-  width?: number
-  height?: number
-  quality?: number
-  format?: 'auto' | 'jpg' | 'png' | 'webp' | 'tiff' | 'avif'
-  fit?: 'cover' | 'contain' | 'inside' | 'outside' | 'fill'
   modifiers?: DirectusModifiers
 }
 
@@ -123,11 +118,17 @@ export default defineProvider<DirectusOptions>({
   getImage: (src, { modifiers, baseURL }) => {
     if (isKeyModifier(modifiers)) {
       return {
-        url: joinURL(baseURL, src + `?key=${modifiers.key}`),
+        url: joinURL(baseURL, src + `?key=${encodeURIComponent(modifiers.key)}`),
       }
     }
 
-    const operations = operationsGenerator(modifiers)
+    // Directus expects `jpg`; Nuxt Image normalises JPEG to `jpeg`.
+    const resolved = {
+      ...modifiers,
+      format: modifiers?.format === 'jpeg' ? 'jpg' : modifiers?.format,
+    }
+
+    const operations = operationsGenerator(resolved)
 
     return {
       url: joinURL(baseURL, src + (operations ? `?${operations}` : '')),
