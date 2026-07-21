@@ -47,7 +47,7 @@ Additionally, the following modifiers are supported:
 The `format` modifier is supported.
 
 ```vue
-<NuxtImg src="..." width="300" height="300" modifiers="{ format: 'gif' }" />
+<NuxtImg src="..." width="300" height="300" :modifiers="{ format: 'gif' }" />
 ```
 
 ### Quality
@@ -55,7 +55,7 @@ The `format` modifier is supported.
 The `quality` modifier is supported.
 
 ```vue
-<NuxtImg src="..." width="300" height="300" modifiers="{ quality: 10 }" />
+<NuxtImg src="..." width="300" height="300" :modifiers="{ quality: 10 }" />
 ```
 
 ### Crop
@@ -70,7 +70,7 @@ The `crop` modifier is supported with the following values:
 - `region`
 
 ```vue
-<NuxtImg src="..." width="300" height="300" modifiers="{ crop: 'center' }" />
+<NuxtImg src="..." width="300" height="300" :modifiers="{ crop: 'center' }" />
 ```
 
 #### Crop Region
@@ -82,7 +82,7 @@ The `crop` modifier can also be used to crop an image to a specific region.
   src="..." 
   width="300" 
   height="300" 
-  modifiers="{ 
+  :modifiers="{ 
     crop: 'region', 
     cropLeft: 100, 
     cropTop: 100, 
@@ -97,5 +97,5 @@ The `crop` modifier can also be used to crop an image to a specific region.
 The `padColor` modifier can be used to pad an image with a background color. Must be a hex color value.
 
 ```vue
-<NuxtImg src="..." width="300" height="300" modifiers="{ padColor: 'ff0000' }" />
+<NuxtImg src="..." width="300" height="300" :modifiers="{ padColor: 'ff0000' }" />
 ```
