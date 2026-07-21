@@ -87,3 +87,20 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+### `minimumCacheTTL`
+
+- Type: **Number** (optional)
+
+Configure the minimum cache lifetime in seconds for optimized images.
+By default, the provider uses `300`.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    vercel: {
+      minimumCacheTTL: 3600
+    }
+  }
+})
+```

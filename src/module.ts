@@ -235,16 +235,20 @@ function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]):
 }
 
 function generateImageOptions(providers: ImageModuleProvider[], imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'>): string {
-  return `
-  ${providers.map(p => `import ${p.importName} from '${p.runtime}'`).join('\n')}
-  
-  export const imageOptions = {
-    ...${JSON.stringify(imageOptions, null, 2)},
-    /** @type {${JSON.stringify(imageOptions.provider)}} */
-    provider: ${JSON.stringify(imageOptions.provider)},
-    providers: {
-      ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
-    }
+  const serializedImageOptions = Object.entries(imageOptions)
+    .filter(([key]) => key !== 'provider')
+    .map(([key, value]) => `  ${key}: ${JSON.stringify(value)}`)
+    .join(',\n')
+
+  return `${providers.map(p => `import ${p.importName} from '${p.runtime}'`).join('\n')}
+
+export const imageOptions = {
+${serializedImageOptions},
+  /** @type {${JSON.stringify(imageOptions.provider)}} */
+  provider: ${JSON.stringify(imageOptions.provider)},
+  providers: {
+    ${providers.map(p => `  ['${p.name}']: { setup: ${p.importName}, defaults: ${JSON.stringify(p.runtimeOptions)} }`).join(',\n')}
   }
+}
 `
 }

@@ -52,6 +52,7 @@ const operationsGenerator = createOperationsGenerator({
 interface AmplifyOptions {
   baseURL?: string
   formats?: NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats']
+  minimumCacheTTL?: NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['minimumCacheTTL']
   modifiers?: {
     quality?: string | number
     // TODO: more modifiers
