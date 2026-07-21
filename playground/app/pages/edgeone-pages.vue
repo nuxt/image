@@ -213,7 +213,7 @@ import { useImage, useRuntimeConfig } from '#imports'
 const $img = useImage()
 const runtimeConfig = useRuntimeConfig()
 
-const providerConfig = runtimeConfig.public.image?.providers?.edgeonePages as { baseURL?: string } | undefined
+const providerConfig = (runtimeConfig.public.image as { providers?: Record<string, { baseURL?: string }> } | undefined)?.providers?.edgeonePages
 const baseURL = providerConfig?.baseURL ?? ''
 const src = ref('/ssg-img.png')
 const width = ref<number | null>(800)
@@ -250,7 +250,7 @@ const optimizedUrl = computed(() => {
     width: width.value || undefined,
     height: height.value || undefined,
     format: format.value || undefined,
-  }, { provider: 'edgeonePages' })
+  }, { provider: 'edgeonePages' as 'ipx' })
 })
 </script>
 
