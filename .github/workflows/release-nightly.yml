@@ -10,6 +10,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.number || github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release-pkg-pr-new:
     runs-on: ubuntu-latest
