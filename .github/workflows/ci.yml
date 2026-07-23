@@ -98,11 +98,11 @@ jobs:
         
       - run: pnpm dev:prepare
 
-      - parallel:
-          - name: 💪 Type check
-            run: pnpm test:types
-          - name: 🛠 Build project
-            run: pnpm build
+      - name: 💪 Type check
+        run: pnpm test:types
+
+      - name: 🛠 Build project
+        run: pnpm build
 
       - name: 🧪 Test project
         run: pnpm test
