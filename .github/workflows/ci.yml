@@ -65,13 +65,14 @@ jobs:
         
       - run: pnpm dev:prepare
 
-      - parallel:
-          - name: 🔠 Lint project
-            run: pnpm lint
-          - name: ✂️ Knip project
-            run: pnpm knip --workspace .
-          - name: ⚙️ Check package engines
-            run: pnpm installed-check -d --no-workspaces
+      - name: 🔠 Lint project
+        run: pnpm lint
+
+      - name: ✂️ Knip project
+        run: pnpm knip --workspace .
+
+      - name: ⚙️ Check package engines
+        run: pnpm installed-check -d --no-workspaces
 
   ci:
     needs: changes
