@@ -118,7 +118,7 @@ jobs:
 
   ci-ok:
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs:
       - changes
       - lint
