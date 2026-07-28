@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   agentscan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: AgentScan
         id: agentscan
