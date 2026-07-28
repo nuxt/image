@@ -102,10 +102,10 @@ const operationsGenerator = createOperationsGenerator({
     mozjpeg: Number,
     preserveAspectRatio: Number,
     preserveNaturalSize: Number,
-    // Encode colours so # does not break the URL path segment
-    background: (value: string) => value.startsWith('#') ? value.replace('#', '%23') : value,
-    textColor: (value: string) => value.startsWith('#') ? value.replace('#', '%23') : value,
-    textBackground: (value: string) => value.startsWith('#') ? value.replace('#', '%23') : value,
+    // Encode # so it does not break the URL path segment
+    background: (value: string) => value.replaceAll('#', '%23'),
+    textColor: (value: string) => value.replaceAll('#', '%23'),
+    textBackground: (value: string) => value.replaceAll('#', '%23'),
     // Encode text watermarks
     text: (value: string) => encodeURIComponent(value),
   },
