@@ -24,6 +24,23 @@ export default defineNuxtConfig({
 })
 ```
 
+## Options
+
+### `baseURL`
+
+Override the default Sanity CDN URL (`https://cdn.sanity.io/images`). Useful for custom CDN or proxy setups, or [Enterprise custom domains](https://www.sanity.io/docs/custom-cdn-domain).
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  image: {
+    sanity: {
+      projectId: 'yourprojectid',
+      baseURL: 'https://your-custom-cdn.example.com/images',
+    }
+  }
+})
+```
+
 ## Modifiers
 
 The Sanity provider supports a number of additional modifiers. For a full list, check out the [Sanity documentation](https://www.sanity.io/docs/image-urls). All of the modifiers mentioned in the Sanity docs are supported, with the following notes.
