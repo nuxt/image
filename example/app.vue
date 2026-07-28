@@ -8,6 +8,7 @@
         width="300"
         height="200"
         class="rounded"
+        alt="Mountain landscape by Benjamin Voros"
       />
       <figcaption class="text-gray-600 text-xs mt-3">
         Photo by <a
@@ -28,6 +29,7 @@
         width="3750"
         height="2500"
         sizes="xs:200px md:500px lg:1024"
+        alt="Mountain landscape by Kurt Cotoaga"
       />
       <figcaption class="text-gray-600 text-xs mt-3">
         Photo by <a

@@ -25,6 +25,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   preload?: boolean | { fetchPriority: 'auto' | 'high' | 'low' }
 
   // <img> attributes
+  alt: string
   width?: string | number
   height?: string | number
   crossorigin?: 'anonymous' | 'use-credentials' | boolean
@@ -46,6 +47,7 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
     height: parseSize(props.height),
     crossorigin: props.crossorigin === true ? 'anonymous' : props.crossorigin || undefined,
     nonce: props.nonce,
+    alt: props.alt,
   }))
 
   const imageModifiers = computed(() => {

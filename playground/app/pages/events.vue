@@ -5,12 +5,14 @@
       src="/images/colors.jpg"
       width="500"
       height="500"
+      alt=""
       @load="() => { console.log('Image was loaded') }"
     />
     <nuxt-picture
       src="/images/colors.jpg"
       width="500"
       height="500"
+      alt=""
       @load="() => { console.log('Image was loaded') }"
     />
 
@@ -20,6 +22,7 @@
       placeholder
       width="500"
       height="500"
+      alt=""
       @load="() => { console.log('Image was loaded') }"
     />
     <nuxt-picture
@@ -27,6 +30,7 @@
       placeholder
       width="500"
       height="500"
+      alt=""
       @load="() => { console.log('Image was loaded') }"
     />
 
@@ -35,12 +39,14 @@
       :src="'nonexistent' + src"
       width="500"
       height="500"
+      alt=""
       @error="() => { console.log('Error loading image') }"
     />
     <nuxt-picture
       :src="'nonexistent' + src"
       width="500"
       height="500"
+      alt=""
       @error="() => { console.log('Error loading image') }"
     />
   </div>
