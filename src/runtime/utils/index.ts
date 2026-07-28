@@ -86,6 +86,15 @@ export function parseSize(input: string | number | undefined = '') {
   }
 }
 
+/**
+ * Sentinel key used for bare size values without a breakpoint prefix
+ * (e.g. `"100vw"` in `sizes="100vw sm:50vw"`). Consumers should expand
+ * this to all configured screen breakpoints that aren't explicitly set.
+ *
+ * @see https://github.com/nuxt/image/issues/1433
+ */
+export const SIZES_DEFAULT_KEY = 'default'
+
 export function parseSizes(input: Record<string, string | number> | string): Record<string, string> {
   const sizes: Record<string, string> = {}
   // string => object
@@ -93,7 +102,7 @@ export function parseSizes(input: Record<string, string | number> | string): Rec
     for (const entry of input.split(/[\s,]+/).filter(e => e)) {
       const s = entry.split(':')
       if (s.length !== 2) {
-        sizes['1px'] = s[0]!.trim()
+        sizes[SIZES_DEFAULT_KEY] = s[0]!.trim()
       }
       else {
         sizes[s[0]!.trim()] = s[1]!.trim()

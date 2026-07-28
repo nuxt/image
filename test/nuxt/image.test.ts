@@ -390,6 +390,45 @@ describe('Sizes and densities behavior', () => {
     // Should have sizes attribute
     expect(sizes).toBeTruthy()
   })
+
+  it('bare vw sizes value generates proper srcset widths (#1433)', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: '100vw',
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')!
+    const sizes = imgElement.getAttribute('sizes')
+
+    // Should generate width-based srcset entries matching screen breakpoints,
+    // not 1w/2w entries from a 1px placeholder
+    const widths = srcset.match(/\b(\d+)w\b/g)!.map(w => Number.parseInt(w))
+    expect(widths.every(w => w > 100)).toBe(true)
+
+    // Should have sizes attribute with media queries
+    expect(sizes).toBeTruthy()
+    expect(sizes).toContain('100vw')
+  })
+
+  it('bare vw sizes with explicit breakpoints fills remaining screens (#1433)', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: '100vw lg:480px',
+    })
+
+    const imgElement = img.find('img').element
+    const srcset = imgElement.getAttribute('srcset')!
+
+    // lg:480px should produce a 480w entry, other screens should use 100vw
+    expect(srcset).toContain('480w')
+    const widths = srcset.match(/\b(\d+)w\b/g)!.map(w => Number.parseInt(w))
+    expect(widths.every(w => w > 100)).toBe(true)
+  })
 })
 
 describe('Preset sizes and densities inheritance', () => {
