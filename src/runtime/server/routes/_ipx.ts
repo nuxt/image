@@ -1,8 +1,9 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXH3Handler, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXNodeHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import type { IPXOptions } from 'ipx'
-import { lazyEventHandler, useBase } from 'h3'
+import type { NodeListener } from 'h3'
+import { lazyEventHandler, fromNodeMiddleware } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 
@@ -26,8 +27,18 @@ export default lazyEventHandler(() => {
     httpStorage,
   }
 
+  const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
   const ipx = createIPX(ipxOptions)
+  const nodeHandler = createIPXNodeHandler(ipx, {
+    parseURL(url) {
+      const parsedURL = new URL(url)
+      let pathname = parsedURL.pathname
+      if (baseURL && (pathname === baseURL || pathname.startsWith(`${baseURL}/`))) {
+        pathname = pathname.slice(baseURL.length) || '/'
+      }
+      return parseIPXURL(parsedURL.origin + pathname + parsedURL.search)
+    },
+  })
 
-  const ipxHandler = createIPXH3Handler(ipx)
-  return useBase(opts.baseURL, ipxHandler)
+  return fromNodeMiddleware(nodeHandler as NodeListener)
 })
