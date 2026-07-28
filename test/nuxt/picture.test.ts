@@ -176,6 +176,20 @@ describe('Renders simple image', () => {
     })
     expect(img.find('img').exists()).toBe(true)
   })
+
+  it('handles src: undefined', () => {
+    const img = mount(NuxtPicture, {
+      propsData: {
+        src: undefined as any,
+        sizes: '32px',
+      },
+    })
+    const html = img.html()
+    expect(html).not.toContain('undefined')
+    expect(img.find('source').exists()).toBe(true)
+    expect(img.find('source').element.getAttribute('srcset')).toBe('')
+    expect(img.find('img').element.getAttribute('srcset')).toBe('')
+  })
 })
 
 describe('Renders image, applies module config', () => {

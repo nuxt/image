@@ -129,6 +129,14 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
   const preset = getPreset(ctx, opts.preset)
   const merged = defu(opts, preset)
 
+  if (!input) {
+    return {
+      sizes: undefined,
+      srcset: '',
+      src: undefined,
+    }
+  }
+
   const width = parseSize(merged.modifiers?.width)
   const height = parseSize(merged.modifiers?.height)
 

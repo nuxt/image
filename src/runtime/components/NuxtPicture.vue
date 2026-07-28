@@ -96,7 +96,7 @@ const sources = computed<Source[]>(() => {
   const formats = props.format?.split(',') || (originalFormat.value === 'svg' ? ['svg'] : ($img.options.format?.length ? [...$img.options.format] : ['webp']))
 
   if (formats[0] === 'svg') {
-    return [{ src: props.src! }]
+    return [{ src: props.src }]
   }
 
   if (!formats.includes(legacyFormat.value)) {
@@ -108,7 +108,7 @@ const sources = computed<Source[]>(() => {
   }
 
   return formats.map((format) => {
-    const { srcset, sizes, src } = $img.getSizes(props.src!, {
+    const { srcset, sizes, src } = $img.getSizes(props.src as string, {
       ...providerOptions.value,
       sizes: props.sizes || $img.options.screens,
       densities: props.densities,

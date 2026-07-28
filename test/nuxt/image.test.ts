@@ -603,6 +603,33 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
     expect(domSrc).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
     expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
+
+  it('handles src: undefined combined with custom: true & sizes', async () => {
+    wrapper = mount(NuxtImg, {
+      propsData: {
+        src: undefined,
+        custom: true,
+        sizes: '32px',
+      },
+      slots: {
+        default: (props) => {
+          return JSON.stringify(props)
+        },
+      },
+    })
+
+    await nextTick()
+
+    const data = JSON.parse(wrapper.text())
+
+    expect(data.imgAttrs.srcset).not.toContain('undefined')
+    expect(data.imgAttrs.srcset).toBe('')
+    if (data.src) {
+      expect(data.src).not.toBe('undefined')
+      expect(data.src).not.toContain('/undefined')
+    }
+    expect(data.imgAttrs.sizes).toBeUndefined()
+  })
 })
 
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
