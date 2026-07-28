@@ -392,7 +392,7 @@ describe('Sizes and densities behavior', () => {
   })
 })
 
-describe('Preset sizes and densities inheritance', () => {
+describe('Preset inheritance', () => {
   const src = '/image.png'
 
   beforeEach(() => {
@@ -504,6 +504,34 @@ describe('Preset sizes and densities inheritance', () => {
     expect(srcset).toMatch(/\s2x\b/)
     expect(srcset).not.toMatch(/\b\d+w\b/)
     expect(sizes).toBeFalsy()
+  })
+
+  it('preset placeholder and placeholderClass are inherited', () => {
+    setImageContext({
+      presets: {
+        withPlaceholder: {
+          placeholder: true,
+          placeholderClass: 'placeholder-class',
+        },
+      },
+    })
+
+    const wrapper = mount(NuxtImg, {
+      propsData: {
+        src,
+        width: 200,
+        height: 200,
+        preset: 'withPlaceholder',
+      },
+    })
+
+    const imgElement = wrapper.find('img').element
+    const domSrc = imgElement.getAttribute('src')
+
+    expect(domSrc).toMatchInlineSnapshot(
+      '"/_ipx/q_50&blur_3&s_10x10/image.png"',
+    )
+    expect(imgElement.classList).toContain('placeholder-class')
   })
 })
 

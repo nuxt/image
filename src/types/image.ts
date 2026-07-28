@@ -23,6 +23,12 @@ export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = 
   provider?: Provider
   preset?: string
   densities?: string
+  placeholder?:
+    | boolean
+    | string
+    | number
+    | [w: number, h: number, q?: number, b?: number]
+  placeholderClass?: string
   modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
     & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
   sizes?: string | Record<string, any>
