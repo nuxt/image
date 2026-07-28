@@ -27,13 +27,13 @@ export default lazyEventHandler(() => {
     httpStorage,
   }
 
-  const baseURL = opts.baseURL || '/_ipx'
+  const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
   const ipx = createIPX(ipxOptions)
   const nodeHandler = createIPXNodeHandler(ipx, {
     parseURL(url) {
       const parsedURL = new URL(url)
       let pathname = parsedURL.pathname
-      if (pathname.startsWith(baseURL)) {
+      if (baseURL && (pathname === baseURL || pathname.startsWith(`${baseURL}/`))) {
         pathname = pathname.slice(baseURL.length) || '/'
       }
       return parseIPXURL(parsedURL.origin + pathname + parsedURL.search)
