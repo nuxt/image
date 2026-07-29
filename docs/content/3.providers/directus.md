@@ -88,7 +88,7 @@ A pipeline of transforms to tell Directus how to modify the image before sending
 | **rotate**| \[angle?: number, options?: \{ background: Color \} \]| \['rotate', 90\] or \['rotate', 90, \{ background: 'white' \} \]|
 | **flip**| \[]| \['flip'\]|
 | **flop**| \[]| \['flop'\]|
-| **sharpen**| \[sigma?: number\] \| \[options?: \{ sigma?: number, m1?: number, m2?: number, x1?: number, y2?: number, y3?: number \} \]| \['sharpen', 1.5\] or \['sharpen', \{ sigma: 1.5, m1: 0.5 \} \]|
+| **sharpen**| \[options?: \{ sigma?: number, m1?: number, m2?: number, x1?: number, y2?: number, y3?: number \} \]| \['sharpen'\] or \['sharpen', \{ sigma: 1.5, m1: 0.5 \} \]|
 | **median**| \[size?: number\]| \['median', 5\]|
 | **blur**| \[sigma?: number\] \| \[options?: \{ sigma?: number, precision?: 'integer' \| 'float' \| 'approximate', minAmplitude?: number \} \]| \['blur', 2\] or \['blur', \{ sigma: 2, precision: 'float' \} \]|
 | **flatten**| \[options?: \{ background: Color \} \]| \['flatten', \{ background: 'black' \} \]|
