@@ -7,7 +7,7 @@ type SharpOperationMap = {
   rotate: [angle?: number, options?: { background: Color }]
   flip: []
   flop: []
-  sharpen: [sigma?: number] | [options?: { sigma?: number, m1?: number, m2?: number, x1?: number, y2?: number, y3?: number }]
+  sharpen: [options?: { sigma?: number, m1?: number, m2?: number, x1?: number, y2?: number, y3?: number }]
   median: [size?: number]
   blur: [sigma?: number] | [options?: { sigma?: number, precision?: 'integer' | 'float' | 'approximate', minAmplitude?: number }]
   flatten: [options?: { background: Color }]
