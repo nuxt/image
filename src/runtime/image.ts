@@ -15,7 +15,7 @@ export function createImage(globalOptions: CreateImageOptions) {
 
     // Prerender static images
     if (import.meta.server && import.meta.prerender && globalOptions.event) {
-      prerenderStaticImages(image.url, undefined, globalOptions.event)
+      prerenderStaticImages(image.url, undefined, globalOptions.event, globalOptions.runtimeConfig)
     }
 
     return image

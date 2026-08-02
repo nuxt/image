@@ -12,6 +12,9 @@ await setup({
   nuxtConfig: {
     image: {
       inject: false,
+      ipx: {
+        baseURL: '/static-images',
+      },
     },
     nitro: {
       prerender: {
@@ -31,22 +34,22 @@ describe('ipx provider', () => {
   it('generates static files', async () => {
     const ctx = useTestContext()
     const outputDir = resolve(ctx.nuxt!.options.nitro.output?.dir || '', 'public')
-    const files = await glob('_ipx/**/*', { cwd: outputDir })
+    const files = await glob('static-images/**/*', { cwd: outputDir })
     expect(files.sort()).toMatchInlineSnapshot(`
       [
-        "_ipx/_/images/nuxt.png",
-        "_ipx/s_300x300/images/colors-layer-config.jpg",
-        "_ipx/s_300x300/images/colors-layer.jpg",
-        "_ipx/s_300x300/images/colors.jpg",
-        "_ipx/s_300x300/images/everest.jpg",
-        "_ipx/s_300x300/images/tacos.svg",
-        "_ipx/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
-        "_ipx/s_600x600/images/colors-layer-config.jpg",
-        "_ipx/s_600x600/images/colors-layer.jpg",
-        "_ipx/s_600x600/images/colors.jpg",
-        "_ipx/s_600x600/images/everest.jpg",
-        "_ipx/s_600x600/images/tacos.svg",
-        "_ipx/s_600x600/unsplash/photo-1606112219348-204d7d8b94ee",
+        "static-images/_/images/nuxt.png",
+        "static-images/s_300x300/images/colors-layer-config.jpg",
+        "static-images/s_300x300/images/colors-layer.jpg",
+        "static-images/s_300x300/images/colors.jpg",
+        "static-images/s_300x300/images/everest.jpg",
+        "static-images/s_300x300/images/tacos.svg",
+        "static-images/s_300x300/unsplash/photo-1606112219348-204d7d8b94ee",
+        "static-images/s_600x600/images/colors-layer-config.jpg",
+        "static-images/s_600x600/images/colors-layer.jpg",
+        "static-images/s_600x600/images/colors.jpg",
+        "static-images/s_600x600/images/everest.jpg",
+        "static-images/s_600x600/images/tacos.svg",
+        "static-images/s_600x600/unsplash/photo-1606112219348-204d7d8b94ee",
       ]
     `)
   })

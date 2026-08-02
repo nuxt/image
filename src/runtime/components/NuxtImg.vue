@@ -125,7 +125,7 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
-  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent())
+  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent(), $img.options.runtimeConfig)
 }
 
 const initialLoad = useNuxtApp().isHydrating
