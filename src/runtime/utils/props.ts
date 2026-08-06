@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 
-import type { ConfiguredImageProviders, ImageModifiers } from '@nuxt/image'
+import type { ConfiguredImageProviders, ImageModifiers, ProviderOptions } from '@nuxt/image'
 import { parseSize } from '.'
 import { useImage } from '#imports'
 
@@ -19,6 +19,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   // options
   preset?: string
   provider?: Provider
+  providerOptions?: ProviderOptions<Provider>
 
   sizes?: string | Record<string, any>
   densities?: string
@@ -37,7 +38,8 @@ export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(p
   const $img = useImage()
 
   const providerOptions = computed(() => ({
-    provider: props.provider,
+    ...props.providerOptions as ProviderOptions<keyof ConfiguredImageProviders>,
+    provider: props.provider as keyof ConfiguredImageProviders | undefined,
     preset: props.preset,
   }))
 

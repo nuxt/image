@@ -24,7 +24,19 @@ describe('image helper', () => {
     expect(() => useImage().getImage('/test.png', { preset: 'invalid' })).toThrow(Error)
   })
 
+  it('applies per-call provider options', () => {
+    const { url } = useImage().getImage('/test.png', { provider: 'ipx', baseURL: '/custom' })
+    expect(url).toMatchInlineSnapshot('"/custom/_/test.png"')
+  })
+
   it('is correctly typed for provider options', () => {
+    useImage().getImage('/test.png', {
+      provider: 'ipx',
+      baseURL: '/other',
+      // @ts-expect-error this is not a valid option for ipx
+      yolo: true,
+    })
+
     useImage().getImage('/test.png', {
       provider: 'ipx',
       modifiers: {
