@@ -31,10 +31,16 @@ export default lazyEventHandler(() => {
   const ipx = createIPX(ipxOptions)
   const nodeHandler = createIPXNodeHandler(ipx, {
     parseURL(url) {
-      const parsedURL = new URL(url)
+      const parsedURL = new URL(url, 'http://localhost')
       let pathname = parsedURL.pathname
       if (baseURL && (pathname === baseURL || pathname.startsWith(`${baseURL}/`))) {
         pathname = pathname.slice(baseURL.length) || '/'
+      }
+      try {
+        pathname = decodeURI(pathname)
+      }
+      catch {
+        // Keep original pathname if decoding fails.
       }
       return parseIPXURL(parsedURL.origin + pathname + parsedURL.search)
     },

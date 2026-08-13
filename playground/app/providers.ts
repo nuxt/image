@@ -93,6 +93,12 @@ export const providers: Provider[] = [
         height: 300,
         link: 'https://unsplash.com/@omidarmin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText',
       },
+      {
+        src: '/images/test+plus.png',
+        from: 'Filename with + (issue #1378)',
+        width: 300,
+        height: 300,
+      },
     ],
   },
   // Aliyun
