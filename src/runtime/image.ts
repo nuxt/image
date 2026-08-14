@@ -3,6 +3,7 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
+import type { IPXRuntimeConfig } from './providers/ipx'
 import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
 
 export function createImage(globalOptions: CreateImageOptions) {
@@ -15,7 +16,7 @@ export function createImage(globalOptions: CreateImageOptions) {
 
     // Prerender static images
     if (import.meta.server && import.meta.prerender && globalOptions.event) {
-      prerenderStaticImages(image.url, undefined, globalOptions.event)
+      prerenderStaticImages(image.url, undefined, globalOptions.event, (globalOptions.runtimeConfig.ipx as IPXRuntimeConfig | undefined)?.baseURL)
     }
 
     return image
