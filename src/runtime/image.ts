@@ -217,11 +217,11 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
     return undefined
   }
   let _cWidth = Number.parseInt(size)
-  if (!screenMaxWidth || !_cWidth) {
-    return undefined
-  }
   if (isFluid) {
     _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
+  }
+  if (!screenMaxWidth || !_cWidth) {
+    return undefined
   }
   const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
   return {

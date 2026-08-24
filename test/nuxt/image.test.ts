@@ -390,6 +390,20 @@ describe('Sizes and densities behavior', () => {
     // Should have sizes attribute
     expect(sizes).toBeTruthy()
   })
+
+  it('unprefixed fluid size below 50vw does not emit a 0w descriptor', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 300,
+      height: 400,
+      sizes: '22vw sm:22vw',
+    })
+
+    const srcset = img.find('img').element.getAttribute('srcset')
+
+    // Should drop the degenerate default-bucket variant instead of emitting 0w
+    expect(srcset).not.toMatch(/\s0w\b/)
+  })
 })
 
 describe('Preset sizes and densities inheritance', () => {
