@@ -71,12 +71,16 @@ export function isBuiltInProvider(provider: ImageModuleProvider) {
 type ImageProviderName = typeof BuiltInProviders[number]
 
 // https://docs.netlify.com/image-cdn/create-integration/
-const netlifySetup: ProviderSetup = (_providerOptions, moduleOptions, nuxt: Nuxt) => {
+export const netlifySetup: ProviderSetup = (_providerOptions, moduleOptions, nuxt: Nuxt) => {
   if (moduleOptions.domains?.length > 0) {
     nuxt.options.nitro = defu(nuxt.options.nitro, {
       netlify: {
         images: {
-          remote_images: moduleOptions.domains.map(domain => `https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*`),
+          // Anchor the generated pattern at both ends (`^`/`$`). Without the
+          // anchors, a consumer that treats these entries as a substring match
+          // could accept a foreign host that merely embeds an allowlisted
+          // domain elsewhere in the URL, defeating the allowlist.
+          remote_images: moduleOptions.domains.map(domain => `^https?:\\/\\/${domain.replaceAll('.', '\\.')}\\/.*$`),
         },
       },
     })
