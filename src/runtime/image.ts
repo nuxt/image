@@ -208,8 +208,11 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
 }
 
 function getSizesVariant(key: string, size: string, height: number | undefined, hwRatio: number, ctx: ImageCTX): ImageSizesVariant | undefined {
-  const screenMaxWidth = (ctx.options.screens && ctx.options.screens[key]) || Number.parseInt(key)
   const isFluid = size.endsWith('vw')
+  const screens = ctx.options.screens && Object.values(ctx.options.screens).map(Number)
+  const screenMaxWidth = key === '1px' && isFluid && screens?.length
+    ? Math.min(...screens)
+    : (ctx.options.screens && ctx.options.screens[key]) || Number.parseInt(key)
   if (!isFluid && /^\d+$/.test(size)) {
     size = size + 'px'
   }

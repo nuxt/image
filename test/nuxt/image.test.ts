@@ -136,6 +136,17 @@ describe('Renders simple image', () => {
     expect(img.html()).toMatchInlineSnapshot(`"<img width="1000" height="2000" data-nuxt-img="" sizes="(max-width: 767px) 100vw, (max-width: 1023px) 300px, (max-width: 1279px) 350px, (max-width: 1535px) 350px, 350px" srcset="/_ipx/s_300x600/image.png 300w, /_ipx/s_350x700/image.png 350w, /_ipx/s_600x1200/image.png 600w, /_ipx/s_640x1280/image.png 640w, /_ipx/s_700x1400/image.png 700w, /_ipx/s_1280x2560/image.png 1280w" src="/_ipx/s_1280x2560/image.png">"`)
   })
 
+  it('uses the smallest screen for an unprefixed fluid size', () => {
+    const img = mountImage({
+      src: '/image.png',
+      width: 200,
+      height: 200,
+      sizes: '22vw sm:22vw md:400px',
+    })
+    expect(img.html()).not.toContain(' 0w')
+    expect(img.html()).toContain('/_ipx/s_141x141/image.png 141w')
+  })
+
   it('without sizes', () => {
     const img = mountImage({
       src: '/image.png',
