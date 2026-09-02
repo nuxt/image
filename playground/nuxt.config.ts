@@ -3,8 +3,17 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   extends: ['./layers/example'],
   modules: ['@nuxt/image'],
-  // `bun --bun nuxt generate playground --envName bunStatic` (see test/bun/static.test.ts)
   $env: {
+    // scripts/bench-image-engines.ts
+    benchBun: {
+      image: { provider: 'bun' },
+      nitro: { preset: 'bun', output: { dir: '.output/bench-bun' } },
+    },
+    benchIpx: {
+      image: { provider: 'ipx' },
+      nitro: { preset: 'node-server', output: { dir: '.output/bench-ipx' } },
+    },
+    // test/bun/static.test.ts
     bunStatic: {
       image: {
         provider: 'bunStatic',

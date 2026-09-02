@@ -92,6 +92,29 @@ The warning fires where the URL is generated (during SSR and in the browser) and
 
 Bun 1.4 resizes with `fill` and `inside` only. `cover` (the default when both `width` and `height` are given, matching ipx), `outside` and `contain` are emulated: the image is scaled so it covers or fits the box, but it is neither cropped nor padded, so the output can be larger or smaller than the box on one axis. Use CSS `object-fit` on the `<img>` when the exact box matters, or set `defaultFit: 'inside'`. Native support is detected at startup, so once Bun ships the remaining fit modes the provider uses them without a change.
 
+## Performance
+
+`pnpm bench:image-engines` builds the playground twice from the same code, ipx served by Node and the bun provider served by Bun, and sends both production servers the same requests. Broadly, on the machine below the bun provider:
+
+- transforms JPEG photos **1.2× to 1.9× faster** per request, with the largest gain on big outputs (a 1200 px wide JPEG from a 24 MP source: 250 ms with ipx, 140 ms with bun);
+- handles a mixed concurrent workload with **about 40% more throughput** and a **p95 latency 35% to 45% lower**;
+- serves a page with ten resized images **about 25% faster** (roughly 400 ms with ipx, 300 ms with bun, measured from the page request to the last image byte with six requests);
+- runs in **less than half the memory**, about 350 MB of server RSS against 750 MB to 800 MB for ipx after the same workload;
+- is **slower on PNG to PNG** re-encoding (about 14 ms against 11 ms) and produces **5% to 40% larger files** at the same nominal quality, most visibly on small WebP thumbnails, because the encoders and their defaults differ. Set `defaults` or a lower `quality` if bytes matter more than CPU time.
+
+The SVG row is not a like-for-like comparison: ipx optimises SVG with svgo, the bun provider serves it untouched, which is why it is ten times faster and returns the original size.
+
+| Request (median of 20, warm) | ipx (sharp) | bun (Bun.Image) |
+| --- | ---: | ---: |
+| 24 MP JPEG → 300×300 box, WebP | 157 ms · 21 KB | 125 ms · 30 KB |
+| 24 MP JPEG → 1200 px JPEG, q80 | 256 ms · 168 KB | 137 ms · 177 KB |
+| 2 MP JPEG → 640 px WebP | 101 ms · 115 KB | 87 ms · 119 KB |
+| PNG logo → 200 px WebP | 11 ms · 1.7 KB | 8 ms · 1.7 KB |
+| PNG logo → 400 px PNG | 11 ms · 14 KB | 15 ms · 16 KB |
+| 64 mixed requests, 8 in flight | 32 req/s, p95 446 ms | 44 req/s, p95 335 ms |
+
+Numbers move with hardware and versions; run the script on your own machine for the comparison that matters to you.
+
 ## Configuration
 
 ```ts [nuxt.config.ts]
