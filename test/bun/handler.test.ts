@@ -88,6 +88,16 @@ describe('bun provider: handler with real Bun.Image', () => {
     }
   })
 
+  it('encodes HEIC where the OS provides a codec and falls back to JPEG elsewhere', async () => {
+    const res = await get('/_bun/f_heic&w_50/images/colors.jpg')
+    expect(res.status).toBe(200)
+    const type = res.headers.get('content-type') || ''
+    expect(['image/heic', 'image/jpeg']).toContain(type)
+    if (type === 'image/jpeg') {
+      expect(logs.some(l => l.includes('cannot encode "heic"'))).toBe(true)
+    }
+  })
+
   it('ignores unsupported modifiers with a warning and still serves the image', async () => {
     const res = await get('/_bun/w_50&blur_5/images/colors.jpg')
     expect(res.status).toBe(200)

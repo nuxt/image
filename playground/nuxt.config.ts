@@ -3,6 +3,18 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   extends: ['./layers/example'],
   modules: ['@nuxt/image'],
+  // `bun --bun nuxt generate playground --envName bunStatic` (see test/bun/static.test.ts)
+  $env: {
+    bunStatic: {
+      image: {
+        provider: 'bunStatic',
+      },
+      nitro: {
+        output: { dir: '.output/bun-static' },
+        prerender: { routes: ['/provider/bun'], failOnError: false },
+      },
+    },
+  },
   compatibilityDate: '2024-08-27',
   nitro: {
     prerender: {

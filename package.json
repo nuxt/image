@@ -41,8 +41,8 @@
     "lint:fix": "eslint . --cache --fix",
     "prepack": "nuxt-module-build prepare && pnpm build",
     "test": "nuxt prepare playground && pnpm vitest run --coverage",
-    "test:bun": "bun test test/bun",
-    "test:types": "vue-tsc --noEmit",
+    "test:bun": "bun test --tsconfig-override tsconfig.bun.json test/bun",
+    "test:types": "vue-tsc --noEmit && tsc -p tsconfig.bun.json",
     "test:built:types": "nuxt typecheck playground && nuxt typecheck example"
   },
   "dependencies": {
