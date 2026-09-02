@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 import { images } from '../providers'
 
@@ -6,6 +6,7 @@ import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
 
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
+import bun from '../../dist/runtime/providers/bun'
 import none from '../../dist/runtime/providers/none'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
@@ -87,6 +88,35 @@ describe('Providers', () => {
     expect(generated).toMatchObject({
       url: '/_ipx/_/images/test.png',
     })
+  })
+
+  it('bun', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = bun().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.bun)
+    }
+  })
+
+  it('bun router base and custom baseURL', () => {
+    const src = '/images/test.png'
+    expect(bun().getImage(src, { modifiers: {} }, getEmptyContext())).toMatchObject({ url: '/_bun/_/images/test.png' })
+    expect(bun().getImage(src, { modifiers: { width: 10 }, baseURL: '/img' }, getEmptyContext())).toMatchObject({ url: '/img/w_10/images/test.png' })
+  })
+
+  it('bun warns once about modifiers Bun.Image cannot apply', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const context = getEmptyContext()
+    bun().getImage('/images/test.png', { modifiers: { blur: 5, width: 10 } }, context)
+    bun().getImage('/images/other.png', { modifiers: { blur: 5 } }, context)
+    expect(warn).toHaveBeenCalledOnce()
+    expect(warn.mock.calls[0]![0]).toContain('The "blur" modifier is not supported by the bun provider')
+    warn.mockClear()
+    bun().getImage('/images/test.png', { modifiers: { trim: 1 }, unsupported: 'silent' }, context)
+    expect(warn).not.toHaveBeenCalled()
+    warn.mockRestore()
   })
   it('aliyun', () => {
     const providerOptions = {

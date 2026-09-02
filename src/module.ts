@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
-import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
+import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate, useLogger, tryResolveModule } from '@nuxt/kit'
 import { join, relative, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders, isBuiltInProvider } from './provider'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
@@ -32,7 +32,6 @@ export default defineNuxtModule<ModuleOptions>({
     dirs: [],
     presets: {},
     domains: [] as string[],
-    sharp: {},
     format: ['webp'],
     // https://tailwindcss.com/docs/breakpoints
     screens: {
@@ -140,7 +139,8 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
 
     // Run setup
     for (const p of providers) {
-      if (typeof p.setup === 'function' && p.name !== 'ipx' && p.name !== 'ipxStatic') {
+      // self-hosted engines are set up in `nitro:init`
+      if (typeof p.setup === 'function' && !isSelfHostedProvider(p.name)) {
         await p.setup(p, options, nuxt)
       }
     }
@@ -184,36 +184,53 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
     })
 
     nuxt.hook('nitro:init', async (nitro) => {
-      if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic' || options.ipx) {
-        const hasExternalIPX = (options.ipx?.baseURL && hasProtocol(options.ipx.baseURL, { acceptRelative: true }))
-        const resolvedProvider = hasExternalIPX
-          ? 'ipx'
-          : nitro.options.static || options.provider === 'ipxStatic'
-            ? 'ipxStatic'
-            : nitro.options.node ? 'ipx' : 'none'
+      const explicit = options.provider as string | undefined
+      const wantsSelfHosted = !explicit || isSelfHostedProvider(explicit) || options.ipx || options.bun
+      if (!wantsSelfHosted) {
+        return
+      }
 
-        if (!options.provider || options.provider === 'ipx' || options.provider === 'ipxStatic') {
-          imageOptions.provider = options.provider = resolvedProvider
+      const engine = await resolveSelfHostedEngine(explicit, options, nitro.options.preset)
+      if (!engine) {
+        if (!explicit) {
+          imageOptions.provider = options.provider = 'none'
         }
+        return
+      }
 
-        // initialise provider options
-        if (resolvedProvider === 'ipxStatic') {
-          // handle the case of `ipx: {}` existing in options, but deploying a static site
-          options.ipxStatic ||= options.ipx || {}
-        }
-        else {
-          options[resolvedProvider] = options[resolvedProvider] || {}
-        }
+      const engineOptions = options[engine]
+      const hasExternalHandler = Boolean(engineOptions?.baseURL && hasProtocol(engineOptions.baseURL, { acceptRelative: true }))
+      const staticName = `${engine}Static` as const
+      const resolvedProvider: SelfHostedProvider | 'none' = hasExternalHandler
+        ? engine
+        : nitro.options.static || explicit === staticName
+          ? staticName
+          : nitro.options.node ? engine : 'none'
 
-        const p = await resolveProvider(nuxt, resolvedProvider, {
-          options: options[resolvedProvider],
-        })
-        if (!providers.some(p => p.name === resolvedProvider)) {
-          providers.push(p)
-        }
-        if (typeof p.setup === 'function') {
-          await p.setup(p, options, nuxt)
-        }
+      if (!explicit || isSelfHostedProvider(explicit)) {
+        imageOptions.provider = options.provider = resolvedProvider
+      }
+      if (resolvedProvider === 'none') {
+        return
+      }
+
+      // initialise provider options
+      if (resolvedProvider === staticName) {
+        // handle the case of `ipx: {}` / `bun: {}` existing in options, but deploying a static site
+        options[staticName] ||= engineOptions || {}
+      }
+      else {
+        options[resolvedProvider] = options[resolvedProvider] || {}
+      }
+
+      const p = await resolveProvider(nuxt, resolvedProvider, {
+        options: options[resolvedProvider],
+      })
+      if (!providers.some(p => p.name === resolvedProvider)) {
+        providers.push(p)
+      }
+      if (typeof p.setup === 'function') {
+        await p.setup(p, options, nuxt)
       }
     })
 
@@ -225,6 +242,42 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
     // TODO: Transform asset urls that pass to `src` attribute on image components
   },
 })
+
+type SelfHostedEngine = 'ipx' | 'bun'
+type SelfHostedProvider = SelfHostedEngine | 'ipxStatic' | 'bunStatic'
+
+const SELF_HOSTED_PROVIDERS = new Set<string>(['ipx', 'ipxStatic', 'bun', 'bunStatic'])
+
+function isSelfHostedProvider(name: string): name is SelfHostedProvider {
+  return SELF_HOSTED_PROVIDERS.has(name)
+}
+
+/**
+ * Which self-hosted engine to use: an explicit choice wins, then whichever
+ * engine has options configured, then Bun when the build runs on Bun or
+ * targets the `bun` Nitro preset, then ipx when it is installed.
+ */
+async function resolveSelfHostedEngine(explicit: string | undefined, options: ModuleOptions, preset: string | undefined): Promise<SelfHostedEngine | undefined> {
+  if (explicit === 'bun' || explicit === 'bunStatic') {
+    return 'bun'
+  }
+  if (explicit === 'ipx' || explicit === 'ipxStatic') {
+    return 'ipx'
+  }
+  if (options.bun) {
+    return 'bun'
+  }
+  if (options.ipx) {
+    return 'ipx'
+  }
+  if (process.versions.bun || preset === 'bun') {
+    return 'bun'
+  }
+  if (await tryResolveModule('ipx', import.meta.url)) {
+    return 'ipx'
+  }
+  useLogger('@nuxt/image').warn('No self-hosted image engine is available: install `ipx` (sharp) or run on Bun >= 1.4 for `Bun.Image`. Images will be served unoptimised (`provider: none`). Set `image.provider` to pick an engine explicitly.')
+}
 
 function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]): Pick<O, K> {
   const newobj = {} as Pick<O, K>

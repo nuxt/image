@@ -6,6 +6,7 @@ import { providers as playgroundProviders } from '../../playground/app/providers
 
 const missingProviderTests = [
   'ipxStatic', // build-time-only alias for ipx
+  'bunStatic', // build-time-only alias for bun
   'strapi', // covered in a unique test
   'strapi5', // covered in a unique test
 ]

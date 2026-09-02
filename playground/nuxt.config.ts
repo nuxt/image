@@ -20,6 +20,7 @@ export default defineNuxtConfig({
       750: 750,
     },
     none: {},
+    bun: {},
     ipx: {
       sharpOptions: {
         animated: true,
