@@ -67,6 +67,9 @@ importers:
       '@nuxt/test-utils':
         specifier: ^4.1.0
         version: 4.1.0(@vue/test-utils@2.4.11(@vue/compiler-dom@3.5.38)(@vue/server-renderer@3.5.38(vue@3.5.38(typescript@6.0.3)))(vue@3.5.38(typescript@6.0.3)))(esbuild@0.28.0)(happy-dom@20.11.1)(magicast@0.5.3)(playwright-core@1.62.0)(rolldown@1.2.0)(rollup@4.60.2)(typescript@6.0.3)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))(vitest@4.1.10)
+      '@types/bun':
+        specifier: ^1.4.0
+        version: 1.4.0
       '@types/node':
         specifier: ^24.13.3
         version: 24.13.3
@@ -3524,6 +3527,9 @@ packages:
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
 
+  '@types/bun@1.4.0':
+    resolution: {integrity: sha512-K+lZULY23vRgK/CfTjFIV+tyifaNdSMlPh9j+6mQ/cLfpOznLyAuzgV/JQysyECpkBQLVMSyvjlr2fBUSA9wFQ==}
+
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
@@ -4289,6 +4295,9 @@ packages:
   builtin-modules@5.0.0:
     resolution: {integrity: sha512-bkXY9WsVpY7CvMhKSR6pZilZu9Ln5WDrKVBUXf2S443etkmEO4V58heTecXcUIsNsi4Rx8JUO4NfX1IcQl4deg==}
     engines: {node: '>=18.20'}
+
+  bun-types@1.4.0:
+    resolution: {integrity: sha512-iIKw23BspnQQYd3prITOBxeUsxBHnwzX6YJfGMuNOZzeNcMmVqzIIVGRm1l69ogaPQmb4wB6BN8mA5bE9YuC5Q==}
 
   bundle-name@4.1.0:
     resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
@@ -11057,7 +11066,7 @@ snapshots:
       defu: 6.1.7
       h3: 1.15.11
       nuxt-site-config: 4.1.2(6e48cc8208698a25b905c922f26ed9f3)
-      nuxtseo-shared: 5.3.6(646a9fbc3d736c409c21b97241c83a96)
+      nuxtseo-shared: 5.3.6(02d083f3d1f6b1e7755011f2ffad0498)
       pathe: 2.0.3
       pkg-types: 2.3.1
       ufo: 1.6.4
@@ -12249,6 +12258,10 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
+  '@types/bun@1.4.0':
+    dependencies:
+      bun-types: 1.4.0
+
   '@types/chai@5.2.3':
     dependencies:
       '@types/deep-eql': 4.0.2
@@ -13142,6 +13155,10 @@ snapshots:
   buffered-async-iterable@1.0.1: {}
 
   builtin-modules@5.0.0: {}
+
+  bun-types@1.4.0:
+    dependencies:
+      '@types/node': 24.13.3
 
   bundle-name@4.1.0:
     dependencies:
@@ -16089,7 +16106,7 @@ snapshots:
       magicast: 0.5.3
       mocked-exports: 0.1.1
       nuxt-site-config: 4.1.2(714d30af539cd84b948e14a705e8d65a)
-      nuxtseo-shared: 5.3.6(dc5f4447d8ae10c3e6ba3aa7b817f8b0)
+      nuxtseo-shared: 5.3.6(09da85c45b9c6aad2e2c9c73f6cb7fcc)
       nypm: 0.6.8
       ofetch: 1.5.1
       ohash: 2.0.11
@@ -16164,7 +16181,7 @@ snapshots:
       '@nuxt/kit': 4.5.1(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))
       h3: 1.15.11
       nuxt-site-config-kit: 4.1.2(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))(vue@3.5.38(typescript@6.0.3))
-      nuxtseo-shared: 5.3.6(646a9fbc3d736c409c21b97241c83a96)
+      nuxtseo-shared: 5.3.6(02d083f3d1f6b1e7755011f2ffad0498)
       pathe: 2.0.3
       pkg-types: 2.3.1
       site-config-stack: 4.1.2(vue@3.5.38(typescript@6.0.3))
@@ -16187,7 +16204,7 @@ snapshots:
       '@nuxt/kit': 4.5.1(magic-string@0.30.21)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))
       h3: 1.15.11
       nuxt-site-config-kit: 4.1.2(magic-string@0.30.21)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))(vue@3.5.38(typescript@6.0.3))
-      nuxtseo-shared: 5.3.6(dc5f4447d8ae10c3e6ba3aa7b817f8b0)
+      nuxtseo-shared: 5.3.6(09da85c45b9c6aad2e2c9c73f6cb7fcc)
       pathe: 2.0.3
       pkg-types: 2.3.1
       site-config-stack: 4.1.2(vue@3.5.38(typescript@6.0.3))
@@ -16482,7 +16499,7 @@ snapshots:
       - xml2js
       - yaml
 
-  nuxtseo-shared@5.3.6(646a9fbc3d736c409c21b97241c83a96):
+  nuxtseo-shared@5.3.6(02d083f3d1f6b1e7755011f2ffad0498):
     dependencies:
       '@clack/prompts': 1.7.0
       '@nuxt/devtools-kit': 4.0.0-alpha.7(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))
@@ -16502,7 +16519,7 @@ snapshots:
       ufo: 1.6.4
       vue: 3.5.38(typescript@6.0.3)
     optionalDependencies:
-      nuxt-site-config: 4.1.2(714d30af539cd84b948e14a705e8d65a)
+      nuxt-site-config: 4.1.2(6e48cc8208698a25b905c922f26ed9f3)
       zod: 4.4.3
     transitivePeerDependencies:
       - magic-string
@@ -16512,7 +16529,7 @@ snapshots:
       - unplugin
       - vite
 
-  nuxtseo-shared@5.3.6(dc5f4447d8ae10c3e6ba3aa7b817f8b0):
+  nuxtseo-shared@5.3.6(09da85c45b9c6aad2e2c9c73f6cb7fcc):
     dependencies:
       '@clack/prompts': 1.7.0
       '@nuxt/devtools-kit': 4.0.0-alpha.7(magic-string@0.30.21)(magicast@0.5.3)(oxc-parser@0.135.0)(rolldown@1.2.0)(unplugin@3.3.0(esbuild@0.28.0)(rolldown@1.2.0)(rollup@4.60.2)(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)))(vite@8.1.5(@types/node@24.13.3)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))
@@ -16532,7 +16549,7 @@ snapshots:
       ufo: 1.6.4
       vue: 3.5.38(typescript@6.0.3)
     optionalDependencies:
-      nuxt-site-config: 4.1.2(714d30af539cd84b948e14a705e8d65a)
+      nuxt-site-config: 4.1.2(6e48cc8208698a25b905c922f26ed9f3)
       zod: 4.4.3
     transitivePeerDependencies:
       - magic-string

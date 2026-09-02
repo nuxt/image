@@ -41,6 +41,7 @@
     "lint:fix": "eslint . --cache --fix",
     "prepack": "nuxt-module-build prepare && pnpm build",
     "test": "nuxt prepare playground && pnpm vitest run --coverage",
+    "test:bun": "bun test test/bun",
     "test:types": "vue-tsc --noEmit",
     "test:built:types": "nuxt typecheck playground && nuxt typecheck example"
   },
@@ -61,6 +62,7 @@
     "@nuxt/module-builder": "1.0.3",
     "@nuxt/schema": "4.5.1",
     "@nuxt/test-utils": "^4.1.0",
+    "@types/bun": "^1.4.0",
     "@types/node": "^24.13.3",
     "@unhead/vue": "^3.2.3",
     "@vitest/coverage-v8": "^4.1.10",

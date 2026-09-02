@@ -7,7 +7,8 @@ export default defineConfig({
       {
         test: {
           name: 'unit',
-          exclude: ['test/nuxt/**', 'test/e2e/**', ...defaultExclude],
+          // test/bun runs under `bun test`
+          exclude: ['test/nuxt/**', 'test/e2e/**', 'test/bun/**', ...defaultExclude],
         },
       },
       defineVitestProject({
