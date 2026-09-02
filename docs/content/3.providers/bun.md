@@ -8,7 +8,7 @@ links:
     size: xs
 ---
 
-The `bun` provider transforms images with [`Bun.Image`](https://bun.com/docs/runtime/image), the image pipeline built into the Bun runtime. It is the self-hosted alternative to [ipx](/providers/ipx): the same URLs and modifier names, but no `sharp`, no native binaries and no `@img/*` packages to install or trace into your build.
+The `bun` provider transforms images with [`Bun.Image`](https://bun.com/docs/runtime/image), the image pipeline built into the Bun runtime. It is the self-hosted alternative to [ipx](/providers/ipx): the same URLs and modifier names, but no `sharp`, no native binaries and no `@img/*` packages to install or trace into your build. In [benchmarks](#performance) it also resizes JPEG photos 1.2× to 1.9× faster than ipx, serves about 40% more requests per second under load and uses less than half the memory, at the cost of somewhat larger output files.
 
 ::warning
 The `bun` provider needs **Bun 1.4.0 or newer** wherever images are transformed: the dev server, the production server, and the build process when you prerender. See [Running on Bun](#running-on-bun).
@@ -16,11 +16,11 @@ The `bun` provider needs **Bun 1.4.0 or newer** wherever images are transformed:
 
 ## Support matrix
 
-`Bun.Image` implements a subset of what Sharp offers. Every modifier ipx accepts is listed below with its status on the `bun` provider. Modifiers marked ❌ or ⏳ are ignored and produce a console warning (see [Unsupported modifiers](#unsupported-modifiers)).
+Currently, `Bun.Image` implements a subset of what sharp offers. Every modifier ipx accepts is listed below with its status on the `bun` provider. Modifiers marked ❌ or ⏳ are ignored and produce a console warning (see [Unsupported modifiers](#unsupported-modifiers)).
 
 Legend: ✅ Works as with ipx · 🟡 Partial or emulated, read the note · ⏳ Waits on an open Bun pull request · ❌ Not available, a console warning is emitted.
 
-| Status | Modifier | ipx / Sharp | Bun.Image | Note |
+| Status | Modifier | ipx / sharp | Bun.Image | Note |
 | :---: | --- | --- | --- | --- |
 | ✅ | `width`, `w` | resize width | resize width |  |
 | ✅ | `height`, `h` | resize height | resize height | Source size is read first. |
