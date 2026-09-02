@@ -45,15 +45,15 @@ export const BUN_MODIFIERS: Record<string, BunModifierInfo> = {
   dilate: { status: 'unsupported', note: 'Bun.Image has no morphology operations.' },
   erode: { status: 'unsupported', note: 'Bun.Image has no morphology operations.' },
   clahe: { status: 'unsupported', note: 'Bun.Image has no CLAHE operation.' },
-  flatten: { status: 'unsupported', note: 'Bun.Image has no flatten operation.' },
-  unflatten: { status: 'unsupported', note: 'Bun.Image has no unflatten operation.' },
+  flatten: { status: 'unsupported', note: 'Bun.Image has no flatten or unflatten operation.' },
+  unflatten: { status: 'unsupported', note: 'Bun.Image has no flatten or unflatten operation.' },
   gamma: { status: 'unsupported', note: 'Bun.Image has no gamma operation.' },
   negate: { status: 'unsupported', note: 'Bun.Image has no negate operation.' },
   normalize: { status: 'unsupported', note: 'Bun.Image has no normalize operation.' },
   threshold: { status: 'unsupported', note: 'Bun.Image has no threshold operation.' },
   linear: { status: 'unsupported', note: 'Bun.Image has no linear operation.' },
-  hue: { status: 'unsupported', note: 'Bun.Image modulate has no hue.' },
-  lightness: { status: 'unsupported', note: 'Bun.Image modulate has no lightness.' },
+  hue: { status: 'unsupported', note: 'Bun.Image modulate has no hue or lightness.' },
+  lightness: { status: 'unsupported', note: 'Bun.Image modulate has no hue or lightness.' },
 }
 
 /** Short ipx aliases, resolved to their canonical modifier name. */

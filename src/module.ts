@@ -264,10 +264,12 @@ async function resolveSelfHostedEngine(explicit: string | undefined, options: Mo
   if (explicit === 'ipx' || explicit === 'ipxStatic') {
     return 'ipx'
   }
-  if (options.bun) {
+  const hasBunOptions = Boolean(options.bun)
+  const hasIpxOptions = Boolean(options.ipx)
+  if (hasBunOptions && !hasIpxOptions) {
     return 'bun'
   }
-  if (options.ipx) {
+  if (hasIpxOptions && !hasBunOptions) {
     return 'ipx'
   }
   if (process.versions.bun || preset === 'bun') {
@@ -275,6 +277,9 @@ async function resolveSelfHostedEngine(explicit: string | undefined, options: Mo
   }
   if (await tryResolveModule('ipx', import.meta.url)) {
     return 'ipx'
+  }
+  if (hasBunOptions) {
+    return 'bun'
   }
   useLogger('@nuxt/image').warn('No self-hosted image engine is available: install `ipx` (sharp) or run on Bun >= 1.4 for `Bun.Image`. Images will be served unoptimised (`provider: none`). Set `image.provider` to pick an engine explicitly.')
 }
