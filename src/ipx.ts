@@ -2,11 +2,9 @@ import { arch, platform } from 'node:os'
 import { readdir } from 'node:fs/promises'
 import { join, relative } from 'pathe'
 import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
-import type { NitroEventHandler } from 'nitropack'
-import { defu } from 'defu'
-import { hasProtocol } from 'ufo'
 import type { ProviderSetup } from './types'
 import type { IPXRuntimeConfig } from './runtime/providers/ipx'
+import { hasUserProvidedHandler, registerSelfHostedHandler } from './self-hosted'
 
 type IPXSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
@@ -18,11 +16,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   const ipxBaseURL = providerOptions.options?.baseURL || '/_ipx'
 
   // Avoid overriding user custom handler
-  const hasUserProvidedIPX = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
-    || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(ipxBaseURL))
-    || hasProtocol(ipxBaseURL, { acceptRelative: true })
-
-  if (hasUserProvidedIPX) {
+  if (hasUserProvidedHandler(nuxt, ipxBaseURL)) {
     return
   }
 
@@ -45,24 +39,14 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
     },
   }
 
-  nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
-  nitro.options.runtimeConfig.ipx = defu(nitro.options.runtimeConfig.ipx, ipxOptions)
-
-  const ipxHandler = {
-    route: `${ipxBaseURL}/**`,
-    middleware: false,
+  registerSelfHostedHandler(nitro, {
+    baseURL: ipxBaseURL,
+    runtimeConfigKey: 'ipx',
     handler: resolver.resolve('./runtime/server/routes/_ipx'),
-  } satisfies NitroEventHandler
-
-  if (!setupOptions?.isStatic) {
-    nitro.options.handlers.push(ipxHandler)
-  }
-
-  // Prerenderer
-  if (!nitro.options.dev) {
-    nitro.options._config.runtimeConfig.ipx = defu({ fs: { dir: moduleOptions.dirs } }, ipxOptions)
-    nitro.options._config.handlers!.push(ipxHandler)
-  }
+    runtimeOptions: ipxOptions,
+    prerenderOptions: { fs: { dir: moduleOptions.dirs } },
+    isStatic: setupOptions?.isStatic,
+  })
 
   if (!nuxt.options.dev && !setupOptions?.isStatic) {
     nitro.hooks.hook('compiled', async () => {
