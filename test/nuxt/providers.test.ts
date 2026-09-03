@@ -107,9 +107,20 @@ describe('Providers', () => {
     expect(bun().getImage(src, { modifiers: { width: 10 }, baseURL: '/img' }, getEmptyContext())).toMatchObject({ url: '/img/w_10/images/test.png' })
   })
 
-  it('bunStatic collapses repeated slashes in the source but keeps an external baseURL intact', () => {
+  it('bunStatic collapses repeated slashes in a local pathname only', () => {
     expect(bunStatic().getImage('/images//test.png', { modifiers: { width: 10 } }, getEmptyContext())).toMatchObject({ url: '/_bun/w_10/images/test.png' })
+    // query and fragment are left alone (and percent-encoded by encodePath, as for every provider)
+    expect(bunStatic().getImage('/images//test.png?v=1//2#a//b', { modifiers: { width: 10 } }, getEmptyContext()))
+      .toEqual(bun().getImage('/images/test.png?v=1//2#a//b', { modifiers: { width: 10 } }, getEmptyContext()))
     expect(bunStatic().getImage('/images/test.png', { modifiers: { width: 10 }, baseURL: 'https://images.example.com/_bun' }, getEmptyContext())).toMatchObject({ url: 'https://images.example.com/_bun/w_10/images/test.png' })
+  })
+
+  it('bunStatic leaves absolute source URLs exactly as the bun provider does', () => {
+    for (const src of ['https://cdn.example.com/a//b.jpg?token=x//y&w=1', '//cdn.example.com/a//b.jpg']) {
+      const expected = bun().getImage(src, { modifiers: { width: 10 } }, getEmptyContext())
+      expect(expected.url).toContain('a//b.jpg')
+      expect(bunStatic().getImage(src, { modifiers: { width: 10 } }, getEmptyContext())).toEqual(expected)
+    }
   })
 
   it('bun warns once about modifiers Bun.Image cannot apply', () => {

@@ -115,13 +115,13 @@ export function createHTTPStorage(options: BunImageHTTPOptions = {}): ImageStora
   const defaultMaxAge = options.maxAge ?? 300
   const fetchOptions = options.fetchOptions || {}
 
-  // credentials configured in fetchOptions are only sent to the original origin
-  function headersFor(sameOrigin: boolean): Headers | undefined {
+  // credentials configured in fetchOptions are only sent over HTTPS to the original origin
+  function headersFor(trusted: boolean): Headers | undefined {
     if (!fetchOptions.headers) {
       return undefined
     }
     const headers = new Headers(fetchOptions.headers)
-    if (!sameOrigin) {
+    if (!trusted) {
       for (const name of CREDENTIAL_HEADERS) {
         headers.delete(name)
       }
@@ -156,7 +156,7 @@ export function createHTTPStorage(options: BunImageHTTPOptions = {}): ImageStora
     for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
       let response: Response
       try {
-        response = await fetch(current, { ...fetchOptions, headers: headersFor(current.origin === url.origin), redirect: 'manual' })
+        response = await fetch(current, { ...fetchOptions, headers: headersFor(current.origin === url.origin && current.protocol === 'https:'), redirect: 'manual' })
       }
       catch (error) {
         throw new BunImageError(502, 'BUN_IMAGE_FETCH_FAILED', `Cannot fetch: ${id}`, { cause: error })

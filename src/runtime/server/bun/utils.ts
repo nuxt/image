@@ -46,7 +46,11 @@ export interface BunImageHTTPOptions {
   maxAge?: number
   /** Ignore upstream `cache-control` and always use `maxAge`. */
   ignoreCacheControl?: boolean
-  /** Extra `fetch` options (headers, etc.). */
+  /**
+   * Extra `fetch` options (headers, etc.). `authorization`, `proxy-authorization`
+   * and `cookie` headers are only sent over HTTPS to the requested origin, never
+   * on plain HTTP or after a redirect to another origin.
+   */
   fetchOptions?: RequestInit
 }
 

@@ -147,7 +147,7 @@ export default defineNuxtConfig({
 | `maxOutputDimension` | `8192` | Cap on output width and height, `false` to disable. |
 | `maxPixels` | Bun default | Reject sources with more pixels, before decoding. |
 | `fs` | `{ dir: <public dirs> }` | Local storage. `false` to disable. Accepts `maxAge` and `allowSymlinksOutsideDir`. |
-| `http` | `{ domains: <image.domains> }` | Remote storage. `false` to disable. Accepts `allowAllDomains`, `maxAge`, `ignoreCacheControl`, `fetchOptions`. |
+| `http` | `{ domains: <image.domains> }` | Remote storage. `false` to disable. Accepts `allowAllDomains`, `maxAge`, `ignoreCacheControl`, `fetchOptions`. Credential headers in `fetchOptions` are only sent over HTTPS to the requested origin. |
 | `unsupported` | `'warn'` | What to do with modifiers Bun.Image cannot apply. |
 | `defaultFit` | `'cover'` | Fit used when both `width` and `height` are given without `fit`. |
 | `defaults` | `{}` | Per-format encoder defaults. |

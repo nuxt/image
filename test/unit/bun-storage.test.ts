@@ -150,6 +150,18 @@ describe('bun provider: http storage', () => {
     ])
   })
 
+  it('never sends configured credentials over plain HTTP', async () => {
+    const seen: (string | null)[] = []
+    stubFetch((_url, init) => {
+      seen.push(new Headers(init?.headers).get('authorization'))
+      return new Response('x')
+    })
+    const storage = createHTTPStorage({ domains: ['example.com'], fetchOptions: { headers: { authorization: 'Bearer secret' } } })
+    await storage.resolve('http://example.com/a')
+    await storage.resolve('https://example.com/a')
+    expect(seen).toEqual([null, 'Bearer secret'])
+  })
+
   it('gives up after too many redirects', async () => {
     stubFetch(() => new Response(null, { status: 302, headers: { location: '/loop' } }))
     await expect(createHTTPStorage({ domains: 'example.com' }).resolve('https://example.com/a')).rejects.toMatchObject({ code: 'BUN_IMAGE_TOO_MANY_REDIRECTS' })
