@@ -125,6 +125,31 @@ describe('bun provider: http storage', () => {
     await expect(strict.resolve('https://example.com/a')).rejects.toMatchObject({ statusCode: 403, code: 'BUN_IMAGE_FORBIDDEN_HOST' })
   })
 
+  it('sends configured credentials to the original origin only', async () => {
+    const seen: Record<string, string | null>[] = []
+    stubFetch((url, init) => {
+      const headers = new Headers(init?.headers)
+      seen.push({ url, authorization: headers.get('authorization'), cookie: headers.get('cookie'), accept: headers.get('accept') })
+      if (url === 'https://example.com/a') {
+        return new Response(null, { status: 302, headers: { location: '/b' } })
+      }
+      if (url === 'https://example.com/b') {
+        return new Response(null, { status: 302, headers: { location: 'https://cdn.example.com/c' } })
+      }
+      return new Response('final')
+    })
+    const storage = createHTTPStorage({
+      domains: ['example.com', 'cdn.example.com'],
+      fetchOptions: { headers: { authorization: 'Bearer secret', cookie: 'session=1', accept: 'image/*' } },
+    })
+    await storage.resolve('https://example.com/a')
+    expect(seen).toEqual([
+      { url: 'https://example.com/a', authorization: 'Bearer secret', cookie: 'session=1', accept: 'image/*' },
+      { url: 'https://example.com/b', authorization: 'Bearer secret', cookie: 'session=1', accept: 'image/*' },
+      { url: 'https://cdn.example.com/c', authorization: null, cookie: null, accept: 'image/*' },
+    ])
+  })
+
   it('gives up after too many redirects', async () => {
     stubFetch(() => new Response(null, { status: 302, headers: { location: '/loop' } }))
     await expect(createHTTPStorage({ domains: 'example.com' }).resolve('https://example.com/a')).rejects.toMatchObject({ code: 'BUN_IMAGE_TOO_MANY_REDIRECTS' })

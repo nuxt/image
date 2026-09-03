@@ -9,9 +9,21 @@ const BUN_MIN_VERSION = '1.4.0'
 
 type BunSetupT = (setupOptions?: { isStatic: boolean }) => ProviderSetup
 
-/** Whether the current process is Bun (`bun --bun nuxt dev`, `bun --bun nuxt generate`). */
-function isRunningOnBun(): boolean {
-  return Boolean(process.versions.bun)
+function compareVersions(a: string, b: string): number {
+  const pa = a.split('.').map(part => Number.parseInt(part, 10) || 0)
+  const pb = b.split('.').map(part => Number.parseInt(part, 10) || 0)
+  for (let i = 0; i < 3; i++) {
+    if ((pa[i] || 0) !== (pb[i] || 0)) {
+      return (pa[i] || 0) - (pb[i] || 0)
+    }
+  }
+  return 0
+}
+
+/** Whether the current process is a Bun runtime that has `Bun.Image` (`bun --bun nuxt dev`, `bun --bun nuxt generate`). */
+export function isSupportedBunRuntime(): boolean {
+  const version = process.versions.bun
+  return Boolean(version) && compareVersions(version!, BUN_MIN_VERSION) >= 0
 }
 
 export const bunSetup: BunSetupT = setupOptions => (providerOptions, moduleOptions) => {
@@ -54,8 +66,11 @@ export const bunSetup: BunSetupT = setupOptions => (providerOptions, moduleOptio
     isStatic: setupOptions?.isStatic,
   })
 
-  const onBun = isRunningOnBun()
-  if (nuxt.options.dev && !onBun) {
+  const onBun = isSupportedBunRuntime()
+  if (process.versions.bun && !onBun) {
+    logger.warn(`The \`bun\` image provider needs Bun >= ${BUN_MIN_VERSION}, found ${process.versions.bun}.`)
+  }
+  else if (nuxt.options.dev && !onBun) {
     logger.warn(`The \`bun\` image provider needs the Bun runtime (>= ${BUN_MIN_VERSION}). Start the dev server with \`bun --bun nuxt dev\`, or set \`image.provider\` to \`ipx\`.`)
   }
   else if (setupOptions?.isStatic && !onBun) {

@@ -4,6 +4,7 @@ import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate, useLogger, tryResolveModule } from '@nuxt/kit'
 import { join, relative, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders, isBuiltInProvider } from './provider'
+import { isSupportedBunRuntime } from './bun'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
 import { existsSync } from 'node:fs'
 
@@ -272,7 +273,7 @@ async function resolveSelfHostedEngine(explicit: string | undefined, options: Mo
   if (hasIpxOptions && !hasBunOptions) {
     return 'ipx'
   }
-  if (process.versions.bun || preset === 'bun') {
+  if (isSupportedBunRuntime() || preset === 'bun') {
     return 'bun'
   }
   if (await tryResolveModule('ipx', import.meta.url)) {

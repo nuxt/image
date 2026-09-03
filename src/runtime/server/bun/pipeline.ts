@@ -380,8 +380,8 @@ export async function processImage(Image: BunImageConstructor, source: Uint8Arra
       notes.push('fit: contain emulated as inside (no padding)')
     }
     else {
-      const dims = fitDimensions(meta!, { width: requested.width, height: requested.height }, 'outside', parsed.enlarge)
-      resize = { width: dims.width, height: dims.height, options: { ...base, fit: 'fill', withoutEnlargement: false } }
+      const dims = clampToMaxDimension(fitDimensions(meta!, { width: requested.width, height: requested.height }, 'outside', parsed.enlarge), maxOutputDimension)
+      resize = { width: dims.width!, height: dims.height!, options: { ...base, fit: 'fill', withoutEnlargement: false } }
       notes.push(`fit: ${fit} emulated as outside (no crop)`)
     }
   }

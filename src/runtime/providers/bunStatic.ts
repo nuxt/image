@@ -7,7 +7,7 @@ export default defineProvider<Partial<BunOptions>>({
   supportsAlias: true,
   getImage(src, { modifiers, baseURL, unsupported }, ctx) {
     return {
-      url: getBunImageURL(src, modifiers, baseURL, ctx.options.nuxt.baseURL, unsupported).replace(/\/{2,}/g, '/'),
+      url: getBunImageURL(src.replace(/\/{2,}/g, '/'), modifiers, baseURL, ctx.options.nuxt.baseURL, unsupported),
     }
   },
 })

@@ -91,7 +91,8 @@ async function timedFetch(url: string): Promise<{ ms: number, bytes: number, sta
 
 function stats(samples: number[]) {
   const sorted = [...samples].sort((a, b) => a - b)
-  const at = (q: number) => sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))]!
+  // nearest-rank percentile
+  const at = (q: number) => sorted[Math.max(0, Math.min(sorted.length - 1, Math.ceil(q * sorted.length) - 1))]!
   return { median: at(0.5), p95: at(0.95), mean: sorted.reduce((a, b) => a + b, 0) / sorted.length, min: sorted[0]!, max: sorted[sorted.length - 1]! }
 }
 

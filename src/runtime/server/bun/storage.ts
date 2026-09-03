@@ -93,6 +93,7 @@ export function createFSStorage(options: BunImageFSOptions = {}): ImageStorage {
 
 const REDIRECT_STATUS = new Set([301, 302, 303, 307, 308])
 const MAX_REDIRECTS = 3
+const CREDENTIAL_HEADERS = ['authorization', 'proxy-authorization', 'cookie']
 
 function parseMaxAge(cacheControl: string | null): number | undefined {
   const match = cacheControl?.match(/(?:^|,)\s*(?:s-maxage|max-age)\s*=\s*(\d+)/i)
@@ -113,6 +114,20 @@ export function createHTTPStorage(options: BunImageHTTPOptions = {}): ImageStora
   }))
   const defaultMaxAge = options.maxAge ?? 300
   const fetchOptions = options.fetchOptions || {}
+
+  // credentials configured in fetchOptions are only sent to the original origin
+  function headersFor(sameOrigin: boolean): Headers | undefined {
+    if (!fetchOptions.headers) {
+      return undefined
+    }
+    const headers = new Headers(fetchOptions.headers)
+    if (!sameOrigin) {
+      for (const name of CREDENTIAL_HEADERS) {
+        headers.delete(name)
+      }
+    }
+    return headers
+  }
 
   function validate(url: URL, id: string) {
     if (!url.hostname) {
@@ -141,7 +156,7 @@ export function createHTTPStorage(options: BunImageHTTPOptions = {}): ImageStora
     for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
       let response: Response
       try {
-        response = await fetch(current, { ...fetchOptions, redirect: 'manual' })
+        response = await fetch(current, { ...fetchOptions, headers: headersFor(current.origin === url.origin), redirect: 'manual' })
       }
       catch (error) {
         throw new BunImageError(502, 'BUN_IMAGE_FETCH_FAILED', `Cannot fetch: ${id}`, { cause: error })

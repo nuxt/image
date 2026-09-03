@@ -155,6 +155,13 @@ describe('bun provider: pipeline', () => {
       expect(calls[0]!.args).toEqual([300, 300, { fit: 'inside', withoutEnlargement: true }])
     })
 
+    it('clamps the emulated outside box to maxOutputDimension', async () => {
+      const { Image, calls } = createFakeImage({ width: 4000, height: 1000 })
+      await processImage(Image, source, { s: '3000x3000', enlarge: '' }, { maxOutputDimension: 8192 })
+      // outside would be 12000x3000; the clamp keeps the aspect ratio under the cap
+      expect(calls[1]!.args).toEqual([8192, 2048, { fit: 'fill', withoutEnlargement: false }])
+    })
+
     it('clamps huge requests to maxOutputDimension', async () => {
       const { Image, calls } = createFakeImage()
       await processImage(Image, source, { s: '20000x10000', fit: 'fill', enlarge: '' }, { maxOutputDimension: 8192 })

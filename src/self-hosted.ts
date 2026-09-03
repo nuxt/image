@@ -28,9 +28,11 @@ export interface SelfHostedHandlerOptions<T extends object> {
  * an external origin. In both cases the module must not register its own.
  */
 export function hasUserProvidedHandler(nuxt: Nuxt, baseURL: string): boolean {
+  const base = baseURL.replace(/\/+$/, '')
+  const isUnderBase = (route?: string) => Boolean(route) && (route === base || route!.startsWith(`${base}/`))
   return Boolean(
-    nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(baseURL))
-    || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(baseURL))
+    nuxt.options.serverHandlers.find(handler => isUnderBase(handler.route))
+    || nuxt.options.devServerHandlers.find(handler => isUnderBase(handler.route))
     || hasProtocol(baseURL, { acceptRelative: true }),
   )
 }

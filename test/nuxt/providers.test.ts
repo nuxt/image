@@ -7,6 +7,7 @@ import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
 import bun from '../../dist/runtime/providers/bun'
+import bunStatic from '../../dist/runtime/providers/bunStatic'
 import none from '../../dist/runtime/providers/none'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
@@ -104,6 +105,11 @@ describe('Providers', () => {
     const src = '/images/test.png'
     expect(bun().getImage(src, { modifiers: {} }, getEmptyContext())).toMatchObject({ url: '/_bun/_/images/test.png' })
     expect(bun().getImage(src, { modifiers: { width: 10 }, baseURL: '/img' }, getEmptyContext())).toMatchObject({ url: '/img/w_10/images/test.png' })
+  })
+
+  it('bunStatic collapses repeated slashes in the source but keeps an external baseURL intact', () => {
+    expect(bunStatic().getImage('/images//test.png', { modifiers: { width: 10 } }, getEmptyContext())).toMatchObject({ url: '/_bun/w_10/images/test.png' })
+    expect(bunStatic().getImage('/images/test.png', { modifiers: { width: 10 }, baseURL: 'https://images.example.com/_bun' }, getEmptyContext())).toMatchObject({ url: 'https://images.example.com/_bun/w_10/images/test.png' })
   })
 
   it('bun warns once about modifiers Bun.Image cannot apply', () => {
