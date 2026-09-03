@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { CreateImageOptions } from '@nuxt/image'
-import { getStaticImagePrefixes } from '../../src/runtime/utils/prerender'
+import { getStaticImagePrefixes, matchStaticImagePaths } from '../../src/runtime/utils/prerender'
 
 function options(providers: Record<string, { baseURL?: string } | undefined>, baseURL = '/'): CreateImageOptions {
   return {
@@ -28,5 +28,28 @@ describe('static image prerender prefixes', () => {
   it('caches per options object', () => {
     const opts = options({ bun: {} })
     expect(getStaticImagePrefixes(opts)).toBe(getStaticImagePrefixes(opts))
+  })
+})
+
+describe('static image path matching', () => {
+  it('collects local src and srcset entries under a configured prefix', () => {
+    expect(matchStaticImagePaths('/_bun/w_100/a.jpg', '/_bun/w_100/a.jpg 100w, /_bun/w_200/a.jpg 200w'))
+      .toEqual(['/_bun/w_100/a.jpg', '/_bun/w_100/a.jpg', '/_bun/w_200/a.jpg'])
+    expect(matchStaticImagePaths('/img/w_100/a.jpg?x=1', '', ['/img/'])).toEqual(['/img/w_100/a.jpg?x=1'])
+    expect(matchStaticImagePaths('/app/_ipx/w_100/a.jpg', '', ['/app/_ipx/'])).toEqual(['/app/_ipx/w_100/a.jpg'])
+  })
+
+  it('matches at a route boundary only', () => {
+    expect(matchStaticImagePaths('/imgs/w_100/a.jpg', '', ['/img/'])).toEqual([])
+    expect(matchStaticImagePaths('/_bunny/w_100/a.jpg', '', ['/_bun/'])).toEqual([])
+    expect(matchStaticImagePaths('/a/_bun/w_100/a.jpg', '')).toEqual([])
+  })
+
+  it('ignores external URLs and prefixes that only appear in the query or fragment', () => {
+    expect(matchStaticImagePaths('https://cdn.example.com/img/a.jpg', '', ['/img/'])).toEqual([])
+    expect(matchStaticImagePaths('//cdn.example.com/_bun/a.jpg', '')).toEqual([])
+    expect(matchStaticImagePaths('/other.jpg?redirect=/img/a.jpg', '', ['/img/'])).toEqual([])
+    expect(matchStaticImagePaths('/other.jpg#/img/a.jpg', '', ['/img/'])).toEqual([])
+    expect(matchStaticImagePaths('', 'https://cdn.example.com/_ipx/a.jpg 100w')).toEqual([])
   })
 })
