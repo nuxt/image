@@ -1,7 +1,7 @@
 import { withBase } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
-import { createError } from '#imports'
+import { HTTPError } from 'h3'
 
 const operationsGenerator = createOperationsGenerator({
   keyMap: {
@@ -100,17 +100,15 @@ export default defineProvider<WeservOptions>({
 
     if (typeof options.baseURL !== 'string' || options.baseURL.length === 0) {
       if (import.meta.dev) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Internal Server Error',
+        throw new HTTPError({
+          status: 500,
+          statusText: 'Internal Server Error',
           message: 'The weserv provider requires the baseURL of your website.',
           data: {
             provider: 'weserv',
             src,
             modifiers: options.modifiers,
           },
-          fatal: true,
-          name: 'NuxtImageError',
         })
       }
       else {

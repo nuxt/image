@@ -5,7 +5,7 @@ import type { Img } from '@nuxt/image'
 
 // @ts-expect-error virtual file
 import { imageOptions } from '#internal/nuxt-image'
-import { useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from 'nitro/runtime-config'
 
 export const useImage = (event?: H3Event): Img => {
   const config = useRuntimeConfig()
