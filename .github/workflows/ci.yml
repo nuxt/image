@@ -59,10 +59,6 @@ jobs:
       - uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           cache: true
-          install: false
-
-      - name: 📦 Install dependencies
-        run: pnpm install
         
       - run: pnpm dev:prepare
 
@@ -91,10 +87,6 @@ jobs:
         with:
           runtime: node@22
           cache: true
-          install: false
-
-      - name: 📦 Install dependencies
-        run: pnpm install
 
       - name: Install Playwright
         # does not need to explicitly set chromium after https://github.com/microsoft/playwright/issues/14862 is solved

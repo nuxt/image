@@ -26,10 +26,6 @@ jobs:
         with:
           runtime: node@latest
           cache: true
-          install: false
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Prepare build environment
         run: pnpm dev:prepare
