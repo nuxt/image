@@ -24,7 +24,6 @@ jobs:
           persist-credentials: false
       - uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
-          runtime: node@latest
           cache: true
 
       - name: Prepare build environment
@@ -33,7 +32,7 @@ jobs:
       - run: pnpm build
 
       - name: publish nightly release
-        run: pnpm pkg-pr-new publish --compact
+        run: pnpm pkg-pr-new publish --compact --pnpm
 
   release-nightly:
     runs-on: ubuntu-latest
