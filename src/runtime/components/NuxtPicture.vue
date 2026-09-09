@@ -27,7 +27,7 @@ import type { ImgHTMLAttributes } from 'vue'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
-import { prerenderStaticImages } from '../utils/prerender'
+import { getStaticImagePrefixes, prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
@@ -144,7 +144,7 @@ if (import.meta.server && props.preload) {
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
   for (const src of sources.value) {
-    prerenderStaticImages(src.src, src.srcset, useRequestEvent())
+    prerenderStaticImages(src.src, src.srcset, useRequestEvent(), getStaticImagePrefixes($img.options))
   }
 }
 

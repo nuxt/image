@@ -1,0 +1,19 @@
+{
+  // Typechecks and runs test/bun. Has no `paths`: Bun applies tsconfig paths at runtime,
+  // and the Nuxt-generated ones would make it load package directories instead of `exports`.
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "types": ["bun"]
+  },
+  "include": [
+    "test/bun/**/*.ts",
+    "src/runtime/server/bun/**/*.ts",
+    "src/runtime/utils/bun-modifiers.ts"
+  ]
+}

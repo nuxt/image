@@ -3,6 +3,27 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   extends: ['./layers/example'],
   modules: ['@nuxt/image'],
+  $env: {
+    // scripts/bench-image-engines.ts
+    benchBun: {
+      image: { provider: 'bun' },
+      nitro: { preset: 'bun', output: { dir: '.output/bench-bun' } },
+    },
+    benchIpx: {
+      image: { provider: 'ipx' },
+      nitro: { preset: 'node-server', output: { dir: '.output/bench-ipx' } },
+    },
+    // test/bun/static.test.ts
+    bunStatic: {
+      image: {
+        provider: 'bunStatic',
+      },
+      nitro: {
+        output: { dir: '.output/bun-static' },
+        prerender: { routes: ['/provider/bun'], failOnError: false },
+      },
+    },
+  },
   compatibilityDate: '2024-08-27',
   nitro: {
     prerender: {
@@ -20,6 +41,7 @@ export default defineNuxtConfig({
       750: 750,
     },
     none: {},
+    bun: {},
     ipx: {
       sharpOptions: {
         animated: true,
