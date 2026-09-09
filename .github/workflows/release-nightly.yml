@@ -22,14 +22,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - run: corepack enable
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          node-version: latest
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
+          cache: true
 
       - name: Prepare build environment
         run: pnpm dev:prepare
@@ -37,7 +32,7 @@ jobs:
       - run: pnpm build
 
       - name: publish nightly release
-        run: pnpm pkg-pr-new publish --compact
+        run: pnpm pkg-pr-new publish --compact --pnpm
 
   release-nightly:
     runs-on: ubuntu-latest
