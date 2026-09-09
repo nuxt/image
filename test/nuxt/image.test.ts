@@ -211,6 +211,49 @@ const getImageLoad = (cb = () => {}) => {
   }
 }
 
+const getImageDecode = (cb = () => {}) => {
+  let markLoaded = () => {}
+  let markFailed = () => {}
+  let rejectDecode = () => {}
+  const decodeError = new DOMException('The source image cannot be decoded.', 'EncodingError')
+  const ImageMock = vi.fn(function (this: HTMLImageElement) {
+    const _image = {
+      complete: false,
+      naturalWidth: 0,
+      decode: () => new Promise<void>((_, _reject) => {
+        rejectDecode = () => _reject(decodeError)
+      }),
+    }
+    markLoaded = () => {
+      _image.complete = true
+      _image.naturalWidth = 200
+    }
+    // a broken image is also `complete`, it just has no intrinsic size
+    markFailed = () => {
+      _image.complete = true
+    }
+
+    return _image as unknown as HTMLImageElement
+  })
+
+  vi.stubGlobal('Image', ImageMock)
+  cb()
+  vi.unstubAllGlobals()
+
+  return {
+    markLoaded,
+    markFailed,
+    rejectDecode,
+    decodeError,
+  }
+}
+
+// `decode()` settles a promise chain, so its handlers need more than one tick
+const flushDecode = async () => {
+  await nextTick()
+  await nextTick()
+}
+
 describe('Renders placeholder image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
@@ -326,6 +369,50 @@ describe('Renders placeholder image', () => {
     await nextTick()
 
     expect(wrapper.emitted().error![0]).toStrictEqual([errorEvent])
+  })
+
+  it('props.placeholder swaps when the image loads but `decode` fails', async () => {
+    const { markLoaded, rejectDecode } = getImageDecode(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          placeholder: true,
+        },
+      })
+    })
+
+    // the image has loaded, only decoding it failed
+    markLoaded()
+    rejectDecode()
+    await flushDecode()
+
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(wrapper.emitted().load).toHaveLength(1)
+    expect(wrapper.emitted().error).toBeUndefined()
+  })
+
+  it('props.placeholder emits an error when the image itself fails to load', async () => {
+    const { markFailed, rejectDecode, decodeError } = getImageDecode(() => {
+      wrapper = mount(NuxtImg, {
+        propsData: {
+          width: 200,
+          height: 200,
+          src,
+          placeholder: true,
+        },
+      })
+    })
+
+    // a broken image settles as `complete` with no intrinsic size
+    markFailed()
+    rejectDecode()
+    await flushDecode()
+
+    expect(wrapper.emitted().error![0]).toStrictEqual([decodeError])
+    expect(wrapper.emitted().load).toBeUndefined()
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/q_50&blur_3&s_10x10/image.png"')
   })
 })
 
