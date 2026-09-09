@@ -19,17 +19,15 @@ export interface ResolvedImageModifiers extends ImageModifiers {
 
 type DefaultProvider = ProviderDefaults extends Record<'provider', unknown> ? ProviderDefaults['provider'] : never
 
-export interface ImageOptions<Provider extends keyof ConfiguredImageProviders = DefaultProvider> {
-  provider?: Provider
+type Sizes = Record<string, string | number> | string
+
+export interface ImageOptions<TProvider extends keyof ConfiguredImageProviders = DefaultProvider> {
+  provider?: TProvider
   preset?: string
   densities?: string
   modifiers?: Partial<Omit<ImageModifiers, 'format' | 'quality' | 'background' | 'fit'>>
-    & ('modifiers' extends keyof ConfiguredImageProviders[Provider] ? ConfiguredImageProviders[Provider]['modifiers'] : Record<string, unknown>)
-  sizes?: string | Record<string, any>
-}
-
-export interface ImageSizesOptions extends ImageOptions {
-  sizes: Record<string, string | number> | string
+    & ('modifiers' extends keyof ConfiguredImageProviders[TProvider] ? ConfiguredImageProviders[TProvider]['modifiers'] : Record<string, unknown>)
+  sizes?: Sizes
 }
 
 export type ProviderGetImage<T = Record<string, unknown>> = (src: string, options: Omit<ImageOptions, 'modifiers'> & { modifiers: Partial<ResolvedImageModifiers> } & T, ctx: ImageCTX) => ResolvedImage
@@ -84,11 +82,15 @@ export interface ImageSizes {
 }
 
 export interface Img {
-  (source: string, modifiers?: ImageOptions['modifiers'], options?: ImageOptions): ResolvedImage['url']
+  <TProvider extends keyof ConfiguredImageProviders>(
+    source: string,
+    modifiers?: ImageOptions<TProvider>['modifiers'],
+    options?: ImageOptions<TProvider>
+  ): ResolvedImage['url']
   options: CreateImageOptions
-  getImage: (source: string, options?: ImageOptions) => ResolvedImage
-  getSizes: (source: string, options?: ImageOptions, sizes?: string[]) => ImageSizes
-  getMeta: (source: string, options?: ImageOptions) => Promise<ImageInfo>
+  getImage: <TProvider extends keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>) => ResolvedImage
+  getSizes: <TProvider extends keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>) => ImageSizes
+  getMeta: <TProvider extends keyof ConfiguredImageProviders>(source: string, options?: ImageOptions<TProvider>) => Promise<ImageInfo>
 }
 
 export type $Img = Img & {
