@@ -31,20 +31,10 @@ export default defineNuxtModule<ModuleOptions>({
     dir: nuxt.options.dir.public,
     dirs: [],
     presets: {},
-    domains: [] as string[],
+    domains: [],
     sharp: {},
-    format: ['webp'],
-    // https://tailwindcss.com/docs/breakpoints
-    screens: {
-      'sm': 640,
-      'md': 768,
-      'lg': 1024,
-      'xl': 1280,
-      '2xl': 1536,
-    },
     providers: {},
     alias: {},
-    densities: [1, 2],
   }),
   meta: {
     name: '@nuxt/image',
@@ -97,12 +87,20 @@ export default defineNuxtModule<ModuleOptions>({
     if (options.provider) {
       options[options.provider as keyof ImageProviders] = options[options.provider as keyof ImageProviders] || {}
     }
-    options.densities = options.densities || []
 
-    // Deduplicate format array (defu merges arrays, causing duplicates)
-    if (options.format && Array.isArray(options.format)) {
-      options.format = [...new Set(options.format)]
-    }
+    options.densities = options.densities || [1, 2]
+
+    options.format = [...new Set(options.format || ['webp'])]
+
+    options.screens = options.screens
+    // https://tailwindcss.com/docs/breakpoints
+      || {
+        'sm': 640,
+        'md': 768,
+        'lg': 1024,
+        'xl': 1280,
+        '2xl': 1536,
+      }
 
     const imageOptions: Omit<CreateImageOptions, 'providers' | 'nuxt' | 'runtimeConfig'> = pick(options, [
       'screens',
