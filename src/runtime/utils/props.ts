@@ -6,7 +6,7 @@ import { useImage } from '#imports'
 
 export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders> {
   // input source
-  src?: string
+  src: string
 
   // modifiers
   format?: string
