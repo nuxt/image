@@ -10,6 +10,10 @@ links:
 
 Nuxt Image comes with a [preconfigured instance](/get-started/providers#default-provider) of [unjs/ipx](https://github.com/unjs/ipx) - an open source, self-hosted image optimizer based on [lovell/sharp](https://github.com/lovell/sharp).
 
+::note
+ipx is an optional dependency. If you deploy on Bun, the [bun provider](/providers/bun) offers the same URLs and modifiers with `Bun.Image` and no native binaries.
+::
+
 ## Additional Modifiers
 
 You can use [additional modifiers](https://github.com/unjs/ipx/#modifiers) supported by IPX.

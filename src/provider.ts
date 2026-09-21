@@ -10,11 +10,14 @@ import type { ProviderName } from 'std-env'
 import type { InputProvider, ImageModuleProvider, ProviderSetup, ConfiguredImageProviders } from './types'
 import type { ModuleOptions } from './module'
 import { ipxSetup } from './ipx'
+import { bunSetup } from './bun'
 
 // Please add new providers alphabetically to the list below
 export const BuiltInProviders = [
   'aliyun',
   'awsAmplify',
+  'bun',
+  'bunStatic',
   'bunny',
   'builderio',
   'caisy',
@@ -84,9 +87,11 @@ const netlifySetup: ProviderSetup = (_providerOptions, moduleOptions, nuxt: Nuxt
 }
 
 const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
-  // IPX
+  // IPX and Bun.Image
   ipx: ipxSetup(),
   ipxStatic: ipxSetup({ isStatic: true }),
+  bun: bunSetup(),
+  bunStatic: bunSetup({ isStatic: true }),
 
   // https://vercel.com/docs/build-output-api/v3/configuration#images
   vercel(providerOptions, moduleOptions, nuxt: Nuxt) {

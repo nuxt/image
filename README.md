@@ -18,7 +18,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 
 - `<nuxt-img>` drop-in replacement for the native `<img>` element
 - `<nuxt-picture>` drop-in replacement for the native `<picture>` element.
-- Built-in image resizer and transformer with [unjs/ipx](https://github.com/unjs/ipx)
+- Built-in image resizer and transformer with [unjs/ipx](https://github.com/unjs/ipx), or with [Bun.Image](https://bun.com/docs/runtime/image) and zero native dependencies when running on Bun
 - Support 20+ providers
 - Generate responsive sizes
 - Optimize using modern formats such as webp and avif

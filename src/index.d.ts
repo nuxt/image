@@ -7,6 +7,8 @@ declare module './types' {
   interface ImageProviders {
     ipx: ReturnType<typeof import('./runtime/providers/ipx').default> extends ImageProvider<infer Options> ? Options : unknown
     ipxStatic: ReturnType<typeof import('./runtime/providers/ipxStatic').default> extends ImageProvider<infer Options> ? Options : unknown
+    bun: ReturnType<typeof import('./runtime/providers/bun').default> extends ImageProvider<infer Options> ? Options : unknown
+    bunStatic: ReturnType<typeof import('./runtime/providers/bunStatic').default> extends ImageProvider<infer Options> ? Options : unknown
     none: ReturnType<typeof import('./runtime/providers/none').default> extends ImageProvider<infer Options> ? Options : unknown
   }
 }
