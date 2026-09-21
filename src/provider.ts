@@ -51,6 +51,7 @@ export const BuiltInProviders = [
   'strapi',
   'strapi5',
   'supabase',
+  'truocloud',
   'twicpics',
   'umbraco',
   'unsplash',
