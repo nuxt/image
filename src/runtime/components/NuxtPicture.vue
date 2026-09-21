@@ -32,6 +32,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { IPXRuntimeConfig } from '../providers/ipx'
 import type { DataAttributes } from '../types'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
@@ -143,8 +144,9 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
+  const ipxBaseURL = ($img.options.runtimeConfig.ipx as IPXRuntimeConfig | undefined)?.baseURL
   for (const src of sources.value) {
-    prerenderStaticImages(src.src, src.srcset, useRequestEvent())
+    prerenderStaticImages(src.src, src.srcset, useRequestEvent(), ipxBaseURL)
   }
 }
 
