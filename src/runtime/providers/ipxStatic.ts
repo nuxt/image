@@ -14,13 +14,14 @@ export default defineProvider<Partial<IPXOptions>>({
     }
 
     const params = operationsGenerator(modifiers) || '_'
+    const encodedSrc = src.replace(/\?/g, '%3F').replace(/&/g, '%26').replace(/=/g, '%3D')
 
     if (!baseURL) {
       baseURL = joinURL(ctx.options.nuxt.baseURL, '/_ipx')
     }
 
     return {
-      url: joinURL(baseURL, params, encodePath(src).replace(/\/{2,}/g, '/')),
+      url: joinURL(baseURL, params, encodePath(encodedSrc).replace(/\/{2,}/g, '/')),
     }
   },
 })
