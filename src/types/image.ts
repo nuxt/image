@@ -9,7 +9,7 @@ export interface ImageModifiers {
   format: string
   quality: string | number
   background: string
-  blur: number
+  blur: number | string
 }
 
 export interface ResolvedImageModifiers extends ImageModifiers {
