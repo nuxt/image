@@ -1,9 +1,8 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXNodeHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import type { IPXOptions } from 'ipx'
-import type { NodeListener } from 'h3'
-import { lazyEventHandler, fromNodeMiddleware } from 'h3'
+import { lazyEventHandler, fromWebHandler } from 'h3'
 import { isAbsolute } from 'pathe'
 import type { NitroRuntimeConfig } from 'nitropack'
 
@@ -29,7 +28,7 @@ export default lazyEventHandler(() => {
 
   const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
   const ipx = createIPX(ipxOptions)
-  const nodeHandler = createIPXNodeHandler(ipx, {
+  const fetchHandler = createIPXFetchHandler(ipx, {
     parseURL(url) {
       const parsedURL = new URL(url)
       let pathname = parsedURL.pathname
@@ -40,5 +39,6 @@ export default lazyEventHandler(() => {
     },
   })
 
-  return fromNodeMiddleware(nodeHandler as NodeListener)
+  // `createIPXFetchHandler` may return a `Response` synchronously; `WebHandler` requires a promise.
+  return fromWebHandler(request => Promise.resolve(fetchHandler(request)))
 })
