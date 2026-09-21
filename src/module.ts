@@ -93,7 +93,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Normalize alias to start with leading slash
     options.alias = Object.fromEntries(Object.entries(options.alias).map(e => [withLeadingSlash(e[0]), e[1]]))
 
-    options.provider = detectProvider(options.provider)!
+    options.provider = detectProvider(options.provider) || 'ipx'
     if (options.provider) {
       options[options.provider as keyof ImageProviders] = options[options.provider as keyof ImageProviders] || {}
     }
