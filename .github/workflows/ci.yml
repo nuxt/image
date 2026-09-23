@@ -56,14 +56,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - run: corepack enable
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          node-version: 24.20.0
-          cache: "pnpm"
-
-      - name: 📦 Install dependencies
-        run: pnpm install
+          cache: true
         
       - run: pnpm dev:prepare
 
@@ -88,14 +83,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - run: corepack enable
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
-          node-version: lts/-1
-          cache: "pnpm"
-
-      - name: 📦 Install dependencies
-        run: pnpm install
+          runtime: node@22.23.2
+          cache: true
 
       - name: Install Playwright
         # does not need to explicitly set chromium after https://github.com/microsoft/playwright/issues/14862 is solved
@@ -118,7 +109,7 @@ jobs:
       - run: pnpm dev:build
 
       - name: 🟩 Coverage
-        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7
         if: matrix.os != 'windows-latest'
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

@@ -60,32 +60,43 @@
     "@nuxt/eslint-config": "1.17.0",
     "@nuxt/module-builder": "1.0.3",
     "@nuxt/schema": "4.5.2",
-    "@nuxt/test-utils": "^4.2.0",
-    "@types/node": "^24.13.3",
-    "@unhead/vue": "^3.4.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vue/test-utils": "^2.5.0",
+    "@nuxt/test-utils": "^4.3.2",
+    "@types/node": "^24.13.6",
+    "@unhead/vue": "^3.4.1",
+    "@vitest/coverage-v8": "^5.0.1",
+    "@vue/test-utils": "^2.5.1",
     "changelogen": "^0.6.2",
-    "eslint": "10.9.1",
-    "happy-dom": "^20.12.0",
+    "eslint": "10.11.0",
+    "happy-dom": "^20.14.5",
     "installed-check": "^11.0.0",
     "ipx": "4.0.0-beta.1",
-    "knip": "^6.34.0",
+    "knip": "^6.37.0",
     "nitropack": "^2.13.4",
     "nuxt": "^4.5.2",
     "pkg-pr-new": "^0.0.88",
-    "playwright-core": "^1.62.1",
+    "playwright-core": "^1.63.0",
     "tinyglobby": "^0.2.17",
     "typescript": "6.0.3",
     "unbuild": "^3.6.1",
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.1",
     "vue": "3.5.38",
     "vue-tsc": "^3.3.11"
   },
   "optionalDependencies": {
     "ipx": "4.0.0-beta.1"
   },
-  "packageManager": "pnpm@11.25.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.0.0",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.3.4",
+      "onFail": "download"
+    }
+  },
   "engines": {
     "node": "^20.19.0 || >=22.3.0"
   }
