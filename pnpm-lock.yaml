@@ -239,8 +239,8 @@ importers:
         specifier: workspace:*
         version: link:..
       '@nuxt/ui':
-        specifier: ^4.11.0
-        version: 4.11.1(feb21126fb0ce06cdd05d3275c4172ad)
+        specifier: ^4.11.2
+        version: 4.11.2(feb21126fb0ce06cdd05d3275c4172ad)
       '@nuxtjs/plausible':
         specifier: ^4.0.0
         version: 4.0.0(magic-string@1.4.1)(magicast@0.5.5)(oxc-parser@0.143.0)(rolldown@1.2.9)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.9)(rollup@4.63.4)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
@@ -1669,15 +1669,14 @@ packages:
       vitest:
         optional: true
 
-  '@nuxt/ui@4.11.1':
-    resolution: {integrity: sha512-6/xTMQNO4bcVesaaiIorH65cZ3eu0xenH+gC2L/b9pfmeVc0aMGXDKpW2JxoVUlrlcHo/beoUTI0B164HcwweQ==}
+  '@nuxt/ui@4.11.2':
+    resolution: {integrity: sha512-TefoICLKP2xxtA3jsQhNyqwVmgtiRW7UxiJoIl0T8Qu6398X0Nc3Z+jvjYrfa19glEAMTHvsFB0HywSUh56nrQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
     peerDependencies:
-      '@inertiajs/vue3': ^2.0.7 || ^3.0.0
-      '@internationalized/date': ^3.0.0
-      '@internationalized/number': ^3.0.0
-      '@nuxt/content': ^3.0.0
+      '@inertiajs/vue3': ^2.0.7 || ^3
+      '@internationalized/date': ^3
+      '@internationalized/number': ^3
+      '@nuxt/content': ^3
       '@tiptap/core': ^3
       '@tiptap/extension-bubble-menu': ^3
       '@tiptap/extension-code': ^3
@@ -1696,14 +1695,14 @@ packages:
       '@tiptap/suggestion': ^3
       '@tiptap/vue-3': ^3
       ai: ^6 || ^7
-      joi: ^18.0.0
-      superstruct: ^2.0.0
-      tailwindcss: ^4.0.0
-      typescript: ^5.6.3 || ^6.0.0 || ^7.0.0
-      valibot: ^1.0.0
-      vue-router: ^4.5.0 || ^5.0.0
+      joi: ^18
+      superstruct: ^2
+      tailwindcss: ^4
+      typescript: ^5.6.3 || ^6 || ^7
+      valibot: ^1
+      vue-router: ^4.5.0 || ^5
       yup: ^1.7.0
-      zod: ^3.24.0 || ^4.0.0
+      zod: ^3.24.0 || ^4
     peerDependenciesMeta:
       '@inertiajs/vue3':
         optional: true
@@ -10935,7 +10934,7 @@ snapshots:
       - vite
       - webpack
 
-  '@nuxt/ui@4.11.1(feb21126fb0ce06cdd05d3275c4172ad)':
+  '@nuxt/ui@4.11.2(feb21126fb0ce06cdd05d3275c4172ad)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@iconify/vue': 5.0.2(vue@3.5.38(typescript@6.0.3))
@@ -13943,7 +13942,7 @@ snapshots:
       '@nuxt/content': 3.16.0(@oxc-project/types@0.150.0)(better-sqlite3@13.0.3)(esbuild@0.28.2)(magic-string@1.4.1)(magicast@0.5.5)(oxc-parser@0.143.0)(rolldown@1.2.9)(rollup@4.63.4)(supports-color@10.2.2)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
       '@nuxt/image': link:.
       '@nuxt/kit': 4.5.2(magic-string@1.4.1)(magicast@0.5.5)(oxc-parser@0.143.0)(rolldown@1.2.9)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.9)(rollup@4.63.4)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
-      '@nuxt/ui': 4.11.1(feb21126fb0ce06cdd05d3275c4172ad)
+      '@nuxt/ui': 4.11.2(feb21126fb0ce06cdd05d3275c4172ad)
       '@nuxtjs/i18n': 10.6.0(@vue/compiler-dom@3.5.38)(db0@0.4.1)(esbuild@0.28.2)(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.1(supports-color@10.2.2))(magicast@0.5.5)(rolldown@1.2.9)(rollup@4.63.4)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))
       '@nuxtjs/mcp-toolkit': 0.19.0(@vue/compiler-sfc@3.5.38)(h3@1.15.11)(magic-string@1.4.1)(magicast@0.5.5)(oxc-parser@0.143.0)(rolldown@1.2.9)(rollup@4.63.4)(supports-color@10.2.2)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.9)(rollup@4.63.4)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.38(typescript@6.0.3))(zod@4.6.5)
       '@nuxtjs/mdc': 0.22.2(magic-string@1.4.1)(magicast@0.5.5)(oxc-parser@0.143.0)(rolldown@1.2.9)(supports-color@10.2.2)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.9)(rollup@4.63.4)(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)))
