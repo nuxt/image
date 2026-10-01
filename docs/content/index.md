@@ -162,6 +162,7 @@ orientation: horizontal
     - shopify
     - storyblok
     - strapi
+    - truocloud
     - twicpics
     - unsplash
     - uploadcare
