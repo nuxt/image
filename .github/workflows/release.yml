@@ -16,7 +16,7 @@ jobs:
   # or update a draft release PR, and close any superseded release PRs
   # (e.g. `release/v1.0.1` when the bump is now `release/v1.1.0`).
   pr:
-    if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    if: github.repository_owner == 'nuxt' && github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
     permissions:
       contents: write       # push the `release/vX.Y.Z` branch and delete superseded ones
@@ -32,7 +32,8 @@ jobs:
   # the head-repo guard keeps merged fork PRs from triggering it.
   release:
     if: |
-      github.event_name == 'pull_request'
+      github.repository_owner == 'nuxt' 
+      && github.event_name == 'pull_request'
       && github.event.pull_request.merged == true
       && startsWith(github.event.pull_request.head.ref, 'release/v')
       && github.event.pull_request.head.repo.full_name == github.repository
@@ -54,7 +55,7 @@ jobs:
   # artifact. See "Lifecycle scripts" below for what runs where. Manual
   # recovery uses the same path (Run workflow -> pick a `v*` tag).
   pack:
-    if: github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
+    if: github.repository_owner == 'nuxt' && github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     concurrency:
       group: pack-${{ github.ref }}
@@ -70,7 +71,8 @@ jobs:
   # artifact and stages it for publish.
   publish:
     if: |
-      github.event_name == 'workflow_dispatch'
+      github.repository_owner == 'nuxt' 
+      && github.event_name == 'workflow_dispatch'
       && startsWith(github.ref, 'refs/tags/v')
       && needs.pack.outputs.files != '[]'
     needs: pack
