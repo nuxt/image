@@ -179,8 +179,8 @@ function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageS
         variant = {
           size: '',
           screenMaxWidth: 0,
-          _cWidth: opts.modifiers?.width as number,
-          _cHeight: opts.modifiers?.height as number,
+          _cWidth: width as number,
+          _cHeight: height as number,
         }
       }
 
