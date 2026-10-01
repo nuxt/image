@@ -17,7 +17,12 @@ export default defineNuxtConfig({
       'https://upload.wikimedia.org',
     ],
     screens: {
-      750: 750,
+      'sm': 640,
+      '750': 750,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      '2xl': 1536,
     },
     none: {},
     ipx: {
