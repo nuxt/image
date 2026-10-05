@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 import { images } from '../providers'
 
@@ -6,6 +6,8 @@ import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
 
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
+import bun from '../../dist/runtime/providers/bun'
+import bunStatic from '../../dist/runtime/providers/bunStatic'
 import none from '../../dist/runtime/providers/none'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
@@ -87,6 +89,51 @@ describe('Providers', () => {
     expect(generated).toMatchObject({
       url: '/_ipx/_/images/test.png',
     })
+  })
+
+  it('bun', () => {
+    const providerOptions = {}
+
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = bun().getImage(src, { modifiers: { ...modifiers }, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.bun)
+    }
+  })
+
+  it('bun router base and custom baseURL', () => {
+    const src = '/images/test.png'
+    expect(bun().getImage(src, { modifiers: {} }, getEmptyContext())).toMatchObject({ url: '/_bun/_/images/test.png' })
+    expect(bun().getImage(src, { modifiers: { width: 10 }, baseURL: '/img' }, getEmptyContext())).toMatchObject({ url: '/img/w_10/images/test.png' })
+  })
+
+  it('bunStatic collapses repeated slashes in a local pathname only', () => {
+    expect(bunStatic().getImage('/images//test.png', { modifiers: { width: 10 } }, getEmptyContext())).toMatchObject({ url: '/_bun/w_10/images/test.png' })
+    // query and fragment are left alone (and percent-encoded by encodePath, as for every provider)
+    expect(bunStatic().getImage('/images//test.png?v=1//2#a//b', { modifiers: { width: 10 } }, getEmptyContext()))
+      .toEqual(bun().getImage('/images/test.png?v=1//2#a//b', { modifiers: { width: 10 } }, getEmptyContext()))
+    expect(bunStatic().getImage('/images/test.png', { modifiers: { width: 10 }, baseURL: 'https://images.example.com/_bun' }, getEmptyContext())).toMatchObject({ url: 'https://images.example.com/_bun/w_10/images/test.png' })
+  })
+
+  it('bunStatic leaves absolute source URLs exactly as the bun provider does', () => {
+    for (const src of ['https://cdn.example.com/a//b.jpg?token=x//y&w=1', '//cdn.example.com/a//b.jpg']) {
+      const expected = bun().getImage(src, { modifiers: { width: 10 } }, getEmptyContext())
+      expect(expected.url).toContain('a//b.jpg')
+      expect(bunStatic().getImage(src, { modifiers: { width: 10 } }, getEmptyContext())).toEqual(expected)
+    }
+  })
+
+  it('bun warns once about modifiers Bun.Image cannot apply', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const context = getEmptyContext()
+    bun().getImage('/images/test.png', { modifiers: { blur: 5, width: 10 } }, context)
+    bun().getImage('/images/other.png', { modifiers: { blur: 5 } }, context)
+    expect(warn).toHaveBeenCalledOnce()
+    expect(warn.mock.calls[0]![0]).toContain('The "blur" modifier is not supported by the bun provider')
+    warn.mockClear()
+    bun().getImage('/images/test.png', { modifiers: { trim: 1 }, unsupported: 'silent' }, context)
+    expect(warn).not.toHaveBeenCalled()
+    warn.mockRestore()
   })
   it('aliyun', () => {
     const providerOptions = {

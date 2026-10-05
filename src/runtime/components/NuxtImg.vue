@@ -21,7 +21,7 @@ import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
-import { prerenderStaticImages } from '../utils/prerender'
+import { getStaticImagePrefixes, prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
@@ -125,7 +125,7 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
-  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent())
+  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent(), getStaticImagePrefixes($img.options))
 }
 
 const initialLoad = useNuxtApp().isHydrating
