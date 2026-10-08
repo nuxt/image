@@ -34,7 +34,7 @@ npx nuxt module add image
 
 ## Nuxt 2
 
-**Note:** This branch is for **Nuxt 3** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
+**Note:** This branch is for **Nuxt 3, 4 and 5** compatible module. Checkout [`v0` branch](https://github.com/nuxt/image/tree/v0) for **Nuxt 2** support. ([Announcement](https://github.com/nuxt/image/discussions/548))
 
 ### Contributing
 

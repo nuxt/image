@@ -98,6 +98,11 @@ describe('Providers', () => {
       expect(generated).toMatchObject(image.aliyun)
     }
   })
+  it('aliyun falls back to public siteUrl', () => {
+    const ctx = getEmptyContext()
+    ctx.options.runtimeConfig = { public: { siteUrl: 'https://example.com' } }
+    expect(aliyun().getImage('/test.png', { modifiers: {} }, ctx)).toMatchObject({ url: 'https://example.com/test.png' })
+  })
   it('awsAmplify', () => {
     const providerOptions = {
       baseURL: '/',

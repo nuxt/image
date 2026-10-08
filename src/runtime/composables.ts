@@ -3,7 +3,7 @@ import { createImage } from './image'
 import type { $Img } from '@nuxt/image'
 
 import { imageOptions } from '#build/image-options.mjs'
-import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { createError, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export const useImage = (event?: H3Event): $Img => {
   const config = useRuntimeConfig()
@@ -14,6 +14,7 @@ export const useImage = (event?: H3Event): $Img => {
     event: event || nuxtApp.ssrContext?.event,
     nuxt: {
       baseURL: config.app.baseURL,
+      createError,
     },
     runtimeConfig: config,
   }))
