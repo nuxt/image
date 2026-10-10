@@ -25,6 +25,7 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { ImageAltProps } from '../types'
 import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
@@ -35,7 +36,7 @@ export interface ImageProps<Provider extends keyof ConfiguredImageProviders> ext
   placeholderClass?: string
 }
 
-const props = defineProps<ImageProps<Provider>>()
+const props = defineProps<ImageProps<Provider> & ImageAltProps>()
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown

@@ -5,6 +5,7 @@
       src="/images/colors-no-densities-or-sizes-prop.jpg"
       width="500"
       height="500"
+      alt=""
       densities="x1"
       preload
     />
@@ -13,6 +14,7 @@
       src="/images/colors-with-densities-and-no-sizes-prop.jpg"
       width="500"
       height="500"
+      alt=""
       densities="x1 x2"
       preload
     />
@@ -22,6 +24,7 @@
       src="/images/colors-with-densities-and-sizes-prop.jpg"
       width="500"
       height="500"
+      alt=""
       sizes="100vw md:500px"
       densities="x1 x2"
       preload
@@ -32,6 +35,7 @@
       src="/images/colors-with-densities-sizes-and-fetchprio-prop.jpg"
       width="500"
       height="500"
+      alt=""
       sizes="100vw md:500px"
       densities="x1 x2"
       :preload="{ fetchPriority: 'high' }"

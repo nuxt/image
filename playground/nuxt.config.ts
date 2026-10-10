@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   },
   image: {
     inject: true,
+    requireAlt: true,
     domains: [
       'https://nuxtjs.org',
       'https://images.unsplash.com',

@@ -25,7 +25,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   preload?: boolean | { fetchPriority: 'auto' | 'high' | 'low' }
 
   // <img> attributes
-  alt: string
+  alt?: string
   width?: string | number
   height?: string | number
   crossorigin?: 'anonymous' | 'use-credentials' | boolean
