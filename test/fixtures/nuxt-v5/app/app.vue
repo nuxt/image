@@ -1,0 +1,15 @@
+<template>
+  <div>
+    <NuxtImg
+      src="/images/nuxt.png"
+      width="300"
+      height="300"
+      preload
+    />
+    <NuxtPicture
+      src="/images/nuxt.png"
+      width="300"
+      height="300"
+    />
+  </div>
+</template>

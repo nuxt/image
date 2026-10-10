@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
-import { appendHeader } from 'h3'
+import type { CreateImageOptions } from '@nuxt/image'
 
-export function prerenderStaticImages(src = '', srcset = '', event?: H3Event) {
+export function prerenderStaticImages(src = '', srcset = '', event?: CreateImageOptions['event']) {
   if (!import.meta.server || !import.meta.prerender || !event) {
     return
   }
@@ -15,5 +15,11 @@ export function prerenderStaticImages(src = '', srcset = '', event?: H3Event) {
     return
   }
 
-  appendHeader(event, 'x-nitro-prerender', paths.map(p => encodeURIComponent(p)).join(', '))
+  const value = paths.map(p => encodeURIComponent(p)).join(', ')
+  if ('headers' in event.res) {
+    event.res.headers.append('x-nitro-prerender', value)
+  }
+  else {
+    (event as H3Event).node.res.appendHeader('x-nitro-prerender', value)
+  }
 }

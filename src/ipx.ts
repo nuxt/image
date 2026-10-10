@@ -1,7 +1,7 @@
 import { arch, platform } from 'node:os'
 import { readdir } from 'node:fs/promises'
 import { join, relative } from 'pathe'
-import { useNuxt, createResolver, useNitro, useLogger } from '@nuxt/kit'
+import { useNuxt, createResolver, useNitro, useLogger, resolveServerVariant } from '@nuxt/kit'
 import type { NitroEventHandler } from 'nitropack'
 import { defu } from 'defu'
 import { hasProtocol } from 'ufo'
@@ -48,10 +48,19 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
   nitro.options.runtimeConfig.ipx = defu(nitro.options.runtimeConfig.ipx, ipxOptions)
 
+  const handler = resolveServerVariant({
+    nuxt: resolver.resolve('./runtime/server/routes/_ipx'),
+    nitro2: resolver.resolve('./runtime/server/routes/_ipx.legacy'),
+  })
+
+  if (!handler) {
+    return
+  }
+
   const ipxHandler = {
     route: `${ipxBaseURL}/**`,
     middleware: false,
-    handler: resolver.resolve('./runtime/server/routes/_ipx'),
+    handler,
   } satisfies NitroEventHandler
 
   if (!setupOptions?.isStatic) {

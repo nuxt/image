@@ -52,8 +52,9 @@ export interface CreateImageOptions {
   }>
   nuxt: {
     baseURL: string
+    createError: (error: { statusCode?: number, statusMessage?: string, message?: string, data?: unknown, fatal?: boolean, name?: string }) => Error
   }
-  event?: H3Event
+  event?: H3Event | { res: { headers: Headers } }
   presets: { [name: string]: ImageOptions }
   provider: (string & {}) | keyof ImageProviders
   screens: Record<string, number>

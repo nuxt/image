@@ -4,7 +4,7 @@ import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
 import { NuxtImg } from '#components'
 import { createImage } from '@nuxt/image/runtime'
-import { h, nextTick, useNuxtApp, useRuntimeConfig, useImage } from '#imports'
+import { createError, h, nextTick, useNuxtApp, useRuntimeConfig, useImage } from '#imports'
 import type { CreateImageOptions } from '@nuxt/image'
 import defu from 'defu'
 
@@ -613,6 +613,6 @@ function setImageContext(options: Partial<CreateImageOptions>) {
   nuxtApp.$img = nuxtApp._img = createImage(defu(options, {
     runtimeConfig: {} as any,
     ...imageOptions,
-    nuxt: { baseURL: config.app.baseURL },
+    nuxt: { baseURL: config.app.baseURL, createError },
   }))
 }

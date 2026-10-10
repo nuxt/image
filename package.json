@@ -32,6 +32,7 @@
   "scripts": {
     "build": "nuxt-module-build build",
     "dev": "nuxt dev playground",
+    "dev:v5": "pnpm --filter ./playground-v5 dev",
     "dev:build": "nuxt build playground",
     "dev:generate": "nuxt generate playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare docs",
@@ -46,7 +47,7 @@
   },
   "dependencies": {
     "@noble/hashes": "^2.4.0",
-    "@nuxt/kit": "^4.5.2",
+    "@nuxt/kit": "^4.6.1",
     "defu": "^6.1.7",
     "h3": "^1.15.11",
     "image-meta": "^0.3.0",
@@ -59,7 +60,7 @@
   "devDependencies": {
     "@nuxt/eslint-config": "1.17.0",
     "@nuxt/module-builder": "1.0.3",
-    "@nuxt/schema": "4.5.2",
+    "@nuxt/schema": "4.6.1",
     "@nuxt/test-utils": "^4.3.3",
     "@types/node": "^24.19.1",
     "@unhead/vue": "^3.4.2",
@@ -72,7 +73,7 @@
     "ipx": "4.0.0-beta.1",
     "knip": "^6.39.0",
     "nitropack": "^2.13.4",
-    "nuxt": "^4.5.2",
+    "nuxt": "^4.6.1",
     "pkg-pr-new": "^0.0.88",
     "playwright-core": "^1.63.0",
     "tinyglobby": "^0.2.17",
@@ -98,6 +99,6 @@
     }
   },
   "engines": {
-    "node": "^20.19.0 || >=22.3.0"
+    "node": "^20.19.0 || >=22.12.0"
   }
 }

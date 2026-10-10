@@ -172,7 +172,10 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
     addServerImports([
       {
         name: 'useImage',
-        from: resolver.resolve('runtime/server/utils/image'),
+        from: {
+          nuxt: resolver.resolve('runtime/server/utils/image'),
+          nitro2: resolver.resolve('runtime/server/utils/image.legacy'),
+        },
       },
     ])
 

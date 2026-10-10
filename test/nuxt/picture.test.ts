@@ -2,7 +2,7 @@ import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { NuxtPicture } from '#components'
-import { useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
+import { createError, useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
 import { imageOptions } from '#build/image-options.mjs'
 import { createImage } from '@nuxt/image/runtime'
 import type { RuntimeConfig } from 'nuxt/schema'
@@ -211,6 +211,7 @@ describe('Renders image, applies module config', () => {
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
+        createError,
       },
       format: ['avif'],
     })
@@ -235,6 +236,7 @@ describe('Renders image, applies module config', () => {
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
+        createError,
       },
       format: ['avif', 'webp'],
     })
@@ -260,6 +262,7 @@ describe('Renders image, applies module config', () => {
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
+        createError,
       },
       format: ['avif', 'webp'],
     })
@@ -285,6 +288,7 @@ describe('Renders image, applies module config', () => {
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
+        createError,
       },
       format: ['avif', 'webp'],
     })
@@ -305,6 +309,7 @@ describe('Renders image, applies module config', () => {
       ...imageOptions,
       nuxt: {
         baseURL: config.app.baseURL,
+        createError,
       },
       quality: 75,
     })
