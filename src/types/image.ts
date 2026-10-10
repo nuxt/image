@@ -1,5 +1,4 @@
 import type { RuntimeConfig } from '@nuxt/schema'
-import type { NuxtError } from 'nuxt/app'
 import type { H3Event } from 'h3'
 import type { ConfiguredImageProviders, ImageProviders, ProviderDefaults } from './module'
 
@@ -53,7 +52,7 @@ export interface CreateImageOptions {
   }>
   nuxt: {
     baseURL: string
-    createError: (error: Partial<NuxtError>) => NuxtError
+    createError: (error: { statusCode?: number, statusMessage?: string, message?: string, data?: unknown, fatal?: boolean, name?: string }) => Error
   }
   event?: H3Event | { res: { headers: Headers } }
   presets: { [name: string]: ImageOptions }
