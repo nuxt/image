@@ -155,6 +155,15 @@ onMounted(() => {
           emit('load', new Event('load'))
         })
         .catch((error) => {
+          // decode() can reject even when the image is renderable - Chromium does this for
+          // large images - so we gate the error path on whether the image actually failed to load
+          // see https://issues.chromium.org/issues/40261318
+          if (img.complete && img.naturalWidth > 0) {
+            placeholderLoaded.value = true
+            emit('load', new Event('load'))
+            return
+          }
+
           emit('error', error)
         })
     }
