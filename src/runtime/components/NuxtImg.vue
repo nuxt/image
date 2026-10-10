@@ -25,6 +25,7 @@ import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
+import type { IPXRuntimeConfig } from '../providers/ipx'
 import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
@@ -125,7 +126,8 @@ if (import.meta.server && props.preload) {
 
 // Prerender static images
 if (import.meta.server && import.meta.prerender) {
-  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent())
+  const ipxBaseURL = ($img.options.runtimeConfig.ipx as IPXRuntimeConfig | undefined)?.baseURL
+  prerenderStaticImages(src.value, sizes.value.srcset, useRequestEvent(), ipxBaseURL)
 }
 
 const initialLoad = useNuxtApp().isHydrating
