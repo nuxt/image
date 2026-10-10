@@ -284,6 +284,7 @@ export const providers: Provider[] = [
         src: 'test-image-id',
         width: 300,
         height: 300,
+        alt: '',
       },
     ],
   },
@@ -437,6 +438,7 @@ export const providers: Provider[] = [
         height: 375,
         quality: 80,
         format: 'webp',
+        alt: '',
       },
       {
         src: 'https://picsum.photos/seed/nuxtimage/800/600',
@@ -444,11 +446,13 @@ export const providers: Provider[] = [
         height: 200,
         fit: 'cover',
         quality: 75,
+        alt: '',
       },
       {
         src: 'https://picsum.photos/seed/nuxtimage/800/600',
         width: 200,
         fit: 'contain',
+        alt: '',
       },
     ],
   },
@@ -540,12 +544,14 @@ export const providers: Provider[] = [
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
         width: 300,
         height: 300,
+        alt: '',
       },
       {
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
         width: 300,
         height: 300,
         quality: 10,
+        alt: '',
       },
       {
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
@@ -553,6 +559,7 @@ export const providers: Provider[] = [
         modifiers: {
           resize: 'fit:500:500:1:1',
         },
+        alt: '',
       },
       {
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
@@ -561,6 +568,7 @@ export const providers: Provider[] = [
         modifiers: {
           rotate: 180,
         },
+        alt: '',
       },
       {
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
@@ -569,6 +577,7 @@ export const providers: Provider[] = [
         modifiers: {
           blur: 100,
         },
+        alt: '',
       },
       {
         src: 'https://mars.nasa.gov/system/downloadable_items/39099_Mars-MRO-orbiter-fresh-crater-sirenum-fossae.jpg',
@@ -590,6 +599,7 @@ export const providers: Provider[] = [
           expires: 4106340630,
           filename: 'test',
         },
+        alt: '',
       },
     ],
   },
@@ -1369,30 +1379,35 @@ export const providers: Provider[] = [
         width: 400,
         height: 300,
         fit: 'contain',
+        alt: '',
       },
       {
         src: '/ssg-img.png',
         width: 400,
         height: 300,
         fit: 'cover',
+        alt: '',
       },
       {
         src: '/ssg-img.png',
         width: 400,
         height: 300,
         fit: 'fill',
+        alt: '',
       },
       {
         src: '/ssg-img.png',
         width: 300,
         quality: 80,
         format: 'webp',
+        alt: '',
       },
       {
         src: '/ssg-img.png',
         modifiers: {
           rotate: 90,
         },
+        alt: '',
       },
       {
         src: '/ssg-img.png',
@@ -1400,6 +1415,7 @@ export const providers: Provider[] = [
           blur: 15,
           quality: 50,
         },
+        alt: '',
       },
     ],
   },
@@ -1728,6 +1744,7 @@ export const providers: Provider[] = [
         height: 200,
         quality: 30,
         format: 'webp',
+        alt: '',
       },
       {
         src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
@@ -1735,6 +1752,7 @@ export const providers: Provider[] = [
         height: 200,
         quality: 90,
         format: 'webp',
+        alt: '',
       },
       {
         src: 'https://umbraco.com/media/hvjlhtfw/home-full-screen-4.png',
@@ -1744,6 +1762,7 @@ export const providers: Provider[] = [
         modifiers: {
           focalPointXY: '0.5488476724567298,0.5772994963168611',
         },
+        alt: '',
       },
     ],
   },
