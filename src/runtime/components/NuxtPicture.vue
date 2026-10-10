@@ -32,7 +32,7 @@ import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
-import type { DataAttributes } from '../types'
+import type { DataAttributes, ImageAltProps } from '../types'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
@@ -44,7 +44,7 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<PictureProps<Provider>>()
+const props = defineProps<PictureProps<Provider> & ImageAltProps>()
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
