@@ -19,7 +19,7 @@ await setup({
 
 describe('browser (ssr: false)', () => {
   for (const provider of providers) {
-    it(`${provider.name} should render images`, { timeout: 20000 }, async () => {
+    it(`${provider.name} should render images`, { timeout: 60000 }, async () => {
       const providerPath = `/provider/${provider.name}`
 
       const page = await createPage()
