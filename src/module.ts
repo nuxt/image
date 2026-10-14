@@ -20,6 +20,7 @@ export interface ModuleOptions extends ImageProviders {
   densities: number[]
   format: CreateImageOptions['format']
   quality?: CreateImageOptions['quality']
+  requireAlt: boolean
 }
 
 export * from './types'
@@ -45,6 +46,7 @@ export default defineNuxtModule<ModuleOptions>({
     providers: {},
     alias: {},
     densities: [1, 2],
+    requireAlt: false,
   }),
   meta: {
     name: '@nuxt/image',
@@ -120,21 +122,23 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'image/providers.d.ts',
       getContents() {
         const file = join(nuxt.options.buildDir, 'image')
-        return `
-        import { ImageProvider } from '@nuxt/image'
-        declare module '@nuxt/image' {
-          interface ProviderDefaults {
-            provider: ${JSON.stringify(options.provider)}
-          }
-          interface ConfiguredImageProviders {
-${providers.map(p => `            ${JSON.stringify(p.name)}: ${isBuiltInProvider(p) ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown `}`).join('\n')}
-          }
-          interface ImageProviders {
-${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown `).join('\n')}
-          }
-        }
-        export {}
-        `
+        return `import { ImageProvider } from '@nuxt/image'
+declare module '@nuxt/image' {
+  interface ProviderDefaults {
+    provider: ${JSON.stringify(options.provider)}
+  }
+  interface ConfiguredImageProviders {
+${providers.map(p => `    ${JSON.stringify(p.name)}: ${isBuiltInProvider(p) ? `ImageProviders[${JSON.stringify(p.name)}]` : `ReturnType<typeof import('${relative(file, p.runtime)}').default> extends ImageProvider<infer Options> ? Options : unknown`}`).join('\n')}
+  }
+  interface ImageProviders {
+${BuiltInProviders.map(p => `    ${JSON.stringify(p)}: ReturnType<typeof import('${relative(file, resolver.resolve('./runtime/providers/' + p))}').default> extends ImageProvider<infer Options> ? Options : unknown`).join('\n')}
+  }
+}
+declare module '${relative(file, resolver.resolve('./runtime/types'))}' {
+  interface ImageAltProps ${options.requireAlt ? '{ alt: string }' : '{}'}
+}
+export {}
+`
       },
     }, { nitro: true, nuxt: true, node: true, shared: true })
 

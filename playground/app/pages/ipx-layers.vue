@@ -5,6 +5,7 @@
       src="/images/colors.jpg"
       width="500"
       height="500"
+      alt=""
       @load="isLoadedRoot = true"
     />
     <p>Received onLoad event: {{ isLoadedRoot }}</p>
@@ -14,6 +15,7 @@
       src="/images/colors-layer.jpg"
       width="500"
       height="500"
+      alt=""
       @load="isLoadedLayer = true"
     />
     <p>Received onLoad event: {{ isLoadedLayer }}</p>
@@ -23,6 +25,7 @@
       src="/images/colors-layer-config.jpg"
       width="500"
       height="500"
+      alt=""
       @load="isLoadedLayerWithConfig = true"
     />
     <p>Received onLoad event: {{ isLoadedLayerWithConfig }}</p>
