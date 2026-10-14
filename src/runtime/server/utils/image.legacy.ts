@@ -1,11 +1,12 @@
+import { createError } from 'h3'
 import type { H3Event } from 'h3'
+import { useRuntimeConfig } from 'nitropack/runtime'
 
 import { createImage } from '../../image'
 import type { Img } from '@nuxt/image'
 
 // @ts-expect-error virtual file
 import { imageOptions } from '#internal/nuxt-image'
-import { createError, useRuntimeConfig } from '#imports'
 
 export const useImage = (event?: H3Event): Img => {
   const config = useRuntimeConfig()
