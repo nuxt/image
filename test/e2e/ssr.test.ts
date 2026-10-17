@@ -145,4 +145,22 @@ describe('browser (ssr: true)', () => {
 
     await page.close()
   })
+
+  it('mirrors crossorigin on the preconnect hint and keeps connection modes distinct', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-crossorigin'))
+    await page.waitForSelector('img')
+
+    const hints = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => ({
+      href: link.getAttribute('href'),
+      crossorigin: link.getAttribute('crossorigin'),
+    })))
+
+    // Three images share one origin, but only two connection modes were requested
+    expect(hints).toHaveLength(2)
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'anonymous' })
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: null })
+
+    await page.close()
+  })
 })
