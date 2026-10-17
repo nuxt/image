@@ -108,4 +108,29 @@ describe('browser (ssr: true)', () => {
       }
     `)
   })
+
+  it('preconnects to a remote provider origin', async () => {
+    const page = await createPage()
+    await page.goto(url('/provider/cloudinary'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toContain('https://res.cloudinary.com')
+    expect(origins.filter(origin => origin === 'https://res.cloudinary.com')).toHaveLength(1)
+
+    await page.close()
+  })
+
+  it('does not preconnect for same-origin images', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual([])
+
+    await page.close()
+  })
 })

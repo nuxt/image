@@ -1,9 +1,10 @@
 import type { H3Event } from 'h3'
 import { createImage } from './image'
+import { resolvePreconnectOrigin } from './utils/preconnect'
 import type { $Img } from '@nuxt/image'
 
 import { imageOptions } from '#build/image-options.mjs'
-import { createError, useNuxtApp, useRuntimeConfig } from '#imports'
+import { createError, useHead, useNuxtApp, useRequestURL, useRuntimeConfig } from '#imports'
 
 export const useImage = (event?: H3Event): $Img => {
   const config = useRuntimeConfig()
@@ -18,4 +19,35 @@ export const useImage = (event?: H3Event): $Img => {
     },
     runtimeConfig: config,
   }))
+}
+
+interface PreconnectOptions {
+  crossorigin?: 'anonymous' | 'use-credentials' | boolean
+}
+
+/**
+ * Registers a deduped `<link rel="preconnect">` for the origin of a rendered
+ * image URL. No-op on the client, and for empty, relative, same-origin or
+ * non-http(s) URLs.
+ */
+export const usePreconnect = (url: string | undefined, options: PreconnectOptions = {}): void => {
+  if (import.meta.client) {
+    return
+  }
+
+  const origin = resolvePreconnectOrigin(url, useRequestURL().href)
+  if (!origin) {
+    return
+  }
+
+  const crossorigin = options.crossorigin === true ? 'anonymous' : (options.crossorigin || undefined)
+
+  useHead({
+    link: [{
+      rel: 'preconnect',
+      href: origin,
+      key: `preconnect:${origin}${crossorigin ? `:${crossorigin}` : ''}`,
+      ...(crossorigin ? { crossorigin } : {}),
+    }],
+  })
 }
