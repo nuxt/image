@@ -63,6 +63,7 @@ export interface CreateImageOptions {
   densities: number[]
   format: string[]
   quality?: number
+  preconnect: boolean
   runtimeConfig: RuntimeConfig
 }
 

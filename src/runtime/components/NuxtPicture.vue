@@ -29,7 +29,7 @@ import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { useImage } from '../composables'
+import { useImage, usePreconnect } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
 import type { DataAttributes } from '../types'
@@ -118,6 +118,12 @@ const sources = computed<Source[]>(() => {
     return { src, type: `image/${format}`, sizes, srcset }
   })
 })
+
+if (import.meta.server && $img.options.preconnect !== false) {
+  for (const source of sources.value) {
+    usePreconnect(source.src, { crossorigin: normalizedAttrs.value.crossorigin })
+  }
+}
 
 if (import.meta.server && props.preload) {
   useHead({ link: () => {
