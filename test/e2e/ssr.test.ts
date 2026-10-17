@@ -133,4 +133,16 @@ describe('browser (ssr: true)', () => {
 
     await page.close()
   })
+
+  it('preconnects for a remote provider rendered by NuxtPicture', async () => {
+    const page = await createPage()
+    await page.goto(url('/picture-preconnect'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toContain('https://res.cloudinary.com')
+
+    await page.close()
+  })
 })

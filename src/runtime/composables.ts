@@ -35,7 +35,15 @@ export const usePreconnect = (url: string | undefined, options: PreconnectOption
     return
   }
 
-  const origin = resolvePreconnectOrigin(url, useRequestURL().href)
+  let base: string
+  try {
+    base = useRequestURL().href
+  }
+  catch {
+    return
+  }
+
+  const origin = resolvePreconnectOrigin(url, base)
   if (!origin) {
     return
   }
