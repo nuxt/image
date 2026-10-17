@@ -21,8 +21,8 @@ export const useImage = (event?: H3Event): $Img => {
   }))
 }
 
-interface PreconnectOptions {
-  crossorigin?: 'anonymous' | 'use-credentials' | boolean
+export interface PreconnectOptions {
+  crossorigin?: 'anonymous' | 'use-credentials' | '' | boolean
 }
 
 /**
@@ -48,7 +48,10 @@ export const usePreconnect = (url: string | undefined, options: PreconnectOption
     return
   }
 
-  const crossorigin = options.crossorigin === true ? 'anonymous' : (options.crossorigin || undefined)
+  // an empty crossorigin attribute means "anonymous", same as `true`
+  const crossorigin = options.crossorigin === true || options.crossorigin === ''
+    ? 'anonymous'
+    : (options.crossorigin || undefined)
 
   useHead({
     link: [{

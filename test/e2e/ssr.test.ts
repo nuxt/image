@@ -175,4 +175,23 @@ describe('browser (ssr: true)', () => {
 
     await page.close()
   })
+
+  it('matches the picture preconnect hint to the crossorigin the image renders', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-crossorigin-picture'), { waitUntil: 'domcontentloaded' })
+
+    const rendered = await page.$$eval('picture img', imgs => imgs.map(img => img.getAttribute('crossorigin')))
+    const hints = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => ({
+      href: link.getAttribute('href'),
+      crossorigin: link.getAttribute('crossorigin'),
+    })))
+
+    // `imgAttrs` is applied after the prop, so it wins: 'use-credentials' and '' (anonymous)
+    expect(rendered).toEqual(['use-credentials', ''])
+    expect(hints).toHaveLength(2)
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'use-credentials' })
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'anonymous' })
+
+    await page.close()
+  })
 })

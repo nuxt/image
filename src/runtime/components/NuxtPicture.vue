@@ -29,7 +29,7 @@ import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { useImage, usePreconnect } from '../composables'
+import { useImage, usePreconnect, type PreconnectOptions } from '../composables'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
 import type { DataAttributes } from '../types'
@@ -120,8 +120,10 @@ const sources = computed<Source[]>(() => {
 })
 
 if (import.meta.server && $img.options.preconnect !== false) {
+  // `imgAttrs` is merged into `attrs.img` after the prop, so use that same value
+  const crossorigin = attrs.value.img.crossorigin as PreconnectOptions['crossorigin']
   for (const source of sources.value) {
-    usePreconnect(source.src, { crossorigin: normalizedAttrs.value.crossorigin })
+    usePreconnect(source.src, { crossorigin })
   }
 }
 
