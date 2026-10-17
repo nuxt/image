@@ -163,4 +163,16 @@ describe('browser (ssr: true)', () => {
 
     await page.close()
   })
+
+  it('preconnects to a remote placeholder origin', async () => {
+    const page = await createPage()
+    // the placeholder is the rendered `src`, so only its origin should be hinted
+    await page.goto(url('/preconnect-placeholder'), { waitUntil: 'domcontentloaded' })
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual(['https://res.cloudinary.com'])
+
+    await page.close()
+  })
 })

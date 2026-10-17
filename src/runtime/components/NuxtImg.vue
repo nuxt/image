@@ -103,6 +103,8 @@ const mainSrc = computed(() =>
 
 if (import.meta.server && $img.options.preconnect !== false) {
   usePreconnect(mainSrc.value, { crossorigin: normalizedAttrs.value.crossorigin })
+  // The placeholder is what renders first, so preconnect to its origin too
+  usePreconnect(placeholder.value || undefined, { crossorigin: normalizedAttrs.value.crossorigin })
 }
 
 const src = computed(() => placeholder.value || mainSrc.value)
