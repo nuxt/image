@@ -1,0 +1,10 @@
+<template>
+  <div>
+    <nuxt-picture
+      provider="cloudinary"
+      src="/remote/nuxt-org/blog/going-full-static/main"
+      width="500"
+      height="500"
+    />
+  </div>
+</template>

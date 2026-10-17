@@ -20,7 +20,7 @@
 import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
-import { useImage } from '../composables'
+import { useImage, usePreconnect } from '../composables'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
@@ -100,6 +100,11 @@ const mainSrc = computed(() =>
     ? sizes.value.src
     : $img(props.src!, imageModifiers.value, providerOptions.value),
 )
+
+if (import.meta.server && $img.options.preconnect !== false) {
+  usePreconnect(mainSrc.value, { crossorigin: normalizedAttrs.value.crossorigin })
+  usePreconnect(placeholder.value || undefined, { crossorigin: normalizedAttrs.value.crossorigin })
+}
 
 const src = computed(() => placeholder.value || mainSrc.value)
 
