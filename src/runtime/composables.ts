@@ -26,9 +26,9 @@ interface PreconnectOptions {
 }
 
 /**
- * Registers a deduped `<link rel="preconnect">` for the origin of a rendered
- * image URL. No-op on the client, and for empty, relative, same-origin or
- * non-http(s) URLs.
+ * Registers a keyed `<link rel="preconnect">` for the origin of a rendered
+ * image URL, so unhead dedupes repeated origins into a single hint. No-op on
+ * the client, and for empty, relative, same-origin or non-http(s) URLs.
  */
 export const usePreconnect = (url: string | undefined, options: PreconnectOptions = {}): void => {
   if (import.meta.client) {
