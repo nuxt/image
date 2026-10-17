@@ -5,7 +5,7 @@ import type { IPXOptions } from 'ipx'
 import type { NodeListener } from 'h3'
 import { lazyEventHandler, fromNodeMiddleware } from 'h3'
 import { isAbsolute } from 'pathe'
-import type { NitroRuntimeConfig } from 'nitropack'
+import type { NitroRuntimeConfig } from 'nitropack/types'
 
 import { useRuntimeConfig } from 'nitropack/runtime'
 
