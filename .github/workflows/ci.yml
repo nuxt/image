@@ -86,7 +86,7 @@ jobs:
           persist-credentials: false
       - uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
-          runtime: node@24.21.0
+          runtime: node@24.22.0
           cache: true
 
       - name: Install Playwright
