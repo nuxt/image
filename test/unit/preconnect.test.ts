@@ -1,5 +1,13 @@
-import { describe, expect, it } from 'vitest'
-import { resolvePreconnectOrigin } from '../../src/runtime/utils/preconnect'
+import { describe, expect, it, vi } from 'vitest'
+
+const { useHead } = vi.hoisted(() => ({ useHead: vi.fn() }))
+
+vi.mock('#imports', () => ({
+  useHead,
+  useRequestURL: () => new URL('https://my-site.com/page'),
+}))
+
+const { addPreconnect, resolvePreconnectOrigin } = await import('../../src/runtime/utils/preconnect')
 
 const base = 'https://my-site.com/page'
 
@@ -52,5 +60,57 @@ describe('resolvePreconnectOrigin', () => {
   it('returns undefined for empty or missing urls', () => {
     expect(resolvePreconnectOrigin('', base)).toBeUndefined()
     expect(resolvePreconnectOrigin(undefined, base)).toBeUndefined()
+  })
+})
+
+describe('addPreconnect', () => {
+  it('registers a preconnect hint for a cross-origin url', () => {
+    addPreconnect('https://cdn.example.com/a.jpg')
+
+    expect(useHead).toHaveBeenCalledWith({
+      link: [{
+        rel: 'preconnect',
+        href: 'https://cdn.example.com',
+        key: 'preconnect:https://cdn.example.com',
+      }],
+    })
+  })
+
+  it('mirrors the crossorigin mode of the image', () => {
+    addPreconnect('https://cdn.example.com/a.jpg', { crossorigin: 'use-credentials' })
+
+    expect(useHead).toHaveBeenCalledWith({
+      link: [{
+        rel: 'preconnect',
+        href: 'https://cdn.example.com',
+        key: 'preconnect:https://cdn.example.com:use-credentials',
+        crossorigin: 'use-credentials',
+      }],
+    })
+  })
+
+  it('treats an empty crossorigin as anonymous', () => {
+    addPreconnect('https://cdn.example.com/a.jpg', { crossorigin: '' })
+
+    expect(useHead).toHaveBeenCalledWith({
+      link: [{
+        rel: 'preconnect',
+        href: 'https://cdn.example.com',
+        key: 'preconnect:https://cdn.example.com:anonymous',
+        crossorigin: 'anonymous',
+      }],
+    })
+  })
+
+  it('does not register a hint for a same-origin url', () => {
+    addPreconnect('https://my-site.com/other.jpg')
+
+    expect(useHead).not.toHaveBeenCalled()
+  })
+
+  it('does not register a hint for a relative url', () => {
+    addPreconnect('/images/a.jpg')
+
+    expect(useHead).not.toHaveBeenCalled()
   })
 })

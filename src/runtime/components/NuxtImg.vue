@@ -21,7 +21,7 @@ import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
-import { addPreconnect } from '../utils/head'
+import { addPreconnect } from '../utils/preconnect'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
