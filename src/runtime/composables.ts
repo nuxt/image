@@ -29,8 +29,11 @@ export interface PreconnectOptions {
  * Registers a keyed `<link rel="preconnect">` for the origin of a rendered
  * image URL, so unhead dedupes repeated origins into a single hint. No-op on
  * the client, and for empty, relative, same-origin or non-http(s) URLs.
+ *
+ * This is an internal helper for the image components, not a supported public
+ * API.
  */
-export const usePreconnect = (url: string | undefined, options: PreconnectOptions = {}): void => {
+export const addPreconnect = (url: string | undefined, options: PreconnectOptions = {}): void => {
   if (import.meta.client) {
     return
   }
