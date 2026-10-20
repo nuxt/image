@@ -48,9 +48,12 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
   nitro.options._config.runtimeConfig = nitro.options._config.runtimeConfig || {}
   nitro.options.runtimeConfig.ipx = defu(nitro.options.runtimeConfig.ipx, ipxOptions)
 
+  // `srvx/node` is only traced when the runtime resolves srvx to its Node adapter, which `bun` and `deno` do not
+  const isNodeRuntime = !['bun', 'deno'].some(condition => nitro.options.exportConditions?.includes(condition))
+
   const handler = resolveServerVariant({
     nuxt: resolver.resolve('./runtime/server/routes/_ipx'),
-    nitro2: resolver.resolve('./runtime/server/routes/_ipx.legacy'),
+    nitro2: resolver.resolve(isNodeRuntime ? './runtime/server/routes/_ipx.legacy' : './runtime/server/routes/_ipx.legacy.fetch'),
   })
 
   if (!handler) {
