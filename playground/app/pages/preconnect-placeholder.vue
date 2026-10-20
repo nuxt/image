@@ -1,0 +1,10 @@
+<template>
+  <div>
+    <nuxt-img
+      src="/images/nuxt.png"
+      width="100"
+      height="100"
+      placeholder="https://res.cloudinary.com/nuxt/image/upload/images/nuxt.png"
+    />
+  </div>
+</template>

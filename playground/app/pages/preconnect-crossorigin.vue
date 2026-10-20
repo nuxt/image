@@ -1,0 +1,24 @@
+<template>
+  <div>
+    <nuxt-img
+      provider="cloudinary"
+      src="/remote/nuxt-org/blog/going-full-static/main"
+      width="100"
+      height="100"
+      crossorigin="anonymous"
+    />
+    <nuxt-img
+      provider="cloudinary"
+      src="/remote/nuxt-org/blog/going-full-static/main"
+      width="120"
+      height="120"
+    />
+    <nuxt-img
+      provider="cloudinary"
+      src="/remote/nuxt-org/blog/going-full-static/main"
+      width="140"
+      height="140"
+      crossorigin="anonymous"
+    />
+  </div>
+</template>
