@@ -37,8 +37,7 @@ import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-// Attributes fall through to `<picture>`, except `imageAttrNames`, which go to the `<img>`.
-// `@vue-ignore` types them without turning them into runtime props.
+// Type fallthrough attributes (`imageAttrNames` go to `<img>`) without making them runtime props
 export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends
   BaseImageProps<Provider>,
   /* @vue-ignore */ Omit<HTMLAttributes, keyof BaseImageProps<Provider> | 'placeholder' | 'onLoad' | 'onError'>,
