@@ -23,7 +23,7 @@
 
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
 import type { SerializableHead } from '@unhead/vue/types'
-import type { ImgHTMLAttributes } from 'vue'
+import type { HTMLAttributes, ImgHTMLAttributes } from 'vue'
 
 import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 
@@ -37,7 +37,12 @@ import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
-export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
+// Attributes fall through to `<picture>`, except `imageAttrNames`, which go to the `<img>`.
+// `@vue-ignore` types them without turning them into runtime props.
+export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends
+  BaseImageProps<Provider>,
+  /* @vue-ignore */ Omit<HTMLAttributes, keyof BaseImageProps<Provider> | 'placeholder' | 'onLoad' | 'onError'>,
+  /* @vue-ignore */ Pick<ImgHTMLAttributes, 'alt' | 'decoding' | 'loading' | 'referrerpolicy' | 'usemap'> {
   legacyFormat?: string
   imgAttrs?: ImgHTMLAttributes & DataAttributes
 }
