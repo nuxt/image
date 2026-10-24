@@ -76,6 +76,12 @@ describe('browser (ssr: true)', () => {
     expect(await link4.getAttribute('imagesrcset')).not.toBeNull()
     expect(await link4.getAttribute('fetchpriority')).toBe('high')
 
+    const link5 = page.locator('head link[rel="preload"][as="image"][imagesrcset*="colors-picture-with-crossorigin-prop.jpg"]')
+    expect(await link5.getAttribute('crossorigin')).toBe('anonymous')
+
+    const link6 = page.locator('head link[rel="preload"][as="image"][imagesrcset*="colors-picture-with-crossorigin-img-attrs.jpg"]')
+    expect(await link6.getAttribute('crossorigin')).toBe('use-credentials')
+
     await page.close()
   })
 

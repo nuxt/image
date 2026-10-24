@@ -36,5 +36,23 @@
       densities="x1 x2"
       :preload="{ fetchPriority: 'high' }"
     />
+
+    <h1>Picture preload with crossorigin prop</h1>
+    <nuxt-picture
+      src="/images/colors-picture-with-crossorigin-prop.jpg"
+      width="500"
+      height="500"
+      crossorigin="anonymous"
+      preload
+    />
+
+    <h1>Picture preload with crossorigin in imgAttrs</h1>
+    <nuxt-picture
+      src="/images/colors-picture-with-crossorigin-img-attrs.jpg"
+      width="500"
+      height="500"
+      :img-attrs="{ crossorigin: 'use-credentials' }"
+      preload
+    />
   </div>
 </template>
