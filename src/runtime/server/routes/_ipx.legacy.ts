@@ -1,16 +1,17 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXNodeHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import type { IPXOptions } from 'ipx'
-import type { NodeListener } from 'h3'
-import { lazyEventHandler, fromNodeMiddleware } from 'h3'
+import { lazyEventHandler, fromWebHandler } from 'h3'
 import { isAbsolute } from 'pathe'
+import { withoutBase } from 'ufo'
 import type { NitroRuntimeConfig } from 'nitropack/types'
 
 import { useRuntimeConfig } from 'nitropack/runtime'
 
 export default lazyEventHandler(() => {
-  const opts = useRuntimeConfig().ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
+  const config = useRuntimeConfig()
+  const opts = config.ipx as NitroRuntimeConfig['ipx'] || {} as Record<string, never>
 
   // TODO: Migrate to unstorage layer
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map(dir => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, import.meta.url))) : undefined
@@ -29,10 +30,10 @@ export default lazyEventHandler(() => {
 
   const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
   const ipx = createIPX(ipxOptions)
-  const nodeHandler = createIPXNodeHandler(ipx, {
+  const fetchHandler = createIPXFetchHandler(ipx, {
     parseURL(url) {
       const parsedURL = new URL(url)
-      let pathname = parsedURL.pathname
+      let pathname = withoutBase(parsedURL.pathname, config.app.baseURL)
       if (baseURL && (pathname === baseURL || pathname.startsWith(`${baseURL}/`))) {
         pathname = pathname.slice(baseURL.length) || '/'
       }
@@ -40,5 +41,5 @@ export default lazyEventHandler(() => {
     },
   })
 
-  return fromNodeMiddleware(nodeHandler as NodeListener)
+  return fromWebHandler(async request => fetchHandler(request))
 })
