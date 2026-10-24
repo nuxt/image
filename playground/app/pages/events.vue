@@ -24,7 +24,6 @@
     />
     <nuxt-picture
       :src="src"
-      placeholder
       width="500"
       height="500"
       @load="() => { console.log('Image was loaded') }"
