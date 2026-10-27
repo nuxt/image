@@ -150,11 +150,22 @@ describe('Renders simple image', () => {
     // 1vw of a 10px screen rounds down to 0
     setImageContext({ screens: { tiny: 10 } })
     try {
-      const { srcset } = useImage().getSizes('/image.png', {
+      const withBreakpoint = useImage().getSizes('/image.png', {
         sizes: '1vw sm:400px',
         modifiers: { width: 200, height: 200 },
       })
-      expect(getSrcsetWidths(srcset)).toEqual([400, 800])
+      // The default entry must be kept in `sizes`
+      expect(withBreakpoint.sizes).toBe('(max-width: 639px) 1vw, 400px')
+      expect(getSrcsetWidths(withBreakpoint.srcset)).toEqual([1, 2, 400, 800])
+
+      // With a single entry, skipping it would leave the image without any candidate nor `src`
+      const singleEntry = useImage().getSizes('/image.png', {
+        sizes: '1vw',
+        modifiers: { width: 200, height: 200 },
+      })
+      expect(singleEntry.sizes).toBe('1vw')
+      expect(getSrcsetWidths(singleEntry.srcset)).toEqual([1, 2])
+      expect(singleEntry.src).toBeTruthy()
     }
     finally {
       // Restore the default image context for the following tests

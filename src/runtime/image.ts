@@ -225,11 +225,9 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
     // for ordering. Resolving a vw value against 1px would yield 0w/1w candidates (#2320), so the
     // smallest configured screen is used as the reference width instead.
     const referenceWidth = key === '1px' ? getSmallestScreen(ctx) || screenMaxWidth : screenMaxWidth
-    _cWidth = Math.round((_cWidth / 100) * referenceWidth)
-    // A very small reference width can still round down to 0, which would emit an invalid 0w descriptor
-    if (!_cWidth) {
-      return undefined
-    }
+    // A very small reference width can still round down to 0, which would emit an invalid 0w descriptor.
+    // The width is clamped rather than skipped, so the entry is kept in `sizes` and a `src` is still rendered.
+    _cWidth = Math.max(1, Math.round((_cWidth / 100) * referenceWidth))
   }
   const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
   return {
