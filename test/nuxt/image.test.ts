@@ -145,6 +145,25 @@ describe('Renders simple image', () => {
     expect(getSrcsetWidths(el.getAttribute('srcset')!)).toEqual([141, 282, 400, 800])
   })
 
+  // https://github.com/nuxt/image/issues/2320
+  it('does not emit a 0w srcset descriptor when the smallest screen is too small for the fluid size', () => {
+    // 1vw of a 10px screen rounds down to 0
+    setImageContext({ screens: { tiny: 10 } })
+    try {
+      const { srcset } = useImage().getSizes('/image.png', {
+        sizes: '1vw sm:400px',
+        modifiers: { width: 200, height: 200 },
+      })
+      expect(getSrcsetWidths(srcset)).toEqual([400, 800])
+    }
+    finally {
+      // Restore the default image context for the following tests
+      const nuxtApp = useNuxtApp()
+      delete nuxtApp._img
+      delete nuxtApp.$img
+    }
+  })
+
   it('encodes characters', () => {
     const img = mountImage({
       width: 200,
