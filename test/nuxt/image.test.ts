@@ -116,6 +116,35 @@ describe('Renders simple image', () => {
     expect(img.html()).toMatchInlineSnapshot(`"<img width="200" height="300" data-nuxt-img="" sizes="(max-width: 299px) 200px, (max-width: 399px) 200px, (max-width: 499px) 400px, (max-width: 799px) 500px, 800px" srcset="/_ipx/s_200x300/image.png 200w, /_ipx/s_400x600/image.png 400w, /_ipx/s_500x750/image.png 500w, /_ipx/s_800x1200/image.png 800w, /_ipx/s_1000x1500/image.png 1000w, /_ipx/s_1600x2400/image.png 1600w" src="/_ipx/s_1600x2400/image.png">"`)
   })
 
+  // https://github.com/nuxt/image/issues/2320
+  it('does not emit a 0w srcset descriptor for an unprefixed fluid size below 50vw', () => {
+    const img = mountImage({
+      width: 200,
+      height: 200,
+      sizes: '22vw sm:22vw md:400px',
+      src: 'image.png',
+    })
+    const srcset = img.find('img').element.getAttribute('srcset')!
+    expect(srcset).not.toMatch(/\s0w(,|$)/)
+    // The unprefixed default is resolved against the smallest screen (sm: 640),
+    // so it collapses with `sm:22vw` into 141w / 282w
+    expect(getSrcsetWidths(srcset)).toEqual([141, 282, 400, 800])
+  })
+
+  // https://github.com/nuxt/image/issues/2320
+  it('keeps an unprefixed fluid size in `sizes` while resolving it against the smallest screen', () => {
+    const img = mountImage({
+      width: 200,
+      height: 200,
+      sizes: '22vw md:400px',
+      src: 'image.png',
+    })
+    const el = img.find('img').element
+    // The default entry must not be dropped, otherwise mobile viewports would fall back to 400px
+    expect(el.getAttribute('sizes')).toBe('(max-width: 767px) 22vw, 400px')
+    expect(getSrcsetWidths(el.getAttribute('srcset')!)).toEqual([141, 282, 400, 800])
+  })
+
   it('encodes characters', () => {
     const img = mountImage({
       width: 200,
@@ -606,6 +635,15 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
 })
 
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
+
+/**
+ * Extract the `w` descriptors of a srcset attribute.
+ * @param srcset - Raw srcset attribute value (e.g. `/a.png 100w, /b.png 200w`)
+ * @returns The widths, in srcset order
+ */
+function getSrcsetWidths(srcset: string) {
+  return srcset.split(',').map(candidate => Number.parseInt(candidate.trim().split(/\s+/)[1]!))
+}
 
 function setImageContext(options: Partial<CreateImageOptions>) {
   const nuxtApp = useNuxtApp()
