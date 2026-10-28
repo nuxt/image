@@ -1,59 +1,109 @@
 name: release
 
 on:
-  pull_request_target:
+  push:
+    # release/v* picks up hand edits to an open release PR
+    branches: ['1.x', 'release/v*']
+  pull_request:
     types: [closed]
-    branches:
-      - main
+    branches: ['1.x']
+  # merged release PRs, publish reruns, and prereleases all arrive here
+  workflow_dispatch:
+    inputs:
+      prerelease:
+        description: 'Cut a prerelease instead of a normal release, e.g. `beta`, `rc`, or `0`'
+        required: false
+        default: ''
+      npm-tag:
+        description: 'npm dist-tag to publish to. Set by uppt/release for maintenance lines; leave blank otherwise'
+        required: false
+        default: ''
 
-# Remove default permissions of GITHUB_TOKEN for security
-# https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
 permissions: {}
 
 jobs:
-  release:
-    if: github.repository_owner == 'nuxt' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'v')
-    concurrency:
-      group: release
+  # Parse commits since the last tag, push a `release/vX.Y.Z` branch, open
+  # or update a draft release PR against 1.x.
+  pr:
+    if: |
+      github.repository_owner == 'nuxt'
+      && (
+        (
+          github.event_name == 'push'
+          && (github.ref == 'refs/heads/1.x' || startsWith(github.ref, 'refs/heads/release/v'))
+        )
+        || (github.event_name == 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/'))
+      )
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+      pull-requests: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: danielroe/uppt/pr@6c1a9b480b0f02a3f535dedaf1a113f590aa56f2 # v0.6.12
         with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
-      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base-branch: 1.x
+          prerelease: ${{ inputs.prerelease }}
+
+  # The release PR was merged: tag the squash commit, cut a GitHub release
+  # from the PR body, and dispatch the publish workflow. uppt/release
+  # derives the `1x` npm dist-tag for this maintenance line itself.
+  release:
+    if: |
+      github.repository_owner == 'nuxt'
+      && github.event_name == 'pull_request'
+      && github.event.pull_request.merged == true
+      && startsWith(github.event.pull_request.head.ref, 'release/v')
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: danielroe/uppt/release@6c1a9b480b0f02a3f535dedaf1a113f590aa56f2 # v0.6.12
         with:
-          node-version: lts/*
-          registry-url: "https://registry.npmjs.org/"
-          cache: "pnpm"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 📦 Install dependencies
-        run: pnpm install
+  # The chained dispatch from `release` lands here as a `workflow_dispatch`
+  # event on a `vX.Y.Z` tag ref. Manual recovery uses the same path
+  # (Run workflow -> pick a `v*` tag).
+  pack:
+    if: github.repository_owner == 'nuxt' && github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pack-${{ github.ref }}
+      cancel-in-progress: false
+    permissions: {}
+    outputs:
+      files: ${{ steps.pack.outputs.files }}
+    steps:
+      - id: pack
+        uses: danielroe/uppt/pack@6c1a9b480b0f02a3f535dedaf1a113f590aa56f2 # v0.6.12
+        with:
+          node-version: 22
 
-      - name: Build (stub)
-        run: pnpm dev:prepare
-
-      - name: 🛠 Build and release project
-        run: pnpm changelogen --publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.RELEASE_NODE_AUTH_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-
-      - name: 🏷️ Create tag
-        env:
-          TAG_NAME: ${{ github.event.pull_request.head.ref }}
-        run: |
-          git tag "$TAG_NAME"
-          git push origin "$TAG_NAME"
-
-      - name: 🛳️ Create GitHub release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_NAME: ${{ github.event.pull_request.head.ref }}
-          RELEASE_NAME: ${{ github.event.pull_request.head.ref }}
-          BODY: ${{ github.event.pull_request.body }}
-        run: gh release create "$TAG_NAME" --title "$RELEASE_NAME" --notes "$BODY"
+  # `publish` stages the packed tarball for this maintenance line; approve
+  # it with 2FA on npmjs.com. The `environment` and workflow filename must
+  # match the trusted-publisher entry on npmjs.com.
+  publish:
+    if: |
+      github.repository_owner == 'nuxt'
+      && github.event_name == 'workflow_dispatch'
+      && startsWith(github.ref, 'refs/tags/v')
+      && needs.pack.outputs.files != '[]'
+    needs: pack
+    runs-on: ubuntu-latest
+    concurrency:
+      group: publish-${{ github.ref }}
+      cancel-in-progress: false
+    permissions:
+      id-token: write
+    environment: npm
+    steps:
+      - uses: danielroe/uppt/publish@6c1a9b480b0f02a3f535dedaf1a113f590aa56f2 # v0.6.12
+        with:
+          files: ${{ needs.pack.outputs.files }}
+          npm-tag: ${{ inputs.npm-tag }}
