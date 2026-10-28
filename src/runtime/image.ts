@@ -221,7 +221,13 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
     return undefined
   }
   if (isFluid) {
-    _cWidth = Math.round((_cWidth / 100) * screenMaxWidth)
+    // `parseSizes` stores the unprefixed default under a synthetic '1px' key, which is only meant
+    // for ordering. Resolving a vw value against 1px would yield 0w/1w candidates (#2320), so the
+    // smallest configured screen is used as the reference width instead.
+    const referenceWidth = key === '1px' ? getSmallestScreen(ctx) || screenMaxWidth : screenMaxWidth
+    // A very small reference width can still round down to 0, which would emit an invalid 0w descriptor.
+    // The width is clamped rather than skipped, so the entry is kept in `sizes` and a `src` is still rendered.
+    _cWidth = Math.max(1, Math.round((_cWidth / 100) * referenceWidth))
   }
   const _cHeight = hwRatio ? Math.round(_cWidth * hwRatio) : height
   return {
@@ -230,6 +236,16 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
     _cWidth,
     _cHeight,
   }
+}
+
+/**
+ * Get the width of the smallest configured screen.
+ * @param ctx - Image context holding the `screens` option
+ * @returns The smallest screen width, or `undefined` when no screen is configured
+ */
+function getSmallestScreen(ctx: ImageCTX): number | undefined {
+  const widths = Object.values(ctx.options.screens || {}).filter(w => w > 0)
+  return widths.length ? Math.min(...widths) : undefined
 }
 
 function getVariantSrc(ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
