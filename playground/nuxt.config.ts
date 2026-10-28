@@ -9,6 +9,13 @@ export default defineNuxtConfig({
       failOnError: false,
     },
   },
+  typescript: {
+    tsConfig: {
+      vueCompilerOptions: {
+        checkUnknownProps: true,
+      },
+    },
+  },
   image: {
     inject: true,
     domains: [
