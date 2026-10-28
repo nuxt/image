@@ -16,6 +16,10 @@ export interface IPXOptions extends Omit<IPXRuntimeConfig, 'alias'> {
   modifiers: Partial<IPXModifiers>
 }
 
+export function encodeIPXPath(src: string) {
+  return encodePath(src).replace(/%2B/g, '+')
+}
+
 export const operationsGenerator = createOperationsGenerator({
   keyMap: {
     format: 'f',
@@ -46,7 +50,7 @@ export default defineProvider<Partial<IPXOptions>>({
     }
 
     return {
-      url: joinURL(baseURL, params, encodePath(src)),
+      url: joinURL(baseURL, params, encodeIPXPath(src)),
     }
   },
 })
