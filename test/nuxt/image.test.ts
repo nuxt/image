@@ -505,6 +505,41 @@ describe('Preset sizes and densities inheritance', () => {
     expect(srcset).not.toMatch(/\b\d+w\b/)
     expect(sizes).toBeFalsy()
   })
+  it('preset width and height are scaled by densities', () => {
+    setImageContext({
+      presets: {
+        card: {
+          modifiers: { width: 300, height: 400 },
+        },
+      },
+    })
+
+    const { srcset, src: defaultSrc } = useImage().getSizes(src, {
+      preset: 'card',
+      densities: '1x 2x',
+    })
+
+    expect(srcset).toBe('/_ipx/s_300x400/image.png 1x, /_ipx/s_600x800/image.png 2x')
+    expect(defaultSrc).toBe('/_ipx/s_600x800/image.png')
+  })
+
+  it('component width and height take precedence over preset when scaling densities', () => {
+    setImageContext({
+      presets: {
+        card: {
+          modifiers: { width: 300, height: 400 },
+        },
+      },
+    })
+
+    const { srcset } = useImage().getSizes(src, {
+      preset: 'card',
+      densities: '1x 2x',
+      modifiers: { width: 100, height: 100 },
+    })
+
+    expect(srcset).toBe('/_ipx/s_100x100/image.png 1x, /_ipx/s_200x200/image.png 2x')
+  })
 })
 
 describe('Renders image, applies module config', () => {
