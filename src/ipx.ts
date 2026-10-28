@@ -63,7 +63,7 @@ export const ipxSetup: IPXSetupT = setupOptions => (providerOptions, moduleOptio
     handler,
   } satisfies NitroEventHandler
 
-  if (!setupOptions?.isStatic) {
+  if (!setupOptions?.isStatic || nitro.options.dev) {
     nitro.options.handlers.push(ipxHandler)
   }
 
