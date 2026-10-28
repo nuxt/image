@@ -1,5 +1,5 @@
-import { joinURL, encodePath } from 'ufo'
-import { operationsGenerator } from './ipx'
+import { joinURL } from 'ufo'
+import { encodeIPXPath, operationsGenerator } from './ipx'
 import type { IPXOptions } from './ipx'
 import { defineProvider } from '../utils/provider'
 
@@ -20,7 +20,7 @@ export default defineProvider<Partial<IPXOptions>>({
     }
 
     return {
-      url: joinURL(baseURL, params, encodePath(src).replace(/\/{2,}/g, '/')),
+      url: joinURL(baseURL, params, encodeIPXPath(src).replace(/\/{2,}/g, '/')),
     }
   },
 })
