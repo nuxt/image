@@ -89,6 +89,9 @@ export default defineNuxtConfig({
     imgix: {
       baseURL: 'https://assets.imgix.net',
     },
+    truocloud: {
+      baseURL: 'https://img.truo.cloud/i/demo',
+    },
     imgproxy: {
       baseURL: 'http://localhost:8080',
       key: 'ee3b0e07dfc9ec20d5d9588a558753547a8a88c48291ae96171330daf4ce2800',
