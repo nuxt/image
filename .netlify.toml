@@ -1,7 +1,0 @@
-# https://docs.netlify.com/build/configure-builds/file-based-configuration/
-
-[build]
-  base    = "docs"
-  command = "pnpm build"
-  publish = "dist"
-  ignore  = "git diff --quiet HEAD^ HEAD . ../package.json"

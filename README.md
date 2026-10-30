@@ -1,4 +1,4 @@
-[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://image.nuxt.com)
+[![nuxt-image-social-card](https://github-production-user-asset-6210df.s3.amazonaws.com/904724/261574805-5af726c5-0113-4676-9ee9-c464393caee0.png)](https://nuxt.com/modules/image)
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -11,7 +11,7 @@
 
 Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN.
 
-- [📖 &nbsp;Read Documentation](https://image.nuxt.com)
+- [📖 &nbsp;Read Documentation](https://nuxt.com/modules/image)
 - [👾 &nbsp;Playground](https://stackblitz.com/github/nuxt/image/tree/main/example)
 
 ## Features

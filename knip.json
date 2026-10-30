@@ -18,26 +18,6 @@
       ],
       "ignoreDependencies": []
     },
-    "docs": {
-      "entry": [
-        "app/{components,layouts,pages,plugins,server}/**",
-        "app/{app,error}.vue",
-        "app/assets/css/main.css",
-        "app/*.ts"
-      ],
-      "ignoreUnresolved": [
-        "#content/server"
-      ],
-      "ignoreDependencies": [
-        "@nuxt/content",
-        "@nuxt/ui",
-        "@nuxt/image",
-        "@nuxtjs/plausible",
-        "better-sqlite3",
-        "docus",
-        "tailwindcss"
-      ]
-    },
     "example": {
       "ignoreDependencies": [
         "@nuxt/image"
