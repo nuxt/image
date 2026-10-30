@@ -119,4 +119,102 @@ describe('browser (ssr: true)', () => {
       }
     `)
   })
+
+  it('does not preconnect unless the image opts in', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-opt-out'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual([])
+
+    await page.close()
+  })
+
+  it('preconnects to a remote provider origin', async () => {
+    const page = await createPage()
+    await page.goto(url('/provider/cloudinary'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toContain('https://res.cloudinary.com')
+    expect(origins.filter(origin => origin === 'https://res.cloudinary.com')).toHaveLength(1)
+
+    await page.close()
+  })
+
+  it('does not preconnect for same-origin images', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual([])
+
+    await page.close()
+  })
+
+  it('preconnects for a remote provider rendered by NuxtPicture', async () => {
+    const page = await createPage()
+    await page.goto(url('/picture-preconnect'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toContain('https://res.cloudinary.com')
+
+    await page.close()
+  })
+
+  it('mirrors crossorigin on the preconnect hint and keeps connection modes distinct', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-crossorigin'))
+    await page.waitForSelector('img')
+
+    const hints = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => ({
+      href: link.getAttribute('href'),
+      crossorigin: link.getAttribute('crossorigin'),
+    })))
+
+    // Three images share one origin, but only two connection modes were requested
+    expect(hints).toHaveLength(2)
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'anonymous' })
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: null })
+
+    await page.close()
+  })
+
+  it('preconnects to a remote placeholder origin', async () => {
+    const page = await createPage()
+    // the placeholder is the rendered `src`, so only its origin should be hinted
+    await page.goto(url('/preconnect-placeholder'), { waitUntil: 'domcontentloaded' })
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual(['https://res.cloudinary.com'])
+
+    await page.close()
+  })
+
+  it('matches the picture preconnect hint to the crossorigin the image renders', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-crossorigin-picture'), { waitUntil: 'domcontentloaded' })
+
+    const rendered = await page.$$eval('picture img', imgs => imgs.map(img => img.getAttribute('crossorigin')))
+    const hints = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => ({
+      href: link.getAttribute('href'),
+      crossorigin: link.getAttribute('crossorigin'),
+    })))
+
+    // `imgAttrs` is applied after the prop, so it wins: 'use-credentials' and '' (anonymous)
+    expect(rendered).toEqual(['use-credentials', ''])
+    expect(hints).toHaveLength(2)
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'use-credentials' })
+    expect(hints).toContainEqual({ href: 'https://res.cloudinary.com', crossorigin: 'anonymous' })
+
+    await page.close()
+  })
 })

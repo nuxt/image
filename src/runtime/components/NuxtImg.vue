@@ -21,6 +21,7 @@ import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
+import { addPreconnect } from '../utils/preconnect'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
@@ -102,6 +103,12 @@ const mainSrc = computed(() =>
 )
 
 const src = computed(() => placeholder.value || mainSrc.value)
+
+if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
+  // Preconnect the URL that is actually rendered. Reading `mainSrc` here would
+  // force `getSizes` to run during SSR on pages that render a placeholder.
+  addPreconnect([src.value], { crossorigin: normalizedAttrs.value.crossorigin })
+}
 
 if (import.meta.server && props.preload) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')
