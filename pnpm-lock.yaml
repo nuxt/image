@@ -134,8 +134,8 @@ importers:
         version: 2.2.12(typescript@5.8.3)
     optionalDependencies:
       ipx:
-        specifier: ^2.1.1
-        version: 2.1.1(@netlify/blobs@9.1.2)(bare-buffer@3.0.1)(db0@0.3.2)(ioredis@5.6.1)
+        specifier: ^2.1.2
+        version: 2.1.2(@netlify/blobs@9.1.2)(bare-buffer@3.0.1)(db0@0.3.2)(ioredis@5.6.1)
 
   docs:
     dependencies:
@@ -4701,8 +4701,8 @@ packages:
     resolution: {integrity: sha512-UxC0Yv1Y4WRJiGQxQkP0hfdL0/5/6YvdfOOClRgJ0qppSarkhneSa6UvkMkms0AkdGimSH3Ikqm+6mkMmX7vGA==}
     engines: {node: '>=12.22.0'}
 
-  ipx@2.1.1:
-    resolution: {integrity: sha512-XuM9FEGOT+/45mfAWZ5ykwkZ/oE7vWpd1iWjRffMWlwAYIRzb/xD6wZhQ4BzmPMX6Ov5dqK0wUyD0OEN9oWT6g==}
+  ipx@2.1.2:
+    resolution: {integrity: sha512-Yabv1lJ/ANeBzzh14GGECdKIKvW6n2xp1D4m6kKlTxCZSIWin5iKNrivwIx0oXxkEAnQmNgAiiBXFPpbfMBWNQ==}
     hasBin: true
 
   iron-webcrypto@1.2.1:
@@ -6137,6 +6137,7 @@ packages:
   prebuild-install@7.1.2:
     resolution: {integrity: sha512-UnNke3IQb6sgarcZIDU3gbMeTp/9SSU1DAIkil7PrqG1vZlBtY5msYccSKSHDqa3hNg436IXK+SNImReuA1wEQ==}
     engines: {node: '>=10'}
+    deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
   precinct@12.2.0:
@@ -12525,7 +12526,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ipx@2.1.1(@netlify/blobs@9.1.2)(bare-buffer@3.0.1)(db0@0.3.2)(ioredis@5.6.1):
+  ipx@2.1.2(@netlify/blobs@9.1.2)(bare-buffer@3.0.1)(db0@0.3.2)(ioredis@5.6.1):
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       citty: 0.1.6
