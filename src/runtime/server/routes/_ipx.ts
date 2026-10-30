@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage, WEB_INPUT_FORMATS } from 'ipx'
 import type { IPXOptions } from 'ipx'
 import { isAbsolute } from 'pathe'
 import { withoutBase } from 'ufo'
@@ -38,7 +38,7 @@ function createHandler() {
   }
 
   const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
-  const ipx = createIPX(ipxOptions)
+  const ipx = createIPX({ ...ipxOptions, allowedInputFormats: ipxOptions.allowedInputFormats ?? WEB_INPUT_FORMATS })
   return createIPXFetchHandler(ipx, {
     parseURL(url) {
       const parsedURL = new URL(url)

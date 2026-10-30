@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 
-import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { createIPX, createIPXFetchHandler, parseIPXURL, ipxFSStorage, ipxHttpStorage, WEB_INPUT_FORMATS } from 'ipx'
 import type { IPXOptions } from 'ipx'
 import { lazyEventHandler, fromWebHandler } from 'h3'
 import { isAbsolute } from 'pathe'
@@ -29,7 +29,7 @@ export default lazyEventHandler(() => {
   }
 
   const baseURL = (opts.baseURL || '/_ipx').replace(/\/+$/, '')
-  const ipx = createIPX(ipxOptions)
+  const ipx = createIPX({ ...ipxOptions, allowedInputFormats: ipxOptions.allowedInputFormats ?? WEB_INPUT_FORMATS })
   const fetchHandler = createIPXFetchHandler(ipx, {
     parseURL(url) {
       const parsedURL = new URL(url)
