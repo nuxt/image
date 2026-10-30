@@ -1,10 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const { useHead } = vi.hoisted(() => ({ useHead: vi.fn() }))
+const { useHead, useRequestURL } = vi.hoisted(() => ({
+  useHead: vi.fn(),
+  useRequestURL: vi.fn(() => new URL('https://my-site.com/page')),
+}))
 
 vi.mock('#imports', () => ({
   useHead,
-  useRequestURL: () => new URL('https://my-site.com/page'),
+  useRequestURL,
 }))
 
 const { addPreconnect, resolvePreconnectOrigin } = await import('../../src/runtime/utils/preconnect')
@@ -64,8 +67,12 @@ describe('resolvePreconnectOrigin', () => {
 })
 
 describe('addPreconnect', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('registers a preconnect hint for a cross-origin url', () => {
-    addPreconnect('https://cdn.example.com/a.jpg')
+    addPreconnect(['https://cdn.example.com/a.jpg'])
 
     expect(useHead).toHaveBeenCalledWith({
       link: [{
@@ -77,7 +84,7 @@ describe('addPreconnect', () => {
   })
 
   it('mirrors the crossorigin mode of the image', () => {
-    addPreconnect('https://cdn.example.com/a.jpg', { crossorigin: 'use-credentials' })
+    addPreconnect(['https://cdn.example.com/a.jpg'], { crossorigin: 'use-credentials' })
 
     expect(useHead).toHaveBeenCalledWith({
       link: [{
@@ -90,7 +97,7 @@ describe('addPreconnect', () => {
   })
 
   it('treats an empty crossorigin as anonymous', () => {
-    addPreconnect('https://cdn.example.com/a.jpg', { crossorigin: '' })
+    addPreconnect(['https://cdn.example.com/a.jpg'], { crossorigin: '' })
 
     expect(useHead).toHaveBeenCalledWith({
       link: [{
@@ -102,14 +109,68 @@ describe('addPreconnect', () => {
     })
   })
 
+  it('registers one hint per origin within a batch', () => {
+    addPreconnect([
+      'https://cdn.example.com/a.jpg',
+      'https://cdn.example.com/b.jpg',
+      'https://cdn.example.com/c.jpg?signature=abc',
+    ])
+
+    expect(useHead).toHaveBeenCalledTimes(1)
+    expect(useHead).toHaveBeenCalledWith({
+      link: [{
+        rel: 'preconnect',
+        href: 'https://cdn.example.com',
+        key: 'preconnect:https://cdn.example.com',
+      }],
+    })
+  })
+
+  it('combines every origin in a batch into a single useHead call', () => {
+    addPreconnect([
+      'https://a.example.com/1.jpg',
+      'https://b.example.com/2.jpg',
+      'https://a.example.com/3.jpg',
+    ])
+
+    expect(useHead).toHaveBeenCalledTimes(1)
+    expect(useHead).toHaveBeenCalledWith({
+      link: [
+        { rel: 'preconnect', href: 'https://a.example.com', key: 'preconnect:https://a.example.com' },
+        { rel: 'preconnect', href: 'https://b.example.com', key: 'preconnect:https://b.example.com' },
+      ],
+    })
+  })
+
+  it('resolves the request url once per batch', () => {
+    addPreconnect([
+      'https://a.example.com/1.jpg',
+      'https://b.example.com/2.jpg',
+      'https://c.example.com/3.jpg',
+    ])
+
+    expect(useRequestURL).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not call useHead when no url produces an origin', () => {
+    addPreconnect([
+      undefined,
+      '/images/a.jpg',
+      'https://my-site.com/other.jpg',
+      'data:image/png;base64,AAAA',
+    ])
+
+    expect(useHead).not.toHaveBeenCalled()
+  })
+
   it('does not register a hint for a same-origin url', () => {
-    addPreconnect('https://my-site.com/other.jpg')
+    addPreconnect(['https://my-site.com/other.jpg'])
 
     expect(useHead).not.toHaveBeenCalled()
   })
 
   it('does not register a hint for a relative url', () => {
-    addPreconnect('/images/a.jpg')
+    addPreconnect(['/images/a.jpg'])
 
     expect(useHead).not.toHaveBeenCalled()
   })

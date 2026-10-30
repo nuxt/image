@@ -7,6 +7,7 @@
       height="500"
       densities="x1"
       preload
+      preconnect
     />
     <h1>Preload with densities and no sizes prop</h1>
     <nuxt-img
@@ -15,6 +16,7 @@
       height="500"
       densities="x1 x2"
       preload
+      preconnect
     />
 
     <h1>Preload with densities and sizes prop</h1>
@@ -25,6 +27,7 @@
       sizes="100vw md:500px"
       densities="x1 x2"
       preload
+      preconnect
     />
 
     <h1>Preload with densities, sizes prop and default fetch priority high</h1>
@@ -35,6 +38,7 @@
       sizes="100vw md:500px"
       densities="x1 x2"
       :preload="{ fetchPriority: 'high' }"
+      preconnect
     />
   </div>
 </template>

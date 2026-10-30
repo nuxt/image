@@ -5,6 +5,7 @@
       width="100"
       height="100"
       placeholder="https://res.cloudinary.com/nuxt/image/upload/images/nuxt.png"
+      preconnect
     />
   </div>
 </template>

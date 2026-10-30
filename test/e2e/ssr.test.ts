@@ -109,6 +109,18 @@ describe('browser (ssr: true)', () => {
     `)
   })
 
+  it('does not preconnect unless the image opts in', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-opt-out'))
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual([])
+
+    await page.close()
+  })
+
   it('preconnects to a remote provider origin', async () => {
     const page = await createPage()
     await page.goto(url('/provider/cloudinary'))

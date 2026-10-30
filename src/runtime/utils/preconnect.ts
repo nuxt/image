@@ -41,13 +41,14 @@ export interface PreconnectOptions {
 }
 
 /**
- * Registers a keyed `<link rel="preconnect">` for the origin of a rendered
- * image URL, so unhead dedupes repeated origins into a single hint. No-op on
- * the client, and for empty, relative, same-origin or non-http(s) URLs.
+ * Registers keyed `<link rel="preconnect">` hints for the origins of rendered
+ * image URLs, in a single `useHead` call so unhead dedupes repeated origins
+ * into one hint each. No-op on the client, and for empty, relative,
+ * same-origin or non-http(s) URLs.
  *
  * @internal
  */
-export const addPreconnect = (url: string | undefined, options: PreconnectOptions = {}): void => {
+export const addPreconnect = (urls: Array<string | undefined>, options: PreconnectOptions = {}): void => {
   if (import.meta.client) {
     return
   }
@@ -60,22 +61,34 @@ export const addPreconnect = (url: string | undefined, options: PreconnectOption
     return
   }
 
-  const origin = resolvePreconnectOrigin(url, base)
-  if (!origin) {
-    return
-  }
-
   // an empty crossorigin attribute means "anonymous", same as `true`
-  const crossorigin = options.crossorigin === true || options.crossorigin === ''
+  const crossorigin: 'anonymous' | 'use-credentials' | undefined = options.crossorigin === true || options.crossorigin === ''
     ? 'anonymous'
     : (options.crossorigin || undefined)
 
-  useHead({
-    link: [{
+  const links = new Map<string, { rel: 'preconnect', href: string, key: string, crossorigin?: 'anonymous' | 'use-credentials' }>()
+  for (const url of urls) {
+    const origin = resolvePreconnectOrigin(url, base)
+    if (!origin) {
+      continue
+    }
+
+    const key = `preconnect:${origin}${crossorigin ? `:${crossorigin}` : ''}`
+    if (links.has(key)) {
+      continue
+    }
+
+    links.set(key, {
       rel: 'preconnect',
       href: origin,
-      key: `preconnect:${origin}${crossorigin ? `:${crossorigin}` : ''}`,
+      key,
       ...(crossorigin ? { crossorigin } : {}),
-    }],
-  })
+    })
+  }
+
+  if (!links.size) {
+    return
+  }
+
+  useHead({ link: [...links.values()] })
 }

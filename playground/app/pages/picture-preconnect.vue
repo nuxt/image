@@ -5,6 +5,7 @@
       src="/remote/nuxt-org/blog/going-full-static/main"
       width="500"
       height="500"
+      preconnect
     />
   </div>
 </template>

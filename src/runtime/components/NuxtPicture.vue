@@ -120,12 +120,10 @@ const sources = computed<Source[]>(() => {
   })
 })
 
-if (import.meta.server && $img.options.preconnect !== false) {
+if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
   // `imgAttrs` is merged into `attrs.img` after the prop, so use that same value
   const crossorigin = attrs.value.img.crossorigin as PreconnectOptions['crossorigin']
-  for (const source of sources.value) {
-    addPreconnect(source.src, { crossorigin })
-  }
+  addPreconnect(sources.value.map(source => source.src), { crossorigin })
 }
 
 if (import.meta.server && props.preload) {

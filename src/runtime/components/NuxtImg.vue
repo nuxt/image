@@ -102,12 +102,13 @@ const mainSrc = computed(() =>
     : $img(props.src!, imageModifiers.value, providerOptions.value),
 )
 
-if (import.meta.server && $img.options.preconnect !== false) {
-  addPreconnect(mainSrc.value, { crossorigin: normalizedAttrs.value.crossorigin })
-  addPreconnect(placeholder.value || undefined, { crossorigin: normalizedAttrs.value.crossorigin })
-}
-
 const src = computed(() => placeholder.value || mainSrc.value)
+
+if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
+  // Preconnect the URL that is actually rendered. Reading `mainSrc` here would
+  // force `getSizes` to run during SSR on pages that render a placeholder.
+  addPreconnect([src.value], { crossorigin: normalizedAttrs.value.crossorigin })
+}
 
 if (import.meta.server && props.preload) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')
