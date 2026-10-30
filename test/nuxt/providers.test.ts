@@ -88,6 +88,20 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png',
     })
   })
+
+  it('ipx does not double-encode an already-encoded src', () => {
+    const generated = ipx().getImage('/images/UPcase%E6%B5%8B%E8%AF%95.png', { modifiers: { width: 100 } }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: '/_ipx/w_100/images/UPcase%E6%B5%8B%E8%AF%95.png',
+    })
+  })
+
+  it('ipx encodes raw non-ascii src exactly once', () => {
+    const generated = ipx().getImage('/images/UPcase测试.png', { modifiers: { width: 100 } }, getEmptyContext())
+    expect(generated).toMatchObject({
+      url: '/_ipx/w_100/images/UPcase%E6%B5%8B%E8%AF%95.png',
+    })
+  })
   it('aliyun', () => {
     const providerOptions = {
       baseURL: '/',

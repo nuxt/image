@@ -211,6 +211,20 @@ const getImageLoad = (cb = () => {}) => {
   }
 }
 
+describe('Handles non-ascii and pre-encoded srcs', () => {
+  it('encodes raw non-ascii src exactly once', () => {
+    const wrapper = mountImage({ src: '/images/UPcase测试.png', width: 200, height: 200 })
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/_ipx/s_200x200/images/UPcase%E6%B5%8B%E8%AF%95.png')
+  })
+
+  it('does not double-encode an already-encoded src (e.g. rendered by Nuxt Content)', () => {
+    const wrapper = mountImage({ src: '/images/UPcase%E6%B5%8B%E8%AF%95.png', width: 200, height: 200 })
+    const html = wrapper.html()
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/_ipx/s_200x200/images/UPcase%E6%B5%8B%E8%AF%95.png')
+    expect(html).not.toContain('%25')
+  })
+})
+
 describe('Renders placeholder image', () => {
   let wrapper: VueWrapper<any>
   const src = '/image.png'
