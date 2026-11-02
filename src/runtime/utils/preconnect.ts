@@ -18,7 +18,11 @@ function resolvePreconnectOrigin(url: string | undefined, baseHref: string): str
 
   // keep protocol-relative urls scheme-less: prerendering runs over http, but the browser must pick the page's protocol
   if (url.startsWith('//')) {
-    return resolved.host === base.host ? undefined : `//${resolved.host}`
+    // URL drops a port that is default for the base protocol, which may not be default for the page's
+    const explicitPort = /^\/\/[^/?#]*:(\d+)(?=[/?#]|$)/.exec(url)?.[1]
+    const host = explicitPort && !resolved.port ? `${resolved.host}:${explicitPort}` : resolved.host
+
+    return resolved.host === base.host ? undefined : `//${host}`
   }
 
   if (resolved.protocol !== 'http:' && resolved.protocol !== 'https:') {

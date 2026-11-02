@@ -15,5 +15,12 @@
       height="120"
       preconnect
     />
+    <nuxt-img
+      provider="none"
+      src="//res.cloudinary.com:80/nuxt/image/upload/images/nuxt.png"
+      width="140"
+      height="140"
+      preconnect
+    />
   </div>
 </template>

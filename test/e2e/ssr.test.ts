@@ -220,9 +220,11 @@ describe('browser (ssr: true)', () => {
       hid: link.getAttribute('data-hid'),
     })))
 
-    expect(hints).toHaveLength(2)
+    expect(hints).toHaveLength(3)
     expect(hints).toContainEqual({ href: '//res.cloudinary.com', hid: 'preconnect://res.cloudinary.com' })
     expect(hints).toContainEqual({ href: 'http://res.cloudinary.com', hid: 'preconnect:http://res.cloudinary.com' })
+    // an explicit port default for http is still not default for the https page that may serve it
+    expect(hints).toContainEqual({ href: '//res.cloudinary.com:80', hid: 'preconnect://res.cloudinary.com:80' })
 
     await page.close()
   })
