@@ -1,5 +1,4 @@
 packages:
-  - docs
   - example
   - playground
   - playground-v5
@@ -9,18 +8,19 @@ verifyDepsBeforeRun: install
 
 minimumReleaseAgeExclude:
   - "@nuxt/test-utils"
-  - ipx@4.0.0
+  - ipx@4.1.0
   - node-mock-http@1.0.5
   - nuxt
   - nuxt-nightly
   - '@nuxt/*'
   - vue
   - '@vue/*'
+  - nitro@3.0.261029-rc
 
 overrides:
   "@nuxt/image": "workspace:*"
-  "@nuxt/schema@4": "4.6.2"
-  "@types/node": "^24.19.2"
+  "@nuxt/schema@4": "4.6.3"
+  "@types/node": "^26.6.6"
   vite-plugin-vue-tracer: "^1.6.0"
   vue: "3.5.44"
   "@vue/compiler-core": "3.5.44"
