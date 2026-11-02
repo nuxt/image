@@ -100,6 +100,17 @@ describe('browser (ssr: true)', () => {
     expect(res.headers.get('content-type')).toBe('image/jpeg')
   })
 
+  it('refuses TIFF input to /_ipx by default', async () => {
+    const res = await fetch(url('/_ipx/w_32/images/benign.tif'))
+    expect(res.status).toBe(403)
+  })
+
+  it('still encodes TIFF output from other formats', async () => {
+    const res = await fetch(url('/_ipx/f_tiff/images/colors.jpg'))
+    expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toContain('image/tiff')
+  })
+
   it('works with server-side useImage', async () => {
     expect(await $fetch('/api/image' as any)).toMatchInlineSnapshot(`
       {
