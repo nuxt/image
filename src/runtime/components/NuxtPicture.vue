@@ -45,7 +45,10 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<PictureProps<Provider>>()
+const props = withDefaults(defineProps<PictureProps<Provider>>(), {
+  // preserve `undefined` so the global `image.preconnect` option can apply
+  preconnect: undefined,
+})
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
