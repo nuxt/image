@@ -16,6 +16,11 @@ export function resolvePreconnectOrigin(url: string | undefined, baseHref: strin
     return
   }
 
+  // keep protocol-relative urls scheme-less: prerendering runs over http, but the browser must pick the page's protocol
+  if (url.startsWith('//')) {
+    return resolved.host === base.host ? undefined : `//${resolved.host}`
+  }
+
   if (resolved.protocol !== 'http:' && resolved.protocol !== 'https:') {
     return
   }

@@ -199,6 +199,34 @@ describe('browser (ssr: true)', () => {
     await page.close()
   })
 
+  it('ignores data, non-http(s) and same-origin sources', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-ignored'), { waitUntil: 'domcontentloaded' })
+    await page.waitForSelector('img')
+
+    const origins = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => link.getAttribute('href')))
+
+    expect(origins).toEqual([])
+
+    await page.close()
+  })
+
+  it('keeps protocol-relative hints distinct from explicit http origins', async () => {
+    const page = await createPage()
+    await page.goto(url('/preconnect-protocol-relative'), { waitUntil: 'domcontentloaded' })
+
+    const hints = await page.$$eval('head link[rel="preconnect"]', links => links.map(link => ({
+      href: link.getAttribute('href'),
+      hid: link.getAttribute('data-hid'),
+    })))
+
+    expect(hints).toHaveLength(2)
+    expect(hints).toContainEqual({ href: '//res.cloudinary.com', hid: 'preconnect://res.cloudinary.com' })
+    expect(hints).toContainEqual({ href: 'http://res.cloudinary.com', hid: 'preconnect:http://res.cloudinary.com' })
+
+    await page.close()
+  })
+
   it('matches the picture preconnect hint to the crossorigin the image renders', async () => {
     const page = await createPage()
     await page.goto(url('/preconnect-crossorigin-picture'), { waitUntil: 'domcontentloaded' })
