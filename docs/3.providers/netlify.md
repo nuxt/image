@@ -4,7 +4,7 @@ description: Optimize images with Netlify's dynamic image transformation service
 links:
   - label: Source
     icon: i-simple-icons-github
-    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/netlify.ts
+    to: https://github.com/nuxt/image/blob/main/src/runtime/providers/netlifyImageCdn.ts
     size: xs
 ---
 

@@ -28,7 +28,7 @@ If you don't already have one, you can easily [create your own TwicPics account 
 
 ## Setup
 
-You just need to configure the `TwicPics` provider with the `baseURL` set to your TwicPics [Domain](https://www.twicpics.com/docs/getting-started/subdomain/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
+You just need to configure the `TwicPics` provider with the `baseURL` set to your TwicPics [Domain](https://www.twicpics.com/docs/essentials/domain-configuration?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -132,13 +132,13 @@ This will return a blurry preview of your image in `svg` format.
 />
 ```
 
-More informations [about format here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#output).
+More informations [about format here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#output).
 
 ### quality
 
 Specifies the output quality as a number between 1 (poor quality) and 100 (best quality).
 
-Syntax: `quality=`[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)
+Syntax: `quality=`[`number`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)
 
 [TwicPics](https://www.twicpics.com/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider) considers `quality`=70 as default value.
 
@@ -156,13 +156,13 @@ Example:
 />
 ```
 
-More informations [about quality here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=quality#truecolor).
+More informations [about quality here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#quality).
 
 ### background
 
 `background` specifies a color that will show through transparent and translucent parts of the image. This will have no effect on images with no transparency nor translucency.
 
-Syntax: `background=`[`color`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#color)
+Syntax: `background=`[`color`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#color)
 
 Example:
 
@@ -185,7 +185,7 @@ Example:
 />
 ```
 
-More informations [about background here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#background).
+More informations [about background here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#background).
 
 ## TwicPics modifiers
 
@@ -203,13 +203,13 @@ In addition to the standard parameters, the specific features of the TwicPics AP
 />
 ```
 
-[A complete list of these features and their uses is accessible here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
+[A complete list of these features and their uses is accessible here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
 ### crop
 
 `crop` will extract a zone from the image which size is the given `crop` size. If no coordinates are given, the focus point will be used as a guide to determine where to start the extraction. If coordinates are given, they will be used to determine the top-left pixel from which to start the extraction and the focus point will be reset to the center of the resulting image.
 
-Syntax: `{ crop: `[`size`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-size)[`@coordinates`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#coordinates)` }`
+Syntax: `{ crop: `[`size`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-size)[`@coordinates`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#coordinates)` }`
 
 ```vue
 <!-- no coordinates given -->
@@ -234,7 +234,7 @@ Syntax: `{ crop: `[`size`](https://www.twicpics.com/docs/api/manipulations/?utm_
 />
 ```
 
-More informations [about `crop` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop).
+More informations [about `crop` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop).
 
 ### flip
 
@@ -265,7 +265,7 @@ Syntax: `{ flip: 'both' | 'x' | 'y' }`
 />
 ```
 
-More informations [about `flip` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#flip).
+More informations [about `flip` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#flip).
 
 ### focus
 
@@ -273,7 +273,7 @@ More informations [about `flip` here](https://www.twicpics.com/docs/api/transfor
 
 If `auto` is used in place of actual coordinates, the focus point will be chosen automagically for you!
 
-Syntax: `{ focus: `[`coordinates`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#crop-coordinates)`|'auto' }`
+Syntax: `{ focus: `[`coordinates`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#coordinates)`|'auto' }`
 
 ```vue
 <!-- using crop with focus auto -->
@@ -300,7 +300,7 @@ Syntax: `{ focus: `[`coordinates`](https://www.twicpics.com/docs/api/manipulatio
 
 _NB_ : focus must be placed before the transformations modifying the output image (namely cover, crop and resize).
 
-More informations [about `focus` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#focus).
+More informations [about `focus` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#focus).
 
 ### truecolor
 
@@ -330,13 +330,13 @@ Use truecolor if you want to distribute substantially larger but more accurate i
 />
 ```
 
-More informations [about `truecolor` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#truecolor).
+More informations [about `truecolor` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#truecolor).
 
 ### turn
 
 `turn` will change the orientation of the image. It accepts an angle in degrees or an expression. Angles will be rounded to the closest multiple of 90°.
 
-Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` | 'flip' | 'left' | 'right' }`
+Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` | 'flip' | 'left' | 'right' }`
 
 ```vue
 <!-- turns image at -90° -->
@@ -354,13 +354,13 @@ Syntax: `{ turn: `[`number`](https://www.twicpics.com/docs/api/manipulations/?ut
 />
 ```
 
-More informations [about `turn` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#turn).
+More informations [about `turn` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#turn).
 
 ### zoom
 
 Zooms into the image by a factor equal or superior to 1 towards the focus point while preserving the image size.
 
-Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/api/manipulations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` }`
+Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/reference/parameters?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#number)` }`
 
 ```vue
 <!-- zooms into image by a factor 1.5 -->
@@ -393,11 +393,11 @@ Syntax: `{ zoom: `[`number`](https://www.twicpics.com/docs/api/manipulations/?ut
 
 ```
 
-More informations [about `zoom` here](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#zoom).
+More informations [about `zoom` here](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider#zoom).
 
 ## Combination of parameters
 
-You can combine several transformations of the [TwicPics API](https://www.twicpics.com/docs/api/transformations/?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
+You can combine several transformations of the [TwicPics API](https://www.twicpics.com/docs/reference/transformations?utm_source=nuxt&utm_medium=organic&utm_campaign=provider).
 
 Be aware that the order of the parameters can be significant.
 
@@ -473,4 +473,4 @@ TwicPics offers a [collection of web components](https://www.npmjs.com/package/@
 - LQIP
 - CLS Optimization
 
-A specific integration to Nuxt is available [here](https://github.com/TwicPics/components/blob/main/documentation/nuxt2.md).
+A specific integration to Nuxt is available [here](https://github.com/TwicPics/components/blob/main/documentation/nuxt3.md).

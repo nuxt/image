@@ -134,7 +134,7 @@ Specify background color and its opacity for your image using the `bg` modifier.
 
 ## Overlay Transformation Modifiers
 
-ImageKit's Nuxt Image integration enables you to apply overlays to [images](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md) using the `raw` parameter with the concept of [layers](https://docs.imagekit.io/features/image-transformations/overlay-using-layers.md#layers). The `raw` parameter facilitates incorporating transformations directly in the URL. A layer is a special type of transformation that allows you to apply text and image overlay along with other transformation parameters.
+ImageKit's Nuxt Image integration enables you to apply overlays to [images](https://imagekit.io/docs/add-overlays-on-images) using the `raw` parameter with the concept of [layers](https://imagekit.io/docs/add-overlays-on-images). The `raw` parameter facilitates incorporating transformations directly in the URL. A layer is a special type of transformation that allows you to apply text and image overlay along with other transformation parameters.
 
 ### Overlay Image
 
@@ -176,7 +176,7 @@ const modifiers = {
 </script>
 ```
 
-Read more about ImageKit's overlay using layers [here](https://docs.imagekit.io/features/image-transformations/overlay-using-layers).
+Read more about ImageKit's overlay using layers [here](https://imagekit.io/docs/add-overlays-on-images).
 
 ## Image Enhancement Modifiers
 

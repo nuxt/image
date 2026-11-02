@@ -5,7 +5,7 @@ navigation:
   title: Quick Start
 ---
 
-# Introduction
+## Introduction
 
 Nuxt Image adds `<NuxtImg>` and `<NuxtPicture>` components to your app: drop-in replacements for the native `img` and `picture` elements that resize, transform and serve optimized images, with the built-in optimizer or the image CDN you already use.
 
@@ -19,16 +19,12 @@ Nuxt Image adds `<NuxtImg>` and `<NuxtPicture>` components to your app: drop-in 
 Try it online in the [Nuxt Image playground](https://stackblitz.com/github/nuxt/image/tree/main/example) on StackBlitz.
 ::
 
-::note
-You are reading the `v2` documentation compatible with **Nuxt 3.1+**. Check out [v0.image.nuxtjs.org](https://v0.image.nuxtjs.org/getting-started/installation) for the **Nuxt 2** compatible version ([Announcement](https://github.com/nuxt/image/discussions/548)).
-::
-
 ## Automatic Installation
 
 To get started, add `@nuxt/image` to your project:
 
 ```bash
-npx nuxt module add image
+npx nuxt add image
 ```
 
 ## Manual Installation
@@ -126,22 +122,22 @@ export default defineNuxtConfig({
 Checkout the [image configuration](/modules/image/configuration) for all available options and features to customize.
 ::
 
-## Edge Channel
+## Nightly Channel
 
 After each commit is merged into the `main` branch of `@nuxt/image` and **passing all tests**, we trigger an automated npm release using GitHub Actions publishing a [`@nuxt/image-nightly`](https://npmjs.com/package/@nuxt/image-nightly) package.
 
 You can opt in to use this release channel and avoid waiting for the next release and helping the module by beta testing changes.
 
-The build and publishing method and quality of edge releases are the same as stable ones. The only difference is that you should often check the [GitHub repository](https://github.com/nuxt/image) for updates. There is a slight chance of regressions not being caught during the review process and by the automated tests. Therefore, we internally use this channel to double-check everything before each release.
+The build and publishing method and quality of nightly releases are the same as stable ones. The only difference is that you should often check the [GitHub repository](https://github.com/nuxt/image) for updates. There is a slight chance of regressions not being caught during the review process and by the automated tests. Therefore, we internally use this channel to double-check everything before each release.
 
-### Opting into the edge channel
+### Opting into the nightly channel
 
 Update `@nuxt/image` dependency inside `package.json`:
 
 ```diff [package.json]
 {
   "devDependencies": {
--   "@nuxt/image": "^1.0.0"
+-   "@nuxt/image": "^2.0.0"
 +   "@nuxt/image": "npm:@nuxt/image-nightly@latest"
   }
 }
@@ -149,7 +145,7 @@ Update `@nuxt/image` dependency inside `package.json`:
 
 Remove lockfile (`package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml`) and reinstall dependencies.
 
-### Opting out from the edge channel
+### Opting out from the nightly channel
 
 Update `@nuxt/image` dependency inside `package.json`:
 
@@ -157,7 +153,7 @@ Update `@nuxt/image` dependency inside `package.json`:
 {
   "devDependencies": {
 -   "@nuxt/image": "npm:@nuxt/image-nightly@latest"
-+   "@nuxt/image": "^1.0.0"
++   "@nuxt/image": "^2.0.0"
   }
 }
 ```

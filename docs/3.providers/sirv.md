@@ -54,7 +54,7 @@ To use Sirv-specific transformations, add them in the `modifier` prop.
 
 ### `profile`
 
-Use [Sirv profiles](https://sirv.com/help/profiles) to combine multiple transformation options into a single parameter.
+Use [Sirv profiles](https://sirv.com/help/articles/dynamic-imaging/profiles/) to combine multiple transformation options into a single parameter.
 For example, you can combine `canvas`, `crop` and `watermark` parameters into a single profile and use it like this:
 
 ```vue

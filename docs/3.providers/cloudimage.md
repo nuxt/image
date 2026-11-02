@@ -142,7 +142,7 @@ export default defineNuxtConfig({
 
 ## Cloudimage Modifiers
 
-Beside the [standard modifiers](/modules/image/usage/nuxt-img#modifiers), also you can pass Cloudimage-specific [Cloudimage-specific transformation](https://docs.cloudimage.io/go/cloudimage-documentation-v7/en/introduction) params to `modifiers` prop.
+Beside the [standard modifiers](/modules/image/usage/nuxt-img#modifiers), also you can pass Cloudimage-specific [Cloudimage-specific transformation](https://docs.cloudimage.io/transformations/image-operations) params to `modifiers` prop.
 
 ## Cloudimage `fit` Values
 

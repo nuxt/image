@@ -29,7 +29,7 @@ Plug-and-play image optimization for Nuxt apps. Resize and transform your images
 Install `@nuxt/image` dependency to your project:
 
 ```sh
-npx nuxt module add image
+npx nuxt add image
 ```
 
 ## Nuxt 2
@@ -39,7 +39,7 @@ npx nuxt module add image
 ### Contributing
 
 - Clone this repository
-- Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
+- Install [pnpm](https://pnpm.io/installation)
 - Install dependencies using `pnpm install`
 - Run `pnpm dev:prepare` to generate type stubs.
 - Use `pnpm dev` to start [playground](./playground) in development mode.

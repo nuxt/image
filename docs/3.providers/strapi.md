@@ -44,7 +44,7 @@ By default, when the image is uploaded and **Enable responsive friendly upload**
 | `medium` | 750px             |
 | `large`  | 1000px            |
 
-You can override the default breakpoints. See the [Upload configuration](https://docs.strapi.io/dev-docs/plugins/upload#configuration) in the Strapi documentation.
+You can override the default breakpoints. See the [Media Library configuration](https://docs.strapi.io/cms/features/media-library#responsive-images) in the Strapi documentation.
 
 If you don't set breakpoint modifier, the original image size will be used:
 
