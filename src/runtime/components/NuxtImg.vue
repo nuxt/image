@@ -36,10 +36,8 @@ export interface ImageProps<Provider extends keyof ConfiguredImageProviders> ext
   placeholderClass?: string
 }
 
-const props = withDefaults(defineProps<ImageProps<Provider>>(), {
-  // preserve `undefined` so the global `image.preconnect` option can apply
-  preconnect: undefined,
-})
+// `undefined` lets the global `image.preconnect` option apply
+const props = withDefaults(defineProps<ImageProps<Provider>>(), { preconnect: undefined })
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
@@ -108,8 +106,7 @@ const mainSrc = computed(() =>
 const src = computed(() => placeholder.value || mainSrc.value)
 
 if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
-  // Preconnect the URL that is actually rendered. Reading `mainSrc` here would
-  // force `getSizes` to run during SSR on pages that render a placeholder.
+  // use the rendered URL: reading `mainSrc` forces `getSizes` during SSR with a placeholder
   addPreconnect([src.value], { crossorigin: normalizedAttrs.value.crossorigin })
 }
 

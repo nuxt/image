@@ -1,12 +1,6 @@
 import { useHead, useRequestURL } from '#imports'
 
-/**
- * Resolve the origin a cross-origin image URL should be preconnected to.
- *
- * Returns `undefined` when the URL is empty, relative, same-origin as
- * `baseHref`, not parseable, or not an `http(s)` URL (so `data:`, `blob:`
- * and other schemes are ignored).
- */
+/** Resolves the origin to preconnect to, or `undefined` for empty, relative, same-origin, unparseable or non-http(s) URLs. */
 export function resolvePreconnectOrigin(url: string | undefined, baseHref: string): string | undefined {
   if (!url) {
     return
@@ -41,10 +35,7 @@ export interface PreconnectOptions {
 }
 
 /**
- * Registers keyed `<link rel="preconnect">` hints for the origins of rendered
- * image URLs, in a single `useHead` call so unhead dedupes repeated origins
- * into one hint each. No-op on the client, and for empty, relative,
- * same-origin or non-http(s) URLs.
+ * Registers `<link rel="preconnect">` hints for image origins in one `useHead` call.
  *
  * @internal
  */
