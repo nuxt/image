@@ -3,14 +3,22 @@ import { hasProtocol, parseURL, joinURL, withLeadingSlash } from 'ufo'
 import { imageMeta } from './utils/meta'
 import { checkDensities, parseDensities, parseSize, parseSizes } from './utils'
 import { prerenderStaticImages } from './utils/prerender'
-import type { ImageOptions, ImageSizesOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders } from '@nuxt/image'
+import type { ImageOptions, CreateImageOptions, ResolvedImage, ImageCTX, $Img, ImageSizes, ImageSizesVariant, ConfiguredImageProviders, DefaultProvider } from '@nuxt/image'
+
+type RuntimeImageOptions = {
+  provider?: keyof ConfiguredImageProviders
+  preset?: string
+  densities?: string
+  modifiers?: Record<string, any>
+  sizes?: string | Record<string, any>
+} & Record<string, any>
 
 export function createImage(globalOptions: CreateImageOptions) {
   const ctx: ImageCTX = {
     options: globalOptions,
   }
 
-  const getImage: $Img['getImage'] = (input: string, options = {}) => {
+  const getImage: $Img['getImage'] = <Provider extends keyof ConfiguredImageProviders = DefaultProvider>(input: string, options: ImageOptions<Provider> = {}) => {
     const image = resolveImage(ctx, input, options)
 
     // Prerender static images
@@ -21,24 +29,25 @@ export function createImage(globalOptions: CreateImageOptions) {
     return image
   }
 
-  const $img = ((input, modifiers, options) => getImage(input, defu({ modifiers }, options)).url) as $Img
+  const $img = ((input: string, modifiers?: RuntimeImageOptions['modifiers'], options?: RuntimeImageOptions) =>
+    getImage(input, defu({ modifiers }, options)).url) as $Img
 
   for (const presetName in globalOptions.presets) {
-    $img[presetName] = ((source, modifiers, options) =>
+    $img[presetName] = ((source: string, modifiers?: RuntimeImageOptions['modifiers'], options?: RuntimeImageOptions) =>
       $img(source, modifiers, { ...globalOptions.presets[presetName], ...options })) as $Img[string]
   }
 
   $img.options = globalOptions
   $img.getImage = getImage
-  $img.getMeta = ((input: string, options?: ImageOptions) => getMeta(ctx, input, options)) as $Img['getMeta']
-  $img.getSizes = ((input: string, options: ImageSizesOptions) => getSizes(ctx, input, options)) as $Img['getSizes']
+  $img.getMeta = <Provider extends keyof ConfiguredImageProviders = DefaultProvider>(input: string, options?: ImageOptions<Provider>) => getMeta(ctx, input, options)
+  $img.getSizes = <Provider extends keyof ConfiguredImageProviders = DefaultProvider>(input: string, options: ImageOptions<Provider> = {}) => getSizes(ctx, input, options)
 
-  ctx.$img = $img as $Img
+  ctx.$img = $img
 
   return $img
 }
 
-async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
+async function getMeta(ctx: ImageCTX, input: string, options?: RuntimeImageOptions) {
   const image = resolveImage(ctx, input, { ...options })
 
   if (typeof image.getMeta === 'function') {
@@ -49,7 +58,7 @@ async function getMeta(ctx: ImageCTX, input: string, options?: ImageOptions) {
   }
 }
 
-function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): ResolvedImage {
+function resolveImage(ctx: ImageCTX, input: string, options: RuntimeImageOptions): ResolvedImage {
   if (input && typeof input !== 'string') {
     throw new TypeError(`input must be a string (received ${typeof input}: ${JSON.stringify(input)})`)
   }
@@ -90,8 +99,8 @@ function resolveImage(ctx: ImageCTX, input: string, options: ImageOptions): Reso
     }
   }
 
-  const _options = defu(options, preset, defaults as Partial<ImageOptions>)
-  const resolvedOptions = {
+  const _options: RuntimeImageOptions = defu(options, preset, defaults as Partial<ImageOptions>)
+  const resolvedOptions: RuntimeImageOptions & { modifiers: Record<string, any> } = {
     ..._options,
     modifiers: {
       ..._options.modifiers,
@@ -124,7 +133,7 @@ function getPreset(ctx: ImageCTX, name?: string): ImageOptions {
   return ctx.options.presets[name]
 }
 
-function getSizes(ctx: ImageCTX, input: string, opts: ImageSizesOptions): ImageSizes {
+function getSizes(ctx: ImageCTX, input: string, opts: RuntimeImageOptions): ImageSizes {
   // Merge preset options so preset-provided sizes/densities are respected
   const preset = getPreset(ctx, opts.preset)
   const merged = defu(opts, preset)
@@ -232,7 +241,7 @@ function getSizesVariant(key: string, size: string, height: number | undefined, 
   }
 }
 
-function getVariantSrc(ctx: ImageCTX, input: string, opts: ImageSizesOptions, variant: ImageSizesVariant, density: number) {
+function getVariantSrc(ctx: ImageCTX, input: string, opts: RuntimeImageOptions, variant: ImageSizesVariant, density: number) {
   return ctx.$img!(input,
     {
       ...opts.modifiers,
