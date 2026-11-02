@@ -1,7 +1,7 @@
 import { useHead, useRequestURL } from '#imports'
 
 /** Resolves the origin to preconnect to, or `undefined` for empty, relative, same-origin, unparseable or non-http(s) URLs. */
-export function resolvePreconnectOrigin(url: string | undefined, baseHref: string): string | undefined {
+function resolvePreconnectOrigin(url: string | undefined, baseHref: string): string | undefined {
   if (!url) {
     return
   }
