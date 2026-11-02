@@ -37,6 +37,7 @@ import storyblok from '../../dist/runtime/providers/storyblok'
 import strapi from '../../dist/runtime/providers/strapi'
 import strapi5 from '../../dist/runtime/providers/strapi5'
 import supabase from '../../dist/runtime/providers/supabase'
+import truocloud from '../../dist/runtime/providers/truocloud'
 import edgeonePages from '../../dist/runtime/providers/edgeonePages'
 import twicpics from '../../dist/runtime/providers/twicpics'
 import umbraco from '../../dist/runtime/providers/umbraco'
@@ -88,6 +89,27 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png',
     })
   })
+  it('truocloud', () => {
+    const providerOptions = {
+      baseURL: 'https://img.truo.cloud/i/demo',
+    }
+    for (const image of images) {
+      const [src, modifiers] = image.args
+      const generated = truocloud().getImage(src, { modifiers, ...providerOptions }, getEmptyContext())
+      expect(generated).toMatchObject(image.truocloud)
+    }
+  })
+
+  it('truocloud does not wrap a source that is already one of its own URLs', () => {
+    // Nuxt re-runs the provider over whatever `src` it is given, and a
+    // partially migrated site hands it URLs that already point at the CDN.
+    // Wrapping twice produces a URL that works and costs twice.
+    const providerOptions = { baseURL: 'https://img.truo.cloud/i/demo' }
+    const once = truocloud().getImage('/test.png', { modifiers: { width: 200 }, ...providerOptions }, getEmptyContext())
+    const twice = truocloud().getImage(once.url, { modifiers: { width: 400 }, ...providerOptions }, getEmptyContext())
+    expect(twice).toMatchObject({ url: 'https://img.truo.cloud/i/demo/test.png?w=400' })
+  })
+
   it('aliyun', () => {
     const providerOptions = {
       baseURL: '/',

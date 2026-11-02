@@ -13,6 +13,24 @@ interface Provider {
 }
 
 export const providers: Provider[] = [
+  {
+    name: 'truocloud',
+    samples: [
+      {
+        src: '/wikipedia/commons/3/3f/Fronalpstock_big.jpg',
+        width: 400,
+        height: 300,
+        fit: 'cover',
+      },
+      {
+        src: '/wikipedia/commons/3/3f/Fronalpstock_big.jpg',
+        width: 400,
+        height: 300,
+        format: 'auto',
+      },
+    ],
+  },
+
   // null provider (for non-node environments)
   {
     name: 'none',
