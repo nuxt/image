@@ -7,7 +7,7 @@
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
       <a
         class="flex justify-center pt-8"
-        href="https://image.nuxt.com"
+        href="https://nuxt.com/modules/image"
         target="_blank"
       >
         <!-- Nuxt Logo -->
@@ -62,7 +62,7 @@
         </h2>
         <p class="mt-3 text-gray-600">
           Feel free to check out the full <a
-            href="https://image.nuxt.com"
+            href="https://nuxt.com/modules/image"
             target="_blank"
             class="text-green-500 hover:underline"
           >documentation</a> to see everything you can do.<br>
@@ -72,7 +72,7 @@
         <div class="block my-4 border-b" />
         <p class="mt-3 text-gray-600">
           You can edit the props or the <a
-            href="https://image.nuxt.com/usage/nuxt-picture"
+            href="https://nuxt.com/modules/image/usage/nuxt-picture"
             target="_blank"
             class="text-green-500 hover:underline"
           >&lt;nuxt-picture&gt;</a> component in sandbox to see what you can do. Have fun!

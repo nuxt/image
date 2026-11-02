@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <!-- https://image.nuxt.com/usage/nuxt-img -->
+    <!-- https://nuxt.com/modules/image/usage/nuxt-img -->
     <figure class="mb-8">
       <NuxtImg
         src="/images/mountains_1.jpg"
@@ -21,7 +21,7 @@
         >Unsplash</a>.
       </figcaption>
     </figure>
-    <!-- https://image.nuxt.com/usage/nuxt-picture -->
+    <!-- https://nuxt.com/modules/image/usage/nuxt-picture -->
     <figure>
       <NuxtPicture
         src="/images/mountains_2.jpg"
