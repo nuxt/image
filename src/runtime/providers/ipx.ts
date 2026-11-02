@@ -1,4 +1,4 @@
-import { joinURL, encodePath, encodeParam } from 'ufo'
+import { joinURL, decodePath, encodePath, encodeParam } from 'ufo'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -46,7 +46,7 @@ export default defineProvider<Partial<IPXOptions>>({
     }
 
     return {
-      url: joinURL(baseURL, params, encodePath(src)),
+      url: joinURL(baseURL, params, encodePath(decodePath(src))),
     }
   },
 })
