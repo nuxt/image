@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <!-- none of these sources can be preconnected: data, non-http(s) and same-origin relative -->
+    <nuxt-img
+      provider="none"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      width="10"
+      height="10"
+      preconnect
+    />
+    <nuxt-img
+      provider="none"
+      src="ftp://cdn.example.com/a.jpg"
+      width="20"
+      height="20"
+      preconnect
+    />
+    <nuxt-img
+      provider="none"
+      src="/images/nuxt.png"
+      width="30"
+      height="30"
+      preconnect
+    />
+  </div>
+</template>

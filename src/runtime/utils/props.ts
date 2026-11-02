@@ -23,6 +23,7 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   sizes?: string | Record<string, any>
   densities?: string
   preload?: boolean | { fetchPriority: 'auto' | 'high' | 'low' }
+  preconnect?: boolean
 
   // <img> attributes
   width?: string | number
