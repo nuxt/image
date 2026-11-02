@@ -67,11 +67,11 @@ describe('browser (ssr: true)', () => {
     expect(await link2.getAttribute('imagesizes')).toBeNull()
     expect(await link2.getAttribute('imagesrcset')).not.toBeNull()
 
-    const link3 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1000x1000/images/colors-with-densities-and-sizes-prop.jpg"]')
+    const link3 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1280x1280/images/colors-with-densities-and-sizes-prop.jpg"]')
     expect(await link3.getAttribute('imagesizes')).not.toBeNull()
     expect(await link3.getAttribute('imagesrcset')).not.toBeNull()
 
-    const link4 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1000x1000/images/colors-with-densities-sizes-and-fetchprio-prop.jpg"]')
+    const link4 = page.locator('head link[rel="preload"][as="image"][href="/_ipx/s_1280x1280/images/colors-with-densities-sizes-and-fetchprio-prop.jpg"]')
     expect(await link4.getAttribute('imagesizes')).not.toBeNull()
     expect(await link4.getAttribute('imagesrcset')).not.toBeNull()
     expect(await link4.getAttribute('fetchpriority')).toBe('high')
