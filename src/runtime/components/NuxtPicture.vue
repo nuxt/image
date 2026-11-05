@@ -131,6 +131,7 @@ if (import.meta.server && props.preload) {
       as: 'image',
       imagesrcset: firstSource.srcset,
       nonce: props.nonce,
+      crossorigin: attrs.value.img.crossorigin as '' | 'anonymous' | 'use-credentials' | undefined,
       ...(firstSource.sizes ? { imagesizes: firstSource.sizes } : {}),
       ...(typeof props.preload !== 'boolean' && props.preload?.fetchPriority
         ? { fetchpriority: props.preload.fetchPriority }

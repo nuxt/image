@@ -79,6 +79,18 @@ describe('browser (ssr: true)', () => {
     await page.close()
   })
 
+  it('preloads picture images with the same crossorigin as the img', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+
+    for (const image of ['damavand.jpg', 'everest.jpg']) {
+      const link = page.locator(`head link[rel="preload"][as="image"][imagesrcset*="${image}"]`)
+      expect(await link.getAttribute('crossorigin')).toBe('anonymous')
+    }
+
+    await page.close()
+  })
+
   it('should emit load and error events', async () => {
     const page = await createPage()
     const logs: string[] = []

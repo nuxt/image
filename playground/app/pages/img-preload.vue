@@ -36,5 +36,23 @@
       densities="x1 x2"
       :preload="{ fetchPriority: 'high' }"
     />
+
+    <h1>Picture preload with crossorigin</h1>
+    <nuxt-picture
+      src="/images/damavand.jpg"
+      width="500"
+      height="500"
+      crossorigin="anonymous"
+      preload
+    />
+
+    <h1>Picture preload with crossorigin in img-attrs</h1>
+    <nuxt-picture
+      src="/images/everest.jpg"
+      width="500"
+      height="500"
+      :img-attrs="{ crossorigin: 'anonymous' }"
+      preload
+    />
   </div>
 </template>
