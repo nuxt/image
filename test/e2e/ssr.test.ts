@@ -83,7 +83,7 @@ describe('browser (ssr: true)', () => {
     const page = await createPage()
     await page.goto(url('/img-preload'))
 
-    for (const image of ['damavand.jpg', 'everest.jpg']) {
+    for (const image of ['damavand.jpg', 'everest.jpg', 'nuxt.png']) {
       const link = page.locator(`head link[rel="preload"][as="image"][imagesrcset*="${image}"]`)
       expect(await link.getAttribute('crossorigin')).toBe('anonymous')
     }
