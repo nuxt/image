@@ -2,6 +2,7 @@ import process from 'node:process'
 
 import { hasProtocol, parseURL, withLeadingSlash } from 'ufo'
 import { defineNuxtModule, addTemplate, addImports, addServerImports, createResolver, addComponent, addPlugin, addServerTemplate, addTypeTemplate } from '@nuxt/kit'
+import type { NuxtModule } from '@nuxt/schema'
 import { join, relative, resolve } from 'pathe'
 import { resolveProviders, detectProvider, resolveProvider, BuiltInProviders, isBuiltInProvider } from './provider'
 import type { ImageOptions, InputProvider, CreateImageOptions, ImageModuleProvider, ImageProviders } from './types'
@@ -24,7 +25,7 @@ export interface ModuleOptions extends ImageProviders {
 
 export * from './types'
 
-export default defineNuxtModule<ModuleOptions>({
+const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtModule<ModuleOptions>({
   defaults: nuxt => ({
     inject: false,
     provider: 'auto',
@@ -228,6 +229,8 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
     // TODO: Transform asset urls that pass to `src` attribute on image components
   },
 })
+
+export default nuxtImage
 
 function pick<O extends Record<any, any>, K extends keyof O>(obj: O, keys: K[]): Pick<O, K> {
   const newobj = {} as Pick<O, K>
