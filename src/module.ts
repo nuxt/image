@@ -21,6 +21,7 @@ export interface ModuleOptions extends ImageProviders {
   densities: number[]
   format: CreateImageOptions['format']
   quality?: CreateImageOptions['quality']
+  preconnect: boolean
 }
 
 export * from './types'
@@ -46,6 +47,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
     providers: {},
     alias: {},
     densities: [1, 2],
+    preconnect: false,
   }),
   meta: {
     name: '@nuxt/image',
@@ -114,6 +116,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
       'densities',
       'format',
       'quality',
+      'preconnect',
     ])
 
     const providers = await resolveProviders(nuxt, options)
