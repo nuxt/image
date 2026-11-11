@@ -15,11 +15,11 @@ export function prerenderStaticImages(src = '', srcset = '', event?: CreateImage
   }
 
   const value = paths.map(p => encodeURIComponent(p)).join(', ')
-  if ('headers' in event.res) {
+  if ('res' in event && 'headers' in event.res) {
     event.res.headers.append('x-nitro-prerender', value)
   }
-  else {
+  else if ('node' in event) {
     // h3 v1 (Nitro v2) event
-    (event as unknown as { node: { res: { appendHeader: (name: string, value: string) => void } } }).node.res.appendHeader('x-nitro-prerender', value)
+    event.node.res.appendHeader('x-nitro-prerender', value)
   }
 }

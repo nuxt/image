@@ -1,5 +1,5 @@
 import { encodeQueryItem, joinURL } from 'ufo'
-import type { NitroConfig } from '@nuxt/schema'
+import type { NuxtConfig } from '@nuxt/schema'
 import { createOperationsGenerator } from '../utils/index'
 import { defineProvider } from '../utils/provider'
 
@@ -51,8 +51,8 @@ const operationsGenerator = createOperationsGenerator({
 
 interface AmplifyOptions {
   baseURL?: string
-  formats?: NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['formats']
-  minimumCacheTTL?: NonNullable<NonNullable<NitroConfig['awsAmplify']>['imageSettings']>['minimumCacheTTL']
+  formats?: NonNullable<NonNullable<NonNullable<NuxtConfig['nitro']>['awsAmplify']>['imageSettings']>['formats']
+  minimumCacheTTL?: NonNullable<NonNullable<NonNullable<NuxtConfig['nitro']>['awsAmplify']>['imageSettings']>['minimumCacheTTL']
   modifiers?: {
     quality?: string | number
     // TODO: more modifiers

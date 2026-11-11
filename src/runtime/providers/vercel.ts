@@ -1,13 +1,13 @@
 import { stringifyQuery } from 'ufo'
-import type { NitroConfig } from '@nuxt/schema'
+import type { NuxtConfig } from '@nuxt/schema'
 import { defineProvider } from '../utils/provider'
 
 // https://vercel.com/docs/build-output-api/v3/configuration#images
 
 interface VercelOptions {
   baseURL?: string
-  formats?: NonNullable<NonNullable<NonNullable<NitroConfig['vercel']>['config']>['images']>['formats']
-  minimumCacheTTL?: NonNullable<NonNullable<NonNullable<NitroConfig['vercel']>['config']>['images']>['minimumCacheTTL']
+  formats?: NonNullable<NonNullable<NonNullable<NonNullable<NuxtConfig['nitro']>['vercel']>['config']>['images']>['formats']
+  minimumCacheTTL?: NonNullable<NonNullable<NonNullable<NonNullable<NuxtConfig['nitro']>['vercel']>['config']>['images']>['minimumCacheTTL']
   modifiers?: {
     quality?: string | number
   }
