@@ -1,7 +1,6 @@
 import { normalize } from 'pathe'
 import { defu } from 'defu'
-import type { Nuxt } from '@nuxt/schema'
-import type { NitroConfig } from 'nitropack'
+import type { Nuxt, NuxtConfig } from '@nuxt/schema'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'
@@ -100,7 +99,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
             formats: providerOptions.options?.formats ?? ['image/webp', 'image/avif'],
           },
         },
-      } satisfies NitroConfig['vercel'],
+      } satisfies NonNullable<NuxtConfig['nitro']>['vercel'],
     })
   },
 
@@ -119,7 +118,7 @@ const providerSetup: Partial<Record<ImageProviderName, ProviderSetup>> = {
           remotePatterns: [], // Provided by domains
           dangerouslyAllowSVG: false, // TODO
         },
-      } satisfies NitroConfig['awsAmplify'],
+      } satisfies NonNullable<NuxtConfig['nitro']>['awsAmplify'],
     })
   },
   // https://docs.netlify.com/image-cdn/create-integration/

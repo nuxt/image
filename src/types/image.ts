@@ -1,6 +1,13 @@
 import type { RuntimeConfig } from '@nuxt/schema'
-import type { H3Event } from 'h3'
 import type { ConfiguredImageProviders, ImageProviders, ProviderDefaults } from './module'
+
+/**
+ * The server request event, described by shape so it matches both the h3 v2 event
+ * (Nitro v3) and the h3 v1 event (Nitro v2) without depending on either package.
+ */
+export type ImageRequestEvent
+  = | { res: { headers: Headers } }
+    | { node: { res: { appendHeader: (name: string, value: string) => unknown } } }
 
 export interface ImageModifiers {
   width: number | string
@@ -54,7 +61,7 @@ export interface CreateImageOptions {
     baseURL: string
     createError: (error: { statusCode?: number, statusMessage?: string, message?: string, data?: unknown, fatal?: boolean, name?: string }) => Error
   }
-  event?: H3Event | { res: { headers: Headers } }
+  event?: ImageRequestEvent
   presets: { [name: string]: ImageOptions }
   provider: (string & {}) | keyof ImageProviders
   screens: Record<string, number>

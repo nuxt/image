@@ -1,11 +1,10 @@
-import type { H3Event } from 'h3'
 import { createImage } from './image'
-import type { $Img } from '@nuxt/image'
+import type { $Img, ImageRequestEvent } from '@nuxt/image'
 
 import { imageOptions } from '#build/image-options.mjs'
 import { createError, useNuxtApp, useRuntimeConfig } from '#imports'
 
-export const useImage = (event?: H3Event): $Img => {
+export const useImage = (event?: ImageRequestEvent): $Img => {
   const config = useRuntimeConfig()
   const nuxtApp = useNuxtApp()
 
