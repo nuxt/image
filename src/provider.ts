@@ -1,7 +1,6 @@
 import { normalize } from 'pathe'
 import { defu } from 'defu'
-import type { Nuxt } from '@nuxt/schema'
-import type { NitroConfig } from 'nitropack'
+import type { NitroConfig, Nuxt } from '@nuxt/schema'
 import { createResolver, resolvePath } from '@nuxt/kit'
 import { hash } from 'ohash'
 import { genSafeVariableName } from 'knitwork'

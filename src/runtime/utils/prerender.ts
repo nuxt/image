@@ -1,4 +1,3 @@
-import type { H3Event } from 'h3'
 import type { CreateImageOptions } from '@nuxt/image'
 
 export function prerenderStaticImages(src = '', srcset = '', event?: CreateImageOptions['event']) {
@@ -20,6 +19,7 @@ export function prerenderStaticImages(src = '', srcset = '', event?: CreateImage
     event.res.headers.append('x-nitro-prerender', value)
   }
   else {
-    (event as H3Event).node.res.appendHeader('x-nitro-prerender', value)
+    // h3 v1 (Nitro v2) event
+    (event as unknown as { node: { res: { appendHeader: (name: string, value: string) => void } } }).node.res.appendHeader('x-nitro-prerender', value)
   }
 }
