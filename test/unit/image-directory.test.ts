@@ -8,6 +8,7 @@ import { expect, it } from 'vitest'
 it.each([
   { name: 'Nuxt 4 layout', compatibilityVersion: 4, srcDir: 'app', configuredDir: 'public', imageDir: 'public', unexpectedDir: 'app/public' },
   { name: 'Nuxt 4 relative public path', compatibilityVersion: 4, srcDir: 'app', configuredDir: './public', imageDir: 'public', unexpectedDir: 'app/public' },
+  { name: 'Nuxt 4 public path with trailing slash', compatibilityVersion: 4, srcDir: 'app', configuredDir: 'public/', imageDir: 'public', unexpectedDir: 'app/public' },
   { name: 'Nuxt 3 layout with custom srcDir', compatibilityVersion: 3, srcDir: 'src', configuredDir: 'public', imageDir: 'src/public', unexpectedDir: 'public' },
   { name: 'Nuxt 4 custom image directory', compatibilityVersion: 4, srcDir: 'app', configuredDir: 'assets/images', imageDir: 'app/assets/images', unexpectedDir: 'assets/images' },
 ])('resolves the image directory for $name', async ({ compatibilityVersion, srcDir, configuredDir, imageDir, unexpectedDir }) => {
