@@ -33,6 +33,31 @@ export interface BaseImageProps<Provider extends keyof ConfiguredImageProviders>
   nonce?: string
 }
 
+export type PlaceholderProp = boolean | string | number | [w: number, h: number, q?: number, b?: number]
+
+/**
+ * Resolves the `placeholder` prop into either a ready-to-use URL (when a string
+ * is provided), the modifiers used to generate a low quality placeholder, or
+ * `false` when no placeholder should be rendered.
+ */
+export const resolvePlaceholder = (placeholder: PlaceholderProp | undefined) => {
+  const value = placeholder === '' ? [10, 10] : placeholder
+
+  if (!value) {
+    return false
+  }
+
+  if (typeof value === 'string') {
+    return value
+  }
+
+  const [width = 10, height = width, quality = 50, blur = 3] = Array.isArray(value)
+    ? value
+    : typeof value === 'number' ? [value] : []
+
+  return { width, height, quality, blur }
+}
+
 export const useImageProps = <Provider extends keyof ConfiguredImageProviders>(props: BaseImageProps<Provider>) => {
   const $img = useImage()
 

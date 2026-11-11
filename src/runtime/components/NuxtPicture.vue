@@ -2,20 +2,21 @@
   <picture v-bind="attrs.picture">
     <template v-for="(source, index) of sources">
       <source
-        v-if="index + 1 < sources.length"
+        v-if="index + 1 < sources.length && !placeholder"
         :key="source.src"
         :type="source.type"
         :sizes="source.sizes"
         :srcset="source.srcset"
       >
       <img
-        v-else
+        v-else-if="index + 1 === sources.length"
         ref="imgEl"
         :key="'last' + source.src"
+        :class="placeholder ? placeholderClass : undefined"
         v-bind="attrs.img"
-        :src="source.src"
-        :sizes="source.sizes"
-        :srcset="source.srcset"
+        :src="placeholder || source.src"
+        :sizes="placeholder ? undefined : source.sizes"
+        :srcset="placeholder ? undefined : source.srcset"
       >
     </template>
   </picture>
@@ -25,13 +26,13 @@
 import type { SerializableHead } from '@unhead/vue/types'
 import type { ImgHTMLAttributes } from 'vue'
 
-import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
+import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
-import { useImageProps } from '../utils/props'
-import type { BaseImageProps } from '../utils/props'
+import { resolvePlaceholder, useImageProps } from '../utils/props'
+import type { BaseImageProps, PlaceholderProp } from '../utils/props'
 import type { DataAttributes } from '../types'
 import type { ConfiguredImageProviders, ProviderDefaults } from '@nuxt/image'
 
@@ -40,6 +41,8 @@ import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 export interface PictureProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
   legacyFormat?: string
   imgAttrs?: ImgHTMLAttributes & DataAttributes
+  placeholder?: PlaceholderProp
+  placeholderClass?: string
 }
 
 defineOptions({ inheritAttrs: false })
@@ -119,6 +122,29 @@ const sources = computed<Source[]>(() => {
   })
 })
 
+const placeholderLoaded = ref(false)
+
+// The placeholder is rendered as a plain `<img>` (without any `<source>`) until
+// the real image has been loaded.
+const placeholder = computed(() => {
+  // SVGs are not converted into multiple formats, so there is nothing to wait for
+  if (placeholderLoaded.value || !sources.value.some(source => source.type)) {
+    return false
+  }
+
+  const placeholder = resolvePlaceholder(props.placeholder)
+
+  if (typeof placeholder !== 'object') {
+    return placeholder
+  }
+
+  return $img(props.src!, {
+    ...imageModifiers.value,
+    ...placeholder,
+    format: legacyFormat.value,
+  }, providerOptions.value)
+})
+
 if (import.meta.server && props.preload) {
   useHead({ link: () => {
     const firstSource = sources.value[0]
@@ -146,13 +172,60 @@ if (import.meta.server && import.meta.prerender) {
   for (const src of sources.value) {
     prerenderStaticImages(src.src, src.srcset, useRequestEvent())
   }
+  if (placeholder.value) {
+    prerenderStaticImages(placeholder.value, undefined, useRequestEvent())
+  }
 }
 
 const nuxtApp = useNuxtApp()
 const initialLoad = nuxtApp.isHydrating
 
 const imgEl = useTemplateRef('imgEl')
+
+function setAttributes(el: Element, attrs: Record<string, string | undefined>) {
+  for (const key in attrs) {
+    if (attrs[key]) {
+      el.setAttribute(key, attrs[key])
+    }
+  }
+}
+
+// Loads the real image off-screen, using the same `<source>` candidates as the
+// final markup so the browser picks the format and size it would pick anyway.
+function loadSources() {
+  const picture = document.createElement('picture')
+  const img = document.createElement('img')
+
+  for (const { type, sizes, srcset } of sources.value.slice(0, -1)) {
+    const source = document.createElement('source')
+    setAttributes(source, { type, sizes, srcset })
+    picture.appendChild(source)
+  }
+  picture.appendChild(img)
+
+  img.onload = (event) => {
+    // img.decode() avoids jank and flash. A failed decode should not keep the placeholder forever
+    Promise.resolve(img.decode?.()).catch(() => {}).then(() => {
+      placeholderLoaded.value = true
+      emit('load', event)
+    })
+  }
+  img.onerror = (event) => {
+    emit('error', event)
+  }
+
+  // Attributes are set last, once the `<img>` is a child of the `<picture>`
+  const { sizes, srcset, src } = sources.value.at(-1)!
+  setAttributes(img, { sizes, srcset, src, crossorigin: normalizedAttrs.value.crossorigin })
+}
+
 onMounted(() => {
+  if (placeholder.value) {
+    loadSources()
+    markFeatureUsage('nuxt-picture')
+    return
+  }
+
   const el = Array.isArray(imgEl.value) ? imgEl.value[0] as HTMLImageElement | undefined : imgEl.value
   if (!el) {
     return

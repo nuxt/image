@@ -23,15 +23,15 @@ import type { ImgHTMLAttributes } from 'vue'
 import { useImage } from '../composables'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
-import { useImageProps } from '../utils/props'
-import type { BaseImageProps } from '../utils/props'
+import { resolvePlaceholder, useImageProps } from '../utils/props'
+import type { BaseImageProps, PlaceholderProp } from '../utils/props'
 import type { ProviderDefaults, ConfiguredImageProviders } from '@nuxt/image'
 
 import { useHead, useNuxtApp, useRequestEvent } from '#imports'
 
 export interface ImageProps<Provider extends keyof ConfiguredImageProviders> extends BaseImageProps<Provider> {
   custom?: boolean
-  placeholder?: boolean | string | number | [w: number, h: number, q?: number, b?: number]
+  placeholder?: PlaceholderProp
   placeholderClass?: string
 }
 
@@ -72,26 +72,15 @@ const placeholder = computed(() => {
     return false
   }
 
-  const placeholder = props.placeholder === '' ? [10, 10] : props.placeholder
+  const placeholder = resolvePlaceholder(props.placeholder)
 
-  if (!placeholder) {
-    return false
-  }
-
-  if (typeof placeholder === 'string') {
+  if (typeof placeholder !== 'object') {
     return placeholder
   }
 
-  const [width = 10, height = width, quality = 50, blur = 3] = Array.isArray(placeholder)
-    ? placeholder
-    : typeof placeholder === 'number' ? [placeholder] : []
-
   return $img(props.src!, {
     ...imageModifiers.value,
-    width,
-    height,
-    quality,
-    blur,
+    ...placeholder,
   }, providerOptions.value)
 })
 

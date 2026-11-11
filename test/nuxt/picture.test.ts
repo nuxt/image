@@ -1,11 +1,12 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { NuxtPicture } from '#components'
 import { createError, useNuxtApp, useRuntimeConfig, nextTick } from '#imports'
 import { imageOptions } from '#build/image-options.mjs'
 import { createImage } from '@nuxt/image/runtime'
 import type { RuntimeConfig } from 'nuxt/schema'
+import type { PlaceholderProp } from '../../src/runtime/utils/props'
 
 describe('Renders simple image', () => {
   let wrapper: VueWrapper<any>
@@ -175,6 +176,148 @@ describe('Renders simple image', () => {
       },
     })
     expect(img.find('img').exists()).toBe(true)
+  })
+})
+
+describe('Renders placeholder image', () => {
+  const src = '/image.png'
+
+  // Captures the off-screen elements used to load the real image
+  const captureOffscreenImage = () => {
+    const created: Record<string, HTMLElement[]> = {}
+    const createElement = document.createElement.bind(document)
+    vi.spyOn(document, 'createElement').mockImplementation(((tag: string, options?: ElementCreationOptions) => {
+      const el = createElement(tag, options)
+      ;(created[tag] ||= []).push(el)
+      return el
+    }) as typeof document.createElement)
+    // pictures rendered by the component contain an `<img data-nuxt-pic>`
+    const offscreenPictures = () => (created.picture || []).filter(picture => !picture.querySelector('[data-nuxt-pic]'))
+    return {
+      offscreenPictures,
+      offscreenImage: () => offscreenPictures()[0]!.querySelector('img') as HTMLImageElement,
+    }
+  }
+
+  // The swap happens after the (async) decode of the loaded image
+  const finishLoad = async (img: HTMLImageElement) => {
+    img.onload!(new Event('load'))
+    await new Promise(resolve => setTimeout(resolve))
+    await nextTick()
+  }
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('renders only a placeholder <img> until the image is loaded', async () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { width: 200, height: 200, src, placeholder: true },
+    })
+
+    expect(wrapper.find('source').exists()).toBe(false)
+    const img = wrapper.find('img').element
+    expect(img.getAttribute('src')).toMatchInlineSnapshot(`"/_ipx/f_png&q_50&blur_3&s_10x10/image.png"`)
+    expect(img.hasAttribute('srcset')).toBe(false)
+    expect(img.hasAttribute('sizes')).toBe(false)
+
+    // the real image is loaded off-screen with the same candidates
+    const offscreen = created.offscreenImage()
+    const offscreenSources = [...offscreen.parentElement!.querySelectorAll('source')]
+    expect(offscreenSources).toHaveLength(1)
+    expect(offscreenSources[0]!.type).toBe('image/webp')
+    expect(offscreenSources[0]!.getAttribute('srcset')).toContain('/_ipx/f_webp&s_640x640/image.png 640w')
+    expect(offscreen.parentElement?.tagName).toBe('PICTURE')
+    expect(offscreen.getAttribute('src')).toBe('/_ipx/f_png&s_3072x3072/image.png')
+
+    await finishLoad(offscreen)
+
+    expect(wrapper.findAll('source')).toHaveLength(1)
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/_ipx/f_png&s_3072x3072/image.png')
+    expect(wrapper.find('img').element.getAttribute('srcset')).toContain('/_ipx/f_png&s_640x640/image.png 640w')
+    expect(wrapper.emitted().load).toHaveLength(1)
+  })
+
+  it('keeps the same <img> element when swapping to the real image', async () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src, placeholder: true },
+    })
+    const before = wrapper.find('img').element
+    await finishLoad(created.offscreenImage())
+    expect(wrapper.find('img').element).toBe(before)
+  })
+
+  it('supports the same placeholder values as <NuxtImg>', () => {
+    const render = (placeholder: PlaceholderProp) => mount(NuxtPicture, {
+      propsData: { src, placeholder },
+    }).find('img').element.getAttribute('src')
+
+    expect(render([50, 25])).toBe('/_ipx/f_png&q_50&blur_3&s_50x25/image.png')
+    expect(render([50, 25, 75, 5])).toBe('/_ipx/f_png&q_75&blur_5&s_50x25/image.png')
+    expect(render(15)).toBe('/_ipx/f_png&q_50&blur_3&s_15x15/image.png')
+    expect(render('/placeholder.png')).toBe('/placeholder.png')
+    expect(render('')).toBe('/_ipx/f_png&q_50&blur_3&s_10x10/image.png')
+  })
+
+  it('uses the legacy format for the generated placeholder', () => {
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src, placeholder: true, format: 'avif,webp', legacyFormat: 'jpeg' },
+    })
+    expect(wrapper.find('img').element.getAttribute('src')).toBe('/_ipx/f_jpeg&q_50&blur_3&s_10x10/image.png')
+  })
+
+  it('applies placeholderClass only while the placeholder is shown', async () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src, placeholder: true, placeholderClass: 'placeholder' },
+      attrs: { class: 'picture' },
+    })
+    expect(wrapper.find('img').classes()).toEqual(['placeholder'])
+    await finishLoad(created.offscreenImage())
+    expect(wrapper.find('img').classes()).toEqual([])
+  })
+
+  it('emits error and keeps the placeholder when the image fails to load', async () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src, placeholder: true },
+    })
+    const errorEvent = new Event('error')
+    ;(created.offscreenImage()).onerror!(errorEvent)
+    await nextTick()
+
+    expect(wrapper.emitted().error![0]).toStrictEqual([errorEvent])
+    expect(wrapper.find('source').exists()).toBe(false)
+    expect(wrapper.find('img').element.getAttribute('src')).toContain('blur_3')
+  })
+
+  it('swaps even if decoding the loaded image fails', async () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src, placeholder: true },
+    })
+    const offscreen = created.offscreenImage()
+    offscreen.decode = () => Promise.reject(new Error('decode failed'))
+    offscreen.onload!(new Event('load'))
+    await vi.waitFor(() => expect(wrapper.find('source').exists()).toBe(true))
+  })
+
+  it('does not render a placeholder for svg sources', () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, {
+      propsData: { src: '/image.svg', placeholder: true },
+    })
+    expect(wrapper.html()).toMatchInlineSnapshot('"<picture><img data-nuxt-pic="" src="/image.svg"></picture>"')
+    expect(created.offscreenPictures()).toHaveLength(0)
+  })
+
+  it('renders the regular markup without the placeholder prop', () => {
+    const created = captureOffscreenImage()
+    const wrapper = mount(NuxtPicture, { propsData: { src } })
+    expect(wrapper.find('source').exists()).toBe(true)
+    expect(created.offscreenPictures()).toHaveLength(0)
   })
 })
 
