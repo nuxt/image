@@ -63,7 +63,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
     const publicDirs = new Set(options.dirs)
     for (const layer of nuxt.options._layers) {
       const isRootLayer = layer.config.rootDir === nuxt.options.rootDir
-      const srcDir = isRootLayer ? nuxt.options.srcDir : layer.config.srcDir
+      const srcDir = isRootLayer ? nuxt.options.rootDir : layer.config.srcDir
       const path = (layer?.config.image && layer.config.image.dir) || layer.config.dir?.public || 'public'
 
       publicDirs.add(resolve(srcDir, path))
