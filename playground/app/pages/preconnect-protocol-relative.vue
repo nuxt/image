@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <!-- a protocol-relative and an explicit http source must not share a hint -->
+    <nuxt-img
+      provider="none"
+      src="//res.cloudinary.com/nuxt/image/upload/images/nuxt.png"
+      width="100"
+      height="100"
+      preconnect
+    />
+    <nuxt-img
+      provider="none"
+      src="http://res.cloudinary.com/nuxt/image/upload/images/nuxt.png"
+      width="120"
+      height="120"
+      preconnect
+    />
+    <nuxt-img
+      provider="none"
+      src="//res.cloudinary.com:80/nuxt/image/upload/images/nuxt.png"
+      width="140"
+      height="140"
+      preconnect
+    />
+  </div>
+</template>

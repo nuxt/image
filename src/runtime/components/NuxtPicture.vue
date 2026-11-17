@@ -30,6 +30,7 @@ import { computed, onMounted, useAttrs, useTemplateRef } from 'vue'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImage } from '../composables'
+import { addPreconnect, type PreconnectOptions } from '../utils/preconnect'
 import { useImageProps } from '../utils/props'
 import type { BaseImageProps } from '../utils/props'
 import type { DataAttributes } from '../types'
@@ -44,7 +45,8 @@ export interface PictureProps<Provider extends keyof ConfiguredImageProviders> e
 
 defineOptions({ inheritAttrs: false })
 
-const props = defineProps<PictureProps<Provider>>()
+// `undefined` lets the global `image.preconnect` option apply
+const props = withDefaults(defineProps<PictureProps<Provider>>(), { preconnect: undefined })
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
@@ -118,6 +120,12 @@ const sources = computed<Source[]>(() => {
     return { src, type: `image/${format}`, sizes, srcset }
   })
 })
+
+if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
+  // `imgAttrs` is merged into `attrs.img` after the prop, so use that same value
+  const crossorigin = attrs.value.img.crossorigin as PreconnectOptions['crossorigin']
+  addPreconnect(sources.value.map(source => source.src), { crossorigin })
+}
 
 if (import.meta.server && props.preload) {
   useHead({ link: () => {
