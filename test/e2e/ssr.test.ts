@@ -79,6 +79,32 @@ describe('browser (ssr: true)', () => {
     await page.close()
   })
 
+  it('preloads picture images with the same crossorigin as the img', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+
+    for (const image of ['damavand.jpg', 'everest.jpg', 'nuxt.png']) {
+      const link = page.locator(`head link[rel="preload"][as="image"][imagesrcset*="${image}"]`)
+      expect(await link.getAttribute('crossorigin')).toBe('anonymous')
+    }
+
+    await page.close()
+  })
+
+  it('keeps the img crossorigin when both spellings are set', async () => {
+    const page = await createPage()
+    await page.goto(url('/img-preload'))
+
+    const img = page.locator('img[srcset*="colors.jpg"]')
+    const link = page.locator('head link[rel="preload"][as="image"][imagesrcset*="colors.jpg"]')
+
+    const imgCrossOrigin = await img.getAttribute('crossorigin')
+    expect(imgCrossOrigin).toBe('anonymous')
+    expect(await link.getAttribute('crossorigin')).toBe(imgCrossOrigin)
+
+    await page.close()
+  })
+
   it('should emit load and error events', async () => {
     const page = await createPage()
     const logs: string[] = []
