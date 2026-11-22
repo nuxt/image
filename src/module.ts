@@ -209,7 +209,8 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
 
           // images are read from the source directories while prerendering, so custom directories do not need to be copied to the output
           if (!nitro.options.dev) {
-            const isImageOnlyDir = (dir: string) => registeredDirs.has(resolve(dir)) && nitro.options.publicAssets.filter(asset => resolve(asset.dir) === resolve(dir)).length === 1
+            const nitroPublicDirs = new Set(nitro.options.scanDirs.map(dir => resolve(dir, 'public')))
+            const isImageOnlyDir = (dir: string) => registeredDirs.has(resolve(dir)) && !nitroPublicDirs.has(resolve(dir)) && nitro.options.publicAssets.filter(asset => resolve(asset.dir) === resolve(dir)).length === 1
             nitro.options.publicAssets = nitro.options.publicAssets.filter(asset => !isImageOnlyDir(asset.dir))
           }
         }

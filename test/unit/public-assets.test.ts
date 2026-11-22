@@ -18,22 +18,27 @@ describe('image directories', () => {
   })
 
   it('does not copy a custom directory with a trailing slash to the output for the ipxStatic provider', { timeout: 60_000 }, async () => {
-    const { publicAssetDirs, imageDir, publicDir } = await setupNuxt('ipx-static-trailing-slash', 'ipxStatic', true)
+    const { publicAssetDirs, imageDir, publicDir } = await setupNuxt('ipx-static-trailing-slash', 'ipxStatic', root => `dirs: ['${join(root, 'app/assets/images')}/']`)
     expect(publicAssetDirs).not.toContain(imageDir)
     expect(publicAssetDirs).toContain(publicDir)
   })
+
+  it('keeps a Nitro public directory that is also an image directory for the ipxStatic provider', { timeout: 60_000 }, async () => {
+    const { publicAssetDirs, rootDir } = await setupNuxt('ipx-static-server-public', 'ipxStatic', root => `dirs: ['${join(root, 'server/public')}']`)
+    expect(publicAssetDirs).toContain(join(rootDir, 'server/public'))
+  })
 })
 
-async function setupNuxt(name: string, provider: string, trailingSlash = false) {
+async function setupNuxt(name: string, provider: string, imageConfig = (_root: string) => `dir: 'assets/images'`) {
   const rootDir = fileURLToPath(new URL(`.tmp/public-assets/${name}`, import.meta.url))
   await rm(rootDir, { recursive: true, force: true })
   const imageDir = join(rootDir, 'app/assets/images')
   const publicDir = join(rootDir, 'public')
   await mkdir(imageDir, { recursive: true })
   await mkdir(publicDir, { recursive: true })
+  await mkdir(join(rootDir, 'server/public'), { recursive: true })
   await writeFile(join(rootDir, 'app/app.vue'), `<template><NuxtImg src="/test.jpg" /></template>`)
-  const imageConfig = trailingSlash ? `dirs: ['${imageDir}/']` : `dir: 'assets/images'`
-  await writeFile(join(rootDir, 'nuxt.config.ts'), `export default defineNuxtConfig({ image: { provider: '${provider}', ${imageConfig} } })`)
+  await writeFile(join(rootDir, 'nuxt.config.ts'), `export default defineNuxtConfig({ image: { provider: '${provider}', ${imageConfig(rootDir)} } })`)
 
   let nitro: Nitro | undefined
   const nuxt = await loadNuxt({
@@ -50,5 +55,5 @@ async function setupNuxt(name: string, provider: string, trailingSlash = false) 
   })
   const publicAssetDirs = nitro!.options.publicAssets.map(asset => asset.dir)
   await nuxt.close()
-  return { publicAssetDirs, imageDir, publicDir }
+  return { publicAssetDirs, imageDir, publicDir, rootDir }
 }
