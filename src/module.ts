@@ -71,6 +71,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
 
     options.dirs = [...publicDirs].filter(dir => existsSync(dir))
 
+    const registeredDirs = new Set<string>()
     nuxt.hook('nitro:config', (nitroConfig) => {
       for (const dir of options.dirs) {
         if (!existsSync(dir)) {
@@ -79,6 +80,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
         nitroConfig.publicAssets ||= []
         if (!nitroConfig.publicAssets.some(asset => asset && asset.dir === dir)) {
           nitroConfig.publicAssets.push({ dir, maxAge: 1 })
+          registeredDirs.add(dir)
         }
       }
     })
@@ -204,6 +206,12 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
         if (resolvedProvider === 'ipxStatic') {
           // handle the case of `ipx: {}` existing in options, but deploying a static site
           options.ipxStatic ||= options.ipx || {}
+
+          // images are read from the source directories while prerendering, so custom directories do not need to be copied to the output
+          if (!nitro.options.dev) {
+            const isImageOnlyDir = (dir: string) => registeredDirs.has(dir) && nitro.options.publicAssets.filter(asset => asset.dir === dir).length === 1
+            nitro.options.publicAssets = nitro.options.publicAssets.filter(asset => !isImageOnlyDir(asset.dir))
+          }
         }
         else {
           options[resolvedProvider] = options[resolvedProvider] || {}
