@@ -80,7 +80,7 @@ const nuxtImage: NuxtModule<ModuleOptions, ModuleOptions, false> = defineNuxtMod
         nitroConfig.publicAssets ||= []
         if (!nitroConfig.publicAssets.some(asset => asset && asset.dir === dir)) {
           nitroConfig.publicAssets.push({ dir, maxAge: 1 })
-          registeredDirs.add(dir)
+          registeredDirs.add(resolve(dir))
         }
       }
     })
@@ -209,7 +209,7 @@ ${BuiltInProviders.map(p => `            ${JSON.stringify(p)}: ReturnType<typeof
 
           // images are read from the source directories while prerendering, so custom directories do not need to be copied to the output
           if (!nitro.options.dev) {
-            const isImageOnlyDir = (dir: string) => registeredDirs.has(dir) && nitro.options.publicAssets.filter(asset => asset.dir === dir).length === 1
+            const isImageOnlyDir = (dir: string) => registeredDirs.has(resolve(dir)) && nitro.options.publicAssets.filter(asset => resolve(asset.dir) === resolve(dir)).length === 1
             nitro.options.publicAssets = nitro.options.publicAssets.filter(asset => !isImageOnlyDir(asset.dir))
           }
         }
