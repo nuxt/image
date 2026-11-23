@@ -176,11 +176,11 @@ function loadMainImage() {
 // With `loading="lazy"`, wait until the image is close to the viewport before
 // loading the full image, as the browser does for a plain `<img loading="lazy">`.
 function loadMainImageNearViewport() {
-  const el = getRenderedElement()
+  const elements = getRenderedElements()
 
   // Without an element to watch (e.g. an empty custom slot) or IntersectionObserver
   // support, there is no way to tell when the image becomes visible.
-  if (!el || typeof IntersectionObserver === 'undefined') {
+  if (!elements.length || typeof IntersectionObserver === 'undefined') {
     loadMainImage()
     return
   }
@@ -192,7 +192,9 @@ function loadMainImageNearViewport() {
     }
   }, { rootMargin: '200px' })
 
-  viewportObserver.observe(el)
+  for (const element of elements) {
+    viewportObserver.observe(element)
+  }
 }
 
 function stopObservingViewport() {
@@ -200,18 +202,20 @@ function stopObservingViewport() {
   viewportObserver = undefined
 }
 
-// The `<img>` itself, or the first element rendered by the custom slot.
-function getRenderedElement(): Element | undefined {
+// The `<img>` itself, or every element rendered by the custom slot.
+function getRenderedElements(): Element[] {
   if (imgEl.value) {
-    return imgEl.value
+    return [imgEl.value]
   }
 
+  const elements: Element[] = []
   const { el, anchor } = instance!.subTree
   for (let node: Node | null = el as Node | null; node && node !== anchor; node = node.nextSibling) {
     if (node.nodeType === Node.ELEMENT_NODE) {
-      return node as Element
+      elements.push(node as Element)
     }
   }
+  return elements
 }
 
 onBeforeUnmount(stopObservingViewport)

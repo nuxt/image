@@ -621,7 +621,7 @@ describe('Lazy loading with a placeholder', () => {
       attrs: { loading: 'lazy' },
     })
 
-    expect(observer.target).toBe(wrapper.find('img').element)
+    expect(observer.targets).toEqual([wrapper.find('img').element])
     expect(images.created).toBe(0)
 
     observer.trigger(false)
@@ -653,7 +653,7 @@ describe('Lazy loading with a placeholder', () => {
       },
     })
 
-    expect(observer.target).toBe(wrapper.find('p').element)
+    expect(observer.targets).toEqual([wrapper.find('p').element])
     expect(images.created).toBe(0)
 
     observer.trigger(true)
@@ -661,6 +661,26 @@ describe('Lazy loading with a placeholder', () => {
     await nextTick()
 
     expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+  })
+
+  it('loads once any root of a multi-root custom slot is near the viewport', async () => {
+    const observer = stubIntersectionObserver()
+    const images = stubImage()
+
+    const wrapper = mount(NuxtImg, {
+      props: { width: 200, height: 200, src, custom: true },
+      attrs: { loading: 'lazy' },
+      slots: {
+        default: ({ imgAttrs, src, isLoaded }) => isLoaded
+          ? h('img', { ...imgAttrs, src })
+          : [h('span', { hidden: true }), h('p', {}, 'placeholder')],
+      },
+    })
+
+    expect(observer.targets).toEqual([wrapper.find('span').element, wrapper.find('p').element])
+
+    observer.trigger(true)
+    expect(images.created).toBe(1)
   })
 
   it('stops watching when unmounted before becoming visible', () => {
@@ -683,14 +703,14 @@ describe('Lazy loading with a placeholder', () => {
 
     mount(NuxtImg, { props: { src, placeholder: true } })
 
-    expect(observer.target).toBeUndefined()
+    expect(observer.targets).toEqual([])
     expect(images.created).toBe(1)
   })
 })
 
 function stubIntersectionObserver() {
   const state = {
-    target: undefined as Element | undefined,
+    targets: [] as Element[],
     disconnected: false,
     trigger: (_isIntersecting: boolean) => {},
   }
@@ -698,7 +718,7 @@ function stubIntersectionObserver() {
   vi.stubGlobal('IntersectionObserver', vi.fn(function (callback: IntersectionObserverCallback) {
     state.trigger = isIntersecting => callback([{ isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver)
     return {
-      observe: (el: Element) => { state.target = el },
+      observe: (el: Element) => { state.targets.push(el) },
       disconnect: () => { state.disconnected = true },
     }
   }))
