@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts" generic="Provider extends keyof ConfiguredImageProviders = ProviderDefaults['provider']">
-import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
+import { computed, getCurrentInstance, onBeforeUnmount, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
@@ -133,41 +133,96 @@ const imgEl = useTemplateRef('imgEl')
 
 defineExpose({ imgEl })
 
+const instance = getCurrentInstance()
+let viewportObserver: IntersectionObserver | undefined
+
+function loadMainImage() {
+  const img = new Image()
+
+  if (mainSrc.value) {
+    img.src = mainSrc.value
+  }
+
+  if (props.sizes) {
+    img.sizes = sizes.value.sizes || ''
+    img.srcset = sizes.value.srcset
+  }
+
+  // img.decode() can avoid jank and flash
+  // see https://www.tunetheweb.com/blog/what-does-the-image-decoding-attribute-actually-do/
+  if (img.decode) {
+    img.decode()
+      .then(() => {
+        placeholderLoaded.value = true
+        emit('load', new Event('load'))
+      })
+      .catch((error) => {
+        emit('error', error)
+      })
+  }
+  else {
+    // fallback for browsers that don't support decode() API
+    img.onload = (event) => {
+      placeholderLoaded.value = true
+      emit('load', event)
+    }
+
+    img.onerror = (event) => {
+      emit('error', event)
+    }
+  }
+}
+
+// With `loading="lazy"`, wait until the image is close to the viewport before
+// loading the full image, as the browser does for a plain `<img loading="lazy">`.
+function loadMainImageNearViewport() {
+  const el = getRenderedElement()
+
+  // Without an element to watch (e.g. an empty custom slot) or IntersectionObserver
+  // support, there is no way to tell when the image becomes visible.
+  if (!el || typeof IntersectionObserver === 'undefined') {
+    loadMainImage()
+    return
+  }
+
+  viewportObserver = new IntersectionObserver((entries) => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      stopObservingViewport()
+      loadMainImage()
+    }
+  }, { rootMargin: '200px' })
+
+  viewportObserver.observe(el)
+}
+
+function stopObservingViewport() {
+  viewportObserver?.disconnect()
+  viewportObserver = undefined
+}
+
+// The `<img>` itself, or the first element rendered by the custom slot.
+function getRenderedElement(): Element | undefined {
+  if (imgEl.value) {
+    return imgEl.value
+  }
+
+  const { el, anchor } = instance!.subTree
+  for (let node: Node | null = el as Node | null; node && node !== anchor; node = node.nextSibling) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      return node as Element
+    }
+  }
+}
+
+onBeforeUnmount(stopObservingViewport)
+
 onMounted(() => {
   if (placeholder.value || props.custom) {
-    const img = new Image()
-
-    if (mainSrc.value) {
-      img.src = mainSrc.value
-    }
-
-    if (props.sizes) {
-      img.sizes = sizes.value.sizes || ''
-      img.srcset = sizes.value.srcset
-    }
-
-    // img.decode() can avoid jank and flash
-    // see https://www.tunetheweb.com/blog/what-does-the-image-decoding-attribute-actually-do/
-    if (img.decode) {
-      img.decode()
-        .then(() => {
-          placeholderLoaded.value = true
-          emit('load', new Event('load'))
-        })
-        .catch((error) => {
-          emit('error', error)
-        })
+    if (attrs.loading === 'lazy') {
+      loadMainImageNearViewport()
     }
     else {
-      // fallback for browsers that don't support decode() API
-      img.onload = (event) => {
-        placeholderLoaded.value = true
-        emit('load', event)
-      }
-
-      img.onerror = (event) => {
-        emit('error', event)
-      }
+      loadMainImage()
     }
 
     markFeatureUsage('nuxt-image')

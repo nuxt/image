@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect, vi } from 'vitest'
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import { imageOptions } from '#build/image-options.mjs'
@@ -604,6 +604,125 @@ describe('Renders NuxtImg with the custom prop and default slot', () => {
     expect(wrapper.emitted().load![0]).toStrictEqual([loadEvent])
   })
 })
+
+describe('Lazy loading with a placeholder', () => {
+  const src = '/image.png'
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('loads the full image only once it is near the viewport', async () => {
+    const observer = stubIntersectionObserver()
+    const images = stubImage()
+
+    const wrapper = mount(NuxtImg, {
+      props: { width: 200, height: 200, src, placeholder: true },
+      attrs: { loading: 'lazy' },
+    })
+
+    expect(observer.target).toBe(wrapper.find('img').element)
+    expect(images.created).toBe(0)
+
+    observer.trigger(false)
+    expect(images.created).toBe(0)
+
+    observer.trigger(true)
+    expect(images.created).toBe(1)
+    expect(images.last.src).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(observer.disconnected).toBe(true)
+
+    images.resolve()
+    await nextTick()
+
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+    expect(wrapper.emitted().load).toHaveLength(1)
+  })
+
+  it('watches the element rendered by a custom slot', async () => {
+    const observer = stubIntersectionObserver()
+    const images = stubImage()
+
+    const wrapper = mount(NuxtImg, {
+      props: { width: 200, height: 200, src, custom: true },
+      attrs: { loading: 'lazy' },
+      slots: {
+        default: ({ imgAttrs, src, isLoaded }) => isLoaded
+          ? h('img', { ...imgAttrs, src })
+          : h('p', {}, 'placeholder'),
+      },
+    })
+
+    expect(observer.target).toBe(wrapper.find('p').element)
+    expect(images.created).toBe(0)
+
+    observer.trigger(true)
+    images.resolve()
+    await nextTick()
+
+    expect(wrapper.find('img').element.getAttribute('src')).toMatchInlineSnapshot('"/_ipx/s_200x200/image.png"')
+  })
+
+  it('stops watching when unmounted before becoming visible', () => {
+    const observer = stubIntersectionObserver()
+    const images = stubImage()
+
+    const wrapper = mount(NuxtImg, {
+      props: { src, placeholder: true },
+      attrs: { loading: 'lazy' },
+    })
+    wrapper.unmount()
+
+    expect(observer.disconnected).toBe(true)
+    expect(images.created).toBe(0)
+  })
+
+  it('still loads the full image right away without `loading="lazy"`', () => {
+    const observer = stubIntersectionObserver()
+    const images = stubImage()
+
+    mount(NuxtImg, { props: { src, placeholder: true } })
+
+    expect(observer.target).toBeUndefined()
+    expect(images.created).toBe(1)
+  })
+})
+
+function stubIntersectionObserver() {
+  const state = {
+    target: undefined as Element | undefined,
+    disconnected: false,
+    trigger: (_isIntersecting: boolean) => {},
+  }
+
+  vi.stubGlobal('IntersectionObserver', vi.fn(function (callback: IntersectionObserverCallback) {
+    state.trigger = isIntersecting => callback([{ isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver)
+    return {
+      observe: (el: Element) => { state.target = el },
+      disconnect: () => { state.disconnected = true },
+    }
+  }))
+
+  return state
+}
+
+function stubImage() {
+  const state = {
+    created: 0,
+    last: {} as HTMLImageElement,
+    resolve: () => {},
+  }
+
+  vi.stubGlobal('Image', vi.fn(function () {
+    const image = { onload: () => {}, onerror: () => {} } as unknown as HTMLImageElement
+    state.created++
+    state.last = image
+    state.resolve = () => image.onload?.(new Event('load'))
+    return image
+  }))
+
+  return state
+}
 
 const mountImage = (props: ComponentMountingOptions<typeof NuxtImg>['props']) => mount(NuxtImg, { props })
 
