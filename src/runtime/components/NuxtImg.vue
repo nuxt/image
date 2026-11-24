@@ -21,6 +21,7 @@ import { computed, onMounted, ref, useAttrs, useTemplateRef } from 'vue'
 import type { ImgHTMLAttributes } from 'vue'
 
 import { useImage } from '../composables'
+import { addPreconnect } from '../utils/preconnect'
 import { prerenderStaticImages } from '../utils/prerender'
 import { markFeatureUsage } from '../utils/performance'
 import { useImageProps } from '../utils/props'
@@ -35,7 +36,8 @@ export interface ImageProps<Provider extends keyof ConfiguredImageProviders> ext
   placeholderClass?: string
 }
 
-const props = defineProps<ImageProps<Provider>>()
+// `undefined` lets the global `image.preconnect` option apply
+const props = withDefaults(defineProps<ImageProps<Provider>>(), { preconnect: undefined })
 
 const emit = defineEmits<{
   (event: 'load', payload: Event): unknown
@@ -102,6 +104,11 @@ const mainSrc = computed(() =>
 )
 
 const src = computed(() => placeholder.value || mainSrc.value)
+
+if (import.meta.server && (props.preconnect ?? $img.options.preconnect)) {
+  // use the rendered URL: reading `mainSrc` forces `getSizes` during SSR with a placeholder
+  addPreconnect([src.value], { crossorigin: normalizedAttrs.value.crossorigin })
+}
 
 if (import.meta.server && props.preload) {
   const hasMultipleDensities = sizes.value.srcset.includes('x, ')

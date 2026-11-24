@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
 import { describe, it, expect } from 'vitest'
-import { setup, useTestContext } from '@nuxt/test-utils'
+import { $fetch, setup, useTestContext } from '@nuxt/test-utils'
 import { useNuxt } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import { glob } from 'tinyglobby'
@@ -12,6 +12,7 @@ await setup({
   nuxtConfig: {
     image: {
       inject: false,
+      preconnect: true,
     },
     nitro: {
       prerender: {
@@ -49,5 +50,22 @@ describe('ipx provider', () => {
         "_ipx/s_600x600/unsplash/photo-1606112219348-204d7d8b94ee",
       ]
     `)
+  })
+})
+
+describe('preconnect', () => {
+  it('preconnects when enabled with the global image option', async () => {
+    // `/preconnect-opt-out` renders a cross-origin image without the `preconnect` prop
+    const html = await $fetch<string>('/preconnect-opt-out')
+
+    expect(html).toContain('href="https://res.cloudinary.com"')
+    expect(html).toContain('rel="preconnect"')
+  })
+
+  it('lets the prop disable the global image option', async () => {
+    const html = await $fetch<string>('/preconnect-disabled')
+
+    expect(html).toContain('https://res.cloudinary.com')
+    expect(html).not.toContain('rel="preconnect"')
   })
 })
