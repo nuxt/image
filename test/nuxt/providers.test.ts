@@ -6,6 +6,7 @@ import type { ImgproxyModifiers } from '../../dist/runtime/providers/imgproxy'
 
 import { useNuxtApp } from '#imports'
 import ipx from '../../dist/runtime/providers/ipx'
+import ipxStatic from '../../dist/runtime/providers/ipxStatic'
 import none from '../../dist/runtime/providers/none'
 import aliyun from '../../dist/runtime/providers/aliyun'
 import awsAmplify from '../../dist/runtime/providers/awsAmplify'
@@ -88,6 +89,12 @@ describe('Providers', () => {
       url: '/_ipx/_/images/test.png',
     })
   })
+  it('ipx keeps + in the path', () => {
+    const src = '/images/a+b.png'
+    expect(ipx().getImage(src, { modifiers: {} }, getEmptyContext())).toMatchObject({ url: '/_ipx/_/images/a+b.png' })
+    expect(ipxStatic().getImage(src, { modifiers: {} }, getEmptyContext())).toMatchObject({ url: '/_ipx/_/images/a+b.png' })
+  })
+
   it('aliyun', () => {
     const providerOptions = {
       baseURL: '/',
